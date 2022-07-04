@@ -1,5 +1,10 @@
 
 (t)mon jul 04 22
+(u)Moberry
+(p)9377
+(e)⚖|balance
+(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409
 (e)⚖|balance
