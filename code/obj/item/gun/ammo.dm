@@ -302,9 +302,8 @@
 		ammo_type.material = copyMaterial(src.material)
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") / 2.75)
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 4)
-			ammo_type.ks_ratio = max(0,round(material.getProperty("hard") / 75))
+			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
