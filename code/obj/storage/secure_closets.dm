@@ -582,6 +582,7 @@
 	name = "medical uniform locker"
 	icon_closed = "medical_clothes"
 	icon_state = "medical_clothes"
+	#ifdef CREATE_PATHOGENS
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/backpack/robotics,
@@ -596,11 +597,24 @@
 	/obj/item/storage/box/stma_kit,
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/glasses/healthgoggles
-	#ifdef CREATE_PATHOGENS
 	/obj/item/storage/backpack/pathology,
 	/obj/item/storage/backpack/satchel/pathology,
 	/obj/item/storage/box/clothing/pathologist)
-
+	#else
+	spawn_contents = list(/obj/item/storage/backpack/medic,
+	/obj/item/storage/backpack/satchel/medic,
+	/obj/item/storage/backpack/robotics,
+	/obj/item/storage/backpack/genetics,
+	/obj/item/storage/backpack/satchel/robotics,
+	/obj/item/storage/backpack/satchel/genetics,
+	/obj/item/storage/box/clothing/medical,
+	/obj/item/storage/box/clothing/geneticist,
+	/obj/item/storage/box/clothing/roboticist,
+	/obj/item/clothing/suit/wintercoat/medical,
+	/obj/item/storage/belt/medical,
+	/obj/item/storage/box/stma_kit,
+	/obj/item/storage/box/lglo_kit/random,
+	/obj/item/clothing/glasses/healthgoggles)
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
 	icon_closed = "medical_restricted"
