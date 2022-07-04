@@ -408,7 +408,6 @@
 		// electrocution check
 
 		var/OSHA_is_crying = 1
-		var/dmg_mod = 0
 		if (src.material && src.material.getProperty("electrical") < 4)
 			OSHA_is_crying = 0
 

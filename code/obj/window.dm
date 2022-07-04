@@ -153,8 +153,6 @@
 		if (!isnum(amount) || amount <= 0)
 			return
 
-		var/armor = 0
-
 		amount = get_damage_after_percentage_based_armor_reduction(blunt_resist,amount)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
