@@ -673,25 +673,27 @@
 		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
 
-	proc/flip_down(mob/user)
+	proc/flip_down(var/mob/living/carbon/human/user)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		src.obscure(user)
-		user.update_clothing()
+		if (user.head == src)
+			src.obscure(user)
+			user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_up(mob/user)
+	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		src.reveal(user)
-		user.update_clothing()
+		if (user.head == src)
+			src.reveal(user)
+			user.update_clothing()
 
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
@@ -708,9 +710,10 @@
 
 	disposing()
 		. = ..()
-		if (ismob(src.loc))
-			var/mob/owner = src.loc
-			src.reveal(owner)
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/owner = src.loc
+			if (owner.head == src) //human is actually wearing it
+				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
 		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
