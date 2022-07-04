@@ -83,7 +83,7 @@ ABSTRACT_TYPE(/datum/material)
 						return P.min_value
 					if(VALUE_MAX)
 						return P.max_value
-		return -1
+		return 0
 
 	proc/removeProperty(var/property)
 		for(var/datum/material_property/P in properties)
@@ -881,6 +881,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
+		setProperty("reflective", rand(1, 9))
 		setProperty("corrosion", rand(1, 8))
 		setProperty("permeable", rand(3, 9))
 		addTrigger(triggersTemp, new /datum/materialProc/temp_miraclium())
