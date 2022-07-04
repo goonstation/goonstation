@@ -202,13 +202,6 @@
 		if(!I.material || (I.material.mat_id != "starstone")) return 0
 		return ..()
 
-/datum/matfab_part/fissile
-	name = "Fissile"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		//if(I.material.getProperty("fissile") < 30) return 0
-		//if(!I.material.nuke_compat) return 0
-		return ..()
 //////////////////////////////////////////////BASE CLASS BELOW
 
 /// Base material fabrication part

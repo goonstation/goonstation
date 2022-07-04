@@ -1181,8 +1181,8 @@
 	process()
 		if(src.material)
 			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 50)
-					if(prob(max(11 - src.material.getProperty("stability"), 0)))
+				if(src.material.getProperty("stability") <= 1)
+					if(prob(1))
 						var/turf/T = get_turf(src)
 						explosion_new(src, T, 1)
 						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
@@ -1195,20 +1195,32 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
+
+			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
 
 			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+			recharge_rate += material.getProperty("radioactive")/2
+			recharge_rate += material.getProperty("n_radioactive")
+
 
 		charge = max_charge
+
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
+
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			max_charge = round((conductivity ** 2) * 4, 25)
+
+			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
