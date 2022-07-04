@@ -246,15 +246,13 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
-	var/spam_flag = 0
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
-	if (spam_flag < world.time)
+	if (!ON_COOLDOWN(src,"quack",2 SECONDS))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
-		spam_flag = 1
 		if (narrator_mode)
 			playsound(user, 'sound/vox/duct.ogg', 50, 1)
 		else
@@ -271,7 +269,6 @@
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)
-		spam_flag = world.time + 2 SECONDS
 	return
 
 /obj/item/ghostboard
