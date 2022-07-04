@@ -582,7 +582,7 @@
 	name = "medical uniform locker"
 	icon_closed = "medical_clothes"
 	icon_state = "medical_clothes"
-	#ifdef CREATE_PATHOGENS
+#ifdef CREATE_PATHOGENS
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/backpack/robotics,
@@ -600,7 +600,7 @@
 	/obj/item/storage/backpack/pathology,
 	/obj/item/storage/backpack/satchel/pathology,
 	/obj/item/storage/box/clothing/pathologist)
-	#else
+#else
 	spawn_contents = list(/obj/item/storage/backpack/medic,
 	/obj/item/storage/backpack/satchel/medic,
 	/obj/item/storage/backpack/robotics,
@@ -615,6 +615,7 @@
 	/obj/item/storage/box/stma_kit,
 	/obj/item/storage/box/lglo_kit/random,
 	/obj/item/clothing/glasses/healthgoggles)
+
 /obj/storage/secure/closet/medical/chemical
 	name = "restricted medical locker"
 	icon_closed = "medical_restricted"
