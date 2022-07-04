@@ -295,9 +295,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 3)
 		setProperty("hard", 2)
 
-
-
-
 /datum/material/metal/copper
 	mat_id = "copper"
 	name = "copper"
@@ -321,7 +318,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("stability", 6)
 		setProperty("electrical", 7)
 		setProperty("density", 2)
-		setProperty("hard", 1)
+		setProperty("hard", 2)
 
 
 /datum/material/metal/cobryl
@@ -345,7 +342,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		setProperty("density", 6)
-		setProperty("hard", 4)
+		setProperty("hard", 5)
 
 
 /datum/material/metal/mauxite
@@ -356,7 +353,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		setProperty("density", 4)
-		setProperty("hard", 2)
+		setProperty("hard", 3)
 
 
 /datum/material/metal/cerenkite
@@ -388,7 +385,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		value = 400
 
 		setProperty("density", 1)
-		setProperty("hard", 1)
+		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
@@ -406,7 +403,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		value = 300
 
 		setProperty("density", 5)
-		setProperty("hard", 1)
+		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
 
@@ -454,7 +451,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 9)
-		setProperty("hard", 2)
+		setProperty("hard", 3)
 		setProperty("electrical", 7)
 		setProperty("stability", 2)
 		setProperty("n_radioactive", 8)
