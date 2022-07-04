@@ -1,5 +1,9 @@
 
 (t)mon jul 04 22
+(u)LeahTheTech
+(p)9416
+(e)🎨⚖|sprites, balance
+(+)Welding masks now use a vision obscuring overlay instead of a screen tint
 (u)Moberry
 (p)9377
 (e)⚖|balance
