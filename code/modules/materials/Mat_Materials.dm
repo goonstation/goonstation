@@ -255,6 +255,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		. = ..()
 		material_flags |= MATERIAL_METAL
 		setProperty("electrical", 5)
+		setProperty("thermal", 6)
 		setProperty("permeable", 3)
 		setProperty("density", 4)
 
@@ -270,6 +271,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 2)
 		setProperty("hard", 2)
 		setProperty("stability", 2)
+		setProperty("electrical", 4)
+		setProperty("thermal", 4)
 
 
 /datum/material/metal/electrum
@@ -406,6 +409,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
+		setProperty("thermal", 7)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 
@@ -978,6 +982,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		. = ..()
 		material_flags |= MATERIAL_ORGANIC
 		setProperty("flammable", 5)
+		setProperty("electrical", 4)
 
 /datum/material/organic/blob
 	mat_id = "blob"
@@ -1260,6 +1265,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		. = ..()
 		material_flags |= MATERIAL_CLOTH
 		setProperty("flammable", 5)
+		setProperty("electrical", 4)
 		setProperty("hard", 1)
 		setProperty("density", 1)
 
