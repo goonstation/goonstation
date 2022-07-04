@@ -85,9 +85,9 @@
 		if(genMat)
 			src.name = "[genMat.name]-doped [src.name]"
 			if(genMat)
-				var/conductivity = (2 * coreMat.getProperty("electical") + genMat.getProperty("electical") - 15) / 3 //if self-charging, use a weighted average of the conductivities
+				var/conductivity = (2 * coreMat.getProperty("electical") + genMat.getProperty("electical")) / 3 //if self-charging, use a weighted average of the conductivities
 				maxcharge = round((conductivity ** 2) * 300, 500)
-				genrate = (max(0, coreMat.getProperty("radioactive")) + max(0, coreMat.getProperty("n_radioactive")) * 2 + max(0, genMat.getProperty("radioactive")) * 2 + max(0, genMat.getProperty("n_radioactive")) * 4) / 3 //weight this too
+				genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
 
 /obj/item/cell/charged
 	charge = 7500
