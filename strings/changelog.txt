@@ -1,5 +1,9 @@
 
 (t)mon jul 04 22
+(u)ZWRh3
+(p)9354
+(e)⚖|balance
+(+)Werewolves are now immune to walking on shards similar to cows.
 (u)avimour
 (p)9356
 (e)🆕🎨|feature, sprites
