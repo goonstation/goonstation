@@ -1,6 +1,10 @@
 
 (t)mon jul 04 22
 (u)ZWRh3
+(p)9409
+(e)⚖|balance
+(+)Changeling regenerative statis now removes more negative status effects and bad genes.
+(u)ZWRh3
 (p)9354
 (e)⚖|balance
 (+)Werewolves are now immune to walking on shards similar to cows.
