@@ -599,7 +599,7 @@
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 				return
 			if(isabomination(H))
 				return
@@ -608,9 +608,12 @@
 				step_on(H)
 			else
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+
+				if (H.mutantrace?.can_walk_on_shards)
+					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7)) && !iscow(H))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()

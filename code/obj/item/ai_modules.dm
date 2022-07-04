@@ -438,7 +438,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 /obj/item/aiModule/ability_expansion/doctor_vision
 	name = "ProDoc Expansion Module"
 	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
-	lawText = "Security EXPANSION MODULE"
+	lawText = "Medical EXPANSION MODULE"
 	highlight_color = rgb(166, 0, 172, 255)
 	ai_abilities = list(/datum/targetable/ai/module/prodocs)
 

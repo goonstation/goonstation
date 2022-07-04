@@ -1002,6 +1002,9 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/plant/turmeric)
 					new/obj/item/reagent_containers/food/snacks/ingredient/currypowder(src.loc)
 					qdel( P )
+				if (/obj/item/plant/herb/tea)
+					new/obj/item/reagent_containers/food/snacks/condiment/matcha(src.loc)
+					qdel( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)
 			S.set_loc(get_turf(src))

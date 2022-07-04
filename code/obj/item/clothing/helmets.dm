@@ -667,7 +667,7 @@
 		color_r = initial(color_r) // darken
 		color_g = initial(color_g)
 		color_b = initial(color_b)
-		user.set_clothing_icon_dirty()
+		user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
@@ -681,7 +681,7 @@
 		color_r = 1 // no effect
 		color_g = 1
 		color_b = 1
-		user.set_clothing_icon_dirty()
+		user.update_clothing()
 
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)

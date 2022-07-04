@@ -1805,6 +1805,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\IconProcs.dm"
 #include "code\WorkInProgress\infernal_contracts.dm"
 #include "code\WorkInProgress\ISNStuff2.dm"
+#include "code\WorkInProgress\KatzStuff.dm"
 #include "code\WorkInProgress\KingInYellow.dm"
 #include "code\WorkInProgress\kyle-nonsense.dm"
 #include "code\WorkInProgress\laundry.dm"
