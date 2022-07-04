@@ -433,7 +433,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 			maxexplode -= 1
 			if(owner)
-				owner.setProperty("resonance", 10)
+				owner.setProperty("resonance", 1)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
