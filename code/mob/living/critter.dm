@@ -1357,6 +1357,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	New()
 		..()
 		src.reagents = null
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)

@@ -55,7 +55,7 @@
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
-
+	remove_lifeprocess(/datum/lifeprocess/radiation)
 	qdel(abilityHolder)
 	setMaterial(getMaterial("gnesis"))
 	src.material.setProperty("reflective", 45)
