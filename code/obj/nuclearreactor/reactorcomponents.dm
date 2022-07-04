@@ -202,8 +202,12 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			//heat transfer coefficient
 			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
+				//gas density << metal density, so energy to heat gas to T is much small than energy to heat metal to T
+				//basically, we just need a specific heat capactiy factor in here
+				//fortunately, atmos has macros for that - for everything else, let's just assume steel's heat capacity and density
+				var/gas_shc_factor = HEAT_CAPACITY(current_gas)/(420*7700/0.055) //shc * moles/(shc of steel * density of steel / molar mass of steel)
 				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
-				src.temperature += gas_thermal_cross_section*deltaT*hTC
+				src.temperature += gas_shc_factor*gas_thermal_cross_section*deltaT*hTC
 				if(src.current_gas.temperature < 0 || src.temperature < 0)
 					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas

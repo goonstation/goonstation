@@ -836,6 +836,11 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "qr" = (
@@ -1145,6 +1150,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "Kt" = (
@@ -1264,6 +1274,15 @@
 "Sh" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
+"Tf" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "Up" = (
@@ -46505,7 +46524,7 @@ KF
 ds
 AG
 oV
-Yq
+sx
 Dt
 li
 eW
@@ -46807,7 +46826,7 @@ Zo
 UF
 cr
 Cu
-Yq
+sx
 iJ
 UL
 IV
@@ -47109,7 +47128,7 @@ qF
 qF
 xD
 Yq
-Yq
+sx
 OL
 vT
 XZ
@@ -47411,7 +47430,7 @@ Yq
 Yq
 Lx
 lZ
-Yq
+sx
 hB
 oC
 nd
@@ -47713,7 +47732,7 @@ Yq
 CO
 Lx
 HW
-Yq
+sx
 jp
 Vf
 ux
@@ -48015,7 +48034,7 @@ Yq
 Yq
 Lx
 RE
-Yq
+sx
 NG
 xU
 Hh
@@ -48317,7 +48336,7 @@ IZ
 MS
 Lx
 QU
-Yq
+sx
 lq
 cI
 gm
@@ -48619,7 +48638,7 @@ Yq
 Ld
 Lx
 yk
-Yq
+sx
 IF
 Ds
 dx
@@ -48921,7 +48940,7 @@ Yq
 sO
 gD
 Xf
-Yq
+sx
 gM
 Yq
 rr
@@ -49223,7 +49242,7 @@ Yq
 zD
 gD
 VG
-Yq
+sx
 Je
 Yq
 Lc
@@ -49525,7 +49544,7 @@ Sh
 sj
 qr
 CO
-Yq
+sx
 CO
 Yq
 zQ
@@ -49827,7 +49846,7 @@ Sh
 sj
 qr
 Yq
-Yq
+sx
 Yq
 Yq
 MI
@@ -50129,7 +50148,7 @@ Yq
 sx
 jY
 mK
-qF
+Tf
 qF
 qF
 UR
