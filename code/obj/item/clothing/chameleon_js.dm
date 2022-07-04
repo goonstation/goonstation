@@ -1591,6 +1591,18 @@
 		icon_state = "satchel_genetics"
 		item_state = "satchel_genetics"
 
+	pathology
+		name = "pathology backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of pathologists."
+		icon_state = "bp_pathology"
+		item_state = "bp_pathology"
+
+	pathology
+		name = "pathology backpack"
+		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of pathologists."
+		icon_state = "satchel_pathology"
+		item_state = "satchel_pathology"
+
 	medic
 		name = "medic's backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."

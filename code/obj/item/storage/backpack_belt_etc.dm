@@ -109,6 +109,13 @@
 	item_state = "bp_genetics"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
+/obj/item/storage/backpack/pathology
+	name = "pathology backpack"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of pathologists."
+	icon_state = "bp_pathology"
+	item_state = "bp_pathology"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
 /obj/item/storage/backpack/engineering
 	name = "engineering backpack"
 	desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
@@ -286,6 +293,13 @@
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists."
 	icon_state = "satchel_robotics"
 	item_state = "satchel_robotics"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
+
+/obj/item/storage/backpack/satchel/pathology
+	name = "pathology satchel"
+	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of pathologists."
+	icon_state = "satchel_pathology"
+	item_state = "satchel_pathology"
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 /obj/item/storage/backpack/satchel/genetics

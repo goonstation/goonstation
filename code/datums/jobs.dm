@@ -602,10 +602,11 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 0
 	#endif
 	wages = PAY_DOCTORATE
-	slot_belt = list(/obj/item/device/pda2/genetics)
+	slot_belt = list(/obj/item/device/pda2/pathology)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
+	slot_back = list(/obj/item/storage/backpack/pathology)
 	#ifdef SCIENCE_PATHO_MAP
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	#else

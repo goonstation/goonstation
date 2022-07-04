@@ -173,6 +173,15 @@
 	/obj/item/device/pda2/medical/robotics,\
 	/obj/item/clothing/gloves/latex)
 
+/obj/item/storage/box/clothing/pathologist
+	name = "\improper Pathologist's equipment"
+	spawn_contents = list(/obj/item/clothing/under/rank/pathologist,\
+	/obj/item/clothing/shoes/white,\
+	/obj/item/clothing/suit/labcoat/pathology,\
+	/obj/item/device/radio/headset/medical,\
+	/obj/item/device/pda2/pathology,\
+	/obj/item/clothing/gloves/latex)
+
 // Research Equipment
 
 /obj/item/storage/box/clothing/research
