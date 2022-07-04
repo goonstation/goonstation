@@ -60,7 +60,7 @@
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
 /obj/item/clothing/glasses/meson
-	name = "Meson Goggles"
+	name = "meson goggles"
 	icon_state = "meson"
 	var/base_state = "meson"
 	item_state = "glasses"
@@ -82,8 +82,8 @@
 	proc/toggle(var/mob/toggler)
 		src.on = !src.on
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
-		toggler.set_clothing_icon_dirty()
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
+		toggler.update_clothing()
 		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler

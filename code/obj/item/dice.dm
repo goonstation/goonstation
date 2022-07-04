@@ -1,5 +1,4 @@
 #define MAX_DICE_GROUP 6
-#define ROLL_WAIT_TIME 30
 var/list/rollList = list()
 
 /obj/item/dice
@@ -13,7 +12,6 @@ var/list/rollList = list()
 	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
-	var/last_roll_time = null
 	var/can_have_pals = 1
 	var/list/obj/item/dice/dicePals = list() // for combined dice rolls, up to 9 in a stack
 	var/sound_roll = 'sound/items/dicedrop.ogg'
@@ -54,7 +52,7 @@ var/list/rollList = list()
 		return 1
 
 	proc/roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
@@ -430,7 +428,7 @@ var/list/rollList = list()
 		return 1
 
 	roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
