@@ -79,8 +79,10 @@
 
 
 /datum/aiTask/timed/targeted/sawfly_attack/get_targets()
-	. = list() // don't ask why the list is simply a period
+	. = list()
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
+	var/targetcount = 0
+	var/maxtargets = 8
 
 	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
@@ -96,10 +98,11 @@
 			. = list(C) //go get em, tiger
 			return
 		. += C //you passed all the checks it, now you get added to the list for consideration
-		return
 
-
-
+		targetcount++
+		if(targetcount >= maxtargets) //prevents them from getting too hung up on finding folks
+			break
+			return
 //chase behaviour - pick someone, run up to them, and stab em
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab
 	name = "chasing"
@@ -117,12 +120,24 @@
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/on_tick()
 
+/*	if(!has_started && !failed() && !succeeded())
+		if(holder.target)
+			var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
+			owncritter.set_dir(get_dir(owncritter, holder.target))
+			owncritter.hand_attack(holder.target, dummy_params)
+			has_started = TRUE
+		else
+			holder.interrupt() //somehow lost target, go do something else
+			return*/
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	..()
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/get_targets()
-	. = list() // don't ask why the list is simply a period
+	. = list()
+	var/targetcount = 0
+	var/maxtargets = 8
+
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	for (var/mob/living/C in viewers(max_dist, owncritter))
 		if (C.health < -50 || !isalive(C)) continue
@@ -133,13 +148,22 @@
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += C
 				continue
-		. += C //you passed all the checks it, now you get added to the list for consideration
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
 			return
-	. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded
 
+		if(get_dist(C, owncritter) <2) //go after those standing right next to you. <2 is slightly
+			. = list(C)
+			return
 
+		. += C //you passed all the checks it, now you get added to the list for consideration
+
+		targetcount++
+		if(targetcount >= maxtargets) //prevents them from getting too hung up on finding folks
+			break
+	//. = get_path_to(holder.owner, ., max_dist*2, 1) //calculate paths to the target, any unreachable targets will be discarded
+
+/*
 /datum/aiTask/succeedable/sawfly_stab
 	name = "stab subtask"
 	var/found_path = null
@@ -174,3 +198,6 @@
 	has_started = FALSE
 	src.found_path = null
 	..()
+*/
+//give it something to not skip at end of file
+/datum/aiTask/succeedable/sawfly_stab

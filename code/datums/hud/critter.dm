@@ -375,30 +375,30 @@
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
-	if(src.master.can_bleed)
-		if (!src.bleeding || isdead(src.master))
-			src.bleeding.icon_state = "blood0"
-			src.bleeding.tooltipTheme = "healthDam healthDam0"
-			return
+	if (!src.bleeding || src.master.can_bleed) return //doesn't have a hud element to update
+	if (isdead(src.master))
+		src.bleeding.icon_state = "blood0"
+		src.bleeding.tooltipTheme = "healthDam healthDam0"
+		return
 
-		var/state = 0
-		var/theme = 0
-		switch (src.master.bleeding)
-			if (-INFINITY to 0)
-				state = 0 // blank
-				theme = 0
-			if (1 to 2)
-				state = 1
-				theme = 3
-			if (3 to 4)
-				state = 2
-				theme = 4
-			if (5 to INFINITY)
-				state = 3
-				theme = 6
+	var/state = 0
+	var/theme = 0
+	switch (src.master.bleeding)
+		if (-INFINITY to 0)
+			state = 0 // blank
+			theme = 0
+		if (1 to 2)
+			state = 1
+			theme = 3
+		if (3 to 4)
+			state = 2
+			theme = 4
+		if (5 to INFINITY)
+			state = 3
+			theme = 6
 
-		src.bleeding.icon_state = "blood[state]"
-		src.bleeding.tooltipTheme = "healthDam healthDam[theme]"
+	src.bleeding.icon_state = "blood[state]"
+	src.bleeding.tooltipTheme = "healthDam healthDam[theme]"
 
 /// updates temperature hud element
 /datum/hud/critter/proc/update_temp_indicator()
