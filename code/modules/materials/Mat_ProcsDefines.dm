@@ -25,22 +25,25 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return material_cache[mat]
 	return null
 
-/proc/mergeProperties(var/list/l1, var/list/l2, var/bias=0.5)
-	var/oBias = 1 - bias
+/proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
+	var/leftBias = 1 - rightBias
 
 	var/list/merged = list()
 
-	for(var/o in l1)
+	for(var/o in leftProps)
 		//merged.Add(o)
-		merged[o] = l1[o]
+		merged[o] = leftProps[o] * leftBias
 
-	if(l2)
-		for(var/x in l2)
+	if(rightProps)
+		for(var/x in rightProps)
 			if(x in merged)
-				merged[x] = round(merged[x] * oBias + l2[x] * bias)
+				merged[x] += rightProps[x] * rightBias
 			else
 				merged.Add(x)
-				merged[x] = l2[x]
+				merged[x] = rightProps[x] * rightBias
+
+	for(var/x in merged)
+		merged[x] = round(merged[x])
 
 	return merged
 
@@ -51,7 +54,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return M
 	else
 		var/datum/material/M = new base.type ()
-		M.properties = mergeProperties(base.properties)
+		M.properties = mergeProperties(base.properties, rightBias = 0)
 		for(var/X in base.vars)
 			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
