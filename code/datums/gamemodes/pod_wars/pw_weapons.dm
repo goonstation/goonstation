@@ -5,6 +5,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
+	can_dual_wield = FALSE
 	w_class = 3.0
 	force = 8.0
 	mats = 0
