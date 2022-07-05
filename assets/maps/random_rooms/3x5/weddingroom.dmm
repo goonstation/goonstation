@@ -1,0 +1,107 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/dmm_suite/clear_area)
+"b" = (
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/item/clothing/suit/tuxedo_jacket,
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/machinery/light/small/floor,
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/dmm_suite/clear_area)
+"H" = (
+/turf/simulated/floor/carpet/red/fancy,
+/area/dmm_suite/clear_area)
+"I" = (
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/table/wood/auto/desk,
+/obj/item/device/light/candle/small{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/machinery/light/small/floor/warm,
+/obj/item/storage/bible{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/clothing/gloves/ring/gold{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/clothing/gloves/ring{
+	pixel_y = -3;
+	pixel_x = -4
+	},
+/turf/simulated/floor/carpet/red/fancy,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/machinery/light/small/floor,
+/obj/stool/chair/pew/fancy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/item/clothing/suit/tuxedo_jacket,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+P
+c
+K
+D
+r
+"}
+(2,1,1) = {"
+I
+J
+H
+H
+b
+"}
+(3,1,1) = {"
+x
+X
+u
+e
+a
+"}

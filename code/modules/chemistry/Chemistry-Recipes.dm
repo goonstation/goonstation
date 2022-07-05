@@ -1799,6 +1799,15 @@ datum
 			mix_phrase = "The orange juice turns an unsettlingly vibrant shade of green."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		matchatea
+			name = "Matcha Tea"
+			id = "matchatea"
+			result = "matchatea"
+			required_reagents = list("matcha"=1, "water"= 1)
+			result_amount = 2
+			mix_phrase = "The matcha dissolves into the water, turning a darker green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		tealquila
 			name = "Tealquila Sunrise"
 			id = "tealquila"

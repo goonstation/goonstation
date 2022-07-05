@@ -177,7 +177,7 @@
 
 		if (src.material)
 			var/fail = 0
-			if (src.material.hasProperty("stability") && src.material.getProperty("stability") < 15)
+			if (src.material.getProperty("stability") <= 2)
 				fail = 1
 			if (src.material.quality < 0) if(prob(abs(src.material.quality)))
 				fail = 1
@@ -187,7 +187,7 @@
 				del(src)
 				return
 
-		src.take_hit(W)
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
