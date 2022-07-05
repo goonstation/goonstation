@@ -90,9 +90,9 @@
 		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
 		if(C.mind?.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
-				if (!(C in owncritter.friends))
+				if (!(C.weakref in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
-					owncritter.friends += C
+					owncritter.friends += get_weakref(C)
 				continue
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
