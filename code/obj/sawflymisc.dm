@@ -115,7 +115,7 @@
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
 
-			if(S.issawfly = TRUE)
+			if(S.issawfly == TRUE)
 				if((istype(S, /obj/item/old_grenade/sawflyreused)) || (istype(S, /obj/item/old_grenade/sawfly)))
 					S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
 					S.icon_state = "sawfly1"
