@@ -381,7 +381,7 @@
 	name = "Resonance"
 	id = "resonance"
 	min_value = 1
-	max_value = 100
+	max_value = 1000 // please don't try to hit this I'm begging you
 	default_value = 1
 
 	prefix_high_min = 25

@@ -370,16 +370,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner)
 		owner.material.triggerTemp(locate(owner))
 
+#define HIGH 4
+#define MID 2
+#define AGENT_B_RELEASED 0.10
+#define BASE_SCALE 1
 /datum/materialProc/molitz_temp
-	var/unresonant = 1
-	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
 	execute(var/atom/location, var/temp, var/agent_b=FALSE)
 		var/turf/target = get_turf(location)
-		if(owner.hasProperty("resonance"))
-			if(unresonant == 1)
-				iterations = max(iterations, 2)
-				unresonant -= 1
-		if(iterations <= 0) return
 		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
@@ -389,7 +386,33 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		payload.temperature = T20C
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
-		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY && owner && owner.hasProperty("resonance") && \
+			owner.getProperty("resonance") > owner.getProperty("resonance", VALUE_MIN))
+			// TECHNICALLY this permits agent B production potentially greater than what resonance would allow, but
+			// the amount of agent B produced in any one trigger is not so great, so for simplicity's sake I'm keeping it
+
+			// softness increases the gas released and increases the resonance lost
+			// the HARDER the crystal is, the better it can keep its form, preserving resonance
+			var/hardness = owner.hasProperty("hardness") ? owner.getProperty("hardness") / owner.getProperty("hardness", VALUE_MAX) : 0
+
+			// radioactivity slightly increases the amount of gas released but increases the resonance lost
+			// a decaying crystal has trouble keeping resonance
+			var/radioactive = owner.hasProperty("radioactive") ? owner.getProperty("radioactive") / owner.getProperty("radioactive", VALUE_MAX) : 0
+
+			// you vs the guy she tells you not to worry about
+			var/n_radioactive = owner.hasProperty("n_radioactive") ? owner.getProperty("n_radioactive") / owner.getProperty("n_radioactive", VALUE_MAX) : 0
+
+			// higher temperatures energize the crystal's atoms
+			var/t = 1 + max(1, (air.temperature - PLASMA_MINIMUM_BURN_TEMPERATURE) / (PLASMA_UPPER_TEMPERATURE - PLASMA_MINIMUM_BURN_TEMPERATURE))
+
+			// scales amount of agent b released
+			// max 15
+			var/g = BASE_SCALE + (t * (HIGH * (1 - hardness)) + (radioactive) + (MID * n_radioactive))
+
+			// scales amount of resonance lost
+			// max 17
+			var/loss = BASE_SCALE + (t * (MID * (1 - hardness)) + (MID * radioactive) + (HIGH * n_radioactive))
+
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
@@ -398,37 +421,79 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
-			trace_gas.moles += 0.18
-			iterations -= 1
-			payload.oxygen = 20
+
+			trace_gas.moles += AGENT_B_RELEASED * g
+			owner.adjustProperty("resonance", -loss)
+			payload.oxygen = 20 * loss
 
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
 			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
 			payload.oxygen = 80
-			iterations -= 1
 
 			target.assume_air(payload)
+#undef HIGH
+#undef MID
+#undef AGENT_B_RELEASED
+#undef BASE_SCALE
 
 /datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
 		..(location, temp, TRUE)
 		return
 
+#define MAX_SCALE 4
+#define BASE_RESONANCE 3
 /datum/materialProc/molitz_exp
-	var/maxexplode = 1
+	var/datum/material_property/density/DENSITY = new /datum/material_property/density/
 	execute(var/atom/location, var/sev)
-		if(maxexplode <= 0) return
-		var/turf/target = get_turf(location)
-		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
+		if(owner)
+			if (!owner.hasProperty("resonance"))
+				owner.setProperty("resonance", 0)
+
+			// the DENSER the crystal is, the more resonance it can store
+			var/density = owner.hasProperty("density") ? owner.getProperty("density") / owner.getProperty("density", VALUE_MAX) : 0
+
+			// "central value" -- this ROUGHLY corresponds to maximum desired severity
+			var/c = density * MAX_SCALE
+
+			// harmonic component.
+			// hitting the peaks maximizes resonance gain.
+			// h = -cos(c pi |sev - c|) if cos is in radians.
+			var/h = -cos(c * abs(sev - c) * 180)
+
+			// decay component.
+			// the further the severity is from the central value, the less resonance we get.
+			// d = e^(-|sev - c|)
+			var/d = eulers ** (-abs(sev - c))
+
+			// property is guaranteed to exist
+			var/resonance = owner.getProperty("resonance")
+
+			// saturation component. After a certain point, the more resonance is in the crystal, the less resonance you get.
+			// s = (1 + max(0, R / 25 - c))^(-1)
+			var/s = 1/(1 + max(0, (MAX_SCALE * resonance / DENSITY.max_value) - c))
+
+			// resonance multiplier, the amount of resonance gained is multiplied by this.
+			// max achievable ~ 22. Doing that will instantly put resonance above the saturation threshold.
+			// it's actually desirable not to do this right away, and instead get as close as possible to the threshold
+			// before pumping it.
+			// r = e^(c h d s)
+			var/r = eulers ** (c * h * d * s)
+
+			owner.adjustProperty("resonance", BASE_RESONANCE * MAX_SCALE * r) // 12 * r(x)
+
+			var/turf/target = get_turf(location)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.oxygen = 50
+			payload.oxygen = 50 * r
 			payload.temperature = T20C
 			target.assume_air(payload)
-			maxexplode -= 1
-			if(owner)
-				owner.setProperty("resonance", 10)
+
+			if (resonance == owner.getProperty("resonance", VALUE_MAX))
+				playsound(location, 'sound/voice/creepyshriek.ogg', 80, 1) // congrats. are you proud of yourself?
+#undef MAX_SCALE
+#undef BASE_RESONANCE
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
