@@ -417,7 +417,6 @@
 		else if (ispryingtool(W) && state <= 1)
 			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
 			if(!anchored)
-				user.show_text("You rotate the window.", "blue")
 				src.turn_window()
 			else
 				if (deconstruct_time)
