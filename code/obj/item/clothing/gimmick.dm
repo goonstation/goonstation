@@ -1811,3 +1811,16 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+
+// marching band stuff
+/obj/item/clothing/under/gimmick/marchingband
+	name = "Marching Band Outfit"
+	desc = "Band, ten-hut! For-ward harch!" // this isn't a typo, honest -disturbherb
+	icon_state = "marchingband"
+	item_state = "marchingband"
+
+/obj/item/clothing/head/shako
+	name = "Marching Band Shako"
+	desc = "It's hard to resist playing with the plume on this thing."
+	icon_state = "shako"
+	item_state = "shako"
