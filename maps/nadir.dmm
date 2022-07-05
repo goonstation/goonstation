@@ -1238,6 +1238,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "aDn" = (
@@ -8398,6 +8399,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "ezI" = (
@@ -12134,6 +12136,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "gvL" = (
@@ -28112,6 +28115,7 @@
 	pixel_x = 9;
 	pixel_y = 5
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "oty" = (
@@ -30109,6 +30113,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "pzn" = (
@@ -30899,6 +30904,7 @@
 	pixel_x = -9;
 	pixel_y = 15
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/courtroom)
 "pUS" = (
