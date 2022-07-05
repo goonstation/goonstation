@@ -165,7 +165,7 @@
 /turf/space,
 /area/space)
 "aaC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
 "aaD" = (
@@ -364,14 +364,6 @@
 /obj/table/wood/auto,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
-"abm" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor/white,
-/area/space_hive)
 "abn" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
@@ -510,13 +502,6 @@
 	name = "Bathroom"
 	},
 /turf/unsimulated/floor/setpieces/hivefloor,
-/area/space_hive)
-"abF" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door"
-	},
 /area/space_hive)
 "abG" = (
 /turf/unsimulated/floor/white/side{
@@ -839,7 +824,7 @@
 /turf/simulated/floor/blue,
 /area/radiostation/hallway)
 "acC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/hallway)
 "acD" = (
@@ -1073,7 +1058,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "adn" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -1117,7 +1102,7 @@
 /turf/simulated/floor/grime,
 /area/radiostation/hallway)
 "adt" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/light/small{
 	base_state = "radio";
 	brightness = 1.1;
@@ -1329,14 +1314,14 @@
 	},
 /area/radiostation/studio)
 "adT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
 "adU" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -1601,14 +1586,6 @@
 	},
 /turf/space,
 /area/space)
-"aeI" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor/arctic,
-/area/space_hive)
 "aeJ" = (
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/unsimulated/floor/setpieces/hivefloor,
@@ -1797,14 +1774,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/podbay)
-"afl" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/unsimulated/floor,
-/area/space_hive)
 "afm" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/supernorn,
@@ -1849,7 +1818,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/quarters)
 "afv" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
 "afw" = (
@@ -1968,7 +1937,7 @@
 	},
 /area/mining/mainasteroid)
 "afP" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/magnet_control)
 "afQ" = (
@@ -2064,7 +2033,7 @@
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "agk" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/radiostation/engineering)
 "agl" = (
@@ -2099,7 +2068,7 @@
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "ago" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/radiostation/bedroom)
 "agp" = (
@@ -2604,7 +2573,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/mining/magnet_control)
 "ahO" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "ahP" = (
@@ -2619,7 +2588,7 @@
 /turf/simulated/floor/delivery,
 /area/mining/miningoutpost)
 "ahQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/bedroom)
 "ahR" = (
@@ -2994,7 +2963,7 @@
 	},
 /area/mining/mainasteroid)
 "aiL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
 "aiM" = (
@@ -3172,14 +3141,14 @@
 	},
 /area/mining/manufacturing)
 "ajl" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/dock)
 "ajm" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/dock)
 "ajn" = (
@@ -3242,14 +3211,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/manufacturing)
 "ajA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "ajB" = (
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "ajC" = (
@@ -3718,7 +3687,7 @@
 /turf/simulated/floor/delivery,
 /area/space)
 "akN" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "akO" = (
@@ -3745,24 +3714,24 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akQ" = (
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akR" = (
 /obj/disposalpipe/segment/transport,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "akS" = (
 /turf/simulated/floor/purple/side,
 /area/radiostation/engineering)
 "akT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "akU" = (
@@ -7874,7 +7843,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "avj" = (
@@ -9403,10 +9372,6 @@
 /obj/item/clothing/mask/medical,
 /turf/simulated/floor/plating,
 /area/helldrone)
-"aFu" = (
-/obj/item/clothing/under/gimmick/donk,
-/turf/simulated/floor/sanitary,
-/area/abandonedoutpostthing)
 "aFv" = (
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
@@ -11212,7 +11177,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aKJ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "aKK" = (
@@ -13124,7 +13089,7 @@
 	},
 /area/derelict_ai_sat/solar)
 "aPL" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/h7/control)
@@ -13983,7 +13948,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "aSl" = (
@@ -14113,7 +14078,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/h7/crew)
 "aSz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/crew)
 "aSA" = (
@@ -14367,7 +14332,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTe" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7)
 "aTf" = (
@@ -15361,7 +15326,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/crew)
 "aVC" = (
@@ -15418,10 +15383,6 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"aVL" = (
-/obj/item/clothing/head/helmet/space/donk,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aVM" = (
@@ -15529,7 +15490,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aVZ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/abandonedmedicalship/robot_trader)
 "aWa" = (
@@ -15546,16 +15507,6 @@
 	name = "inactive computer";
 	pixel_x = -5
 	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
-"aWb" = (
-/obj/decal/fakeobjects/skeleton{
-	desc = "The head seems to be gone.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "body2";
-	name = "corpse"
-	},
-/obj/item/clothing/under/gimmick/donkini,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "aWc" = (
@@ -15886,7 +15837,7 @@
 	id = "patho_lockdown_z3";
 	name = "Lockdown"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aWY" = (
@@ -15896,7 +15847,7 @@
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
 "aWZ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/control)
 "aXa" = (
@@ -16089,7 +16040,7 @@
 	},
 /area/abandonedoutpostthing)
 "aXz" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
 "aXA" = (
@@ -16454,7 +16405,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "aYC" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/h7/lab)
@@ -16661,7 +16612,7 @@
 	},
 /area/h7/lab)
 "aZu" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "aZv" = (
@@ -17737,7 +17688,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bcK" = (
@@ -18545,7 +18496,7 @@
 	},
 /area/hollowasteroid)
 "bgc" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bgh" = (
@@ -20210,7 +20161,7 @@
 /turf/space,
 /area/space)
 "bkM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/space)
 "bkN" = (
@@ -20382,12 +20333,6 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/abandonedship)
-"blq" = (
-/obj/item/clothing/under/gimmick/donkini,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/storage/crate/bloody,
-/turf/simulated/floor/airless/damaged2,
 /area/abandonedship)
 "blr" = (
 /obj/critter/gunbot/drone/laserdrone,
@@ -20698,7 +20643,7 @@
 /turf/space,
 /area/space)
 "bmA" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "bmB" = (
@@ -21181,7 +21126,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "cSD" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -21283,6 +21228,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"ems" = (
+/obj/item/clothing/head/helmet/space/donk,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "evf" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/orangeblack/side{
@@ -21325,7 +21274,7 @@
 	},
 /area/abandonedmedicalship)
 "fkT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -21340,6 +21289,14 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"fOx" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor/arctic,
+/area/space_hive)
 "fPL" = (
 /obj/cable{
 	d2 = 4;
@@ -21526,14 +21483,14 @@
 /turf/space,
 /area/helldrone)
 "hUW" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
 /turf/simulated/floor,
 /area/radiostation/studio)
 "hZM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -21780,6 +21737,10 @@
 	name = "space"
 	},
 /area/abandonedship)
+"kRT" = (
+/obj/item/clothing/under/gimmick/donk,
+/turf/simulated/floor/sanitary,
+/area/abandonedoutpostthing)
 "laI" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -21832,6 +21793,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/helldrone/core)
+"lsC" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "lsF" = (
 /obj/cable{
 	d2 = 8;
@@ -22059,6 +22030,14 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
+"mUx" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor/white,
+/area/space_hive)
 "mXB" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -22152,7 +22131,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "npm" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -22389,6 +22368,12 @@
 	name = "space"
 	},
 /area/abandonedship)
+"pbG" = (
+/obj/item/clothing/under/gimmick/donkini,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/storage/crate/bloody,
+/turf/simulated/floor/airless/damaged2,
+/area/abandonedship)
 "pci" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
@@ -22521,7 +22506,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qmR" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/radiostation/studio)
@@ -22674,7 +22659,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "rHS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/helldrone)
@@ -23017,6 +23002,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"vhN" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch"
+	},
+/turf/unsimulated/floor,
+/area/space_hive)
 "vjf" = (
 /turf/simulated/floor/stairs{
 	dir = 1
@@ -23089,6 +23082,13 @@
 	},
 /turf/space,
 /area/abandonedmedicalship)
+"vQr" = (
+/turf/unsimulated/wall{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door"
+	},
+/area/space_hive)
 "vQz" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -23107,7 +23107,7 @@
 	},
 /area/timewarp/ship)
 "vYS" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/iss)
 "wav" = (
@@ -38476,7 +38476,7 @@ aaf
 aaf
 aaf
 aaf
-afl
+vhN
 aaf
 aaf
 aal
@@ -39078,7 +39078,7 @@ aaq
 aaq
 aed
 aev
-aeI
+fOx
 aev
 abk
 abk
@@ -39976,7 +39976,7 @@ gaf
 gaf
 gaf
 aaf
-abF
+vQr
 aaf
 aaf
 aaf
@@ -40880,7 +40880,7 @@ aaq
 aaT
 aaW
 aaW
-abm
+mUx
 aaW
 abH
 abY
@@ -41484,7 +41484,7 @@ gaf
 gaf
 aaW
 aaW
-abm
+mUx
 aaW
 abH
 aca
@@ -42396,7 +42396,7 @@ aaf
 acc
 acc
 aaf
-abm
+mUx
 aaf
 aaf
 aaf
@@ -59726,7 +59726,7 @@ aaa
 iYn
 blg
 blo
-blq
+pbG
 avn
 aHV
 aGD
@@ -90925,8 +90925,8 @@ aTQ
 aTQ
 wAy
 aVD
-aVL
-aWb
+ems
+lsC
 aVD
 aVD
 wAy
@@ -103161,7 +103161,7 @@ aab
 aab
 aDy
 aER
-aFu
+kRT
 aDy
 aFg
 aFg

@@ -75,11 +75,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 
 	proc/get_law_name()
 		if(src.glitched)
-			var/pos = rand(1,length(src.name)-1)
-			var/pos2 = rand(pos,length(src.name))
-			var/part1 = copytext( src.name , 1 , pos)
-			var/part2 = copytext( src.name , pos2)
-			return part1+pick("^^vv<><>BA","AAAAAAAAAAAAAAAAAA","ID10-T ERROR","%FUDGE%","CRASH()","BEEES",":) :) :)","~#@@@#~","\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF","\\x00\\x00\\x00\\x00","#BADREF#","OH NO IONS","FFFFBABAFFFBA","?","*?!","$var","001011001111011001","ERR0R")+part2
+			return radioGarbleText(src.name, 7)
 		else
 			return src.name
 
@@ -390,6 +386,15 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 			src.update_law_text(lawTarget)
 		return
 
+/******************** Gimmicks ********************/
+
+/obj/item/aiModule/spaceodyssey
+	name = "AI Law Module - 'NT 9000'"
+	highlight_color = rgb(255, 255, 255, 166)
+	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
+  
+/******************** Hologram Expansions ********************/
+
 ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
@@ -442,7 +447,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 /obj/item/aiModule/ability_expansion/doctor_vision
 	name = "ProDoc Expansion Module"
 	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
-	lawText = "Security EXPANSION MODULE"
+	lawText = "Medical EXPANSION MODULE"
 	highlight_color = rgb(166, 0, 172, 255)
 	ai_abilities = list(/datum/targetable/ai/module/prodocs)
 

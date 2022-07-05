@@ -963,6 +963,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	audio = "sound/radio_station/adverts/owl.ogg"
 	name_of_thing = "Owls"
 
+/obj/item/radio_tape/adventure
+	audio_type = "???"
+	name = "compact tape - 'Unlabeled'"
+	audio = "sound/ambience/spooky/Somewhere_Tone.ogg"
+	name_of_thing = "found tape"
+	interesting = "The tape seems pretty corrupted."
+
+
 // Drawer
 /*/obj/table/wood/auto/desk/radio
 	var/list/stuff = list()

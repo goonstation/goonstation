@@ -291,7 +291,7 @@
 /obj/item/clothing/under/gimmick/donkini
 	name = "\improper Donkini"
 	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "donk"
+	icon_state = "donkini"
 	item_state = "donkini"
 
 // Duke Nukem

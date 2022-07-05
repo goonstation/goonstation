@@ -1637,6 +1637,12 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
 That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
 
+/obj/item/paper/artists_anger // for starved artist random maint room
+	name = "stained note"
+	desc = "This paper is stained yellow from old age."
+	icon_state = "paper_caution"
+	info = {"God damnit, why is drawing a simple rubber duck so fucking hard?!"}
+
 /obj/item/paper/synd_lab_note
 	name = "scribbled note"
 	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>

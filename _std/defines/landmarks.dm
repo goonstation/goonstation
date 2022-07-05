@@ -16,6 +16,7 @@
 #define LANDMARK_BOXING_RING "boxing ring"
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
+#define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
 
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
@@ -82,6 +83,7 @@
 #define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
+#define LANDMARK_SUMMON "summon"
 
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"
