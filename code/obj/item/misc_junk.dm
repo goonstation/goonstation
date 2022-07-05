@@ -29,15 +29,6 @@
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
-	var/clarity = 20 //probably somewhere between 0-100 ish
-	var/focal_strength = 20 //1-100 ish
-
-	onMaterialChanged()
-		..()
-		if (istype(src.material))
-			clarity = 80 + initial(clarity) - ((src.material.alpha / 255) * 100)
-			if(material.hasProperty("reflective")) focal_strength = 80 + initial(focal_strength) - (material.hasProperty("reflective") ? material.getProperty("reflective") : 15)
-		return
 
 /obj/item/coil
 	desc = "A coil. Not really useful without additional components."
