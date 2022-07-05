@@ -26,8 +26,6 @@
 	walk(holder.owner, 0)
 
 // Custom behaviour starts here
-
-
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab
 	name = "chasing"
 	weight = 15
@@ -39,13 +37,11 @@
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/New(parentHolder, transTask)
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/sawfly_stab, list(holder)))
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
 
 /datum/aiTask/sequence/goalbased/sawfly_chase_n_stab/on_tick()
-
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	if(prob(5)) owncritter.communalbeep()
 	holder.stop_move()
@@ -79,7 +75,6 @@
 			owncritter.set_dir(get_dir(owncritter, holder.target))
 			owncritter.hand_attack(holder.target, dummy_params)
 
-
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	..()
@@ -102,11 +97,9 @@
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
 			return
-
 		if(get_dist(C, owncritter) <2) //go after those standing right next to you. <2 is slightly
 			. = list(C)
 			return
-
 		. += C //you passed all the checks it, now you get added to the list for consideration
 
 		targetcount++
