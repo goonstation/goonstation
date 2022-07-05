@@ -613,7 +613,7 @@
 					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
