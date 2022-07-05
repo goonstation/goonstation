@@ -387,16 +387,26 @@
 			else if (state >= 1)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 				if (deconstruct_time)
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, deconstruct_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
 					state = 3 - state
 					user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 				if (deconstruct_time)
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, deconstruct_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
 					src.anchored = !(src.anchored)
 					src.stops_space_move = !(src.stops_space_move)
@@ -411,8 +421,13 @@
 				src.turn_window()
 			else
 				if (deconstruct_time)
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, deconstruct_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
 					state = 1 - state
 					user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
