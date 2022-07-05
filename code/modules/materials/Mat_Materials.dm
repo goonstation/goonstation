@@ -301,8 +301,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 	desc = "Terrestrial steel from Earth."
 	New()
 		..()
-		setProperty("density", 3)
-		setProperty("hard", 2)
+		setProperty("density", 4)
+		setProperty("hard", 3)
 
 /datum/material/metal/copper
 	mat_id = "copper"
