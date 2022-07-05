@@ -747,9 +747,9 @@ var/f_color_selector_handler/F_Color_Selector
 	if(ticker?.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
 		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b><br>"
 	else if (current_state == GAME_STATE_FINISHED)
-		statsus += "Time: RESTARTING<br>"
+		statsus += "Time: <b>RESTARTING</b><br>"
 	else if(!ticker)
-		statsus += "Time: STARTING<br>"
+		statsus += "Time: <b>STARTING</b><br>"
 
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
