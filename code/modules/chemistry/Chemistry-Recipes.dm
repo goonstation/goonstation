@@ -1409,6 +1409,11 @@ datum
 			mix_phrase = "The coffee and tequila mix together. Liqueur? Who needs it?"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_bull/bravebull2
+			id = "bull2"
+			required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
+			result_amount = 2
+
 		cocktail_longisland_rcola
 			name = "Long Island Iced Tea"
 			id = "longisland_rcola"
