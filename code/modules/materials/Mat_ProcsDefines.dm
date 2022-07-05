@@ -50,7 +50,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Returns a copy of a given material.
 /proc/copyMaterial(var/datum/material/base)
 	if(!base || !istype(base, /datum/material))
-		var/datum/material/M = new/datum/material()
+		var/datum/material/M = new/datum/material/interpolated()
 		return M
 	else
 		var/datum/material/M = new base.type ()
@@ -275,7 +275,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /proc/getInterpolatedMaterial(var/datum/material/mat1,var/datum/material/mat2,var/t)
 	var/ot = 1 - t
-	var/datum/material/newMat = new()
+	var/datum/material/interpolated/newMat = new()
 
 	newMat.quality = round(mat1.quality * ot + mat2.quality * t)
 

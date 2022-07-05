@@ -244,6 +244,12 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 
+/datum/material/interpolated
+	mat_id = "imcoderium"
+	name = "imcoderium"
+	desc = "You should not be seeing this"
+	color = "#6f00ff"
+
 // Metals
 
 /// Base metal material parent
