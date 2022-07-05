@@ -434,7 +434,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampire
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
-	var/not_when_in_an_object = 1 // 0: Anywhere | 1: Only on turfs | 2: Anywhere but the port a brig
+	var/not_when_in_an_object = 1
 	var/unlock_message = null
 
 	New()
@@ -506,10 +506,7 @@
 
 		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
 			return 1
-		if (src.not_when_in_an_object == 1 && !isturf(M.loc))
-			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
-			return 0
-		if (src.not_when_in_an_object == 2 && istype(M.loc,/obj/machinery/port_a_brig))
+		if (src.not_when_in_an_object && !isturf(M.loc))
 			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
 			return 0
 		if (!(iscarbon(M) || ismobcritter(M)))
