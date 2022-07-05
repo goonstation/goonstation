@@ -1342,7 +1342,10 @@ datum
 						M.change_eye_blurry(3, 3)
 						M.change_misstep_chance(20 * mult)
 						if(probmult(12))
-							M.setStatus("drowsy", 10 SECONDS)
+							if(!M.hasStatus("drowsy"))
+								M.setStatus("drowsy", 10 SECONDS)
+							else                                   //replenishing your drowsiness would be a bit much
+								M.setStatus("staggered", 4 SECONDS)
 							boutput(M, pick("<span class='alert'>You feel extremely dizzy!</span>",\
 											"<span class='alert'>You feel like everything is spinning!</span>",\
 											"<span class='alert'>Your [pick("arms", "legs")] quiver!</span>",\
@@ -1352,6 +1355,8 @@ datum
 						else if(probmult(12))
 							M.setStatus("muted", 10 SECONDS)
 							boutput(M, pick("<span class='alert'>You feel like the words are getting caught up in your mouth!</span>",\
+											"<span class='alert'>You can't utter a single word!</span>",\
+											"<span class='alert'>Your [pick("face","chest")] feels numb...</span>",\
 											"<span class='alert'>You can't feel your [pick("mouth","tongue","throat")]!</span>"))
 							if(prob(20)) //no need for probmult in here as it's already behind a probmult statement
 								M.losebreath += (1)
