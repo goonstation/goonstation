@@ -34,6 +34,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_armed = null
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
+	var/issawfly = FALSE //for sawfly remote
 
 	attack_self(mob/user as mob)
 		if (!src.state)
