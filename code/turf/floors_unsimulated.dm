@@ -1014,11 +1014,6 @@
 	step_priority = STEP_PRIORITY_MED
 
 /////////////////////////////////////////
-
-#define FLOOR_AUTO_EDGE_PRIORITY_DIRT 50
-#define FLOOR_AUTO_EDGE_PRIORITY_GRASS 100
-#define FLOOR_AUTO_EDGE_PRIORITY_WATER 200
-
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
 
@@ -1202,7 +1197,3 @@
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
-
-#undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
-#undef FLOOR_AUTO_EDGE_PRIORITY_GRASS
-#undef FLOOR_AUTO_EDGE_PRIORITY_WATER
