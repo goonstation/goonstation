@@ -1,5 +1,11 @@
 
 (t)tue jul 05 22
+(u)tarmunora
+(p)9463
+(e)⚖|balance
+(*)materials have (hopefully) reasonable defaults for properties, and property values have been squisified down to the 1-9 range.
+(*)Some things, especially with respect to fabrication, may not work as they did before/as expected. If there are any serious problems, make a bug report or something so it can be looked at.
+(+)neutronium recipe disabled
 (u)Taylor Kellogg
 (p)9406
 (e)📄|tgui
