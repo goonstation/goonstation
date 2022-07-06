@@ -284,6 +284,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
 	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
 	if(islist(mat1.color) || islist(mat2.color))
