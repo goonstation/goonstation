@@ -26,7 +26,7 @@
 	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
-	var/deconstruct_time = 0//20
+	var/deconstruct_time = 10
 	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
@@ -607,7 +607,6 @@
 	health_max = 50
 	the_tuff_stuff
 		explosion_resistance = 5
-	deconstruct_time = 30
 
 /obj/window/reinforced/pyro
 	icon_state = "rpyro"
@@ -619,7 +618,7 @@
 	health = 80
 	health_max = 80
 	explosion_resistance = 2
-	deconstruct_time = 40
+	deconstruct_time = 20
 
 /obj/window/crystal/pyro
 	icon_state = "pyro"
@@ -724,7 +723,6 @@
 	icon_state = "mapwin"
 	dir = 5
 	health_multiplier = 2
-	deconstruct_time = 20
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -796,7 +794,6 @@
 	health_max = 50
 	the_tuff_stuff
 		explosion_resistance = 5
-	deconstruct_time = 30
 
 /obj/window/auto/reinforced/indestructible
 	desc = "A window. A particularly robust one at that."
@@ -867,7 +864,7 @@
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	health = 80
 	health_max = 80
-	deconstruct_time = 40
+	deconstruct_time = 20
 
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
