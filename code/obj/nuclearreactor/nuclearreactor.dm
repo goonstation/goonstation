@@ -113,8 +113,9 @@
 			//heat transfer coefficient
 			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
+				var/gas_shc_factor = HEAT_CAPACITY(current_gas)/(420*7700*2.5/0.055)
 				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				src.temperature += heat_transfer_mult*deltaT*hTC
+				src.temperature += gas_shc_factor*heat_transfer_mult*deltaT*hTC
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))

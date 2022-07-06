@@ -99,11 +99,11 @@ ABSTRACT_TYPE(/obj/reactor_component)
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
 			src.material.adjustProperty("n_radioactive", -0.1)
 			src.material.adjustProperty("radioactive", 0.1)
-			src.temperature += 100 //TODO make this less arbitrary
+			src.temperature += 20
 		if(prob(src.material.getProperty("radioactive"))*src.neutron_cross_section) //spontaneous emission
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 			src.material.adjustProperty("radioactive", -0.1)
-			src.temperature += 100 //TODO make this less arbitrary
+			src.temperature += 10
 		for(var/datum/neutron/N in inNeutrons)
 			if(prob(src.material.getProperty("density")*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
@@ -112,13 +112,13 @@ ABSTRACT_TYPE(/obj/reactor_component)
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
-					src.temperature += 100 //TODO make this less arbitrary
+					src.temperature += 20
 				else if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("radioactive"))) //stimulated emission
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons -= N
 					qdel(N)
-					src.temperature += 100 //TODO make this less arbitrary
+					src.temperature += 10
 				else
 					if(prob(src.material.getProperty("hardness"))) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
@@ -159,7 +159,8 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 	extra_info()
 		. = ..()
-		. += "Insertion: [neutron_cross_section*100]%"
+		if(!melted)
+			. += "Insertion: [neutron_cross_section*100]%"
 
 	processNeutrons(list/datum/neutron/inNeutrons)
 		. = ..()
@@ -205,7 +206,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				//gas density << metal density, so energy to heat gas to T is much small than energy to heat metal to T
 				//basically, we just need a specific heat capactiy factor in here
 				//fortunately, atmos has macros for that - for everything else, let's just assume steel's heat capacity and density
-				var/gas_shc_factor = HEAT_CAPACITY(current_gas)/(420*7700/0.055) //shc * moles/(shc of steel * density of steel / molar mass of steel)
+				var/gas_shc_factor = HEAT_CAPACITY(current_gas)/(420*7700*0.2/0.055) //shc * moles/(shc of steel * density of steel * volume / molar mass of steel)
 				src.current_gas.temperature += gas_thermal_cross_section*-deltaT*hTC
 				src.temperature += gas_shc_factor*gas_thermal_cross_section*deltaT*hTC
 				if(src.current_gas.temperature < 0 || src.temperature < 0)
