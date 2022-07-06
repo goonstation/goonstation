@@ -16,6 +16,7 @@
 	var/broken = 0
 	var/burnt = 0
 	var/has_material = TRUE
+	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
@@ -691,15 +692,14 @@
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cloth")
-	mat_changename = 0
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
+	mat_appearances_to_ignore = list("cotton")
+	mat_changename = 0
 
 	New()
-		..()
-		setMaterial(getMaterial("cloth"))
-
+		plate_mat = getMaterial("cotton")
+		. = ..()
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
