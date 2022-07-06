@@ -4,7 +4,11 @@
 	name = "human"
 	voice_name = "human"
 	icon = 'icons/mob/mob.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#else
 	icon_state = "blank"
+#endif
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
