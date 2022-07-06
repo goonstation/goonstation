@@ -396,6 +396,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
 		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+			// if there is nitrogen and oxygen, make sleeping gas and do nothing else
+			if (air.nitrogen > MINIMUM_REACT_QUANTITY && air.oxygen > MINIMUM_REACT_QUANTITY)
+				var reaction_rate = min(air.nitrogen / 2, air.oxygen)
+				reaction_rate = QUANTIZE(reaction_rate)
+
+				air.nitrogen -= reaction_rate * 2
+				air.oxygen -= reaction_rate
+				var/datum/gas/sleeping_agent/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
+				trace_gas.moles += reaction_rate * 2
+				payload.temperature = air.temperature
+
+				target.assume_air(payload)
+				return
+
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
 			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
 			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
