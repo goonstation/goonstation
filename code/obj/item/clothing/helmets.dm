@@ -150,8 +150,8 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(0, (7 - visr_material.getProperty("permeable")) * 5)
-			setProperty("viralprot", prot)
+			prot =  clamp(((visr_material.getProperty("chemical") - 4) * 10), 10, 35) // All crystals (assuming default chem value) will give 20 chemprot, same as normal helm.
+			setProperty("chemprot", prot)
 
 			prot = max(0, visr_material.getProperty("density") - 3) / 2
 			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value

@@ -1291,8 +1291,8 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
-			setProperty("viralprot", prot)
+			prot =  max(10, (src.material.getProperty("chemical") - 4) * 15) // 30 would be default for metal.
+			setProperty("chemprot", prot)
 
 			prot = max(0, renf.getProperty("density") - 3) / 2
 			setProperty("meleeprot", 3 + prot)

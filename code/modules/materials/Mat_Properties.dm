@@ -171,9 +171,9 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(8 to INFINITY)
 				return "very flammable"
 
-/datum/material_property/corrosion
-	name = "Corrosion resistance"
-	id = "corrosion"
+/datum/material_property/chemical
+	name = "Chemical resistance"
+	id = "chemical"
 	default_value = 3
 
 	prefix_high_min = 5
@@ -188,11 +188,11 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(2 to 4)
 				return "slightly corroded"
 			if(4 to 6)
-				return "slightly corrosion-resistant"
+				return "slightly chemical-resistant"
 			if(6 to 8)
-				return "corrosion-resistant"
+				return "chemical-resistant"
 			if(8 to INFINITY)
-				return "highly corrosion-resistant"
+				return "highly chemical-resistant"
 
 /datum/material_property/stability
 	name = "Stability"
@@ -213,26 +213,6 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(8 to INFINITY)
 				return "very solid"
 
-/datum/material_property/permeability
-	name = "Permeability"
-	id = "permeable"
-
-	default_value = 6
-
-	getAdjective(var/datum/material/M)
-		switch(M.getProperty(id))
-			if(0 to 1)
-				return "very impermeable"
-			if(1 to 2)
-				return "impermeable"
-			if(2 to 4)
-				return "slightly impermeable"
-			if(4 to 6)
-				return "slightly permeable"
-			if(6 to 8)
-				return "permeable"
-			if(8 to INFINITY)
-				return "very permeable"
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
