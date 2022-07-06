@@ -1857,7 +1857,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\dialogue\dialogueSystem.dm"
 #include "code\WorkInProgress\dialogue\dialogueTraders.dm"
 #include "code\WorkInProgress\griffening\griffening_cards.dm"
-#include "code\WorkInProgress\nuclear_engine\nuclear_engine.dm"
 #include "code\WorkInProgress\optics\beamline.dm"
 #include "code\WorkInProgress\pali\blob_fabricator.dm"
 #include "code\WorkInProgress\pali\pali.dm"

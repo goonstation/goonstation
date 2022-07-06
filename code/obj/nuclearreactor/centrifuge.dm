@@ -27,12 +27,19 @@
 			UpdateIcon()
 
 		if(doing_stuff && fuel_rod)
-			if(fuel_rod.material.getProperty("spent_fuel"))
+			if(fuel_rod.material.getProperty("spent_fuel") > 0)
 				extracted_fuel += min(fuel_rod.material.getProperty("spent_fuel"),0.1)
 				fuel_rod.material.adjustProperty("spent_fuel",-0.1)
 			else
 				//we done here, spit out results
-
+				var/obj/item/material_piece/slag/waste = new(get_turf(src))
+				if(round(extracted_fuel/2.0) > 1)
+					var/obj/item/material_piece/plutonium/goodstuff = new(get_turf(src))
+					goodstuff.amount = round(extracted_fuel/2.0)
+					playsound(src, sound_process, 40, 1)
+				else
+					waste.amount+=1
+					playsound(src, sound_grump, 40, 1)
 				qdel(fuel_rod)
 				doing_stuff = FALSE
 
