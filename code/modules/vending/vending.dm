@@ -1181,6 +1181,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/spaceacillin, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mannitol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ephedrine, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/ipecac, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/ampoule/smelling_salts, 5)
