@@ -792,16 +792,16 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
+				. = ..()
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
-				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				..()
+				. = ..()
 				if(!volume)
 					volume = 10
 				if(method == TOUCH)
@@ -809,7 +809,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * volume SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-				return 1
+						. = 0
 
 		water/water_holy
 			name = "holy water"

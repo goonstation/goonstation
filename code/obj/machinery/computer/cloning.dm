@@ -559,7 +559,7 @@ proc/find_ghost_by_key(var/find_key)
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -571,6 +571,9 @@ proc/find_ghost_by_key(var/find_key)
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 
 		return
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)

@@ -72,6 +72,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		M?.bodytemperature = 310
 		return
+
 /datum/materialProc/generic_reagent_onattacked
 	var/trigger_chance = 100
 	var/limit = 0
@@ -280,6 +281,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isobserver(entering) || isintangible(entering))
 			return
+		if(ON_COOLDOWN(entering, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
@@ -293,6 +296,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
+		if(ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
+			return
 		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
@@ -310,6 +315,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
+		if(ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(M)
 		if(probmult(5) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
@@ -407,7 +414,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 			maxexplode -= 1
 			if(owner)
-				owner.setProperty("resonance", 10)
+				owner.setProperty("resonance", 1)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
@@ -421,7 +428,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive"), FALSE,FALSE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE,FALSE)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -434,7 +441,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive"), FALSE,TRUE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE,TRUE)
 		return
 
 /datum/materialProc/n_radioactive_remove

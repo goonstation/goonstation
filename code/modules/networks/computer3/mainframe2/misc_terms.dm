@@ -1038,7 +1038,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 

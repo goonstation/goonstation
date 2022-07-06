@@ -9,6 +9,7 @@
 	anchored = 1
 	density = 1
 	var/packable = 0
+	var/obj/deployer = /obj/beacon_deployer
 	var/beaconid //created by kits
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -167,7 +168,7 @@
 	src.packable = 0
 	src.icon_state = "beaconpack"
 	SPAWN(14) //wait until packing is complete
-		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
+		var/obj/beacon_deployer/packitup = new src.deployer(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
@@ -182,6 +183,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beaconunit"
 	density = 1
+	var/tile_range = 2
 	var/deploying = null
 	var/beaconid = null
 
@@ -192,7 +194,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/wrench) && !src.deploying)
-			for (var/turf/T in range(2,src))
+			for (var/turf/T in range(src.tile_range,src))
 				if (!T.allows_vehicles)
 					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
@@ -226,7 +228,19 @@
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
+		depbeac.deployer = src.type
 		qdel(src)
+
+/obj/beacon_deployer/sketchy
+	name = "unregistered warp buoy unit"
+	tile_range = 1
+
+	New()
+		src.beaconid = rand(1000,9999)
+		src.name = "unregistered warp buoy unit [beaconid]"
+		desc = "A compact anchor for teleportation technology, cobbled together from spare parts. Looks like the safety features have been laxened."
+		..()
+
 
 /obj/beacon_deployer/syndicate
 	name = "syndicate warp buoy unit"

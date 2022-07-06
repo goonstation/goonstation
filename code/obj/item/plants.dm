@@ -369,6 +369,14 @@
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
 
+/obj/item/plant/herb/tea
+	name = "tea leaves"
+	crop_suffix = " leaves"
+	desc = "Leaves from a green tea plant, which can be used to create matcha."
+	icon_state = "tealeaves"
+	brewable = TRUE
+	brew_result = "matcha"
+
 /obj/item/plant/herb/aconite
 	name = "aconite"
 	crop_suffix	= ""

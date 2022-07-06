@@ -541,12 +541,6 @@
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cloth")
-	mat_changename = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("cloth"))
 
 /turf/unsimulated/floor/carpet/grime
 	icon = 'icons/turf/floors.dmi'

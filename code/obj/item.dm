@@ -261,8 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
-			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
+			burn_possible = src.material.getProperty("flammable") >= 5 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
