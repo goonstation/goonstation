@@ -857,6 +857,9 @@
 
 	proc/output_bar(material, amount, quality)
 
+		if(amount <= 0)
+			return
+
 		var/datum/material/MAT = material
 		if (!istype(MAT))
 			MAT = getMaterial(material)
