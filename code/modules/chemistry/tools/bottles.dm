@@ -164,7 +164,7 @@
 
 /obj/item/reagent_containers/glass/bottle/pfd
 	name = "perfluorodecalin bottle"
-	desc = "A small bottle of an experimental liquid-breathing medicine."
+	desc = "A small bottle of perfluorodecalin, an experimental liquid-breathing medicine."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "perfluorodecalin"
@@ -220,14 +220,14 @@
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
 	name = "bottle (charcoal)"
-	desc = "A small bottle of charcoal, a general antitoxin."
+	desc = "A small bottle of charcoal, a general purpose antitoxin."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
-	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamine, useful for reducing the severity of allergic reactions."
+	name = "bottle (diphenhydramine)"
+	desc = "A small bottle of dyphenhidramine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"
