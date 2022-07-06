@@ -10,6 +10,7 @@
 	var/radiorange = 3
 
 	var/list/authorisations = list()
+	var/list/authorisedIDs = list()
 
 	light_r =1
 	light_g = 0.3
@@ -138,6 +139,7 @@
 		logTheThing("station", usr, null, "unauthorized armory access")
 		authed = 0
 		authorisations = list()
+		authorisedIDs = list()
 		src.ClearSpecificOverlays("screen_image")
 		icon_state = "drawbr"
 		src.UpdateIcon()
@@ -227,12 +229,16 @@
 
 		if (modalText != "")
 			showModal = TRUE
-
-		if (nameOnFile != printOnFile && maxSecAccess != TRUE) // Placed after the showModal value assign, as will only display when Auth/Repeal is clicked.
-			if (printOnFile != FALSE)
-				modalText = "User Fingerprint ID Already On File!"
-			if (nameOnFile != FALSE)
-				modalText = "Authorisation Already Issued By User!"
+		else
+			// Placed after the showModal value assign, as will only display when Auth/Repeal is clicked.
+			if ((W in authorisedIDs) && existingAuthorisation != TRUE)
+				canAuth = FALSE
+				modalText = "Authorisation Already Issued By This ID!"
+			if (canAuth != TRUE && maxSecAccess != TRUE)
+				if (printOnFile != FALSE)
+					modalText = "User Fingerprint ID Already On File!"
+				if (nameOnFile != FALSE)
+					modalText = "Authorisation Already Issued By User!"
 
 		return list(
 			"hasID" = hasID,
@@ -313,6 +319,7 @@
 				return
 
 			authorisations[user] = list("name" = user, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
+			authorisedIDs.Add(ID)
 
 			authorize()
 			. = TRUE
@@ -322,6 +329,7 @@
 				return
 
 			authorisations[user] = list("name" = user, "rank" = ID.assignment, "prints" = user.bioHolder.fingerprints)
+			authorisedIDs.Add(ID)
 
 			if (src.authorisations.len < auth_need)
 				print_auth_needed(user)
@@ -334,6 +342,7 @@
 				return
 
 			authorisations.Remove(user)
+			authorisedIDs.Remove(ID)
 
 			print_auth_needed(user)
 			. = TRUE
