@@ -654,3 +654,93 @@
 
 	proc/sunrise()
 		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+
+
+/proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
+	var/list/nodes = list()
+
+	var/index_open = 1
+	var/list/open = list(epicenter)
+	var/list/next_open = list()
+	var/list/heuristics = list() //caching is only valid if we arn't calculating based on the open node
+	nodes[epicenter] = radius
+	var/i = 0
+	while (index_open <= length(open) || length(next_open))
+		if(i++ % 500 == 0)
+			LAGCHECK(LAG_HIGH)
+		if(index_open > length(open))
+			open = next_open
+			next_open = list()
+			index_open = 1
+		var/turf/T = open[index_open++]
+		var/value = nodes[T] - (1)
+		var/value2 = nodes[T] - (1.4)
+		if (heuristic) // Only use a custom hueristic if we were passed one
+			if(isnull(heuristics[T]))
+				heuristics[T] = call(heuristic)(T, heuristic_args)
+			if(heuristics[T])
+				value -= heuristics[T]
+				value2 -= heuristics[T]
+		if (value < 0)
+			continue
+		for (var/dir in alldirs)
+			var/turf/target = get_step(T, dir)
+			if (!target) continue // woo edge of map
+			var/new_value = dir & (dir-1) ? value2 : value
+			if(width < 360)
+				var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+				if(diff > width)
+					continue
+				else if(diff > width/2)
+					new_value = new_value / 3 - 1
+			if ((nodes[target] && nodes[target] >= new_value))
+				continue
+
+			nodes[target] = new_value
+			next_open[target] = 1
+
+	for (var/turf/T as anything in nodes)
+		if(nodes[T]<=0)
+			nodes -= T
+
+	return nodes
+
+/datum/mutex
+	var/locked
+
+	proc/unlock()
+		locked = FALSE
+
+	proc/lock()
+		while(!trylock())
+			sleep(1)
+
+	proc/trylock()
+		if(!locked)
+			locked = TRUE
+			. = TRUE
+
+	limited
+		var/iterations
+		var/maxIterations
+
+		New(maxItrs)
+			..()
+			maxIterations = maxItrs
+
+		trylock()
+			if(iterations <= 0 && locked)
+				locked = FALSE
+			. = ..()
+			if(.)
+				iterations = maxIterations
+			else
+				iterations--
+
+		unlock()
+			iterations = 0
+			..()
+
+
+
+
