@@ -1,5 +1,9 @@
 
 (t)tue jul 05 22
+(u)XyzzyThePretender
+(p)9473
+(e)🐛|bug
+(+)Brave Bull can be made using coffee from a coffee maker.
 (u)Kubius
 (p)9433
 (e)🆕🔄|feature, rework
