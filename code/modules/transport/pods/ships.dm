@@ -818,9 +818,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 40)
+			src.maxhealth = max(75, src.material.getProperty("density") * 40) / (1 MAT)
 			src.health = maxhealth
-			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
+			src.speed = 1 - (src.material.getProperty("electrical") - (5 MAT)) / (15 MAT)
 		return
 
 	attackby(obj/item/W, mob/living/user)

@@ -147,13 +147,13 @@ datum/teg_transformation
 
 			Oversimplification: zT = 2σ/κ
 			*/
-			electrical_conductivity = 50
+			electrical_conductivity = 5 MAT
 			if(src.teg.material.hasProperty("electrical"))
-				electrical_conductivity = src.teg.material.getProperty("electrical") * 10
+				electrical_conductivity = src.teg.material.getProperty("electrical")
 
-			thermal_conductivity = 50
+			thermal_conductivity = 5 MAT
 			if(src.teg.material.hasProperty("thermal"))
-				thermal_conductivity =  src.teg.material.getProperty("thermal") * 10
+				thermal_conductivity =  src.teg.material.getProperty("thermal")
 
 			/*    2σ / κ = zT    - Offset 				Result 	*/
 			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/

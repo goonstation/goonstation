@@ -128,7 +128,7 @@ var/global/obj/flashDummy
 		target_r = O
 	if(wattage && isliving(target)) //Grilles can reroute arcflashes
 		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
-			var/arcprob = L.material?.getProperty("electrical") >= 6 ? 60 : 30
+			var/arcprob = L.material?.getProperty("electrical") >= 6 MAT ? 60 : 30
 			if(!L.ruined && L.anchored)
 				if (prob(arcprob) && L.get_connection()) // hopefully half the default is low enough
 					target = L

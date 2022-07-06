@@ -302,8 +302,8 @@
 		ammo_type.material = copyMaterial(src.material)
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
+			ammo_type.power = round( (material.getProperty("density") * 2 + material.getProperty("hard")) / (1 MAT))
+			ammo_type.dissipation_delay = round(material.getProperty("density") / (2 MAT))
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
@@ -1180,7 +1180,7 @@
 	process()
 		if(src.material)
 			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 1)
+				if(src.material.getProperty("stability") <= 1 MAT)
 					if(prob(1))
 						var/turf/T = get_turf(src)
 						explosion_new(src, T, 1)
@@ -1195,11 +1195,11 @@
 		..()
 		if(istype(src.material))
 
-			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
+			max_charge = round((material.getProperty("electrical") ** 2) * 4 / (1 MAT), 25)
 
 			recharge_rate = 0
-			recharge_rate += material.getProperty("radioactive")/2
-			recharge_rate += material.getProperty("n_radioactive")
+			recharge_rate += material.getProperty("radioactive") / (2 MAT)
+			recharge_rate += material.getProperty("n_radioactive") / (1 MAT)
 
 
 		charge = max_charge
@@ -1213,11 +1213,11 @@
 		if(genMat)
 			src.name = "[genMat.name]-doped [src.name]"
 
-			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / (3 MAT) //if self-charging, use a weighted average of the conductivities
 			max_charge = round((conductivity ** 2) * 4, 25)
 
 			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
-			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / (3 MAT) //weight this too
 
 			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
 

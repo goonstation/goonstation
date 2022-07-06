@@ -177,7 +177,7 @@
 
 		if (src.material)
 			var/fail = 0
-			if (src.material.getProperty("stability") <= 2)
+			if (src.material.getProperty("stability") <= 2 MAT)
 				fail = 1
 			if (src.material.quality < 0) if(prob(abs(src.material.quality)))
 				fail = 1

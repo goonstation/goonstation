@@ -68,7 +68,7 @@
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 
-			gas_impermeable = (src.density && material.hasProperty("permeable")) ? material.getProperty("permeable") >= 7 : gas_impermeable
+			gas_impermeable = (src.density && material.hasProperty("permeable")) ? material.getProperty("permeable") >= 7 MAT : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)

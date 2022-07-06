@@ -1287,17 +1287,17 @@
 		renf = R
 		if (src.material && renf)
 
-			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
-			setProperty("coldprot", 10+prot)
-			setProperty("heatprot", 2+round(prot/2))
+			var/prot = max(0, (5 MAT - src.material.getProperty("thermal")) * 10)
+			setProperty("coldprot", 10 MAT+prot)
+			setProperty("heatprot", 2 MAT+round(prot/2))
 
-			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
+			prot =  max(0, (7 MAT - src.material.getProperty("permeable")) * 10)
 			setProperty("viralprot", prot)
 
-			prot = max(0, renf.getProperty("density") - 3) / 2
-			setProperty("meleeprot", 3 + prot)
-			setProperty("rangedprot", 0.3 + prot / 5)
-			setProperty("space_movespeed", 0.15 + prot / 5)
+			prot = max(0, renf.getProperty("density") - 3 MAT) / 2
+			setProperty("meleeprot", 3 MAT + prot)
+			setProperty("rangedprot", 0.3 MAT + prot / 5)
+			setProperty("space_movespeed", 0.15 MAT + prot / 5)
 
 	UpdateName()
 		if (src.material && renf)

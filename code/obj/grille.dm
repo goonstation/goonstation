@@ -179,12 +179,12 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			health_max = material.getProperty("density") * 10
+			health_max = material.getProperty("density") * 10 / (1 MAT)
 			health = health_max
 
-			cut_resist = material.getProperty("hard") * 10
-			blunt_resist = material.getProperty("density") * 10
-			corrode_resist = material.getProperty("corrosion") * 10
+			cut_resist = material.getProperty("hard") * 10 / (1 MAT)
+			blunt_resist = material.getProperty("density") * 10 / (1 MAT)
+			corrode_resist = material.getProperty("corrosion") * 10 / (1 MAT)
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -324,7 +324,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
 			if(src?.material.hasProperty("electrical"))
-				shock(AM, 60 + (5 * (src.material.getProperty("electrical") - 5)))  // sure loved people being able to throw corpses into these without any consequences.
+				shock(AM, 60 + (5 * (src.material.getProperty("electrical") - (5 MAT)) / (1 MAT)))  // sure loved people being able to throw corpses into these without any consequences.
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -408,10 +408,10 @@
 		// electrocution check
 
 		var/OSHA_is_crying = 1
-		if (src.material && src.material.getProperty("electrical") < 4)
+		if (src.material && src.material.getProperty("electrical") < 4 MAT)
 			OSHA_is_crying = 0
 
-		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - (5 MAT)) / (1 MAT))))
 			return
 
 		// Things that will electrocute you
@@ -550,7 +550,7 @@
 		if (!powernets[net])
 			return FALSE
 		if(src.material)
-			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical") * 5)
+			powernets[net].newavail += lpower / 100 * ((100 MAT)- src.material.getProperty("electrical") * 5) / (1 MAT)
 		else
 			powernets[net].newavail += lpower / 7500
 

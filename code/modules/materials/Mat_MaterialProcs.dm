@@ -80,7 +80,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("radiation", owner.material.getProperty("radioactive") SECONDS)
+				M.changeStatus("radiation", owner.material.getProperty("radioactive") SECONDS / (1 MAT))
 		return
 
 /datum/materialProc/n_radioactive_on_enter
@@ -90,7 +90,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("n_radiation", owner.material.getProperty("n_radioactive") SECONDS)
+				M.changeStatus("n_radiation", owner.material.getProperty("n_radioactive") SECONDS / (1 MAT))
 		return
 
 /datum/materialProc/generic_reagent_onattacked
@@ -434,7 +434,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 			maxexplode -= 1
 			if(owner)
-				owner.setProperty("resonance", 1)
+				owner.setProperty("resonance", 1 MAT)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
@@ -453,13 +453,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", max(I.material.getProperty("radioactive") / 4, 1) SECONDS * mult)
+			M.changeStatus("radiation", max(I.material.getProperty("radioactive") / 4, 1) SECONDS / (1 MAT) * mult)
 		return
 
 /datum/materialProc/radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("radiation", I.material.getProperty("radioactive") * 2 SECONDS)
+			M.changeStatus("radiation", I.material.getProperty("radioactive") * 2 SECONDS / (1 MAT))
 		return
 
 /datum/materialProc/n_radioactive_add
@@ -470,13 +470,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", max(I.material.getProperty("n_radioactive") / 4, 1) SECONDS * mult)
+			M.changeStatus("n_radiation", max(I.material.getProperty("n_radioactive") / 4, 1) SECONDS / (1 MAT) * mult)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("n_radiation", I.material.getProperty("n_radioactive") * 2 SECONDS)
+			M.changeStatus("n_radiation", I.material.getProperty("n_radioactive") / (1 MAT) * 2 SECONDS)
 		return
 
 /datum/materialProc/erebite_flash

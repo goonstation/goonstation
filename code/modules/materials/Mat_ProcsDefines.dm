@@ -96,9 +96,9 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
-		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / (3 MAT)) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / (3 MAT)) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5 MAT)) flags |= CONDUCT
 
 
 /// Simply removes a material from an object.
@@ -209,22 +209,22 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		src.alpha = mat1.alpha
 		src.color = mat1.color
 
-/proc/getProcessedMaterialForm(var/datum/material/MAT)
-	if (!istype(MAT))
+/proc/getProcessedMaterialForm(var/datum/material/mat)
+	if (!istype(mat))
 		return /obj/item/material_piece // just in case
 
 	// higher on this list means higher priority, be careful with it!
-	if (MAT.material_flags & MATERIAL_CRYSTAL)
+	if (mat.material_flags & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
-	if (MAT.material_flags & MATERIAL_METAL)
+	if (mat.material_flags & MATERIAL_METAL)
 		return /obj/item/material_piece
-	if (MAT.material_flags & MATERIAL_ORGANIC)
+	if (mat.material_flags & MATERIAL_ORGANIC)
 		return /obj/item/material_piece/wad
-	if (MAT.material_flags & MATERIAL_CLOTH)
+	if (mat.material_flags & MATERIAL_CLOTH)
 		return /obj/item/material_piece/cloth
-	if (MAT.material_flags & MATERIAL_RUBBER)
+	if (mat.material_flags & MATERIAL_RUBBER)
 		return /obj/item/material_piece/block
-	if (MAT.material_flags & MATERIAL_ENERGY)
+	if (mat.material_flags & MATERIAL_ENERGY)
 		return /obj/item/material_piece/sphere
 
 	return /obj/item/material_piece

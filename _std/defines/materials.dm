@@ -17,6 +17,10 @@
 /// Rubber , latex etc
 #define MATERIAL_RUBBER 32
 
+// Material "unit" for getting properties and such
+// hopefully this lets future reworks more easily change material scale
+#define MAT *1
+
 /// Global static list of rarity color associations
 var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#ff0000")
 

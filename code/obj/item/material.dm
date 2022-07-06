@@ -613,7 +613,7 @@
 					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7 MAT))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
@@ -857,19 +857,19 @@
 
 	proc/output_bar(material, amount, quality)
 
-		var/datum/material/MAT = material
-		if (!istype(MAT))
-			MAT = getMaterial(material)
-			if (!MAT)
+		var/datum/material/mat = material
+		if (!istype(mat))
+			mat = getMaterial(material)
+			if (!mat)
 				return
 
 		var/output_location = src.get_output_location()
 
-		var/bar_type = getProcessedMaterialForm(MAT)
+		var/bar_type = getProcessedMaterialForm(mat)
 		var/obj/item/material_piece/BAR = new bar_type
 		BAR.quality = quality
 		BAR.name += getQualityName(quality)
-		BAR.setMaterial(MAT)
+		BAR.setMaterial(mat)
 		BAR.change_stack_amount(amount - 1)
 
 		if (istype(output_location, /obj/machinery/manufacturer))

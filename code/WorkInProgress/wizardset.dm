@@ -589,13 +589,13 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	icon = 'icons/turf/adventure.dmi'
 
 	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
-		var/datum/material/MAT = new assoc_material()
-		var/bar_type = getProcessedMaterialForm(MAT)
+		var/datum/material/mat = new assoc_material()
+		var/bar_type = getProcessedMaterialForm(mat)
 		var/obj/item/material_piece/BAR = new bar_type(creator.get_output_location())
 
 		BAR.quality = rand(50, 100)
 		BAR.name += getQualityName(BAR.quality)
-		BAR.setMaterial(MAT)
+		BAR.setMaterial(mat)
 		playsound(src.loc, creator.sound_process, 40, 1)
 
 		return BAR

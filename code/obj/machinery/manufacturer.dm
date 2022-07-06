@@ -1349,9 +1349,9 @@
 						// bohr hardness = 33
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10 MAT
 							if(3 to INFINITY)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15 MAT
 							else
 								return TRUE
 				if ("CRY")
@@ -1359,36 +1359,36 @@
 
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("density") >= 7
+								return mat.getProperty("density") >= 7 MAT
 							else
 								return TRUE
 				if ("REF")
-					return (mat.getProperty("reflective") >= 6)
+					return (mat.getProperty("reflective") >= 6 MAT)
 				if ("CON")
 					switch(secondpart)
 						if(2)
-							return (mat.getProperty("electrical") >= 8)
+							return (mat.getProperty("electrical") >= 8 MAT)
 						else
-							return (mat.getProperty("electrical") >= 6)
+							return (mat.getProperty("electrical") >= 6 MAT)
 				if ("INS")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("electrical") <= 2 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+							return mat.getProperty("electrical") <= 2 MAT && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 						else
-							return mat.getProperty("electrical") <= 4 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+							return mat.getProperty("electrical") <= 4 MAT && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 				if ("DEN")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("density") >= 6
+							return mat.getProperty("density") >= 6 MAT
 						else
-							return mat.getProperty("density") >= 4
+							return mat.getProperty("density") >= 4 MAT
 				if ("POW")
 					if (mat.material_flags & MATERIAL_ENERGY)
 						switch(secondpart)
 							if(3)
-								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
+								return mat.getProperty("radioactive") >= 5 MAT //soulsteel and erebite basically
 							if(2)
-								return mat.getProperty("radioactive") >= 2
+								return mat.getProperty("radioactive") >= 2 MAT
 							else
 								return TRUE
 				if ("FAB")

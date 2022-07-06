@@ -63,9 +63,9 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty("density") >= 6 MAT)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty("density") <= 2 MAT)
 				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
@@ -283,7 +283,7 @@
 
 	if(src.material)
 		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
+		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2 MAT) fail = 1
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 		if(fail)
@@ -345,7 +345,7 @@
 		if(src.material)
 			src.material.triggerOnHit(src, W, user, 1)
 			var/fail = 0
-			if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
+			if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2 MAT) fail = 1
 			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 			if(fail)
@@ -376,9 +376,9 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty("density") >= 6 MAT)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty("density") <= 2 MAT)
 				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
@@ -539,7 +539,7 @@
 	if(src.material)
 		src.material.triggerOnHit(src, W, user, 1)
 		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
+		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2 MAT) fail = 1
 		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
 		if(fail)

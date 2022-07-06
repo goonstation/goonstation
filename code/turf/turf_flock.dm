@@ -277,7 +277,7 @@
 		src.desc = "It's broken. You could probably use a crowbar to break the pieces apart."
 		src.broken = TRUE
 		src.UpdateIcon()
-		src.material.setProperty("reflective", 3)
+		src.material.setProperty("reflective", 3 MAT)
 		if (playAttackSound)
 			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
 

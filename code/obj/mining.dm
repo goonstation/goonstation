@@ -1295,19 +1295,19 @@
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create
-				MAT.set_loc(src)
+				var/obj/item/raw_material/mat = new ore_to_create
+				mat.set_loc(src)
 
-				if(MAT.material)
-					if(MAT.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.quality, src.quality)
-						MAT.material.quality = newQual
-						MAT.quality = newQual
+				if(mat.material)
+					if(mat.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
+						var/newQual = max(mat.material.quality, src.quality)
+						mat.material.quality = newQual
+						mat.quality = newQual
 					else
-						MAT.material.quality = src.quality
-						MAT.quality = src.quality
+						mat.material.quality = src.quality
+						mat.quality = src.quality
 
-				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
+				mat.name = getOreQualityName(mat.quality) + " [mat.name]"
 		if(!icon_old)
 			icon_old = icon_state
 

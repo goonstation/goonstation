@@ -1,5 +1,5 @@
 /datum/matfab_part/variable
-	var/required_value = 5
+	var/required_value = 5 MAT
 	var/greater_than = 1
 	var/required_property = "hard"
 	var/proper_name = "hardness"
@@ -40,7 +40,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(I.material.getProperty("radioactive") < 1 && I.material.getProperty("n_radioactive") < 1) return 0
+		if(I.material.getProperty("radioactive") < 1 MAT && I.material.getProperty("n_radioactive") < 1 MAT) return 0
 		return ..()
 
 /datum/matfab_part/conductive
@@ -48,7 +48,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(I.material.getProperty("electrical") < 5) return 0
+		if(I.material.getProperty("electrical") < 5 MAT) return 0
 		return ..()
 
 /datum/matfab_part/charge

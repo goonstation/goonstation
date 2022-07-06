@@ -243,7 +243,8 @@ ABSTRACT_TYPE(/datum/material)
 			call(X,  "execute")(owner, attackobj, attacker, meleeorthrow)
 		return
 
-
+// gonna assume that if you're reworking materials AGAIN, you might be doing an affine scaling which MAT can't handle, so
+// I won't touch these. Also, code readability/repetition or something.
 /datum/material/interpolated
 	mat_id = "imcoderium"
 	name = "imcoderium"

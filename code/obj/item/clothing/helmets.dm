@@ -146,15 +146,15 @@
 		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
 		if (visr_material)
 
-			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
-			setProperty("coldprot", 10+prot)
-			setProperty("heatprot", 2+round(prot/2))
+			var/prot = max(0, (5 MAT - visr_material.getProperty("thermal")) * 5)
+			setProperty("coldprot", 10 MAT+prot)
+			setProperty("heatprot", 2 MAT+round(prot/2))
 
-			prot =  max(0, (7 - visr_material.getProperty("permeable")) * 5)
+			prot =  max(0, (7 MAT - visr_material.getProperty("permeable")) * 5)
 			setProperty("viralprot", prot)
 
-			prot = max(0, visr_material.getProperty("density") - 3) / 2
-			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
+			prot = max(0, visr_material.getProperty("density") - 3 MAT) / 2
+			setProperty("meleeprot_head", 3 MAT + prot) // even if soft visor, still gives some value
 
 		// overlay stuff
 
