@@ -1,5 +1,9 @@
 
 (t)wed jul 06 22
+(u)DimWhat
+(p)9342
+(e)🆕🎨|feature, sprites
+(+)Made a few new more of clothing work with the inspector clothing medal reward.
 (u)Mr. Moriarty
 (p)9460
 (e)|
