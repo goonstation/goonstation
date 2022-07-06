@@ -4305,7 +4305,7 @@
 /obj/item/device/light/lava_lamp/activated{
 	pixel_y = 11
 	},
-/obj/table/wood/round,
+/obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "aog" = (
@@ -10274,6 +10274,15 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
+"aHV" = (
+/obj/storage/cart/trash,
+/obj/item/scrap,
+/obj/item/scrap,
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "aIb" = (
 /obj/lattice{
 	dir = 1;
@@ -23967,11 +23976,15 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "btO" = (
-/obj/storage/cart/trash,
-/obj/item/scrap,
-/obj/item/scrap,
-/turf/unsimulated/floor,
-/area/iomoon/base)
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/iomoon/floor{
+	dir = 1;
+	icon_state = "iocrust_corner"
+	},
+/area/iomoon)
 "btP" = (
 /obj/lattice{
 	dir = 4;
@@ -24095,18 +24108,12 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "buj" = (
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
+/obj/railing/yellow/reinforced,
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "buk" = (
-/obj/item/scrap,
-/obj/rack,
-/obj/item/reagent_containers/glass/bucket,
-/obj/item/mop,
-/turf/unsimulated/floor,
+/obj/item/storage/toilet,
+/turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
 "bul" = (
 /obj/decal/nothing,
@@ -24264,11 +24271,24 @@
 	dir = 8
 	},
 /obj/machinery/door/window/eastright,
+/obj/decal/cleanable/gangtag{
+	desc = "A hastily-scrawled sequence of numbers: 1-949-415-6298. What does it mean?";
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "shitty_bill";
+	name = "graffiti";
+	pixel_x = -32
+	},
+/obj/machinery/drainage,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
 "buJ" = (
-/obj/submachine/chef_sink/chem_sink,
-/turf/unsimulated/floor/specialroom/freezer,
+/obj/rack,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "buK" = (
 /turf/unsimulated/floor{
@@ -24620,7 +24640,9 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/turf/unsimulated/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/iomoon/base)
 "bvS" = (
 /obj/decal/fakeobjects{
@@ -29646,6 +29668,14 @@
 	dir = 1
 	},
 /area/crater/biodome/crew)
+"bMv" = (
+/obj/submachine/chef_sink{
+	desc = "A water-filled unit intended for sanitary purposes.";
+	name = "utility sink";
+	pixel_y = 16
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base)
 "bMw" = (
 /turf/space/dense,
 /area/cordon)
@@ -30493,16 +30523,6 @@
 "bPe" = (
 /obj/window{
 	dir = 2
-	},
-/obj/decal/cleanable/gangtag{
-	desc = "A hastily-scrawled sequence of numbers: 1-949-415-6298. What does it mean?";
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "shitty_bill";
-	name = "graffiti";
-	pixel_x = -32
-	},
-/obj/item/storage/toilet{
-	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
@@ -70491,6 +70511,11 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"igq" = (
+/obj/item/radio_tape/adventure/xg4,
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base/underground)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -72251,6 +72276,12 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"lYw" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -72977,6 +73008,11 @@
 	dir = 8
 	},
 /area/iomoon/base)
+"nEK" = (
+/obj/item/clothing/suit/bedsheet/pink,
+/obj/stool/bed,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -73491,6 +73527,12 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
+"oJe" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -73549,6 +73591,10 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
+"oRf" = (
+/obj/machinery/door/unpowered/wood/stall,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/iomoon/base)
 "oSg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -73658,6 +73704,13 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"pbL" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/iomoon/base)
 "pdL" = (
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
@@ -73899,15 +73952,6 @@
 	icon_state = "eng_open";
 	layer = 6;
 	name = "broken door"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
@@ -74579,6 +74623,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"qQq" = (
+/obj/railing/yellow/reinforced,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/iomoon/base)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-14"
@@ -75911,6 +75961,12 @@
 "tKt" = (
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"tLb" = (
+/obj/item/radio_tape/adventure/xg3,
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/iomoon/base)
 "tLZ" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_x4"
@@ -76343,6 +76399,12 @@
 "uQX" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
+"uSk" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base)
 "uTj" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal,
@@ -77038,6 +77100,19 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wDq" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -88579,7 +88654,7 @@ izT
 izT
 bvR
 izT
-diC
+tLb
 wOp
 jqz
 buK
@@ -88877,9 +88952,9 @@ izT
 izT
 izT
 izT
-buj
-btM
-btM
+wDq
+buK
+buK
 izT
 aPA
 wOp
@@ -89176,11 +89251,11 @@ bpD
 bpD
 bpD
 bsX
-izT
-izT
+buq
+buJ
 buj
-btM
-btM
+qQq
+aHV
 izT
 izT
 bwC
@@ -89479,7 +89554,7 @@ bpD
 bpD
 izT
 izT
-izT
+bMv
 btM
 btM
 izT
@@ -89780,8 +89855,8 @@ bpU
 bpE
 bpE
 bsY
-izT
-izT
+buq
+btM
 btM
 izT
 izT
@@ -90083,8 +90158,8 @@ boW
 boW
 izT
 izT
-btO
-btM
+izT
+uSk
 izT
 eMD
 bvT
@@ -90384,9 +90459,9 @@ boW
 boW
 boW
 bsZ
-izT
-izT
-btM
+buq
+buN
+buN
 izT
 bvp
 buK
@@ -90687,8 +90762,8 @@ boV
 boW
 izT
 izT
-izT
-btM
+nEK
+buN
 izT
 bvq
 buK
@@ -90987,10 +91062,10 @@ bpD
 bqp
 boV
 boV
-bpU
-izT
-izT
-buk
+btO
+buq
+oJe
+buN
 izT
 bvr
 bvV
@@ -91289,10 +91364,10 @@ bpD
 bqp
 boW
 boW
-boW
-bqw
 izT
 izT
+izT
+lYw
 izT
 izT
 pKM
@@ -91591,9 +91666,9 @@ bpD
 bqp
 boW
 boW
-boW
-bqw
 izT
+buk
+oRf
 bPe
 buI
 izT
@@ -91893,12 +91968,12 @@ bpD
 bqp
 boW
 boW
-boW
-bqw
+izT
+izT
 izT
 bum
 bum
-bum
+pbL
 izT
 izT
 bwC
@@ -92195,11 +92270,11 @@ bqO
 bqp
 boW
 boW
-bqn
-bqZ
 izT
-izT
-buJ
+buk
+oRf
+bum
+bum
 bum
 izT
 bwA
@@ -92497,8 +92572,8 @@ bpD
 bqp
 boW
 boW
-bqw
-bpD
+izT
+izT
 izT
 izT
 izT
@@ -95515,7 +95590,7 @@ wXY
 bpD
 bpD
 bpD
-bpD
+bsW
 bqp
 boW
 bqw
@@ -110319,7 +110394,7 @@ btb
 rHr
 lnE
 kce
-kce
+igq
 aoe
 rHr
 bwe
