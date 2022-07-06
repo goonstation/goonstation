@@ -395,6 +395,10 @@ datum
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
+						if (H.disfigured)
+							boutput(H, "<span class='notice'>You feel the synthflesh seeping into your face.</span>")
+							H.disfigured = FALSE
+							H.UpdateName()
 						if (H.bleeding)
 							repair_bleeding_damage(H, 80, 2)
 						if (ishuman(M))
