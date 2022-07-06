@@ -1321,31 +1321,25 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 4) //give it some time, with the drooling, they might even think it's neurotoxin
-						if(probmult(10))
-							M.emote("drool")
-						else if(probmult(8))
-							boutput(M, pick("<span class='alert'>You feel a tingling in your [pick("arms","legs","chest")]..</span>",\
-											"<span class='alert'>Things don't feel quite right..</span>",\
-											"<span class='alert'>Your [pick("left arm","right arm","left leg","right leg")] twitches a bit.</span>"))
-					if (4 to 9)
+					if (1 to 5)
+						return //evil evil evil make them think it's neurotoxin
+					if (5 to 10)
 						M.make_dizzy(1 * mult)
-						M.change_eye_blurry(3, 3)
-						M.change_misstep_chance(7 * mult)
-						if (probmult(20)) M.emote(pick("twitch", "tremble", "twitch_v"))
-						else if(probmult(20))
-							boutput(M, pick("<span class='alert'>Your [pick("arms","legs")] start twitching!</span>",\
-											"<span class='alert'>You feel kinda dizzy..</span>",\
-											"<span class='alert'>You don't feel very well.</span>"))
-					if (9 to INFINITY) //now things start going wacky
+						M.change_misstep_chance(10 * mult)
+						if (probmult(20)) M.emote("drool")
+					if (10 to 18)
+						M.setStatus("drowsy", 8 SECONDS)
+						M.make_dizzy(1 * mult)
+						M.change_misstep_chance(15 * mult)
+						if (probmult(35)) M.emote("drool")
+					if (18 to INFINITY)
+						M.setStatus("drowsy", 8 SECONDS)
 						M.make_dizzy(1 * mult)
 						M.change_eye_blurry(6, 6)
-						M.change_misstep_chance(14 * mult)
-						if(probmult(12))
-							if(!M.hasStatus("drowsy"))
-								M.setStatus("drowsy", 10 SECONDS)
-							else                                   //replenishing your drowsiness would be a bit much
-								M.setStatus("staggered", 4 SECONDS)
+						M.change_misstep_chance(20 * mult)
+						if(probmult(15))
+							if(!M.hasStatus("slowed"))
+								M.setStatus("slowed", 2 SECONDS)
 							boutput(M, pick("<span class='alert'>You feel extremely dizzy!</span>",\
 											"<span class='alert'>You feel like everything is spinning!</span>",\
 											"<span class='alert'>Your [pick("arms", "legs")] quiver!</span>",\
@@ -1367,7 +1361,9 @@ datum
 								M.emote(pick("gasp", "choke"))
 							else if(prob(25)) //same thing
 								M.setStatus("stunned", 3 SECONDS)
-						else if (probmult(40)) M.emote(pick("twitch", "tremble", "drool", "drool", "twitch_v")) //double drool so it shows up more
+						else if (probmult(40)) M.emote(pick("twitch", "tremble", "drool", "drool", "twitch_v"))
+
+				M.jitteriness = max(M.jitteriness-30,0)
 				..(M, mult)
 				return
 
