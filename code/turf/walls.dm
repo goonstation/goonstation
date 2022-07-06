@@ -331,6 +331,8 @@
 		else return
 
 	else
+		if(src.material)
+			src.material.triggerOnHit(src, W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
 
@@ -512,6 +514,9 @@
 
 	if(istype(src, /turf/simulated/wall/r_wall) && src.d_state > 0)
 		src.icon_state = "r_wall-[d_state]"
+
+	if(src.material)
+		src.material.triggerOnHit(src, W, user, 1)
 
 	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)
