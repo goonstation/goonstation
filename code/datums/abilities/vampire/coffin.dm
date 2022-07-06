@@ -50,7 +50,7 @@
 	max_range = 999
 	cooldown = 600
 	pointCost = 0
-	not_when_in_an_object = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
