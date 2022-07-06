@@ -1,4 +1,9 @@
 
+(t)wed jul 06 22
+(u)Mr. Moriarty
+(p)9460
+(e)|
+(+)Attempting to drop an item will now drop any grabs made with it first.
 (t)tue jul 05 22
 (u)XyzzyThePretender
 (p)9473
