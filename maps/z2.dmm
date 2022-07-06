@@ -37440,7 +37440,8 @@
 /area/iomoon/base/underground)
 "ckt" = (
 /obj/machinery/door/unpowered/wood{
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /turf/unsimulated/floor/wood,
 /area/sim/racing_entry)
@@ -37455,7 +37456,8 @@
 	dir = 8
 	},
 /obj/machinery/door/unpowered/wood{
-	autoclose = 0
+	autoclose = 0;
+	dir = 4
 	},
 /turf/unsimulated/floor/wood,
 /area/sim/racing_entry)
@@ -38341,7 +38343,8 @@
 /area/sim/racing_entry)
 "cmL" = (
 /obj/machinery/door/unpowered/wood{
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
@@ -75460,6 +75463,13 @@
 /obj/item/shinai_bag,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
+"sHI" = (
+/obj/machinery/door/unpowered/wood{
+	autoclose = 0;
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/arcade,
+/area/sim/racing_entry)
 "sHX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -118274,7 +118284,7 @@ ckv
 ciu
 civ
 ciu
-cmL
+sHI
 ciu
 ciu
 civ
