@@ -1714,6 +1714,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\martian\biotech\biomass_pool.dm"
 #include "code\obj\martian\biotech\cloner.dm"
 #include "code\obj\martian\biotech\seed.dm"
+#include "code\obj\nuclearreactor\centrifuge.dm"
 #include "code\obj\nuclearreactor\nuclearreactor.dm"
 #include "code\obj\nuclearreactor\reactorcomponents.dm"
 #include "code\obj\nuclearreactor\reactorcontrol.dm"
