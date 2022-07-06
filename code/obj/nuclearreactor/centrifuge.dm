@@ -11,6 +11,7 @@
 
 	var/obj/item/reactor_component/fuel_rod = null
 	var/extracted_fuel = 0
+	var/fuel_to_extract = 0
 
 	//thanks portable reclaimer
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
@@ -27,9 +28,10 @@
 			UpdateIcon()
 
 		if(doing_stuff && fuel_rod)
-			if(fuel_rod.material.getProperty("spent_fuel") > 0)
-				extracted_fuel += min(fuel_rod.material.getProperty("spent_fuel"),0.1)
-				fuel_rod.material.adjustProperty("spent_fuel",-0.1)
+			if(fuel_to_extract > 0)
+				var/delta = min(fuel_to_extract, 0.1)
+				extracted_fuel += delta
+				fuel_to_extract -= delta
 			else
 				//we done here, spit out results
 				var/obj/item/material_piece/slag/waste = new(get_turf(src))
@@ -53,7 +55,10 @@
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
 			W.set_loc(src)
+			if (user) user.u_equip(W)
+			W.dropped(user)
 			fuel_rod = W
+			fuel_to_extract = W.material.getProperty("spent_fuel")
 			doing_stuff = TRUE
 		else
 			boutput(user, "You can't put that [W] in here![istype(W, /obj/item/reactor_component) ? " It isn't ready for reprocessing!":""]")

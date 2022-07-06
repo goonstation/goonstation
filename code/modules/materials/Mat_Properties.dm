@@ -318,7 +318,8 @@ ABSTRACT_TYPE(/datum/material_property)
 	name = "Fissile Isotopes"
 	id = "spent_fuel"
 
-	prefix_high_min = 0
+	min_value = 0
+	prefix_high_min = 0.1
 	prefix_low_max = 9
 	default_value = 0
 
