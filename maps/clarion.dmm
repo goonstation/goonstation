@@ -36803,7 +36803,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/centrifuge/nuclear,
+/obj/machinery/centrifuge_nuclear,
 /turf/simulated/floor/black/side,
 /area/station/engine/inner)
 "byZ" = (
@@ -41674,7 +41674,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "bNk" = (
-/obj/machinery/centrifuge/nuclear,
+/obj/machinery/centrifuge_nuclear,
 /turf/simulated/floor/black/side,
 /area/station/engine/inner)
 "bNl" = (
@@ -41744,7 +41744,7 @@
 	},
 /area/station/mining/staff_room)
 "bNs" = (
-/obj/machinery/centrifuge/nuclear,
+/obj/machinery/centrifuge_nuclear,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "bNt" = (
