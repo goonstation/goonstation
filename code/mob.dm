@@ -1223,6 +1223,10 @@
 				W = held
 		if (!istype(W) || W.cant_drop) return
 
+		if (W.chokehold != null)
+			W.drop_grab()
+			return
+
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
 				var/obj/vehicle/V = src.loc
