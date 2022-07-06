@@ -82,7 +82,7 @@
 /obj/item/reagent_containers/emergency_injector/epinephrine
 	name = "emergency auto-injector (epinephrine)"
 	initial_reagents = "epinephrine"
-	desc = "An auto-injector epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
+	desc = "An auto-injector containing epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
 
 /obj/item/reagent_containers/emergency_injector/atropine
 	name = "emergency auto-injector (atropine)"
@@ -148,7 +148,7 @@
 	name = "emergency auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
 	label = "blue"
-	desc = "An auto-injector containing salbutamol, for opening the airways and aiding recovery from suffocation"
+	desc = "An auto-injector containing salbutamol, for opening the airways and aiding recovery from suffocation."
 
 /obj/item/reagent_containers/emergency_injector/perf
 	name = "emergency auto-injector (perfluorodecalin)"
@@ -160,13 +160,13 @@
 	name = "emergency auto-injector (mannitol)"
 	initial_reagents = "mannitol"
 	label = "red"
-	desc = "An auto-injector containing mannitol, a medicine used to treat severe concussions"
+	desc = "An auto-injector containing mannitol, a medicine used to treat severe concussions."
 
 /obj/item/reagent_containers/emergency_injector/mutadone
 	name = "emergency auto-injector (mutadone)"
 	initial_reagents = "mutadone"
 	label = "purple"
-	desc = "An auto-injector containing mutadone, an experimental medicine that reverses genetic abnormalities"
+	desc = "An auto-injector containing mutadone, an experimental medicine that reverses genetic abnormalities."
 
 /obj/item/reagent_containers/emergency_injector/heparin
 	name = "emergency auto-injector (heparin)"
@@ -190,7 +190,7 @@
 	name = "emergency auto-injector (methamphetamine)"
 	initial_reagents = "methamphetamine"
 	label = "white"
-	desc = "An auto-injector containing methamphetamine, a powerful, yet addictive stimulant"
+	desc = "An auto-injector containing methamphetamine, a powerful, yet addictive stimulant."
 
 /obj/item/reagent_containers/emergency_injector/lexorin
 	name = "emergency auto-injector (lexorin)"
@@ -241,59 +241,59 @@
 	name = "high-capacity auto-injector (epinephrine)"
 	initial_reagents = "epinephrine"
 	label = "green"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing containing epinephrine, also known as adrenaline. Used for stabilizing critical patients and as an antihistamine in severe allergic reactions."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol
 	name = "high-capacity auto-injector (salbutamol)"
 	initial_reagents = "salbutamol"
 	label = "blue"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing salbutamol, for opening the airways and aiding recovery from suffocation"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/salicylic_acid
 	name = "high-capacity auto-injector (salicylic acid)"
 	initial_reagents = "salicylic_acid"
 	label = "purple"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing salicyclic acid, used as a painkiller and for treating moderate injuries."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/saline
 	name = "high-capacity auto-injector (saline-glucose)"
 	initial_reagents = "saline"
 	label = "blue"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine
 	name = "high-capacity auto-injector (atropine)"
 	initial_reagents = "atropine"
 	label = "red"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing atropine, used for cardiac emergencies and as a stabilizer in extreme medical cases."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/pentetic
 	name = "high-capacity auto-injector (pentetic acid)"
 	initial_reagents = "penteticacid"
 	label = "purple"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"
 	initial_reagents = "mannitol"
 	label = "green"
-	desc = "A high-capacity auto-injector containing"
+	desc = "A high-capacity auto-injector containing mannitol, a medicine used to treat severe concussions."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
-	desc = "A combination medical injector containing saline and epinephrine."
+	desc = "A combination medical injector containing saline and epinephrine- useful in near-death situations."
 	initial_reagents = list("saline" = 25, "epinephrine" = 25)
 	label = "yellow"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss
 	name = "bloodloss combi-injector"
-	desc = "A combination medical injector containing filgrastim and proconvertin."
+	desc = "A combination medical injector containing filgrastim and proconvertin- useful in treating blood loss."
 	initial_reagents = list("filgrastim" = 25, "proconvertin" = 25)
 	label = "red"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector containing salbutamol and mannitol."
+	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations.."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 
