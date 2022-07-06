@@ -18,7 +18,7 @@
 
 	animate_movement = 2
 //	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
-//heh no not really
+//heh no not really :)
 
 	var/_health = 100
 	var/_max_health = 100
