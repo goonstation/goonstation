@@ -1330,8 +1330,8 @@ datum
 											"<span class='alert'>Your [pick("left arm","right arm","left leg","right leg")] twitches a bit.</span>"))
 					if (4 to 9)
 						M.make_dizzy(1 * mult)
-						M.change_eye_blurry(1, 3)
-						M.change_misstep_chance(10 * mult)
+						M.change_eye_blurry(3, 3)
+						M.change_misstep_chance(7 * mult)
 						if (probmult(20)) M.emote(pick("twitch", "tremble", "twitch_v"))
 						else if(probmult(20))
 							boutput(M, pick("<span class='alert'>Your [pick("arms","legs")] start twitching!</span>",\
@@ -1339,8 +1339,8 @@ datum
 											"<span class='alert'>You don't feel very well.</span>"))
 					if (9 to INFINITY) //now things start going wacky
 						M.make_dizzy(1 * mult)
-						M.change_eye_blurry(3, 3)
-						M.change_misstep_chance(20 * mult)
+						M.change_eye_blurry(6, 6)
+						M.change_misstep_chance(14 * mult)
 						if(probmult(12))
 							if(!M.hasStatus("drowsy"))
 								M.setStatus("drowsy", 10 SECONDS)
@@ -1349,19 +1349,25 @@ datum
 							boutput(M, pick("<span class='alert'>You feel extremely dizzy!</span>",\
 											"<span class='alert'>You feel like everything is spinning!</span>",\
 											"<span class='alert'>Your [pick("arms", "legs")] quiver!</span>",\
+											"<span class='alert'>Your feel a numbness through your [pick("hands", "fingers")]..</span>",\
+											"<span class='alert'>Your vision [pick("gets all blurry", "goes fuzzy")]!</span>",\
 											"<span class='alert'>You feel very sick!</span>"))
 							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
 								M.vomit() //so dizzy you puke
-						else if(probmult(12))
+								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>",\
+													"<span class='alert'>You puke all over yourself!</span>")
+						else if(probmult(9))
 							M.setStatus("muted", 10 SECONDS)
 							boutput(M, pick("<span class='alert'>You feel like the words are getting caught up in your mouth!</span>",\
 											"<span class='alert'>You can't utter a single word!</span>",\
 											"<span class='alert'>Your [pick("face","chest")] feels numb...</span>",\
 											"<span class='alert'>You can't feel your [pick("mouth","tongue","throat")]!</span>"))
-							if(prob(20)) //no need for probmult in here as it's already behind a probmult statement
+							if(prob(25)) //no need for probmult in here as it's already behind a probmult statement
 								M.losebreath += (1)
 								M.emote(pick("gasp", "choke"))
-						else if (probmult(40)) M.emote(pick("twitch", "tremble", "twitch_v"))
+							else if(prob(25)) //same thing
+								M.setStatus("stunned", 3 SECONDS)
+						else if (probmult(40)) M.emote(pick("twitch", "tremble", "drool", "drool", "twitch_v")) //double drool so it shows up more
 				..(M, mult)
 				return
 
