@@ -289,7 +289,6 @@ ABSTRACT_TYPE(/datum/job/command)
 			return
 		M.traitHolder.addTrait("training_drinker")
 		M.traitHolder.addTrait("training_security")
-		JOB_XP(M, "Head of Security", 1)
 
 	derelict
 		name = null//"NT-SO Special Operative"
@@ -1385,8 +1384,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
-		if(prob(20))
-			M.bioHolder.AddEffect("noir", magical=1)
 
 /datum/job/special/musician
 	name = "Musician"

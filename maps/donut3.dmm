@@ -903,7 +903,7 @@
 /area/station/turret_protected/AIsat)
 "abL" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -21459,6 +21459,12 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
+"fVk" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/maintenance/outer/north)
 "fVn" = (
 /obj/machinery/drainage{
 	pixel_x = 9;
@@ -21906,6 +21912,10 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"gdc" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/north)
 "gde" = (
 /obj/disposaloutlet/south,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
@@ -26535,6 +26545,7 @@
 /area/station/crew_quarters/garden)
 "hvd" = (
 /obj/decal/tile_edge/line/blue{
+	dir = 1;
 	icon_state = "line1"
 	},
 /obj/cable{
@@ -36576,7 +36587,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/ranch)
 "kwK" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/decoration/vent{
@@ -50648,6 +50659,20 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
+"oBj" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/maintenance,
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/maintenance/outer/north)
+"oBq" = (
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/maintenance/outer/north)
 "oBu" = (
 /obj/item/instrument/large/piano/grand,
 /obj/railing/cyan{
@@ -64977,7 +65002,7 @@
 	icon_state = "1-10"
 	},
 /obj/cable,
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -67705,6 +67730,12 @@
 	icon_state = "L3"
 	},
 /area/station/hallway/primary/west)
+"ttJ" = (
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/maintenance/outer/north)
 "ttM" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/machinery/door_control{
@@ -71424,7 +71455,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "uzE" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
@@ -78414,7 +78445,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/wall/auto/reinforced/jen,
+/turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
 "wvQ" = (
 /obj/cable{
@@ -126422,9 +126453,9 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
+noK
+noK
+fVk
 noK
 wvD
 cbd
@@ -126724,10 +126755,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+noK
+oBq
+oBq
+ttJ
 wvD
 dwH
 ewQ
@@ -127026,10 +127057,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+gdc
+oBq
+oBq
+oBq
 wvD
 dEs
 oHX
@@ -127328,11 +127359,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
-wvD
+gdc
+oBq
+oBq
+oBq
+oBj
 dEs
 oHX
 oHX
@@ -127630,10 +127661,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+gdc
+oBq
+oBq
+oBq
 wvD
 bRG
 qIy
@@ -127932,10 +127963,10 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+noK
+oBq
+oBq
+oBq
 wvD
 diK
 nUK
@@ -128234,11 +128265,11 @@ rdj
 rdj
 rdj
 rdj
-jqD
-aUm
-kyD
-aUm
-aNo
+noK
+noK
+oHX
+oHX
+voK
 oHX
 dnp
 fjM
@@ -129442,11 +129473,11 @@ rdj
 rdj
 rdj
 rdj
-vPw
+iHx
 kkV
 kkV
 kkV
-aNo
+voK
 euN
 mTq
 pDe
@@ -129741,7 +129772,7 @@ rdj
 rdj
 rdj
 rdj
-kkV
+aUm
 kyD
 kyD
 kyD
@@ -147293,7 +147324,7 @@ tJf
 xXf
 kwO
 ovm
-mxH
+cxH
 nkC
 lVQ
 etV

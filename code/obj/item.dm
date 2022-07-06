@@ -261,8 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
-			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
+			burn_possible = src.material.getProperty("flammable") >= 5 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
@@ -406,9 +405,9 @@
 		return 1
 
 	else
-		user.tri_message("<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-		user, "<span class='alert'>You try to feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
+			"<span class='alert'>You try to feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
 		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
@@ -416,9 +415,9 @@
 		if (BOUNDS_DIST(user, M) > 0)
 			return 0
 
-		user.tri_message("<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-		user, "<span class='alert'>You feed [M] [src]!</span>",\
-		M, "<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
+			"<span class='alert'>You feed [M] [src]!</span>",\
+			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
