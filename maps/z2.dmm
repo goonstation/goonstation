@@ -10274,15 +10274,6 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
-"aHV" = (
-/obj/storage/cart/trash,
-/obj/item/scrap,
-/obj/item/scrap,
-/obj/decal/fakeobjects/lightbulb_broken,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/iomoon/base)
 "aIb" = (
 /obj/lattice{
 	dir = 1;
@@ -13908,6 +13899,7 @@
 /area/crater/biodome/research)
 "aTg" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/businesscard/bonktek,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -23976,15 +23968,10 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "btO" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/iomoon/floor{
-	dir = 1;
-	icon_state = "iocrust_corner"
-	},
-/area/iomoon)
+/obj/storage/crate/loot,
+/obj/item/paper/businesscard/clowntown,
+/turf/simulated/floor/white,
+/area/shuttle/john/owlery)
 "btP" = (
 /obj/lattice{
 	dir = 4;
@@ -24112,9 +24099,15 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "buk" = (
-/obj/item/storage/toilet,
-/turf/unsimulated/floor/specialroom/freezer,
-/area/iomoon/base)
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/iomoon/floor{
+	dir = 1;
+	icon_state = "iocrust_corner"
+	},
+/area/iomoon)
 "bul" = (
 /obj/decal/nothing,
 /obj/map/light/brightwhite,
@@ -24282,13 +24275,8 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
 "buJ" = (
-/obj/rack,
-/obj/item/mop,
-/obj/item/reagent_containers/glass/bucket,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/unsimulated/floor,
+/obj/item/storage/toilet,
+/turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
 "buK" = (
 /turf/unsimulated/floor{
@@ -25698,6 +25686,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
+/obj/item/paper/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -29668,14 +29657,6 @@
 	dir = 1
 	},
 /area/crater/biodome/crew)
-"bMv" = (
-/obj/submachine/chef_sink{
-	desc = "A water-filled unit intended for sanitary purposes.";
-	name = "utility sink";
-	pixel_y = 16
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base)
 "bMw" = (
 /turf/space/dense,
 /area/cordon)
@@ -31565,6 +31546,8 @@
 /area/crypt/sigma/mainhall)
 "bSl" = (
 /obj/table/reinforced/bar/auto,
+/obj/item/paper/businesscard/bonktek,
+/obj/item/paper/businesscard/banjo,
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -32729,6 +32712,7 @@
 	icon_state = "pictureframe";
 	pixel_y = 8
 	},
+/obj/item/paper/businesscard/vurdulak,
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "bWy" = (
@@ -43254,6 +43238,7 @@
 /obj/table/reinforced/auto,
 /obj/item/pen/fancy,
 /obj/machinery/light_switch/north,
+/obj/item/paper/businesscard,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cAG" = (
@@ -47868,6 +47853,8 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/item/paper/businesscard/vurdulak,
+/obj/item/paper/businesscard/ezekian,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLU" = (
@@ -47878,6 +47865,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/paper/businesscard/taxi,
+/obj/item/paper/businesscard/banjo,
+/obj/item/paper/businesscard/clowntown,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cLV" = (
@@ -52907,6 +52897,7 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 10
 	},
+/obj/item/paper/businesscard,
 /turf/unsimulated/floor/wood/two,
 /area/syndicate/minerva5/command)
 "cWM" = (
@@ -58200,6 +58191,7 @@
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal{
 	pixel_x = 19
 	},
+/obj/item/paper/businesscard/cosmicacres,
 /turf/unsimulated/floor/carpet/wizard/standard/edge/south,
 /area/wizard_station)
 "dkD" = (
@@ -69214,6 +69206,19 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"ffI" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "fgY" = (
 /obj/submachine/weapon_vendor/syndicate,
 /obj/machinery/light,
@@ -69694,6 +69699,15 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"ghc" = (
+/obj/storage/cart/trash,
+/obj/item/scrap,
+/obj/item/scrap,
+/obj/decal/fakeobjects/lightbulb_broken,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/iomoon/base)
 "gjq" = (
 /obj/decal/snowbits,
 /turf/unsimulated/floor/arctic/snow,
@@ -70187,6 +70201,10 @@
 /obj/decal/fakeobjects/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"hqt" = (
+/obj/machinery/door/unpowered/wood/stall,
+/turf/unsimulated/floor/specialroom/freezer,
+/area/iomoon/base)
 "hrN" = (
 /obj/machinery/light{
 	dir = 4
@@ -70239,6 +70257,12 @@
 	dir = 5
 	},
 /area/centcom/offices/aloe)
+"hzH" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base)
 "hBb" = (
 /obj/grille/catwalk,
 /obj/map/light/lava,
@@ -70510,11 +70534,6 @@
 /obj/item/crowbar,
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
-/area/iomoon/base/underground)
-"igq" = (
-/obj/item/radio_tape/adventure/xg4,
-/obj/table/wood/round/auto,
-/turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "ihi" = (
 /obj/indestructible/shuttle_corner{
@@ -71079,6 +71098,12 @@
 "jqz" = (
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"jqP" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "jqT" = (
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -4;
@@ -71160,6 +71185,12 @@
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"jBW" = (
+/obj/item/radio_tape/adventure/xg3,
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/iomoon/base)
 "jCK" = (
 /obj/grille/catwalk,
 /obj/map/light/lava,
@@ -72276,12 +72307,6 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
-"lYw" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/iomoon/base)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -72563,6 +72588,11 @@
 /obj/decal/fakeobjects/dreambeach/stones,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"mPS" = (
+/obj/item/radio_tape/adventure/xg4,
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base/underground)
 "mPW" = (
 /obj/loudspeaker{
 	desc = "This could probably cause an earthquake.";
@@ -73008,11 +73038,6 @@
 	dir = 8
 	},
 /area/iomoon/base)
-"nEK" = (
-/obj/item/clothing/suit/bedsheet/pink,
-/obj/stool/bed,
-/turf/unsimulated/floor/carpet/grime,
-/area/iomoon/base)
 "nFE" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/lower_arctic/mining)
@@ -73218,6 +73243,12 @@
 "nTj" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/se,
 /area/centcom/offices/sovexe)
+"nTv" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "nUK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-3"
@@ -73487,6 +73518,13 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oEX" = (
+/obj/table/auto,
+/obj/item/paper/businesscard/lawyers,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/meat_derelict/entry)
 "oGk" = (
 /obj/decal/cleanable/sakura{
 	real_name = "sakura petals"
@@ -73510,6 +73548,14 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"oHh" = (
+/obj/submachine/chef_sink{
+	desc = "A water-filled unit intended for sanitary purposes.";
+	name = "utility sink";
+	pixel_y = 16
+	},
+/turf/unsimulated/floor,
+/area/iomoon/base)
 "oHu" = (
 /obj/cable{
 	d1 = 1;
@@ -73527,12 +73573,6 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
-"oJe" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet/grime,
-/area/iomoon/base)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -73591,10 +73631,6 @@
 	name = "wood floor"
 	},
 /area/centcom/offices/sord)
-"oRf" = (
-/obj/machinery/door/unpowered/wood/stall,
-/turf/unsimulated/floor/specialroom/freezer,
-/area/iomoon/base)
 "oSg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -73704,12 +73740,14 @@
 /obj/item/paper/postcard/mushroom,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"pbL" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 1;
-	tag = "icon-sink (NORTH)"
+"pbH" = (
+/obj/rack,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/unsimulated/floor/specialroom/freezer,
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "pdL" = (
 /obj/storage/crate,
@@ -74623,12 +74661,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"qQq" = (
-/obj/railing/yellow/reinforced,
-/turf/unsimulated/floor/stairs/dark{
-	dir = 8
-	},
-/area/iomoon/base)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-14"
@@ -75366,6 +75398,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"shs" = (
+/obj/item/clothing/suit/bedsheet/pink,
+/obj/stool/bed,
+/turf/unsimulated/floor/carpet/grime,
+/area/iomoon/base)
 "siD" = (
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_x = -11;
@@ -75961,12 +75998,6 @@
 "tKt" = (
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"tLb" = (
-/obj/item/radio_tape/adventure/xg3,
-/turf/unsimulated/floor/black/side{
-	dir = 1
-	},
-/area/iomoon/base)
 "tLZ" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_x4"
@@ -76399,12 +76430,6 @@
 "uQX" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/bball)
-"uSk" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/unsimulated/floor,
-/area/iomoon/base)
 "uTj" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal,
@@ -76800,6 +76825,13 @@
 	icon_state = "red2"
 	},
 /area/diner/cow)
+"vKW" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
+/turf/unsimulated/floor/specialroom/freezer,
+/area/iomoon/base)
 "vMW" = (
 /obj/cable{
 	d1 = 2;
@@ -77100,19 +77132,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"wDq" = (
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/iomoon/base)
 "wEA" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -77661,6 +77680,12 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
+"xOb" = (
+/obj/railing/yellow/reinforced,
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/iomoon/base)
 "xPv" = (
 /obj/cable{
 	d1 = 2;
@@ -80950,7 +80975,7 @@ cFc
 cFc
 bqA
 cIf
-cIM
+btO
 cJA
 cJD
 cKh
@@ -88654,7 +88679,7 @@ izT
 izT
 bvR
 izT
-tLb
+jBW
 wOp
 jqz
 buK
@@ -88952,7 +88977,7 @@ izT
 izT
 izT
 izT
-wDq
+ffI
 buK
 buK
 izT
@@ -89252,10 +89277,10 @@ bpD
 bpD
 bsX
 buq
-buJ
+pbH
 buj
-qQq
-aHV
+xOb
+ghc
 izT
 izT
 bwC
@@ -89554,7 +89579,7 @@ bpD
 bpD
 izT
 izT
-bMv
+oHh
 btM
 btM
 izT
@@ -90159,7 +90184,7 @@ boW
 izT
 izT
 izT
-uSk
+hzH
 izT
 eMD
 bvT
@@ -90762,7 +90787,7 @@ boV
 boW
 izT
 izT
-nEK
+shs
 buN
 izT
 bvq
@@ -91062,9 +91087,9 @@ bpD
 bqp
 boV
 boV
-btO
+buk
 buq
-oJe
+jqP
 buN
 izT
 bvr
@@ -91367,7 +91392,7 @@ boW
 izT
 izT
 izT
-lYw
+nTv
 izT
 izT
 pKM
@@ -91667,8 +91692,8 @@ bqp
 boW
 boW
 izT
-buk
-oRf
+buJ
+hqt
 bPe
 buI
 izT
@@ -91973,7 +91998,7 @@ izT
 izT
 bum
 bum
-pbL
+vKW
 izT
 izT
 bwC
@@ -92271,8 +92296,8 @@ bqp
 boW
 boW
 izT
-buk
-oRf
+buJ
+hqt
 bum
 bum
 bum
@@ -110394,7 +110419,7 @@ btb
 rHr
 lnE
 kce
-igq
+mPS
 aoe
 rHr
 bwe
@@ -141590,7 +141615,7 @@ caX
 aqL
 ccZ
 cdC
-cec
+oEX
 aqL
 dfJ
 dfK
