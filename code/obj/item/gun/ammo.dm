@@ -1177,15 +1177,6 @@
 	max_charge = 40.0
 	recharge_rate = 5.0
 
-	process()
-		if(src.material)
-			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 1)
-					if(prob(1))
-						var/turf/T = get_turf(src)
-						explosion_new(src, T, 1)
-						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
-
 
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
