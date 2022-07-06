@@ -95,32 +95,32 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
-		if(prob(src.material.getProperty("n_radioactive"))*src.neutron_cross_section) //fast spontaneous emission
+		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
-			src.material.adjustProperty("n_radioactive", -0.1)
-			src.material.adjustProperty("radioactive", 0.1)
+			src.material.adjustProperty("n_radioactive", -0.01)
+			src.material.adjustProperty("radioactive", 0.01)
 			src.temperature += 20
-		if(prob(src.material.getProperty("radioactive"))*src.neutron_cross_section) //spontaneous emission
+		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
 			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
-			src.material.adjustProperty("radioactive", -0.1)
+			src.material.adjustProperty("radioactive", -0.01)
 			src.temperature += 10
 		for(var/datum/neutron/N in inNeutrons)
-			if(prob(src.material.getProperty("density")*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
+			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("n_radioactive"))) //neutron stimulated emission
+				if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 20
-				else if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("radioactive"))) //stimulated emission
+				else if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 10
 				else
-					if(prob(src.material.getProperty("hardness"))) //reflection is based on hardness
+					if(prob(src.material.getProperty("hardness")*10)) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
 					else if(is_control_rod) //control rods absorb neutrons
 						N.velocity = 0
@@ -146,7 +146,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 	extra_info()
 		. = ..()
-		. += "Radioactivity: [max(src.material.getProperty("n_radioactive"),src.material.getProperty("radioactive"))]%"
+		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod

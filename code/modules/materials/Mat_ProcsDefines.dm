@@ -547,16 +547,16 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	var/hTC2 = 1
 	if(matA)
 		if(matA.hasProperty("thermal"))
-			hTC1 = max(matA.getProperty("thermal"),1)/100
+			hTC1 = max(matA.getProperty("thermal"),1)/10
 		else if(matA.hasProperty("electrical"))
-			hTC1 = max(matA.getProperty("electrical"),1)/100
+			hTC1 = max(matA.getProperty("electrical"),1)/10
 		else
 			hTC1 = 0.5 //default value
 	if(matB)
 		if(matB.hasProperty("thermal"))
-			hTC2 = max(matB.getProperty("thermal"),1)/100
+			hTC2 = max(matB.getProperty("thermal"),1)/10
 		else if(matB.hasProperty("electrical"))
-			hTC2 = max(matB.getProperty("electrical"),1)/100
+			hTC2 = max(matB.getProperty("electrical"),1)/10
 		else
 			hTC2 = 0.5 //default value
 	return hTC1*hTC2

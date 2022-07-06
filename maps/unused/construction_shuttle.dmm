@@ -825,9 +825,6 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "oV" = (
-/obj/item/material_piece/kremfuel_o{
-	amount = 10
-	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "pi" = (
@@ -1299,9 +1296,6 @@
 /area/station/engine/engineering)
 "UF" = (
 /obj/machinery/light/small/floor,
-/obj/item/material_piece/p239_o{
-	amount = 10
-	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "UH" = (

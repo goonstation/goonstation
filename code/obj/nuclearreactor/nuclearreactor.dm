@@ -361,19 +361,19 @@
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
 		if(hit.material)
-			if(prob(hit.material.getProperty("hardness")))
+			if(prob(hit.material.getProperty("hardness")*10))
 				//reflect
 				shoot_reflected_bounce(O, hit)
 
-			if(prob(hit.material.getProperty("n_radioactive")))
+			if(prob(hit.material.getProperty("n_radioactive")*10))
 				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, TRUE, 1)
-			if(prob(hit.material.getProperty("radioactive")))
+			if(prob(hit.material.getProperty("radioactive")*10))
 				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, FALSE, 1)
 		hit.AddComponent(/datum/component/radioactive, min(power,5), TRUE, FALSE, 1)
 		return
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
-		if(hit.material && !prob(hit.material.getProperty("density")))
+		if(hit.material && !prob(hit.material.getProperty("density")*10))
 			O.power /= 2
 			. = TRUE
