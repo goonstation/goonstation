@@ -1357,7 +1357,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 //little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
-	var/max_wclass = 1 // biggest thing we can carry
+	var/max_wclass = W_CLASS_TINY // biggest thing we can carry
 	var/dam_low = 1
 	var/dam_high = 1
 	var/actions = list("scratches", "baps", "slashes", "paws")
@@ -1459,16 +1459,16 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 
 /datum/limb/small_critter/med //same as the previous, but can pick up some heavier shit
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 
 /datum/limb/small_critter/strong
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	stam_damage_mult = 1
 
 /datum/limb/small_critter/pincers
 	dmg_type = DAMAGE_STAB
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 	dam_low = 2
 	dam_high = 4
