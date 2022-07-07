@@ -476,9 +476,8 @@ var/list/headset_channel_lookup
 
 		if (length(heard_normal))
 			var/prep_name = "[real_name ? real_name : M.real_name]"
-			if(ishuman(M))
-				if (M:vdisfigured)
-					prep_name = "Unknown"
+			if(M.vdisfigured)
+				prep_name = "Unknown"
 			rendered = "[part_a][prep_name][part_b][M.say_quote(messages[1])][part_c]" //delete if no work
 			for (var/mob/R in heard_normal)
 				var/thisR = rendered
