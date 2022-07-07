@@ -114,6 +114,7 @@ What are the archived variables for?
 	. = graphic != graphic_archived
 	graphic_archived = graphic
 
+#define SLEEPING_GAS_CATALYSIS_RATIO 100
 /datum/gas_mixture/proc/react(atom/dump_location)
 	. = 0 //set to non-zero if a notable reaction occured (used by pipe_network and hotspots)
 	var/reaction_rate
@@ -124,15 +125,25 @@ What are the archived variables for?
 			// has already been asserted above instead of utilizing get_trace_gas_by_type()
 			var/datum/gas/oxygen_agent_b/trace_gas = src.trace_gas_refs[/datum/gas/oxygen_agent_b/]
 			if(trace_gas?.moles > MINIMUM_REACT_QUANTITY )
-				reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
-				reaction_rate = QUANTIZE(reaction_rate)
+				// nitrogen saturates oxygen beta, preventing it from reacting with plasma.
+				if (src.nitrogen > src.toxins)
+					reaction_rate = min(src.nitrogen / 2, src.oxygen, trace_gas.moles * SLEEPING_GAS_CATALYSIS_RATIO)
+					reaction_rate = QUANTIZE(reaction_rate * 2)
+					src.oxygen -= reaction_rate / 2
+					src.nitrogen -= reaction_rate
 
-				src.carbon_dioxide -= reaction_rate
-				src.oxygen += reaction_rate
+					var/datum/gas/sleeping_agent/sleepy = src.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
+					sleepy.moles += reaction_rate
+				else
+					reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, trace_gas.moles*0.05)
+					reaction_rate = QUANTIZE(reaction_rate)
 
-				trace_gas.moles -= reaction_rate*0.05
+					src.carbon_dioxide -= reaction_rate
+					src.oxygen += reaction_rate
 
-				src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+					trace_gas.moles -= reaction_rate*0.05
+
+					src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
 
 				if(reaction_rate > MINIMUM_REACT_QUANTITY)
 					. |= CATALYST_ACTIVE

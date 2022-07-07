@@ -376,7 +376,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner)
 		owner.material.triggerTemp(locate(owner))
 
-#define MAX_PLASMA_TO_NITROGEN_RATIO 1
 /datum/materialProc/molitz_temp
 	var/unresonant = 1
 	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
@@ -397,18 +396,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
 		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
-			// if there is enough nitrogen and oxygen, make sleeping gas and do nothing else
-			if (air.nitrogen > MINIMUM_REACT_QUANTITY && air.oxygen > MINIMUM_REACT_QUANTITY && air.nitrogen * MAX_PLASMA_TO_NITROGEN_RATIO > air.toxins)
-				var reaction_rate = min(air.nitrogen / 2, air.oxygen)
-				reaction_rate = QUANTIZE(reaction_rate)
-
-				air.nitrogen -= reaction_rate * 2
-				air.oxygen -= reaction_rate
-				var/datum/gas/sleeping_agent/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-				trace_gas.moles += reaction_rate * 2
-				payload.temperature = air.temperature
-
-				target.assume_air(payload)
+			// excess nitrogen prevents oxygen B from being created
+			if (air.nitrogen > air.toxins)
 				return
 
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
@@ -431,7 +420,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			iterations -= 1
 
 			target.assume_air(payload)
-#undef MAX_PLASMA_TO_NITROGEN_RATIO
 
 /datum/materialProc/molitz_temp/agent_b
 	execute(var/atom/location, var/temp)
