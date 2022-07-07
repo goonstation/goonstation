@@ -22,7 +22,11 @@
 		. = ..()
 		use_power(250)
 
-		if(!turbine_handle)
+		if(QDELETED(turbine_handle))
+			turbine_handle = null
+			if (length(src.history) > src.history_max)
+				src.history.Cut(1, 2) //drop the oldest entry
+			history += list(list(0, 0, 0))
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
@@ -31,6 +35,15 @@
 					break
 			return
 
+		if (length(src.history) > src.history_max)
+			src.history.Cut(1, 2) //drop the oldest entry
+		history += list(
+					list(
+						turbine_handle.RPM,
+						turbine_handle.stator_load,
+						turbine_handle.lastgen
+						)
+					)
 
 		if (status & (NOPOWER|BROKEN))
 			return
@@ -45,15 +58,7 @@
 			src.icon_state = "engine"
 			src.UpdateIcon()
 
-		if (length(src.history) > src.history_max)
-			src.history.Cut(1, 2) //drop the oldest entry
-		history += list(
-					list(
-						turbine_handle.RPM,
-						turbine_handle.stator_load,
-						turbine_handle.lastgen
-						)
-					)
+
 
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -68,16 +73,17 @@
 
 	ui_data(mob/user)
 		. = list(
-			"rpm" = turbine_handle.RPM,
-			"load" = turbine_handle.stator_load,
-			"power" = turbine_handle.lastgen,
-			"volume" = turbine_handle.flow_rate,
+			"rpm" = turbine_handle?.RPM,
+			"load" = turbine_handle?.stator_load,
+			"power" = turbine_handle?.lastgen,
+			"volume" = turbine_handle?.flow_rate,
 			"history" = src.history,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
-		if(.)
+		if(. || QDELETED(src.turbine_handle))
+			src.turbine_handle = null
 			return
 
 		switch(action)
@@ -101,7 +107,8 @@
 
 	process()
 		. = ..()
-		if(!reactor_handle)
+		if(QDELETED(reactor_handle))
+			reactor_handle = null
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/netlink/N in powernet.nodes)
@@ -110,6 +117,10 @@
 
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if(QDELETED(src.reactor_handle))
+			boutput(user,"No connection to reactor!")
+			ui?.close()
+			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "NuclearReactor")
