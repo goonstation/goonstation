@@ -272,5 +272,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	harvests = 5
 	endurance = 0
 	genome = 6
+	assoc_reagents = list("coffee")
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	mutations = list(/datum/plantmutation/coffee/mocha, /datum/plantmutation/coffee/latte)

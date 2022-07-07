@@ -25,6 +25,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -96,6 +97,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw1"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
@@ -231,7 +233,7 @@ CONTAINS:
 	throw_range = 20
 	force = 5
 	flags = ONBELT
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
@@ -1282,9 +1284,6 @@ CONTAINS:
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-
-			if (!H.blinded) // can't see the light if you can't see shit else!!
-				H.vision.flash(src.anim_duration)
 
 			if (istype(H.glasses) && !istype(H.glasses, /obj/item/clothing/glasses/regular) && H.glasses.c_flags & COVERSEYES) // check all the normal things that could cover eyes
 				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!</span>"

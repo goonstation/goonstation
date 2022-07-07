@@ -303,38 +303,40 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
-				if(src.material.hasProperty("electrical"))
-					src.setProperty("conductivity", src.material.getProperty("electrical") / 100)
-				else
-					src.setProperty("conductivity", 1)
 
-				if(src.material.hasProperty("thermal"))
-					protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-					setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-					setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				else
-					protective_temperature = 0
-					setProperty("coldprot", 0)
-					setProperty("heatprot", 0)
-			return
+				switch(src.material.getProperty("electrical"))
+					if(0 to 1)
+						src.setProperty("conductivity", 0.15)
+					if(1 to 2)
+						src.setProperty("conductivity", 0.3)
+					if(3 to 4)
+						src.setProperty("conductivity", 0.45)
+					else
+						src.setProperty("conductivity", 1)
+
+				var/thermal_insul = max(0, 5 - src.material.getProperty("thermal"))
+
+				src.setProperty("coldprot", thermal_insul * 2)
+				src.setProperty("heatprot", thermal_insul * 2)
 
 	armored
 		icon_state = "black"
 		item_state = "swat_gl"
+
 		onMaterialChanged()
 			..()
 			if(istype(src.material))
 				var/types = list()
-				if(src.material.getProperty("density") > 10 || src.material.getProperty("hard") > 10)
-					types["blunt"] = 0.5 * ceil((max(src.material.getProperty("density"), src.material.getProperty("hard")) - 10)**0.5)
-				if(src.material.getProperty("density") > 10)
-					types["cut"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
-				if(src.material.getProperty("hard") > 10)
-					types["stab"] = 0.5 * ceil((src.material.getProperty("density") - 10)**0.5)
-				if(src.material.hasProperty("thermal"))
-					var/thermal = 100 - src.material.getProperty("thermal")
-					if(thermal > 10)
-						types["burn"] = 0.5 * ceil((thermal - 10)**0.5)
+				if(src.material.getProperty("density") > 3 || src.material.getProperty("hard") > 3)
+					types["blunt"] = 0.5 * (max(src.material.getProperty("density"), src.material.getProperty("hard")) - 2)
+				if(src.material.getProperty("density") > 3)
+					types["cut"] = 0.5 * (src.material.getProperty("density") - 2)
+				if(src.material.getProperty("hard") > 3)
+					types["stab"] = 0.5 * (src.material.getProperty("hard") - 2)
+
+				var/thermal = max(0, 5 - src.material.getProperty("thermal"))
+				if(thermal > 0)
+					types["burn"] = thermal
 
 				AddComponent(/datum/component/wearertargeting/unarmedblock/unarmed_bonus_block, list(SLOT_GLOVES), types)
 

@@ -423,7 +423,7 @@
 	bite_adjectives = list("rather large","big","expansive","proportionally small but still sizable")
 
 /datum/limb/small_critter/bee // can hold slightly larger things
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	actions = list("pokes")
 	sound_attack = null
 

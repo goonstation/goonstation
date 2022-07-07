@@ -105,7 +105,7 @@
 							item_amounts += 1
 						if(2)
 							items += pick(concrete_typesof(/obj/item/wizard_crystal))
-							item_amounts += 10
+							item_amounts += 3
 						else
 							items += /obj/item/shipcomponent/mainweapon/rockdrills
 							item_amounts += 1

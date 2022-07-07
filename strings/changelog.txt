@@ -1,5 +1,123 @@
 
+(t)wed jul 06 22
+(u)XyzzyThePretender
+(p)9499
+(e)|
+(+)Added robustissin to the medical vendors.
+(u)LeahTheTech
+(p)9504
+(e)⚖|balance
+(*)Made freedom implants more reliable.
+(u)Hans
+(p)9462
+(e)|
+(*)Added a new chemical, neurodepressant! A compound that messes with muscular function and causes dizziness.
+(u)Ikea
+(p)9487
+(e)⚖|balance
+(+)The stability material property has been removed from the game.
+(u)DimWhat
+(p)9342
+(e)🆕🎨|feature, sprites
+(+)Made a few new more of clothing work with the inspector clothing medal reward.
+(u)Mr. Moriarty
+(p)9460
+(e)|
+(+)Attempting to drop an item will now drop any grabs made with it first.
+(t)tue jul 05 22
+(u)XyzzyThePretender
+(p)9473
+(e)🐛|bug
+(+)Brave Bull can be made using coffee from a coffee maker.
+(u)Kubius
+(p)9433
+(e)🆕🔄|feature, rework
+(+)Disfigured faces can now be mended with synthflesh, and no longer persist with you into the ethereal plane.
+(u)Luxizzle
+(p)9226
+(e)🆕📄|feature, tgui
+(*)TGUI Human Inventory
+(u)tarmunora
+(p)9463
+(e)⚖|balance
+(*)materials have (hopefully) reasonable defaults for properties, and property values have been squisified down to the 1-9 range.
+(*)Some things, especially with respect to fabrication, may not work as they did before/as expected. If there are any serious problems, make a bug report or something so it can be looked at.
+(+)neutronium recipe disabled
+(u)Taylor Kellogg
+(p)9406
+(e)📄|tgui
+(+)Makes it so tgui number inputs can be tabbed between.
+(t)mon jul 04 22
+(u)LeahTheTech
+(p)9416
+(e)🎨⚖|sprites, balance
+(+)Welding masks now use a vision obscuring overlay instead of a screen tint
+(u)Moberry
+(p)9377
+(e)⚖|balance
+(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(+)Artifact Resupply is now a flat one minute delay.
+(u)ZWRh3
+(p)9409
+(e)⚖|balance
+(+)Changeling regenerative statis now removes more negative status effects and bad genes.
+(u)ZWRh3
+(p)9354
+(e)⚖|balance
+(+)Werewolves are now immune to walking on shards similar to cows.
+(u)avimour
+(p)9356
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant: Tea. Which can be used to create matcha!
+(+)Combine matcha and water to get...matcha tea!
+(t)sun jul 03 22
+(u)DimWhat
+(p)9352
+(e)⚖|balance
+(+)Removed the penlight flash effect
+(u)DimWhat
+(p)9370
+(e)⚖|balance
+(+)Made the radio show host headphones more protective against loud noises.
+(u)LeahTheTech
+(p)9436
+(e)|
+(+)Using a mop in hand will now mop the turf you're standing on, mopping now comes with 13% less RSI!
+(u)Mr. Moriarty
+(p)9430
+(e)🗺|mapping
+(+)Replaced old Security Records computers with ThinkDOS SecMate computers.
+(t)sat jul 02 22
+(u)ZWRh3
+(p)9437
+(e)⚖|balance
+(+)Removed stimulants from battle royale.
+(u)ZWRh3
+(p)9438
+(e)⚖|balance
+(+)Removed sarin grenades from BR
+(u)Azrun
+(p)9434
+(e)⚖|balance
+(+)TEG Circulator maintenance panel now protected with aerogel.  Less likely to be impacted by environmental temperatures when panel is closed.
+(t)fri jul 01 22
+(u)Walpvrgis
+(p)9425
+(e)🎨|sprites
+(+)Some botany herbs have had a visual makeover, and Shivering/Quivering Contusine now have unique growth sprites rather than using the same one.
+(u)Munien
+(p)9424
+(e)|
+(+)Nicotine patch boxes are now available for purchase in cigarette vending machines.
+(t)thu jun 30 22
+(u)End
+(e)🎨|sprites
+(+)Resprited the Syndicate teleport gun.
+(+)Updated the armory shotgun rack.
 (t)tue jun 28 22
+(u)Azrun
+(e)|
+(+)Frozen fart will no longer jump out of objects.
 (u)CodeJester
 (p)8541
 (e)📄|tgui

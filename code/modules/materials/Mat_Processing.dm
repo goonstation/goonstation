@@ -400,9 +400,6 @@
 
 					var/obj/item/piece = new newtype(src)
 
-					if(istype(FP.material, /datum/material/fissile) && istype(SP.material, /datum/material/fissile))
-						merged = merge_mat_nuke(merged, FP.material, SP.material)
-
 					if(apply_material)
 						piece.setMaterial(merged)
 

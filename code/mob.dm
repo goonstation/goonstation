@@ -69,6 +69,7 @@
 	var/stuttering = null
 	var/real_name = null
 	var/blinded = null
+	var/disfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0.0
 	var/lying = 0.0
@@ -1221,6 +1222,10 @@
 			if (held && !istype(held, /obj/ability_button))
 				W = held
 		if (!istype(W) || W.cant_drop) return
+
+		if (W.chokehold != null)
+			W.drop_grab()
+			return
 
 		if (W && !W.qdeled)
 			if (istype(src.loc, /obj/vehicle))
@@ -2424,6 +2429,7 @@
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
 	src.buckled = null
+	src.disfigured = FALSE
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
