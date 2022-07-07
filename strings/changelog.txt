@@ -1,5 +1,21 @@
 
 (t)wed jul 06 22
+(u)XyzzyThePretender
+(p)9499
+(e)|
+(+)Added robustissin to the medical vendors.
+(u)LeahTheTech
+(p)9504
+(e)⚖|balance
+(*)Made freedom implants more reliable.
+(u)Hans
+(p)9462
+(e)|
+(*)Added a new chemical, neurodepressant! A compound that messes with muscular function and causes dizziness.
+(u)Ikea
+(p)9487
+(e)⚖|balance
+(+)The stability material property has been removed from the game.
 (u)DimWhat
 (p)9342
 (e)🆕🎨|feature, sprites
