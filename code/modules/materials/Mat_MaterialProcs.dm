@@ -376,7 +376,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner)
 		owner.material.triggerTemp(locate(owner))
 
-#define MAX_PLASMA_TO_NITROGEN_RATIO 4
+#define MAX_PLASMA_TO_NITROGEN_RATIO 1
 /datum/materialProc/molitz_temp
 	var/unresonant = 1
 	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
