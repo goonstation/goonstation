@@ -95,6 +95,14 @@ datum
 					else
 
 						M.TakeDamage("All", 0, min(5, volume * 0.5) * stack_mult, 0, DAMAGE_BURN)
+				else if (method == INGEST)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.TakeDamage("chest", 0, 5, 0, DAMAGE_BURN)
+						H.emote("scream")
+						if (!H.vdisfigured)
+							boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+							H.vdisfigured = TRUE
 				else
 					boutput(M, "<span class='alert'>The greenish acidic substance stings[volume < 10 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 10)
@@ -166,6 +174,14 @@ datum
 						M.unlock_medal("Red Hood", 1)
 					else
 						random_burn_damage(M, min(5, volume * 0.25))
+				else if (method == INGEST)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.TakeDamage("chest", 0, 5, 0, DAMAGE_BURN)
+						H.emote("scream")
+						if (!H.vdisfigured)
+							boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+							H.vdisfigured = TRUE
 				else
 					boutput(M, "<span class='alert'>The transparent acidic substance stings[volume < 25 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 					if (volume >= 25)
@@ -891,6 +907,16 @@ datum
 								return
 					else
 						random_brute_damage(M, min(15,volume))
+
+				else if (method == INGEST)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.TakeDamage("chest", 0, 5, 0, DAMAGE_BURN)
+						H.emote("scream")
+						if (!H.vdisfigured)
+							boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+							H.vdisfigured = TRUE
+
 				else if (method == TOUCH && volume <= 10 && prob(20))
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M

@@ -2535,6 +2535,8 @@
 						heardname = ID.registered
 					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
