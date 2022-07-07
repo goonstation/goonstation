@@ -64,6 +64,7 @@
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y])
+					src.component_grid[x][y].loc = src
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
@@ -96,6 +97,14 @@
 		//if we somehow ended up with input gas still
 		gas_output.merge(gas_input)
 
+		if(temperature >= 2000)
+			if(!src.GetParticles("overheat_smoke"))
+				src.UpdateParticles(new/particles/nuke_overheat_smoke,"overheat_smoke")
+				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+		else
+			src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+			src.ClearSpecificParticles("overheat_smoke")
+
 		src.radiationLevel = tmpRads
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
@@ -106,7 +115,7 @@
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
-			var/heat_transfer_mult = 0.01
+			var/heat_transfer_mult = 0.95
 			//heat transfer equation = hA(T2-T1)
 			//assume A = 1m^2
 			var/deltaT = src.current_gas.temperature - src.temperature
@@ -128,14 +137,14 @@
 		if(rads <= 0)
 			return
 		neutron_projectile.power = rads
-		for(var/i = min(rads,10),i>0,i--)
+		for(var/i = min(rads,20),i>0,i--)
 			shoot_projectile_XY(src, neutron_projectile, rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
-		rads -= min(rads,10)
+		rads -= min(rads,20)
 
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads,100), TRUE, FALSE, 5)
+		src.AddComponent(/datum/component/radioactive, rads, TRUE, FALSE, 5)
 
 
 
@@ -318,22 +327,13 @@
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
-		/*src.component_grid[3][2] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[2][3] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[3][6] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[2][5] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][2] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[6][3] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[6][5] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][6] = new /obj/item/reactor_component/gas_channel
 
-		src.component_grid[3][3] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[2][4] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[3][5] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][3] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[6][4] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][5] = new /obj/item/reactor_component/heat_exchanger*/
-
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
+	New()
+		..()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT
@@ -380,3 +380,18 @@
 		if(hit.material && !prob(hit.material.getProperty("density")*10))
 			O.power /= 2
 			. = TRUE
+
+/particles/nuke_overheat_smoke
+	icon = 'icons/effects/effects.dmi'
+	icon_state = list("smoke")
+	color = "#777777"
+	width = 150
+	height = 200
+	count = 200
+	lifespan = generator("num", 20, 35, UNIFORM_RAND)
+	fade = generator("num", 50, 100, UNIFORM_RAND)
+	position = generator("box", list(-4,0,0), list(4,15,0), UNIFORM_RAND)
+	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
+	gravity = list(0.07, 0.02, 0)
+	grow = list(0.02, 0)
+	fadein = 10
