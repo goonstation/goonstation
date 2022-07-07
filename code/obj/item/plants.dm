@@ -437,15 +437,32 @@
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
 	var/thorned = 1
-	var/list/names = list("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia",
-	"Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Dakota", "Avery",
-	"Sofia", "Camila", "Aria", "Scarlett", "Liam", "Noah", "William", "James",
-	"Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan",
-	"Jacob", "Michael", "Daniel", "Henry", "Jackson", "Sebastian", "Aiden", "Matthew")
 
 	New()
 		..()
-		desc = desc + pick(names) + "."
+		var/list/possible_names = list()
+		for(var/mob/living/carbon/human/H in mobs)
+			if(isnpcmonkey(H))
+				continue
+			if(iswizard(H))
+				continue
+			if(isnukeop(H))
+				continue
+			if(!H.mind)
+				continue
+			possible_names += H
+		for(var/mob/living/silicon/robot/R in mobs)
+			possible_names += R
+		for(var/mob/living/silicon/ai/A in mobs)
+			possible_names += A
+		var/mob/rose_name //typecasted to mob to use the real_name var
+		if(!length(possible_names))
+			rose_name = pick_string_autokey("names/first.txt")
+		else
+			rose_name = pick(possible_names)
+			rose_name = rose_name.real_name
+		desc = desc + rose_name + "."
+
 
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
