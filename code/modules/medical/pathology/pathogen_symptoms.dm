@@ -1442,58 +1442,6 @@ datum/pathogeneffects/malevolent/acutefever
 		if (R == "salicylic_acid")
 			return "The heat emission of the pathogen is barely affected by the painkillers."
 
-datum/pathogeneffects/malevolent/ultimatefever
-	name = "Dragon Fever"
-	desc = "The body temperature of the infected individual seriously increases and may spontaneously combust. Or worse."
-	infect_type = INFECT_NONE
-	rarity = RARITY_VERY_RARE
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		var/mob/living/carbon/human/H = M
-		switch (origin.stage)
-			if (1 to 3)
-				if (prob(4 * origin.stage))
-					M.bodytemperature += origin.stage * 4
-					M.show_message("<span class='alert'>You feel [pick("a bit ", "rather ", "")]hot.</span>")
-			if (4)
-				if (prob(12))
-					M.bodytemperature += 20
-					M.TakeDamage("chest", 0, 2)
-					M.show_message("<span class='alert'>You feel extremely hot.</span>")
-				if (prob(5))
-					H.update_burning(25)
-					M.show_message("<span class='alert'>You spontaneously combust!</span>")
-					if (istype(M.loc, /obj/icecube))
-						var/IC = M.loc
-						M.set_loc(get_turf(M))
-						qdel(IC)
-
-			if (5)
-				if (prob(17))
-					M.bodytemperature += 25
-					M.TakeDamage("chest", 0, 2)
-					M.show_message("<span class='alert'>You feel rather hot.</span>")
-				if (prob(5))
-					H.update_burning(35)
-					M.show_message("<span class='alert'>You spontaneously combust!</span>")
-					if (istype(M.loc, /obj/icecube))
-						var/IC = M.loc
-						M.set_loc(get_turf(M))
-						qdel(IC)
-				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
-					M.show_message("<span class='alert'>You completely burn up!</span>")
-					logTheThing("pathology", M, null, " is firegibbed due to symptom [src].")
-					M.firegib()
-
-	may_react_to()
-		return "The pathogen appears to be creating a constant field of radiating heat. The relevant membranes look like they might be affected by painkillers."
-
-	react_to(var/R, var/zoom)
-		if (R == "salicylic_acid")
-			return "The heat emission of the pathogen is completely unaffected by the painkillers and continues to radiate heat at an intense rate."
-
 datum/pathogeneffects/malevolent/chills
 	name = "Common Chills"
 	desc = "The infected feels the sensation of lowered body temperature."
@@ -1607,67 +1555,6 @@ datum/pathogeneffects/malevolent/seriouschills
 	react_to(var/R, var/zoom)
 		if (R == "phlogiston" || R == "infernite")
 			return "The hot reagent barely melts the trail of ice."
-
-datum/pathogeneffects/malevolent/seriouschills/ultimate
-	name = "Arctic Chills"
-	desc = "The infected feels the sensation of seriously lowered body temperature. And might spontaneously become an ice statue."
-	infect_type = INFECT_NONE
-	rarity = RARITY_VERY_RARE
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		switch (origin.stage)
-			if (1 to 3)
-				if (prob(origin.stage * 4))
-					M.bodytemperature -= rand(origin.stage * 5)
-					M.show_message("<span class='alert'>You feel [pick("a little ", "a bit ", "rather ", "")] cold.</span>")
-				if (prob(origin.stage - 1) && isturf(M.loc))
-					M.show_message("<span class='alert'>You spontaneously freeze!</span>")
-					M.bodytemperature -= 25
-					new /obj/icecube(get_turf(M), M)
-			if (4)
-				if (prob(50))
-					create_icing(M)
-				if (prob(13))
-					if (prob(15) && isturf(M.loc))
-						M.delStatus("burning")
-						M.show_message("<span class='alert'>You spontaneously freeze!</span>")
-						M.bodytemperature -= 30
-						new /obj/icecube(get_turf(M), M)
-					else
-						M.bodytemperature -= 30
-						M.show_message("<span class='alert'>You pretty damn cold.</span>")
-						M.changeStatus("stunned", 1 SECOND)
-						M.emote("shiver")
-
-			if (5)
-				if (prob(50))
-					create_icing(M)
-				if (prob(15))
-					if (prob(25) && isturf(M.loc))
-						M.delStatus("burning")
-						M.show_message("<span class='alert'>You spontaneously freeze!</span>")
-						M.bodytemperature -= 30
-						new /obj/icecube(get_turf(M), M)
-					else
-						M.bodytemperature -= 50
-						M.show_message("<span class='alert'>[pick("You're freezing!", "You're getting cold...", "So very cold...", "You feel your skin turning into ice...")]</span>")
-						M.changeStatus("stunned", 3 SECONDS)
-						M.emote("shiver")
-				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
-					M.show_message("<span class='alert'>You freeze completely!</span>")
-					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
-					M.become_statue_ice()
-		if (M.bodytemperature < 0)
-			M.bodytemperature = 0
-
-	may_react_to()
-		return "The pathogen is producing a trail of ice. Perhaps something hot might affect it."
-
-	react_to(var/R, var/zoom)
-		if (R == "phlogiston" || R == "infernite")
-			return "The hot reagent doesn't affect the trail of ice at all!"
 
 datum/pathogeneffects/malevolent/farts
 	name = "Farts"
