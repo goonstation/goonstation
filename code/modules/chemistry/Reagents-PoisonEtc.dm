@@ -85,8 +85,10 @@ datum
 						if (prob(75))
 							M.TakeDamage("head", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 							M.emote("scream")
-							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-							M.real_name = "Unknown"
+							if(!M.disfigured)
+								boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
+								M.disfigured = TRUE
+								M.UpdateName()
 							M.unlock_medal("Red Hood", 1)
 						else
 							M.TakeDamage("All", 0, 10 * stack_mult, 0, DAMAGE_BURN)
@@ -157,8 +159,10 @@ datum
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 0, 10, 0, DAMAGE_BURN)
 						M.emote("scream")
-						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-						M.real_name = "Unknown"
+						if(!M.disfigured)
+							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
+							M.disfigured = TRUE
+							M.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
 						random_burn_damage(M, min(5, volume * 0.25))
@@ -856,8 +860,10 @@ datum
 						if (!H.wear_mask && !H.head)
 							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.real_name = "Unknown"
+							if(!H.disfigured)
+								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+								H.disfigured = TRUE
+								H.UpdateName()
 							H.unlock_medal("Red Hood", 1)
 							return
 						else

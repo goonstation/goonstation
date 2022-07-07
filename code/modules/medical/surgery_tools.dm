@@ -1283,9 +1283,6 @@ CONTAINS:
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 
-			if (!H.blinded) // can't see the light if you can't see shit else!!
-				H.vision.flash(src.anim_duration)
-
 			if (istype(H.glasses) && !istype(H.glasses, /obj/item/clothing/glasses/regular) && H.glasses.c_flags & COVERSEYES) // check all the normal things that could cover eyes
 				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!</span>"
 			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)

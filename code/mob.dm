@@ -69,6 +69,7 @@
 	var/stuttering = null
 	var/real_name = null
 	var/blinded = null
+	var/disfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0.0
 	var/lying = 0.0
@@ -2424,6 +2425,7 @@
 	src.take_brain_damage(-INFINITY)
 	src.health = src.max_health
 	src.buckled = null
+	src.disfigured = FALSE
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp

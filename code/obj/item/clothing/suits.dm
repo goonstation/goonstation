@@ -1282,44 +1282,22 @@
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
 	var/datum/material/renf=null
-	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
 
 	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
 		renf = R
 		if (src.material && renf)
-			if (src.material.hasProperty("thermal"))
-				var/prot = 100 - src.material.getProperty("thermal")
-				setProperty("coldprot", prot)
-				setProperty("heatprot", round(prot/2))
-			else
-				setProperty("coldprot", 30)
-				setProperty("heatprot", 15)
 
-			if (src.material.hasProperty("permeable"))
-				var/permprot = 100 - src.material.getProperty("permeable")
-				setProperty("viralprot", permprot)
-			else
-				setProperty("viralprot", 40)
+			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			setProperty("coldprot", 10+prot)
+			setProperty("heatprot", 2+round(prot/2))
 
-			if(src.material.hasProperty("density"))
-				prot = round(src.material.getProperty("density") / 13)// for RANGED
-				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("rangedprot", 0.4)
+			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
+			setProperty("viralprot", prot)
 
-			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
-				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
-				setProperty("meleeprot", prot)
-
-				 // for MOVESPEED
-				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
-				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
-				setProperty("space_movespeed", clunk)
-
-			else
-				setProperty("meleeprot", 3)
-				setProperty("space_movespeed", 0.6)
+			prot = max(0, renf.getProperty("density") - 3) / 2
+			setProperty("meleeprot", 3 + prot)
+			setProperty("rangedprot", 0.3 + prot / 5)
+			setProperty("space_movespeed", 0.15 + prot / 5)
 
 	UpdateName()
 		if (src.material && renf)
