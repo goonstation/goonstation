@@ -562,7 +562,7 @@
 		icon_state = "MDlabcoat-cool"
 		coat_style = "MDlabcoat-cool"
 
-/obj/item/clothing/suit/labcoat/microbiology
+/obj/item/clothing/suit/labcoat/pathology
 	name = "microbiologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Microbiologist."
 	icon_state = "PTlabcoat"

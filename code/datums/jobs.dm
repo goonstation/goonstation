@@ -603,7 +603,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/microbiologist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
-	slot_suit = list(/obj/item/clothing/suit/labcoat/microbiology)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
 	#ifdef SCIENCE_PATHO_MAP
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	#else
