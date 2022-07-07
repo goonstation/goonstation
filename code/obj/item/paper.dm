@@ -1767,8 +1767,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
 
 
@@ -1779,8 +1777,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
 
 
@@ -1792,8 +1788,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
 
 
@@ -1804,8 +1798,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
 
 /obj/item/paper/businesscard/clowntown
@@ -1816,8 +1808,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
 
 /obj/item/paper/businesscard/cosmicacres
@@ -1827,8 +1817,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
 
 /obj/item/paper/businesscard/ezekian
@@ -1839,8 +1827,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
 
 /obj/item/paper/businesscard/gragg1
@@ -1850,8 +1836,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
 
 /obj/item/paper/businesscard/gragg2
@@ -1861,8 +1845,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
 
 /obj/item/paper/businesscard/josh
@@ -1873,8 +1855,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
 
 /obj/item/paper/businesscard/lawyers
@@ -1884,8 +1864,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
 
 /obj/item/paper/businesscard/hemera_rcd
@@ -1895,8 +1873,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
 
 
@@ -1907,8 +1883,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
 
 /obj/item/paper/businesscard/taxi
@@ -1919,8 +1893,6 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
 
 /obj/item/paper/businesscard/vurdulak
@@ -1931,6 +1903,4 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	New()
 		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
