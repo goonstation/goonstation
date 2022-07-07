@@ -6,6 +6,11 @@ datum
 			name = "germs"
 			id = "germs"
 			data = null				//The precursor reagent
+			var/minimum_required_volume = 4.5
+
+			reaction_obj(var/obj/O, var/volume)
+				if (src.volume < minimum_required_volume)
+					return
 
 		/*microbiology/exclusiveimmunity
 			name = "Toggleable Immunizers"
@@ -46,6 +51,7 @@ datum
 			data = "silicon"
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if (istype(O,/obj/machinery/power/solar))
 					var/obj/machinery/power/solar/S = O
 					// Credit to Convair800's silicate code implementation as a reference
@@ -71,6 +77,7 @@ datum
 			data = "synthflesh"
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if (istype(O,/obj/kitchenspike))
 					var/obj/kitchenspike/K = O
 					if (K.meat <= 1)
@@ -102,6 +109,7 @@ datum
 			#define EXPLO_INCREMENT 1
 			#define RANGED_INCREMENT 0.25				//numeric scale, 1->inf. Most clothes with rangedprot do not go past 1.
 			#define MAX_RANGED_UPGRADE 0.5				//Assume someone tries to minmax shoes, uniform, outer layer, and hat. Give 2 total.
+				..()
 				if (!(istype(O, /obj/item/clothing)))
 					return
 				if (istype(O, /obj/item/clothing/glasses) || istype(O,/obj/item/clothing/mask))
@@ -185,6 +193,7 @@ datum
 			data = "ldmatter"
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if (istype(O, /obj/item/rcd))
 					var/obj/item/rcd/R = O
 					/* construction cost and time */
@@ -216,6 +225,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 			#define CHARGER_MAX_CHARGE_RATE 1000	//2-3 times faster charge for cells, borgs!
+				..()
 				if (istype(O, /obj/machinery/recharger))	//Tool charger
 					var/obj/machinery/recharger/R = O
 					if (R.secondarymult <= 2)
@@ -248,6 +258,7 @@ datum
 			data = "cleaner"
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if(!(istype(O,/obj/item/clothing)))
 					return
 				var/obj/item/clothing/C = O
@@ -268,6 +279,7 @@ datum
 			data = "napalm_goo"
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if(!(istype(O, /obj/item/weldingtool)))
 					return
 				var/obj/item/weldingtool/tool = O
@@ -288,6 +300,7 @@ datum
 			data = "spaceglue"	// No boron yet...
 
 			reaction_obj(var/obj/O, var/volume)
+				..()
 				if(!(istype(O, /obj/machinery/atmospherics/pipe/simple)))
 					return
 				var/obj/machinery/atmospherics/pipe/simple/Pipe = O
