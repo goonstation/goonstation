@@ -2001,46 +2001,6 @@ datum/pathogeneffects/malevolent/mutation/beneficial
 			else
 				return "The pathogen seems to have reluctantly settled down in the presence of the mutadone."
 
-datum/pathogeneffects/malevolent/radiation
-	name = "Radioactive Infection"
-	desc = "Infection irradiates the host's cells."
-	infect_type = INFECT_NONE
-	rarity = RARITY_RARE
-
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		switch (origin.stage)
-			if (1 to 3)
-				if (prob(5 * origin.stage + 3))
-					M.changeStatus("radiation", origin.stage)
-					boutput(M,"<span class='alert'>You feel sick.</span>")
-			if (4)
-				if (prob(13))
-					M.changeStatus("radiation", 3 SECONDS)
-					boutput(M,"<span class='alert'>You feel very sick!</span>")
-				else if (prob(26))
-					M.changeStatus("radiation", 2 SECONDS)
-					boutput(M,"<span class='alert'>You feel sick.</span>")
-			if (5)
-				if (prob(15))
-					M.changeStatus("radiation", rand(2,4) SECONDS)
-					boutput(M,"<span class='alert'>You feel extremely sick!!</span>")
-				else if (prob(20))
-					M.changeStatus("radiation", 3 SECONDS)
-					boutput(M,"<span class='alert'>You feel very sick!</span>")
-				else if (prob(40))
-					M.changeStatus("radiation", 2 SECONDS)
-					boutput(M,"<span class='alert'>You feel sick.</span>")
-
-
-	may_react_to()
-		return "A curiously shaped gland on the pathogen is emitting an unearthly blue glow." //Cherenkov radiation
-
-	react_to(var/R, var/zoom)
-		if (R == "silver")
-			return "The silver appears to be moderating the reaction within the pathogen's gland." //neutron capture
-
 datum/pathogeneffects/malevolent/snaps
 	name = "Snaps"
 	desc = "The infection forces its host's fingers to occasionally snap."
