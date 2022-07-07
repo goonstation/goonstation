@@ -44376,6 +44376,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"hls" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Engine Room"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "hoj" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -82541,7 +82552,7 @@ bFN
 bFN
 qmz
 oce
-bAh
+hls
 bNl
 bFj
 bJd
