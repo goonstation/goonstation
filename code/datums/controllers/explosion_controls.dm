@@ -1,6 +1,6 @@
 var/datum/explosion_controller/explosions
 #define RSS_SCALE 2
-#define EXPLOSION_MAPTEXT_DEBUGGING
+//#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()
