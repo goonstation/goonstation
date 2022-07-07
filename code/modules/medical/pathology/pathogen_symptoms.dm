@@ -897,59 +897,6 @@ datum/pathogeneffects/malevolent/teleportation
 				return "The pathogens appear to be rapidly moving around the LSD-filled dish."
 		else return null
 
-datum/pathogeneffects/malevolent/gibbing
-	name = "Gibbing"
-	desc = "The infected person may spontaneously gib."
-	rarity = RARITY_VERY_RARE
-	spread = SPREAD_FACE | SPREAD_HANDS | SPREAD_AIR | SPREAD_BODY
-	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		switch (origin.stage)
-			if (1)
-				if (prob(5))
-					M.show_message("<span class='alert'>Your body feels a bit tight.</span>")
-
-			if (2)
-				if (prob(5))
-					M.show_message("<span class='alert'>Your body feels a bit tight.</span>")
-
-			if (3)
-				if (prob(10))
-					M.show_message("<span class='alert'>Your body feels too tight to hold your organs inside.</span>")
-
-			if (4)
-				if (prob(20))
-					M.show_message("<span class='alert'>Your body feels too tight to hold your organs inside.</span>")
-				else if (prob(20))
-					M.show_message("<span class='alert'>You feel like you could explode at any time.</span>")
-
-			if (5)
-				if (prob(1))
-					if (ishuman(M))
-						// it's funnier if their organs actually do burst out.
-						var/mob/living/carbon/human/H = M
-						H.dump_contents_chance = 100
-					M.show_message("<span class='alert'>Your organs burst out of your body!</span>")
-					src.infect_cloud(M, origin, origin.spread) // boof
-					logTheThing("pathology", M, null, "gibbed due to Gibbing symptom in [origin].")
-					M.gib()
-				else if (prob(30))
-					M.show_message("<span class='alert'>Your body feels too tight to hold your organs inside.</span>")
-				else if (prob(30))
-					M.show_message("<span class='alert'>You feel like you could explode at any time.</span>")
-
-	may_react_to()
-		return "The culture appears to process proteins at an irregular speed."
-
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			if (zoom)
-				return "There are stray synthflesh pieces all over the dish."
-			else
-				return "Pathogens appear to be storming the synthflesh chunks and through an extreme conversion of energy, bursting them into smaller, more processible chunks."
-		else return null
-
 datum/pathogeneffects/malevolent/shakespeare
 	name = "Shakespeare"
 	desc = "The infected has an urge to begin reciting shakespearean poetry."
