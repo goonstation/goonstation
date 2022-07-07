@@ -412,6 +412,10 @@
 			if (ispug(M))
 				..()
 				boutput(M, "<span class='notice'>That tasted delicious!</span>")
+			if (iswerewolf(M))
+				..()
+				boutput(M, "<span class='notice'>That tasted delicious!</span>")
+				src.heal_amt = 0
 			else
 				src.heal_amt = 0
 				..()
