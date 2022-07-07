@@ -29,7 +29,7 @@
 
 		if(doing_stuff && fuel_rod)
 			if(fuel_to_extract > 0)
-				var/delta = min(fuel_to_extract, 0.1)
+				var/delta = min(fuel_to_extract, 0.5)
 				extracted_fuel += delta
 				fuel_to_extract -= delta
 			else
@@ -61,4 +61,4 @@
 			fuel_to_extract = W.material.getProperty("spent_fuel")
 			doing_stuff = TRUE
 		else
-			boutput(user, "You can't put that [W] in here![istype(W, /obj/item/reactor_component) ? " It isn't ready for reprocessing!":""]")
+			boutput(user, "You can't put \a [W] in here![istype(W, /obj/item/reactor_component) ? " It isn't ready for reprocessing!":""]")

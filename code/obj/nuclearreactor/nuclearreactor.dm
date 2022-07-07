@@ -113,9 +113,12 @@
 			//heat transfer coefficient
 			var/hTC = calculateHeatTransferCoefficient(null, src.material)
 			if(hTC>0)
-				var/gas_shc_factor = HEAT_CAPACITY(current_gas)/(420*7700*2.5/0.055)
+				var/gas_thermal_e = THERMAL_ENERGY(current_gas)
 				src.current_gas.temperature += heat_transfer_mult*-deltaT*hTC
-				src.temperature += gas_shc_factor*heat_transfer_mult*deltaT*hTC
+				//Q = mcT
+				//dQ = mc(dT)
+				//dQ/mc = dT
+				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*2.5)
 			. = src.current_gas
 		if(inGas)
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
@@ -294,24 +297,24 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
 	New()
 		..()
-		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel
-		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel
+		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel("gold")
 
-		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger("gold")
 
-		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger
-		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger
+		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger("gold")
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
