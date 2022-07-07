@@ -276,7 +276,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 2)
 		setProperty("hard", 2)
-		setProperty("stability", 2)
 		setProperty("electrical", 4)
 		setProperty("thermal", 4)
 
@@ -311,7 +310,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	color = "#B87333" //the hex value known as copper in RGB colorspace
 	New()
 		..()
-		setProperty("stability", 3)
 		setProperty("electrical", 6)
 		setProperty("density", 2)
 		setProperty("hard", 1)
@@ -324,7 +322,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 	color = "#E39362"
 	New()
 		..()
-		setProperty("stability", 6)
 		setProperty("electrical", 7)
 		setProperty("density", 2)
 		setProperty("hard", 2)
@@ -377,7 +374,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 		material_flags |= MATERIAL_ENERGY
 		setProperty("electrical", 6)
-		setProperty("stability", 3)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
 
@@ -463,7 +459,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 9)
 		setProperty("hard", 3)
 		setProperty("electrical", 7)
-		setProperty("stability", 2)
 		setProperty("n_radioactive", 8)
 
 
@@ -483,7 +478,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
-		setProperty("stability", 1)
 		setProperty("electrical", 2)
 
 
@@ -495,7 +489,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 	New()
 		..()
-		setProperty("stability", 9)
 		setProperty("density", 8)
 		setProperty("hard", 1)
 
@@ -623,7 +616,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
-		setProperty("stability", 1)
 
 		addTrigger(triggersOnAdd, new /datum/materialProc/erebite_flash())
 		addTrigger(triggersTemp, new /datum/materialProc/erebite_temp())
@@ -852,7 +844,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 2) //light
 		setProperty("hard", 5) // very hard
 		setProperty("reflective", 9) // shiny
-		setProperty("stability", 4) // constantly fluctuating
 		setProperty("electrical", 7) // good conductor
 
 
@@ -908,7 +899,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("reflective", 9)
 		setProperty("density", 9)
 		setProperty("hard", 9)
-		setProperty("stability", 7)
 		setProperty("electrical", 1)
 		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
 
@@ -1259,7 +1249,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 1)
 		setProperty("hard", 1)
-		setProperty("stability", 2)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 // Fabrics
 
@@ -1391,7 +1380,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 4)
 		setProperty("hard", 4)
 		setProperty("thermal", 9)
-		setProperty("stability", 4)
 		setProperty("permeable", 8)
 		setProperty("electrical", 7)
 
@@ -1408,7 +1396,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		material_flags |= MATERIAL_METAL | MATERIAL_ENERGY
 		setProperty("density", 1)
 		setProperty("hard", 1)
-		setProperty("stability", 9)
 		setProperty("electrical", 1)
 		setProperty("permeable", 1)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
@@ -1428,7 +1415,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 6)
 		setProperty("hard", 1)
 		setProperty("thermal", 9)
-		setProperty("stability", 8)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
@@ -1445,7 +1431,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 8)
 		setProperty("hard", 4)
 		setProperty("corrosion", 7)
-		setProperty("stability", 8)
 		setProperty("electrical", 7)
 
 
