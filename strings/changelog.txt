@@ -1,5 +1,9 @@
 
 (t)wed jul 06 22
+(u)Ikea
+(p)9487
+(e)⚖|balance
+(+)The stability material property has been removed from the game.
 (u)DimWhat
 (p)9342
 (e)🆕🎨|feature, sprites
