@@ -2189,21 +2189,3 @@ datum/pathogeneffects/malevolent/snaps/wild
 				return "The individual microbodies appear to be playing some form of freeform jazz. They are clearly off-key."
 			else
 				return "The pathogen appears to be using the powder granules to make microscopic... saxophones???"
-
-
-datum/pathogeneffects/malevolent/detonation
-	name = "Necrotic Detonation"
-	desc = "The pathogen will cause you to violently explode upon death."
-	rarity = RARITY_VERY_RARE
-
-	may_react_to()
-		return "Some of the pathogen's dead cells seem to remain active."
-
-	ondeath(mob/M as mob, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		explosion_new(M, get_turf(M), origin.stage*5, origin.stage/2.5)
-
-	react_to(var/R, var/zoom)
-		if (R == "synthflesh")
-			return "There are stray synthflesh pieces all over the dish."
