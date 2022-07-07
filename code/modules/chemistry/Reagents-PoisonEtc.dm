@@ -1284,13 +1284,13 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 4)
+					if (1 to 5)
 						return // let's not be incredibly obvious about who stung you for changelings
-					if (5 to 10)
+					if (5 to 11)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(10 * mult)
 						if (probmult(20)) M.emote("drool")
-					if (11 to 17)
+					if (11 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(20 * mult)
