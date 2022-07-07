@@ -512,7 +512,10 @@
 		if (!src || !src.occupant)
 			return
 		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -527,7 +530,6 @@
 			src.occupant = null
 			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
