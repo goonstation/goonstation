@@ -1650,8 +1650,6 @@
 						rendered = "<span class='game say'><span class='name'>[src.wear_id:registered]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
 					else
 						rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
-				else if (src.vdisfigured)
-					rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
 				else
 					rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span></span>"
 
@@ -1671,8 +1669,6 @@
 				rendered = "<span class='game say'><span class='name'>[src.wear_id:registered]</span> whispers, <span class='message'>[message]</span></span>"
 			else
 				rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>[message]</span></span>"
-		else if (src.vdisfigured)
-			rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>[message]</span></span>"
 		else
 			rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] whispers, <span class='message'>[message]</span></span>"
 
