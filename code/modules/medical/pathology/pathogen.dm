@@ -1182,7 +1182,6 @@ datum/pathogen
 	proc/ongrab(var/mob/target as mob)
 		for (var/effect in src.effects)
 			effect:ongrab(infected, target, src)
-		suppressant.ongrab(target, src)
 
 	// Act when punched by a mob. Returns a multiplier for the damage done by the punch.
 	// A hardened skin symptom might make good use of it one day (AT THE TIME OF WRITING THIS COMMENT THAT DID NOT EXIST OKAY)
@@ -1190,7 +1189,6 @@ datum/pathogen
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret *= effect:onpunched(infected, origin, zone, src)
-		suppressant.onpunched(origin, zone, src)
 		return ret
 
 	// Act when punching a mob. Returns a multipier for the damage done by the punch.
@@ -1200,7 +1198,6 @@ datum/pathogen
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret *= effect:onpunch(infected, target, zone, src)
-		suppressant.onpunch(target, zone, src)
 		return ret
 
 	// Act when successfully disarming or pushing down a mob. Returns whether this may happen.
@@ -1212,7 +1209,6 @@ datum/pathogen
 		var/ret = 1
 		for (var/effect in src.effects)
 			ret = min(effect:ondisarm(infected, target, isPushDown, src), ret)
-		suppressant.ondisarm(target, isPushDown, src)
 		return ret
 
 	// Act when shocked. Returns the amount of damage the shocked mob should actually take (which leaves place for both amplification and suppression)
@@ -1232,12 +1228,10 @@ datum/pathogen
 	proc/onsay(message)
 		for (var/effect in src.effects)
 			message = effect:onsay(infected, message, src)
-		suppressant.onsay(message, src)
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
 	proc/onemote(act, voluntary, param)
-		suppressant.onemote(infected, act, voluntary, param, src)
 		for (var/effect in src.effects)
 			. *= effect:onemote(infected, act, voluntary, param, src)
 
@@ -1245,14 +1239,12 @@ datum/pathogen
 	proc/ondeath()
 		for (var/effect in src.effects)
 			effect:ondeath(infected, src)
-		suppressant.ondeath(src)
 		return
 
 	// Act when pathogen is cured. Returns nothing.
 	proc/oncured()
 		for (var/effect in src.effects)
 			effect:oncured(infected, src)
-		suppressant.oncured(src)
 		return
 
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
