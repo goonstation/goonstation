@@ -275,29 +275,6 @@
 		if (R == "chickensoup")
 			return "The pathogens near the chicken soup appear to be having a great meal and are ignorant of their surroundings."
 
-/datum/suppressant/radiation
-	color = "viridian"
-	name = "Radiation"
-	desc = "The pathogen is suppressed by radiation."
-	therapy = "radioactive"
-
-	cure_synthesis = list("radium", "mutagen", "uranium", "polonium")
-
-	suppress_act(var/datum/pathogen/P)
-		if ((P.infected.getStatusDuration("radiation")/10) > P.suppression_threshold * 0.1 || (P.infected.getStatusDuration("n_radiation")/10) > P.suppression_threshold * 0.05)
-			if (P.stage > 3 && prob(P.advance_speed * 2))
-				P.infected.show_message("<span class='notice'>You feel better.</span>")
-				P.stage--
-			return 1
-		return 0
-
-	may_react_to()
-		return "The chemical structure of the pathogen's membrane indicates it may be <b style='font-size:20px;color:red'>suppressed</b> by either gamma rays or mutagenic substances."
-
-	react_to(var/datum/reagent/R)
-		if (R in cure_synthesis)
-			return "The radiation emitted by the [R] is severely damaging the inner elements of the pathogen."
-
 /datum/suppressant/mutagen
 	color = "olive drab"
 	name = "Mutagen"
