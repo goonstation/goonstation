@@ -132,6 +132,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "morphine"
 
+/obj/item/reagent_containers/glass/bottle/coldmedicine
+	name = "bottle (robustissin)"
+	desc = "A small bottle containing robustissin, for treating common ailments.  It has a warning label on it about dizziness and minor toxicity."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cold_medicine"
+
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
 /obj/item/reagent_containers/glass/bottle/poison
