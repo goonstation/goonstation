@@ -1721,35 +1721,6 @@ datum/pathogeneffects/malevolent/farts/smoke
 		var/datum/reagent/RE = H.get_reagent(R)
 		return "The [RE.name] violently explodes into a puff of smoke when coming into contact with the pathogen."
 
-datum/pathogeneffects/malevolent/farts/plasma
-	name = "Plasma Farts"
-	desc = "The infected individual occasionally farts. Plasma."
-	rarity = RARITY_RARE
-	cooldown = 600
-
-	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
-		..()
-		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
-		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
-		gas.temperature = T20C
-		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-		if (T)
-			T.assume_air(gas)
-
-	disease_act(var/mob/M, var/datum/pathogen/origin)
-		if (!origin.symptomatic)
-			return
-		..()
-		if (origin.stage > 2 && prob(origin.stage * 3))
-			M.take_toxin_damage(1)
-			M.take_oxygen_deprivation(4)
-
-	react_to(var/R, var/zoom)
-		if (R == "infernite" || R == "phlogiston")
-			return "The gas lights up in a puff of flame."
-
 datum/pathogeneffects/malevolent/farts/co2
 	name = "CO2 Farts"
 	desc = "The infected individual occasionally farts. Carbon dioxide."
