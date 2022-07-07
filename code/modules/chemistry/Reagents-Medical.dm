@@ -416,10 +416,9 @@ datum
 
 				else if(method == INGEST)
 					if (isliving(M))
-						var/mob/living/H = M
-						if (H.vdisfigured)
-							boutput(H, "<span class='notice'>You feel the ache in your vocal chords dissipate as you awkwardly swallow the synthflesh.</span>")
-							H.vdisfigured = FALSE
+						if (M.vdisfigured)
+							boutput(M, "<span class='notice'>You feel the ache in your vocal chords dissipate as you awkwardly swallow the synthflesh.</span>")
+							M.vdisfigured = FALSE
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
