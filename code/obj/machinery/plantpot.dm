@@ -416,6 +416,12 @@
 				// If there's no mutation we just use the base special proc, obviously!
 				growing.HYPspecial_proc(src)
 
+		// Have we lost all health or growth, or used up all available harvests? If so, this plant
+		// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
+		if((src.health < 1 || src.growth < 0) || (growing.harvestable && src.harvests < 1))
+			HYPkillplant()
+			return
+
 		var/current_growth_level = 0
 		// This is entirely for updating the icon. Check how far the plant has grown and update
 		// if it's gone a level beyond what the tracking says it is.
@@ -447,12 +453,6 @@
 		else if(health_warning && src.health > growing.starthealth / 2)
 			src.health_warning = 0
 			do_update_icon = TRUE
-
-		// Have we lost all health or growth, or used up all available harvests? If so, this plant
-		// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
-		if((src.health < 1 || src.growth < 0) || (growing.harvestable && src.harvests < 1))
-			HYPkillplant()
-			return
 
 		if(do_update_icon)
 			UpdateIcon()
