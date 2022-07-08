@@ -722,7 +722,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				if (volume < 1)
-						return
+					return
 
 				var/colorize
 				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
@@ -733,7 +733,7 @@ datum
 						if(P.fatigue_pressure >= max_reinforcement)
 							return
 
-						P.fatigue_pressure = clamp(P.fatigue_pressure + (P.fatigue_pressure) * (2**volume)), initial(P.fatigue_pressure), max_reinforcement)
+						P.fatigue_pressure = clamp(P.fatigue_pressure + ((P.fatigue_pressure) * (2**volume)), initial(P.fatigue_pressure), max_reinforcement)
 						colorize = TRUE
 
 				else if (istype(O,/obj/window))
