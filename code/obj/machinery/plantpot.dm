@@ -348,8 +348,7 @@
 				if(current_water_level < 200) // max water limit!!
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/metabolism_slow) && prob(50))
 						src.growth++
-						if(drink_rate)
-							drink_rate /= 2
+						drink_rate /= 2
 						// If our plant has a slow metabolism, it will only gain growth 50% of
 						// the time compared to usual. It consumes reagents a lot slower though.
 						// This is essentially like putting the plant on slow-mo overall.
