@@ -1385,11 +1385,13 @@
 		rendered = "<span class='name'>"
 	else
 		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask && src.wear_mask.vchange || src.vdisfigured)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
 			rendered += "[src.wear_id:registered]</span>"
 		else
 			rendered += "Unknown</span>"
+	else if (src.vdisfigured)
+		rendered += "Unknown</span>"
 	else
 		rendered += "[src.real_name]</span>[alt_name]"
 
