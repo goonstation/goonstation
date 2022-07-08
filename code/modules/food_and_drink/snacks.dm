@@ -415,7 +415,7 @@
 			if (iswerewolf(M))
 				..()
 				boutput(M, "<span class='notice'>That tasted delicious!</span>")
-				src.heal_amt = 0
+
 			else
 				src.heal_amt = 0
 				..()
@@ -425,6 +425,10 @@
 		on_bite(var/mob/M)
 			var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
 			if (!ispug(M))
+				src.food_effects = list()
+			..()
+			src.food_effects = food_effects_pre
+			if (!iswerewolf(M))
 				src.food_effects = list()
 			..()
 			src.food_effects = food_effects_pre
