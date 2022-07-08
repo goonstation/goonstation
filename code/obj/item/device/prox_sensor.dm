@@ -54,7 +54,7 @@
 			src.armed = 1
 			src.time = 0
 			src.timing = 0
-			src.event_handler_flags |= USE_PROXIMITY
+			setup_use_proximity()
 			src.UpdateIcon()
 
 
@@ -129,9 +129,9 @@
 		if (href_list["arm"])
 			src.armed = !src.armed
 			if (src.armed)
-				src.event_handler_flags |= USE_PROXIMITY
+				setup_use_proximity()
 			else
-				src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
+				remove_use_proximity()
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 

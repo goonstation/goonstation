@@ -8,6 +8,7 @@
 	anchored = 1
 	throws_can_hit_me = FALSE
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	canbegrabbed = FALSE
 
 	New()
 		. = ..()
@@ -67,6 +68,7 @@
 				src.z = 1
 			return
 
+		// Since we can walk through walls, just move regardless
 		if(!isturf(src.loc))
 			src.set_loc(get_turf(src))
 		if(NewLoc)
@@ -80,6 +82,8 @@
 			src.x++
 		if((direct & WEST) && src.x > 1)
 			src.x--
+
+		return ..()
 
 /mob/living/intangible/change_eye_blurry(var/amount, var/cap = 0)
 	if (amount < 0)

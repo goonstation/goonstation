@@ -1409,6 +1409,11 @@ datum
 			mix_phrase = "The coffee and tequila mix together. Liqueur? Who needs it?"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_bull/bull2
+			id = "bull2"
+			required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
+			result_amount = 2
+
 		cocktail_longisland_rcola
 			name = "Long Island Iced Tea"
 			id = "longisland_rcola"
@@ -1799,6 +1804,35 @@ datum
 			mix_phrase = "The orange juice turns an unsettlingly vibrant shade of green."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		matchatea
+			name = "Matcha Tea"
+			id = "matchatea"
+			result = "matchatea"
+			required_reagents = list("matcha"=1, "water"= 1)
+			result_amount = 2
+			mix_phrase = "The matcha dissolves into the water, turning a darker green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		tealquila
+			name = "Tealquila Sunrise"
+			id = "tealquila"
+			result = "tealquila"
+			required_reagents = list("tequilasunrise" = 1, "flockdrone_fluid" = 1)
+			result_amount = 2
+			mix_phrase = "The bright orange Sunrise neutralizes the gnesis, somehow becoming even more teal in the process."
+			mix_sound = 'sound/misc/flockmind/flockmind_cast.ogg'
+
+			//we don't react in bloodstream, gotta get the gnesis out first
+			does_react(var/datum/reagents/holder)
+				return !ismob(holder.my_atom)
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				if (holder.has_reagent("blood") || holder.has_reagent("bloodc")) //don't expose lings
+					for(var/mob/M in all_viewers(null, get_turf(holder.my_atom)))
+						boutput(M, "<span class='alert'>The gnesis rapidly absorbs the remaining blood before becoming inert.</span>")
+					holder.del_reagent("blood")
+					holder.del_reagent("bloodc")
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
@@ -2182,8 +2216,10 @@ datum
 							boutput(H, "<span class='alert'>Your face comes into contact with the acidic vapors!</span>")
 							H.TakeDamage("head", 0, created_volume * 3, 0, DAMAGE_BURN) // IT'S ACID IT BURNS
 							H.emote("scream")
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.real_name = "Unknown"
+							if(!H.disfigured)
+								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+								H.disfigured = TRUE
+								H.UpdateName()
 							H.changeStatus("weakened", 8 SECONDS)
 							H:unlock_medal("Red Hood", 1)
 				return
@@ -2407,6 +2443,16 @@ datum
 					C.reagents.add_reagent("toxin",((0.25 * created_volume) / length(mobs_affected)))
 					C.reagents.add_reagent("neurotoxin",((0.5 * created_volume) / length(mobs_affected))) // ~HEH~
 				return
+
+		neurodepressant //obtained by breaking down neurotoxin with solvents and heat
+			name = "neurodepressant"
+			id = "neurodepressant"
+			result = "neurodepressant"
+			required_reagents = list("acid" = 1, "neurotoxin" = 2, "acetone" = 1)
+			result_amount = 2
+			required_temperature = T0C + 450
+			mix_phrase = "The neurotoxin breaks down, bubbling violently."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
 			name = "Mutadone"
@@ -2850,6 +2896,29 @@ datum
 			result_amount = 3
 			mix_phrase = "A white crystalline substance condenses out of the mixture."
 			mix_sound = 'sound/misc/fuse.ogg'
+
+		slow_saltpetre
+			name = "slow saltpetre"
+			id = "slow_saltpetre"
+			result = "saltpetre"
+			// fungus turns compost into ammonium
+			// compost bacteria turns ammonium into nitrates
+			// nitrates are extracted from "soil" with water
+			// potash purifies nitrates into saltpetre
+			required_reagents = list("nitrogen" = 1, "poo" = 1, "potash" = 1)
+			result_amount = 1
+			instant = 0 // Potash filtering takes time.
+			reaction_speed = 1
+			mix_phrase = "A putrid odor pours from the mixture as a white crystalline substance leaches into the water."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				// water byproduct
+				// some nitrification processes create additional water.
+				holder.add_reagent("water", created_volume,,holder.total_temperature)
+				// disgusting
+				var/turf/location = pick(holder.covered_turf())
+				location.fluid_react_single("miasma", created_volume, airborne = 1)
 
 		jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 			name = "Jenkem"

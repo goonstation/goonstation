@@ -375,7 +375,7 @@
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
-	explosion_new(src, get_turf(M), 1500, 22.78)
+	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)

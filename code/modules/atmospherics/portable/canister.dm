@@ -5,6 +5,7 @@
 	density = 1
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
 	status = REQ_PHYSICAL_ACCESS
 
@@ -27,11 +28,11 @@
 	var/image/atmos_dmi
 	var/image/bomb_dmi
 
-	onMaterialChanged()
+	New()
 		..()
-		if(istype(src.material))
-			temperature_resistance = 400 + T0C + (((src.material.getProperty("flammable") - 50) * (-1)) * 3)
-		return
+		src.AddComponent(/datum/component/bullet_holes, 5, 0)
+		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
+		bomb_dmi = image('icons/obj/canisterbomb.dmi')
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -83,11 +84,6 @@
 	icon_state = "empty"
 	casecolor = "empty"
 
-/obj/machinery/portable_atmospherics/canister/New()
-	..()
-	atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
-	bomb_dmi = image('icons/obj/canisterbomb.dmi')
-
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -131,6 +127,8 @@
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
+		if(src.material.getProperty("flammable") > 6) //why would you make a canister out of wood/etc
+			health -= 1000 //BURN
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck(mob/user)

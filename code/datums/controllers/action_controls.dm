@@ -386,28 +386,6 @@ var/datum/action_controller/actions
 			shield_bar.invisibility = INVIS_ALWAYS
 
 
-/datum/action/bar/blob_replicator
-	onUpdate()
-		var/obj/blob/deposit/replicator/B = owner
-		if (!owner)
-			return
-		if (!B.converting || (B.converting && !B.converting.maximum_volume))
-			border.invisibility = INVIS_ALWAYS
-			bar.invisibility = INVIS_ALWAYS
-			return
-		else
-			border.invisibility = INVIS_NONE
-			bar.invisibility = INVIS_NONE
-		var/complete = 1 - (B.converting.total_volume / B.converting.maximum_volume)
-		bar.color = "#0000FF"
-		bar.transform = matrix(complete, 1, MATRIX_SCALE)
-		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
-
-	onDelete()
-		bar.invisibility = INVIS_NONE
-		border.invisibility = INVIS_NONE
-		..()
-
 /datum/action/bar/icon //Visible to everyone and has an icon.
 	var/icon //! Icon to use above the bar. Can also be a mutable_appearance; pretty much anything that can be converted into an image
 	var/icon_state
@@ -700,6 +678,9 @@ var/datum/action_controller/actions
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if(isliving(owner))
+			var/mob/living/M = owner
+			R.add_fingerprint(M)
 		if (callback)
 			call(callback)(src, R)
 
@@ -1003,6 +984,7 @@ var/datum/action_controller/actions
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
+					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
 				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
@@ -1028,6 +1010,7 @@ var/datum/action_controller/actions
 				I.dropped(target)
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
+				target.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
@@ -1084,6 +1067,7 @@ var/datum/action_controller/actions
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 					T.icon_state = "airoff"
 				target.internal = null
+				target.update_inv()
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[owner] removes [target]'s internals!</B></span>", 1)
 			else
@@ -1093,6 +1077,7 @@ var/datum/action_controller/actions
 				else
 					if (istype(target.back, /obj/item/tank))
 						target.internal = target.back
+						target.update_inv()
 						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 							T.icon_state = "airon"
 						for(var/mob/M in AIviewers(target, 1))
@@ -1229,6 +1214,7 @@ var/datum/action_controller/actions
 		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
+			H.update_inv()
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -1764,6 +1750,52 @@ var/datum/action_controller/actions
 			food.take_a_bite(consumer, mob_owner)
 		else
 			drink.take_a_drink(consumer, mob_owner)
+
+/datum/action/bar/icon/syringe
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/target
+	var/syringe_mode
+	var/obj/item/reagent_containers/syringe/S
+
+	New(var/mob/target, var/item, var/icon, var/icon_state)
+		..()
+		src.target = target
+		if (istype(item, /obj/item/reagent_containers/syringe))
+			S = item
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/syringe called with invalid type [item].")
+		src.icon = icon
+		src.icon_state = icon_state
+
+
+	onStart()
+		if (!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.mob_owner = owner
+		syringe_mode = S.mode
+
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!isnull(S) && syringe_mode == S.mode)
+			S.syringe_action(owner, target)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

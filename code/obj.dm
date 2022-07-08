@@ -70,16 +70,6 @@
 	proc/updateHealth(var/prevHealth)
 		if(_health <= 0)
 			onDestroy()
-/*		else
-			if((_health > 75) && !(prevHealth > 75))
-				//UpdateOverlays(null, "damage")
-			else if((_health <= 75 && _health > 50) && !(prevHealth <= 75 && prevHealth > 50))
-				//setTexture("damage1", BLEND_MULTIPLY, "damage")
-			else if((_health <= 50 && _health > 25) && !(prevHealth <= 50 && prevHealth > 25))
-				//setTexture("damage2", BLEND_MULTIPLY, "damage")
-			else if((_health <= 25) && !(prevHealth <= 25))
-				//setTexture("damage3", BLEND_MULTIPLY, "damage")
-		return*/
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
@@ -120,8 +110,8 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			pressure_resistance = round((material.getProperty("density") + material.getProperty("density")) / 2)
-			throwforce = round(max(material.getProperty("hard"),1) / 8)
+			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
+			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality
 			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
@@ -281,6 +271,7 @@
 	desc = "A bin for containing bedsheets."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23.0
 	anchored = 1.0
 
@@ -308,6 +299,7 @@
 	desc = "A bin for containing towels."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23.0
 	anchored = 1.0
 

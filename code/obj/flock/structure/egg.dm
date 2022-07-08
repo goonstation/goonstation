@@ -8,6 +8,7 @@
 	density = FALSE
 	name = "glowing doodad"
 	desc = "Oh god is that a fucking light grenade?!"
+	flock_desc = "Will soon hatch into a Flockdrone."
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
 	health = 30
@@ -41,6 +42,7 @@
 
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"
+	flock_desc = "Will soon hatch into Flockbits."
 
 /obj/flock_structure/egg/bit/spawn_contents()
 	for (var/i in 1 to 3)

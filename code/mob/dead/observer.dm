@@ -89,7 +89,7 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	if (!ON_COOLDOWN(src, "point", 1 SECOND))
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
@@ -233,7 +233,8 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
@@ -517,6 +518,8 @@
 	if((direct & WEST) && src.x > 1)
 		src.x--
 	OnMove()
+
+	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return

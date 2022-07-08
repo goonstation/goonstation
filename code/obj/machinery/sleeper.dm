@@ -512,7 +512,10 @@
 		if (!src || !src.occupant)
 			return
 		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -527,7 +530,6 @@
 			src.occupant = null
 			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -726,7 +728,7 @@
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.

@@ -11,6 +11,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE
+	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
@@ -19,6 +20,8 @@
 
 	New()
 		..()
+		// TODO enable when I do leaking
+		// src.AddComponent(/datum/component/bullet_holes, 10, 5)
 		src.create_reagents(4000)
 
 

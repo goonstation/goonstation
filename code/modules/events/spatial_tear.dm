@@ -63,6 +63,9 @@
 		if(AM.client?.check_key(KEY_RUN) && src.stabilized)
 			src.try_pass(AM)
 
+	ex_act(severity)
+		return
+
 	proc/try_pass(mob/user)
 		actions.start(new /datum/action/bar/icon/push_through_tear(user, src), user)
 

@@ -701,11 +701,11 @@
 		STOP_TRACKING
 
 		..()
+
 	process()
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
-		return
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -886,22 +886,10 @@
 		return
 
 	src.leave_pod(usr)
-/*
-	if (usr.loc != src)
-		return
-	src.passengers--
-	usr.set_loc(src.loc)
-	usr.remove_shipcrewmember_powers(src.weapon_class)
-	if (usr.client)
-		usr.client.perspective = MOB_PERSPECTIVE
-	if(src.pilot == usr)
-		src.pilot = null
-	if(passengers)
-		find_pilot()
-	else
-		src.ion_trail.stop()
-*/
-/obj/machinery/vehicle/proc/eject(mob/ejectee as mob) // Call leave_pod if you're having the mob leave the vehicle normally, otherwise use set_loc and it'll call this for you.
+
+/// Called when the loc of an occupant changes to something other than a pod. (It's in mob/set_loc. Yes, really.)
+/// Use leave_pod if the occupant is exiting the pod normally, and don't call this directly.
+/obj/machinery/vehicle/proc/eject(mob/ejectee)
 	if (!ejectee || ejectee.loc != src)
 		return
 
@@ -1191,7 +1179,7 @@
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
 		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
-		src.leave_pod(M)
+		M.set_loc(get_turf(src))
 		var/atom/target = get_edge_cheap(M, src.dir)
 		M.throw_at(target, 10, 2)
 

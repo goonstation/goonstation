@@ -12,7 +12,7 @@
 	var/atom/movable/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -255,12 +255,15 @@
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
 		fryholder.set_loc(get_turf(src))
 
-		src.fryitem = null
-		src.UpdateIcon()
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.fryitem)
+			src.fryitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			UnsubscribeProcess()
 
-		UnsubscribeProcess()
 
 	verb/drain()
 		set src in oview(1)

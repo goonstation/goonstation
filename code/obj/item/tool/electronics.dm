@@ -246,14 +246,11 @@
 					if("Right")
 						src.set_dir(4)
 			boutput(user, "Ready to deploy!")
-			switch(alert("Ready to deploy?",,"Yes","No"))
-				if("Yes")
-					boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
-					viewstat = 2
-					secured = 2
-					icon_state = "dbox"
-				if("No")
-					return
+			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
+				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
+				viewstat = 2
+				secured = 2
+				icon_state = "dbox"
 		else
 			return
 
@@ -457,7 +454,6 @@
 	var/processing = 0
 	var/net_id = null
 	var/frequency = FREQ_RUCK
-	var/no_print_spam = 1 // In relation to world.time.
 	var/olde = 0
 	var/datum/mechanic_controller/ruck_controls
 	///net_id of the ruck that will send messages
@@ -799,6 +795,8 @@
 				if(href_list["op"])
 					var/datum/electronics/scanned_item/O = locate(href_list["op"])
 					if(istype(O,/datum/electronics/scanned_item/))
+						if (!(O.item_mats && src.olde))
+							return
 						var/obj/item/electronics/frame/F = new/obj/item/electronics/frame(src.loc)
 						F.name = "[O.name]-frame"
 						F.store_type = O.item_type
@@ -806,22 +804,23 @@
 
 			if("blueprint")
 				if(href_list["op"])
-					if (src.no_print_spam && world.time < src.no_print_spam + 25)
+					if (ON_COOLDOWN(src,"anti_print_spam", 2.5 SECONDS))
 						usr.show_text("[src] isn't done with the previous print job.", "red")
-					else
-						var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
-						if (istype(O.blueprint, /datum/manufacture/mechanics/))
-							usr.show_text("Print job started...", "blue")
-							var/datum/manufacture/mechanics/M = O.blueprint
-							playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
-							src.no_print_spam = world.time
-							SPAWN(2.5 SECONDS)
-								if (src)
-									new /obj/item/paper/manufacturer_blueprint(src.loc, M)
-
+						return
+					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
+					if (istype(O.blueprint, /datum/manufacture/mechanics/))
+						if (!(!O.locked || src.allowed(usr) || src.olde))
+							return
+						usr.show_text("Print job started...", "blue")
+						var/datum/manufacture/mechanics/M = O.blueprint
+						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
+						SPAWN(2.5 SECONDS)
+							if (src)
+								new /obj/item/paper/manufacturer_blueprint(src.loc, M)
 			if("lock")
 				if(href_list["op"])
-
+					if (!src.allowed(usr))
+						return
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					O.locked = !O.locked
 					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works

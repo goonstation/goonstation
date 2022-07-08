@@ -316,9 +316,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
                                 Please disable your VPN or proxy, close the game, and rejoin.<br>
                                 <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and request an admins assistance with  whitelisting your account.
-                                 <br> <br>
-                                 If an admin is not immediately available you may also use the <b><u>/report</u></b> command in our discord server to submit a ticket to the administration. Please be sure to include your byond ckey (aka your username), and the name of your ISP in your ticket to avoid delays.
+								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a5">this form</a> for help whitelisting your account.
 							</body>
 						</html>
 					"}
@@ -410,7 +408,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
 	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
 		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-		alert(src.mob,"I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
+		tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
 		del(src)
 		return
 
@@ -486,13 +484,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 			if (src.holder && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
 				admin_changes()
 #endif
-#if ASS_JAM
-				src.verbs += /client/proc/cmd_ass_day_rules
-				src.cmd_ass_day_rules()
-#endif
 
 			if (src.byond_version < 514 || src.byond_build < 1566)
-				if (alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", "Yes", "No") == "Yes")
+				if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page? Make sure to download the stable release.", "ALERT", list("Yes", "No")) == "Yes")
 					src << link("http://www.byond.com/download/")
 /*
  				else
@@ -512,7 +506,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		setJoinDate()
 
 		if (winget(src, null, "hwmode") != "true")
-			alert(src, "Hardware rendering is disabled.  This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.","Potential Rendering Issue")
+			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
 		ircbot.event("login", src.key)
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
@@ -719,7 +713,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				var/datum/player/player = find_player(found_ckey)
 				if(player?.client?.mob)
 					SPAWN(0)
-						alert(player.client.mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+						tgui_alert(player.client.mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!", "Alert")
 
 
 /client/proc/init_admin()
@@ -749,7 +743,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		return
 	if ((params["screenW"]/params["screenH"]) <= (4/3))
 		SPAWN(6 SECONDS)
-			if(alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is reccomended for your display. Activate Horizontal Split?",,"Yes","No") == "Yes")
+			if(tgui_alert(src, "You appear to be using a 4:3 aspect ratio! The Horizontal Split option is recommended for your display. Activate Horizontal Split?", "Recommended option", list("Yes", "No")) == "Yes")
 				set_splitter_orientation(0)
 				winset( src, "menu", "horiz_split.is-checked=true" )
 

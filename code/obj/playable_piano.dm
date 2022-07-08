@@ -7,7 +7,7 @@
 
 #define MIN_TIMING 0.25
 #define MAX_TIMING 0.5
-#define MAX_NOTE_INPUT 2048
+#define MAX_NOTE_INPUT 15360
 
 /obj/player_piano //this is the big boy im pretty sure all this code is garbage
 	name = "player piano"

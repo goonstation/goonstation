@@ -122,7 +122,7 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.15) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
@@ -752,6 +752,7 @@
 	var/see_revs = 0
 	var/see_heads = 0
 	var/see_xmas = 0
+	var/see_zombies = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
 	var/see_everything = 0
 	var/datum/gang/gang_to_see = null
@@ -789,7 +790,9 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
-		if (isnukeop(src) || isnukeopgunbot(src))
+		if (istraitor(src) && traitorsseeeachother)
+			see_traitors = TRUE
+		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
 		else if (iswizard(src))
 			see_wizards = 1
@@ -797,6 +800,8 @@
 			V = src.get_ability_holder(/datum/abilityHolder/vampire)
 		else if (isvampiricthrall(src))
 			VT = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+		else if (iszombie(src))
+			see_zombies = 1
 		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
 
@@ -813,7 +818,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -904,6 +909,10 @@
 				if (ROLE_ARCFIEND)
 					if (see_everything)
 						var/I = image(antag_arcfiend, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_ZOMBIE)
+					if (see_everything || see_zombies)
+						var/I = image(antag_generic, loc = M.current)
 						can_see.Add(I)
 				else
 					if (see_everything)
@@ -1115,14 +1124,10 @@
 	.=0
 
 /mob/living/carbon/human/clothing_protects_from_chems()
-	.= 0
-	if (\
-		(src.wear_suit 	&& src.wear_suit.permeability_coefficient 	<= 0.01) && \
-		(src.head 		&& src.head.permeability_coefficient 		<= 0.01) && \
-		(src.wear_mask 	&& src.wear_mask.permeability_coefficient 	<= 0.10) && \
-		(src.shoes 		&& src.shoes.permeability_coefficient 		<= 0.10) && \
-		(src.gloves 	&& src.gloves.permeability_coefficient 		<= 0.02 ))
-		.=1
+	if (src.get_chem_protection() == 100)
+		return 1
+	else
+		return 0
 
 
 /// Changes ghost invisibility for the round.

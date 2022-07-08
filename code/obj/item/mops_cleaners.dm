@@ -377,6 +377,12 @@ WET FLOOR SIGN
 		else // Lances up!
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
+	else
+		for (var/obj/fluid/fluid in user.loc)
+			src.AfterAttack(fluid, user)
+			return
+		if (isturf(user.loc))
+			src.AfterAttack(user.loc, user)
 
 /obj/item/mop/attack(mob/living/M, mob/user)
 	if (user.a_intent == INTENT_HELP)
@@ -641,7 +647,8 @@ WET FLOOR SIGN
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
 				playsound(src, 'sound/items/sponge.ogg', 20, 1)
-				animate_smush(target)
+				if (ismob(target))
+					animate_smush(target)
 				return
 
 			if ("Wring out")

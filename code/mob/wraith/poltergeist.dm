@@ -279,7 +279,9 @@
 				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
 				return 1
 
-			var/I = input(holder.owner, "Where to retreat", "Where to retreat", "Master") as anything in list("Master", "Anchor")
+			var/I = tgui_input_list(holder.owner, "Where to retreat", "Where to retreat", list("Master", "Anchor"))
+			if (!I)
+				return TRUE
 			switch (I)
 				if ("Master")
 					if (!isnull(P.master))

@@ -270,8 +270,16 @@
 	req_access_txt = "2"
 	autoclose = 0 //brig doors close only when the cell timer starts
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		..()
+		STOP_TRACKING
+
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/flasher (flasher.dm)
