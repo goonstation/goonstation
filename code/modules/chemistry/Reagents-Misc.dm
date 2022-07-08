@@ -721,19 +721,22 @@ datum
 			value = 9
 
 			reaction_obj(var/obj/O, var/volume)
+				if (volume < 1)
+						return
+
 				var/colorize
 				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
 					var/obj/machinery/atmospherics/pipe/simple/P = O
 
 					if(P.can_rupture)
-						var/max_reinforcement = 1e10
+						var/max_reinforcement = 1e9
 						if(P.fatigue_pressure >= max_reinforcement)
 							return
 
-						P.fatigue_pressure = clamp(P.fatigue_pressure * volume, initial(P.fatigue_pressure), max_reinforcement)
+						P.fatigue_pressure = clamp(P.fatigue_pressure + (P.fatigue_pressure) * (2**volume)), initial(P.fatigue_pressure), max_reinforcement)
 						colorize = TRUE
 
-				if (istype(O,/obj/window))
+				else if (istype(O,/obj/window))
 					var/obj/window/W = O
 					var/initial_resistance = initial(W.explosion_resistance)
 					W.explosion_resistance = clamp(W.explosion_resistance + volume, initial_resistance, initial_resistance + 3)
