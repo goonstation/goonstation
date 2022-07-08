@@ -496,7 +496,7 @@
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
 
-				var/dominance = P1DNA.alleles[1] - P2DNA.alleles[1]
+				var/dominance = P1DNA.d_species - P2DNA.d_species
 				var/datum/plant/dominantspecies = null
 				var/datum/plant/submissivespecies = null
 				var/datum/plantgenes/dominantDNA = null
@@ -582,22 +582,22 @@
 				// If one is dominant and the other recessive, use the dominant value
 				// If both are dominant or recessive, average the values out
 
-				P.growtime = SpliceMK2(P1DNA.alleles[2],P2DNA.alleles[2],P1.vars["growtime"],P2.vars["growtime"])
-				DNA.growtime = SpliceMK2(P1DNA.alleles[2],P2DNA.alleles[2],P1DNA.vars["growtime"],P2DNA.vars["growtime"])
+				P.growtime = SpliceMK2(P1DNA.d_growtime,P2DNA.d_growtime,P1.vars["growtime"],P2.vars["growtime"])
+				DNA.growtime = SpliceMK2(P1DNA.d_growtime,P2DNA.d_growtime,P1DNA.vars["growtime"],P2DNA.vars["growtime"])
 
-				P.harvtime = SpliceMK2(P1DNA.alleles[3],P2DNA.alleles[3],P1.vars["harvtime"],P2.vars["harvtime"])
-				DNA.harvtime = SpliceMK2(P1DNA.alleles[3],P2DNA.alleles[3],P1DNA.vars["harvtime"],P2DNA.vars["harvtime"])
+				P.harvtime = SpliceMK2(P1DNA.d_harvtime,P2DNA.d_harvtime,P1.vars["harvtime"],P2.vars["harvtime"])
+				DNA.harvtime = SpliceMK2(P1DNA.d_harvtime,P2DNA.d_harvtime,P1DNA.vars["harvtime"],P2DNA.vars["harvtime"])
 
-				P.cropsize = SpliceMK2(P1DNA.alleles[4],P2DNA.alleles[4],P1.vars["cropsize"],P2.vars["cropsize"])
-				DNA.cropsize = SpliceMK2(P1DNA.alleles[4],P2DNA.alleles[4],P1DNA.vars["cropsize"],P2DNA.vars["cropsize"])
+				P.cropsize = SpliceMK2(P1DNA.d_cropsize,P2DNA.d_cropsize,P1.vars["cropsize"],P2.vars["cropsize"])
+				DNA.cropsize = SpliceMK2(P1DNA.d_cropsize,P2DNA.d_cropsize,P1DNA.vars["cropsize"],P2DNA.vars["cropsize"])
 
-				P.harvests = SpliceMK2(P1DNA.alleles[5],P2DNA.alleles[5],P1.vars["harvests"],P2.vars["harvests"])
-				DNA.harvests = SpliceMK2(P1DNA.alleles[5],P2DNA.alleles[5],P1DNA.vars["harvests"],P2DNA.vars["harvests"])
+				P.harvests = SpliceMK2(P1DNA.d_harvests,P2DNA.d_harvests,P1.vars["harvests"],P2.vars["harvests"])
+				DNA.harvests = SpliceMK2(P1DNA.d_harvests,P2DNA.d_harvests,P1DNA.vars["harvests"],P2DNA.vars["harvests"])
 
-				DNA.potency = SpliceMK2(P1DNA.alleles[6],P2DNA.alleles[6],P1DNA.vars["potency"],P2DNA.vars["potency"])
+				DNA.potency = SpliceMK2(P1DNA.d_potency,P2DNA.d_potency,P1DNA.vars["potency"],P2DNA.vars["potency"])
 
-				P.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1.vars["endurance"],P2.vars["endurance"])
-				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
+				P.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1.vars["endurance"],P2.vars["endurance"])
+				DNA.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
 				playsound(src, "sound/machines/ping.ogg", 50, 1)
@@ -719,15 +719,15 @@
 			generation = F.generation
 
 		return {"
-		<td class='l [DNA.alleles[1] ? "hyp-dominant" : ""]'>[P.name]</td>
+		<td class='l [DNA.d_species ? "hyp-dominant" : ""]'>[P.name]</td>
 		<td class='r'>[P.genome]</td>
 		<td class='r'>[generation]</td>
-		<td class='r [DNA.alleles[2] ? "hyp-dominant" : ""]'>[DNA.growtime]</td>
-		<td class='r [DNA.alleles[3] ? "hyp-dominant" : ""]'>[DNA.harvtime]</td>
-		<td class='r [DNA.alleles[4] ? "hyp-dominant" : ""]'>[DNA.harvests]</td>
-		<td class='r [DNA.alleles[5] ? "hyp-dominant" : ""]'>[DNA.cropsize]</td>
-		<td class='r [DNA.alleles[6] ? "hyp-dominant" : ""]'>[DNA.potency]</td>
-		<td class='r [DNA.alleles[7] ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
+		<td class='r [DNA.d_growtime ? "hyp-dominant" : ""]'>[DNA.growtime]</td>
+		<td class='r [DNA.d_harvtime ? "hyp-dominant" : ""]'>[DNA.harvtime]</td>
+		<td class='r [DNA.d_cropsize ? "hyp-dominant" : ""]'>[DNA.harvests]</td>
+		<td class='r [DNA.d_harvests ? "hyp-dominant" : ""]'>[DNA.cropsize]</td>
+		<td class='r [DNA.d_potency ? "hyp-dominant" : ""]'>[DNA.potency]</td>
+		<td class='r [DNA.d_endurance ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
 		"}
 
 	Exited(Obj, newloc)

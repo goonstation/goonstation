@@ -1715,7 +1715,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		<table style='border-collapse: collapse; border: 1px solid black; margin: 0 0.25em; width: 100%;'>
 			<caption>Analysis of \the <b>[scanned.name]</b></caption>
 			<tr>
-				<th style='white-space: nowrap;' width=0>Species</th><td colspan='3'>[P.name] ([DNA.alleles[1] ? "D" : "r"])</td>
+				<th style='white-space: nowrap;' width=0>Species</th><td colspan='3'>[P.name] ([DNA.d_species ? "D" : "r"])</td>
 			</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Generation</th><td style='text-align: right; white-space: nowrap;'>[generation]</td><td colspan=2 width=100%>&nbsp;</td>
@@ -1723,37 +1723,37 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 			<tr>
 				<th style='white-space: nowrap;' width=0>Maturation Rate</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.growtime]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[2] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_growtime ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.growtime), 0, 100)]%; background-color: [DNA.growtime > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Production Rate</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.harvtime]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[3] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_harvtime ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.harvtime), 0, 100)]%; background-color: [DNA.harvtime > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Lifespan</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.harvests]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[4] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_harvests ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.harvests), 0, 100)]%; background-color: [DNA.harvests > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Yield</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.cropsize]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[5] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_cropsize ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.cropsize), 0, 100)]%; background-color: [DNA.cropsize > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Potency</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.potency]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[6] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_potency ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.potency), 0, 100)]%; background-color: [DNA.potency > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 			<tr>
 				<th style='white-space: nowrap;' width=0>Endurance</th>
 				<td width=0 style='text-align: right; white-space: nowrap;'>[DNA.endurance]</td>
-				<td width=0 style='text-align: center;'>[DNA.alleles[7] ? "D" : "r"]</td>
+				<td width=0 style='text-align: center;'>[DNA.d_endurance ? "D" : "r"]</td>
 				<td width=100%><span style='display: inline-block; border-right: 1px solid black; height: 1em; width: [clamp(abs(DNA.endurance), 0, 100)]%; background-color: [DNA.endurance > 0 ? "#2f2" : "#a55"];'></span></td>
 				</tr>
 		</table>

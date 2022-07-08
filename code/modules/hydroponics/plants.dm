@@ -246,22 +246,26 @@ ABSTRACT_TYPE(/datum/plant)
 	var/endurance = 0
 	var/list/commuts = null // General transferrable mutations
 	var/datum/plantmutation/mutation = null // is it mutated? if so which variation?
-	var/list/alleles = list(0,0,0,0,0,0,0)
-	// Order goes:
-	// Species, Growtime, Harvtime, Cropsize, Harvests, Potency, Endurance
+	// dominant?
+	var/d_species = FALSE
+	var/d_growtime = FALSE
+	var/d_harvtime = FALSE
+	var/d_cropsize = FALSE
+	var/d_harvests = FALSE
+	var/d_potency = FALSE
+	var/d_endurance = FALSE
 	// Species allele controls name, appearance, crop produce and mutations
-	// 1 is dominant, else recessive
 
-	New(var/loc,var/random_alleles = 1)
+	New(var/loc,var/random_alleles = TRUE)
 		..()
 		if (random_alleles)
-			src.alleles[1] = rand(0,1)
-			src.alleles[2] = rand(0,1)
-			src.alleles[3] = rand(0,1)
-			src.alleles[4] = rand(0,1)
-			src.alleles[5] = rand(0,1)
-			src.alleles[6] = rand(0,1)
-			src.alleles[7] = rand(0,1)
+			src.d_species = rand(0,1)
+			src.d_growtime = rand(0,1)
+			src.d_harvtime = rand(0,1)
+			src.d_cropsize = rand(0,1)
+			src.d_harvests = rand(0,1)
+			src.d_potency = rand(0,1)
+			src.d_endurance = rand(0,1)
 			// optimise this later
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
