@@ -5,7 +5,7 @@
 	var/iconmod = null // name of the sprite files in hydro_mutants.dmi
 	var/harvest_override = 0 // If 1, you can harvest it irregardless of the plant's base harvestability
 	var/harvested_proc_override = 0
-	var/special_proc_override = 0
+	var/special_proc_override = FALSE
 	// If 0, just use the base plant's settings
 	// If 1, use the mutation's special_proc instead
 	// If anything else, use both the base and the mutant procs
@@ -44,7 +44,7 @@
 		if (POT.dead || !POT.current) lasterr = 402
 		if (lasterr)
 			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
-			special_proc_override = 0
+			special_proc_override = FALSE
 		return lasterr
 
 	proc/HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
@@ -176,7 +176,7 @@
 	iconmod = "MelonBowling"
 	ENrange = list(12,null)
 	chance = 20
-	special_proc_override = 1
+	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -284,7 +284,7 @@
 	iconmod = "SynthButts"
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
-	special_proc_override = 1
+	special_proc_override = TRUE
 	mutation_sfx = "sound/voice/farts/fart6.ogg"
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -486,7 +486,7 @@
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
 	crop = /obj/item/fish/random
-	special_proc_override = 1
+	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -594,7 +594,7 @@
 	name = "White Radweed"
 	name_prefix = "White "
 	iconmod = "RadweedWhite"
-	special_proc_override = 1
+	special_proc_override = TRUE
 	assoc_reagents = list("penteticacid")
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -689,7 +689,7 @@
 	name = "Dogwood Tree"
 	dont_rename_crop = true
 	iconmod = "TreeDogwood"
-	special_proc_override = 1
+	special_proc_override = TRUE
 	attacked_proc_override = 1
 	mutation_sfx = "sound/voice/animal/dogbark.ogg"
 

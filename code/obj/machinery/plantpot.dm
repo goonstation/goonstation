@@ -403,10 +403,10 @@
 				// proc that overrides the regular one.
 				var/datum/plantmutation/MUT = plantgenes.mutation
 				switch (MUT.special_proc_override)
-					if(0)
+					if(FALSE)
 						// There's no special proc for this mutation, so just use the regular one.
 						growing.HYPspecial_proc(src)
-					if(1)
+					if(TRUE)
 						// The mutation overrides the base proc to use its own.
 						MUT.HYPspecial_proc_M(src)
 					else
