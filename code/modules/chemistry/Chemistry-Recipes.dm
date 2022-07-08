@@ -1941,6 +1941,14 @@ datum
 				holder.add_reagent("ammonia", created_volume * 6)
 			mix_phrase = "The mixture bubbles aggressively."
 
+		silicate
+			name = "Silicate"
+			id = "silicate"
+			result = "silicate"
+			required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
+			result_amount = 3
+			mix_phrase = "The substance mixes into a clear, viscous liquid."
+
 		graphene
 			name = "Graphene"
 			id = "graphene"
