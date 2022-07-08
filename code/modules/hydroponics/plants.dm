@@ -35,9 +35,6 @@ ABSTRACT_TYPE(/datum/plant)
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
-	var/list/harvest_tools // For plants that don't harvest normally and need some sort of special tool (mixed list of tool flags and item paths)
-	var/harvest_tool_message // An output message for plants with unique harvest messages (string)
-	var/harvest_tool_fail_message // A helpful output message to players when they attempt to harvest a plant by hand
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
@@ -290,9 +287,6 @@ ABSTRACT_TYPE(/datum/plant)
 			source = sourcerelay
 		if(duration2)
 			duration = duration2
-		if(plant_pot.current.harvest_tools && (source.equipped() != null))
-			var/obj/item/I = source.equipped()
-			toolcheck = I
 		..()
 
 	onUpdate()

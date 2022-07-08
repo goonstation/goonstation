@@ -155,21 +155,14 @@
 		if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
 		src.add_fingerprint(user)
 		if(src.current)
-			var/datum/plant/growing = src.current
-
 			if(src.dead)
 				boutput(user, "<span class='notice'>You clear the dead plant.</span>")
 				HYPdestroyplant()
 				return
 
 			if(HYPcheck_if_harvestable())
-				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
-					HYPharvesting(user,null)
-				else
-					if(!growing.harvest_tool_fail_message)
-						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
-					else
-						boutput(user,growing.harvest_tool_fail_message)
+				HYPharvesting(user,null)
+
 
 	HYPdestroyplant()
 		..()
@@ -522,23 +515,6 @@
 					qdel (W)
 					if(!(user in src.contributors))
 						src.contributors += user
-			if(src.current.harvest_tools)
-			//checks to see if the plant requires a specific tool to harvest, rather than an empty hand.
-				var/passed
-				for(var/i=1,i<=src.current.harvest_tools.len,i++)
-					if(ispath(src.current.harvest_tools[i]))
-						if(istype(W,src.current.harvest_tools[i]))
-							passed = 1
-							break
-					else if(istool(W,src.current.harvest_tools[i]))
-						passed = 1
-						break
-				if(passed)
-					if(src.current.harvest_tool_message)
-						boutput(user,src.current.harvest_tool_message)
-					HYPharvesting(user,null)
-					return
-
 
 		// From here on out we handle item reacions of the plantpot itself rather than specific
 		// special kinds of plant.
@@ -707,8 +683,6 @@
 			if(src.dead)
 				boutput(user, "<span class='alert'>The plant is dead and cannot be harvested!</span>")
 				return
-			if (src.current.harvest_tools)
-				return
 			var/datum/plant/growing = src.current
 			if(!growing.harvestable)
 				boutput(user, "<span class='alert'>You doubt this plant is going to grow anything worth harvesting...</span>")
@@ -739,13 +713,8 @@
 				return
 
 			if(HYPcheck_if_harvestable())
-				if(!growing.harvest_tools) //if the plant needs a specific tool or set of tools to harvest
-					HYPharvesting(user,null)
-				else
-					if(!growing.harvest_tool_fail_message)
-						boutput(user, "<span><b>You don't have the right tool to harvest this plant!</b></span>")
-					else
-						boutput(user,growing.harvest_tool_fail_message)
+				HYPharvesting(user,null)
+
 				// If the plant is ready for harvest, do that. Otherwise, check it's condition.
 			else
 				boutput(user, "You check [src.name] and the tray.")
