@@ -417,7 +417,7 @@ datum
 				else if(method == INGEST)
 					if (isliving(M))
 						if (M.vdisfigured)
-							boutput(M, "<span class='notice'>You feel the ache in your vocal chords dissipate as you awkwardly swallow the synthflesh.</span>")
+							boutput(M, "<span class='notice'>You feel the ache in your vocal chords dissipate as you ingest the synthflesh.</span>")
 							M.vdisfigured = FALSE
 
 			reaction_turf(var/turf/T, var/volume)
