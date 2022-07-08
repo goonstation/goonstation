@@ -10,10 +10,10 @@
 				return ..()
 
 			var/mult = get_multiplier()
-
+			/*
 			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
-
+			*/
 			if (H.mutantrace && !H.mutantrace.decomposes)
 				return ..()
 
