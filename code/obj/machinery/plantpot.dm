@@ -1329,6 +1329,8 @@
 
 			// At this point all the harvested items are inside the plant pot, and this is the
 			// part where we decide where they're going and get them out.
+			var/seeds_only = satchelpick == "Seeds Only"
+			var/produce_only = satchelpick == "Produce Only"
 			if(SA)
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
@@ -1336,11 +1338,11 @@
 						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
-						if(!satchelpick || satchelpick == "Seeds Only")
+						if(!satchelpick || seeds_only)
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 					else
-						if(!satchelpick || satchelpick == "Produce Only")
+						if(!satchelpick || produce_only)
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 				SA.UpdateIcon()
