@@ -977,7 +977,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		. = ..()
 		material_flags |= MATERIAL_ORGANIC
-		setProperty("flammable", 5)
+		setProperty("flammable", 3)
 		setProperty("electrical", 4)
 
 /datum/material/organic/blob
@@ -999,7 +999,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("corrosion", 3)
 		setProperty("density", 5)
 		setProperty("hard", 1)
-		setProperty("flammable", 9)
+		setProperty("flammable", 5)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 
 
@@ -1034,7 +1034,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	New()
 		..()
-		setProperty("flammable", 6)
+		setProperty("flammable", 5)
 		setProperty("hard", 3)
 		setProperty("density", 2)
 
@@ -1052,7 +1052,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("radioactive", 2)
 		setProperty("density", 5)
-		setProperty("flammable", 1)
 
 
 /datum/material/organic/viscerite
@@ -1100,7 +1099,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 5)
 		setProperty("hard", 3)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/bamboo
@@ -1114,7 +1113,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("density", 4)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/cardboard
@@ -1127,7 +1126,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 2)
 		setProperty("hard", 1)
-		setProperty("flammable", 8)
+		setProperty("flammable", 4)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
 
@@ -1155,7 +1154,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 1)
 		setProperty("hard", 2)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/honey
@@ -1259,7 +1258,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	New()
 		. = ..()
 		material_flags |= MATERIAL_CLOTH
-		setProperty("flammable", 5)
+		setProperty("flammable", 2)
 		setProperty("electrical", 4)
 		setProperty("hard", 1)
 		setProperty("density", 1)
@@ -1318,6 +1317,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 3)
 		setProperty("thermal", 1)
 		setProperty("electrical", 4)
+		setProperty("flammable", 1)
 
 
 /datum/material/fabric/cotton
@@ -1331,7 +1331,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/fabric/fibrilith
@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 6)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
-		setProperty("flammable", 8)
+		setProperty("flammable", 5)
 
 
 /datum/material/fabric/carbonfibre
@@ -1432,6 +1432,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 4)
 		setProperty("corrosion", 7)
 		setProperty("electrical", 7)
+		setProperty("flammable", 1)
 
 
 
@@ -1447,7 +1448,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		..()
 		setProperty("hard", 2)
 		setProperty("density", 2)
-		setProperty("flammable", 7)
+		setProperty("flammable", 6)
 		setProperty("electrical", 3)
 		setProperty("thermal", 7)
 
@@ -1498,3 +1499,4 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
+		setProperty("flammable", 3)

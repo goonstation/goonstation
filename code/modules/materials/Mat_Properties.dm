@@ -155,21 +155,20 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/flammability
 	name = "Flammability"
 	id = "flammable"
+	default_value = 1
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
 			if(0 to 1)
-				return "very fireproof"
-			if(1 to 2)
-				return "fireproof"
-			if(2 to 4)
-				return "slightly fireproof"
-			if(4 to 6)
+				return "inflammable"
+			if(1 to 3)
 				return "slightly flammable"
-			if(6 to 8)
+			if(3 to 5)
 				return "flammable"
+			if(5 to 8)
+				return "extremely flammable"
 			if(8 to INFINITY)
-				return "very flammable"
+				return "insanely flammable"
 
 /datum/material_property/corrosion
 	name = "Corrosion resistance"
