@@ -1088,8 +1088,8 @@
 		var/extra_harvest_chance = 0
 
 		if(getamount > harvest_cap)
-			getamount = harvest_cap
 			extra_harvest_chance += getamount - harvest_cap
+			getamount = harvest_cap
 			// Max harvest amount for all plants is capped. If we've got higher output
 			// than the cap it's probably through gene manipulation, so reward the player
 			// with greater chances for an extra harvest if this is the case.
