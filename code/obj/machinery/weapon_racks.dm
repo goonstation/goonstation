@@ -21,7 +21,7 @@
 	var/amount = 1
 	anchored = 1
 	density = 1
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
 	var/contained_weapon = /obj/item/katana_sheath
 	var/contained_weapon_name = "katana"

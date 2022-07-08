@@ -72,6 +72,12 @@
 			if (trunk)
 				trunk.linked = null
 		trunk = null
+
+		var/turf/T = get_turf(src)
+		for (var/atom in src)
+			var/atom/movable/A = atom
+			A.set_loc(T)
+
 		return ..()
 
 	onDestroy()
