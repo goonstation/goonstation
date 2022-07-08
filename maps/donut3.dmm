@@ -84285,7 +84285,8 @@
 /area/station/security/checkpoint/podbay)
 "ycK" = (
 /obj/decal/tile_edge/line/blue{
-	icon_state = "line1"
+	icon_state = "line1";
+	dir = 1
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/hallway/primary/south)
