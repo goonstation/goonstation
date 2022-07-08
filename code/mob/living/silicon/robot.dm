@@ -172,8 +172,6 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..(loc, null, null, FALSE)
-
 		hud = new(src)
 		src.attach_hud(hud)
 
@@ -195,6 +193,9 @@
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 			src.syndicate = syndie
 			src.emagged = frame_emagged
+
+		. = ..(loc)
+
 		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
