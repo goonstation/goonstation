@@ -1107,7 +1107,7 @@
 			var/cropcount = getamount
 			var/seedcount = 0
 
-			while (getamount > 0)
+			for (var/_ in 1 to getamount)
 				var/quality_score = base_quality_score
 				quality_score += rand(-2,2)
 				// Just a bit of natural variance to make it interesting
@@ -1332,8 +1332,6 @@
 						S.planttype = hybrid
 
 					seedcount++
-				getamount--
-
 
 			// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 			// This is only reached if you actually got anything harvested.
