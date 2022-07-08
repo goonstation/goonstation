@@ -1047,16 +1047,6 @@
 			base_quality_score -= 12
 			// And this is if you've neglected the plant!
 
-
-		if(DNA.commuts)
-			for(var/datum/plant_gene_strain/quality/Q in DNA.commuts)
-				if(Q.negative)
-					base_quality_score -= Q.quality_mod
-				else
-					base_quality_score += Q.quality_mod
-		// And ones that mess with the quality of crops.
-		// Unstable isn't here because it'd be less random outside the loop.
-
 		var/getitem = null
 		var/dont_rename_crop = false
 		// Figure out what crop we use - the base crop or a mutation crop.
@@ -1072,7 +1062,14 @@
 				getitem = growing.crop
 				dont_rename_crop = growing.dont_rename_crop
 
-		var/extra_harvest_chance = 0
+		if(DNA.commuts)
+			for(var/datum/plant_gene_strain/quality/Q in DNA.commuts)
+				if(Q.negative)
+					base_quality_score -= Q.quality_mod
+				else
+					base_quality_score += Q.quality_mod
+		// And ones that mess with the quality of crops.
+		// Unstable isn't here because it'd be less random outside the loop.
 
 		if(DNA.commuts)
 			for(var/datum/plant_gene_strain/yield/Y in DNA.commuts)
@@ -1086,6 +1083,8 @@
 					harvest_cap *= Y.yield_mult
 					harvest_cap += Y.yield_mod
 		// Gene strains that boost or penalize the cap.
+
+		var/extra_harvest_chance = 0
 
 		if(getamount > harvest_cap)
 			getamount = harvest_cap
