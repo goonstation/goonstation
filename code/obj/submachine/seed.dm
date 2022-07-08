@@ -193,11 +193,7 @@
 				var/datum/plant/P1 = src.splicing1.planttype
 				var/datum/plant/P2 = src.splicing2.planttype
 
-				var/genome_difference = 0
-				if (P1.genome > P2.genome)
-					genome_difference = P1.genome - P2.genome
-				else
-					genome_difference = P2.genome - P1.genome
+				var/genome_difference = abs(P1.genome - P2.genome)
 				splice_chance -= genome_difference * 10
 
 				splice_chance -= src.splicing1.seeddamage
@@ -340,10 +336,11 @@
 
 				if (!stored || !DNA)
 					give = 0
-				if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+				else if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					give = 0
-				if(stored.no_extract)
+				else if(stored.no_extract)
 					give = 0
+
 				if (!give)
 					boutput(usr, "<span class='alert'>No viable seeds found in [I].</span>")
 				else
@@ -472,11 +469,7 @@
 			if (!P1 || !P2) splice_chance = 0
 			else
 				// Seeds from different families aren't easy to splice
-				var/genome_difference = 0
-				if (P1.genome > P2.genome)
-					genome_difference = P1.genome - P2.genome
-				else
-					genome_difference = P2.genome - P1.genome
+				var/genome_difference = abs(P1.genome - P2.genome)
 				splice_chance -= genome_difference * 10
 
 				// Deduct chances if the seeds are damaged from infusing or w/e else
@@ -510,28 +503,17 @@
 				var/datum/plantgenes/submissiveDNA = null
 
 				// Establish which species allele is dominant
-				if (dominance > 0)
+				// If neither, we pick randomly unlike the rest of the allele resolutions
+				if (dominance > 0 || (dominance == 0 && prob(50)))
 					dominantspecies = P1
 					submissivespecies = P2
 					dominantDNA = P1DNA
 					submissiveDNA = P2DNA
-				else if (dominance < 0)
+				else
 					dominantspecies = P2
 					submissivespecies = P1
 					dominantDNA = P2DNA
 					submissiveDNA = P1DNA
-				else
-					// If neither, we pick randomly unlike the rest of the allele resolutions
-					if (prob(50))
-						dominantspecies = P1
-						submissivespecies = P2
-						dominantDNA = P1DNA
-						submissiveDNA = P2DNA
-					else
-						dominantspecies = P2
-						submissivespecies = P1
-						dominantDNA = P2DNA
-						submissiveDNA = P1DNA
 
 				// Create the new seed
 				var/obj/item/seed/S = new /obj/item/seed
@@ -718,12 +700,7 @@
 		else if (dominance < 0)
 			return value2
 		else
-			var/average = (value1 + value2)
-			if (average != 0) average /= 2
-			return round(average)
-
-
-
+			return round((value1 + value2)/2)
 
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
 		// Largely copied from plantpot.dm
