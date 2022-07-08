@@ -934,16 +934,16 @@
 		// Pretty much figure out if we can harvest the plant yet or not. This is used for
 		// updating the sprite and obviously handling harvesting when a player clicks
 		// on the plant pot.
-		if(!current || !plantgenes || health < 1 || harvests < 1 || recently_harvested) return 0
+		if(!current || !plantgenes || health < 1 || harvests < 1 || recently_harvested) return FALSE
 		if(plantgenes.mutation)
 			var/datum/plantmutation/MUT = plantgenes.mutation
 			if(MUT.harvest_override && MUT.crop)
-				if(src.growth >= current.harvtime - plantgenes.harvtime) return 1
-				else return 0
-		if(!current.crop || !current.harvestable) return 0
+				if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+				else return FALSE
+		if(!current.crop || !current.harvestable) return FALSE
 
-		if(src.growth >= current.harvtime - plantgenes.harvtime) return 1
-		else return 0
+		if(src.growth >= current.harvtime - plantgenes.harvtime) return TRUE
+		else return FALSE
 
 	proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
 		// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
