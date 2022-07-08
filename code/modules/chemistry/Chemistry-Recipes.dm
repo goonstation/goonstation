@@ -1941,13 +1941,27 @@ datum
 				holder.add_reagent("ammonia", created_volume * 6)
 			mix_phrase = "The mixture bubbles aggressively."
 
-		silicate
-			name = "Silicate"
-			id = "silicate"
-			result = "silicate"
-			required_reagents = list("aluminium" = 1, "silicon" = 1, "oxygen" = 1)
+		graphene
+			name = "Graphene"
+			id = "graphene"
+			result = "graphene"
+			required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
+			required_temperature = T0C + 150
+			result_amount = 2
+			reaction_speed = 0.1 // Slow growth
+			instant = 0
+			mix_phrase = "A small particulate forms into a tiny lattice."
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				holder.add_reagent("oxygen", created_volume)
+				holder.add_reagent("salt", created_volume)
+
+		space_epoxy
+			name = "Space Epoxy"
+			id = "space_epoxy"
+			result = "space_epoxy"
+			required_reagents = list("graphene" = 1, "spaceglue" = 2)
 			result_amount = 3
-			mix_phrase = "The substance mixes into a clear, viscous liquid."
+			mix_phrase = "The substance turns dark with a beatiful faceted lattice pattern."
 
 		oil
 			name = "Oil"
