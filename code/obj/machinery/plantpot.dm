@@ -387,39 +387,6 @@
 					if(current_reagent)
 						current_reagent.on_plant_life(src)
 
-			/* DEPRECATED, IN COMMENTS FOR THE MOMENT FOR TESTING
-			// Now we do a similar thing for gene strains, except with these we do a hard-coded
-			// thing right here since the gene strains themselves are just text strings.
-			for (var/X in DNA.commuts)
-				switch(X)
-					if("Unstable")
-						if(prob(18))
-							HYPmutateplant(1)
-						// Unstable causes the plant to mutate on its own every so often.
-						// Players might want this or might not, so it's neither good nor bad.
-					if("Accelerator")
-						if(prob(10))
-							DNA.growtime--
-							DNA.harvtime--
-						// This gene strain should be kept rare. It boosts the growth rate genes
-						// which makes the plant grow faster permanently. As of the time of writing
-						// I don't think anyone's discovered it so if it needs a downside, we can
-						// figure it out later.
-					if("Poor Health")
-						if(prob(24))
-							HYPdamageplant("frailty",1)
-						// Poor Health is a bad strain to have that causes the plant to slowly take
-						// damage for sod all reason. It's basically a weak wuss plant strain.
-					if("Rapid Growth")
-						src.growth += 2
-						// Basically like rapid metabolism with no downsides.
-					if("Stunted Growth")
-						if(src.growth > 1)
-							src.growth--
-						// Slow down growth. We don't want this to reduce src.growth to zero in
-						// any case, because that means the plant would die.
-			*/
-
 			if(DNA.commuts)
 				for (var/datum/plant_gene_strain/X in DNA.commuts)
 					X.on_process(src)
