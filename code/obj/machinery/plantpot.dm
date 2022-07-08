@@ -1319,14 +1319,7 @@
 				else
 					JOB_XP(user, "Botanist", 1)
 
-			var/list/harvest_string = list("You harvest [cropcount] item")
-			if (cropcount > 1)
-				harvest_string += "s"
-			if(seedcount)
-				harvest_string += " and [seedcount] seed"
-				if (seedcount > 1)
-					harvest_string += "s"
-			boutput(user, "<span class='notice'>[harvest_string.Join()].</span>")
+			boutput(user, "<span class='notice'>You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""].</span>")
 
 			// Mostly for dangerous produce (explosive tomatoes etc) that should show up somewhere in the logs (Convair880).
 			if(istype(MUT,/datum/plantmutation/))
