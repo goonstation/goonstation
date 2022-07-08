@@ -337,12 +337,6 @@
 		// We obtain the current plant type in the plantpot, and the genes of the individual plant.
 		// We'll be referencing these a lot!
 
-		if(growing.required_reagents)
-			for(var/i=1,i<=growing.required_reagents.len,i++)
-				if(src.reagents.get_reagent_amount(growing.required_reagents[i]["id"]) < growing.required_reagents[i]["amount"])
-					return
-		//Checks to see if the plant requires a reagent to grow, and compares to to the reagents present in the pot.
-
 		// REAGENT PROCESSING
 		var/drink_rate = 1
 		// drink_rate is how much reagent is consumed per tick. This used to be 0.5, but got bumped

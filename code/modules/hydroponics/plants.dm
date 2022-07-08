@@ -39,7 +39,6 @@ ABSTRACT_TYPE(/datum/plant)
 	var/harvest_tool_message // An output message for plants with unique harvest messages (string)
 	var/harvest_tool_fail_message // A helpful output message to players when they attempt to harvest a plant by hand
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
-	var/list/required_reagents // reagents required for the plant to grow - formated like: list(list(id="poo",amount=100),list(id="thing",amount=number))
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
