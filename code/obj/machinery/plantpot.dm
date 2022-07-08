@@ -1063,26 +1063,27 @@
 				dont_rename_crop = growing.dont_rename_crop
 
 		if(DNA.commuts)
-			for(var/datum/plant_gene_strain/quality/Q in DNA.commuts)
-				if(Q.negative)
-					base_quality_score -= Q.quality_mod
-				else
-					base_quality_score += Q.quality_mod
-		// And ones that mess with the quality of crops.
-		// Unstable isn't here because it'd be less random outside the loop.
-
-		if(DNA.commuts)
-			for(var/datum/plant_gene_strain/yield/Y in DNA.commuts)
-				if(Y.negative)
-					if(harvest_cap == 0 || Y.yield_mult == 0)
-						continue
+			for(var/datum/plant_gene_strain/G in DNA.commuts)
+				// And ones that mess with the quality of crops.
+				// Unstable isn't here because it'd be less random outside the loop.
+				if (istype(G, /datum/plant_gene_strain/quality))
+					var/datum/plant_gene_strain/quality/Q = G
+					if(Q.negative)
+						base_quality_score -= Q.quality_mod
 					else
-						harvest_cap /= Y.yield_mult
-						harvest_cap -= Y.yield_mod
-				else
-					harvest_cap *= Y.yield_mult
-					harvest_cap += Y.yield_mod
-		// Gene strains that boost or penalize the cap.
+						base_quality_score += Q.quality_mod
+				// Gene strains that boost or penalize the cap.
+				else if (istype(G, /datum/plant_gene_strain/yield))
+					var/datum/plant_gene_strain/yield/Y = G
+					if(Y.negative)
+						if(harvest_cap == 0 || Y.yield_mult == 0)
+							continue
+						else
+							harvest_cap /= Y.yield_mult
+							harvest_cap -= Y.yield_mod
+					else
+						harvest_cap *= Y.yield_mult
+						harvest_cap += Y.yield_mod
 
 		var/extra_harvest_chance = 0
 
