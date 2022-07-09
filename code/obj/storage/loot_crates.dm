@@ -1,3 +1,159 @@
+/datum/loot_crate_table
+	// list of obj or lists
+	// if an element is a list, the result is picked randomly
+	var/items = list()
+	// list of nums or lists
+	// if an element is a list, it's treated as bounds [lower, upper]
+	// for the amount of items
+	var/amounts = list()
+
+	// actual items and amounts
+	var/collapsed_items = list()
+	var/collapsed_amounts = list()
+
+	New()
+		..()
+		for (var/i in 1 to length(items))
+			var/item = items[i]
+			var/amount = amounts[i]
+			if (islist(amount))
+				amount = rand(amount[1], amount[2])
+				if (islist(item))
+					for(var/_ in 1 to amount)
+						collapsed_items += pick(item)
+						collapsed_amounts += 1
+				else
+					collapsed_items += item
+					collapsed_amounts += amount
+			else
+				if (islist(item))
+					collapsed_items += pick(item)
+				else
+					collapsed_items += item
+				collapsed_amounts += amount
+
+/datum/loot_crate_table/research
+	// Tier 3
+	psylink
+		items = list(/obj/item/clothing/gloves/psylink_bracelet)
+		amounts = list(1)
+
+	artifact
+		// All of these are pretty useful and it heavily reduces chances of telewand.
+		items = list(
+			list(
+				/obj/item/artifact/teleport_wand,
+				/obj/item/artifact/activator_key,
+				/obj/item/gun/energy/artifact,
+				/obj/item/artifact/melee_weapon,
+				/obj/item/artifact/forcewall_wand
+				)
+			)
+		amounts = list(1)
+
+	voltron
+		items = list(/obj/item/device/voltron)
+		amounts = list(1)
+
+	// Tier 2
+	critter
+		// 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
+		items = list(
+			list(
+				/obj/critter/bear,
+				/obj/critter/domestic_bee,
+				/obj/critter/brullbar,
+				/obj/critter/nicespider
+				)
+			)
+		amounts = list(1)
+
+	injector
+		items = list(
+			list(
+				/obj/item/injector_belt,
+				/obj/item/clothing/mask/gas/injector_mask
+				)
+			)
+		amounts = list(1)
+
+	robo
+		items = list(
+			/obj/item/roboupgrade/efficiency,
+			/obj/item/roboupgrade/jetpack,
+			list(
+				/obj/item/roboupgrade/physshield,
+				/obj/item/roboupgrade/teleport,
+				/obj/item/roboupgrade/speed
+			)
+		)
+		amounts = list(1, 1, 1)
+
+	medicine
+		items = list(
+			/obj/item/reagent_containers/glass/beaker/large/antitox,
+			/obj/item/reagent_containers/glass/beaker/large/brute,
+			/obj/item/reagent_containers/glass/beaker/large/burn,
+			/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+			/obj/item/reagent_containers/hypospray
+		)
+
+		amounts = list(1, 1, 1, 1, 1)
+
+	spore
+		items = list(/obj/critter/spore)
+		amounts = list(3)
+
+	hydroponics
+		items = list(
+			/obj/item/reagent_containers/glass/happyplant,
+			/obj/item/seed/alien
+		)
+		amounts = list(2, 3)
+
+/datum/loot_crate_table/military
+	// Tier 3
+	voltron
+		items = list(/obj/item/device/voltron)
+		amounts = list(1)
+
+	power
+		items = list(
+			/obj/item/ammo/power_cell/self_charging/pod_wars_standard,
+			// 400 pu charge, designed to be able to be a trade off of higher capacity at the cost of no self recharging, or vice versa.
+			/obj/item/ammo/power_cell/higherish_power
+		)
+		amounts = list(1,1)
+
+	titanium
+		items = list(/obj/item/clothing/gloves/ring/titanium)
+		amounts = list(1)
+
+	// Tier 2
+	plasma
+		items = list(/obj/item/gun/energy/plasma_gun)
+		amounts = list(1)
+	phaser
+		items = list(/obj/item/gun/energy/phaser_gun, /obj/item/storage/firstaid/crit)
+		amounts = list(1, 1)
+	grenades
+		New()
+			..()
+			for (var/i = 1, i < rand(4,10), i++)
+				collapsed_items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)
+				collapsed_amounts += 1
+
+	// Tier 1
+	medicine
+		items = list(
+			/obj/item/reagent_containers/glass/beaker/large/antitox,
+			/obj/item/reagent_containers/glass/beaker/large/brute,
+			/obj/item/reagent_containers/glass/beaker/large/burn,
+			/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+			/obj/item/reagent_containers/hypospray
+		)
+		amounts = list(1,1,1,1,1)
+
 /obj/storage/crate/loot
 	name = "crate"
 	desc = "A crate of unknown contents, probably accidentally lost from some bygone freighter shipment or the like."
@@ -31,63 +187,36 @@
 				icon_closed = "lootsci"
 
 				// SCIENCE GOODS LOOT TABLE
+				var/datum/loot_crate_table/t
 				if (tier == 3)
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/clothing/gloves/psylink_bracelet
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/psylink
 						if(2)
-							items += pick(/obj/item/artifact/teleport_wand, /obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/artifact/melee_weapon, /obj/item/artifact/forcewall_wand) // All of these are pretty useful and it heavily reduces chances of telewand.
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/artifact
 						else
-							items += /obj/item/device/voltron
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/voltron
 				else if (tier == 2)
 					picker = rand(1,2)
 					switch(picker)
 						if(1)
-							items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
-							/obj/critter/brullbar,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/critter
 						if(2)
-							items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/injector
 				else
 					picker = rand(1,4)
 					switch(picker)
 						if(1)
-							items += /obj/item/roboupgrade/efficiency
-							item_amounts += 1
-							items += /obj/item/roboupgrade/jetpack
-							item_amounts += 1
-							picker = rand(1,4)
-							items += pick(
-								/obj/item/roboupgrade/physshield,
-								/obj/item/roboupgrade/teleport,
-								// /obj/item/roboupgrade/opticthermal,
-								/obj/item/roboupgrade/speed,
-							)
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/robo
 						if(2)
-							items += /obj/item/reagent_containers/glass/beaker/large/antitox
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/brute
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/burn
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
-							item_amounts += 1
-							items += /obj/item/reagent_containers/hypospray
-							item_amounts += 1
+							t = new /datum/loot_crate_table/research/medicine
 						if(3)
-							items += pick(/obj/critter/spore)
-							item_amounts += 3
+							t = new /datum/loot_crate_table/research/spore
 						else
-							items += /obj/item/reagent_containers/glass/happyplant
-							item_amounts += 2
-							items += /obj/item/seed/alien
-							item_amounts += 3
+							t = new /datum/loot_crate_table/research/hydroponics
+				items = t.collapsed_items
+				item_amounts = t.collapsed_amounts
 
 			if(3)
 				name = "industrial shipment crate"
@@ -162,49 +291,30 @@
 				icon_closed = "lootmil"
 
 				// MILITARY GOODS LOOT TABLE
+				var/datum/loot_crate_table/t
 				if (tier == 3)
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/device/voltron
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/voltron
 						if(2)
-							items += /obj/item/ammo/power_cell/self_charging/pod_wars_standard
-							item_amounts += 1
-							items += /obj/item/ammo/power_cell/higherish_power // 400 pu charge, designed to be able to be a trade off of higher capacity at the cost of no self recharging, or vice versa.
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/power
 						else
-							items += /obj/item/clothing/gloves/ring/titanium
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/titanium
+
 				else if (tier == 2)
 					picker = rand(1,10)
 					switch(picker)
 						if(1)
-							items += pick(/obj/item/gun/energy/plasma_gun)
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/plasma
 						if(2 to 6)
-							items += /obj/item/gun/energy/phaser_gun
-							item_amounts += 1
-							items += /obj/item/storage/firstaid/crit
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/phaser
 						if(7 to 10)
-							for (var/i = 1, i < rand(4,10), i++)
-								items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)
-								item_amounts += 1
+							t = new /datum/loot_crate_table/military/grenades
 				else
-					picker = rand(1,1)
-					switch(picker)
-						if(1)
-							items += /obj/item/reagent_containers/glass/beaker/large/antitox
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/brute
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/burn
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
-							item_amounts += 1
-							items += /obj/item/reagent_containers/hypospray
-							item_amounts += 1
+					t = new /datum/loot_crate_table/military/medicine
+				items = t.collapsed_items
+				item_amounts = t.collapsed_amounts
 
 			if(5)
 				name = "unmarked shipment crate"
