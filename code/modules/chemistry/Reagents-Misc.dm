@@ -708,9 +708,9 @@ datum
 			fluid_b = 20
 			value = 5
 
-		space_epoxy
-			name = "space epoxy"
-			id = "space_epoxy"
+		graphene_compound
+			name = "Graphene Hardening Compound"
+			id = "graphene_compound"
 			description = "A thick industrial compound used to reinforce things."
 			reagent_state = LIQUID
 			fluid_r = 10
