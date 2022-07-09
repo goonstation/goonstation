@@ -227,7 +227,7 @@
 						qdel(RC)
 				if(AID_CONTRACT)
 					var/datum/req_contract/aid/RCAID = RC
-					if(RCAID.cycles_remaining)
+					if(RCAID.cycles_remaining > 0)
 						RCAID.cycles_remaining--
 					else
 						src.aid_contracts_active--
