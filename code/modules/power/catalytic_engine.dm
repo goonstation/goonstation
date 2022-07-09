@@ -462,7 +462,7 @@
 			src.anode_viability = round(src.anode_viability * 1.3)
 		var/cathode_density_factor = 180 - abs(5-src.material.getProperty("density")) * 45
 		var/cathode_hardness_factor = 0.01 * (100 - abs(5-src.material.getProperty("hardness")) * 10)
-		src.cathode_viability = round(cathode_density_factor)
+		src.cathode_viability = round(cathode_density_factor * cathode_hardness_factor)
 
 		//Apply efficacy multiplier to viability. increases in parameters beyond standard exponentially increase the base efficacy
 		if(src.anode_viability > 100)
