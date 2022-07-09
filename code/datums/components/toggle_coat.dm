@@ -25,17 +25,17 @@
 		var/mob/M = suit.loc
 		M.set_clothing_icon_dirty()
 	suit.UpdateIcon()
-	if (src.buttoned = TRUE)
-		user.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
+	if (src.buttoned == TRUE)
+		user.visible_message("[user] buttons [his_or_her(user)] coat.",\
+		"You button your coat.")
 	else
-		user.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
+		user.visible_message("[user] unbuttons [his_or_her(user)] coat.",\
+		"You unbutton your coat.")
 
-/datum/component/toggle_hood/proc/hood_icon()
-	suit.icon_state = "[src.coat_style][src.buttoned ? "-o" : ""]"
+/datum/component/toggle_coat/proc/coat_icon()
+	suit.icon_state = "[src.coat_style][src.buttoned ? "" : "_o"]"
 
-/datum/component/toggle_hood/UnregisterFromParent()
+/datum/component/toggle_coat/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	UnregisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON)
 	suit.ability_buttons -= toggle

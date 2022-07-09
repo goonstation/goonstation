@@ -484,10 +484,7 @@
 	item_state = "labcoat"
 	var/coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
-	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
@@ -497,7 +494,7 @@
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 
 /obj/item/clothing/suit/labcoat/genetics
