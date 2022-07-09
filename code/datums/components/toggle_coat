@@ -1,0 +1,45 @@
+/datum/component/toggle_coat
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	var/buttoned = null
+	var/coat_style = null
+	var/obj/item/clothing/suit/suit = null
+	var/obj/ability_button/coat_toggle/toggle = new
+
+/datum/component/toggle_coat/Initialize(buttoned = null, coat_style = null)
+	if(!istype(parent, /obj/item/clothing/suit))
+		return COMPONENT_INCOMPATIBLE
+	src.buttoned = buttoned
+	src.coat_style = coat_style
+	src.suit = parent
+	if (!islist(suit.ability_buttons))
+		suit.ability_buttons = list()
+	suit.ability_buttons += toggle
+	toggle.the_item = suit
+	toggle.name = toggle.name + " ([suit.name])"
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/button_coat)
+	RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, .proc/coat_icon)
+
+/datum/component/toggle_coat/proc/button_coat(atom/movable/thing, mob/user)
+	src.buttoned = !src.buttoned
+	if (ismob(suit.loc))
+		var/mob/M = suit.loc
+		M.set_clothing_icon_dirty()
+	suit.UpdateIcon()
+	if (src.buttoned = TRUE)
+		user.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
+		"You unbutton your [src.name].")
+	else
+		user.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
+		"You button your [src.name].")
+
+/datum/component/toggle_hood/proc/hood_icon()
+	suit.icon_state = "[src.coat_style][src.buttoned ? "-o" : ""]"
+
+/datum/component/toggle_hood/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON)
+	suit.ability_buttons -= toggle
+	suit = null
+	qdel(toggle)
+	toggle = null
+	. = ..()
