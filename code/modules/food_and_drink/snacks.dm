@@ -412,7 +412,6 @@
 			if (ispug(M) || iswerewolf(M))
 				..()
 				boutput(M, "<span class='notice'>That tasted delicious!</span>")
-
 			else
 				src.heal_amt = 0
 				..()
