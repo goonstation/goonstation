@@ -99,11 +99,18 @@
 
 		if(temperature >= 2000)
 			if(!src.GetParticles("overheat_smoke"))
-				src.UpdateParticles(new/particles/nuke_overheat_smoke,"overheat_smoke")
+				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+			if(temperature >= 2500 && !src.GetParticles("overheat_fire"))
+				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
+				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
+			else if(temperature < 2500 && src.GetParticles("overheat_fire"))
+				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
+				src.ClearSpecificParticles("overheat_fire")
 		else
-			src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
-			src.ClearSpecificParticles("overheat_smoke")
+			if(src.GetParticles("overheat_smoke"))
+				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+				src.ClearSpecificParticles("overheat_smoke")
 
 		src.radiationLevel = tmpRads
 		processCaseRadiation(tmpRads)
@@ -306,24 +313,24 @@
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled
 	New()
 		..()
-		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel("gold")
-		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel("gold")
+		src.component_grid[3][1] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[3][3] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[3][5] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[3][7] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[5][1] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[5][3] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[5][5] = new /obj/item/reactor_component/gas_channel("carbonfibre")
+		src.component_grid[5][7] = new /obj/item/reactor_component/gas_channel("carbonfibre")
 
-		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[3][2] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[3][4] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[3][6] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[5][2] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[5][4] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[5][6] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
 
-		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("gold")
-		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger("gold")
+		src.component_grid[4][1] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
+		src.component_grid[4][7] = new /obj/item/reactor_component/heat_exchanger("carbonfibre")
 
 		src.component_grid[4][3] = new /obj/item/reactor_component/control_rod("bohrum")
 		src.component_grid[4][5] = new /obj/item/reactor_component/control_rod("bohrum")
@@ -385,13 +392,29 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = list("smoke")
 	color = "#777777"
-	width = 150
-	height = 200
-	count = 200
+	width = 400
+	height = 400
+	spawning = 5
+	count = 500
 	lifespan = generator("num", 20, 35, UNIFORM_RAND)
 	fade = generator("num", 50, 100, UNIFORM_RAND)
-	position = generator("box", list(-4,0,0), list(4,15,0), UNIFORM_RAND)
-	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
-	gravity = list(0.07, 0.02, 0)
+	position = generator("box", list(20,20,0), list(100,100,0), UNIFORM_RAND)
+	velocity = generator("box", list(-1,0.5,0), list(1,2,0), UNIFORM_RAND)
+	gravity = list(0.07, 0.2, 0)
+	color_change = generator("num", 0, 0, UNIFORM_RAND)
 	grow = list(0.02, 0)
-	fadein = 10
+	fadein = 0
+
+/particles/nuke_overheat_fire
+	icon = 'icons/effects/effects.dmi'
+	icon_state = list("onfire")
+	color = generator("color", "#ffffff", "#ff8000", UNIFORM_RAND)
+	width = 400
+	height = 400
+	lifespan = generator("num", 3, 8, UNIFORM_RAND)
+	fade = 11
+	position = generator("box", list(20,20,0), list(100,100,0), UNIFORM_RAND)
+	gravity = list(0.07, 0.02, 0)
+	scale = generator("num", 0.8, 1.5, UNIFORM_RAND)
+	spin = 1
+	fadein = generator("num", 4, 7, UNIFORM_RAND)
