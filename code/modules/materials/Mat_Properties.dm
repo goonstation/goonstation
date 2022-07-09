@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
 			if(0 to 1)
-				return "inflammable"
+				return "nonflammable"
 			if(1 to 3)
 				return "slightly flammable"
 			if(3 to 5)
