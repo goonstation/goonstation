@@ -31,6 +31,7 @@
 	var/reactor_vessel_gas_volume=200
 	var/obj/machinery/power/terminal/terminal = null
 	var/net_id = null
+	var/melted = FALSE
 
 	New()
 		. = ..()
@@ -46,6 +47,8 @@
 
 	process()
 		. = ..()
+		if(melted)
+			return
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
@@ -113,6 +116,10 @@
 				src.ClearSpecificParticles("overheat_smoke")
 
 		src.radiationLevel = tmpRads
+		if(tmpRads > 1000 || temperature > 15000)
+			src.catastrophicOverload() //we need this, otherwise neutron interactions go exponential and processing does too
+			return
+
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
@@ -153,6 +160,10 @@
 
 		src.AddComponent(/datum/component/radioactive, rads, TRUE, FALSE, 5)
 
+	proc/catastrophicOverload()
+		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
+		src.melted = TRUE
+		explosion(src,get_turf(src),5,10,20,25)
 
 
 
@@ -301,6 +312,22 @@
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 
+	ex_act(severity)
+		var/turf/epicentre = get_turf(src)
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					if(prob(50))
+						src.component_grid[x][y].set_loc(epicentre)
+						src.component_grid[x][y].throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
+					else
+						qdel(src.component_grid[x][y])
+						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris, epicentre)
+						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+						debris.streak_cleanable(dist_upper=20)
+					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
+
+		qdel(src)
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1

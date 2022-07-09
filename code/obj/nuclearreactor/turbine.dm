@@ -93,6 +93,8 @@
 		src.lastgen = 0
 		if(current_gas)
 			var/input_starting_energy = THERMAL_ENERGY(current_gas)
+			if(input_starting_energy <= 0)
+				return //runtime protection for weirdly empty gas packets
 			current_gas.temperature = round(max((input_starting_energy - ((input_starting_energy - (HEAT_CAPACITY(current_gas)*T20C))*0.8))/HEAT_CAPACITY(current_gas),T20C),0.01) //fucking rounding errors
 			var/output_starting_energy = THERMAL_ENERGY(current_gas)
 			var/energy_generated = src.stator_load*(src.RPM/60)
