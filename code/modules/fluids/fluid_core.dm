@@ -801,10 +801,11 @@ var/mutable_appearance/fluid_ma
 					src.w_uniform.add_blood(F)
 					src.set_clothing_icon_dirty()
 			else
-				if (src.shoes)
+				if (src.shoes && !(src.shoes.c_flags & NOSLIP))
 					src.shoes.add_blood(F)
 					src.set_clothing_icon_dirty()
-			F.add_tracked_blood(src)
+			if (!(src.shoes?.c_flags & NOSLIP))
+				F.add_tracked_blood(src)
 			//else if (isliving(M))// || isobj(AM))
 			//	M.add_blood(F)
 			//	if (!M.anchored)
