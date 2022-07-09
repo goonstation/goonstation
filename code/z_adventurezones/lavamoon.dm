@@ -685,8 +685,8 @@ var/sound/iomoon_alarm_sound = null
 	name = "XIANG|GIESEL Onboarding Course"
 	desc = "A cover sheet meant to accompany a set of corporate training materials."
 	icon_state = "paper_burned"
-	sizex = 718
-	sizey = 1023
+	sizex = 740
+	sizey = 1100
 
 	New()
 		..()
@@ -695,9 +695,26 @@ var/sound/iomoon_alarm_sound = null
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/xg_tapes.png")]'></body></html>"
 
 /obj/item/radio_tape/adventure/xg
-	name = "XIANG|GIESEL Onboarding Tape"
+	name = "XIANG|GIESEL Onboarding Tape 1"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
 	audio = "sound/radio_station/xg_onboarding1.ogg"
+
+/obj/item/radio_tape/adventure/xg2
+	name = "XIANG|GIESEL Onboarding Tape 2"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = "sound/radio_station/xg_onboarding2.ogg"
+
+/obj/item/radio_tape/adventure/xg3
+	name = "XIANG|GIESEL Onboarding Tape 3"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = "sound/radio_station/xg_onboarding3.ogg"
+
+/obj/item/radio_tape/adventure/xg4
+	name = "XIANG|GIESEL Onboarding Tape 4"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = "sound/radio_station/xg_onboarding4.ogg"
+
+
 
 /obj/storage/crate/classcrate/xg
 	name = "shielded crate"

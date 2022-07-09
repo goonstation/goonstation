@@ -25,33 +25,36 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return material_cache[mat]
 	return null
 
-/proc/mergeProperties(var/list/l1, var/list/l2, var/bias=0.5)
-	var/oBias = 1 - bias
+/proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
+	var/leftBias = 1 - rightBias
 
 	var/list/merged = list()
 
-	for(var/o in l1)
+	for(var/o in leftProps)
 		//merged.Add(o)
-		merged[o] = l1[o]
+		merged[o] = leftProps[o] * leftBias
 
-	if(l2)
-		for(var/x in l2)
+	if(rightProps)
+		for(var/x in rightProps)
 			if(x in merged)
-				merged[x] = round(merged[x] * oBias + l2[x] * bias)
+				merged[x] += rightProps[x] * rightBias
 			else
 				merged.Add(x)
-				merged[x] = l2[x]
+				merged[x] = rightProps[x] * rightBias
+
+	for(var/x in merged)
+		merged[x] = round(merged[x])
 
 	return merged
 
 /// Returns a copy of a given material.
 /proc/copyMaterial(var/datum/material/base)
 	if(!base || !istype(base, /datum/material))
-		var/datum/material/M = new/datum/material()
+		var/datum/material/M = new/datum/material/interpolated()
 		return M
 	else
 		var/datum/material/M = new base.type ()
-		M.properties = mergeProperties(base.properties)
+		M.properties = mergeProperties(base.properties, rightBias = 0)
 		for(var/X in base.vars)
 			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
@@ -93,9 +96,9 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 33) : explosion_protection
-		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 50)) flags |= CONDUCT
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
 
 
 /// Simply removes a material from an object.
@@ -272,7 +275,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /proc/getInterpolatedMaterial(var/datum/material/mat1,var/datum/material/mat2,var/t)
 	var/ot = 1 - t
-	var/datum/material/newMat = new()
+	var/datum/material/interpolated/newMat = new()
 
 	newMat.quality = round(mat1.quality * ot + mat2.quality * t)
 
@@ -281,6 +284,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
 	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
 	if(islist(mat1.color) || islist(mat2.color))

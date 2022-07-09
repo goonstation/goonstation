@@ -459,7 +459,7 @@
 	name = "Bank Records"
 	icon_state = "databank"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null

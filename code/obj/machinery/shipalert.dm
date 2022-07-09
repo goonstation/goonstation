@@ -127,6 +127,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	force = 5.0
 	throwforce = 5
 	w_class = W_CLASS_TINY

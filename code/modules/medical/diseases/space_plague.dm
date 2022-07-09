@@ -36,7 +36,7 @@
 				boutput(affected_mob, "<span class='alert'>[procmessage]</span>")
 			if(probmult(5))
 				for(var/datum/ailment/disease/V in disease_controls.standard_diseases)
-					if (prob(10))
+					if (istype(V) && V.spread == "Non-Contagious" && prob(10))
 						affected_mob.contract_disease(V.type,null,null,1)
 		else
 			return

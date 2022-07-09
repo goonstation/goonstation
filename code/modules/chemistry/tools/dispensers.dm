@@ -11,6 +11,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE
+	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 

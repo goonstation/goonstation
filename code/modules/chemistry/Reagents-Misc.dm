@@ -2847,12 +2847,14 @@ datum
 					return
 
 				reacting = 1
-				var/count = 0
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					count++
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
-
+				if(volume >= 5)
+					var/count = 0
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						count++
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count), stun_coeff = min(volume / 25, 1))
+				else
+					elecflash(holder.my_atom)
 				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)
