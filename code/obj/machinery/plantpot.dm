@@ -345,7 +345,7 @@
 			// icon on the plant pot needs to change.
 
 			if(current_water_level)
-				if(current_water_level < 200) // max water limit!!
+				if(current_water_level <= 200) // max water limit!!
 					if(HYPCheckCommut(DNA,/datum/plant_gene_strain/metabolism_slow) && prob(50))
 						src.growth++
 						drink_rate /= 2
