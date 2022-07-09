@@ -635,8 +635,10 @@ datum
 					else if (prob(75))
 						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
-						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-						M.real_name = "Unknown"
+						if(!H.disfigured)
+							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
 						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)

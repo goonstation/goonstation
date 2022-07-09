@@ -704,3 +704,43 @@
 			nodes -= T
 
 	return nodes
+
+/datum/mutex
+	var/locked
+
+	proc/unlock()
+		locked = FALSE
+
+	proc/lock()
+		while(!trylock())
+			sleep(1)
+
+	proc/trylock()
+		if(!locked)
+			locked = TRUE
+			. = TRUE
+
+	limited
+		var/iterations
+		var/maxIterations
+
+		New(maxItrs)
+			..()
+			maxIterations = maxItrs
+
+		trylock()
+			if(iterations <= 0 && locked)
+				locked = FALSE
+			. = ..()
+			if(.)
+				iterations = maxIterations
+			else
+				iterations--
+
+		unlock()
+			iterations = 0
+			..()
+
+
+
+

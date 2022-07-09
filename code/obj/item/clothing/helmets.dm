@@ -145,25 +145,16 @@
 	proc/setupVisorMat(var/datum/material/V)
 		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
 		if (visr_material)
-			if (visr_material.hasProperty("thermal"))
-				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
-				setProperty("coldprot", 10+prot)
-				setProperty("heatprot", 1+round(prot/2))
-			else
-				setProperty("coldprot", 10)
-				setProperty("heatprot", 2)
 
-			if (visr_material.hasProperty("permeable"))
-				var/prot = 100 - visr_material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
+			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
+			setProperty("coldprot", 10+prot)
+			setProperty("heatprot", 2+round(prot/2))
 
-			if (visr_material.hasProperty("density"))
-				var/prot = round(visr_material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
-			else
-				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
+			prot =  max(0, (7 - visr_material.getProperty("permeable")) * 5)
+			setProperty("viralprot", prot)
+
+			prot = max(0, visr_material.getProperty("density") - 3) / 2
+			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
 
 		// overlay stuff
 

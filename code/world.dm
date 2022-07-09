@@ -132,7 +132,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /proc/buildMaterialCache()
 	//material_cache
-	var/materialList = childrentypesof(/datum/material)
+	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
 		material_cache.Add(M.mat_id)

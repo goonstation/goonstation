@@ -1,6 +1,7 @@
 /obj/dummy/chameleon
 	name = ""
 	desc = ""
+	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = 1
 	soundproofing = -1

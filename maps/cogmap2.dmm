@@ -30220,7 +30220,8 @@
 	icon_state = "pdoor0";
 	id = "eva";
 	name = "E.V.A.";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/cable{
 	d2 = 2;
@@ -31063,7 +31064,8 @@
 	icon_state = "pdoor0";
 	id = "eva";
 	name = "E.V.A.";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -37567,7 +37569,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/machinery/light/lamp/black{
@@ -37648,7 +37651,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 10
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
@@ -38729,7 +38733,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/item/paper_bin{
@@ -38780,7 +38785,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -38884,7 +38890,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -49793,10 +49800,6 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/vehicle/tug{
-	desc = "Pretty much just an airport baggage cart, really.";
-	name = "utility tractor"
 	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
@@ -76315,6 +76318,18 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"dvU" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0;
+	dir = 9
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "dwa" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
@@ -77007,6 +77022,18 @@
 	icon_state = "12"
 	},
 /area/station/crew_quarters/arcade)
+"hGu" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0;
+	dir = 6
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "hGX" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/heavy,
@@ -77505,6 +77532,18 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"jFX" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0;
+	dir = 5
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/bridge)
 "jHG" = (
 /obj/indestructible/shuttle_corner,
 /turf/unsimulated/floor/shuttle{
@@ -77737,6 +77776,13 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"kXd" = (
+/obj/vehicle/tug{
+	desc = "Pretty much just an airport baggage cart, really.";
+	name = "utility tractor"
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/quartermaster/office)
 "kZi" = (
 /obj/cable{
 	d1 = 4;
@@ -129747,7 +129793,7 @@ cNc
 cNc
 cRr
 cSU
-cSS
+kXd
 cIs
 cSM
 cUm
@@ -146910,7 +146956,7 @@ bAc
 bBL
 bDH
 bFC
-bHD
+dvU
 bJz
 bHD
 bHA
@@ -147514,9 +147560,9 @@ bAc
 bBM
 bDJ
 bFF
-bHD
+jFX
 bJB
-bHD
+hGu
 bMT
 bOx
 bBM

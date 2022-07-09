@@ -278,6 +278,12 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/inspector
+	name = "inspector's hat"
+	desc = "Someone who wears this will look very mysterious."
+	icon_state = "inspector"
+	item_state = "ins_hat"
+
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
@@ -301,6 +307,7 @@ proc/filter_trait_hats(var/type)
 
 	var/max_cigs = 15
 	var/list/cigs
+	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
 
 	New()
 		..()
@@ -410,6 +417,8 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
 		S.linked_hat = src
 		user.drop_item()
 		src.set_loc(S)
@@ -430,6 +439,10 @@ proc/filter_trait_hats(var/type)
 			src.phrase = n_name
 			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"

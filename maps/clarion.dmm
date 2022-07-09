@@ -13861,7 +13861,7 @@
 /obj/machinery/mass_driver{
 	dir = 4;
 	drive_range = 20;
-	id = "evagun1"
+	id = "disposals_vent"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1

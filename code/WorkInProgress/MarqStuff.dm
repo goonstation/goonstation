@@ -709,7 +709,7 @@
 		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
+				current_projectile.power = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
 			else
 				current_projectile.power = default_power
 		else
@@ -744,12 +744,13 @@
 		else
 			var/spread_base = 40
 			if(src.material)
-				if(src.material.hasProperty("density"))
-					var/mod = src.material.getProperty("density")
-					mod -= 50
-					mod /= 2
-					mod = mod * (-1)
-					spread_base += mod
+				if(src.material.getProperty("density") <= 2)
+					spread_base *= 1.5
+				else if (src.material.getProperty("density") >= 5)
+					spread_base *= 0.75
+
+				else if (src.material.getProperty("density") >= 7)
+					spread_base *= 0.5
 
 			spread_angle = spread_base
 			if (aim)

@@ -25,6 +25,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -96,6 +97,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw1"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
@@ -231,7 +233,7 @@ CONTAINS:
 	throw_range = 20
 	force = 5
 	flags = ONBELT
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
