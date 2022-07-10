@@ -50626,7 +50626,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "wmE" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown,
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
