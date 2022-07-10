@@ -18,10 +18,10 @@
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,
 						/datum/targetable/critter/control_owner)
-	var/health_brute = 25
-	var/health_brute_vuln = 1
-	var/health_burn = 25
-	var/health_burn_vuln = 0.2
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.2
 	var/is_inspector = FALSE
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
