@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/radioactive)
 	var/neutron = FALSE
 	var/_added_to_items_processing = FALSE
 	var/effect_range = 1
+	var/backup_color = null //so hacky
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom))
@@ -23,6 +24,8 @@ TYPEINFO(/datum/component/radioactive)
 		src.decays = decays
 		src.neutron = neutron
 		src.effect_range = effectRange
+		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
+			return
 		RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
 		RegisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -45,11 +48,16 @@ TYPEINFO(/datum/component/radioactive)
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
 		var/atom/PA = parent
 		var/color = neutron ? "#2e3ae4FF" : "#18e022FF"
-		//PA.add_filter("radiation_color", 1, color_matrix_filter(normalize_color_to_matrix("#FFF")))
-		PA.add_simple_light("radiation_light", rgb2num(color)+list(min(128,round(255*radStrength/100))))
-		PA.add_filter("radiation_outline", 2, outline_filter(size=1.3, color=color))
+		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+		src.backup_color = PA.color
+		PA.color = null
+		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color)+list(min(128,round(255*radStrength/100))))
+		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
+		if(QDELETED(parent))
+			global.processing_items.Remove(src)
+			return
 		ticked(parent)
 
 	UnregisterFromParent()
@@ -58,9 +66,10 @@ TYPEINFO(/datum/component/radioactive)
 		if(src._added_to_items_processing)
 			global.processing_items.Remove(parent)
 		global.processing_items.Remove(src)
-		PA.remove_simple_light("radiation_light")
-		PA.remove_filter("radiation_outline")
-		PA.remove_filter("radiation_color")
+		PA.remove_simple_light("radiation_light_\ref[src]")
+		PA.remove_filter("radiation_outline_\ref[src]")
+		PA.remove_filter("radiation_color_\ref[src]")
+		PA.color = backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -85,7 +94,7 @@ TYPEINFO(/datum/component/radioactive)
 	proc/ticked(atom/owner, mult=1)
 		for(var/mob/M in viewers(effect_range,parent))
 			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
-		if(src.decays)
+		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - mult)
 		if(!src.radStrength)
 			src.RemoveComponent()

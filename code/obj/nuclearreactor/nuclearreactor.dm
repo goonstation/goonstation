@@ -166,11 +166,11 @@
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
 			src.current_gas.vacuum()
-		src.current_gas.radgas += 1000
+		src.current_gas.radgas += 2000
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
-		explosion(src,current_loc,5,10,20,25)
+		explosion(src,current_loc,0,0,20,25)
 
 
 

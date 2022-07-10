@@ -140,6 +140,17 @@
 /// Hotspot Maximum Temperature to maintain maths works to 1e35-sh in practice)
 #define HOTSPOT_MAX_CAT_TEMPERATURE (INFINITY)
 
+// Radgas properties
+// Rad particles concentration required to contaminate stuff
+#define RADGAS_MINIMUM_CONTAMINATION_MOLES 5
+// how much stuff gets contaminated per tick
+#define RADGAS_MAXIMUM_CONTAMINATION_TICK 5
+// maximum amount stuff can be contaminated by radgas - lower values mean it'll spread out more, higher values mean it'll be more deadly
+#define RADGAS_MAXIMUM_CONTAMINATION 10
+// how much radstrength per mole of contamination is applied - how much radiation per radgas
+#define RADGAS_CONTAMINATION_PER_MOLE 5
+// only apply contamination to atoms on a turf every few seconds, instead of every tick
+#define RADGAS_CONTAMINATION_COOLDOWN 3 SECONDS
 //Gas Reaction Flags
 #define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
 #define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
