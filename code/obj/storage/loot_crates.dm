@@ -31,6 +31,10 @@
 		)
 	amounts = list(1)
 
+/datum/loot_crate_table/science/voltron
+	items = list(/obj/item/device/voltron)
+	amounts = list(1)
+
 /datum/loot_crate_table/science/with_tier
 	New(tier)
 		..()
@@ -39,19 +43,16 @@
 		var/item_amounts = list()
 		// SCIENCE GOODS LOOT TABLE
 		if (tier == 3)
-			picker = rand(1,3)
-			switch(picker)
-				if(1)
-					var/datum/loot_crate_table/t = new /datum/loot_crate_table/science/psylink
-					items += t.collapsed_items
-					item_amounts += t.collapsed_amounts
-				if(2)
-					var/datum/loot_crate_table/t = new /datum/loot_crate_table/science/artifact
-					items += t.collapsed_items
-					item_amounts += t.collapsed_amounts
-				else
-					items += /obj/item/device/voltron
-					item_amounts += 1
+			var crate = pick(
+				/datum/loot_crate_table/science/psylink,
+				/datum/loot_crate_table/science/artifact,
+				/datum/loot_crate_table/science/voltron
+			)
+			var/datum/loot_crate_table/t = new crate
+
+			items += t.collapsed_items
+			item_amounts += t.collapsed_amounts
+
 		else if (tier == 2)
 			picker = rand(1,2)
 			switch(picker)
