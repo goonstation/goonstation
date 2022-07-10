@@ -154,6 +154,142 @@
 		)
 		amounts = list(1,1,1,1,1)
 
+/datum/loot_crate_table/industrial
+	// Tier 3
+	jetpack
+		items = list(/obj/item/clothing/shoes/jetpack)
+		amounts = list(1)
+
+	wizard
+		New()
+			items += concrete_typesof(/obj/item/wizard_crystal)
+			amounts += 3
+			..()
+
+	ship
+		items = list(/obj/item/shipcomponent/mainweapon/rockdrills)
+		amounts = list(1)
+
+	// Tier 2
+	material
+		items = list(
+			list(
+				/obj/item/raw_material/telecrystal,
+				/obj/item/raw_material/gemstone,
+				/obj/item/raw_material/miracle,
+				/obj/item/raw_material/uqill
+			)
+		)
+		amounts = list(30)
+
+	fermid
+		items = list(/obj/critter/fermid)
+		amounts = list(1)
+
+	// Tier 1
+	explosives
+		items = list(/obj/item/breaching_charge/mining)
+		amounts = list(25)
+
+	gear
+		items = list(
+			/obj/item/clothing/gloves/concussive,
+			/obj/item/clothing/shoes/industrial
+		)
+		amounts = list(1, 1)
+
+	armor
+		items = list(
+			/obj/item/clothing/head/helmet/space/industrial,
+			/obj/item/clothing/suit/space/industrial
+		)
+		amounts = list(1, 1)
+
+	less_material
+		items = list(
+			list(
+				/obj/item/raw_material/telecrystal,
+				/obj/item/raw_material/gemstone,
+				/obj/item/raw_material/miracle,
+				/obj/item/raw_material/uqill
+				)
+			)
+		amounts = list(10)
+
+	worse_material
+		items = list(
+			list(
+				/obj/item/raw_material/syreline,
+				/obj/item/raw_material/bohrum,
+				/obj/item/raw_material/claretine,
+				/obj/item/raw_material/cerenkite
+				)
+			)
+		amounts = list(40)
+
+	cargo
+		items = list(
+			list(
+				/obj/item/radio_tape/advertisement/cargonia,
+				/obj/item/clothing/under/rank/cargo,
+				/obj/decal/fakeobjects/skeleton
+				)
+			)
+		amounts = list(1, 1, 1)
+
+	rockworm
+		items = list(/obj/critter/rockworm)
+		amounts = list(3)
+
+/datum/loot_crate_table/criminal
+	// Tier 3
+	bling
+		items = list(/obj/item/gun/bling_blaster)
+		amounts = list(1)
+
+	loadsofmoney
+		items = list(/obj/item/spacecash/hundredthousand)
+		amounts = list(3)
+
+	// Tier 2
+	money
+		items = list(/obj/item/spacecash/thousand)
+		amounts = list(20)
+
+	gold
+		items = list(/obj/item/material_piece/gold)
+		amounts = list(5)
+
+	omega
+		items = list(/obj/item/plant/herb/cannabis/omega/spawnable)
+		amounts = list(10)
+
+	cyberpunk
+		items = list(/obj/item/storage/pill_bottle/cyberpunk)
+		amounts = list(3)
+
+	// Tier 1
+	money/less
+		amounts = list(5)
+
+	wine
+		items = list(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine)
+		amounts = list(5)
+
+	gold/less
+		amounts = list(1)
+
+	cannabis
+		items = list(
+			list(
+				/obj/item/plant/herb/cannabis/spawnable,
+				/obj/item/plant/herb/cannabis/white/spawnable,
+				/obj/item/plant/herb/cannabis/mega/spawnable
+				)
+			)
+		amounts = list(10)
+
+
 /obj/storage/crate/loot
 	name = "crate"
 	desc = "A crate of unknown contents, probably accidentally lost from some bygone freighter shipment or the like."
@@ -226,62 +362,43 @@
 				icon_closed = "lootind"
 
 				// INDUSTRIAL GOODS LOOT TABLE
+				var/datum/loot_crate_table/t
 				if (tier == 3)
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							items += /obj/item/clothing/shoes/jetpack
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/jetpack
 						if(2)
-							items += pick(concrete_typesof(/obj/item/wizard_crystal))
-							item_amounts += 3
+							t = new /datum/loot_crate_table/industrial/wizard
 						else
-							items += /obj/item/shipcomponent/mainweapon/rockdrills
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/ship
+
 				else if (tier == 2)
 					picker = rand(1,4)
 					switch(picker)
 						if(1 to 3)
-							items += pick(/obj/item/raw_material/telecrystal,/obj/item/raw_material/gemstone,
-							/obj/item/raw_material/miracle,/obj/item/raw_material/uqill)
-							item_amounts += 30
+							t = new /datum/loot_crate_table/industrial/material
 						else
-							items += /obj/critter/fermid
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/fermid
 				else
 					picker = rand(1,7)
 					switch(picker)
 						if(1)
-							items += /obj/item/breaching_charge/mining
-							item_amounts += 25
+							t = new /datum/loot_crate_table/industrial/explosives
 						if(2)
-							items += /obj/item/clothing/gloves/concussive
-							item_amounts += 1
-							items += /obj/item/clothing/shoes/industrial
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/gear
 						if(3)
-							items += /obj/item/clothing/head/helmet/space/industrial
-							item_amounts += 1
-							items += /obj/item/clothing/suit/space/industrial
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/armor
 						if(4)
-							items += pick(/obj/item/raw_material/telecrystal,/obj/item/raw_material/gemstone,
-							/obj/item/raw_material/miracle,/obj/item/raw_material/uqill)
-							item_amounts += 10
+							t = new /datum/loot_crate_table/industrial/less_material
 						if(5)
-							items += pick(/obj/item/raw_material/syreline,/obj/item/raw_material/bohrum,
-							/obj/item/raw_material/claretine,/obj/item/raw_material/cerenkite)
-							item_amounts += 40
+							t = new /datum/loot_crate_table/industrial/worse_material
 						if(6)
-							items += /obj/item/radio_tape/advertisement/cargonia
-							item_amounts += 1
-							items += /obj/item/clothing/under/rank/cargo
-							item_amounts += 1
-							items += /obj/decal/fakeobjects/skeleton
-							item_amounts += 1
+							t = new /datum/loot_crate_table/industrial/cargo
 						else
-							items += /obj/critter/rockworm
-							item_amounts += 3
+							t = new /datum/loot_crate_table/industrial/rockworm
+				items = t.collapsed_items
+				item_amounts = t.collapsed_amounts
 
 			if(4)
 				name = "military shipment crate"
@@ -324,50 +441,40 @@
 				icon_closed = "lootcrime"
 
 				// CRIMINAL GOODS LOOT TABLE
+				var/datum/loot_crate_table/t
 				if (tier == 3)
 					picker = rand(1,6)
 					switch(picker)
 						if(1 to 2)
-							items += /obj/item/device/voltron
-							item_amounts += 1
+							t = new /datum/loot_crate_table/military/voltron
 						if(3 to 5)
-							items += /obj/item/gun/bling_blaster
-							item_amounts += 1
+							t = new /datum/loot_crate_table/criminal/bling
 						else
-							items += /obj/item/spacecash/hundredthousand
-							item_amounts += 3
+							t = new /datum/loot_crate_table/criminal/loadsofmoney
 				else if (tier == 2)
 					picker = rand(1,4)
 					switch(picker)
 						if(1)
-							items += /obj/item/spacecash/thousand
-							item_amounts += 20
+							t = new /datum/loot_crate_table/criminal/money
 						if(2)
-							items += /obj/item/material_piece/gold
-							item_amounts += 5
+							t = new /datum/loot_crate_table/criminal/gold
 						if(3)
-							items += /obj/item/plant/herb/cannabis/omega/spawnable
-							item_amounts += 10
+							t = new /datum/loot_crate_table/criminal/omega
 						if(4)
-							items += /obj/item/storage/pill_bottle/cyberpunk
-							item_amounts += 3
+							t = new /datum/loot_crate_table/criminal/cyberpunk
 				else
 					picker = rand(1,4)
 					switch(picker)
 						if(1)
-							items += /obj/item/spacecash/thousand
-							item_amounts += 5
+							t = new /datum/loot_crate_table/criminal/money/less
 						if(2)
-							items += /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
-							item_amounts += 5
+							t = new /datum/loot_crate_table/criminal/wine
 						if(3)
-							items += /obj/item/material_piece/gold
-							item_amounts += 1
+							t = new /datum/loot_crate_table/criminal/gold/less
 						if(4)
-							items += pick(/obj/item/plant/herb/cannabis/spawnable,
-							/obj/item/plant/herb/cannabis/white/spawnable,
-							/obj/item/plant/herb/cannabis/mega/spawnable)
-							item_amounts += 10
+							t = new /datum/loot_crate_table/criminal/cannabis
+				items = t.collapsed_items
+				item_amounts = t.collapsed_amounts
 
 			else
 				name = "goods shipment crate"
