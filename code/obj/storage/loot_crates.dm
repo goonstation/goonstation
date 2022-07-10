@@ -289,63 +289,6 @@
 			)
 		amounts = list(10)
 
-/datum/loot_crate_table/civilian
-	frog
-		items = list(/obj/item/clothing/under/gimmick/frog)
-		amounts = list(1)
-
-	sandal
-		items = list(/obj/item/clothing/shoes/sandal)
-		amounts = list(1)
-
-	skateboard
-		items = list(/obj/vehicle/skateboard)
-		amounts = list(1)
-
-	tomatoes
-		items = list(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary)
-		amounts = list(5)
-
-	yeti
-		items = list(/obj/item/clothing/ears/earmuffs/yeti)
-		amounts = list(1)
-
-	cigarettes
-		items = list(
-			/obj/item/device/light/zippo/gold,
-			/obj/item/cigpacket/random
-			)
-		amounts = list(1, list(2,4))
-
-	moon
-		items = list(/obj/item/clothing/shoes/moon)
-		amounts = list(1)
-
-	food
-		items = list(
-			list(
-				/obj/item/reagent_containers/food/snacks/burrito,
-				/obj/item/reagent_containers/food/snacks/snack_cake,
-				/obj/item/reagent_containers/food/snacks/snack_cake/golden,
-				/obj/item/reagent_containers/food/snacks/plant/lashberry,
-				/obj/item/reagent_containers/food/snacks/plant/tomato
-				)
-			)
-		amounts = list(5)
-
-	cat
-		items = list(/obj/critter/cat)
-		amounts = list(1)
-
-	pest_control
-		items = list(
-			/obj/item/device/flyswatter,
-			/obj/item/storage/box/mousetraps
-			)
-		amounts = list(1, 1)
-
-
-
 
 /obj/storage/crate/loot
 	name = "crate"
@@ -538,40 +481,56 @@
 				desc = "There are consumer goods company logos on the crate."
 
 				// CIVILIAN GOODS LOOT TABLE
-				var/datum/loot_crate_table/t
 				if (tier == 3)
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							t = new /datum/loot_crate_table/civilian/frog
+							items += /obj/item/clothing/under/gimmick/frog
+							item_amounts += 1
 						if(2)
-							t = new /datum/loot_crate_table/civilian/sandal
+							items += /obj/item/clothing/shoes/sandal
+							item_amounts += 1
 						else
-							t = new /datum/loot_crate_table/civilian/skateboard
+							items += /obj/vehicle/skateboard
+							item_amounts += 1
 				else if (tier == 2)
 					picker = rand(1,3)
 					switch(picker)
 						if(1)
-							t = new /datum/loot_crate_table/civilian/tomatoes
+							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
+							item_amounts += 5
 						if(2)
-							t = new /datum/loot_crate_table/civilian/yeti
+							items += /obj/item/clothing/ears/earmuffs/yeti
+							item_amounts += 1
 						if(3)
-							t = new /datum/loot_crate_table/civilian/cigarettes
+							items += /obj/item/device/light/zippo/gold
+							item_amounts += 1
+							items += /obj/item/cigpacket/random
+							item_amounts += rand(2,4)
 				else
 					picker = rand(1,5)
 					switch(picker)
 						if(1)
-							t = new /datum/loot_crate_table/civilian/moon
+							items += /obj/item/clothing/shoes/moon
+							item_amounts += 1
 						if(2)
-							t = new /datum/loot_crate_table/criminal/wine
+							items += /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
+							item_amounts += 5
 						if(3)
-							t = new /datum/loot_crate_table/civilian/food
+							items += pick(/obj/item/reagent_containers/food/snacks/burrito,
+							/obj/item/reagent_containers/food/snacks/snack_cake,
+							/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+							/obj/item/reagent_containers/food/snacks/plant/lashberry,
+							/obj/item/reagent_containers/food/snacks/plant/tomato)
+							item_amounts += 5
 						if(4)
-							t = new /datum/loot_crate_table/civilian/cat
+							items += /obj/critter/cat
+							item_amounts += 1
 						if(5)
-							t = new /datum/loot_crate_table/civilian/pest_control
-				items = t.collapsed_items
-				item_amounts = t.collapsed_amounts
+							items += /obj/item/device/flyswatter
+							item_amounts += 1
+							items += /obj/item/storage/box/mousetraps
+							item_amounts += 1
 
 		var/trap_prob = 100
 		var/newlock = null
