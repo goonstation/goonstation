@@ -1,3 +1,108 @@
+/datum/loot_crate_table/
+	var/items = list()
+	var/amounts = list()
+
+	var/collapsed_items = list()
+	var/collapsed_amounts = list()
+
+	New()
+		..()
+		for (var/i = 1, i <= length(items), i++)
+			if (islist(items[i]))
+				collapsed_items += pick(items[i])
+			else
+				collapsed_items += items[i]
+			collapsed_amounts += amounts[i]
+
+/datum/loot_crate_table/science/psylink
+	items = list(/obj/item/clothing/gloves/psylink_bracelet)
+	amounts = list(1)
+
+// All of these are pretty useful and it heavily reduces chances of telewand.
+/datum/loot_crate_table/science/artifact
+	items = list(
+			list(
+				/obj/item/artifact/teleport_wand,
+				/obj/item/artifact/activator_key,
+				/obj/item/gun/energy/artifact,
+				/obj/item/artifact/melee_weapon,
+				/obj/item/artifact/forcewall_wand
+			)
+		)
+	amounts = list(1)
+
+/datum/loot_crate_table/science/with_tier
+	New(tier)
+		..()
+		var/picker
+		var/items = list()
+		var/item_amounts = list()
+		// SCIENCE GOODS LOOT TABLE
+		if (tier == 3)
+			picker = rand(1,3)
+			switch(picker)
+				if(1)
+					var/datum/loot_crate_table/t = new /datum/loot_crate_table/science/psylink
+					items += t.collapsed_items
+					item_amounts += t.collapsed_amounts
+				if(2)
+					var/datum/loot_crate_table/t = new /datum/loot_crate_table/science/artifact
+					items += t.collapsed_items
+					item_amounts += t.collapsed_amounts
+				else
+					items += /obj/item/device/voltron
+					item_amounts += 1
+		else if (tier == 2)
+			picker = rand(1,2)
+			switch(picker)
+				if(1)
+					items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
+					/obj/critter/brullbar,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
+					item_amounts += 1
+				if(2)
+					items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)
+					item_amounts += 1
+		else
+			picker = rand(1,4)
+			switch(picker)
+				if(1)
+					items += /obj/item/roboupgrade/efficiency
+					item_amounts += 1
+					items += /obj/item/roboupgrade/jetpack
+					item_amounts += 1
+					picker = rand(1,4)
+					items += pick(
+						/obj/item/roboupgrade/physshield,
+						/obj/item/roboupgrade/teleport,
+						// /obj/item/roboupgrade/opticthermal,
+						/obj/item/roboupgrade/speed,
+					)
+					item_amounts += 1
+				if(2)
+					items += /obj/item/reagent_containers/glass/beaker/large/antitox
+					item_amounts += 1
+					items += /obj/item/reagent_containers/glass/beaker/large/brute
+					item_amounts += 1
+					items += /obj/item/reagent_containers/glass/beaker/large/burn
+					item_amounts += 1
+					items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
+					item_amounts += 1
+					items += /obj/item/reagent_containers/hypospray
+					item_amounts += 1
+				if(3)
+					items += pick(/obj/critter/spore)
+					item_amounts += 3
+				else
+					items += /obj/item/reagent_containers/glass/happyplant
+					item_amounts += 2
+					items += /obj/item/seed/alien
+					item_amounts += 3
+		collapsed_items = items
+		collapsed_amounts = item_amounts
+
+
+
+
 /obj/storage/crate/loot
 	name = "crate"
 	desc = "A crate of unknown contents, probably accidentally lost from some bygone freighter shipment or the like."
@@ -30,64 +135,9 @@
 				icon_opened = "lootsciopen"
 				icon_closed = "lootsci"
 
-				// SCIENCE GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/clothing/gloves/psylink_bracelet
-							item_amounts += 1
-						if(2)
-							items += pick(/obj/item/artifact/teleport_wand, /obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/artifact/melee_weapon, /obj/item/artifact/forcewall_wand) // All of these are pretty useful and it heavily reduces chances of telewand.
-							item_amounts += 1
-						else
-							items += /obj/item/device/voltron
-							item_amounts += 1
-				else if (tier == 2)
-					picker = rand(1,2)
-					switch(picker)
-						if(1)
-							items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
-							/obj/critter/brullbar,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
-							item_amounts += 1
-						if(2)
-							items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)
-							item_amounts += 1
-				else
-					picker = rand(1,4)
-					switch(picker)
-						if(1)
-							items += /obj/item/roboupgrade/efficiency
-							item_amounts += 1
-							items += /obj/item/roboupgrade/jetpack
-							item_amounts += 1
-							picker = rand(1,4)
-							items += pick(
-								/obj/item/roboupgrade/physshield,
-								/obj/item/roboupgrade/teleport,
-								// /obj/item/roboupgrade/opticthermal,
-								/obj/item/roboupgrade/speed,
-							)
-							item_amounts += 1
-						if(2)
-							items += /obj/item/reagent_containers/glass/beaker/large/antitox
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/brute
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/burn
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
-							item_amounts += 1
-							items += /obj/item/reagent_containers/hypospray
-							item_amounts += 1
-						if(3)
-							items += pick(/obj/critter/spore)
-							item_amounts += 3
-						else
-							items += /obj/item/reagent_containers/glass/happyplant
-							item_amounts += 2
-							items += /obj/item/seed/alien
-							item_amounts += 3
+				var/datum/loot_crate_table/t = new /datum/loot_crate_table/science/with_tier(tier)
+				items += t.collapsed_items
+				item_amounts += t.collapsed_amounts
 
 			if(3)
 				name = "industrial shipment crate"
