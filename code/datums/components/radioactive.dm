@@ -44,8 +44,10 @@ TYPEINFO(/datum/component/radioactive)
 		else
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
 		var/atom/PA = parent
-		PA.add_simple_light("radiation_light", rgb2num(neutron ? "#2e3ae4" : "#18e022")+list(min(128,round(255*radStrength/100))))
-		PA.add_filter("radiation_outline", -1, outline_filter(size=1.3, color=(neutron ? "#2e3ae4FF" : "#18e022FF")))
+		var/color = neutron ? "#2e3ae4FF" : "#18e022FF"
+		//PA.add_filter("radiation_color", 1, color_matrix_filter(normalize_color_to_matrix("#FFF")))
+		PA.add_simple_light("radiation_light", rgb2num(color)+list(min(128,round(255*radStrength/100))))
+		PA.add_filter("radiation_outline", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
 		ticked(parent)
@@ -58,6 +60,7 @@ TYPEINFO(/datum/component/radioactive)
 		global.processing_items.Remove(src)
 		PA.remove_simple_light("radiation_light")
 		PA.remove_filter("radiation_outline")
+		PA.remove_filter("radiation_color")
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,

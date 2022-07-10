@@ -106,9 +106,11 @@ turf
 				#ifdef ALPHA_GAS_OVERLAYS
 				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 				#else
 				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+				mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 				#endif
 			)
 
@@ -406,6 +408,11 @@ turf
 				for(var/atom/movable/item in src)
 					item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 				temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+
+			if(src.air.radgas > 0) //if fallout is in the air, contaminate objects on this tile and consume radgas
+				for(var/atom/movable/item in src)
+					item.AddComponent(/datum/component/radioactive,min(src.air.radgas,100),TRUE,FALSE)
+					src.air.radgas -= min(src.air.radgas,100)
 
 			return 1
 

@@ -163,7 +163,14 @@
 	proc/catastrophicOverload()
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
-		explosion(src,get_turf(src),5,10,20,25)
+		if(!src.current_gas)
+			src.current_gas = new/datum/gas_mixture()
+			src.current_gas.vacuum()
+		src.current_gas.radgas += 1000
+		src.current_gas.temperature = src.temperature
+		var/turf/current_loc = get_turf(src)
+		current_loc.assume_air(current_gas)
+		explosion(src,current_loc,5,10,20,25)
 
 
 
