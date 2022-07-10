@@ -224,7 +224,6 @@
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "rice-sprig"
 	food_color = "#FFFFAA"
-	brewable = 1
 	brew_result = "ricewine"
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice
@@ -241,7 +240,6 @@
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
-	brewable = 1
 	brew_result = "rum"
 
 /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
@@ -302,7 +300,6 @@
 	doants = 0
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
-	brewable = 1
 	brew_result = "mead"
 	New()
 		..()
