@@ -218,7 +218,7 @@
 		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
 		return TRUE
 
-	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+	playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	target.HealDamage("All", 200, 200)
 	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
