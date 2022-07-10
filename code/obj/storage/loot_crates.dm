@@ -33,41 +33,6 @@
 				collapsed_amounts += amount
 
 /datum/loot_crate_table/research
-	with_tier
-		New(tier)
-			..()
-			var picker
-			var/datum/loot_crate_table/t
-			if (tier == 3)
-				picker = rand(1,3)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/research/psylink
-					if(2)
-						t = new /datum/loot_crate_table/research/artifact
-					else
-						t = new /datum/loot_crate_table/research/voltron
-			else if (tier == 2)
-				picker = rand(1,2)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/research/critter
-					if(2)
-						t = new /datum/loot_crate_table/research/injector
-			else
-				picker = rand(1,4)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/research/robo
-					if(2)
-						t = new /datum/loot_crate_table/research/medicine
-					if(3)
-						t = new /datum/loot_crate_table/research/spore
-					else
-						t = new /datum/loot_crate_table/research/hydroponics
-			collapsed_items = t.collapsed_items
-			collapsed_amounts = t.collapsed_amounts
-
 	// Tier 3
 	psylink
 		items = list(/obj/item/clothing/gloves/psylink_bracelet)
@@ -147,35 +112,6 @@
 		amounts = list(2, 3)
 
 /datum/loot_crate_table/military
-	with_tier
-		New(tier)
-			..()
-			var picker
-			var/datum/loot_crate_table/t
-			if (tier == 3)
-				picker = rand(1,3)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/military/voltron
-					if(2)
-						t = new /datum/loot_crate_table/military/power
-					else
-						t = new /datum/loot_crate_table/military/titanium
-
-			else if (tier == 2)
-				picker = rand(1,10)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/military/plasma
-					if(2 to 6)
-						t = new /datum/loot_crate_table/military/phaser
-					if(7 to 10)
-						t = new /datum/loot_crate_table/military/grenades
-			else
-				t = new /datum/loot_crate_table/military/medicine
-			collapsed_items = t.collapsed_items
-			collapsed_amounts = t.collapsed_amounts
-
 	// Tier 3
 	voltron
 		items = list(/obj/item/device/voltron)
@@ -219,48 +155,6 @@
 		amounts = list(1,1,1,1,1)
 
 /datum/loot_crate_table/industrial
-	with_tier
-		New(tier)
-			..()
-			var picker
-			var/datum/loot_crate_table/t
-			if (tier == 3)
-				picker = rand(1,3)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/industrial/jetpack
-					if(2)
-						t = new /datum/loot_crate_table/industrial/wizard
-					else
-						t = new /datum/loot_crate_table/industrial/ship
-
-			else if (tier == 2)
-				picker = rand(1,4)
-				switch(picker)
-					if(1 to 3)
-						t = new /datum/loot_crate_table/industrial/material
-					else
-						t = new /datum/loot_crate_table/industrial/fermid
-			else
-				picker = rand(1,7)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/industrial/explosives
-					if(2)
-						t = new /datum/loot_crate_table/industrial/gear
-					if(3)
-						t = new /datum/loot_crate_table/industrial/armor
-					if(4)
-						t = new /datum/loot_crate_table/industrial/less_material
-					if(5)
-						t = new /datum/loot_crate_table/industrial/worse_material
-					if(6)
-						t = new /datum/loot_crate_table/industrial/cargo
-					else
-						t = new /datum/loot_crate_table/industrial/rockworm
-			collapsed_items = t.collapsed_items
-			collapsed_amounts = t.collapsed_amounts
-
 	// Tier 3
 	jetpack
 		items = list(/obj/item/clothing/shoes/jetpack)
@@ -348,45 +242,6 @@
 		amounts = list(3)
 
 /datum/loot_crate_table/criminal
-	with_tier
-		New(tier)
-			..()
-			var/datum/loot_crate_table/t
-			var picker
-			if (tier == 3)
-				picker = rand(1,6)
-				switch(picker)
-					if(1 to 2)
-						t = new /datum/loot_crate_table/military/voltron
-					if(3 to 5)
-						t = new /datum/loot_crate_table/criminal/bling
-					else
-						t = new /datum/loot_crate_table/criminal/loadsofmoney
-			else if (tier == 2)
-				picker = rand(1,4)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/criminal/money
-					if(2)
-						t = new /datum/loot_crate_table/criminal/gold
-					if(3)
-						t = new /datum/loot_crate_table/criminal/omega
-					if(4)
-						t = new /datum/loot_crate_table/criminal/cyberpunk
-			else
-				picker = rand(1,4)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/criminal/money/less
-					if(2)
-						t = new /datum/loot_crate_table/criminal/wine
-					if(3)
-						t = new /datum/loot_crate_table/criminal/gold/less
-					if(4)
-						t = new /datum/loot_crate_table/criminal/cannabis
-			collapsed_items = t.collapsed_items
-			collapsed_amounts = t.collapsed_amounts
-
 	// Tier 3
 	bling
 		items = list(/obj/item/gun/bling_blaster)
@@ -435,45 +290,6 @@
 		amounts = list(10)
 
 /datum/loot_crate_table/civilian
-	with_tier
-		New(tier)
-			..()
-			var/datum/loot_crate_table/t
-			var picker
-			if (tier == 3)
-				picker = rand(1,3)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/civilian/frog
-					if(2)
-						t = new /datum/loot_crate_table/civilian/sandal
-					else
-						t = new /datum/loot_crate_table/civilian/skateboard
-			else if (tier == 2)
-				picker = rand(1,3)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/civilian/tomatoes
-					if(2)
-						t = new /datum/loot_crate_table/civilian/yeti
-					if(3)
-						t = new /datum/loot_crate_table/civilian/cigarettes
-			else
-				picker = rand(1,5)
-				switch(picker)
-					if(1)
-						t = new /datum/loot_crate_table/civilian/moon
-					if(2)
-						t = new /datum/loot_crate_table/criminal/wine
-					if(3)
-						t = new /datum/loot_crate_table/civilian/food
-					if(4)
-						t = new /datum/loot_crate_table/civilian/cat
-					if(5)
-						t = new /datum/loot_crate_table/civilian/pest_control
-			collapsed_items = t.collapsed_items
-			collapsed_amounts = t.collapsed_amounts
-
 	frog
 		items = list(/obj/item/clothing/under/gimmick/frog)
 		amounts = list(1)
@@ -553,6 +369,7 @@
 
 		var/list/items = list()
 		var/list/item_amounts = list()
+		var/picker = 0
 
 		switch(kind)
 			if(2)
@@ -563,7 +380,34 @@
 				icon_closed = "lootsci"
 
 				// SCIENCE GOODS LOOT TABLE
-				var/datum/loot_crate_table/t = new /datum/loot_crate_table/research/with_tier(tier)
+				var/datum/loot_crate_table/t
+				if (tier == 3)
+					picker = rand(1,3)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/research/psylink
+						if(2)
+							t = new /datum/loot_crate_table/research/artifact
+						else
+							t = new /datum/loot_crate_table/research/voltron
+				else if (tier == 2)
+					picker = rand(1,2)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/research/critter
+						if(2)
+							t = new /datum/loot_crate_table/research/injector
+				else
+					picker = rand(1,4)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/research/robo
+						if(2)
+							t = new /datum/loot_crate_table/research/medicine
+						if(3)
+							t = new /datum/loot_crate_table/research/spore
+						else
+							t = new /datum/loot_crate_table/research/hydroponics
 				items = t.collapsed_items
 				item_amounts = t.collapsed_amounts
 
@@ -575,7 +419,41 @@
 				icon_closed = "lootind"
 
 				// INDUSTRIAL GOODS LOOT TABLE
-				var/datum/loot_crate_table/t = new /datum/loot_crate_table/industrial/with_tier(tier)
+				var/datum/loot_crate_table/t
+				if (tier == 3)
+					picker = rand(1,3)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/industrial/jetpack
+						if(2)
+							t = new /datum/loot_crate_table/industrial/wizard
+						else
+							t = new /datum/loot_crate_table/industrial/ship
+
+				else if (tier == 2)
+					picker = rand(1,4)
+					switch(picker)
+						if(1 to 3)
+							t = new /datum/loot_crate_table/industrial/material
+						else
+							t = new /datum/loot_crate_table/industrial/fermid
+				else
+					picker = rand(1,7)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/industrial/explosives
+						if(2)
+							t = new /datum/loot_crate_table/industrial/gear
+						if(3)
+							t = new /datum/loot_crate_table/industrial/armor
+						if(4)
+							t = new /datum/loot_crate_table/industrial/less_material
+						if(5)
+							t = new /datum/loot_crate_table/industrial/worse_material
+						if(6)
+							t = new /datum/loot_crate_table/industrial/cargo
+						else
+							t = new /datum/loot_crate_table/industrial/rockworm
 				items = t.collapsed_items
 				item_amounts = t.collapsed_amounts
 
@@ -587,7 +465,28 @@
 				icon_closed = "lootmil"
 
 				// MILITARY GOODS LOOT TABLE
-				var/datum/loot_crate_table/t = new /datum/loot_crate_table/military/with_tier(tier)
+				var/datum/loot_crate_table/t
+				if (tier == 3)
+					picker = rand(1,3)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/military/voltron
+						if(2)
+							t = new /datum/loot_crate_table/military/power
+						else
+							t = new /datum/loot_crate_table/military/titanium
+
+				else if (tier == 2)
+					picker = rand(1,10)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/military/plasma
+						if(2 to 6)
+							t = new /datum/loot_crate_table/military/phaser
+						if(7 to 10)
+							t = new /datum/loot_crate_table/military/grenades
+				else
+					t = new /datum/loot_crate_table/military/medicine
 				items = t.collapsed_items
 				item_amounts = t.collapsed_amounts
 
@@ -599,7 +498,38 @@
 				icon_closed = "lootcrime"
 
 				// CRIMINAL GOODS LOOT TABLE
-				var/datum/loot_crate_table/t = new /datum/loot_crate_table/criminal/with_tier(tier)
+				var/datum/loot_crate_table/t
+				if (tier == 3)
+					picker = rand(1,6)
+					switch(picker)
+						if(1 to 2)
+							t = new /datum/loot_crate_table/military/voltron
+						if(3 to 5)
+							t = new /datum/loot_crate_table/criminal/bling
+						else
+							t = new /datum/loot_crate_table/criminal/loadsofmoney
+				else if (tier == 2)
+					picker = rand(1,4)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/criminal/money
+						if(2)
+							t = new /datum/loot_crate_table/criminal/gold
+						if(3)
+							t = new /datum/loot_crate_table/criminal/omega
+						if(4)
+							t = new /datum/loot_crate_table/criminal/cyberpunk
+				else
+					picker = rand(1,4)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/criminal/money/less
+						if(2)
+							t = new /datum/loot_crate_table/criminal/wine
+						if(3)
+							t = new /datum/loot_crate_table/criminal/gold/less
+						if(4)
+							t = new /datum/loot_crate_table/criminal/cannabis
 				items = t.collapsed_items
 				item_amounts = t.collapsed_amounts
 
@@ -608,7 +538,38 @@
 				desc = "There are consumer goods company logos on the crate."
 
 				// CIVILIAN GOODS LOOT TABLE
-				var/datum/loot_crate_table/t = new /datum/loot_crate_table/civilian/with_tier(tier)
+				var/datum/loot_crate_table/t
+				if (tier == 3)
+					picker = rand(1,3)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/civilian/frog
+						if(2)
+							t = new /datum/loot_crate_table/civilian/sandal
+						else
+							t = new /datum/loot_crate_table/civilian/skateboard
+				else if (tier == 2)
+					picker = rand(1,3)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/civilian/tomatoes
+						if(2)
+							t = new /datum/loot_crate_table/civilian/yeti
+						if(3)
+							t = new /datum/loot_crate_table/civilian/cigarettes
+				else
+					picker = rand(1,5)
+					switch(picker)
+						if(1)
+							t = new /datum/loot_crate_table/civilian/moon
+						if(2)
+							t = new /datum/loot_crate_table/criminal/wine
+						if(3)
+							t = new /datum/loot_crate_table/civilian/food
+						if(4)
+							t = new /datum/loot_crate_table/civilian/cat
+						if(5)
+							t = new /datum/loot_crate_table/civilian/pest_control
 				items = t.collapsed_items
 				item_amounts = t.collapsed_amounts
 
