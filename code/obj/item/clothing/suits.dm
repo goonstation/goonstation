@@ -20,6 +20,7 @@
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
+	var/coat_style = null //for the coat buttoning component
 
 
 	setupProperties()
@@ -482,7 +483,7 @@
 	icon_state = "labcoat"
 	uses_multiple_icon_states = 1
 	item_state = "labcoat"
-	var/coat_style = "labcoat"
+	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 
