@@ -715,6 +715,10 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
+
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
