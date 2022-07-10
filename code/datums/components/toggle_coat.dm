@@ -33,7 +33,7 @@
 		"You unbutton your [suit.name].")
 
 /datum/component/toggle_coat/proc/coat_icon()
-	if(src.coat_style != suit.coat_style)
+	if(src.coat_style != suit.coat_style) //making sure this coat_style is the same as the actual object's
 		src.coat_style = suit.coat_style
 	suit.icon_state = "[src.coat_style][src.buttoned ? "" : "_o"]"
 
