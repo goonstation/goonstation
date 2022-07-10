@@ -459,6 +459,7 @@
 		else
 			var/mob/chosen_mob = pick(possible_names)
 			rose_name = chosen_mob.real_name
+		desc = desc + rose_name + "."
 
 
 	attack_hand(mob/user)
