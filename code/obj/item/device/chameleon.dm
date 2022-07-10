@@ -122,7 +122,7 @@
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (istype(target, /obj/ability_button) || istype(target, /obj/item/grab)) //just don't scan ability buttons or grabs
+		if (plane == PLANE_HUD || istype(target, /obj/item/grab)) //just don't scan ability buttons or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
