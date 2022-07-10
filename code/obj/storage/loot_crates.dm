@@ -335,9 +335,11 @@
 
 	cargo
 		items = list(
-			/obj/item/radio_tape/advertisement/cargonia,
-			/obj/item/clothing/under/rank/cargo,
-			/obj/decal/fakeobjects/skeleton
+			list(
+				/obj/item/radio_tape/advertisement/cargonia,
+				/obj/item/clothing/under/rank/cargo,
+				/obj/decal/fakeobjects/skeleton
+				)
 			)
 		amounts = list(1, 1, 1)
 
