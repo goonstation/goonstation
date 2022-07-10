@@ -1240,7 +1240,7 @@
 	},
 /area/station/science/teleporter)
 "adj" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -17590,11 +17590,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aQr" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/morgue,
 /obj/firedoor_spawn,
@@ -17712,6 +17707,7 @@
 "aQE" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aQF" = (
@@ -19180,6 +19176,7 @@
 "aUa" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/random_item_spawner/junk/maybe_few,
+/obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aUb" = (
@@ -19397,7 +19394,8 @@
 /area/station/medical/medbay)
 "aUy" = (
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 9
+	dir = 9;
+	level = 2 
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -24178,7 +24176,8 @@
 /area/station/medical/morgue)
 "bfx" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -25536,6 +25535,7 @@
 "bjh" = (
 /obj/machinery/light,
 /obj/random_item_spawner/tools/maybe_few,
+/obj/rack,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bji" = (
@@ -30025,9 +30025,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "btR" = (
-/obj/decal/poster/wallsign/chsl,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/south)
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "btS" = (
 /obj/cable{
 	d1 = 1;
@@ -30480,6 +30483,10 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "buV" = (
+/obj/decal/poster/wallsign/chsl{
+	pixel_x = -1;
+	pixel_y = 31
+	},
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -33301,6 +33308,7 @@
 	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bBq" = (
@@ -34789,6 +34797,7 @@
 	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bFn" = (
@@ -38257,7 +38266,8 @@
 	icon_state = "tube1"
 	},
 /obj/machinery/atmospherics/pipe/simple{
-	dir = 5
+	dir = 5;
+	level = 2
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -40581,7 +40591,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple,
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-s"
@@ -40655,6 +40667,10 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"iAG" = (
+/mob/living/critter/small_animal/ranch_base/sheep/white/dolly,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iAR" = (
 /obj/landmark/start{
 	name = "Mechanic"
@@ -41574,6 +41590,19 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"krc" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "krn" = (
 /obj/cable{
 	d1 = 1;
@@ -42960,6 +42989,9 @@
 	name = "Public Market";
 	opacity = 0
 	},
+/obj/machinery/atmospherics/pipe/simple{
+	layer = 2
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "mWh" = (
@@ -43943,6 +43975,14 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"oUg" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "oVe" = (
 /obj/cable{
 	d1 = 1;
@@ -46044,6 +46084,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"sEe" = (
+/obj/rack,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "sEw" = (
 /obj/cable{
 	d1 = 1;
@@ -46684,10 +46728,6 @@
 	},
 /obj/machinery/light_switch/east,
 /obj/disposalpipe/segment,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -47331,11 +47371,6 @@
 /area/station/engine/elect)
 "uQB" = (
 /obj/machinery/light/small/floor,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/morgue,
 /obj/firedoor_spawn,
@@ -60156,7 +60191,7 @@ aPb
 rOg
 aZy
 baZ
-aPb
+krc
 aPb
 igZ
 bce
@@ -62579,7 +62614,7 @@ avq
 fCp
 bcZ
 avq
-acG
+aaa
 aaa
 aaa
 aaa
@@ -63790,7 +63825,7 @@ bgV
 bgV
 bgb
 arN
-arN
+aOZ
 wWc
 arN
 aQs
@@ -65310,7 +65345,7 @@ rJv
 bma
 bma
 blb
-bma
+oUg
 bma
 bor
 blZ
@@ -66212,7 +66247,7 @@ cav
 aXp
 asx
 arN
-arN
+sEe
 blZ
 aYt
 ble
@@ -66520,7 +66555,7 @@ bgF
 blg
 bnE
 bis
-bis
+btR
 bis
 aUI
 bis
@@ -68347,7 +68382,7 @@ bma
 bkU
 bis
 bis
-bis
+btR
 bis
 bis
 blZ
@@ -69249,7 +69284,7 @@ bjm
 bvA
 btx
 bGd
-bAB
+iAG
 qrl
 bAB
 sIC
@@ -83740,7 +83775,7 @@ bgH
 bhm
 bxH
 bsW
-btR
+bgH
 buV
 bvZ
 bxj
