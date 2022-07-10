@@ -13,7 +13,7 @@
 
 	New()
 		..()
-		for (var/i = 1, i <= length(items), i++)
+		for (var/i in 1 to length(items))
 			var/item = items[i]
 			var/amount = amounts[i]
 			if (islist(amount))
