@@ -10,7 +10,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	req_access = list(access_heads) //Only used for record deletion right now.
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	processing_tier = PROCESSING_32TH
 	power_usage = 5000

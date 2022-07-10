@@ -1,6 +1,7 @@
 /obj/dummy/chameleon
 	name = ""
 	desc = ""
+	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = 1
 	soundproofing = -1
@@ -121,6 +122,8 @@
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
+		if (plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
+			return
 		//Okay, enough scanning shit without actual icons yo.
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
 			if (!cham)
@@ -234,6 +237,8 @@
 		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)

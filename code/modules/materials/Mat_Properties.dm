@@ -194,25 +194,6 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(8 to INFINITY)
 				return "highly corrosion-resistant"
 
-/datum/material_property/stability
-	name = "Stability"
-	id = "stability"
-
-	getAdjective(var/datum/material/M)
-		switch(M.getProperty(id))
-			if(0 to 1)
-				return "very unstable"
-			if(1 to 2)
-				return "unstable"
-			if(2 to 4)
-				return "slightly unstable"
-			if(4 to 6)
-				return "slightly solid"
-			if(6 to 8)
-				return "solid"
-			if(8 to INFINITY)
-				return "very solid"
-
 /datum/material_property/permeability
 	name = "Permeability"
 	id = "permeable"

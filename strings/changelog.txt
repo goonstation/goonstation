@@ -1,4 +1,45 @@
 
+(t)sun jul 10 22
+(u)Ilysen
+(p)9317
+(e)|
+(+)Device analyzers will no longer attack an object when you scan it, meaning you can scan things without potentially smacking fragile objects, angering Beepsky, etc.
+(+)Using a device analyzer on Harm intent will skip the scan and make it function like any other item, meaning you can hit people with it, put it into disposals or on tables, and so on.
+(+)Note that due to the above change, you'll need to be on Harm intent to put device analyzers into your bag.
+(u)Munien
+(p)9508
+(e)🆕|feature
+(+)Werewolves can now happily enjoy dog treats!
+(t)sat jul 09 22
+(u)Roddy
+(p)9347
+(e)🗺|mapping
+(+)Updates Donut 3 break room and adds in a medical uniform locker
+(t)wed jul 06 22
+(u)XyzzyThePretender
+(p)9499
+(e)|
+(+)Added robustissin to the medical vendors.
+(u)LeahTheTech
+(p)9504
+(e)⚖|balance
+(*)Made freedom implants more reliable.
+(u)Hans
+(p)9462
+(e)|
+(*)Added a new chemical, neurodepressant! A compound that messes with muscular function and causes dizziness.
+(u)Ikea
+(p)9487
+(e)⚖|balance
+(+)The stability material property has been removed from the game.
+(u)DimWhat
+(p)9342
+(e)🆕🎨|feature, sprites
+(+)Made a few new more of clothing work with the inspector clothing medal reward.
+(u)Mr. Moriarty
+(p)9460
+(e)|
+(+)Attempting to drop an item will now drop any grabs made with it first.
 (t)tue jul 05 22
 (u)XyzzyThePretender
 (p)9473

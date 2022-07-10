@@ -1096,8 +1096,8 @@
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
 				if(20)
@@ -1176,15 +1176,6 @@
 	charge = 40.0
 	max_charge = 40.0
 	recharge_rate = 5.0
-
-	process()
-		if(src.material)
-			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 1)
-					if(prob(1))
-						var/turf/T = get_turf(src)
-						explosion_new(src, T, 1)
-						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
 
 
 /obj/item/ammo/power_cell/self_charging/custom

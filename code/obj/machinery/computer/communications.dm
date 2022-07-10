@@ -4,7 +4,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_COMMSCONSOLES
 	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1

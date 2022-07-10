@@ -1754,3 +1754,153 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	Ovidius Gotdam<br>
 	NT Marching Band Director
 	"}
+
+
+/obj/item/paper/businesscard
+	name = "business card"
+	icon_state = "businesscard"
+	desc = "A generic looking business card, offering printing services for more business cards."
+
+	sizex = 640
+	sizey = 400
+
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/banjo
+	name = "business card - Tum Tum Phillips"
+	icon_state = "businesscard"
+	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/biteylou
+	name = "business card - Bitey Lou's Bodyshop"
+	icon_state = "businesscard"
+	desc = "A business card for some sorta mechanic's shop."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/bonktek
+	name = "business card - Bonktek Shopping Pyramid"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+
+/obj/item/paper/businesscard/clowntown
+	name = "business card - Clown Town"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	color = "blue"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+
+/obj/item/paper/businesscard/cosmicacres
+	name = "business card - Cosmic Acres"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a retirement community on Earth's moon."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+
+/obj/item/paper/businesscard/ezekian
+	name = "business card - Ezekian Veterinary Clinic"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier veterinarian's office."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg1
+	name = "business card - Amantes Mini Golf"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a mini golf course."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg2
+	name = "business card - Amantes Rock Shop"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a rock collector's shop."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+
+/obj/item/paper/businesscard/josh
+	name = "business card - Josh"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "green"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+
+/obj/item/paper/businesscard/lawyers
+	name = "business card - Hogge & Wylde"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+
+/obj/item/paper/businesscard/hemera_rcd
+	name = "info card - Rapid Construction Device"
+	icon_state = "businesscard-alt"
+	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/skulls
+	name = "business card - Skulls for Cash"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+
+/obj/item/paper/businesscard/taxi
+	name = "business card - Old Fortuna Taxi Company"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier space-taxi and shuttle company."
+	color = "yellow"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+
+/obj/item/paper/businesscard/vurdulak
+	name = "business card - Emporium Vurdulak"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "purple"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"

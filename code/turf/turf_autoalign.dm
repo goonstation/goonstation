@@ -175,18 +175,6 @@
 			else
 				return
 
-		if (src.material)
-			var/fail = 0
-			if (src.material.getProperty("stability") <= 2)
-				fail = 1
-			if (src.material.quality < 0) if(prob(abs(src.material.quality)))
-				fail = 1
-			if (fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/jen
