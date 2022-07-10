@@ -1,5 +1,9 @@
 
 (t)sun jul 10 22
+(u)Mora
+(p)9539
+(e)🆕🎨⚖|feature, sprites, balance
+(*)The bartender has a new shotgun to replace their very out-of-place riot shotgun! It's a sawnoff break-action double barrel that functions the way you'd expect, yeehaw. Still uses standard rubber slugs for the moment. Sprites by cogwerks.
 (u)Ilysen
 (p)9317
 (e)|
