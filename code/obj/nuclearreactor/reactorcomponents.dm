@@ -196,6 +196,15 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		..()
 		gas_thermal_cross_section = 0.1 //oh no, all the fins and stuff are melted
 
+	processNeutrons(list/datum/neutron/inNeutrons)
+		. = ..()
+		if(current_gas && current_gas.toxins > 0)
+			for(var/datum/neutron/N in .)
+				if(N.velocity > 0 && prob(current_gas.toxins/10))
+					N.velocity++
+					current_gas.toxins--
+					current_gas.radgas++
+
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
 			//heat transfer equation = hA(T2-T1)
