@@ -1,5 +1,11 @@
 
 (t)sun jul 10 22
+(u)Ilysen
+(p)9317
+(e)|
+(+)Device analyzers will no longer attack an object when you scan it, meaning you can scan things without potentially smacking fragile objects, angering Beepsky, etc.
+(+)Using a device analyzer on Harm intent will skip the scan and make it function like any other item, meaning you can hit people with it, put it into disposals or on tables, and so on.
+(+)Note that due to the above change, you'll need to be on Harm intent to put device analyzers into your bag.
 (u)Munien
 (p)9508
 (e)🆕|feature
