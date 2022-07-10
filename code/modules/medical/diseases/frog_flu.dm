@@ -34,4 +34,4 @@
 			affected_mob.unequip_all()
 			logTheThing("combat", affected_mob, null, "is transformed into a critter frog by the [name] reagent at [log_loc(affected_mob)].")
 			var/mob/living/critter/C = affected_mob.make_critter(/mob/living/critter/small_animal/frog, affected_mob)
-			C.butcherable = 1 //So the brain is recoverable
+			C.butcherable = TRUE //So the brain is recoverable
