@@ -451,17 +451,14 @@
 			if(!H.mind)
 				continue
 			possible_names += H
-		for(var/mob/living/silicon/robot/R in mobs)
-			possible_names += R
 		for(var/mob/living/silicon/ai/A in mobs)
 			possible_names += A
-		var/mob/rose_name //typecasted to mob to use the real_name var
+		var/rose_name
 		if(!length(possible_names))
 			rose_name = pick_string_autokey("names/first.txt")
 		else
-			rose_name = pick(possible_names)
-			rose_name = rose_name.real_name
-		desc = desc + rose_name + "."
+			var/mob/chosen_mob = pick(possible_names)
+			rose_name = chosen_mob.real_name
 
 
 	attack_hand(mob/user)
