@@ -422,6 +422,11 @@
 		. = ..()
 		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
 	
+	get_desc()
+		// We display this on a separate line and with a different color to show emphasis
+		. = ..()
+		. += "<br><span class='notice'>Use the Help, Disarm, or Grab intents to scan objects when you click them. Switch to Harm intent to place it on tables, store it in backpacks, and so on.</span>"
+
 	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
 		if (user.a_intent == INTENT_HARM)
 			return
