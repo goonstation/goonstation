@@ -369,6 +369,7 @@
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
 		if(density_check && !T.can_crossed_by(F))
 			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
 			src.resumable = FALSE
@@ -380,6 +381,7 @@
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
 		if(density_check && !T.can_crossed_by(F))
 			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
 			src.resumable = FALSE
