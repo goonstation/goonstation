@@ -562,6 +562,7 @@ datum
 			name = "saline-glucose solution"
 			id = "saline"
 			description = "This saline and glucose solution can help stabilize critically injured patients and cleanse wounds."
+			taste = "sweet and salty"
 			reagent_state = LIQUID
 			fluid_r = 220
 			fluid_g = 220
