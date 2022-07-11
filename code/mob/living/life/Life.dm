@@ -98,7 +98,7 @@
 		return thermal_protection
 
 	proc/get_rad_protection()
-		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
+		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT)+GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT), 0, 100)
 
 	proc/get_chem_protection()
 		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_CHEMPROT), 0, 100)

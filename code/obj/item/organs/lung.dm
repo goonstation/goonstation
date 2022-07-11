@@ -112,7 +112,7 @@
 			update.show_tox_indicator = TRUE
 
 		if (Radgas_pp > 0) //any fallout is too much fallout
-			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT) //not a lethal dose in one second tho
+			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
 			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
 
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.

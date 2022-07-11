@@ -619,13 +619,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, "r_potassium_iodide", 25)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "r_potassium_iodide", 25)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT, "r_potassium_iodide")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "r_potassium_iodide")
 				..()
 
 		medical/smelling_salt

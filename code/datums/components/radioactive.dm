@@ -109,7 +109,7 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 0.8 : 0.4) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 0.8 : 0.4) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""
