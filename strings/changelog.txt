@@ -1,5 +1,9 @@
 
 (t)mon jul 11 22
+(u)ZWRh3
+(p)9343
+(e)🐛⚖|bug, balance
+(+)The Syndicate has upgraded the space suits of nuclear operatives to resist chemicals penetrating them
 (u)Luxizzle
 (p)9572
 (e)🐛|bug
