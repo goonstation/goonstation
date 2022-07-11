@@ -1133,6 +1133,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",60)
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	disposing()
@@ -1199,7 +1200,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1434,6 +1434,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander
