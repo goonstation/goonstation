@@ -211,7 +211,7 @@
 
 /obj/item/reagent_containers/pill/ephedrine
 	name = "ephedrine pill"
-	desc = "Used to treat minor injuries and stabilize patients in crisis."
+	desc = "Not to be confused with epinephrine, ephedrine is used to treat minor injuries and stabilize patients in crisis."
 	icon_state = "pill18"
 
 	New()

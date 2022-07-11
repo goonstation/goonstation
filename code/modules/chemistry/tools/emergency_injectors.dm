@@ -86,8 +86,8 @@
 /obj/item/reagent_containers/emergency_injector/ephedrine
 	name = "high-capacity auto-injector (ephedrine)"
 	initial_reagents = "ephedrine"
-	label = "orange"
-	desc = "An auto-injector containing ephedrine, used as a stabilizer and to treat minor injuries."
+	label = "blue"
+	desc = "An auto-injector containing ephedrine used as a stabilizer and to treat minor injuries."
 
 /obj/item/reagent_containers/emergency_injector/atropine
 	name = "emergency auto-injector (atropine)"
