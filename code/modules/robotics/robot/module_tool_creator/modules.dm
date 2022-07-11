@@ -159,7 +159,7 @@
 		/obj/item/reagent_containers/dropper,
 	)
 
-// miner.
+// miner. quartermaster.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)
@@ -172,6 +172,7 @@
 		/obj/item/satchel/mining/large,
 		/obj/item/extinguisher, // TODO: make large version
 		/obj/item/device/gps,
+		/obj/item/device/appraisal,
+		/obj/item/device/matanalyzer,
 		// TODO: make barcode machine
-		// TODO: make internal ore processor
 	)
