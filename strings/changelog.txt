@@ -1,5 +1,8 @@
 
 (t)mon jul 11 22
+(u)Sord + Flourish
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Cog2.
 (u)avimour
 (p)9573
 (e)⛔|removal
