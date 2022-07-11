@@ -264,3 +264,10 @@ var/list/magnet_locations = list()
 			new/obj/item/material_piece/iridiumalloy(src.loc)
 
 		..()
+
+	bullet_act(var/obj/projectile/P)
+		if (isobj(P.shooter))
+			var/obj/O = P.shooter
+			if(istype(O, /obj/critter/gunbot/drone/buzzdrone/naniteswarm)) //No more friendly fire
+				return
+		..()
