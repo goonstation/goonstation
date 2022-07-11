@@ -12,6 +12,7 @@
 
 // -------------------grenades-------------
 /obj/item/old_grenade/sawfly
+
 	name = "Compact sawfly"
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1.5 SECONDS
@@ -21,15 +22,16 @@
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
-	is_syndicate = TRUE
 	issawfly = TRUE
-	contraband = 2
+	contraband = 5
+	mats = list( "MET-3" = 7, "MET-1"= 15, "INS-1" = 5, "CON-1" = 7, "POW-1" =5, "CRY-1" = 15)
+
 
 
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			new /mob/living/critter/robotic/sawfly/withai(T)// this is probably a shitty way of doing it but it works
+			new /mob/living/critter/robotic/sawfly/withai(T)
 		qdel(src)
 		return
 
@@ -52,7 +54,7 @@
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
-	is_syndicate = TRUE
+	mechanics_type_override = /obj/item/old_grenade/sawfly
 	issawfly = TRUE
 	contraband = 2
 	//var/tempdam = 0
@@ -87,6 +89,7 @@
 	is_syndicate = TRUE
 	issawfly = TRUE
 	contraband = 5
+	mats = list( "MET-3" =60, "MET-2"= 60, "INS-1" = 30, "CON-1" = 35, "POW-2" =25, "CRY-1" = 60)
 
 	New()
 		..()
