@@ -337,14 +337,14 @@ THROWING DARTS
 /obj/item/implant/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
-	var/uses = 1
+	var/uses = 1.0
 	impcolor = "r"
 	scan_category = "syndicate"
-	var/activation_emote = "shrug"
+	var/activation_emote = "chuckle"
 
 	New()
-		src.activation_emote = pick("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
-		src.uses = rand(3, 5)
+		src.activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
+		src.uses = rand(1, 5)
 		..()
 		return
 
@@ -353,27 +353,22 @@ THROWING DARTS
 			return 0
 
 		if (emote == src.activation_emote)
-			var/activated = FALSE
+			src.uses--
+			boutput(source, "You feel a faint click.")
 
 			if (source.hasStatus("handcuffed"))
 				source.handcuffs.drop_handcuffs(source)
-				activated = TRUE
 
 			// Added shackles here (Convair880).
 			if (ishuman(source))
 				var/mob/living/carbon/human/H = source
 				if (H.shoes && H.shoes.chained)
-					activated = TRUE
 					var/obj/item/clothing/shoes/SH = H.shoes
 					H.u_equip(SH)
 					SH.set_loc(H.loc)
 					H.update_clothing()
 					if (SH)
 						SH.layer = initial(SH.layer)
-
-			if (activated)
-				src.uses--
-				boutput(source, "You feel a faint click.")
 
 	implanted(mob/source as mob)
 		..()
@@ -903,7 +898,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
-		body_visible
+	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
 		var/barbed = FALSE
@@ -956,7 +951,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
 			icon = 'icons/obj/chemical.dmi'
 			icon_state = "syringeproj"
-			chemmult = 2.5 //faster for medical purposes
+			chemmult = 2 //faster for medical purposes
 
 			on_life(mult)
 				. = ..()
@@ -972,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
-				chemmult = 2 //5 life loops for all chems to be transferred
+				chemmult = 1.5 //5 life loops for all chems to be transferred
 
 	blowdart
 		name = "blowdart"
