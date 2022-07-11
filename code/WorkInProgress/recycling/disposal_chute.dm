@@ -118,10 +118,17 @@
 		//first time they click with a storage, it gets dumped. second time container itself is added
 		if (istype(I,/obj/item/storage/) && I.contents.len)
 			var/obj/item/storage/S = I
+			if(user.a_intent != INTENT_HELP) //place the full thing in
+				user.visible_message("[user.name] dunks \the [I] into \the [src].",\
+				"You dunk \the [I] into \the [src].")
+				actions.interrupt(user, INTERRUPT_ACT)
+				return
 			if(istype(S, /obj/item/storage/secure))
 				var/obj/item/storage/secure/secS = S
 				if(secS.locked)
-					boutput("<span class='alert'>You need to unlock the container first.</span>")
+					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
+					I.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
 					return
 			for(var/obj/item/O in S)
 				O.set_loc(src)
@@ -131,6 +138,7 @@
 			return
 
 		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
+			I.set_loc(src)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
