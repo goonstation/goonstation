@@ -119,10 +119,8 @@
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
 			var/staystill = user.loc
-			for(var/obj/W in view(1,user))
+			for(var/obj/W in oview(1,user))
 				if (!matches(W, O))
-					continue
-				if (W in user)
 					continue
 				load_into_furnace(W, 1, user)
 				if (src.fuel >= src.maxfuel)
