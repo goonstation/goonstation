@@ -324,7 +324,7 @@
 	..()
 	if(!istype(F) || !oldloc)
 		return
-	if(F.client && F.client.check_key(KEY_RUN) && !F.floorrunning && F.resources >= 1)
+	if(!F.floorrunning && F.resources >= 1)
 		F.start_floorrunning()
 
 	if(F.floorrunning)
@@ -355,6 +355,15 @@
 				F.end_floorrunning()
 		else if(!isfeathertile(newloc))
 			F.end_floorrunning()
+
+/turf/simulated/wall/auto/feather/Bumped(AM)
+	. = ..()
+	if(istype(AM, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = AM
+		if(F.floorrunning || (F.can_floorrun && F.resources >= 1))
+			if(F.is_npc || (F.client && F.client.check_key(KEY_RUN))) //ai doesn't have to hold shift to wallrun, people do
+				F.start_floorrunning()
+				F.set_loc(src)
 
 /turf/simulated/wall/auto/feather/proc/on()
 	src.on = TRUE
