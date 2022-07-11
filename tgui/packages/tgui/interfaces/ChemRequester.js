@@ -72,16 +72,18 @@ export const ChemRequester = (props, context) => {
             <Stack.Item>
               <IDCard card={card} />
             </Stack.Item>
-            <Stack.Item height="50%">
+            <Stack.Item>
               {!selected_reagent && (
-                <ReagentSearch chemicals={chemicals} />
+                <Section height={36} scrollable>
+                  <ReagentSearch chemicals={chemicals} />
+                </Section>
               )}
               {!!selected_reagent && (
                 <Button onClick={() => { act("set_reagent", { reagent: null }); }}>{capitalize(selected_reagent)}</Button>
               )}
-              <NumberInput unit="u" minValue={5} step={5} maxValue={max_volume} value={volume} onChange={(e, value) => { act("set_volume", { volume: value }); }} />
             </Stack.Item>
             <Stack.Item>
+              Amount: <NumberInput align="left" unit="u" minValue={5} step={5} maxValue={max_volume} value={volume} onChange={(e, value) => { act("set_volume", { volume: value }); }} />
               <Box align="left">Notes:</Box>
               <Input
                 width="100%"

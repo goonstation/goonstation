@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Button, LabeledList, Input, Section, Flex, Box, Stack, Tabs } from '../components';
+import { Button, LabeledList, Input, Section, Flex, Box, Stack, Tabs, Icon } from '../components';
 import { Window } from '../layouts';
 
 import { capitalize } from '../../common/string';
@@ -29,12 +29,24 @@ const ChemRequest = (props, context) => {
   const color_string = "rgba(" + reagent_color[0] + "," + reagent_color[1] + ", " + reagent_color[2] + ", 1)";
   const lightness = reagent_color.reduce((a, b) => a + b, 0)/3;
   return (
-    <Section height>
-      <Flex direction="column" height={9}>
+    <Section>
+      <Flex direction="column" height={10}>
         <Flex.Item grow={1}>
           <Stack vertical>
             <Stack.Item>{name} requested</Stack.Item>
-            <Stack.Item align="center"><Box width={16} textAlign="center" backgroundColor={color_string} color={lightness > 255/2 ? "black" : "white"}>{capitalize(reagent_name)} ({volume}u)</Box></Stack.Item>
+            <Stack.Item align="center">
+              <Box width={16} textAlign="center">
+                <Icon
+                  color={color_string}
+                  name={"circle"}
+                  pt={1}
+                  style={{
+                    "text-shadow": "0 0 3px #000",
+                  }}
+                />
+                {" " + capitalize(reagent_name)} ({volume}u)
+              </Box>
+            </Stack.Item>
             <Stack.Item>from {area} {age} ago. <br /> {notes && `Notes: ${notes}`}</Stack.Item>
           </Stack>
         </Flex.Item>
