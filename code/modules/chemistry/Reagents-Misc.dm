@@ -733,7 +733,7 @@ datum
 						if(P.fatigue_pressure >= max_reinforcement)
 							return
 
-						P.fatigue_pressure = clamp(P.fatigue_pressure + ((P.fatigue_pressure) * (2**volume)), initial(P.fatigue_pressure), max_reinforcement)
+						P.fatigue_pressure = clamp(P.fatigue_pressure * (2**volume), initial(P.fatigue_pressure), max_reinforcement)
 						colorize = TRUE
 
 				else if (istype(O,/obj/window))
