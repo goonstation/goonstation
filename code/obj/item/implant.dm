@@ -903,16 +903,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			..()
 			implant_overlay = null
 
-	body_visible
+		body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
 		var/barbed = FALSE
 		var/pull_out_name = ""
+		var/chemmult = 1
 
 		on_life(mult)
 			. = ..()
 			if (src.reagents?.total_volume)
-				src.reagents.trans_to(owner, 1 * mult)
+				src.reagents.trans_to(owner, chemmult * mult)
 
 		dart
 			name = "dart"
@@ -955,6 +956,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			desc = "A syringe round, of the type that is fired from a syringe gun. Whatever was inside is completely gone."
 			icon = 'icons/obj/chemical.dmi'
 			icon_state = "syringeproj"
+			chemmult = 2.5 //faster for medical purposes
+
+			on_life(mult)
+				. = ..()
+				if (src.reagents?.total_volume)
+					src.reagents.trans_to(owner, chemmult * mult)
 
 			New()
 				..()
@@ -965,6 +972,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				desc = "An empty syringe round, of the type that is fired from a syringe gun. It has a barbed tip. Nasty!"
 				icon_state = "syringeproj_barbed"
 				barbed = TRUE
+				chemmult = 2 //5 life loops for all chems to be transferred
 
 	blowdart
 		name = "blowdart"
