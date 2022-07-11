@@ -251,6 +251,10 @@
 			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
+		if (!M.melee_attack_test(user, src))
+			logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+			return
+
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			src.do_stun(user, M, "failed", 1)
 			JOB_XP(user, "Clown", 1)
