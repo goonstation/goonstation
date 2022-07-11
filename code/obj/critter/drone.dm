@@ -678,6 +678,13 @@
 			name = "Drone CR-[rand(1,999)]"
 			return
 
+		bullet_act(var/obj/projectile/P)
+			if (isobj(P.shooter))
+				var/obj/O = P.shooter
+				if(istype(O, /obj/critter/gunbot/drone/buzzdrone)) //No more friendly fire at melee range
+					return
+			..()
+
 		fish
 			name = "Syndicate FishDrone"
 			desc = "A Syndicate robo-fish. This appears to be a continuation of the scrap cutter production line made for underwater use."
