@@ -42,10 +42,8 @@ TYPEINFO(/datum/component/radioactive)
 			if(!(parent in global.processing_items))
 				global.processing_items.Add(parent)
 				src._added_to_items_processing = TRUE
-		else if(ismob(parent))
-			RegisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK), .proc/ticked)
 		else
-			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item/mob, use the item processing loop anyway
+			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item, use the item processing loop anyway
 		var/atom/PA = parent
 		var/color = neutron ? "#2e3ae4FF" : "#18e022FF"
 		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
