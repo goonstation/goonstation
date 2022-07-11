@@ -39,7 +39,7 @@
 	var/smashed_recently = 0
 	var/smash_cooldown = 200
 	var/list/can_smash = list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack)
-	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser, /obj/forcefield)
+	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser)
 
 	var/projectile_spread = 0
 
