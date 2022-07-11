@@ -781,8 +781,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if(prob(20))
-			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
