@@ -1998,13 +1998,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.3)*/
 
-/obj/item/gun/kinetic/bargun
+/obj/item/gun/kinetic/sawnoff
 	name = "Double Barreled Shotgun"
 	desc = "A double barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "coachgun"
 	icon_state = "coachgun"
-	force = MELEE_DMG_RIFLE
+	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage
 	contraband = 4
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 2
