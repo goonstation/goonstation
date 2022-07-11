@@ -1,5 +1,9 @@
 
 (t)mon jul 11 22
+(u)CheekyBrdy
+(p)9287
+(e)🎨|sprites
+(+)Mechanics now have mechanic headsets instead of engineering headsets.
 (u)CodeJester
 (p)9171
 (e)🐛|bug
