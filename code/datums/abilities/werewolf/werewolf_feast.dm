@@ -33,7 +33,7 @@
 			boutput(M, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
 			return 1
 
-		if (npc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
+		if (isnpc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
 			boutput(M, "<span class='alert'>Something about [target]'s smell puts you off feasting on them.</span>")
 			return 1
 
