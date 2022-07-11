@@ -239,7 +239,6 @@ var/list/magnet_locations = list()
 			attacking = 1
 			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> shreds [M]!</span>")
-
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
 			SPAWN(attack_cooldown)
@@ -263,11 +262,4 @@ var/list/magnet_locations = list()
 		if(prob(1) && alive)
 			new/obj/item/material_piece/iridiumalloy(src.loc)
 
-		..()
-
-	bullet_act(var/obj/projectile/P)
-		if (isobj(P.shooter))
-			var/obj/O = P.shooter
-			if(istype(O, /obj/critter/gunbot/drone/buzzdrone/naniteswarm)) //No more friendly fire
-				return
 		..()
