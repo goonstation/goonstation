@@ -755,7 +755,7 @@ datum
 				var/volume_mult = 1
 
 				if (length(covered))
-					if (volume/length(covered) < 2) //reduce time based on dilution
+					if (volume/length(covered) < 2) //reduce effect based on dilution
 						volume_mult = min(volume / 9, 1)
 
 				if(istype(T))
