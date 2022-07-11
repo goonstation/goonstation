@@ -458,7 +458,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -951,7 +951,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/active = 0
 	var/power = 20
 	var/fire_delay = 100

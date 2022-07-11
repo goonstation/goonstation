@@ -236,6 +236,21 @@
 		else
 			itemstate = "game-fig"
 
+/obj/item/toy/ornate_baton
+	name = "ornate baton"
+	desc = "Twirly."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "ornate-baton"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "ornate_baton"
+	w_class = W_CLASS_NORMAL
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	stamina_damage = 25
+	stamina_cost = 10
+	stamina_crit_chance = 5
+
 /obj/item/rubberduck
 	name = "rubber duck"
 	desc = "Awww, it squeaks!"
@@ -246,15 +261,13 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
-	var/spam_flag = 0
 
 /obj/item/rubberduck/attack_self(mob/user as mob)
-	if (spam_flag < world.time)
+	if (!ON_COOLDOWN(src,"quack",2 SECONDS))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
-		spam_flag = 1
 		if (narrator_mode)
 			playsound(user, 'sound/vox/duct.ogg', 50, 1)
 		else
@@ -271,7 +284,6 @@
 				pixel_y = 0
 				pixel_x = 0
 		src.add_fingerprint(user)
-		spam_flag = world.time + 2 SECONDS
 	return
 
 /obj/item/ghostboard

@@ -1,0 +1,85 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"m" = (
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/bookshelf,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/item/paper/book/from_file/critter_compendium,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/captaining_101,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/item/paper/book/from_file/medical_surgery_guide,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/item/paper/book/from_file/hydroponicsguide,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/table/wood/auto,
+/obj/item/paper{
+	info = "SILENCE IN THE LIBRARY";
+	name = "SILENCE IN THE LIBRARY"
+	},
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/bee_book,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/stool/chair/comfy/yellow{
+	dir = 4
+	},
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/wood/six,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+m
+O
+A
+"}
+(2,1,1) = {"
+m
+y
+C
+"}
+(3,1,1) = {"
+B
+m
+h
+"}
+(4,1,1) = {"
+w
+m
+N
+"}
+(5,1,1) = {"
+w
+x
+a
+"}

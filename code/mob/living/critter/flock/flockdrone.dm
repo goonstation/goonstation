@@ -505,6 +505,12 @@
 			if (wall.on)
 				wall.off()
 	animate_flock_floorrun_end(src)
+	if (flock_is_blocked_turf(get_turf(src.loc)))
+		for(var/turf/T in getneighbours(src.loc))
+			if(!flock_is_blocked_turf(T))
+				src.set_loc(T)
+				return
+
 
 /mob/living/critter/flock/drone/restrained()
 	return ..() || src.floorrunning
@@ -730,6 +736,9 @@
 		return
 	if(src.resources < FLOCK_LAY_EGG_COST)
 		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
+		return
+	if(src.floorrunning)
+		boutput(src, "<span class='alert'>You can't do that while floorrunning.</span>")
 		return
 	var/turf/simulated/floor/feather/nest = get_turf(src)
 	if(!istype(nest, /turf/simulated/floor/feather))

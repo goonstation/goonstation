@@ -1168,13 +1168,13 @@
 		name = "Move"
 		desc = "Go somwhere."
 		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/rally
+		task_type = /datum/aiTask/sequence/goalbased/flock/rally
 
 	convert
 		name = "Convert"
 		desc = "Convert this thing"
 		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/build/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
 			return ..() && target.resources > 20
@@ -1183,7 +1183,7 @@
 		name = "Capture"
 		desc = "Capture this enemy"
 		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flockdrone_capture/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
 			return ..() && target.resources > 20
@@ -1192,7 +1192,7 @@
 		name = "Barricade"
 		desc = "Build a barricade"
 		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/barricade/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
 
 		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
 			return ..() && target.resources > 25

@@ -578,6 +578,7 @@
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuriken"

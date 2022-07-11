@@ -1,4 +1,129 @@
 
+(t)mon jul 11 22
+(u)avimour
+(p)9573
+(e)⛔|removal
+(+)Synthmeat plant mutations are now only infusion based.
+(u)DimWhat
+(p)9522
+(e)🎨|sprites
+(+)Made some edits to the alchemist robe sprites
+(u)ZWRh3
+(p)9343
+(e)🐛⚖|bug, balance
+(+)The Syndicate has upgraded the space suits of nuclear operatives to resist chemicals penetrating them
+(u)Luxizzle
+(p)9572
+(e)🐛|bug
+(+)People can no longer see what are in your pockets like they used to. Finally some privacy again.
+(t)sun jul 10 22
+(u)Mora
+(p)9539
+(e)🆕🎨⚖|feature, sprites, balance
+(*)The bartender has a new shotgun to replace their very out-of-place riot shotgun! It's a sawnoff break-action double barrel that functions the way you'd expect, yeehaw. Still uses standard rubber slugs for the moment. Sprites by cogwerks.
+(u)Ilysen
+(p)9317
+(e)|
+(+)Device analyzers will no longer attack an object when you scan it, meaning you can scan things without potentially smacking fragile objects, angering Beepsky, etc.
+(+)Using a device analyzer on Harm intent will skip the scan and make it function like any other item, meaning you can hit people with it, put it into disposals or on tables, and so on.
+(+)Note that due to the above change, you'll need to be on Harm intent to put device analyzers into your bag.
+(u)Munien
+(p)9508
+(e)🆕|feature
+(+)Werewolves can now happily enjoy dog treats!
+(t)sat jul 09 22
+(u)Roddy
+(p)9347
+(e)🗺|mapping
+(+)Updates Donut 3 break room and adds in a medical uniform locker
+(t)wed jul 06 22
+(u)XyzzyThePretender
+(p)9499
+(e)|
+(+)Added robustissin to the medical vendors.
+(u)LeahTheTech
+(p)9504
+(e)⚖|balance
+(*)Made freedom implants more reliable.
+(u)Hans
+(p)9462
+(e)|
+(*)Added a new chemical, neurodepressant! A compound that messes with muscular function and causes dizziness.
+(u)Ikea
+(p)9487
+(e)⚖|balance
+(+)The stability material property has been removed from the game.
+(u)DimWhat
+(p)9342
+(e)🆕🎨|feature, sprites
+(+)Made a few new more of clothing work with the inspector clothing medal reward.
+(u)Mr. Moriarty
+(p)9460
+(e)|
+(+)Attempting to drop an item will now drop any grabs made with it first.
+(t)tue jul 05 22
+(u)XyzzyThePretender
+(p)9473
+(e)🐛|bug
+(+)Brave Bull can be made using coffee from a coffee maker.
+(u)Kubius
+(p)9433
+(e)🆕🔄|feature, rework
+(+)Disfigured faces can now be mended with synthflesh, and no longer persist with you into the ethereal plane.
+(u)Luxizzle
+(p)9226
+(e)🆕📄|feature, tgui
+(*)TGUI Human Inventory
+(u)tarmunora
+(p)9463
+(e)⚖|balance
+(*)materials have (hopefully) reasonable defaults for properties, and property values have been squisified down to the 1-9 range.
+(*)Some things, especially with respect to fabrication, may not work as they did before/as expected. If there are any serious problems, make a bug report or something so it can be looked at.
+(+)neutronium recipe disabled
+(u)Taylor Kellogg
+(p)9406
+(e)📄|tgui
+(+)Makes it so tgui number inputs can be tabbed between.
+(t)mon jul 04 22
+(u)LeahTheTech
+(p)9416
+(e)🎨⚖|sprites, balance
+(+)Welding masks now use a vision obscuring overlay instead of a screen tint
+(u)Moberry
+(p)9377
+(e)⚖|balance
+(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(+)Artifact Resupply is now a flat one minute delay.
+(u)ZWRh3
+(p)9409
+(e)⚖|balance
+(+)Changeling regenerative statis now removes more negative status effects and bad genes.
+(u)ZWRh3
+(p)9354
+(e)⚖|balance
+(+)Werewolves are now immune to walking on shards similar to cows.
+(u)avimour
+(p)9356
+(e)🆕🎨|feature, sprites
+(*)Added a new botany plant: Tea. Which can be used to create matcha!
+(+)Combine matcha and water to get...matcha tea!
+(t)sun jul 03 22
+(u)DimWhat
+(p)9352
+(e)⚖|balance
+(+)Removed the penlight flash effect
+(u)DimWhat
+(p)9370
+(e)⚖|balance
+(+)Made the radio show host headphones more protective against loud noises.
+(u)LeahTheTech
+(p)9436
+(e)|
+(+)Using a mop in hand will now mop the turf you're standing on, mopping now comes with 13% less RSI!
+(u)Mr. Moriarty
+(p)9430
+(e)🗺|mapping
+(+)Replaced old Security Records computers with ThinkDOS SecMate computers.
 (t)sat jul 02 22
 (u)ZWRh3
 (p)9437
