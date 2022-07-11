@@ -100,6 +100,11 @@ datum
 					if (volume >= 10)
 						M.TakeDamage("All", 0, clamp((volume - 10) * 2, 4, 20), 0, DAMAGE_BURN)
 						M.emote("scream")
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.vdisfigured)
+								boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+								H.vdisfigured = TRUE
 
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/fluid))
@@ -922,6 +927,11 @@ datum
 				else if (volume >= 5)
 					M.emote("scream")
 					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (!H.vdisfigured)
+							boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+							H.vdisfigured = TRUE
 
 				boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 5 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 				return
