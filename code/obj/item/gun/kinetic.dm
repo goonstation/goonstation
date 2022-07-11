@@ -413,9 +413,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
-			var/turf/T = get_turf(src)
-			explosion(src, T,-1,-1,1,2)
-			qdel(src)
+			if(canshoot())
+				var/turf/T = get_turf(src)
+				explosion(src, T,-1,-1,1,2)
+				qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
@@ -1164,8 +1165,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/slamgun
-	// perhaps refactor later to allow for easy creation of 'manual extract weapons'?
-	// would allow easy implementation of other weps such as weldrods
 	name = "slamgun"
 	desc = "A 12 gauge shotgun. Apparently. It's just two pipes stacked together."
 	icon = 'icons/obj/slamgun.dmi'
@@ -1194,6 +1193,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (src.icon_state == "slamgun-ready")
 			if(user.updateTwoHanded(src, FALSE)) // should never fail, but respect error codes
 				w_class = W_CLASS_NORMAL
+				force = MELEE_DMG_REVOLVER
 				if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
 					src.icon_state = "slamgun-open-loaded"
 				else
@@ -1205,6 +1205,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			if(user.updateTwoHanded(src, TRUE))
 				w_class = W_CLASS_BULKY
+				force = MELEE_DMG_RIFLE
 				src.icon_state = "slamgun-ready"
 				update_icon()
 				two_handed = 1
@@ -1243,12 +1244,22 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
-			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src]!</span>")
+			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open \the [src]!</span>")
 			return
 		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
-			boutput(user, "<span class='alert'>The [src] already has a shell inside! You'll have to unload the [src]!</span>")
+			boutput(user, "<span class='alert'>\The [src] already has a shell inside! You'll have to unload \the [src]!</span>")
 			return
 		..()
+
+	alter_projectile(var/obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
+
+	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
+		if (src.icon_state == "slamgun-ready")
+			..()
+		else
+			boutput(user, "<span class='alert'>You can't fire \the [src] when it is open!</span>")
 
 
 //1.0
