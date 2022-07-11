@@ -78,10 +78,7 @@
 				src.icon_state = "turbine_main"
 				UpdateIcon()
 
-		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
-		boutput(world,"TURBINE: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
-
 
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM

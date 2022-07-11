@@ -49,7 +49,6 @@
 		. = ..()
 		if(melted)
 			return
-		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
 
