@@ -14,7 +14,7 @@
 /datum/humanInventory/ui_status(mob/user)
 	return min(
 		tgui_physical_state.can_use_topic(src.human, user),
-	tgui_not_incapacitated_state.can_use_topic(src.human, user)
+		tgui_not_incapacitated_state.can_use_topic(src.human, user)
 	)
 
 /datum/humanInventory/ui_interact(mob/user, datum/tgui/ui)
