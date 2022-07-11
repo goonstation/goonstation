@@ -85,9 +85,15 @@ TYPEINFO(/datum/component/radioactive)
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)
-			src.radStrength = min(src.radStrength+R.radStrength, 100)
-			src.neutron |= R.neutron //only one type of radiation allowed, and neutron takes precedence
-			src.decays &= R.decays //permenant radiation takes precedence over decay
+			if((R.neutron && !src.neutron) || (!R.decays && src.decays)) //neutron overrides non-neutron, permanent overrides temporary
+				src.radStrength = R.radStrength
+				src.neutron = R.neutron
+				src.decays = R.decays
+			else if (R.neutron == src.neutron && R.decays == src.decays) //if compatible, stack
+				src.radStrength = min(src.radStrength+R.radStrength, 100)
+			//else
+				//either you tried to apply a decay to a permanent, or a non-neutron to a neutron
+				//in which case, do nothing
 
 	proc/ticked(atom/owner, mult=1)
 		var/atom/PA = parent
