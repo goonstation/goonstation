@@ -147,6 +147,25 @@ datum/preferences
 		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")
 		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
 
+		var/list/traits = list()
+		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"name" = trait.cleanName,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
+
 		. = list(
 			"isMentor" = client.is_mentor(),
 
@@ -208,6 +227,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -253,11 +275,6 @@ datum/preferences
 
 			if ("open-occupation-window")
 				src.SetChoices(usr)
-				ui.close()
-				return TRUE
-
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
 				ui.close()
 				return TRUE
 
@@ -848,6 +865,19 @@ datum/preferences
 
 			if ("update-preferredMap")
 				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1517,10 +1547,6 @@ datum/preferences
 
 		if (link_tags["jobswindow"])
 			src.SetChoices(user)
-			return
-
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
 			return
 
 		if (link_tags["closejobswindow"])

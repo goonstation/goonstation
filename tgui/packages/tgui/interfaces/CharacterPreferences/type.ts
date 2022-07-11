@@ -67,6 +67,20 @@ export interface CharacterPreferencesData {
   useWasd: BooleanLike;
   useAzerty: BooleanLike;
   preferredMap: string;
+  traitsAvailable: CharacterPreferencesTrait[];
+  traitsMax: number;
+  traitsPointsTotal: number;
+}
+
+export interface CharacterPreferencesTrait {
+  id: string;
+  name: string;
+  desc: string;
+  category?: string[];
+  img: string;
+  points: number;
+  selected?: BooleanLike;
+  available: BooleanLike;
 }
 
 export interface CharacterPreferencesProfile {
@@ -78,6 +92,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Traits,
   GameSettings,
 }
 
