@@ -1110,7 +1110,7 @@
 	name = "worn red space suit"
 	icon_state = "syndicate"
 	item_state = "space_suit_syndicate"
-	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days"
+	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
 	contraband = 3
 
 /obj/item/clothing/suit/space/syndicate
