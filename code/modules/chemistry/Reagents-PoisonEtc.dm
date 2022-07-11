@@ -896,6 +896,7 @@ datum
 								return
 					else
 						random_brute_damage(M, min(15,volume))
+
 				else if (method == TOUCH && volume <= 10 && prob(20))
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
