@@ -93,7 +93,8 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/ticked(atom/owner, mult=1)
 		for(var/mob/M in viewers(effect_range,parent))
-			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
+			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS)) //shorter than item tick time, so you can get multiple doses but there's a limit
+				M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 		if(!src.radStrength)
@@ -101,11 +102,12 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
-			toucher.take_radiation_dose((neutron ? 0.2 : 0.05) * (radStrength/100))
+			if(!ON_COOLDOWN(toucher,"radiation_exposure", 0.5 SECONDS))
+				toucher.take_radiation_dose((neutron ? 0.3 : 0.1) * (radStrength/100))
 
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 0.2 : 0.05) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 0.8 : 0.4) * (radStrength/100)) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""

@@ -39294,15 +39294,13 @@
 /area/station/mining/refinery)
 "bFM" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
-/turf/simulated/floor/black,
-/area/station/engine/inner)
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "bFN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -39364,16 +39362,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Mining APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	d2 = 4;
-	dir = 0;
-	icon_state = "0-4"
-	},
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -39382,11 +39370,6 @@
 "bFX" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -47943,10 +47926,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "pOA" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_east,
-/turf/simulated/floor/black,
-/area/station/engine/inner)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "pOY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -49988,6 +49972,11 @@
 	},
 /obj/machinery/oreaccumulator,
 /obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	d2 = 8;
+	dir = 0;
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -81775,9 +81764,9 @@ bAc
 bAc
 bBj
 qrB
-bFM
-xCx
-pOA
+lwO
+bNj
+bNj
 bII
 bIB
 bDL
@@ -85375,7 +85364,7 @@ bFX
 bGD
 bHc
 dqr
-dqr
+bFM
 bNu
 bBk
 bDN
@@ -85632,7 +85621,7 @@ bFY
 bGE
 bGF
 bGF
-bGF
+pOA
 bzb
 bBo
 bDL
@@ -85889,7 +85878,7 @@ bFZ
 bGF
 bHb
 bGF
-bGF
+pOA
 bzc
 bBp
 bDL
