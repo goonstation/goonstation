@@ -72,6 +72,7 @@
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
+			M.take_radiation_dose(-INFINITY)
 			M.delStatus("burning")
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)

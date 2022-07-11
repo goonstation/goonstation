@@ -95,7 +95,7 @@ TYPEINFO(/datum/component/radioactive)
 		for(var/mob/M in viewers(effect_range,parent))
 			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
 		if(src.decays && prob(33))
-			src.radStrength = max(0, src.radStrength - mult)
+			src.radStrength = max(0, src.radStrength - (1 * mult))
 		if(!src.radStrength)
 			src.RemoveComponent()
 

@@ -1565,7 +1565,6 @@ Returns:
 
 	attack_hand(mob/user)
 		boutput(user, "[src] feels oddly warm...")
-		SEND_SIGNAL(src,COMSIG_ATTACKHAND,user)
 		return
 
 	attackby(obj/item/W, mob/user)
