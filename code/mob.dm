@@ -1709,7 +1709,7 @@
 		if(organ.donor == src)
 			organ.on_removal()
 	if (!custom_gib_handler)
-		if (iscarbon(src))
+		if (iscarbon(src) || (ismobcritter(src) & !isrobocritter(src)))
 			if (bdna && btype)
 				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
