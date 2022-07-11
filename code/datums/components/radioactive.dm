@@ -92,6 +92,10 @@ TYPEINFO(/datum/component/radioactive)
 			src.decays &= R.decays //permenant radiation takes precedence over decay
 
 	proc/ticked(atom/owner, mult=1)
+		var/atom/PA = parent
+		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
+			var/mob/M = PA.loc
+			M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))
 		for(var/mob/M in viewers(effect_range,parent))
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS)) //shorter than item tick time, so you can get multiple doses but there's a limit
 				M.take_radiation_dose(mult * (neutron ? 0.2 : 0.05) * (radStrength/100))

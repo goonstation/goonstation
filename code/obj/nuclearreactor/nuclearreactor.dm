@@ -52,7 +52,6 @@
 		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 		var/tmpRads = 0
-		boutput(world,"REACTOR: input=[input_starting_pressure] [air1.temperature]K output=[output_starting_pressure] [air2.temperature]K")
 
 		//PV=nRT
 		//We're using volume because that makes sense
