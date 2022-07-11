@@ -7,6 +7,26 @@
 /obj/item/device/flyswatter,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
+"l" = (
+/obj/item/toy/plush/small/stress_ball{
+	pixel_x = 9;
+	pixel_y = -3
+	},
+/obj/item/toy/plush/small/stress_ball{
+	pixel_x = -6;
+	pixel_y = -3
+	},
+/obj/item/toy/plush/small/stress_ball{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/toy/plush/small/stress_ball{
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/obj/storage/crate/bin,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
 "q" = (
 /obj/machinery/light/incandescent/broken{
 	dir = 8
@@ -21,22 +41,6 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "J" = (
-/obj/item/toy/plush/small/stress_ball{
-	pixel_y = -3;
-	pixel_x = 9
-	},
-/obj/item/toy/plush/small/stress_ball{
-	pixel_y = -3;
-	pixel_x = -6
-	},
-/obj/item/toy/plush/small/stress_ball{
-	pixel_y = 1;
-	pixel_x = 1
-	},
-/obj/item/toy/plush/small/stress_ball{
-	pixel_y = -6;
-	pixel_x = 1
-	},
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
@@ -45,8 +49,8 @@
 "P" = (
 /obj/machinery/networked/test_apparatus/pitching_machine,
 /obj/item/toy/plush/small/stress_ball{
-	pixel_y = -12;
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = -12
 	},
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/plating,
@@ -71,7 +75,7 @@ U
 d
 "}
 (3,1,1) = {"
-y
+l
 J
 y
 U
