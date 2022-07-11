@@ -41,7 +41,9 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
-	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
+	var/datum/abilityHolder/composite/composite = new(src)
+	abilityHolder = composite
+	composite.addHolder(/datum/abilityHolder/critter/flockdrone)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
@@ -94,13 +96,15 @@
 		state["controller_ref"] = "\ref[controller]"
 	. = state
 
-
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.color = null
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
+
+/mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
+	boutput(src, message, group, forceScroll)
 
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
@@ -134,6 +138,8 @@
 	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
 	sight_process?.Process()
 	src.hud?.update_intent()
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	composite.addHolderInstance(pilot.abilityHolder, TRUE)
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
@@ -170,6 +176,8 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		var/datum/abilityHolder/composite/composite = src.abilityHolder
+		composite.removeHolder(/datum/abilityHolder/flockmind)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
