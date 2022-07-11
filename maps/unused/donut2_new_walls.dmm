@@ -15742,9 +15742,6 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "aLW" = (
@@ -15888,11 +15885,6 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -16128,9 +16120,6 @@
 	text = "NF"
 	},
 /obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
@@ -17356,6 +17345,9 @@
 /obj/critter/bat/doctor,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 29
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 9
@@ -20965,20 +20957,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aYj" = (
-/obj/cable/black{
+/obj/wingrille_spawn/auto,
+/obj/cable{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/area/station/medical/robotics)
 "aYl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23406,19 +23390,6 @@
 	dir = 0
 	},
 /area/station/hallway/primary/west)
-"bdH" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "bdI" = (
 /obj/cable{
 	d1 = 2;
@@ -25478,6 +25449,9 @@
 "biY" = (
 /obj/decal/cleanable/machine_debris,
 /obj/random_item_spawner/tools,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "biZ" = (
@@ -25791,10 +25765,6 @@
 	dir = 8
 	},
 /area/station/medical/research)
-"bjS" = (
-/obj/decal/poster/wallsign/framed_award/mdlicense,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/head)
 "bjT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
@@ -26285,7 +26255,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bld" = (
 /obj/machinery/atmospherics/valve{
@@ -27068,7 +27038,7 @@
 /area/space)
 "bmQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold/northeast,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bmR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold/southwest,
@@ -37877,15 +37847,9 @@
 	},
 /area/station/chapel/sanctuary)
 "dKB" = (
-/obj/cable/black{
-	icon_state = "1-8"
-	},
 /obj/decal/cleanable/oil,
 /obj/disposalpipe/junction{
 	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -38992,9 +38956,6 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
@@ -39671,9 +39632,6 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -39941,12 +39899,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "hkB" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "hmV" = (
@@ -45160,13 +45118,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qVL" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
+/obj/decal/cleanable/dirt/dirt5,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45462,6 +45414,17 @@
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/item/device/reagentscanner{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -7;
+	pixel_y = 5
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "rFu" = (
@@ -48330,6 +48293,9 @@
 	},
 /obj/submachine/cargopad{
 	name = "Robotics Pad"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
@@ -63190,11 +63156,11 @@ aJT
 aJT
 aJT
 aJT
-aYj
-avs
+aLJ
+ayH
 aID
 aID
-bjS
+aID
 aPO
 aIh
 aID
@@ -63492,8 +63458,8 @@ aaa
 aJS
 aaa
 aJZ
-bdH
-arN
+aLJ
+ayH
 aID
 aOo
 baM
@@ -63795,7 +63761,7 @@ acK
 aaa
 avq
 aMW
-aVl
+qVL
 aID
 aPa
 beY
@@ -64097,7 +64063,7 @@ avq
 awR
 avq
 fGh
-arN
+ayH
 aID
 bbi
 bau
@@ -64398,8 +64364,8 @@ arN
 dmM
 arN
 arN
-qVL
-arN
+aLJ
+ayH
 aID
 aOt
 xNL
@@ -65003,7 +64969,7 @@ aIG
 aKL
 aMZ
 aLV
-aMZ
+aYj
 aID
 aID
 aID
