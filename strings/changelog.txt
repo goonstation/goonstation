@@ -3,6 +3,11 @@
 (u)Sord + Flourish
 (e)🆕🗺|feature, mapping
 (+)Added randomized rooms to Cog2.
+(u)HauntedAngel
+(p)9521
+(e)🆕|feature
+(+)Ingesting acid now scars your vocal chords and makes your voice appear as unknown.
+(+)Ingesting Synthflesh can repair the damage done from ingesting acid.
 (u)avimour
 (p)9573
 (e)⛔|removal
