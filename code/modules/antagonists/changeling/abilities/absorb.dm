@@ -207,6 +207,9 @@
 		if (isnpcmonkey(T))
 			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
+		if (isnpc(T))
+			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			return 1
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
