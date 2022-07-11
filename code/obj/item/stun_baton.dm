@@ -247,10 +247,6 @@
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		if(check_target_immunity( M ))
-			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
-			return
-
 		if (!M.melee_attack_test(user, src))
 			logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 			return
