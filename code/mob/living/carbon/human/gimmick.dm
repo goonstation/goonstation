@@ -349,7 +349,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/biker
 	real_name = "Shitty Bill"
 	gender = MALE
-	is_npc = 1
+	is_npc = TRUE
 	var/talk_prob = 5
 	var/greeted_murray = 0
 
