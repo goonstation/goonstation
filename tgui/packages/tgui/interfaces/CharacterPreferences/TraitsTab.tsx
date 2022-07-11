@@ -8,22 +8,12 @@
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
-import {
-  BlockQuote,
-  Box,
-  Button,
-  Collapsible,
-  Divider,
-  Image,
-  Section,
-  Stack,
-} from '../../components';
+import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from '../../components';
 import { ButtonCheckbox } from '../../components/Button';
 import { CharacterPreferencesData, CharacterPreferencesTrait } from './type';
 
-const sortTraits = (a: CharacterPreferencesTrait, b: CharacterPreferencesTrait) => (
-  a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'en', { sensitivity: 'base' })
-);
+const sortTraits = (a: CharacterPreferencesTrait, b: CharacterPreferencesTrait) =>
+  a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
 
 export const TraitsTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
@@ -31,7 +21,12 @@ export const TraitsTab = (_props, context) => {
 
   const traitsByCategory: Record<string, CharacterPreferencesTrait[]> = {};
 
-  for (const trait of data.traitsAvailable) {
+  const traits: CharacterPreferencesTrait[] = data.traitsAvailable.map((trait) => ({
+    ...trait,
+    ...data.traitsData[trait.id],
+  }));
+
+  for (const trait of traits) {
     const categories = trait.category && trait.category.length > 0 ? trait.category : ['uncategorized'];
 
     for (const category of categories) {
@@ -46,7 +41,7 @@ export const TraitsTab = (_props, context) => {
   let traitCategories = Object.keys(traitsByCategory).sort();
   // Uncategorized always goes last.
   if (traitCategories.includes('uncategorized')) {
-    traitCategories = [...traitCategories.filter(c => c !== 'uncategorized'), 'uncategorized'];
+    traitCategories = [...traitCategories.filter((c) => c !== 'uncategorized'), 'uncategorized'];
   }
 
   const selectedAmount = data.traitsAvailable.filter((trait) => trait.selected).length;
@@ -75,7 +70,7 @@ export const TraitsTab = (_props, context) => {
                     Filter available
                   </ButtonCheckbox>
                 }>
-                {traitCategories.map(category => {
+                {traitCategories.map((category) => {
                   const traits = traitsByCategory[category];
 
                   return (
@@ -100,17 +95,17 @@ export const TraitsTab = (_props, context) => {
                 fill
                 scrollable
                 buttons={<Button onClick={() => act('reset-traits')}>Reset traits</Button>}>
-                {
-                  traitCategories.map(category => {
-                    const traits = traitsByCategory[category];
+                {traitCategories.map((category) => {
+                  const traits = traitsByCategory[category];
 
-                    return (<TraitCategoryList
+                  return (
+                    <TraitCategoryList
                       key={category}
                       category={category}
                       traits={traits.filter((trait) => trait.selected).sort(sortTraits)}
-                    />);
-                  })
-                }
+                    />
+                  );
+                })}
               </Section>
             </Stack.Item>
           </Stack>
@@ -152,14 +147,21 @@ const Trait = (props: CharacterPreferencesTrait, context) => {
   return (
     <Stack>
       <Stack.Item>
-        <Image pixelated width="32px" height="32px" src={`data:image/png;base64,${img}`} backgroundColor="transparent" />
+        <Image
+          pixelated
+          width="32px"
+          height="32px"
+          src={`data:image/png;base64,${img}`}
+          backgroundColor="transparent"
+        />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack align="center" mb={1}>
           <Stack.Item grow>
             {name}{' '}
             <Box as="span" color={points < 0 ? 'bad' : points > 0 ? 'good' : 'label'}>
-              ({points > 0 ? '+' : ''}{points})
+              ({points > 0 ? '+' : ''}
+              {points})
             </Box>
           </Stack.Item>
           <Stack.Item>
