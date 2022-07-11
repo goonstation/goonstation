@@ -863,6 +863,7 @@
 	title = "(Skin set) Inspector's Clothes"
 	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
 	required_medal = "Neither fashionable noir stylish"
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
