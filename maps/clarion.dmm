@@ -47943,10 +47943,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "pOA" = (
-/obj/machinery/power/apc/autoname_east{
-	areastring = "Cargo Dock"
-	},
 /obj/cable,
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "pOY" = (
@@ -49989,9 +49987,7 @@
 	name = "Mineral Magnet Pad"
 	},
 /obj/machinery/oreaccumulator,
-/obj/machinery/power/apc/autoname_east{
-	areastring = "Cargo Dock"
-	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
