@@ -25,7 +25,7 @@ var/zapLimiter = 0
 	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
 	req_access = list(access_engineering_power)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	netnum = -1		// set so that APCs aren't found as powernet nodes
 	text = ""
 	var/area/area

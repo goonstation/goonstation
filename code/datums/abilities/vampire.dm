@@ -234,6 +234,12 @@
 			else
 				src.points = max(src.points + change, 0)
 
+			if (change > 0 && ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				if (H.sims)
+					H.sims.affectMotive("Thirst", change * 0.5)
+					H.sims.affectMotive("Hunger", change * 0.5)
+
 	proc/get_vampire_blood(var/total_blood = 0)
 		if (total_blood)
 			return src.vamp_blood

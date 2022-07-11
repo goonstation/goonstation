@@ -13,7 +13,7 @@
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	//cogwerks - burn vars
 	burn_point = 4500

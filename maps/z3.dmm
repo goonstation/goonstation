@@ -1911,6 +1911,9 @@
 "afL" = (
 /obj/table/auto,
 /obj/item/magnet_parts/construction,
+/obj/item/paper/businesscard/lawyers{
+	pixel_y = 27
+	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "afM" = (
@@ -3927,6 +3930,9 @@
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
+	},
+/obj/item/paper/businesscard/gragg2{
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -8072,10 +8078,21 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
+/obj/item/paper/businesscard/josh{
+	pixel_x = 15;
+	pixel_y = 27
+	},
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "avS" = (
 /obj/machinery/vending/snack,
+/obj/item/paper/businesscard/taxi{
+	pixel_y = 32
+	},
+/obj/item/paper/businesscard/ezekian{
+	pixel_x = -6;
+	pixel_y = 24
+	},
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "avT" = (
@@ -9368,8 +9385,8 @@
 	dir = 8
 	},
 /obj/storage/crate,
-/obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/mask/medical,
+/obj/item/clothing/suit/space/syndicate_worn,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aFv" = (
@@ -9421,6 +9438,7 @@
 	},
 /obj/table/auto,
 /obj/item/cable_coil,
+/obj/item/paper/businesscard/hemera_rcd,
 /turf/simulated/floor,
 /area/h7/control)
 "aFI" = (
@@ -9788,8 +9806,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater"
 	},
 /turf/space,
 /area/space)
@@ -11392,8 +11410,8 @@
 	icon_state = "gibbl2"
 	},
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-L";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -11407,8 +11425,8 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater"
 	},
 /turf/space,
 /area/space)
@@ -13138,8 +13156,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater"
 	},
 /turf/space,
 /area/space)
@@ -20692,8 +20710,8 @@
 /area/space)
 "bmN" = (
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-L";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -21143,8 +21161,8 @@
 /area/mining/hangar)
 "daM" = (
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-R";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-R"
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
@@ -21248,10 +21266,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"eHn" = (
+/obj/item/paper/businesscard/bonktek{
+	pixel_x = 5;
+	pixel_y = 25
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/h7/crew)
 "eKc" = (
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-R";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
@@ -21714,6 +21741,21 @@
 	},
 /turf/space,
 /area/timewarp)
+"kEu" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/paper/businesscard/taxi{
+	pixel_y = 24
+	},
+/obj/item/paper/businesscard/biteylou{
+	pixel_x = 15;
+	pixel_y = 29
+	},
+/turf/simulated/floor,
+/area/h7/crew)
 "kFN" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grime,
@@ -22393,6 +22435,13 @@
 	},
 /obj/table/wood/round/champagne,
 /obj/machinery/phone,
+/obj/item/paper/businesscard/banjo{
+	pixel_y = 28
+	},
+/obj/item/paper/businesscard/taxi{
+	pixel_x = -11;
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "pfn" = (
@@ -22712,6 +22761,13 @@
 /area/helldrone)
 "sjy" = (
 /obj/stool/chair/comfy,
+/obj/item/paper/businesscard/lawyers{
+	pixel_x = -11;
+	pixel_y = 27
+	},
+/obj/item/paper/businesscard/bonktek{
+	pixel_y = 31
+	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "skQ" = (
@@ -22756,8 +22812,8 @@
 /area/timewarp/ship)
 "sEI" = (
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-L";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
@@ -23300,8 +23356,8 @@
 /area/abandonedship)
 "xGp" = (
 /obj/decal/fakeobjects/shuttleengine{
-	icon_state = "alt_heater-R";
-	dir = 8
+	dir = 8;
+	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
@@ -30400,7 +30456,7 @@ aUz
 aTK
 aTa
 aOU
-aVQ
+eHn
 aVQ
 aWt
 aVQ
@@ -31602,7 +31658,7 @@ aOU
 aOU
 aOU
 aOU
-aTa
+kEu
 aTK
 aUJ
 aTK

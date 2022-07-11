@@ -840,9 +840,12 @@
 /obj/machinery/recharge_station/proc/go_out()
 	if (!src.occupant)
 		return
-	src.occupant.set_loc(src.loc)
+	src.occupant.set_loc(get_turf(src))
 	src.occupant = null
 	src.build_icon()
+
+/obj/machinery/recharge_station/was_deconstructed_to_frame(mob/user)
+	src.go_out()
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set src in oview(1)
