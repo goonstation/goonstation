@@ -33714,6 +33714,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btn" = (
