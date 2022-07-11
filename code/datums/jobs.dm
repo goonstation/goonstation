@@ -794,7 +794,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/electrical/mechanic_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_poc1 = list(/obj/item/device/pda2/mechanic)
-	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_ears = list(/obj/item/device/radio/headset/mechanic)
 
 	New()
 		..()
