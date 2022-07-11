@@ -272,6 +272,7 @@
 
 	New()
 		..()
+		setProperty("chemprot",30)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -389,7 +390,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -469,6 +469,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",30)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat

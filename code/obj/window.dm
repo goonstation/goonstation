@@ -1064,6 +1064,19 @@
 /obj/window/auto/feather/proc/repair()
 	src.health = min(src.health + 10, src.health_max)
 
+/obj/window/auto/feather/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && isfeathertile(src.loc) && (drone.is_npc || (drone.client && drone.client.check_key(KEY_RUN))))
+		if(drone.floorrunning || (drone.can_floorrun && drone.resources >= 1))
+			drone.set_loc(src.loc)
+			drone.start_floorrunning()
+			return TRUE
+
+/obj/window/auto/feather/Cross(atom/movable/mover)
+	if(istype(mover, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = mover
+		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'

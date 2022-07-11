@@ -571,6 +571,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT

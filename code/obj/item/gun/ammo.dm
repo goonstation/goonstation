@@ -715,6 +715,10 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
+
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
@@ -1096,8 +1100,8 @@
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
 				if(20)

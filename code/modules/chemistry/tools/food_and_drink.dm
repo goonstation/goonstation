@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/food_color = "#FF0000" //Color for various food items
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
-	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens

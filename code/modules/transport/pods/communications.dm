@@ -105,6 +105,9 @@
 			var/mob/living/carbon/human/H = usr
 			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)
 				. = H.wear_id:registered
+			else if (H.vdisfigured)
+				. = "Unknown"
+
 			else
 				. = usr.name
 		else

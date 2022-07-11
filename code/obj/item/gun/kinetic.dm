@@ -886,7 +886,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	hide_attack = 1
 	gildable = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/blow_darts/single
 
@@ -1997,3 +1997,71 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)*/
+
+/obj/item/gun/kinetic/sawnoff
+	name = "Double Barreled Shotgun"
+	desc = "A double barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "coachgun"
+	icon_state = "coachgun"
+	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage
+	contraband = 4
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	max_ammo_capacity = 2
+	auto_eject = 0
+	can_dual_wield = 0
+	two_handed = 0
+	add_residue = 1
+
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+
+	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
+		if(prob(25))
+			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
+
+		ammo = new/obj/item/ammo/bullets/abg/two
+		set_current_projectile(new/datum/projectile/bullet/abg)
+		..()
+
+	canshoot()
+		if (src.broke_open == FALSE)
+			return 1
+		..()
+
+	shoot(var/target,var/start ,var/mob/user)
+		if(src.broke_open == TRUE)
+			boutput(user, "<span class='notice'>You need to close [src] before you can fire!</span>")
+		if (src.broke_open == FALSE && src.ammo.amount_left > 0)
+			src.shells_to_eject += 1
+		..()
+
+	attack_self(mob/user as mob)
+		if (src.broke_open == TRUE)
+			src.icon_state = "coachgun"
+			src.broke_open = FALSE
+
+		else
+			src.icon_state = "coachgun-empty"
+			src.broke_open = TRUE
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists becuase without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+
+		playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, 1)
+
+		..()
+
+	attackby(obj/item/b as obj, mob/user as mob)
+		if (istype(b, /obj/item/ammo/bullets) && src.broke_open == FALSE)
+			boutput(user, "<span class='alert'>You can't load shells into the chambers! You'll have to open the [src] first!</span>")
+			return
+		..()
+
+	attack_hand(mob/user as mob)
+		if (src.broke_open == FALSE && user.find_in_hand(src))
+			boutput(user, "<span class='alert'>The [src] is still closed, you need to open the action to take the shells out!</span>")
+			return
+		..()
