@@ -32,7 +32,7 @@
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		var/mob/ownerMob = owner
-		playsound(ownerMob.loc, "sound/weapons/phaseroverload.ogg", 100, 1)
+		playsound(ownerMob.loc, "sound/effects/mindkill.ogg", 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
@@ -69,7 +69,7 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to gib there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to gib there.</span>")
 				return 1
 		actions.start(new/datum/action/bar/icon/gibstareAbility(target, src), holder.owner)
 		return 0

@@ -52,10 +52,10 @@ proc/ClearBadsmokeRefs(var/atom/A)
 	for(i=0, i<src.number, i++)
 		if(src.total_smoke > 20)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effects/bad_smoke/smoke = unpool(/obj/effects/bad_smoke)
+			var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 			smoke.color = color
 			smoke.set_loc(src.location)
 			src.total_smoke++
@@ -70,10 +70,10 @@ proc/ClearBadsmokeRefs(var/atom/A)
 				var/turf/t = get_step(smoke, direction)
 				var/area/A = get_area(t)
 				if(A?.sanctuary)
-					pool(smoke)
+					qdel(smoke)
 					continue
 				step(smoke,direction)
 			sleep(150+rand(10,30))
 			if (smoke)
-				pool(smoke)
+				qdel(smoke)
 			src.total_smoke--

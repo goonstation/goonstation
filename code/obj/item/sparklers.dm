@@ -30,7 +30,7 @@
 			"You [fluff] out [src].")
 			src.put_out(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.on && sparks)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -120,12 +120,12 @@
 	desc = "Have fun!"
 	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	slots = 5
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
@@ -146,7 +146,7 @@
 			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
 			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if(!src.open)
 			if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 				return

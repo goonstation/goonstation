@@ -6,7 +6,7 @@ Left Mouse Button on turf  = Paste object on the turf you clicked<br>
 Ctrl + Right Mouse Button on build mode  = Spawn for every living player<br>
 ***********************************************************"}
 	icon_state = "copy"
-	var/atom/copied_object
+	var/tmp/atom/copied_object
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl && src.copied_object && alert("Are you sure you want to give everyone \a [src.copied_object]?", "Give stuff???", "Yes", "No") == "Yes")

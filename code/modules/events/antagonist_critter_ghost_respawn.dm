@@ -92,7 +92,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -102,7 +102,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/bot/cleanbot/emagged, /mob/living/critter/bot/firebot/emagged),
+			critter_types = list(/mob/living/critter/robotic/bot/cleanbot/emagged, /mob/living/critter/robotic/bot/firebot/emagged),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -155,11 +155,10 @@
 
 		if (candidates.len)
 			var/list/EV = list()
+			for (var/landmark_type in list(LANDMARK_PESTSTART, LANDMARK_MONKEY, LANDMARK_BLOBSTART, LANDMARK_KUDZUSTART))
+				if (landmarks[landmark_type])
+					EV += landmarks[landmark_type]
 
-			EV += landmarks[LANDMARK_PESTSTART]
-			EV += landmarks[LANDMARK_MONKEY]
-			EV += landmarks[LANDMARK_BLOBSTART]
-			EV += landmarks[LANDMARK_KUDZUSTART]
 			EV += job_start_locations["Clown"]
 
 			if(!EV.len)
@@ -203,7 +202,7 @@
 					antagify(M.current, null, 1)
 				candidates -= M
 
-			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter")
+			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
 		cleanup_event()
 
 	proc/cleanup_event()

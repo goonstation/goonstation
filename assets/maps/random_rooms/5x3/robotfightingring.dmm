@@ -1,0 +1,129 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/railing/orange{
+	dir = 4;
+	layer = 4
+	},
+/obj/railing/orange,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/railing/orange{
+	dir = 4;
+	layer = 4
+	},
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/railing/orange{
+	dir = 1
+	},
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/scrap{
+	icon_state = "2mixed0"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/railing/orange{
+	dir = 4;
+	layer = 4
+	},
+/obj/machinery/bot/mining{
+	name = "ROCKSMASHER"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/machinery/bot/firebot{
+	name = "RED BLASTER"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"y" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/railing/orange{
+	dir = 8
+	},
+/obj/railing/orange{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/railing/orange,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+y
+a
+z
+"}
+(2,1,1) = {"
+V
+x
+n
+"}
+(3,1,1) = {"
+p
+u
+W
+"}
+(4,1,1) = {"
+o
+v
+c
+"}
+(5,1,1) = {"
+T
+J
+T
+"}

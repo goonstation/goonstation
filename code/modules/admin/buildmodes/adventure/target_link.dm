@@ -5,7 +5,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.target_me()
 
 	proc/target_me()

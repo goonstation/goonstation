@@ -291,7 +291,7 @@ toxic - poisons
 		animate(transform=m2,time=5)
 
 
-		SPAWN_DBG(7 DECI SECONDS) qdel(src)
+		SPAWN(7 DECI SECONDS) qdel(src)
 
 /datum/projectile/energy_bolt/pulse
 	name = "pulse"
@@ -312,6 +312,8 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	var/strong = FALSE
+
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		// var/dir = angle2dir(angle)
 		M.throw_at(get_edge_target_turf(M, get_dir(P, M)),7,1, throw_type = THROW_GUNIMPACT)
@@ -324,7 +326,7 @@ toxic - poisons
 		if (ishuman(hit))
 			O.die()
 			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = 0)
+			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
 			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
 			H.emote("twitch_v")
 
@@ -368,7 +370,7 @@ toxic - poisons
 	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
-	power = 10
+	power = 12
 	ks_ratio = 0.1
 
 	sname = "non-lethal"

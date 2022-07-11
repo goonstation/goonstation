@@ -2,3 +2,7 @@
 
 /image
 	appearance_flags = PIXEL_SCALE
+
+/image/disposing()
+	src.loc = null
+	..()

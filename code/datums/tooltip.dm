@@ -454,7 +454,7 @@ var/global/list/atomTooltips = new()
 	set desc = "Returns the amount of tooltips in existence everywhere"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 
 	var/holderCount = 0
 	var/tooltipCount = 0

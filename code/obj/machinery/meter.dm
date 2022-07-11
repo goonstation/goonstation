@@ -11,14 +11,9 @@
 
 /obj/machinery/meter/New()
 	..()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-
-	return 1
-
-/obj/machinery/meter/disposing()
-	radio_controller.remove_object(src, "[frequency]")
-	..()
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/meter/process()
 	if(!target)
@@ -54,15 +49,11 @@
 			if(prob(50))
 				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
 				noiselimiter = 1
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 				noiselimiter = 0
 
 
 	if(frequency)
-		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency("[frequency]")
-
-		if(!radio_connection) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
@@ -71,7 +62,8 @@
 		signal.data["device"] = "AM"
 		signal.data["pressure"] = round(env_pressure)
 
-		radio_connection.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
 
 /obj/machinery/meter/examine()
 	. = list("A gas flow meter. ")

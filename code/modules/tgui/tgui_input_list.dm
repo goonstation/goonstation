@@ -14,8 +14,9 @@
  * * title - The title of the input box, shown on the top of the TGUI window.
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
+ * * allowIllegal - Whether to allow illegal characters in buttons.
  */
-/proc/tgui_input_list(mob/user, message, title, list/buttons, timeout = 0)
+/proc/tgui_input_list(mob/user, message, title, list/buttons, timeout = 0, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(buttons))
@@ -26,7 +27,7 @@
 			user = client.mob
 	if (!user)
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, buttons, timeout)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, buttons, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 	UNTIL(input.choice || input.closed)
 	if (input)
@@ -44,8 +45,9 @@
  * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
+ * * allowIllegal - Whether to allow illegal characters in buttons.
  */
-/proc/tgui_input_list_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_list_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(buttons))
@@ -56,7 +58,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, buttons, callback, timeout)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, buttons, callback, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 
 /**
@@ -69,7 +71,7 @@
 	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
 	var/list/buttons_map
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/buttons, timeout, copyButtons = FALSE)
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/buttons, timeout, copyButtons = FALSE, allowIllegal = FALSE)
 	src.buttons = list()
 	src.buttons_map = list()
 
@@ -77,7 +79,7 @@
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
 	for(var/i in buttons)
-		var/string_key = whitelistedWords.Replace("[i]", "")
+		var/string_key = allowIllegal ? i : whitelistedWords.Replace("[i]", "")
 
 		src.buttons += string_key
 		src.buttons_map[string_key] = i
@@ -117,8 +119,8 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, title, message, buttons, timeout)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/buttons, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+	..(user, title, message, buttons, timeout, copyButtons, allowIllegal)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)

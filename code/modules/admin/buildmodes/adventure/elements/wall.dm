@@ -63,7 +63,7 @@
 			sliding = 0
 			return
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/waited = 0
 				while (waiting?.sliding)
 					waited++
@@ -75,5 +75,5 @@
 				sliding = 0
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.show_message("<span class='alert'>[src] seems to be movable, but you cannot muster the strength to displace it.</span>")

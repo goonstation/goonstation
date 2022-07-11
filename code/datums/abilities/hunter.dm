@@ -13,9 +13,10 @@
 		P.addAbility(/datum/targetable/hunter/hunter_gearspawn)
 		P.addAbility(/datum/targetable/hunter/hunter_taketrophy)
 		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
+		P.addAbility(/datum/targetable/hunter/hunter_summongear)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_HUNTER_TIPS(src)
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
+			src.show_antag_popup("hunter")
 
 	else return
 
@@ -34,7 +35,7 @@
 		M.delStatus("slowed")
 		M.change_misstep_chance(-INFINITY)
 		M.stuttering = 0
-		M.drowsyness = 0
+		M.delStatus("drowsy")
 
 		if (M.hasStatus("handcuffed"))
 			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
@@ -47,7 +48,7 @@
 
 		M.unequip_all()
 
-		var/obj/item/implant/microbomb/hunter/B = new /obj/item/implant/microbomb/hunter(M)
+		var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(M)
 		M.implant.Add(B)
 		B.implanted = 1
 		B.implanted(M)
@@ -58,15 +59,16 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/cloaking_device(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife/butcher/predspear(M), slot_l_hand)
-		M.equip_if_possible(new /obj/item/gun/energy/laser_gun/pred(M), slot_r_hand)
+		M.equip_if_possible(new /obj/item/tank/emergency_oxygen(M), slot_l_store)
+		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
+		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_in_backpack)
+		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_in_backpack)
 
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
 		M.update_clothing()
 
-		boutput(M, __blue("<h3>You have received your equipment. Let the hunt begin!</h3>"))
+		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
 		logTheThing("combat", M, null, "transformed into a hunter at [log_loc(M)].")
 		return 1
 
@@ -104,22 +106,22 @@
 					// Antagonist check.
 					if (checktraitor(H))
 						switch (H.mind.special_role) // Ordered by skull value.
-							if ("omnitraitor")
+							if (ROLE_OMNITRAITOR)
 								skull_type = /obj/item/skull/crystal
 								skull_desc = "A trophy taken from a mystic, all-powerful creature. It is an immeasurable honor."
-							if ("hunter")
+							if (ROLE_HUNTER)
 								skull_type = /obj/item/skull/strange
 								skull_desc = "A trophy taken from a hunter, the finest hunters of all."
-							if ("changeling")
+							if (ROLE_CHANGELING)
 								skull_type = /obj/item/skull/odd
 								skull_desc = "A trophy taken from a shapeshifting alien! It is an immense honor."
-							if ("werewolf")
+							if (ROLE_WEREWOLF)
 								skull_value = 4
 								skull_desc = "A grand trophy from a lycanthrope, a very capable hunter. It is an immense honor."
-							if ("wizard")
+							if (ROLE_WIZARD)
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
-							if ("vampire")
+							if (ROLE_VAMPIRE)
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -244,7 +246,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -329,23 +331,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (hunter_only == 1 && !ishunter(M))
-			boutput(M, __red("You're not quite sure how to go about doing that in your current form."))
+			boutput(M, "<span class='alert'>You're not quite sure how to go about doing that in your current form.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

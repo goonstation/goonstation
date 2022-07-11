@@ -26,7 +26,7 @@
 		if(window)
 			for (var/client/subscriber in window.subscribers)
 				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
-				if(get_dist(src,subscriber.mob) > 1 && length(viewports))
+				if(BOUNDS_DIST(src, subscriber.mob) > 0 && length(viewports))
 					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
 					subscriber.clearViewportsByType("cameras: Viewport")
 
@@ -82,7 +82,7 @@
 
 		if(!closest)
 			return
-		else if (!closest.camera_status)
+		else if (!closest.camera_status || closest.ai_only)
 			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
 			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
 			return
@@ -127,7 +127,7 @@
 	power_change()
 		return
 
-/obj/machinery/computer/security/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/security/attack_hand(var/mob/user)
 	if (status & (NOPOWER|BROKEN) || !user.client)
 		return
 
@@ -156,7 +156,7 @@
 		if (!istype(C, /obj/machinery/camera))
 			return
 
-		if ((!isAI(usr)) && (get_dist(usr, src) > 1 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
+		if ((!isAI(usr)) && (BOUNDS_DIST(usr, src) > 0 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
 			usr.set_eye(null)
 			winshow(usr, "camera_console", 0)
 			return

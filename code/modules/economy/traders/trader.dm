@@ -143,14 +143,14 @@
 
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(H.traitHolder && H.traitHolder.hasTrait("smoothtalker"))
+			if (H.traitHolder.hasTrait("smoothtalker") || H.traitHolder.hasTrait("training_quartermaster"))
 				adjustedTolerance = round(adjustedTolerance * 1.5)
 
 		var/hikeperc = askingprice - goods.price
 		hikeperc = (hikeperc / goods.price) * 100
 		var/negatol = 0 - adjustedTolerance
 
-		if ((buying && hikeperc <= negatol) || (!buying && hikeperc >= adjustedTolerance))
+		if ((buying && (hikeperc <= negatol || askingprice < goods.baseprice / 5)) || (!buying && (hikeperc >= adjustedTolerance || askingprice > goods.baseprice * 5)))
 			// you are being a rude nerd and pushing it too far!
 			src.current_message = pick(src.dialogue_haggle_reject)
 			src.patience--
@@ -200,11 +200,9 @@
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		transmit_connection.post_signal(null, pdaSignal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
 
 	proc/wipe_cart(var/sold_stuff)
@@ -232,6 +230,7 @@
 		if(prob(src.alt_type_chance) && length(src.possible_alt_types))
 			src.comtype = pick(src.possible_alt_types)
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
+		src.baseprice = price
 
 /datum/commodity/trader/incart/
 	var/datum/commodity/reference = null

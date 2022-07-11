@@ -42,7 +42,7 @@ obj/chessbutton
 	icon_state = "doorctrl0"
 	var/confirm = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(chess_in_progress && !confirm)
 			boutput(user, "<span class='alert'>You are about to erase the board. Press again to confirm.</span>")
 			confirm = 1
@@ -108,7 +108,7 @@ obj/item/chesspiece
 		..()
 		name = "[chess_color ? "black" : "white" ] [name]"
 
-	MouseDrop(obj/over_object as obj, src_location, over_location, mob/user as mob)
+	mouse_drop(obj/over_object as obj, src_location, over_location, mob/user as mob)
 		..()
 		var/turf/Tb = get_turf(over_location)
 		var/turf/Ta = get_turf(src_location)

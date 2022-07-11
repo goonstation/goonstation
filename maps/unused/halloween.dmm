@@ -1801,7 +1801,7 @@
 /area/station/medical/research)
 "aeb" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
@@ -2352,7 +2352,7 @@
 	d2 = 4
 	},
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "foresolar";
 	name = "North Solar Control";
 	track = 2
@@ -11046,7 +11046,7 @@
 "avq" = (
 /obj/displaycase{
 	displayed = new /obj/item/captaingun
-},
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "avr" = (
@@ -11768,7 +11768,7 @@
 	d2 = 2
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "awS" = (
@@ -13744,7 +13744,7 @@
 "aAx" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "aAy" = (
@@ -16799,7 +16799,6 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aFS" = (
@@ -17380,7 +17379,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "aGU" = (
@@ -17514,7 +17513,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/engineering{
 	name = "Engine Monitoring"
@@ -18495,7 +18494,7 @@
 /area/station/turret_protected/ai)
 "aIO" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -18886,7 +18885,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aJx" = (
@@ -19167,7 +19166,6 @@
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "aJZ" = (
@@ -26829,7 +26827,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "southsolar";
 	name = "South Solar Control";
 	track = 2
@@ -28979,7 +28977,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -29692,7 +29690,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "beB" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "prisonsolar";
 	name = "Prison Solar Control";
 	track = 2
@@ -36435,7 +36433,7 @@
 /turf/space,
 /area/space)
 "bsY" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bsZ" = (
 /obj/landmark/spawner/loot,
@@ -36466,7 +36464,7 @@
 /obj/landmark{
 	name = "Artifact spawn"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "btg" = (
 /turf/simulated/wall/r_wall,
@@ -39543,7 +39541,7 @@
 	name = "Engineering Outpost"
 	})
 "byF" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "engout-solar";
 	name = "Outpost solar control"
 	},

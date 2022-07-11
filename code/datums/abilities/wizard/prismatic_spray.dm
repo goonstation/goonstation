@@ -41,10 +41,7 @@
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
 				holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
-			if(!istype(src, /datum/targetable/spell/prismatic_spray/admin))
-				if( !do_after( holder.owner, 12 ) )
-					boutput( holder.owner, "<b>You need to stand still to channel your spell!</b>" )
-					return 1
+			logTheThing("combat", holder.owner, target, "casts Prismatic spray at [constructTarget(target,"combat")].")
 			// Put voice stuff here in the future
 			if(src.random == 0)
 				for(var/i=0, i<num_projectiles, i++)

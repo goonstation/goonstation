@@ -5,6 +5,7 @@
 /datum/artifact/forcefield_gen
 	associated_object = /obj/artifact/forcefield_generator
 	type_name = "Forcefield Generator"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
@@ -47,7 +48,7 @@
 			if(get_dist(O,T) == field_radius)
 				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
 				src.forcefields += FF
-		SPAWN_DBG(field_time)
+		SPAWN(field_time)
 			if (O)
 				O.ArtifactDeactivated()
 

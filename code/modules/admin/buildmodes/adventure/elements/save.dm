@@ -16,7 +16,7 @@
 	var/saving = 0
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		//savename = input("Save file name", "Save file name", "save") as text
 		boutput(usr, "<span class='notice'>Use left clicks to mark two corners of the rectangular area to save. Saving will take a significant amount of time, and you should not modify the area until the saving is completed.</span>")
 
@@ -24,7 +24,7 @@
 		if (A)
 			A.overlays -= selection
 		if (selection)
-			pool(selection)
+			qdel(selection)
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
@@ -52,7 +52,6 @@
 					var/turf/B = T
 					var/datum/puzzlewizard/save/this = src
 					A = null
-					src = null
 					boutput(user, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()
@@ -61,7 +60,7 @@
 					sandbox.context["max_y"] = max(AS.y, B.y)
 					sandbox.context["min_y"] = min(AS.y, B.y)
 					sandbox.context["z"] = AS.z
-					SPAWN_DBG(0)
+					SPAWN(0)
 						user.client.Export()
 						var/savefile/F = new /savefile(fname)
 						// fuck you

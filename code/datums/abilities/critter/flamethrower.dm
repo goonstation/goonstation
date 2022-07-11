@@ -3,6 +3,7 @@
 // --------------------------------------------------
 /datum/targetable/critter/flamethrower
 	name = "Flamethrower"
+	icon_state = "fire_e_flamethrower"
 	desc = "Throw flames towards a target location up to three squares away."
 	cooldown = 150
 	targeted = 1
@@ -43,6 +44,7 @@
 					M.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)
 					M.changeStatus("stunned", 2 SECONDS)
 					M.emote("scream")
+					logTheThing("combat", usr, null, "used their [src.name] ability on [M] at [log_loc(usr)]")
 					if (throws)
 						M.throw_at(original_target, 20, 2)
 		return 0
@@ -50,6 +52,5 @@
 
 	throwing
 		desc = "Blast targets backwards with flames."
-		icon_state = "fire_e_flamethrower"
 		throws = 1
 		heat = T0C + 60

@@ -11,7 +11,7 @@
 	New()
 		..()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				src.setup()
 				qdel(src)
 
@@ -101,8 +101,6 @@
 	req_access = list(access_pathology)
 	#elif defined(SCIENCE_PATHO_MAP)
 	req_access = list(access_research)
-	#elif defined(MAP_OVERRIDE_DESTINY) // stupid destiny has patho in genetics
-	req_access = list(access_medlab)
 	#else
 	req_access = list(access_medical)
 	#endif

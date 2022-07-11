@@ -8,7 +8,7 @@
 	boutput(world, "<B>Escape on the shuttle but the humans have precedence!</B>")
 
 /datum/game_mode/monkey/post_setup()
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		var/list/players = list()
 		for (var/mob/living/carbon/human/player in mobs)
 			if (player.client)
@@ -27,7 +27,7 @@
 
 		for (var/mob/living/carbon/human/rabid_monkey in mobs)
 			if (ismonkey(rabid_monkey))
-				rabid_monkey.contract_disease(/datum/ailment/disease/jungle_fever,null,null,1)
+				rabid_monkey.contract_disease(/datum/ailment/disease/monkey_madness,null,null,1)
 
 /datum/game_mode/monkey/check_finished()
 	if(emergency_shuttle.location == SHUTTLE_LOC_RETURNED)

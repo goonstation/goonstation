@@ -2,6 +2,7 @@
 	name = "Bio-Magnetic Field"
 	centcom_headline = "Bio-Magnetic Field"
 	centcom_message = {"Strong bio-magnetic fields have been detected manifesting on the station. Personnel are advised to avoid anybody charged with the opposite magnetic charge. The fields should dissipate within a few minutes."}
+	centcom_origin = ALERT_ANOMALY
 	var/list/positive_mobs = list()
 	var/list/negative_mobs = list()
 	var/list/eligible_mobs = list()
@@ -36,16 +37,9 @@
 			negative_mobs += H
 			eligible_mobs -= H
 
-		SPAWN_DBG(5 SECONDS)
-
+		SPAWN(5 SECONDS)
+			var/duration = rand(2 MINUTES, 3 MINUTES)
 			for (var/mob/living/carbon/human/H in positive_mobs)
-				H.bioHolder.AddEffect("magnets_pos")
+				H.changeStatus("magnetized", duration, "magnets_pos")
 			for (var/mob/living/carbon/human/H in negative_mobs)
-				H.bioHolder.AddEffect("magnets_neg")
-
-			sleep(rand(1200,1800))
-
-			for (var/mob/living/carbon/human/H in positive_mobs)
-				if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_pos")
-			for (var/mob/living/carbon/human/H in negative_mobs)
-				if (H.bioHolder) H.bioHolder.RemoveEffect("magnets_neg")
+				H.changeStatus("magnetized", duration, "magnets_neg")

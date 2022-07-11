@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user) || issilicon(user) || isobserver(user))
+		if (ismobcritter(user) || issilicon(user) || isobserver(user) || isAI(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)
@@ -239,11 +239,11 @@
 
 	New()
 		slots["1"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["2"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["3"] = new/obj/item/reagent_containers/mender/brute(src)
+		slots["2"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
+		slots["3"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
 		slots["4"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["5"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["6"] = new/obj/item/reagent_containers/mender/burn(src)
+		slots["5"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
+		slots["6"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
 		rebuildOverlays()
 		return ..()
 

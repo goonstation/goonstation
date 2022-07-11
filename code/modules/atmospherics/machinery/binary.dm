@@ -22,8 +22,8 @@ obj/machinery/atmospherics/binary
 				initialize_directions = EAST|WEST
 			if(WEST)
 				initialize_directions = EAST|WEST
-		air1 = unpool(/datum/gas_mixture)
-		air2 = unpool(/datum/gas_mixture)
+		air1 = new /datum/gas_mixture
+		air2 = new /datum/gas_mixture
 
 		air1.volume = 200
 		air2.volume = 200
@@ -72,10 +72,10 @@ obj/machinery/atmospherics/binary
 		network2 = null
 
 		if(air1)
-			pool(air1)
+			qdel(air1)
 
 		if(air2)
-			pool(air2)
+			qdel(air2)
 
 		air1 = null
 		air2 = null
@@ -98,7 +98,7 @@ obj/machinery/atmospherics/binary
 				node2 = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network1 && node1)

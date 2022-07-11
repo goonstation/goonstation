@@ -37,7 +37,7 @@ toxic - poisons
 	color_red = 0.8
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 
 
 //Any special things when it hits shit?
@@ -56,4 +56,4 @@ toxic - poisons
 		..()
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
-		SPAWN_DBG(0.5 SECONDS)	qdel(src)
+		SPAWN(0.5 SECONDS)	qdel(src)

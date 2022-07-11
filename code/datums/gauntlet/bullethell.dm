@@ -191,7 +191,7 @@
 				overlay_status = 0
 
 	proc/test()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (!broken)
 				process()
 				sleep(test_sleep_time)
@@ -264,7 +264,7 @@
 		if (health <= 0)
 			die()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/damtype = DT_NORMAL
 
 		if (W.hit_type == DAMAGE_BURN)

@@ -61,7 +61,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		onclose(user, "inj_belt")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
@@ -127,19 +127,19 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
-				SPAWN_DBG(min_time*10) can_trigger = 1
+				SPAWN(min_time*10) can_trigger = 1
 
 				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
 				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					if(inj_amount == -1)
 						container.reagents.trans_to(owner, container.reagents.total_volume)
 					else
 						container.reagents.trans_to(owner, inj_amount)
 
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			if (src) check()
 
 	proc/is_equipped()
@@ -209,7 +209,7 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 		onclose(user, "inj_belt")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
@@ -279,23 +279,23 @@ There's A LOT of duplicate code here, which isn't ideal to say the least. Should
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
-				SPAWN_DBG(min_time*10) can_trigger = 1
+				SPAWN(min_time*10) can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
 					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
 
 				boutput(owner, "<span class='notice'>Your [src] activates.</span>")
 
 				container.reagents.reaction(owner, INGEST)
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					if(inj_amount == -1)
 						container.reagents.trans_to(owner, container.reagents.total_volume)
 					else
 						container.reagents.trans_to(owner, inj_amount)
 
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			if (src) check()
 
 	proc/is_equipped()

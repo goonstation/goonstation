@@ -2,7 +2,7 @@
 	name = "space-american football pads"
 	desc = "A protective suit designed for players of the ancient sport of space-american football. This armor bears colors of the Spacecow Wobbegongs, who won the 2048 series!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
@@ -34,7 +34,7 @@
 	name = "athletic pants"
 	desc = "These are athletic pants bearing the colors of the Spacecow Wobbegongs. The fabric feels like victory."
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_athletic.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -44,11 +44,13 @@
 
 /obj/item/clothing/shoes/cleats
 	name = "cleats"
-	desc = "Sharp cleats made for playing football at a professional level. They must be expensive!"
+	desc = "Sharp cleats made for playing football at a professional level. The cleats provide excellent grip. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
-	kick_bonus = 4
+	c_flags = NOSLIP
+	kick_bonus = 6
 	step_sound = "step_plating"
+	compatible_species = list("cow", "human")
 	step_priority = STEP_PRIORITY_LOW
 	item_function_flags = IMMUNE_TO_ACID
 
@@ -66,7 +68,7 @@
 
 /mob/living/carbon/human/proc/rush()
 	if (!wearing_football_gear())
-		boutput(src, __red("You need to wear more football gear first! It just wouldn't be safe."))
+		boutput(src, "<span class='alert'>You need to wear more football gear first! It just wouldn't be safe.</span>")
 		return
 
 	var/obj/item/clothing/suit/armor/football/S = src.wear_suit
@@ -95,18 +97,18 @@
 	S.in_rush = 0
 
 	if(check_target_immunity(target))
-		boutput(src, __red("[target] braces themselves to stop your tackle effortlessly!"))
+		boutput(src, "<span class='alert'>[target] braces themselves to stop your tackle effortlessly!</span>")
 		return
 
 	if (src.hasStatus("handcuffed"))
-		boutput(src, __red("With your hands tied behind your back, you slam into [target] face first!"))
+		boutput(src, "<span class='alert'>With your hands tied behind your back, you slam into [target] face first!</span>")
 		src.changeStatus("weakened", 3 SECONDS)
 		src.force_laydown_standup()
 
 	src.remove_stamina(40)
 
 	if (!src.head || !istype(src.head,/obj/item/clothing/head/helmet/football))
-		boutput(src, __red("Ouch! Feels like a properly designed helmet would come in handy."))
+		boutput(src, "<span class='alert'>Ouch! Feels like a properly designed helmet would come in handy.</span>")
 		src.take_brain_damage(1 + power * 0.1)
 
 	for (var/mob/C in viewers(src))
@@ -145,7 +147,8 @@
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
-					D.try_force_open(src)
+					SPAWN(0)
+						D.try_force_open(src)
 					return
 				if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 					qdel(O)
@@ -197,7 +200,7 @@
 		indicator.maptext_y = 38
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
-		src.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
 
 	pickup(mob/M)
 		..()
@@ -243,7 +246,7 @@
 				var/mob/living/carbon/human/user = usr
 				if (H.mind && user.mind && H.mind.special_role == user.mind.special_role)
 					playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
-					src.attack_hand(H)
+					src.Attackhand(H)
 					H.visible_message("<span class='combat'>[user] passes \the [src] to [H]!</span>", "<span class='combat'>You pass \the [src] to [H]!</span>")
 					return
 
@@ -252,12 +255,13 @@
 	ex_act(severity)
 		return
 
-/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
-	..()
+	. = ..()
 
 /obj/item/football/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-	..(hit_atom)
+	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
 		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
@@ -265,12 +269,12 @@
 			var/mob/hitMob = hit_atom
 			if (ishuman(hitMob))
 				var/mob/living/carbon/human/user = usr
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					if (istype(user))
 						if (check_target_immunity(hitMob))
 							hitMob.visible_message("<span class='alert'>The [src] bounces off of [hit_atom]!</span>")
 						else if (user.wearing_football_gear())
-							//boutput(hitMob, __red("Oof! The [src.name] knocks the wind right out of you!"))
+							//boutput(hitMob, "<span class='alert'>Oof! The [src.name] knocks the wind right out of you!</span>")
 							hitMob.visible_message("<span class='alert'><b>[src] hits [hit_atom] in the gut and knocks the wind right out of them!</b></span>")
 							hitMob.changeStatus("stunned", 2 SECONDS)
 							hitMob.changeStatus("weakened", 2 SECONDS)

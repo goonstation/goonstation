@@ -8,6 +8,10 @@
 	if(!L) { L = list(); } \
 	L += X; \
 
+#define LAZYLISTADDUNIQUE(L, X) \
+	if(!L) { L = list(); } \
+	L |= X; \
+
 #define LAZYLISTREMOVE(L, I) \
 	if(L) { \
 		L -= I; \
@@ -123,3 +127,7 @@ proc/params2complexlist(params)
 		if (v > 1 && list[v-1] == thing)
 			return list[v]
 	return list[1]
+
+proc/list_pop(list/L)
+	. = L[length(L)]
+	L.Cut(length(L))

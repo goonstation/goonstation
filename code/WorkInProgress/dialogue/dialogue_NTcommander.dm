@@ -12,12 +12,12 @@
 		dialogue = new/datum/dialogueMaster/nt_faction(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/nt_faction
@@ -316,7 +316,7 @@
 	name = "seaman's uniform"
 	desc = "Official seaman's uniform of Nanotrasen's naval branch."
 	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_reward.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "seaman"
 	item_state = "seaman"
 
@@ -324,7 +324,7 @@
 	name = "cadet's uniform"
 	desc = "Official cadet's uniform of Nanotrasen's naval branch."
 	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_reward.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "cadet"
 	item_state = "cadet"
 
@@ -332,7 +332,7 @@
 	name = "lieutenant's uniform"
 	desc = "Official lieutenant's uniform of Nanotrasen's naval branch."
 	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_reward.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "lieutenant"
 	item_state = "lieutenant"
 
@@ -340,7 +340,7 @@
 	name = "officer's uniform"
 	desc = "Officers uniform of Nanotrasen's naval branch."
 	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_reward.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "officer"
 	item_state = "officer"
 
@@ -348,7 +348,7 @@
 	name = "chief officer's uniform"
 	desc = "Uniform awarded to the highest ranking Nanotrasen naval officers."
 	icon = 'icons/obj/clothing/uniforms/item_js_reward.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_reward.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "chiefofficer"
 	item_state = "chiefofficer"
 
@@ -357,25 +357,18 @@
 	desc = "A service cap, to go with the seaman's uniform of Nanotrasen's naval branch. Snazzy!"
 	icon_state = "nt1"
 	item_state = "nt1"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 
 /obj/item/clothing/head/officer
 	name = "officer's peaked cap"
 	desc = "A service cap, to go with the officer's uniform of Nanotrasen's naval branch. Looking sharp, chief!"
 	icon_state = "nt2"
 	item_state = "nt2"
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	wear_image_icon = 'icons/mob/head.dmi'
 
 /obj/item/clothing/suit/armor/nanotrasen
 	name = "Nanotrasen Bodyguard Armor"
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 
 
 	setupProperties()

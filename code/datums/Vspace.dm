@@ -35,14 +35,14 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "party"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!ismob(user) || !user.client || !istype(user, /mob/living/carbon/human/virtual/))
 			return
 		src.add_fingerprint(user)
 
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
 		setdead(user)
-		user.death(0)
+		user.death(FALSE)
 
 		Station_VNet.Leave_Vspace(user)
 		return
@@ -207,7 +207,7 @@ datum/v_space
 			virtual_character.real_name = "Virtual [user.real_name]"
 		user.mind.virtual = virtual_character
 		user.mind.transfer_to(virtual_character)
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if (virtual_character)
 				virtual_character.update_face()
 				virtual_character.update_body()

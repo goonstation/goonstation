@@ -21,6 +21,8 @@
 			return
 		if(!istype(target))
 			return 1
+		if(!IN_RANGE(target, holder.owner, max_range))
+			return 1
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("EI NATH")

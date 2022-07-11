@@ -3,7 +3,7 @@ Some procs  exist for replacement within text:
 	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [showCoords(usr.x, usr.y, usr.z)]")
+		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
 Example out of game log call:
 		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
 */
@@ -19,11 +19,15 @@ var/global/roundLog_name = "data/logs/full/[roundLog_date].html"
 var/global/roundLog = file(roundLog_name)
 var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
+var/global/logLength = 0
 
 /proc/logTheThing(type, source, target, text, diaryType)
 	var/diaryLogging
+	var/forceNonDiaryLoggingToo = FALSE
+	var/area/A
 
 	if (source)
+		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
@@ -56,6 +60,7 @@ var/global/first_adminhelp_happened = 0
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
 		if (!diaryLogging && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 
 	else
 		var/ingameLog = "<td class='duration'>\[[round(world.time/600)]:[(world.time%600)/10]\]</td><td class='source'>[source]</td><td class='text'>[text]</td>"
@@ -66,6 +71,7 @@ var/global/first_adminhelp_happened = 0
 				logs["audit"] += ingameLog
 				diaryLogging = 1
 				diaryType = "audit"
+				forceNonDiaryLoggingToo = TRUE
 			if ("admin") logs["admin"] += ingameLog
 			if ("admin_help") logs["admin_help"] += ingameLog
 			if ("mentor_help") logs["mentor_help"] += ingameLog
@@ -73,7 +79,10 @@ var/global/first_adminhelp_happened = 0
 			if ("ooc") logs["ooc"] += ingameLog
 			if ("whisper") logs["speech"] += ingameLog
 			if ("station") logs["station"] += ingameLog
-			if ("combat") logs["combat"] += ingameLog
+			if ("combat")
+				if (A?.dont_log_combat)
+					return
+				logs["combat"] += ingameLog
 			if ("telepathy") logs["telepathy"] += ingameLog
 			if ("debug") logs["debug"] += ingameLog
 			if ("pdamsg") logs["pdamsg"] += ingameLog
@@ -83,6 +92,7 @@ var/global/first_adminhelp_happened = 0
 			if ("pathology") logs["pathology"] += ingameLog
 			if ("deleted") logs["deleted"] += ingameLog
 			if ("vehicle") logs["vehicle"] += ingameLog
+			if ("computers") logs["computers"] += ingameLog
 			if ("diary")
 				switch (diaryType)
 					//These are things we log in the out of game logs (the diary)
@@ -105,8 +115,9 @@ var/global/first_adminhelp_happened = 0
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
 
 		//A little trial run of full logs saved to disk. They are cleared by the server every so often (cronjob) (HEH NOT ANYMORE)
-		if (!diaryLogging && config.allowRotatingFullLogs)
+		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
+			logLength++
 	return
 
 /proc/logDiary(text)
@@ -138,12 +149,13 @@ var/global/first_adminhelp_happened = 0
 		src_object = window.locked_by.src_object
 	// Insert src_object info
 	if(src_object)
-		entry += "<br>Using: [src_object.type] [\ref(src_object)]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
+		entry += "<br>Using: [src_object.type] \ref[src_object]" // |GOONSTATION-CHANGE| (\n->br, REF->\ref)
 	// Insert message
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
 	WRITE_LOG(roundLog_name, entry)
+	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()
@@ -160,14 +172,38 @@ var/global/first_adminhelp_happened = 0
 	var/traitor
 	var/online
 	var/dead = 1
-	var/mobType
+	var/mobType = null
+	var/lawracktext = null
 
 	var/mob/mobRef
 	if (ismob(ref))
 		mobRef = ref
 		traitor = checktraitor(mobRef)
-		if (mobRef.real_name)
-			name = mobRef.real_name
+		if (mobRef.name)
+			if (ishuman(mobRef))
+				var/mob/living/carbon/human/humanRef = mobRef
+				if (mobRef.name != mobRef.real_name && (mobRef.name == "Unknown" || mobRef.name == humanRef.wear_id?:registered))
+					name = "[mobRef.real_name] (disguised as [mobRef.name])"
+				else
+					name = mobRef.name
+			else
+				name = mobRef.name
+			if (length(mobRef.name_suffixes))
+				name = mobRef.real_name
+
+		if(isnull(mobRef.client) && isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			if(aieye.mainframe?.client)
+				mobRef = aieye.mainframe
+				mobType = "(AIeye/mainframe)"
+		else if(isnull(mobRef.client) && istype(mobRef, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/ai = mobRef
+			if(ai.eyecam?.client)
+				mobRef = ai.eyecam
+				mobType = "(mainframe/AIeye)"
+			else if(ai.deployed_shell?.client)
+				mobRef = ai.deployed_shell
+				mobType = "(mainframe/shell)"
 		if (mobRef.key)
 			key = mobRef.key
 		if (mobRef.ckey)
@@ -182,23 +218,67 @@ var/global/first_adminhelp_happened = 0
 		if (clientRef.mob)
 			mobRef = clientRef.mob
 			traitor = checktraitor(mobRef)
-			if (mobRef.real_name)
-				name = clientRef.mob.real_name
+			if (mobRef.name)
+				if (ishuman(clientRef.mob))
+					var/mob/living/carbon/human/humanRef = clientRef.mob
+					if (clientRef.mob.name != clientRef.mob.real_name && (clientRef.mob.name == "Unknown" || clientRef.mob.name == humanRef.wear_id?:registered))
+						name = "[clientRef.mob.real_name] (disguised as [clientRef.mob.name])"
+					else
+						name = clientRef.mob.name
+				else
+					name = clientRef.mob.name
+				if (length(clientRef.mob.name_suffixes))
+					name = clientRef.mob.real_name
 			if (!isdead(mobRef))
 				dead = 0
 		if (clientRef.key)
 			key = clientRef.key
 		if (clientRef.ckey)
 			ckey = clientRef.ckey
+	else if (istype(ref,/obj/machinery/lawrack))
+		var/list/nice_rack  = list()
+		var/obj/machinery/lawrack/rack_ref = ref
+		nice_rack += rack_ref.name
+		nice_rack += "(UID: [rack_ref.unique_id]) at "
+		nice_rack += log_loc(rack_ref)
+		return nice_rack.Join()
 	else
 		return ref
 
-	if (mobRef)
+	if (mobRef && isnull(mobRef))
 		if (ismonkey(mobRef)) mobType = "Monkey"
 		else if (isrobot(mobRef)) mobType = "Robot"
 		else if (isshell(mobRef)) mobType = "AI Shell"
 		else if (isAI(mobRef)) mobType = "AI"
-		else if (!ckey) mobType = "NPC"
+		else if (!ckey && !mobRef.last_ckey) mobType = "NPC"
+
+	if (mobRef && (issilicon(mobRef) || isAIeye(mobRef)))
+		var/obj/machinery/lawrack/lawrack = null
+		if(isAIeye(mobRef))
+			var/mob/living/intangible/aieye/aieye = mobRef
+			lawrack = aieye?.mainframe?.law_rack_connection
+		else if(isshell(mobRef))
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.mainframe?.law_rack_connection
+		else
+			var/mob/living/silicon/sil = mobRef
+			lawrack = sil?.law_rack_connection
+		if(isnull(lawrack))
+			lawracktext = "NONE"
+		else
+			lawracktext = "<a href=\"#\" \
+				onMouseOver=\"this.children\[0\].style.display = 'block'\"	\
+				onMouseOut=\"this.children\[0\].style.display = 'none';\"		\
+				>[lawrack.unique_id]										\
+				<span id=\"innerContent\" style=\"							\
+					display: none;											\
+					background: #C8C8C8;									\
+					margin-left: 28px;										\
+					padding: 10px;											\
+					position: absolute;										\
+					z-index: 1000;											\
+				\">[lawrack.format_for_logs()]</span>		\
+				</a>"
 
 	var/list/data = list()
 	if (name)
@@ -213,6 +293,11 @@ var/global/first_adminhelp_happened = 0
 			data += "[name ? " (" : ""][key][name ? ")" : ""]"
 		else
 			data += "[name ? " (" : ""]<a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[key]</a>[name ? ")" : ""]"
+	else if(mobRef.last_ckey)
+		if (type == "diary")
+			data += "[name ? " (" : ""]last: [ckey][name ? ")" : ""]"
+		else
+			data += "[name ? " (" : ""]last: <a href='?src=%admin_ref%;action=adminplayeropts;targetckey=[ckey]' title='Player Options'>[ckey]</a>[name ? ")" : ""]"
 	if (traitor)
 		if (type == "diary")
 			data += " \[TRAITOR\]"
@@ -225,10 +310,15 @@ var/global/first_adminhelp_happened = 0
 			data += " \[DEAD\]"
 		else
 			data += " \[<span class='alert'>DEAD</span>\]"
+	if(lawracktext)
+		data += "\[LawRack: [lawracktext]\]"
 	return data.Join()
 
 proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (!P || !SHOT)
+		return
+	var/area/A = get_area(SHOT)
+	if (A?.dont_log_combat)
 		return
 	var/shooter_data = null
 	var/vehicle
@@ -263,7 +353,10 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	else
 		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #else
-	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	if (shooter_data)
+		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	else
+		logTheThing("combat", SHOT, null, "is hit by a projectile [target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #endif
 
 
@@ -312,6 +405,8 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 /proc/log_atmos(var/atom/A as turf|obj|mob)
 	return scan_atmospheric(A, 0, 1)
 
+/proc/alert_atmos(var/atom/A as turf|obj|mob)
+	return scan_atmospheric(A, 0, 0, 0, 1)
 
 /proc/get_log_data_html(logType as text, searchString as text, var/datum/admins/requesting_admin)
 	if (!searchString)

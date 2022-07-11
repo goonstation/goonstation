@@ -4,7 +4,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
@@ -28,6 +28,7 @@
 	var/pictures_max = 30
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
+	var/steals_souls = FALSE
 
 	New()
 		..()
@@ -42,7 +43,7 @@
 		. = ..()
 		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/camera_film))
 			var/obj/item/camera_film/C = W
 
@@ -91,7 +92,7 @@
 	var/wait_cycle = 0
 
 	attack_self(mob/user)
-		if (user.find_in_hand(src))
+		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
 				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
@@ -101,16 +102,16 @@
 				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
-			src.update_icon()
+			src.UpdateIcon()
 
 	New()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
-		update_icon()
+		UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.flash_mode)
 			inventory_counter.update_text("")
 		else
@@ -130,16 +131,17 @@
 		return
 	if (src.flash_mode)
 		// Use cell charge
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, 25) & CELL_INSUFFICIENT_CHARGE)
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, 25) & CELL_SUFFICIENT_CHARGE))
 			user.show_text("[src] doesn't have enough battery power!", "red")
 			return 0
 		var/turf/T = get_turf(target.loc)
 		if (T.is_sanctuary())
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
-		src.update_icon()
+		src.UpdateIcon()
 		// Generic flash
 		var/mob/M = target
+		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
 		playsound(src, "sound/weapons/flash.ogg", 100, 1)
 		flick("camera_flash-anim", src)
@@ -196,12 +198,15 @@
 	var/written = null
 	var/image/my_writing = null
 	tooltip_flags = REBUILD_DIST
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
+			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 			IM.pixel_y = 1
 			src.UpdateOverlays(IM, "photo")
 		if (istype(IC))
@@ -225,7 +230,7 @@
 			. += "At the bottom is written: [written]"
 
 
-/obj/item/photo/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
@@ -265,7 +270,7 @@
 
 	//farting is handled in human.dm
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
@@ -302,7 +307,7 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -319,7 +324,7 @@
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
 	can_use = 0
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		if (src)
 			src.can_use = 1
 
@@ -332,9 +337,6 @@
 	var/icon/photo_icon = getFlatIcon(the_turf)
 	if (!photo)
 		return
-
-	if (istype(photo_icon))
-		photo_icon.Crop(1,1,32,32) // mehhhh
 
 	//photo.overlays += the_turf
 
@@ -350,19 +352,19 @@
 
 	var/mobnumber = 0 // above 3 and it'll stop listing what they're holding and if they're hurt
 	var/itemnumber = 0
+	var/list/mob/stolen_souls = list()
 
 	for (var/atom/A in the_turf)
 		if (A.invisibility || istype(A, /obj/overlay/tile_effect))
 			continue
+		var/icon/ic = getFlatIcon(A)
+		if (ic)
+			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
 		if (ismob(A))
 			var/mob/M = A
-			var/image/X = build_composite_icon(A)
-			var/icon/Y = A:build_flat_icon()
-			//X.Scale(22,20)
-			photo.overlays += X
-			photo_icon.Blend(Y, ICON_OVERLAY)
-			qdel(X)
-			qdel(Y)
+
+			if(src.steals_souls)
+				stolen_souls += M
 
 			if (!mob_title)
 				if(src.takes_voodoo_pics)
@@ -403,16 +405,7 @@
 
 		else
 			if (itemnumber < 5)
-				var/image/X = build_composite_icon(A)
-				var/icon/Y = getFlatIcon(A)
-				if (X)
-					//X.Scale(22,20)
-					photo.overlays += X
-				if (Y)
-					photo_icon.Blend(Y, ICON_OVERLAY)
 				itemnumber++
-				qdel(X)
-				qdel(Y)
 
 				if (!item_title)
 					item_title = " \a [A]"
@@ -438,12 +431,21 @@
 			finished_title = "photo of[item_title]"
 			finished_detail = "You can see [item_detail]."
 
+	if (istype(photo_icon))
+		photo_icon.Crop(1,1,32,32)
+	photo.icon = photo_icon
+
 	var/obj/item/photo/P
 	if(src.takes_voodoo_pics)
 		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
+	else if(src.steals_souls)
+		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		var/obj/item/photo/haunted/HP = P
+		for(var/mob/M as anything in stolen_souls)
+			HP.add_soul(M)
 	else
 		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
 

@@ -24,9 +24,9 @@
 		src.overlays += image('icons/obj/objects.dmi', "DAn-Oe")
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Virus Manipulator</B><BR>
@@ -56,7 +56,7 @@
 
 	Topic(href, href_list)
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Attempt to Create Vaccine
 				if (src.datareagent == "N/A" || src.datareagent == "No virii detected")
 					for(var/mob/O in hearers(src, null))
@@ -79,7 +79,7 @@
 								if (current_disease.Rvaccine) src.datavaccine = "Yes"
 								else src.datavaccine = "No"
 
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					var/vacannounce
@@ -127,7 +127,7 @@
 							if(prob(50))
 								current_disease.Rprob = rand(-3,3)
 								src.dataprob = current_disease.Rprob
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					for(var/mob/O in hearers(src, null))
@@ -204,7 +204,7 @@
 				src.updateUsrDialog()
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (src.working)
 			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return

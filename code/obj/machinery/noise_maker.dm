@@ -2,9 +2,9 @@
 /obj/machinery/noise_switch/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
-/obj/machinery/noise_switch/attack_hand(mob/user as mob)
+/obj/machinery/noise_switch/attack_hand(mob/user)
 	if(status & (NOPOWER|BROKEN))
 		return
 	use_power(5)
@@ -17,7 +17,7 @@
 	src.add_fingerprint(user)
 
 /obj/machinery/noise_switch/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/noise_switch/attackby(obj/item/W, mob/user)
 	user.visible_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>", "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
@@ -38,7 +38,7 @@
 
 
 
-/obj/machinery/noise_maker/attack_hand(mob/user as mob)
+/obj/machinery/noise_maker/attack_hand(mob/user)
 //	playsound(src.loc, "sound/effects/Explosion1.ogg", 100, 1)
 	src.add_fingerprint(user)
 
@@ -71,5 +71,5 @@
 		else if(sound == 3)
 			playsound(src.loc, "sound/effects/screech2.ogg", 100, 5,0)
 	if(containment_fail == 1)
-		SPAWN_DBG(9 SECONDS)
+		SPAWN(9 SECONDS)
 		emittsound()

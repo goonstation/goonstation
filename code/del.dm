@@ -12,15 +12,15 @@ var/delqueue_pos = 1
 proc/qdel(var/datum/O)
 	if(!O)
 		return
+	if(isturf(O))
+		var/turf/T = O
+		T.ReplaceWithSpaceForce()
+		return
 
 	if (istype(O))
 		O.dispose(qdel_instead=0)
-		if (istype(O, /atom/movable))
-			O:set_loc(null)
-		if (istype(O, /image))
-			O:loc = null
 
-		if (isloc(O) && O:contents:len > 0)
+		if (ismovable(O) && O:contents:len > 0)
 			for (var/C in O:contents)
 				qdel(C)
 

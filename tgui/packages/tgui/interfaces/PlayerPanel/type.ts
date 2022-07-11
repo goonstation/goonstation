@@ -51,6 +51,7 @@ export interface PlayerData {
   playerType: string,
   realName: string,
   specialRole: string,
+  ping: number,
 }
 
 export interface PlayerPanelData {
