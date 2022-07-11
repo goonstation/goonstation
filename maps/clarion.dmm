@@ -39294,10 +39294,7 @@
 /area/station/mining/refinery)
 "bFM" = (
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -47927,7 +47924,10 @@
 /area/station/maintenance/central)
 "pOA" = (
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -85364,7 +85364,7 @@ bFX
 bGD
 bHc
 dqr
-bFM
+pOA
 bNu
 bBk
 bDN
@@ -85621,7 +85621,7 @@ bFY
 bGE
 bGF
 bGF
-pOA
+bFM
 bzb
 bBo
 bDL
@@ -85878,7 +85878,7 @@ bFZ
 bGF
 bHb
 bGF
-pOA
+bFM
 bzc
 bBp
 bDL
