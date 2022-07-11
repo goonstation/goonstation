@@ -1,5 +1,9 @@
 
 (t)mon jul 11 22
+(u)CodeJester
+(p)9171
+(e)🐛|bug
+(+)Using floor tiles as a ghostdrone is less awful now.
 (u)Sord + Flourish
 (e)🆕🗺|feature, mapping
 (+)Added randomized rooms to Cog2.
