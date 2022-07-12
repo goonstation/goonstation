@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)Chatauscours
+(p)9128
+(e)🆕|feature
+(*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
 (u)Kubius
 (p)9550
 (e)🆕|feature
