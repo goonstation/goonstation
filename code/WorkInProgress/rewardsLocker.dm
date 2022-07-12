@@ -806,7 +806,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear something in your suit slot."
+	desc = "Requires that you wear a vampire cape."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -815,19 +815,19 @@
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
 				if (istype(M, /obj/item/clothing/suit/gimmick/vampire))
-				var/prev = M.name
-				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				M.icon_state = "vclothes"
-				M.item_state = "vclothes"
-				M.name = "strange vampire outfit"
-				M.real_name = "strange vampire outfit"
-				M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
-				H.set_clothing_icon_dirty()
+					var/prev = M.name
+					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					M.icon_state = "vclothes"
+					M.item_state = "vclothes"
+					M.name = "strange vampire outfit"
+					M.real_name = "strange vampire outfit"
+					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
 				return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
