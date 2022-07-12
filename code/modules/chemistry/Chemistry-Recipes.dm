@@ -1877,7 +1877,7 @@ datum
 			required_reagents = list("water" = 1, "barium" = 1)
 			instant = 1
 			mix_phrase = "The mixture explodes!"
-			hidden = TRUEs
+			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 					return
