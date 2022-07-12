@@ -74,7 +74,7 @@ export const ChemRequester = (props, context) => {
             </Stack.Item>
             <Stack.Item>
               {!selected_reagent && (
-                <Section height={36} scrollable>
+                <Section height={36} fill scrollable>
                   <ReagentSearch chemicals={chemicals} />
                 </Section>
               )}

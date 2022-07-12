@@ -5,8 +5,8 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Button, LabeledList, Input, Section, Flex, Box, Stack, Tabs, Icon } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Section, Flex, Box, Stack, Tabs, Icon } from '../components';
 import { Window } from '../layouts';
 
 import { capitalize } from '../../common/string';
@@ -25,9 +25,7 @@ const ChemRequest = (props, context) => {
     interactable,
     age,
   } = props;
-  // some mild colour hackery to make the text visible on (hopefully) any reagent colour
   const color_string = "rgba(" + reagent_color[0] + "," + reagent_color[1] + ", " + reagent_color[2] + ", 1)";
-  const lightness = reagent_color.reduce((a, b) => a + b, 0)/3;
   return (
     <Section>
       <Flex direction="column" height={10}>
