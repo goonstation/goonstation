@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/ammobag_spec_required = FALSE
 	/// How many charges it costs an ammobag to fabricate ammo for this gun
 	var/ammobag_restock_cost = 0
+	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
+	var/sound_load_override = null
 
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
@@ -1182,6 +1184,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
+	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
+
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/a12)
