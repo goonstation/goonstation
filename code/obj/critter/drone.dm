@@ -16,6 +16,7 @@
 	firevuln = 0.5
 	brutevuln = 1
 	miscvuln = 0
+	attack_range = 7
 	luminosity = 5
 	seekrange = 15
 	flying = 1
@@ -362,7 +363,7 @@
 					src.task = "thinking"
 					walk_to(src,0)
 				if (target)
-					if (get_dist(src, src.target) <= 7)
+					if (get_dist(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
@@ -646,6 +647,7 @@
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
+		attack_range = 1
 		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
@@ -675,6 +677,13 @@
 			..()
 			name = "Drone CR-[rand(1,999)]"
 			return
+
+		bullet_act(var/obj/projectile/P)
+			if (isobj(P.shooter))
+				var/obj/O = P.shooter
+				if(istype(O, /obj/critter/gunbot/drone/buzzdrone)) //No more friendly fire at melee range
+					return
+			..()
 
 		fish
 			name = "Syndicate FishDrone"
