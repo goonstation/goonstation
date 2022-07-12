@@ -1,6 +1,10 @@
 
 (t)tue jul 12 22
 (u)DimWhat
+(p)9591
+(e)🐛|bug
+(+)The strange vampire clothing can now only be claimed with the vampire cape
+(u)DimWhat
 (p)9589
 (e)🆕|feature
 (+)Added a vampire costume to Geoff Honkington's shop.
