@@ -65,23 +65,67 @@
 	desc = "A magical staff used for channeling spells. It's got a little crystal ball on the end."
 	icon = 'icons/obj/wizard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	uses_multiple_icon_states = 1
 	icon_state = "staff"
 	item_state = "staff"
-	force = 3.0
-	throwforce = 5.0
+	force = 6.0
+	throwforce = 20.0
 	throw_speed = 1
 	throw_range = 5
+	stamina_damage = 35
+	stamina_cost = 20
+	stamina_crit_chance = 35
 	health = 8
-	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	hit_type = DAMAGE_BLUNT
+	w_class = W_CLASS_BULKY
 	object_flags = NO_ARM_ATTACH
+	flags = FPRINT | TABLEPASS | NOSHIELD | ONBELT
+	c_flags = EQUIPPED_WHILE_HELD | BLOCK_CUT | BLOCK_BLUNT
 	var/wizard_key = "" // The owner of this staff.
 	var/eldritch = 0	//was for robe and wizard hat, now nothing.
 	duration_remove = 10 SECONDS
+	two_handed = 0
+	var/use_two_handed = 1
+	var/status = 0
+	var/one_handed_force = 6
+	var/two_handed_force = 12
 
 	New()
 		..()
-		BLOCK_SETUP(BLOCK_ALL)
+		src.setItemSpecial(/datum/item_special/simple)
+		BLOCK_SETUP(BLOCK_ROD)
+
+	attack_self(mob/user as mob)
+		src.add_fingerprint(user)
+
+		if (!use_two_handed || setTwoHanded(!src.status))
+			src.status = !src.status
+			// playsound(src, "sparks", 75, 1, -1)
+			if (src.status)
+				setProperty("meleeprot", 3)
+				setProperty("movespeed", 0.1)
+				force = two_handed_force
+				src.setItemSpecial(/datum/item_special/nunchucks)
+			else
+				setProperty("meleeprot", 0)
+				setProperty("movespeed", 0)
+				force = one_handed_force
+				src.setItemSpecial(/datum/item_special/simple)
+
+			user.update_equipped_modifiers()
+
+			can_disarm = src.status
+			item_state = status ? "quarterstaff2" : "staff"
+			user.update_inhands()
+		else
+			user.show_text("You need two free hands in order to activate the [src.name].", "yellow")
+
+		..()
+
+	dropped(mob/user)
+		setTwoHanded(0)
+		status = 0
+		..()
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
