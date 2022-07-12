@@ -261,8 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
-			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
+			burn_possible = src.material.getProperty("flammable") >= 5 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
@@ -559,8 +558,13 @@
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-	if(isrobot(other.loc))
-		max_stack = 500
+	var/imrobot
+	var/imdrone
+	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
+		if (imrobot)
+			max_stack = 500
+		else if (imdrone)
+			max_stack = 1000
 		if (other != src && check_valid_stack(src))
 			if (src.amount + other.amount > max_stack)
 				added = max_stack - other.amount

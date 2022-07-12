@@ -16,6 +16,7 @@ TOILET
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0
+	burn_possible = FALSE
 
 /obj/item/storage/toilet/New()
 	..()

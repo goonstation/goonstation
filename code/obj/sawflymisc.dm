@@ -89,6 +89,7 @@
 	desc = "A small device that can be used to fold or deploy sawflies in range."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
+	object_flags = NO_GHOSTCRITTER
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"

@@ -35,6 +35,8 @@
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
 	/// When something enters the contents of this atom (i.e. Entered())
 	#define COMSIG_ATOM_ENTERED "atom_entered"
+	/// When this atom is analyzed with a device analyzer (item, user)
+	#define COMSIG_ATOM_ANALYZE "atom_analyze"
 	/// Attacking with an item in-hand (item, attacker, params, is_special)
 	#define COMSIG_ATTACKBY "attackby"
 	/// Attacking without an item in-hand (attacker)
@@ -105,6 +107,8 @@
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
 	/// After we've consumed an item
 	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
+	/// Called before an attackby that uses this item (target, user)
+	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
 	/// When an item is used to attack a mob before it actually hurts the mob
 	#define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 	/// When an item is used in-hand

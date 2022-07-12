@@ -100,7 +100,6 @@
 	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
 
-	var/datum/particleSystem/barrelSmoke/smokeParticles
 	var/list/crew = list()
 
 	var/atmos_fail_count = 5 //counts down when life support is offline. once it his 0, life support fails.

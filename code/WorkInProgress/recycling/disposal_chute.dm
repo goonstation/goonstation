@@ -72,6 +72,12 @@
 			if (trunk)
 				trunk.linked = null
 		trunk = null
+
+		var/turf/T = get_turf(src)
+		for (var/atom in src)
+			var/atom/movable/A = atom
+			A.set_loc(T)
+
 		return ..()
 
 	onDestroy()
@@ -91,7 +97,7 @@
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-		if (istype(I,/obj/item/electronics/scanner) || istype(I,/obj/item/deconstructor))
+		if (istype(I,/obj/item/deconstructor))
 			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
 			return
 		if (istype(I, /obj/item/handheld_vacuum))

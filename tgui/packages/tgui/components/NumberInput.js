@@ -208,10 +208,18 @@ export class NumberInput extends Component {
           ref={this.inputRef}
           className="NumberInput__input"
           style={{
-            display: !editing ? 'none' : undefined,
+            opacity: !editing ? 0 : undefined,
             height: height,
             'line-height': lineHeight,
             'font-size': fontSize,
+          }}
+          onFocus={e => {
+            this.setState({
+              editing: true,
+            });
+            if (onChange) {
+              onChange(e, value);
+            }
           }}
           onBlur={e => {
             if (!editing) {

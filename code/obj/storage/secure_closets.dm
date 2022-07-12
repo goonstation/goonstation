@@ -1,6 +1,7 @@
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3

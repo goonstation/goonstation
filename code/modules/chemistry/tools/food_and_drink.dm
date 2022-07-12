@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/food_color = "#FF0000" //Color for various food items
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
-	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
@@ -1558,6 +1557,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		SPAWN(0)
 			if (src.reagents)
 				src.fill_it_up()
+				src.decorate()
 
 	proc/fill_it_up()
 		var/flavor = null
@@ -1580,6 +1580,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.reagents.add_reagent(flavor, src.initial_volume)
 		src.whitelist = null // save a tiny bit of memory I guess
 		src.blacklist = null // same as above  :V
+
+	proc/decorate()
+		if (prob(33))
+			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			src.wedge = new P(src)
+		if (prob(33))
+			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)
+		if (prob(33))
+			var/P = pick(/obj/item/cocktail_stuff/maraschino_cherry,\
+			/obj/item/cocktail_stuff/cocktail_olive,\
+			/obj/item/cocktail_stuff/celery)
+			src.in_glass = new P(src)
+		if (prob(5))
+			src.salted = TRUE
+		src.update_icon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
@@ -1723,8 +1741,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
-	icon_state = "carafe-eng"
-	item_state = "carafe-eng"
+	icon_state = "carafe-gen"
+	item_state = "carafe-gen"
 	initial_volume = 100
 	can_chug = 0
 	var/smashed = 0
@@ -1809,6 +1827,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "carafe-sci"
 	item_state = "carafe-sci"
 
+/obj/item/reagent_containers/food/drinks/carafe/engineering
+	icon_state = "carafe-eng"
+	item_state = "carafe-eng"
+
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"
 	desc = "Must be migrational."
@@ -1887,3 +1909,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "golden cocktail shaker"
 	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
 	icon_state = "golden_cocktailshaker"
+
+/obj/item/reagent_containers/food/drinks/creamer
+	name = "coffee creamer"
+	desc = "A bottle of dairy-based coffee creamer. It's been left out at room temperature for a bit too long, don't you think?"
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "creamer"
+	item_state = "creamer"
+	initial_volume = 50
+	initial_reagents = list("milk"=50)
+	can_recycle = 0
