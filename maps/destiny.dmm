@@ -11548,7 +11548,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aXi" = (
-/obj/machinery/power/apc/autoname_south,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
