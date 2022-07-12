@@ -1908,6 +1908,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 
 /obj/item/clothing/head/helmet/space/replica
 	name = "replica space helmet"
-	icon_state = "space-replica"
-	item_state = "space-replica"
+	icon_state = "space_replica"
+	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."

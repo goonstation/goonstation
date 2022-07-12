@@ -30,6 +30,15 @@
 		else
 			src.UpdateOverlays(null, "barcode")
 
+	attackby(obj/item/I, mob/user)
+		if(src.open)
+			return ..()
+		if(istype(I, /obj/item/antitamper))
+			if(src.locked)
+				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				return
+			var/obj/item/antitamper/AT = I
+			AT.attach_to(src, user)
 
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))

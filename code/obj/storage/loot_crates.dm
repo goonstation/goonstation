@@ -2,32 +2,61 @@
 	// three types of loot - aesthetic motivated, department motivated, and player motivated
 	var/list/aesthetic = list(
 	// character
-	/obj/item/clothing/head/frog_hat
+		/obj/item/clothing/head/frog_hat,\
+		/obj/item/clothing/head/bear,\
+		list(/obj/item/clothing/head/rugged, /obj/item/clothing/suit/rugged_jacket),\
+		list(/obj/item/clothing/head/star_tophat, /obj/item/clothing/suit/star_cloak),\
+		list(/obj/item/clothing/head/cow, /obj/item/clothing/suit/cow_jacket),\
+		/obj/item/clothing/head/torch,\
+		list(/obj/item/clothing/head/helmet/space/replica, /obj/item/clothing/suit/space/replica),\
+		/obj/item/clothing/suit/lined_jacket,\
+		/obj/item/clothing/suit/warm_jacket,\
+		/obj/item/clothing/suit/cool_jacket,\
+		/obj/item/clothing/suit/billow_cape,\
+		/obj/item/clothing/under/misc/tiedye,\
+		/obj/item/clothing/under/misc/neapolitan,\
+		/obj/item/clothing/under/misc/mint_chip,
 	// station
 	)
 	var/list/department = list(
 	// medbay
-	/obj/item/roboupgrade/efficiency, /obj/item/roboupgrade/jetpack, /obj/item/roboupgrade/physshield,\
-	/obj/item/roboupgrade/teleport, /obj/item/cloner_upgrade, /obj/item/grinder_upgrade,\
-	/obj/item/reagent_containers/mender/both, /obj/item/plant/herb/cannabis/white/spawnable,\
-	list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster),
+		/obj/item/roboupgrade/efficiency,\
+		/obj/item/roboupgrade/jetpack,\
+		/obj/item/roboupgrade/physshield,\
+		/obj/item/roboupgrade/teleport,\
+		/obj/item/cloner_upgrade,\
+		/obj/item/grinder_upgrade,\
+		/obj/item/reagent_containers/mender/both,\
+		/obj/item/plant/herb/cannabis/white/spawnable,\
+		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster),
 	// botany
-	/obj/item/reagent_containers/glass/happyplant,\
+		/obj/item/reagent_containers/glass/happyplant,\
 	// mining
-	/obj/item/clothing/shoes/industrial,\
+		/obj/item/clothing/shoes/industrial,\
 	// qm
-	/obj/item/material_piece/gold, /obj/item/plant/herb/cannabis/omega/spawnable,
+		/obj/item/material_piece/gold,\
+		/obj/item/plant/herb/cannabis/omega/spawnable,\
+		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper),
 	)
 	var/list/player = list(
 	// useful
-	/obj/item/clothing/gloves/psylink_bracelet, /obj/item/device/voltron, /obj/item/injector_belt,\
-	/obj/item/clothing/mask/gas/injector_mask, /obj/item/ammo/power_cell/self_charging/pod_wars_standard,\
-	/obj/item/clothing/gloves/ring/titanium, /obj/item/gun/energy/plasma_gun, /obj/item/gun/energy/phaser_gun,\
-	/obj/item/clothing/ears/earmuffs/yeti,\
+		/obj/item/clothing/gloves/psylink_bracelet,\
+		/obj/item/device/voltron,\
+		/obj/item/injector_belt,\
+		/obj/item/clothing/mask/gas/injector_mask,\
+		/obj/item/ammo/power_cell/self_charging/pod_wars_standard,\
+		/obj/item/clothing/gloves/ring/titanium,\
+		/obj/item/gun/energy/plasma_gun,\
+		/obj/item/gun/energy/phaser_gun,\
+		/obj/item/clothing/ears/earmuffs/yeti,\
 	// fun
-	/obj/item/gun/bling_blaster, /obj/item/clothing/under/gimmick/frog, /obj/vehicle/skateboard,\
-	/obj/item/device/flyswatter, /obj/critter/bear, /obj/item/clothing/shoes/jetpack,\
-	/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,
+		/obj/item/gun/bling_blaster,\
+		/obj/item/clothing/under/gimmick/frog,\
+		/obj/vehicle/skateboard,\
+		/obj/item/device/flyswatter,\
+		/obj/critter/bear,\
+		/obj/item/clothing/shoes/jetpack,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager
@@ -39,11 +68,13 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	locked = TRUE
+	anchored = TRUE
 	var/image/light = null
 
 	New()
 		..()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
+		new /obj/item/antitamper(src)
 
 		var/list/loot = list()
 		loot.Add(pick(loot_crate_manager.aesthetic), pick(loot_crate_manager.department), pick(loot_crate_manager.player))
@@ -376,6 +407,64 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		return
 
 // Items specific to loot crates
+
+/obj/item/antitamper
+	name = "anti-tamper device"
+	desc = "Space pirates hate these!"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "antitamper-off"
+	w_class = W_CLASS_SMALL
+	force = 4
+	throwforce = 2
+	var/obj/storage/crate/attached = null
+
+	New(var/obj/storage/crate/C)
+		..()
+		attach_to(C)
+
+	disposing()
+		. = ..()
+		attached = null
+
+	attack_hand(mob/user)
+		if (attached)
+			return
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if (!attached)
+			return ..()
+		if (W.w_class < W_CLASS_NORMAL || W.force < 10)
+			boutput(user, "<span class='alert'>You're going to have to use a heftier object if you want to break the crate's anti-tampering system.</span>")
+			return
+		add_fingerprint(user)
+		detach_from(attached)
+
+	proc/attach_to(var/obj/storage/crate/C)
+		if (!C || !istype(C))
+			return
+		set_loc(C)
+		attached = C
+		attached.vis_contents += src
+		attached.locked = TRUE
+		attached.anchored = TRUE
+		attached.update_icon()
+		icon_state = "antitamper-on"
+		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1)
+
+	proc/detach_from(var/obj/storage/crate/C)
+		if (!C)
+			return
+		icon_state = ""
+		flick("antitamper-break", src)
+		SPAWN(1 SECOND)
+			attached.vis_contents -= src
+			attached.locked = FALSE
+			attached.anchored = FALSE
+			attached.update_icon()
+			attached = null
+			qdel(src)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"

@@ -1812,7 +1812,7 @@
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/cool_jacket
-	name = "warm jacket"
+	name = "cool jacket"
 	desc = "Cool as in its coloration. It's not actually all that radical."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
@@ -1832,5 +1832,5 @@
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
 	desc = "A replica of an old space suit. Seems to still work, though."
-	icon_state = "space_replica"
-	item_state = "space_replica"
+	icon_state = "space-replica"
+	item_state = "space-replica"

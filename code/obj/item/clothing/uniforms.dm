@@ -1749,7 +1749,7 @@
     item_state = "tiedye"
 
 /obj/item/clothing/under/misc/neapolitan
-    name = "neopolitan shirt"
+    name = "neapolitan shirt"
     desc = "Like the icecream, not made in Naples."
     icon_state = "neapolitan"
     item_state = "neapolitan"
