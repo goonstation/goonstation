@@ -247,8 +247,8 @@
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		if (!M.melee_attack_test(user, src))
-			logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+		if(check_target_immunity( M ))
+			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
 			return
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -268,6 +268,8 @@
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
 					src.do_stun(user, M, "failed_stun", 1)
 				else
+					if (M.do_dodge(user, src))
+						return
 					src.do_stun(user, M, "stun", 2)
 
 		return
