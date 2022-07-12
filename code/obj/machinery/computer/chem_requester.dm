@@ -40,7 +40,7 @@ var/list/datum/chem_request/chem_requests = list()
 		var/list/chems = list()
 		for (var/id in chem_reactions_by_id)
 			var/datum/chemical_reaction/reaction = chem_reactions_by_id[id]
-			if (reaction.result)
+			if (reaction.result && !reaction.hidden)
 				var/datum/reagent/reagent = reagents_cache[reaction.result]
 				if (reagent && !istype(reagent, /datum/reagent/fooddrink)) //all the cocktails clog the UI
 					chems[lowertext(reagent.name)] = reagent.id
