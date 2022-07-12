@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Box, Stack, NumberInput } from '../components';
+import { Button, Input, Section, Box, Stack, NumberInput, LabeledList } from '../components';
 import { Window } from '../layouts';
 import { KEY_ENTER } from 'common/keycodes';
 import { capitalize } from '../../common/string';
@@ -83,15 +83,20 @@ export const ChemRequester = (props, context) => {
               )}
             </Stack.Item>
             <Stack.Item>
-              Amount: <NumberInput align="left" unit="u" minValue={5} step={5} maxValue={max_volume} value={volume} onChange={(e, value) => { act("set_volume", { volume: value }); }} />
-              <Box align="left">Notes:</Box>
-              <Input
-                width="100%"
-                value={notesText}
-                maxLength={65}
-                onInput={setNotesText}
-                onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
-              </Input>
+              <LabeledList>
+                <LabeledList.Item label="Amount">
+                  <NumberInput align="left" unit="u" minValue={5} step={5} maxValue={max_volume} value={volume} onChange={(e, value) => { act("set_volume", { volume: value }); }} />
+                </LabeledList.Item>
+                <LabeledList.Item label="Notes">
+                  <Input
+                    width="100%"
+                    value={notesText}
+                    maxLength={65}
+                    onInput={setNotesText}
+                    onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
+                  </Input>
+                </LabeledList.Item>
+              </LabeledList>
             </Stack.Item>
             <Stack.Item>
               <Button onClick={() => {

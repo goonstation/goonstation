@@ -76,7 +76,7 @@ export const ChemRequestReceiver = (props, context) => {
   let request_index = 0;
   return (
     <Window title="Chemical requests" width={600} height={600}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
             selected={tabIndex === 1}
@@ -93,7 +93,7 @@ export const ChemRequestReceiver = (props, context) => {
           {requests.map((request) => {
             if ((request.state === "pending" && tabIndex === 1) || (request.state !== "pending" && tabIndex === 2)) {
               return (
-                <Stack.Item py={1} width={24} key={request.id} ml={request_index++ === 0 ? 1 : undefined}>
+                <Stack.Item py={1} width={23} key={request.id} ml={request_index++ === 0 ? 1 : undefined}>
                   <ChemRequest interactable={allowed} {...request} />
                 </Stack.Item>
               );
