@@ -1987,6 +1987,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	two_handed = 0
 	add_residue = 1
+	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
 
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
@@ -2040,3 +2041,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			boutput(user, "<span class='alert'>The [src] is still closed, you need to open the action to take the shells out!</span>")
 			return
 		..()
+
+	alter_projectile(var/obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
