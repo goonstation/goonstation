@@ -346,7 +346,7 @@
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "shrub"
+	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
 	anchored = 1
 	density = 1
