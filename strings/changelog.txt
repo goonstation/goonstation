@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)Moberry
+(p)9376
+(e)⚖⛔|balance, removal
+(+)Changes QM Ore values and removes the electronics commodity.
 (u)TTerc
 (e)🗺|mapping
 (+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
