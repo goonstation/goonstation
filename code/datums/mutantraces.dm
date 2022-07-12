@@ -1050,6 +1050,7 @@ TYPEINFO(/datum/mutantrace)
 	var/const/blood_decay = 0.5
 	var/cleanable_tally = 0
 	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
+	var/original_name
 
 	New(var/mob/living/carbon/human/M)
 		..()
@@ -1057,11 +1058,17 @@ TYPEINFO(/datum/mutantrace)
 			src.add_ability(src.mob)
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
+			src.original_name = src.mob.real_name
+			src.mob.real_name = "thrall [mob.real_name]"
+			src.mob.UpdateName()
 
 	disposing()
 		if (ishuman(src.mob))
 			src.mob.remove_stam_mod_max("vampiric_thrall")
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
+			if (!isnull(src.original_name))
+				src.mob.real_name = src.original_name
+				src.mob.UpdateName()
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1102,7 +1109,6 @@ TYPEINFO(/datum/mutantrace)
 		if (abil)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
-				abil.master = null
 			else
 				remove_mindslave_status(src.mob)
 		..()
