@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)Kubius
+(p)9550
+(e)🆕|feature
+(+)Gas extractors are now capable of producing red oxygen grenades.
 (u)Roddy
 (p)9439
 (e)🆕🎨|feature, sprites
