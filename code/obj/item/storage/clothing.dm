@@ -189,7 +189,7 @@
 	name = "\improper Mechanic's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/mechanic,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/mechanic,\
 	/obj/item/device/pda2/mechanic,\
 	/obj/item/clothing/under/rank/orangeoveralls/yellow)
 
