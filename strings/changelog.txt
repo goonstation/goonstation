@@ -1,6 +1,10 @@
 
 (t)tue jul 12 22
 (u)Chatauscours
+(p)9337
+(e)🗺|mapping
+(*)The Horizon QM does not rely on piping anymore, having now direct imput and export loaders.
+(u)Chatauscours
 (p)9128
 (e)🆕|feature
 (*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
