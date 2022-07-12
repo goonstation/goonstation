@@ -1,5 +1,34 @@
 
+(t)mon jul 11 22
+(u)Sord + Flourish
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Cog2.
+(u)HauntedAngel
+(p)9521
+(e)🆕|feature
+(+)Ingesting acid now scars your vocal chords and makes your voice appear as unknown.
+(+)Ingesting Synthflesh can repair the damage done from ingesting acid.
+(u)avimour
+(p)9573
+(e)⛔|removal
+(+)Synthmeat plant mutations are now only infusion based.
+(u)DimWhat
+(p)9522
+(e)🎨|sprites
+(+)Made some edits to the alchemist robe sprites
+(u)ZWRh3
+(p)9343
+(e)🐛⚖|bug, balance
+(+)The Syndicate has upgraded the space suits of nuclear operatives to resist chemicals penetrating them
+(u)Luxizzle
+(p)9572
+(e)🐛|bug
+(+)People can no longer see what are in your pockets like they used to. Finally some privacy again.
 (t)sun jul 10 22
+(u)Mora
+(p)9539
+(e)🆕🎨⚖|feature, sprites, balance
+(*)The bartender has a new shotgun to replace their very out-of-place riot shotgun! It's a sawnoff break-action double barrel that functions the way you'd expect, yeehaw. Still uses standard rubber slugs for the moment. Sprites by cogwerks.
 (u)Ilysen
 (p)9317
 (e)|

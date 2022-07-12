@@ -66,6 +66,9 @@
 	ex_act(severity)
 		return
 
+	meteorhit()
+		return
+
 	proc/try_pass(mob/user)
 		actions.start(new /datum/action/bar/icon/push_through_tear(user, src), user)
 

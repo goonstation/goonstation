@@ -340,14 +340,27 @@
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
+	var/density_check = FALSE
 
 	New(Frame)
 		F = Frame
+
+		if(F.deconstructed_thing)
+			density_check = F.deconstructed_thing.density
+		else
+			var/atom/A = F.store_type
+			density_check = initial(A.density)
 		..()
 
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -356,12 +369,25 @@
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onEnd()
 		..()
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && F)
 			F.deploy(owner)
 

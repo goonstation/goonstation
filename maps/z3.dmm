@@ -9385,8 +9385,8 @@
 	dir = 8
 	},
 /obj/storage/crate,
-/obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/mask/medical,
+/obj/item/clothing/suit/space/syndicate_worn,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aFv" = (
