@@ -46,7 +46,6 @@
 		/obj/item/clothing/mask/gas/injector_mask,\
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard,\
 		/obj/item/clothing/gloves/ring/titanium,\
-		/obj/item/gun/energy/plasma_gun,\
 		/obj/item/gun/energy/phaser_gun,\
 		/obj/item/clothing/ears/earmuffs/yeti,\
 	// fun
