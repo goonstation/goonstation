@@ -116,13 +116,9 @@
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 		//first time they click with a storage, it gets dumped. second time container itself is added
-		if (istype(I,/obj/item/storage/) && I.contents.len)
+		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
 			var/obj/item/storage/S = I
-			if(user.a_intent != INTENT_HELP) //place the full thing in
-				user.visible_message("[user.name] dunks \the [I] into \the [src].",\
-				"You dunk \the [I] into \the [src].")
-				actions.interrupt(user, INTERRUPT_ACT)
-				return
+
 			if(istype(S, /obj/item/storage/secure))
 				var/obj/item/storage/secure/secS = S
 				if(secS.locked)
@@ -142,6 +138,7 @@
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
+			return
 
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
