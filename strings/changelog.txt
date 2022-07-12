@@ -1,5 +1,10 @@
 
 (t)tue jul 12 22
+(u)Azrun & Virvatuli
+(p)5663
+(e)⚖🔄|balance, rework
+(*)Slamguns are back!
+(+)Zipguns no longer accept shotgun shells.
 (u)Waffleloffle
 (p)9590
 (e)🎨|sprites
