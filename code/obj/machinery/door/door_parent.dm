@@ -437,9 +437,9 @@
 	var/armor = 0
 
 	if (src.material)
-		if (src.material.getProperty("density") >= 10)
-			armor += round(src.material.getProperty("density") / 10)
-		else if (src.material.hasProperty("density") && src.material.getProperty("density") < 10)
+		if (src.material.getProperty("density") >= 3)
+			armor += round(src.material.getProperty("density"))
+		else
 			amount += rand(1,3)
 
 	amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
@@ -682,7 +682,7 @@
 	return
 
 /obj/machinery/door/unpowered/shuttle
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "door"
 	icon_state = "door1"
 	#ifdef UPSCALED_MAP
@@ -726,6 +726,7 @@
 	density = 1
 	p_open = 0
 	operating = 0
+	layer = EFFECTS_LAYER_UNDER_1
 	anchored = 1
 	autoclose = 1
 	var/blocked = null

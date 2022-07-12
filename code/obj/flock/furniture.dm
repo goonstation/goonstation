@@ -34,6 +34,18 @@
 		<br><span class='bold'>ID:</span> Storage Surface
 		<br><span class='bold'>###=-</span></span>"}
 
+/obj/table/flock/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
+
+/obj/table/flock/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock)
+
 /obj/table/flock/auto
 	auto = TRUE
 
@@ -211,6 +223,19 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health_attack/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
+// flockdrones can always move through
+/obj/storage/closet/flock/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(!src.open && istype(drone) && !drone.floorrunning)
+		animate_flock_passthrough(mover)
+		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
+
+/obj/storage/closet/flock/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock)
+
 ///////////////////////////
 // LIGHT FITTING
 ///////////////////////////
@@ -344,13 +369,17 @@
 	src.AddComponent(/datum/component/flock_protection)
 
 // flockdrones can always move through
-/obj/grille/flock/Cross(atom/movable/mover)
+/obj/grille/flock/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
 
+/obj/grille/flock/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock)
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))

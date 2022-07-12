@@ -13,7 +13,7 @@ obj/machinery/atmospherics/retrofilter
 	initialize_directions = SOUTH|NORTH|WEST
 
 	req_access = list(access_engineering_atmos)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	var/datum/gas_mixture/air_in
 	var/datum/gas_mixture/air_out1

@@ -149,6 +149,14 @@ var/global/list/job_start_locations = list()
 		src.data = src.spawnchance
 		..()
 
+	random_room
+		name = LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN
+
+		New()
+			if (prob(src.spawnchance))
+				Artifact_Spawn(get_turf(src))
+			..()
+
 /obj/landmark/spawner
 	name = "spawner"
 	add_to_landmarks = FALSE

@@ -24,6 +24,7 @@
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
+#define isrobocritter(x) istype(x, /mob/living/critter/robotic)
 
 #define issilicon(x) istype(x, /mob/living/silicon)
 #define isrobot(x) istype(x, /mob/living/silicon/robot)

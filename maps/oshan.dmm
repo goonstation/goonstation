@@ -3654,18 +3654,6 @@
 /obj/item/spacecash/random/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
-"aix" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/under/gimmick/princess,
-/obj/item/clothing/suit/jacket/yellow,
-/obj/item/clothing/suit/jacket/plastic,
-/obj/item/clothing/under/misc/vice,
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "aiy" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm,
@@ -4231,15 +4219,6 @@
 "ajS" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/turf/simulated/floor/red/checker,
-/area/station/medical/medbay/surgery/storage)
-"ajT" = (
-/obj/table/glass/reinforced/auto,
-/obj/machinery/coffeemaker/medbay,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery/storage)
@@ -15275,16 +15254,6 @@
 /obj/item/circuitboard/telescope,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
-"aKq" = (
-/obj/machinery/light/incandescent/warm/very,
-/obj/table/round,
-/obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "aKr" = (
 /obj/machinery/turret,
 /obj/machinery/camera{
@@ -18438,20 +18407,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
-"aSN" = (
-/obj/table/wood/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/coffeemaker,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/turf/simulated/floor/yellow/checker{
-	dir = 8
-	},
-/area/station/engine/engineering)
 "aSO" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating/random,
@@ -19289,8 +19244,8 @@
 /area/iss)
 "aVj" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/space/blackstronaut,
-/obj/item/clothing/under/gimmick/snazza,
+/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/under/gimmick/donkini,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVk" = (
@@ -32724,6 +32679,20 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
+"bFP" = (
+/obj/machinery/light/incandescent/warm/very,
+/obj/table/round,
+/obj/machinery/coffeemaker/research,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "bFR" = (
 /obj/storage/crate/bloody{
 	welded = 1
@@ -33523,14 +33492,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"bHP" = (
-/obj/table/auto,
-/obj/machinery/coffeemaker,
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/turf/simulated/floor/yellow,
-/area/station/quartermaster/office)
 "bHQ" = (
 /obj/cable{
 	d1 = 1;
@@ -36243,14 +36204,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/radio/lab)
-"bOZ" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	name = "rusted hatch"
-	},
-/turf/simulated/floor/damaged2,
-/area/space)
 "bPa" = (
 /obj/decal/fakeobjects/operatorconsole,
 /turf/simulated/floor/wood/two,
@@ -39481,22 +39434,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
-"bWR" = (
-/obj/table/reinforced/auto,
-/obj/disposalpipe/segment/brig{
-	desc = "An underfloor interrogation pipe.";
-	dir = 4;
-	name = "interrogation pipe"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment,
-/obj/machinery/coffeemaker/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bWS" = (
@@ -45041,6 +44978,18 @@
 /obj/stool,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"fIx" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/princess,
+/obj/item/clothing/gloves/princess,
+/obj/item/clothing/suit/jacket/yellow,
+/obj/item/clothing/suit/jacket/plastic,
+/obj/item/clothing/under/misc/vice,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "fIX" = (
 /obj/storage/closet/medicalclothes,
 /turf/simulated/floor/red/checker,
@@ -45527,6 +45476,15 @@
 /obj/machinery/navbeacon/mule/hallway_escape_north,
 /turf/simulated/floor/bot,
 /area/station/hallway/secondary/exit)
+"hVv" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	icon_state = "door1"
+	},
+/turf/simulated/floor/damaged2,
+/area/space)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -45694,6 +45652,17 @@
 /obj/item/pen/crayon/pink,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"iXw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/botany,
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "iYt" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
@@ -46104,10 +46073,34 @@
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"lrr" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/coffeemaker/medbay,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
+/turf/simulated/floor/red/checker,
+/area/station/medical/medbay/surgery/storage)
 "luP" = (
 /obj/machinery/centrifuge,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"lxj" = (
+/obj/table/auto,
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/simulated/floor/yellow,
+/area/station/quartermaster/office)
 "lGL" = (
 /obj/item/clothing/mask/cigarette/random,
 /obj/ladder{
@@ -47581,14 +47574,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
-"uij" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "umv" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -47927,6 +47912,25 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"wIh" = (
+/obj/table/reinforced/auto,
+/obj/disposalpipe/segment/brig{
+	desc = "An underfloor interrogation pipe.";
+	dir = 4;
+	name = "interrogation pipe"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/coffeemaker/security,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "wJj" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/light/small/floor/cool,
@@ -47975,6 +47979,24 @@
 	},
 /turf/space/fluid,
 /area/space)
+"wZh" = (
+/obj/table/wood/auto,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 8
+	},
+/area/station/engine/engineering)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -76677,7 +76699,7 @@ nFR
 aKB
 agY
 aLL
-uij
+iXw
 mip
 bfB
 aPZ
@@ -79660,7 +79682,7 @@ agm
 boU
 agY
 aiz
-aix
+fIx
 aiB
 ajZ
 aiz
@@ -79730,7 +79752,7 @@ buI
 buL
 bvY
 bJw
-bHP
+lxj
 bys
 bzp
 bAv
@@ -96364,7 +96386,7 @@ bST
 bPd
 bUk
 bUk
-bWR
+wIh
 aqi
 bYx
 jfH
@@ -98991,7 +99013,7 @@ akS
 akS
 asw
 ajb
-ajT
+lrr
 alj
 aoh
 aog
@@ -105967,7 +105989,7 @@ ayO
 beA
 aJH
 aJY
-aKq
+bFP
 aKQ
 ayO
 beG
@@ -107489,7 +107511,7 @@ bfe
 akN
 abH
 awc
-aSN
+wZh
 aRi
 bge
 bge
@@ -110416,7 +110438,7 @@ bNJ
 bOo
 bSe
 bPD
-bOZ
+hVv
 bNY
 bOI
 aaE

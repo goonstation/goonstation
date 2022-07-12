@@ -482,7 +482,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 30 && R.material.getProperty("hard") >= 15)
+					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -706,8 +706,6 @@ Contents:
 	icon_state = "2"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 // -Floors
 

@@ -14,7 +14,7 @@
 
 /obj/machinery/power/smes
 	name = "Dianmu power storage unit"
-	desc = "The Xiang-Geisel model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
+	desc = "The XIANG|GIESEL model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
 	icon_state = "smes"
 	density = 1
 	anchored = 1

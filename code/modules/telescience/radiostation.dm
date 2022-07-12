@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "sleeve_1"
 	desc = "A sturdy record sleeve, designed to hold multiple records."
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	can_hold = list(/obj/item/record)
 
 /obj/item/storage/box/record/clown_collection
@@ -962,6 +962,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	name = "compact tape - 'Owls'"
 	audio = "sound/radio_station/adverts/owl.ogg"
 	name_of_thing = "Owls"
+
+/obj/item/radio_tape/adventure
+	audio_type = "???"
+	name = "compact tape - 'Unlabeled'"
+	audio = "sound/ambience/spooky/Somewhere_Tone.ogg"
+	name_of_thing = "found tape"
+	interesting = "The tape seems pretty corrupted."
+
 
 // Drawer
 /*/obj/table/wood/auto/desk/radio

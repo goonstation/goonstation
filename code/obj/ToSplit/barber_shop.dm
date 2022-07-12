@@ -67,6 +67,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
 	health = 6
@@ -112,6 +113,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	force = 7.0
 	health = 6
@@ -311,9 +313,9 @@
 					else
 						M.emote("scream", 0)
 						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
-			user.tri_message(result_msg1,\
-												user, result_msg2,\
-												M,result_msg3)
+			user.tri_message(M, result_msg1,\
+												result_msg2,\
+												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0

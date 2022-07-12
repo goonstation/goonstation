@@ -180,8 +180,9 @@
 		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
 			var/melt = 1643.15 // default steel melting point
-			if (T.material && T.material.hasProperty("flammable") && ((T.material.material_flags & MATERIAL_METAL) || (T.material.material_flags & MATERIAL_CRYSTAL) || (T.material.material_flags & MATERIAL_RUBBER)))
-				melt = melt + (((T.material.getProperty("flammable") - 50) * 15)*(-1)) //+- 750° ?
+			if (T.material && T.material.getProperty("flammable") > 3) //wood walls?
+				melt = 505.93 / 2 //451F (divided by 2 b/c it's multiplied by 2 below)
+				bypass_RNG = 1
 			var/divisor = melt
 			if (mytemp >= melt * 2)
 				var/chance = mytemp / divisor

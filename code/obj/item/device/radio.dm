@@ -263,12 +263,12 @@ var/list/headset_channel_lookup
 	var/ai_sender = 0
 	var/eqjobname
 
-	if (iscarbon(M))
-		if (hasvar(M, "wear_id"))
-			if (M:wear_id)
-				eqjobname = M:wear_id:assignment
-			else
-				eqjobname = "No ID"
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (H.wear_id)
+			eqjobname = H.wear_id:assignment
+		else
+			eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
 		ai_sender = 1
@@ -475,7 +475,10 @@ var/list/headset_channel_lookup
 				R.show_message(thisR, 2)
 
 		if (length(heard_normal))
-			rendered = "[part_a][real_name ? real_name : M.real_name][part_b][M.say_quote(messages[1])][part_c]"
+			var/prep_name = "[real_name ? real_name : M.real_name]"
+			if(M.vdisfigured)
+				prep_name = "Unknown"
+			rendered = "[part_a][prep_name][part_b][M.say_quote(messages[1])][part_c]"
 			for (var/mob/R in heard_normal)
 				var/thisR = rendered
 				if (R.isAIControlled())

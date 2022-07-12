@@ -669,14 +669,14 @@
 			. += "<br>*No PDA detected!*"
 
 /// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
-/atom/proc/_MouseDrop_T(dropped, user)
+/atom/proc/_MouseDrop_T(dropped, user, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SPAWN(0) // Yes, things break if this isn't a spawn.
-		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
+		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user, src_location, over_location, src_control, over_control, params))
 			return
-		src.MouseDrop_T(dropped, user)
+		src.MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 
-/atom/proc/MouseDrop_T(dropped, user)
+/atom/proc/MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 
@@ -698,6 +698,8 @@
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
+		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
 	src.attackby(W, user, params, is_special)
@@ -799,18 +801,18 @@
 	return null
 
 /// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
-/atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/atom/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
-	over_object._MouseDrop_T(src, usr)
-	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))
+	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
-	src.mouse_drop(over_object, src_location, over_location, over_control, params)
+	src.mouse_drop(over_object, src_location, over_location, src_control, over_control, params)
 
-/atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 

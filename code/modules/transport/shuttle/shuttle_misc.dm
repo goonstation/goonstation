@@ -1,6 +1,7 @@
+ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle
 	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 
 	New()
 		..()
