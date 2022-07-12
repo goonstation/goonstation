@@ -372,14 +372,16 @@
 
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
-	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
+	var/can_matter_eat = by_matter_eater && M == user && M.bioHolder.HasEffect("mattereater")
+	var/edible_check = src.edible || (src.material && src.material.edible) || (edibility_override & FORCE_EDIBILITY)
+	if (!edible_check && !can_matter_eat)
 		return 0
 
 	if (M == user)
@@ -396,7 +398,7 @@
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN(1 SECOND)
+		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
 				return
 			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
