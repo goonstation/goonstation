@@ -123,6 +123,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	New()

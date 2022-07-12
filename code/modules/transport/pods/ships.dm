@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				else
 					boutput(user, "<span class='alert'>These sheets aren't the right kind of material. You need metal!</span>")
 			else
-				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need three sheets of metal to cover it all up.")
+				boutput(user, "You shouldn't just leave all those circuits exposed! That's dangerous! You'll need [src.metal_amt] sheets of metal to cover it all up.")
 
 		if(6)
 			if(istype(W, src.engine_type))
@@ -729,7 +729,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				qdel(src)
 
 			else
-				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Three [src.glass_amt] will do.")
+				boutput(user, "You weren't thinking of heading out without a reinforced cockpit, were you? Put some reinforced glass on it! Just [src.glass_amt] sheets will do.")
 
 /*-----------------------------*/
 /*                             */
@@ -818,9 +818,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 5)
+			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
+			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
 		return
 
 	attackby(obj/item/W, mob/living/user)

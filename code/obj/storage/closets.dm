@@ -1,6 +1,7 @@
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
@@ -14,6 +15,7 @@
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
 
 	disposing()
 		. = ..()
@@ -605,7 +607,7 @@
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

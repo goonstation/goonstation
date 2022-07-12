@@ -568,6 +568,33 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/shieldgen
+	name = "Energy-Shield Gen."
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(20,10,5)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/doorshieldgen
+	name = "Door-Shield Gen."
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(20,15)
+	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/doorlink/nocell)
+	time = 60 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/meteorshieldgen
+	name = "Meteor-Shield Gen."
+	item_paths = list("MET-1","MET-2","CON-1")
+	item_amounts = list(10,10,10)
+	item_outputs = list(/obj/machinery/shieldgenerator/meteorshield/nocell)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
 //// cogwerks - gas extraction stuff
 
 
@@ -634,6 +661,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/red_o2_grenade
+	name = "Red Oxygen Grenade"
+	item_paths = list("MET-2","CON-1","molitz","char")
+	item_amounts = list(2,2,10,1)
+	item_outputs = list(/obj/item/old_grenade/oxygen)
+	time = 10 SECONDS
+	create = 1
+	category = "Tool"
+
 ////////////////////////////////
 
 /datum/manufacture/player_module
@@ -664,7 +700,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"
-	item_paths = list("MET-3", "DEN-3", "CON-2", "POW-2")
+	item_paths = list("MET-3", "CRY-2", "CON-2", "POW-2")
 	item_amounts = list(20, 10, 10, 10)
 	item_outputs = list(/obj/item/rcd)
 	time = 90 SECONDS
@@ -691,7 +727,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("DEN-3")
+	item_paths = list("CRY-2")
 	item_amounts = list(40)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
@@ -1529,7 +1565,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/robup_expand
 	name = "Expansion Upgrade"
-	item_paths = list("DEN-3","POW-3")
+	item_paths = list("CRY-2","POW-3")
 	item_amounts = list(3,1)
 	item_outputs = list(/obj/item/roboupgrade/expand)
 	time = 120 SECONDS
@@ -1618,10 +1654,70 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/******************** Science **************************/
 
+/datum/manufacture/biosuit
+	name = "Biosuit Set"
+	item_paths = list("FAB-1","CRY-1")
+	item_amounts = list(5,2)
+	item_outputs = list(/obj/item/clothing/suit/bio_suit,/obj/item/clothing/head/bio_hood)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/spectrogoggles
+	name = "Spectroscopic Scanner Goggles"
+	item_paths = list("MET-1","CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/clothing/glasses/spectro)
+	time = 20 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/gasmask
+	name = "Gas Mask"
+	item_paths = list("FAB-1", "MET-2", "CRY-1")
+	item_amounts = list(2,4,2)
+	item_outputs = list(/obj/item/clothing/mask/gas)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
 
+/datum/manufacture/dropper
+	name ="Dropper"
+	item_paths = list("INS-1", "CRY-1")
+	item_amounts = list(1,2)
+	item_outputs = list(/obj/item/reagent_containers/dropper)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/mechdropper
+	name ="Mechanical Dropper"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(3,3)
+	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/gps
+	name ="Space GPS"
+	item_paths = list("MET-1", "CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/device/gps)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/reagentscanner
+	name ="Reagent Scanner"
+	item_paths = list("MET-1", "CON-1", "CRY-1")
+	item_amounts = list(2,2,1)
+	item_outputs = list(/obj/item/device/reagentscanner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -2489,7 +2585,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hermes
 	name = "Offering to the Fabricator Gods"
-	item_paths = list("MET-3","CON-2","POW-3","DEN-3","FAB-1","INS-1")
+	item_paths = list("MET-3","CON-2","POW-3","CRY-2","FAB-1","INS-1")
 	item_amounts = list(30,30,6,1,30,30)
 	item_outputs = list(/obj/item/clothing/shoes/hermes)
 	time = 120 //suspense
@@ -2654,7 +2750,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
-	item_paths = list("POW-1","MET-3","DEN-3")
+	item_paths = list("POW-1","MET-3","CRY-2")
 	item_amounts = list(10,10,20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	time = 20 SECONDS
@@ -2663,7 +2759,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/pod/weapon/mining/drill
 	name = "Rock Drilling Rig"
-	item_paths = list("POW-1","MET-3","DEN-3")
+	item_paths = list("POW-1","MET-3","CRY-2")
 	item_amounts = list(10,10,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
 	time = 20 SECONDS

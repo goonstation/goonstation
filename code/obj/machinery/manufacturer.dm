@@ -86,6 +86,8 @@
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 		src.net_id = generate_net_id(src)
 
+		src.AddComponent(/datum/component/bullet_holes, 15, 5)
+
 		if (istype(manuf_controls,/datum/manufacturing_controller))
 			src.set_up_schematics()
 			manuf_controls.manufacturing_units += src
@@ -662,7 +664,7 @@
 					boutput(usr, "<span class='alert'>Cannot delete this schematic.</span>")
 					return
 				last_queue_op = world.time
-				if(alert("Are you sure you want to remove [I.name] from the [src]?",,"Yes","No") == "Yes")
+				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					src.download -= I
 			else if (href_list["disp"])
 				var/datum/manufacture/I = locate(href_list["disp"])
@@ -916,7 +918,10 @@
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [W]?","[src.name]","Repair","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [W]?", "[src.name]", list("Repair", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -934,7 +939,10 @@
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
 			if (istype(C,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [C]?","[src.name]","Repair","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [C]?", "[src.name]", list("Repair", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [C] into the [src].</span>", "<span class='notice'>You load [C] into the [src].</span>")
@@ -953,7 +961,10 @@
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
-				if (alert(user,"What do you want to do with [W]?","[src.name]","Dismantle/Construct","Load it in") == "Load it in")
+				var/choice = tgui_alert(user, "What do you want to do with [W]?", "[src.name]", list("Dismantle/Construct", "Load it in"))
+				if (!choice)
+					return
+				if (choice == "Load it in")
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -1338,46 +1349,50 @@
 						// bohr hardness = 33
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("hard") >= 15
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
 							if(3 to INFINITY)
-								return mat.getProperty("hard") >= 30
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
 							else
 								return TRUE
 				if ("CRY")
-					return (mat.material_flags & MATERIAL_CRYSTAL)
+					if (mat.material_flags & MATERIAL_CRYSTAL)
+
+						switch(secondpart)
+							if(2)
+								return mat.getProperty("density") >= 7
+							else
+								return TRUE
 				if ("REF")
-					return (mat.getProperty("reflective") >= 50)
+					return (mat.getProperty("reflective") >= 6)
 				if ("CON")
 					switch(secondpart)
 						if(2)
-							return (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_CRYSTAL) //Wow! Claretine has a use again!
+							return (mat.getProperty("electrical") >= 8)
 						else
-							return (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_CRYSTAL)
+							return (mat.getProperty("electrical") >= 6)
 				if ("INS")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 2 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 						else
-							return mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 4 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 				if ("DEN")
 					switch(secondpart)
-						if(3)
-							return mat.getProperty("density") >= 75  && (mat.material_flags & MATERIAL_CRYSTAL)
 						if(2)
-							return mat.getProperty("density") >= 60  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 6
 						else
-							return mat.getProperty("density") >= 40  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 4
 				if ("POW")
 					if (mat.material_flags & MATERIAL_ENERGY)
 						switch(secondpart)
 							if(3)
-								return mat.getProperty("radioactive") >= 55 //soulsteel and erebite basically
+								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
 							if(2)
-								return mat.getProperty("radioactive") >= 10
+								return mat.getProperty("radioactive") >= 2
 							else
 								return TRUE
 				if ("FAB")
-					return mat.material_flags & MATERIAL_CLOTH || mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+					return mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
 		else if (pattern == mat.mat_id) // specific material id
 			return TRUE
 		return FALSE
@@ -1989,6 +2004,9 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/meteorshieldgen,
+		/datum/manufacture/shieldgen,
+		/datum/manufacture/doorshieldgen,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
@@ -2035,7 +2053,6 @@
 		/datum/manufacture/cybereye_spectro,
 		/datum/manufacture/cybereye_prodoc,
 		/datum/manufacture/cybereye_camera,
-		/datum/manufacture/core_frame,
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
@@ -2173,6 +2190,51 @@
 
 	hidden = list(/datum/manufacture/cyberheart,
 	/datum/manufacture/cybereye)
+
+/obj/machinery/manufacturer/science
+	name = "science fabricator"
+	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
+	icon_state = "fab-sci"
+	icon_base = "sci"
+	free_resource_amt = 2
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass,
+		/obj/item/material_piece/cloth/cottonfabric)
+	available = list(
+		/datum/manufacture/flashlight,
+		/datum/manufacture/gps,
+		/datum/manufacture/crowbar,
+		/datum/manufacture/extinguisher,
+		/datum/manufacture/welder,
+		/datum/manufacture/patch,
+		/datum/manufacture/atmos_can,
+		/datum/manufacture/fluidcanister,
+		/datum/manufacture/spectrogoggles,
+		/datum/manufacture/reagentscanner,
+		/datum/manufacture/dropper,
+		/datum/manufacture/mechdropper,
+		/datum/manufacture/biosuit,
+		/datum/manufacture/labcoat,
+		/datum/manufacture/jumpsuit_white,
+		/datum/manufacture/patient_gown,
+		/datum/manufacture/blindfold,
+		/datum/manufacture/muzzle,
+		/datum/manufacture/gasmask,
+		/datum/manufacture/latex_gloves,
+		/datum/manufacture/shoes_white,
+		/datum/manufacture/rods2,
+		/datum/manufacture/metal,
+		/datum/manufacture/glass)
+
+	hidden = list(/datum/manufacture/scalpel,
+		/datum/manufacture/circular_saw,
+		/datum/manufacture/surgical_scissors,
+		/datum/manufacture/hemostat,
+		/datum/manufacture/suture,
+		/datum/manufacture/stapler,
+		/datum/manufacture/surgical_spoon
+	)
 
 /obj/machinery/manufacturer/mining
 	name = "mining fabricator"
@@ -2343,7 +2405,8 @@
 		/datum/manufacture/o2_can,
 		/datum/manufacture/co2_can,
 		/datum/manufacture/n2_can,
-		/datum/manufacture/plasma_can)
+		/datum/manufacture/plasma_can,
+		/datum/manufacture/red_o2_grenade)
 
 // a blank manufacturer for mechanics
 

@@ -91,7 +91,6 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -101,9 +100,11 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -122,7 +123,6 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
@@ -130,6 +130,7 @@ proc/filter_trait_hats(var/type)
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 15)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
@@ -137,7 +138,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -147,9 +147,10 @@ proc/filter_trait_hats(var/type)
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 10)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.15)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -277,6 +278,12 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/inspector
+	name = "inspector's hat"
+	desc = "Someone who wears this will look very mysterious."
+	icon_state = "inspector"
+	item_state = "ins_hat"
+
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
@@ -300,6 +307,7 @@ proc/filter_trait_hats(var/type)
 
 	var/max_cigs = 15
 	var/list/cigs
+	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
 
 	New()
 		..()
@@ -409,6 +417,8 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
 		S.linked_hat = src
 		user.drop_item()
 		src.set_loc(S)
@@ -429,6 +439,10 @@ proc/filter_trait_hats(var/type)
 			src.phrase = n_name
 			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -1194,12 +1208,12 @@ proc/filter_trait_hats(var/type)
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 40)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 

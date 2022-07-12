@@ -25,7 +25,7 @@
 	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
-				if(alert("Do you want to un-register this phone?","yes","no") == "yes")
+				if(tgui_alert(user, "Do you want to un-register this phone?", list("Yes", "No")) == "Yes")
 					activated = 0
 					phone_id = ""
 					phonelist.Remove(src)

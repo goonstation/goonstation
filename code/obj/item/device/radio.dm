@@ -263,12 +263,12 @@ var/list/headset_channel_lookup
 	var/ai_sender = 0
 	var/eqjobname
 
-	if (iscarbon(M))
-		if (hasvar(M, "wear_id"))
-			if (M:wear_id)
-				eqjobname = M:wear_id:assignment
-			else
-				eqjobname = "No ID"
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if (H.wear_id)
+			eqjobname = H.wear_id:assignment
+		else
+			eqjobname = "No ID"
 	else if (isAI(M))
 		eqjobname = "AI"
 		ai_sender = 1
@@ -475,7 +475,10 @@ var/list/headset_channel_lookup
 				R.show_message(thisR, 2)
 
 		if (length(heard_normal))
-			rendered = "[part_a][real_name ? real_name : M.real_name][part_b][M.say_quote(messages[1])][part_c]"
+			var/prep_name = "[real_name ? real_name : M.real_name]"
+			if(M.vdisfigured)
+				prep_name = "Unknown"
+			rendered = "[part_a][prep_name][part_b][M.say_quote(messages[1])][part_c]"
 			for (var/mob/R in heard_normal)
 				var/thisR = rendered
 				if (R.isAIControlled())
@@ -618,13 +621,13 @@ var/list/headset_channel_lookup
 	. = ..()
 	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<span class='notice'>\the [src] can be attached and modified!</span>"
+			. += "<br><span class='notice'>[src] can be attached and modified!</span>"
 		else
-			. += "<span class='notice'>\the [src] can not be modified or attached!</span>"
+			. += "<br><span class='notice'>[src] can not be modified or attached!</span>"
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
-		. += "Supplementary Channels:"
+		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
-			. += "[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
+			. += "<br>[ headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(src.secure_frequencies["[sayToken]"])]] (Activator: <b>[sayToken]</b>)"
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)

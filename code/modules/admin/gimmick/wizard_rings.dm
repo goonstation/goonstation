@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
 	desc = "Parent object for wizadry rings, you shouldn't see this..."
@@ -272,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			var/ring_type = pick(possible_rings)
 			path = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
 		else
-			path = pick(concrete_typesof(/obj/item/clothing/gloves/ring/wizard))
+			path = pick(typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard)
 
 		new path(src.loc)
 		possible_rings = null

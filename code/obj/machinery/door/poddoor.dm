@@ -1,6 +1,6 @@
 /obj/machinery/door/poddoor
 	name = "podlock"
-	icon = 'icons/obj/doors/rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
 	cant_emag = 1
@@ -359,6 +359,9 @@
 
 			vertical
 				dir = EAST
+
+	// meant for use inside station, or if connected to space, not a door
+	shutters
 
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'

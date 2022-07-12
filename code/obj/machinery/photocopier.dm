@@ -128,6 +128,9 @@
 				if (src.paper_amount >= 30.0)
 					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
+				var/obj/item/paper/P = w
+				if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
+					return
 				boutput(user, "You load the sheet of paper into \the [src].")
 				src.paper_amount++
 				qdel(w)
@@ -160,7 +163,7 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.reset_all()
-					playsound(src.loc, "sound/machines/bweep.ogg", 50, 1)
+					playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
 					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
 					return
 
@@ -180,7 +183,7 @@
 							break
 						flick("print", src)
 						sleep(1.8 SECONDS)
-						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+						playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 1)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0
@@ -196,7 +199,7 @@
 					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
-							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+							playsound(src.loc, "sound/machines/ping.ogg", 20, 1)
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else

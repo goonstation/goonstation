@@ -23,7 +23,7 @@
 	ticker.mode.Agimmicks.Add(H)
 
 	H.unequip_all()
-	H.equip_new_if_possible(/obj/item/clothing/shoes/sandal, SLOT_SHOES)
+	H.equip_new_if_possible(/obj/item/clothing/shoes/sandal/wizard, SLOT_SHOES)
 	H.equip_new_if_possible(/obj/item/clothing/under/gimmick/viking, SLOT_W_UNIFORM)
 	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
 	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)

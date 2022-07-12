@@ -789,11 +789,11 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
 			new select_objective(null, H.mind)
-			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			H.show_antag_popup("traitorhard")
 			ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
-		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		H.show_antag_popup("traitorgeneric")
 	if (traitor_role)
 		H.mind.special_role = traitor_role
 	else
@@ -806,7 +806,7 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 /////////////////////////////////////////////
 
 var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikehorn, /obj/item/brick, /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/glasses/regular, /obj/item/clothing/glasses/sunglasses, /obj/item/clothing/gloves/boxing,
+/obj/item/clothing/glasses/regular, /obj/item/clothing/glasses/sunglasses/tanning, /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy, /obj/item/clothing/shoes/moon,
 /obj/item/clothing/suit/sweater, /obj/item/clothing/suit/sweater/red, /obj/item/clothing/suit/sweater/green, /obj/item/clothing/suit/sweater/grandma, /obj/item/clothing/under/shorts,
 /obj/item/clothing/under/suit/pinstripe, /obj/item/cigpacket, /obj/item/coin, /obj/item/crowbar, /obj/item/pen/crayon/lipstick,

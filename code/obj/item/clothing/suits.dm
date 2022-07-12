@@ -221,15 +221,17 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.005
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 60)
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
+		setProperty("movespeed", 0.3)
+		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -253,28 +255,29 @@
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
 	icon_state = "paramedic"
 	item_state = "paramedic"
-
-	permeability_coefficient = 0.1
 	body_parts_covered = TORSO|LEGS|ARMS
-
 	protective_temperature = 3000
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
 		setProperty("heatprot", 25)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.9)
+		delProperty("movespeed")
+		delProperty("disorient_resist")
 
 /obj/item/clothing/suit/bio_suit/armored
 	name = "armored bio suit"
-	desc = "A suit that protects against biological contamination. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.45)
 
 /obj/item/clothing/suit/bio_suit/armored/nt
 	name = "\improper NT bio suit"
@@ -285,6 +288,7 @@
 		..()
 		setProperty("meleeprot", 5)
 		setProperty("rangedprot", 1)
+		delProperty("movespeed")
 
 /obj/item/clothing/suit/bio_suit/paramedic/armored
 	name = "armored paramedic suit"
@@ -336,7 +340,6 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
 
 	New()
 		. = ..()
@@ -344,10 +347,11 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.45)
+		setProperty("movespeed", 0.3)
 		setProperty("radprot", 50)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
+		setProperty("chemprot", 25)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("disorient_resist", 15)
@@ -414,7 +418,11 @@
 	icon_state = "sousapron"
 	item_state = "sousapron"
 	body_parts_covered = TORSO
-	permeability_coefficient = 0.70
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
+
 
 /obj/item/clothing/suit/apron/tricolor
 	name = "pizza apron"
@@ -422,7 +430,6 @@
 	icon_state = "triapron"
 	item_state = "triapron"
 	body_parts_covered = TORSO
-	permeability_coefficient = 0.70
 
 /obj/item/clothing/suit/apron/botanist
 	name = "blue apron"
@@ -477,7 +484,6 @@
 	item_state = "labcoat"
 	var/coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
-	permeability_coefficient = 0.25
 	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -487,6 +493,7 @@
 		..()
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 15)
+		setProperty("chemprot", 25)
 
 	New()
 		..()
@@ -550,6 +557,10 @@
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
+
+	cool
+		icon_state = "MDlabcoat-cool"
+		coat_style = "MDlabcoat-cool"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -915,7 +926,6 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	icon_state = "fire"
 	item_state = "fire_suit"
-	permeability_coefficient = 0.50
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = 4500
 
@@ -923,20 +933,22 @@
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 45)
+		setProperty("chemprot", 10)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-		setProperty("movespeed", 1)
+		setProperty("movespeed", 0.6)
 		setProperty("disorient_resist", 15)
 
 /obj/item/clothing/suit/fire/armored
 	name = "armored firesuit"
-	desc = "A suit that protects against fire and heat. Somebody slapped some armor onto the chest."
+	desc = "A suit that protects against fire and heat. Somebody slapped some bulky armor onto the chest."
 	icon_state = "fire_armor"
 	item_state = "fire_suit"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 1)
+		setProperty("movespeed", 1)
 
 /obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
@@ -963,7 +975,7 @@
 		setProperty("heatprot", 65)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.8)
-		setProperty("movespeed", 2)
+		setProperty("movespeed", 1.5)
 		setProperty("disorient_resist", 25)
 
 // SWEATERS
@@ -1044,7 +1056,6 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
-	permeability_coefficient = 0.1
 	protective_temperature = 1000
 
 	New()
@@ -1059,9 +1070,9 @@
 		setProperty("coldprot", 50)
 		setProperty("heatprot", 20)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
-
 		setProperty("space_movespeed", 0.6)
 
 /obj/item/clothing/suit/space/emerg
@@ -1095,6 +1106,13 @@
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
 
+/obj/item/clothing/suit/space/syndicate_worn
+	name = "worn red space suit"
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
+	contraband = 3
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
@@ -1122,6 +1140,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",60)
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	disposing()
@@ -1184,7 +1203,6 @@
 			item_state = "syndie_specialist-medic"
 
 			body_parts_covered = TORSO|LEGS|ARMS
-			permeability_coefficient = 0.01
 
 			setupProperties()
 				..()
@@ -1240,7 +1258,7 @@
 
 /obj/item/clothing/suit/space/ntso
 	name = "NT pressure suit"
-	desc = "A Nanotrasen paramilitary space suit, with an integrated chest rig."
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
 
@@ -1271,44 +1289,22 @@
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
 	var/datum/material/renf=null
-	var/prot = 0 //tired of this being initalized in the setup code so it gets a special place now
 
 	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
 		renf = R
 		if (src.material && renf)
-			if (src.material.hasProperty("thermal"))
-				var/prot = 100 - src.material.getProperty("thermal")
-				setProperty("coldprot", prot)
-				setProperty("heatprot", round(prot/2))
-			else
-				setProperty("coldprot", 30)
-				setProperty("heatprot", 15)
 
-			if (src.material.hasProperty("permeable"))
-				var/permprot = 100 - src.material.getProperty("permeable")
-				setProperty("viralprot", permprot)
-			else
-				setProperty("viralprot", 40)
+			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			setProperty("coldprot", 10+prot)
+			setProperty("heatprot", 2+round(prot/2))
 
-			if(src.material.hasProperty("density"))
-				prot = round(src.material.getProperty("density") / 13)// for RANGED
-				setProperty("rangedprot", (0.2 + round(prot/10, 0.1)))
-			else
-				setProperty("rangedprot", 0.4)
+			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
+			setProperty("viralprot", prot)
 
-			if(renf.hasProperty("density"))
-				prot = round(((renf.getProperty("density") / 20)+2), 0.5)// for MELEE- scaling of protection/density with formula y=(x/20)+2
-				prot = clamp(prot, 2, 6)// it shouldn't be outside these two numbers but just in case
-				setProperty("meleeprot", prot)
-
-				 // for MOVESPEED
-				var/clunk = round((((renf.getProperty("density")/20) /10)+0.3), 0.1) // one-line fuckyou code that scales speed between 0.3 and 0.7
-				clunk = clamp(clunk, 0.3, 0.7) // again, keep it safe
-				setProperty("space_movespeed", clunk)
-
-			else
-				setProperty("meleeprot", 3)
-				setProperty("space_movespeed", 0.6)
+			prot = max(0, renf.getProperty("density") - 3) / 2
+			setProperty("meleeprot", 3 + prot)
+			setProperty("rangedprot", 0.3 + prot / 5)
+			setProperty("space_movespeed", 0.15 + prot / 5)
 
 	UpdateName()
 		if (src.material && renf)
@@ -1402,10 +1398,10 @@
 			..()
 
 		specialist
-		name = "specialist heavy operative combat armor"
-		desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
-		icon_state = "syndie_specialist-heavy"
-		item_state = "syndie_specialist-heavy"
+			name = "specialist heavy operative combat armor"
+			desc = "A syndicate issue heavy combat dress system, pressurized for space travel and reinforced for greater protection in firefights."
+			icon_state = "syndie_specialist-heavy"
+			item_state = "syndie_specialist-heavy"
 
 	ntso
 
@@ -1445,6 +1441,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander
@@ -1484,12 +1481,12 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.50
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 20)
+		setProperty("chemprot", 10)
 
 	cursed
 		cant_drop = TRUE
@@ -1524,7 +1521,10 @@
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	over_hair = TRUE
-	permeability_coefficient = 0.50
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
 
 /obj/item/clothing/suit/wizrobe
 	name = "blue wizard robe"
@@ -1532,7 +1532,6 @@
 	icon_state = "wizard"
 	item_state = "wizard"
 	magical = TRUE
-	permeability_coefficient = 0.01
 	body_parts_covered = TORSO|LEGS|ARMS
 	contraband = 4
 	duration_remove = 10 SECONDS
@@ -1541,6 +1540,7 @@
 		..()
 		setProperty("coldprot", 90)
 		setProperty("heatprot", 30)
+		setProperty("chemprot", 40)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -1690,7 +1690,10 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 70)
 
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"

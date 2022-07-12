@@ -42,7 +42,7 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	hit_mob_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 	hit_object_sound = 'sound/impact_sounds/burn_sizzle.ogg'
@@ -279,7 +279,7 @@ toxic - poisons
 	color_red = 1
 	color_green = 0
 	color_blue = 1
-	icon_turf_hit = "burn2"
+	impact_image_state = "burn2"
 	projectile_speed = 42
 
 /datum/projectile/laser/precursor // for precursor traps
@@ -479,7 +479,7 @@ toxic - poisons
 	shot_volume = 20
 	dissipation_delay = 1
 	dissipation_rate = 45
-	icon_turf_hit = null
+	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
 	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
@@ -531,7 +531,7 @@ toxic - poisons
 	sname = "laser"
 	shot_sound = 'sound/weapons/energy/laser_alastor.ogg'
 	brightness = 1
-	icon_turf_hit = "burn1"
+	impact_image_state = "burn1"
 
 	on_hit(atom/hit)
 		var/mob/living/L = hit

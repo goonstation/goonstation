@@ -23,9 +23,9 @@
 	#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 	/// When reagents change
 	#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
-	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
+	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, src_control, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
-	/// When something is dragged onto an atom (object, usr)
+	/// When something is dragged onto an atom (object, usr, src_location, over_location, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
 	/// When the atom is a source of an explosion (object, args_to_explode_at)
 	#define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -35,6 +35,8 @@
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
 	/// When something enters the contents of this atom (i.e. Entered())
 	#define COMSIG_ATOM_ENTERED "atom_entered"
+	/// When this atom is analyzed with a device analyzer (item, user)
+	#define COMSIG_ATOM_ANALYZE "atom_analyze"
 	/// Attacking with an item in-hand (item, attacker, params, is_special)
 	#define COMSIG_ATTACKBY "attackby"
 	/// Attacking without an item in-hand (attacker)
@@ -44,11 +46,11 @@
 
 	// ---- generic ----
 
-	/// when an AM moves (thing, previous_loc, direction)
+	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
 	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
-	/// when an AM moves (thing, previous_loc)
+	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
@@ -105,6 +107,8 @@
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
 	/// After we've consumed an item
 	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
+	/// Called before an attackby that uses this item (target, user)
+	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
 	/// When an item is used to attack a mob before it actually hurts the mob
 	#define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 	/// When an item is used in-hand

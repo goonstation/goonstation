@@ -911,7 +911,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge/south,
 /area/shuttle/escape/centcom)
 "Fv" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/red,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10

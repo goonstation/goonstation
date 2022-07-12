@@ -472,7 +472,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /datum/projectile/special/paintball
 	name = "red paintball"
 	icon_state = "paintball-r"
-	icon_turf_hit = "paint-r"
+	impact_image_state = "paint-r"
 	power = 1
 	cost = 1
 	dissipation_rate = 1
@@ -1098,6 +1098,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throw_speed = 1
 	throw_return = 1
 	throw_spin = 0
+	wear_layer = MOB_GLASSES_LAYER2
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"

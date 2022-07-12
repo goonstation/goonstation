@@ -3,30 +3,22 @@
 // Some of these are loaded in world/New(), some are loaded here.
 // not sure why and don't want to risk breaking more things
 
-var/global
-	// Admins ( ["ckey"] = "rank" )
-	// Populated by proc call in world.New()
-	list/admins = list()
-	list/onlineAdmins = list()
+/// Admins ( ["ckey"] = "rank" )
+/// Populated by proc call in world.New()
+var/global/list/admins = list()
+var/global/list/onlineAdmins = list()
 
-	// HoS/NTSO-whitelisted players
-	list/NT = load_config_list("config/nt.txt")
+/// HoS/NTSO-whitelisted players
+var/global/list/NT = load_config_list("config/nt.txt")
 
-	// Mentors
-	list/mentors = load_config_list("config/mentors.txt")
+/// Mentors
+var/global/list/mentors = load_config_list("config/mentors.txt")
 
-	// Players whomst'd've get allowed if whitelist-only is enabled
-	list/whitelistCkeys = list()
+/// Players whomst'd've get allowed if whitelist-only is enabled
+var/global/list/whitelistCkeys = list()
 
-	// Players who are allowed to bypass the server's player cap
-	list/bypassCapCkeys = list()
-
-	// Hellbanned players
-	// (see code/hellban.dm)
-	list/hellbans = load_config_list("config/hellbans.txt")
-
-
-
+// Players who are allowed to bypass the server's player cap
+var/global/list/bypassCapCkeys = list()
 
 
 /**

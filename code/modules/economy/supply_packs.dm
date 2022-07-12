@@ -647,7 +647,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 1000
 	containertype = /obj/storage/crate
 	containername = "Portable Welding Tank Crate"
-f
+
 /datum/supply_packs/fueltank
 	name = "Welding Fuel Tank"
 	desc = "1x Welding Fuel Tank"
@@ -826,10 +826,6 @@ f
 	cost = 60000
 	containertype = /obj/storage/crate/wooden
 	containername = "RCD Replacement"
-
-	cost = 3000
-	containertype = /obj/storage/crate/packing
-	containername = "Cold Weather Gear"
 
 /datum/supply_packs/buddy
 	name = "Thinktronic Build Your Own Buddy Kit"
@@ -1418,10 +1414,11 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/manufacturer_kit
 	name = "Manufacturer Kit"
-	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
+	desc = "Frames: 1x General Manufacturer, 1x Mining Manufacturer, 1x Science Manufacturer, 1x Gas Extractor, 1x Clothing Manufacturer, 1x Reclaimer"
 	category = "Engineering Department"
 	frames = list(/obj/machinery/manufacturer/general,
 					/obj/machinery/manufacturer/mining,
+					/obj/machinery/manufacturer/science,
 					/obj/machinery/manufacturer/gas,
 					/obj/machinery/manufacturer/uniform,
 					/obj/machinery/portable_reclaimer)
@@ -1781,6 +1778,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 2000
 	containername = "Percussion Band Kit"
 	contains = list(/obj/item/instrument/tambourine,/obj/item/instrument/triangle,/obj/item/instrument/cowbell)
+	containertype = /obj/storage/crate/wooden
+
+/datum/supply_packs/banjo
+	name = "Banjo Kit"
+	desc = "1x Banjo"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Banjo Kit"
+	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
 //Western
