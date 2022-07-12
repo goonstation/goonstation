@@ -1,4 +1,50 @@
 
+(t)tue jul 12 22
+(u)Chatauscours
+(p)9337
+(e)🗺|mapping
+(*)The Horizon QM does not rely on piping anymore, having now direct imput and export loaders.
+(u)Chatauscours
+(p)9128
+(e)🆕|feature
+(*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
+(u)Kubius
+(p)9550
+(e)🆕|feature
+(+)Gas extractors are now capable of producing red oxygen grenades.
+(u)Roddy
+(p)9439
+(e)🆕🎨|feature, sprites
+(+)Adds in some tasty fruit milk to a vending machine near you.
+(u)DimWhat
+(p)9591
+(e)🐛|bug
+(+)The strange vampire clothing can now only be claimed with the vampire cape
+(u)DimWhat
+(p)9589
+(e)🆕|feature
+(+)Added a vampire costume to Geoff Honkington's shop.
+(u)Flappybat
+(p)9585
+(e)⚖|balance
+(*)Human NPCs are no longer valid targets for Changeling's DNA absorb, Werewolf feast and Vampire blood abilities.
+(u)DimWhat
+(p)9587
+(e)🆕|feature
+(+)Bartenders can now use *twirl and *spin while holding glasses safely.
+(u)Azrun & Virvatuli
+(p)5663
+(e)⚖🔄|balance, rework
+(*)Slamguns are back!
+(+)Zipguns no longer accept shotgun shells.
+(u)Waffleloffle
+(p)9590
+(e)🎨|sprites
+(+)NanoTrasen's interior decoration committee has changed indoor plant suppliers after difficulties with the previous bush wholesaler.
+(u)Azrun
+(p)9529
+(e)🎨⚖|sprites, balance
+(*)New Space Epoxy to give strength to the windows, to the walls, and even pipes!
 (t)mon jul 11 22
 (u)Ikea
 (p)9537

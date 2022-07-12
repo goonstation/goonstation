@@ -350,7 +350,7 @@
 /obj/item/device/radio/headset/mechanic
 	name = "mechanic headset"
 	desc = "A headset line only created due to the sheer effectiveness of packet nerd protesting."
-	icon_state = "mechanics headset"
+	icon_state = "engine headset"
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING)
 	secure_classes = list(

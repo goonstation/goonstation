@@ -84512,6 +84512,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/access_spawn/security,
 /obj/machinery/turret{
 	dir = 8
 	},

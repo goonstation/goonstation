@@ -1964,6 +1964,28 @@ datum
 			result_amount = 3
 			mix_phrase = "The substance mixes into a clear, viscous liquid."
 
+		graphene
+			name = "Graphene"
+			id = "graphene"
+			result = "graphene"
+			required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
+			required_temperature = T0C + 150
+			result_amount = 2
+			reaction_speed = 1
+			instant = 0
+			mix_phrase = "A small particulate forms into a tiny lattice."
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				holder.add_reagent("oxygen", created_volume)
+				holder.add_reagent("salt", created_volume)
+
+		graphene_compound
+			name = "Graphene Hardening Compound"
+			id = "graphene_compound"
+			result = "graphene_compound"
+			required_reagents = list("graphene" = 1, "spaceglue" = 9)
+			result_amount = 10
+			mix_phrase = "The substance turns dark with a beatiful faceted lattice pattern."
+
 		oil
 			name = "Oil"
 			id = "oil"

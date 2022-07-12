@@ -2174,6 +2174,15 @@
 	upperfluc = 150
 	lowerfluc = -100
 
+/datum/commodity/costume/vampire
+	comname = "Vampire Costume"
+	comtype = /obj/item/storage/box/costume/vampire
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cienema."
+	price = 600
+	baseprice = 100
+	upperfluc = 150
+	lowerfluc = -100
+
 /datum/commodity/costume/abomination
 	comname = "Abomination Costume"
 	comtype = /obj/item/storage/box/costume/abomination
