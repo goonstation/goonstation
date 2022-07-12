@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)Roddy
+(p)9439
+(e)🆕🎨|feature, sprites
+(+)Adds in some tasty fruit milk to a vending machine near you.
 (u)DimWhat
 (p)9591
 (e)🐛|bug
