@@ -1291,7 +1291,7 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(10, (src.material.getProperty("chemical") - 4) * 15) // 30 would be default for metal.
+			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 30, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
 
 			prot = max(0, renf.getProperty("density") - 3) / 2
