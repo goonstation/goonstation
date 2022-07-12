@@ -53137,11 +53137,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"fTD" = (
-/obj/disposalpipe/segment/transport,
-/obj/storage/closet/biohazard,
-/turf/simulated/floor/plating,
-/area/station/science/testchamber)
 "fUn" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -55972,14 +55967,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
-"kit" = (
-/obj/machinery/computer/chem_request_receiver{
-	dir = 4
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/chemistry)
 "kiI" = (
 /obj/table/auto,
 /obj/item/satchel/hydro{
@@ -57305,8 +57292,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "mxY" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -58355,8 +58349,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
 "ocn" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -95640,7 +95634,7 @@ clU
 cnb
 coj
 cpm
-fTD
+cqn
 crq
 cqn
 cqn
@@ -96244,7 +96238,7 @@ clW
 cnd
 col
 cpo
-kit
+cqo
 coT
 cqo
 ctd

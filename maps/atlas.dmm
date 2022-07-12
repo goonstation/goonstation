@@ -6227,9 +6227,7 @@
 /area/station/teleporter)
 "pC" = (
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
+/turf/simulated/floor/purpleblack,
 /area/station/teleporter)
 "pD" = (
 /obj/machinery/power/apc/autoname_west,
@@ -8738,11 +8736,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
-"uY" = (
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/hallway/primary/east)
 "va" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10510,11 +10503,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "zr" = (
@@ -11366,8 +11354,18 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "By" = (
-/obj/machinery/computer/chem_requester/science,
-/turf/simulated/floor/white,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Bz" = (
 /turf/simulated/floor/bluewhite{
@@ -12179,9 +12177,6 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "DN" = (
-/obj/machinery/computer/chem_request_receiver{
-	dir = 4
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -13053,12 +13048,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"FQ" = (
-/obj/machinery/computer/chem_requester/medical,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "FR" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -17657,9 +17646,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Rg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17675,11 +17662,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
-"Ri" = (
-/turf/simulated/floor/purpleblack/corner{
-	dir = 1
-	},
-/area/station/hallway/primary/east)
 "Rk" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1;
@@ -17934,9 +17916,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/purpleblack/corner{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "RY" = (
 /obj/item/reagent_containers/food/snacks/burger/moldy{
@@ -19579,9 +19559,7 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/simulated/floor/purpleblack{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Wz" = (
 /obj/stool/chair/office/blue,
@@ -63323,7 +63301,7 @@ rw
 qD
 qD
 By
-uY
+Zy
 RJ
 Ui
 Rp
@@ -63625,7 +63603,7 @@ vI
 qj
 qD
 Wy
-Ri
+Zy
 nu
 RZ
 Rp
@@ -70579,7 +70557,7 @@ PN
 Dl
 Eb
 yg
-FQ
+Bz
 Go
 GV
 HA

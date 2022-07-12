@@ -55536,13 +55536,6 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor,
 /area/station/security/main)
-"kQd" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/blueblack,
-/area/station/medical/medbay/lobby)
 "kQD" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -58215,9 +58208,7 @@
 	},
 /area/space)
 "qUc" = (
-/obj/machinery/computer/chem_request_receiver{
-	dir = 8
-	},
+/obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -60083,7 +60074,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "vmG" = (
-/obj/machinery/computer/chem_requester/medical,
+/obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -60609,7 +60603,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "wjq" = (
-/obj/machinery/computer/chem_requester/science,
+/obj/machinery/vending/computer3,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -61461,19 +61455,6 @@
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor,
 /area/station/security/main)
-"xWI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/horizontal,
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/vending/computer3,
-/turf/simulated/floor/carpet/red/fancy/edge/south,
-/area/station/hallway/secondary/east)
 "xXv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -123974,7 +123955,7 @@ aXx
 aEd
 bdG
 bdG
-kQd
+bjQ
 aXx
 trF
 bsi
@@ -128812,7 +128793,7 @@ bpF
 bso
 buu
 bwK
-xWI
+bzB
 mtl
 oGS
 wrp

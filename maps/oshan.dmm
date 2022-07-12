@@ -45991,9 +45991,8 @@
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "laj" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
-	},
+/obj/table/auto,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "lbK" = (
@@ -46064,10 +46063,11 @@
 	name = "Catering Hangar"
 	})
 "lMV" = (
-/obj/machinery/light/incandescent/cool,
-/obj/machinery/computer/chem_request_receiver{
-	dir = 4
+/obj/submachine/chem_extractor{
+	dir = 4;
+	pixel_x = -4
 	},
+/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "lOG" = (
@@ -47572,8 +47572,6 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/medicine,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "ueE" = (
@@ -47713,8 +47711,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "vfE" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6

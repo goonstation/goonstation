@@ -76072,7 +76072,6 @@
 	name = "Privacy Shutters";
 	pixel_x = 28
 	},
-/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "fHh" = (
@@ -76782,8 +76781,14 @@
 	},
 /area/research_outpost)
 "iYe" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 4
+/obj/shrub,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/landmark{
+	name = "kudzustart"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 10
@@ -77272,6 +77277,7 @@
 /area/station/crew_quarters/quartersB)
 "ltT" = (
 /obj/item/device/radio/intercom/science,
+/obj/stool/chair,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26;
@@ -77279,10 +77285,6 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
-/obj/shrub,
-/obj/landmark{
-	name = "kudzustart"
-	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -77530,7 +77532,14 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
 "mdn" = (
-/obj/storage/secure/closet/research/chemical,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/light,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "mey" = (
@@ -78106,8 +78115,10 @@
 /turf/simulated/floor/delivery,
 /area/station/hallway/primary/east)
 "ozP" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -79375,24 +79386,18 @@
 /area/research_outpost)
 "uBc" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox{
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/light,
+/obj/item/storage/firstaid/toxin,
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
 /area/station/science/chemistry)
 "uBE" = (
+/obj/storage/secure/closet/research/chemical,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "uBX" = (

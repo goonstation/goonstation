@@ -7897,9 +7897,10 @@
 	},
 /area/station/security/hos)
 "bYH" = (
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
+/obj/machinery/light/incandescent/cool{
+	dir = 8
 	},
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -32907,7 +32908,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "jpf" = (
@@ -51332,6 +51332,15 @@
 	dir = 1
 	},
 /area/station/ranch)
+"oKb" = (
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = -25
+	},
+/obj/table/reinforced/chemistry/beakers,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/purpleblack/corner,
+/area/station/science/chemistry)
 "oKg" = (
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/inner/north)
@@ -55519,7 +55528,6 @@
 /obj/item/hand_labeler{
 	pixel_y = -8
 	},
-/obj/machinery/glass_recycler,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "pVv" = (
@@ -57901,10 +57909,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"qyA" = (
-/obj/machinery/computer/chem_request_receiver,
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "qyH" = (
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
@@ -68000,12 +68004,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
-"tvo" = (
-/obj/machinery/computer/chem_requester/science{
-	dir = 8
-	},
-/turf/simulated/floor/purple,
-/area/station/science/chemistry)
 "tvv" = (
 /obj/machinery/conveyor/west{
 	id = "ghostdrone"
@@ -84525,6 +84523,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/access_spawn/security,
 /obj/machinery/turret{
 	dir = 8
 	},
@@ -122702,8 +122701,8 @@ sZM
 dpI
 fHL
 pyL
-mZl
-tvo
+mfI
+qEc
 oqi
 oqi
 aZz
@@ -123004,8 +123003,8 @@ oos
 eOq
 npV
 pyL
-mfI
-qEc
+mZl
+aLq
 xXq
 gfr
 bmF
@@ -123308,7 +123307,7 @@ dYa
 dNb
 mZl
 aLq
-qyA
+lnW
 saq
 saq
 srh
@@ -123919,7 +123918,7 @@ pVm
 opG
 mHF
 saq
-lnW
+oKb
 afo
 bIV
 vce
