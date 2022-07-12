@@ -1052,11 +1052,11 @@ TYPEINFO(/datum/mutantrace)
 	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
 	var/original_name
 
-	New(var/mob/living/carbon/human/M)
+	New()
 		..()
 		if(ishuman(src.mob))
 			src.add_ability(src.mob)
-			M.add_stam_mod_max("vampiric_thrall", 100)
+			src.mob.add_stam_mod_max("vampiric_thrall", 100)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 			src.original_name = src.mob.real_name
 			src.mob.real_name = "thrall [src.mob.real_name]"
