@@ -647,3 +647,33 @@
 		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
 		system.reply(success_msg)
+
+/datum/spacebee_extension_command/medal
+	name = "medal"
+	help_message = "Give or revoke a medal for a player"
+	argument_types = list(
+		/datum/command_argument/string/ckey = "player",
+		/datum/command_argument/string = "medal",
+		/datum/command_argument/string/optional = "revoke"
+	)
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+
+	execute(user, player, medal, revoke)
+		if(isnull(player) || isnull(medal))
+			system.reply("Insufficient arguments.", user)
+			return
+
+		var/result
+		if (revoke)
+			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+		else
+			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
+		if (isnull(result))
+			system.reply("Failed to set medal; error communicating with BYOND hub!")
+			return
+
+		var/to_log = "[revoke ? "revoked" : "gave"] the [medal] medal for [player]."
+		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		logTheThing("admin", "[user] (Discord)", null, "[to_log]")
+		logTheThing("diary", "[user] (Discord)", null, "[to_log]", "admin")
+		system.reply("[user] [to_log]")
