@@ -354,7 +354,6 @@
 
 			var/mob/living/M = victim
 
-
 			if (!M.mind && !M.client)
 				if (M.ghost && M.ghost.client && !(M.ghost.mind && M.ghost.mind.dnr))
 					var/mob/dead/ghost = M.ghost
@@ -373,7 +372,6 @@
 								C.mob.mind.transfer_to(M)
 							else
 								M.client = C
-
 							break
 
 			if (!M.client)
@@ -390,8 +388,6 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))
