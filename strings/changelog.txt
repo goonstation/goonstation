@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)Flappybat
+(p)9585
+(e)⚖|balance
+(*)Human NPCs are no longer valid targets for Changeling's DNA absorb, Werewolf feast and Vampire blood abilities.
 (u)DimWhat
 (p)9587
 (e)🆕|feature
