@@ -1984,7 +1984,7 @@ datum
 			result = "graphene_compound"
 			required_reagents = list("graphene" = 1, "spaceglue" = 9)
 			result_amount = 10
-			mix_phrase = "The substance turns dark with a beatiful faceted lattice pattern."
+			mix_phrase = "The substance turns dark with a beautiful faceted lattice pattern."
 
 		oil
 			name = "Oil"
