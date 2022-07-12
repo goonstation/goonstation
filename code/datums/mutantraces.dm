@@ -73,7 +73,8 @@ TYPEINFO(/datum/mutantrace)
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
 	var/genetics_removable = TRUE
-
+	/// Should they be able to walk on shards barefoot
+	var/can_walk_on_shards = FALSE
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
@@ -1308,6 +1309,7 @@ TYPEINFO(/datum/mutantrace)
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
+	can_walk_on_shards = TRUE
 
 	head_offset = 5
 	hand_offset = 3
@@ -2046,6 +2048,7 @@ TYPEINFO(/datum/mutantrace)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
+	can_walk_on_shards = TRUE
 	self_click_fluff = list("fur", "hooves", "horns")
 
 	New(var/mob/living/carbon/human/H)

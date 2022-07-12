@@ -386,6 +386,15 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 			src.update_law_text(lawTarget)
 		return
 
+/******************** Gimmicks ********************/
+
+/obj/item/aiModule/spaceodyssey
+	name = "AI Law Module - 'NT 9000'"
+	highlight_color = rgb(255, 255, 255, 166)
+	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
+  
+/******************** Hologram Expansions ********************/
+
 ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
@@ -438,7 +447,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 /obj/item/aiModule/ability_expansion/doctor_vision
 	name = "ProDoc Expansion Module"
 	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
-	lawText = "Security EXPANSION MODULE"
+	lawText = "Medical EXPANSION MODULE"
 	highlight_color = rgb(166, 0, 172, 255)
 	ai_abilities = list(/datum/targetable/ai/module/prodocs)
 

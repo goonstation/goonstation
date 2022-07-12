@@ -346,7 +346,7 @@
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "shrub"
+	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
 	anchored = 1
 	density = 1
@@ -1443,3 +1443,63 @@ obj/decoration/pottedfern
 	icon_state = "plant_fern"
 	anchored = 1
 	density = 1
+
+/obj/burning_barrel
+	name = "burning barrel"
+	desc = "cozy."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "barrel1"
+	density = 1
+	anchored = 1
+	opacity = 0
+
+	var/datum/light/light
+
+	New()
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
+		light = new /datum/light/point
+		light.attach(src)
+		light.set_brightness(1)
+		light.set_color(0.5, 0.3, 0)
+		light.enable()
+		..()
+
+	disposing()
+		light.disable()
+		light.detach()
+		light = null
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/C = W
+			if(!C.on)
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
+
+/obj/fireworksbox
+	name = "Box of Fireworks"
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
+	density = 0
+	anchored = 0
+	opacity = 0
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "fireworksbox"
+	var/fireworking = 0
+
+	attack_hand(mob/user)
+		if(fireworking) return
+		fireworking = 1
+		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		anchored = 1
+
+		SPAWN(0)
+			for(var/i=0, i<rand(30,40), i++)
+				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				sleep(rand(2, 15))
+
+			for(var/mob/O in oviewers(world.view, src))
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
+
+			qdel(src)
+		return
