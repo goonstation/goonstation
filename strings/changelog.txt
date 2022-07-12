@@ -1,5 +1,9 @@
 
 (t)mon jul 11 22
+(u)Ikea
+(p)9537
+(e)⚖|balance
+(*)Furnaces can now accept any flammable material, with fuel effectiveness scaling with material flammability.
 (u)CheekyBrdy
 (p)9287
 (e)🎨|sprites
