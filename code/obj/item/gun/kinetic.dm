@@ -1802,6 +1802,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
+	sound_load_override = "sound/weapons/gunload_rigil.ogg"
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
