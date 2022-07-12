@@ -414,6 +414,12 @@ datum
 
 					M.UpdateDamageIcon()
 
+				else if(method == INGEST)
+					if (isliving(M))
+						if (M.vdisfigured)
+							boutput(M, "<span class='notice'>You feel the ache in your vocal chords dissipate as you ingest the synthflesh.</span>")
+							M.vdisfigured = FALSE
+
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				if (covered.len > 9)
