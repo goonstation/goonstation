@@ -1,5 +1,9 @@
 
 (t)tue jul 12 22
+(u)DimWhat
+(p)9587
+(e)🆕|feature
+(+)Bartenders can now use *twirl and *spin while holding glasses safely.
 (u)Azrun & Virvatuli
 (p)5663
 (e)⚖🔄|balance, rework
