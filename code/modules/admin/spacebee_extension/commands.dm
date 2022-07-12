@@ -652,7 +652,7 @@
 	name = "medal"
 	help_message = "Give or revoke a medal for a player. E.g., `;;medal give zewaka Contributor`"
 	argument_types = list(
-		/datum/command_argument/string = "`give`/`revoke`",
+		/datum/command_argument/string = "give/revoke",
 		/datum/command_argument/string/ckey = "player",
 		/datum/command_argument/string = "medal"
 	)
@@ -660,7 +660,7 @@
 
 	execute(user, giverevoke, player, medal)
 		if(isnull(giverevoke) || isnull(player) || isnull(medal) )
-			system.reply("Insufficient arguments.", user)
+			system.reply("Failed to set medal; insufficient arguments.", user)
 			return
 
 		var/result
