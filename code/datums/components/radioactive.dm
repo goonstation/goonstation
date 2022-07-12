@@ -35,7 +35,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		), .proc/touched)
-		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eaten)
+		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eaten)
 
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
