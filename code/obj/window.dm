@@ -404,7 +404,7 @@
 					src.align_window()
 
 		else if (ispryingtool(W) && state <= 1)
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+			//no sound here, snap is after the action
 			if(!anchored)
 				src.turn_window()
 			else
@@ -417,6 +417,7 @@
 					user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
+					playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
 					state = 1 - state
 					user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
 
@@ -453,6 +454,7 @@
 		else if(ispryingtool(W))
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
+			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
 
 	proc/align_window()
 		update_nearby_tiles(need_rebuild=1)
