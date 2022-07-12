@@ -22,6 +22,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	bites_left = 1
 	heal_amt = 2
 	initial_volume = 5

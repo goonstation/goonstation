@@ -5,7 +5,6 @@
 #ifdef MAP_OVERRIDE_NADIR
 	/datum/matfab_recipe/catarod,
 #endif
-	/datum/matfab_recipe/arrowhead,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,

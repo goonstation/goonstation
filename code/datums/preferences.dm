@@ -144,8 +144,6 @@ datum/preferences
 				cloud_saves += name
 
 		sanitize_null_values()
-		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")
-		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -197,7 +195,9 @@ datum/preferences
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
+			"hudThemePreview" = icon2base64(icon(hud_style_selection[hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
+			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,

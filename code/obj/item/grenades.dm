@@ -1273,6 +1273,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
 	flags = ONBELT
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2
 

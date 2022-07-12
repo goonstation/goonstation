@@ -100,6 +100,7 @@
 
 		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 		src.set_loc(container)
+
 /obj/item/c_tube
 	name = "cardboard tube"
 	icon = 'icons/obj/items/items.dmi'
@@ -110,7 +111,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
-	w_class = W_CLASS_TINY
 	stamina_damage = 5
 	stamina_cost = 1
 
@@ -142,7 +142,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
-	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 
