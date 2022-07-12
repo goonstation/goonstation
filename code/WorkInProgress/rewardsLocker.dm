@@ -814,23 +814,13 @@
 			var/mob/living/carbon/human/H = activator
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/wizrobe))
-					boutput(activator, "Your magic-infused robes resist the meta-telelogical energies!")
-					return
-				if (istype(M, /obj/item/clothing/suit/space/industrial/syndicate) || istype(M, /obj/item/clothing/suit/space/syndicate))
-					boutput(activator, "Nyet, comrade.")
-					return
+				if (istype(M, /obj/item/clothing/suit/gimmick/vampire))
 				var/prev = M.name
 				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
 				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 				M.icon_state = "vclothes"
 				M.item_state = "vclothes"
-				if (istype(M, /obj/item/clothing/suit/labcoat))
-					var/obj/item/clothing/suit/labcoat/L = M
-					L.coat_style = null
 				M.name = "strange vampire outfit"
 				M.real_name = "strange vampire outfit"
 				M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
