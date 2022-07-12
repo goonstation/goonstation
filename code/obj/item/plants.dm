@@ -463,7 +463,6 @@
 			rose_name = chosen_mob.real_name
 		desc = desc + rose_name + "."
 
-
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
