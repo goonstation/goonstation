@@ -1675,6 +1675,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\computer\atmosphere.dm"
 #include "code\obj\machinery\computer\buildandrepair.dm"
 #include "code\obj\machinery\computer\card.dm"
+#include "code\obj\machinery\computer\chem_requester.dm"
 #include "code\obj\machinery\computer\cloning.dm"
 #include "code\obj\machinery\computer\communications.dm"
 #include "code\obj\machinery\computer\door_control.dm"
