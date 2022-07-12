@@ -1059,7 +1059,7 @@ TYPEINFO(/datum/mutantrace)
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 			src.original_name = src.mob.real_name
-			src.mob.real_name = "thrall [mob.real_name]"
+			src.mob.real_name = "thrall [src.mob.real_name]"
 			src.mob.UpdateName()
 
 	disposing()
