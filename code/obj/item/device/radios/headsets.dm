@@ -356,7 +356,7 @@
 	secure_classes = list(
 		"e" = RADIOCL_ENGINEERING,
 		)
-	icon_override = "mec"
+	icon_override = "Mec"
 	icon_tooltip = "Mechanic"
 
 /obj/item/device/radio/headset/mail
