@@ -1068,4 +1068,4 @@ client/proc/toggle_ghost_respawns()
 
 	cloning_with_records = !cloning_with_records
 
-	message_admins("[key_name(usr)] toggled the cloning method [cloning_with_records ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
