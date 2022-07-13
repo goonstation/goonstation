@@ -10,6 +10,7 @@
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
 	var/auto = 0
