@@ -387,9 +387,12 @@
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
-	var/turf/T = get_turf(holder.owner)
-	if(!istype(T, /turf/simulated/floor/feather))
+	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
+	if(!istype(T))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return TRUE
+	if (T.broken)
+		boutput(holder.get_controlling_mob(), "<span class='alert'>The flocktile you're above is broken!</span>")
 		return TRUE
 	if(locate(/obj/flock_structure/ghost) in T)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>A tealprint has already been scheduled here!</span>")
