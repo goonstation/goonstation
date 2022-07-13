@@ -179,7 +179,7 @@
 	desc = "I wonder if this is still fresh?"
 	icon_state = "water"
 	item_state = "water"
-	initial_volume = 50
+	initial_volume = 25
 	initial_reagents = "water"
 
 /obj/item/reagent_containers/food/drinks/mate
