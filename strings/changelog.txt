@@ -1,4 +1,9 @@
 
+(t)wed jul 13 22
+(u)MetricDuck
+(p)9611
+(e)🆕|feature
+(+)Changelings can copy the DNA of NPCs for transformation purposes by attempting to absorb them.
 (t)tue jul 12 22
 (u)Azrun
 (e)🆕|feature
