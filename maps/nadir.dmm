@@ -2895,7 +2895,6 @@
 	name = "Extraction Nexus"
 	})
 "byw" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -2903,6 +2902,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
 "byA" = (
@@ -6658,6 +6659,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"dEt" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "dEG" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 4
@@ -7289,6 +7296,14 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
+"dZP" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line3"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "dZW" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	dir = 4
@@ -18153,6 +18168,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"jsz" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line3"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "jsJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28841,7 +28865,7 @@
 	name = "Extraction Nexus"
 	})
 "oYt" = (
-/obj/storage/closet,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
 "oYC" = (
@@ -84097,7 +84121,7 @@ tZQ
 fer
 lEp
 szr
-szr
+dEt
 szr
 cey
 kdA
@@ -90451,7 +90475,7 @@ awA
 drI
 drI
 drI
-drI
+dZP
 drI
 nZR
 hBK
@@ -91053,7 +91077,7 @@ diA
 jci
 awA
 drI
-drI
+jsz
 drI
 drI
 drI
