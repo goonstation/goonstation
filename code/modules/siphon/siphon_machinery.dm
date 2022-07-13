@@ -101,7 +101,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 /obj/machinery/siphon/core
 	name = "harmonic siphon"
-	desc = "An egregiously complicated device purpose-built for turning magic space rocks into unmagic useful rocks."
+	desc = "An egregiously complicated device purpose-built for turning a really big underground magic rock into unmagic useful rocks."
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
 	icon_state = "drill-high"
 	density = 1

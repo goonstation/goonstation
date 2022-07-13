@@ -5376,11 +5376,15 @@
 /area/station/storage/warehouse)
 "cRs" = (
 /obj/table/reinforced/auto,
-/obj/item/hand_labeler,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/item/paper/siphon_guide{
+	pixel_x = 7;
+	pixel_y = -11
+	},
+/obj/item/hand_labeler,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -27417,8 +27421,9 @@
 	tag = ""
 	},
 /obj/table/reinforced/auto,
-/obj/item/paper/blueprint/chart/system{
-	pixel_y = 9
+/obj/item/paper/blueprint/chart/system,
+/obj/item/paper/siphon_guide{
+	pixel_y = 14
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 6
@@ -35164,11 +35169,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/siphon_lever,
-/obj/item/paper{
-	icon_state = "index_card";
-	info = "Before use, please consult the reference material available from Siphon Systems Control while the Siphon is inactive, and the Glossary of Terms available in the Resonance Calibration Database.<br><br>New users are heavily recommended to extract four units of mauxite and pharosium to create replacement catalytic rods in a nano-fabricator; catalytic rods are required for station electrical supply.";
-	name = "printed card";
-	pixel_y = -6
+/obj/item/paper/siphon_guide{
+	pixel_y = -10
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
