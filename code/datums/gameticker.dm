@@ -241,7 +241,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		participationRecorder.releaseHold()
 
 #ifdef MAP_OVERRIDE_NADIR
-	SPAWN(25 MINUTES) // special catalytic engine warning; about the time catalytic generators' power peters out
+	SPAWN(30 MINUTES) // special catalytic engine warning
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			if(CG?.gen_rate < 70000 WATTS)

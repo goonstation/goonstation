@@ -30908,7 +30908,9 @@
 	print_id = "Engineering"
 	},
 /obj/cable,
-/turf/simulated/floor/black,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
 /area/station/engine/engineering)
 "qhp" = (
 /obj/shrub{
@@ -31202,7 +31204,7 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/yellowblack{
-	dir = 1
+	dir = 9
 	},
 /area/station/engine/engineering)
 "qsI" = (
