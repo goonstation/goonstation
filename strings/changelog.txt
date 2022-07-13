@@ -1,5 +1,82 @@
 
+(t)wed jul 13 22
+(u)MetricDuck
+(p)9611
+(e)🆕|feature
+(+)Changelings can copy the DNA of NPCs for transformation purposes by attempting to absorb them.
+(t)tue jul 12 22
+(u)Azrun
+(e)🆕|feature
+(+)Glue in TEG Circulator Bad! Graphene compound good?
+(u)Ikea
+(p)9488
+(e)⚖|balance
+(+)The corrosion resistance material property has been renamed to chemical resistance. All applications of permeability has been completely merged with chemical resistance and the permeability material property has been removed.
+(u)Moberry
+(p)9376
+(e)⚖⛔|balance, removal
+(+)Changes QM Ore values and removes the electronics commodity.
+(u)TTerc
+(e)🗺|mapping
+(+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
+(u)Chatauscours
+(p)9337
+(e)🗺|mapping
+(*)The Horizon QM does not rely on piping anymore, having now direct imput and export loaders.
+(u)Chatauscours
+(p)9128
+(e)🆕|feature
+(*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
+(u)Kubius
+(p)9550
+(e)🆕|feature
+(+)Gas extractors are now capable of producing red oxygen grenades.
+(u)Roddy
+(p)9439
+(e)🆕🎨|feature, sprites
+(+)Adds in some tasty fruit milk to a vending machine near you.
+(u)DimWhat
+(p)9591
+(e)🐛|bug
+(+)The strange vampire clothing can now only be claimed with the vampire cape
+(u)DimWhat
+(p)9589
+(e)🆕|feature
+(+)Added a vampire costume to Geoff Honkington's shop.
+(u)Flappybat
+(p)9585
+(e)⚖|balance
+(*)Human NPCs are no longer valid targets for Changeling's DNA absorb, Werewolf feast and Vampire blood abilities.
+(u)DimWhat
+(p)9587
+(e)🆕|feature
+(+)Bartenders can now use *twirl and *spin while holding glasses safely.
+(u)Azrun & Virvatuli
+(p)5663
+(e)⚖🔄|balance, rework
+(*)Slamguns are back!
+(+)Zipguns no longer accept shotgun shells.
+(u)Waffleloffle
+(p)9590
+(e)🎨|sprites
+(+)NanoTrasen's interior decoration committee has changed indoor plant suppliers after difficulties with the previous bush wholesaler.
+(u)Azrun
+(p)9529
+(e)🎨⚖|sprites, balance
+(*)New Space Epoxy to give strength to the windows, to the walls, and even pipes!
 (t)mon jul 11 22
+(u)Ikea
+(p)9537
+(e)⚖|balance
+(*)Furnaces can now accept any flammable material, with fuel effectiveness scaling with material flammability.
+(u)CheekyBrdy
+(p)9287
+(e)🎨|sprites
+(+)Mechanics now have mechanic headsets instead of engineering headsets.
+(u)CodeJester
+(p)9171
+(e)🐛|bug
+(+)Using floor tiles as a ghostdrone is less awful now.
 (u)Sord + Flourish
 (e)🆕🗺|feature, mapping
 (+)Added randomized rooms to Cog2.

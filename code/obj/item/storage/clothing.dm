@@ -392,6 +392,12 @@
 		var/obj/item/clothing/head/H = new /obj/item/clothing/head/werewolf/odd(src)
 		H.color = my_color
 
+/obj/item/storage/box/costume/vampire
+	name = "vampire costume set"
+	desc = "Blah blah blah."
+	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
+	/obj/item/clothing/suit/gimmick/vampire)
+
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/abomination,

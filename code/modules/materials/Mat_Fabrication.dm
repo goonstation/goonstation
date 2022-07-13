@@ -2,7 +2,6 @@
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
 	/datum/matfab_recipe/coillarge,
-	/datum/matfab_recipe/arrowhead,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,

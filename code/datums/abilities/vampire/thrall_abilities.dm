@@ -7,6 +7,7 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 1
 	not_when_handcuffed = 0
 	restricted_area_check = 0

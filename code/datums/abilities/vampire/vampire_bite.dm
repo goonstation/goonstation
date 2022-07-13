@@ -345,6 +345,10 @@
 			boutput(M, "<span class='alert'>You are already performing a Blood action and cannot start a Bite.</span>")
 			return 1
 
+		if (isnpc(target))
+			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			return 1
+
 		var/mob/living/carbon/human/HH = target
 
 

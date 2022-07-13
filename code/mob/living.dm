@@ -1457,14 +1457,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	. = 0
 
 /mob/living/proc/update_lying()
-	if (src.buckled)
-		if (src.buckled == src.loc)
-			src.lying = 1
-		else if (istype(src.buckled, /obj/stool/bed))
-			src.lying = 1
-		else
-			src.lying = 0
-
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
