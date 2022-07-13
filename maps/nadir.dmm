@@ -2282,7 +2282,9 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/trunk/mail/south,
-/turf/simulated/floor,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/station/quartermaster/cargooffice)
 "bks" = (
 /obj/table/auto,
@@ -35704,6 +35706,11 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"sQv" = (
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/quartermaster/cargooffice)
 "sQw" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -39697,7 +39704,9 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/station/quartermaster/cargooffice)
 "uZH" = (
 /obj/machinery/drone_recharger,
@@ -42330,7 +42339,7 @@
 	pixel_y = 26
 	},
 /turf/simulated/floor/orangeblack/side{
-	dir = 8
+	dir = 9
 	},
 /area/station/quartermaster/cargooffice)
 "wJP" = (
@@ -43139,7 +43148,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/station/quartermaster/cargooffice)
 "xiE" = (
 /obj/cable{
@@ -92278,7 +92289,7 @@ lGl
 fdg
 dqX
 iCp
-vEu
+sQv
 vEu
 vEu
 vEu
