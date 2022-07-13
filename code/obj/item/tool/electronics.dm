@@ -470,7 +470,7 @@
 			if (MECHANICS_ANALYSIS_SUCCESS)
 				scan_output = "<span class='notice'>Item scan successful.</span>"
 				playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
-			if (MECHANICS_ANALYSIS_INCOMPATIBLE)
+			if (MECHANICS_ANALYSIS_INCOMPATIBLE, 0) // 0 is returned by SEND_SIGNAL if the component is not present, so we use it here too
 				scan_output = "<span class='alert'>The structure of [A] is not compatible with [parent_item].</span>"
 			if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
 				scan_output = "<span class='alert'>You have already scanned this type of object.</span>"

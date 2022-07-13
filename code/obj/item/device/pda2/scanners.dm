@@ -113,7 +113,7 @@
 			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL)
 				return
 			animate_scanning(A, "#FFFF00")
-			if (scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
+			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
 				return "<span class='alert'>Unable to scan.</span>"
 
 			var/datum/computer/file/electronics_scan/theScan = new
