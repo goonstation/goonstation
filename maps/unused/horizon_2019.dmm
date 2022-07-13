@@ -23278,7 +23278,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -25221,7 +25221,7 @@
 	})
 "bfK" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/brig{
@@ -38668,7 +38668,7 @@
 /area/station/crew_quarters/kitchen)
 "bIK" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -46316,7 +46316,7 @@
 /area/station/security/brig)
 "bYM" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	name = "Authorised Entertainment";
 	pixel_y = 12
 	},
@@ -49600,7 +49600,7 @@
 /area/space)
 "cfQ" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	name = "Authorised Entertainment";
 	pixel_y = 12
 	},

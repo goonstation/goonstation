@@ -7332,7 +7332,7 @@
 	dir = 4
 	},
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
@@ -12947,7 +12947,7 @@
 	pixel_x = -10
 	},
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -16856,7 +16856,7 @@
 /area/station/crew_quarters/bar)
 "aIA" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/light,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
@@ -17955,7 +17955,7 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
@@ -23442,7 +23442,7 @@
 	dir = 4
 	},
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/disposal/small/east{
@@ -30236,7 +30236,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/brig{

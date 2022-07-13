@@ -57779,7 +57779,7 @@
 "chb" = (
 /obj/table/auto,
 /obj/deskclutter,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -57810,7 +57810,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 8
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purple,
@@ -60910,7 +60910,7 @@
 /area/station/medical/robotics)
 "cku" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/cdnp{
@@ -60928,7 +60928,7 @@
 	pixel_x = -14;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_x = 3;
 	pixel_y = 9
 	},
@@ -60936,7 +60936,7 @@
 /area/station/crew_quarters/quarters)
 "ckw" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -61365,7 +61365,7 @@
 /area/station/hallway/secondary/entry)
 "cli" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -61839,7 +61839,7 @@
 /area/station/science/bot_storage)
 "cmd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/delivery,
@@ -62442,7 +62442,7 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 7
 	},
 /turf/simulated/floor/carpet{
@@ -63206,7 +63206,7 @@
 /area/listeningpost)
 "cob" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/light{
 	dir = 4;
 	tag = ""

@@ -67443,7 +67443,7 @@
 /area/crypt/sigma/crew)
 "cId" = (
 /obj/table/woodentable/single,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/decal/glow{
@@ -71021,7 +71021,7 @@
 	name = "old oak table";
 	tag = "icon-bar (SOUTHEAST)"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/decal/glow{
@@ -74752,7 +74752,7 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/delivery,
@@ -75358,7 +75358,7 @@
 	})
 "dap" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -76989,7 +76989,7 @@
 	},
 /obj/item/pen,
 /obj/item/pen,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -77111,7 +77111,7 @@
 /area/sim/racing_entry)
 "ddN" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/specialroom/bar,

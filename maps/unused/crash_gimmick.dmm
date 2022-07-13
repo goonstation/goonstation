@@ -23115,7 +23115,7 @@
 /area/russian/radiation)
 "czv" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 7
 	},
 /obj/item/clothing/head/helmet/camera{
@@ -34585,7 +34585,7 @@
 /area/russian/radiation)
 "dfC" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/grime{
@@ -50463,7 +50463,7 @@
 /area/russian/radiation)
 "jCQ" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},

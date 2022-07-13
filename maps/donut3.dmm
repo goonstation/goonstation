@@ -613,7 +613,7 @@
 /area/station/security/brig/north_side)
 "abc" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/warm,
@@ -20603,7 +20603,7 @@
 /area/station/crew_quarters/courtroom)
 "fEt" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 7
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -23913,7 +23913,7 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/decoration/ashtray{
@@ -37338,7 +37338,7 @@
 /area/station/science/artifact)
 "kEK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/edge{
@@ -54675,7 +54675,7 @@
 /area/station/hangar/science)
 "pEL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -60725,7 +60725,7 @@
 /area/station/science/lobby)
 "rll" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/emergency,

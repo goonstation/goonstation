@@ -2134,7 +2134,7 @@
 	pixel_x = 14;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_x = -3;
 	pixel_y = 9
 	},
@@ -4196,7 +4196,7 @@
 /area/station/crew_quarters/showers)
 "amJ" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -4651,7 +4651,7 @@
 /area/station/security/brig)
 "anJ" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/decal/poster/wallsign/cdnp{
@@ -8577,7 +8577,7 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 7
 	},
 /turf/simulated/floor/carpet{
@@ -9047,7 +9047,7 @@
 "azY" = (
 /obj/table/auto,
 /obj/deskclutter,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -26053,7 +26053,7 @@
 /area/space)
 "bpy" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/delivery,
@@ -39838,7 +39838,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purple,
@@ -42650,7 +42650,7 @@
 /area/station/science/lobby)
 "chY" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -42815,7 +42815,7 @@
 /area/station/hallway/secondary/exit)
 "cix" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/greenwhite/other{

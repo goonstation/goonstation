@@ -3669,7 +3669,7 @@
 /area/diner/dining)
 "ke" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/delivery,

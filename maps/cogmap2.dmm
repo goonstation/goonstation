@@ -6667,7 +6667,7 @@
 /area/station/crew_quarters/fitness)
 "aqa" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -10803,7 +10803,7 @@
 /area/station/crew_quarters/kitchen)
 "azz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
@@ -13232,7 +13232,7 @@
 /area/station/crew_quarters/cafeteria)
 "aER" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
@@ -13528,7 +13528,7 @@
 /area/station/hydroponics/bay)
 "aFF" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen5"
@@ -15936,7 +15936,7 @@
 /area/station/crew_quarters/cafeteria)
 "aLX" = (
 /obj/table/glass/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor{
@@ -17525,7 +17525,7 @@
 "aPE" = (
 /obj/item/game_kit,
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet,
@@ -22257,7 +22257,7 @@
 /area/station/hallway/secondary/entry)
 "baE" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/neutral/side,
@@ -28522,7 +28522,7 @@
 /area/station/engine/engineering)
 "bpI" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/camera{
@@ -30731,7 +30731,7 @@
 /area/station/security/main)
 "buq" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/clothing/glasses/vr{
@@ -35155,7 +35155,7 @@
 /area/station/hallway/primary/east)
 "bDp" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -35801,7 +35801,7 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/blueblack,
 /area/station/engine/power{
 	name = "Engineering Control Room"
@@ -38742,7 +38742,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/device/radio/intercom/bridge,
@@ -41524,7 +41524,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -46182,7 +46182,7 @@
 "bYK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/camera{
@@ -49080,7 +49080,7 @@
 /area/station/storage/tech)
 "cgg" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/power/apc{
@@ -50296,7 +50296,7 @@
 /area/station/science/teleporter)
 "cjz" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/door_control{
@@ -51014,7 +51014,7 @@
 "cle" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom/science,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light{
@@ -54430,7 +54430,7 @@
 /area/station/catwalk/south)
 "csV" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/arrival,
@@ -55697,7 +55697,7 @@
 /area/station/science/lobby)
 "cvU" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
@@ -57803,7 +57803,7 @@
 /area/station/medical/medbay/lobby)
 "cAB" = (
 /obj/table/glass/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet,
@@ -58344,7 +58344,7 @@
 /area/station/science/lab)
 "cBM" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/north{
@@ -62747,7 +62747,7 @@
 /area/station/science/chemistry)
 "cMn" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
@@ -64480,7 +64480,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/yellow/side{
@@ -71094,7 +71094,7 @@
 /area/station/medical/medbay)
 "dey" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/bot/white,
@@ -72937,7 +72937,7 @@
 /area/research_outpost)
 "diK" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/cable{

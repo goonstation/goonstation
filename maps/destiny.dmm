@@ -6541,7 +6541,7 @@
 /area/station/medical/medbay/lobby)
 "aAV" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{

@@ -579,7 +579,7 @@
 /area/station/security/main)
 "bp" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/clothing/glasses/vr{
@@ -3123,7 +3123,7 @@
 /area/station/crew_quarters/bar)
 "ha" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,

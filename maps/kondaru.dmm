@@ -838,7 +838,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/paper{
@@ -20467,7 +20467,7 @@
 /area/station/crew_quarters/kitchen)
 "bjo" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -22032,7 +22032,7 @@
 /area/station/crew_quarters/cafeteria)
 "boy" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
@@ -27674,7 +27674,7 @@
 /area/station/hallway/secondary/south)
 "bHA" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/camera{
@@ -28979,7 +28979,7 @@
 	})
 "bKW" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/darkblue/checker/other,
@@ -29373,7 +29373,7 @@
 /area/station/quartermaster/office)
 "bLV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -29634,7 +29634,7 @@
 /area/station/science/teleporter)
 "bMJ" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -42410,7 +42410,7 @@
 /area/station/maintenance/central)
 "fsR" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/neutral/side{
@@ -43167,7 +43167,7 @@
 /area/station/crew_quarters/courtroom)
 "ggc" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -43727,7 +43727,7 @@
 /area/station/crew_quarters/pool)
 "gFU" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/orangeblack/corner{
@@ -45821,7 +45821,7 @@
 /area/station/security/main)
 "iQf" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light{
@@ -46207,7 +46207,7 @@
 /area/station/hydroponics/bay)
 "jnz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/emergency{
@@ -47626,7 +47626,7 @@
 /area/station/security/interrogation)
 "kQv" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue,
@@ -47656,7 +47656,7 @@
 /area/station/garden/aviary)
 "kSA" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/white,
@@ -51553,7 +51553,7 @@
 /area/station/crew_quarters/quarters_south)
 "oIR" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/device/radio/beacon{
@@ -51958,7 +51958,7 @@
 /area/station/bridge)
 "phF" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/vertical,
@@ -52538,7 +52538,7 @@
 /area/station/crew_quarters/showers)
 "pKm" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "pKK" = (

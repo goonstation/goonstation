@@ -102,17 +102,16 @@
 	name = "Security Cameras"
 	icon_state = "security_det"
 
-	small
-		name = "Television"
-		desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
-		network = "Zeta"
-		icon_state = "security_tv"
+/obj/machinery/computer/security/small
+        name = "Television"
+        desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
+        circuit_type = "/obj/item/circuitboard/television"
+        network = "Zeta"
+        icon_state = "security_tv"
 
-		power_change()
-			return
 
 // -------------------- VR --------------------
-/obj/machinery/computer/security/wooden_tv/small/virtual
+/obj/machinery/computer/security/small/virtual
 	desc = "It's making you feel kinda twitchy for some reason."
 	icon = 'icons/effects/VR.dmi'
 // --------------------------------------------

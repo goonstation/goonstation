@@ -4737,7 +4737,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
 "fBE" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -9626,7 +9626,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "ltN" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,

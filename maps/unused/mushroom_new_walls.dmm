@@ -27147,7 +27147,7 @@
 /area/station/security/detectives_office)
 "lul" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "lvd" = (

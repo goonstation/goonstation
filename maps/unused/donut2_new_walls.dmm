@@ -4724,7 +4724,7 @@
 /area/station/medical/cdc)
 "alj" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "alk" = (
@@ -19387,7 +19387,7 @@
 "aUy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
-	level = 2 
+	level = 2
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4

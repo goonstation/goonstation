@@ -5640,7 +5640,7 @@
 /area/station/crew_quarters/cafeteria)
 "amP" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
@@ -17827,7 +17827,7 @@
 /area/station/medical/medbay/lobby)
 "aMC" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -21246,7 +21246,7 @@
 /area/station/science/teleporter)
 "aTF" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/door_control{
@@ -26905,7 +26905,7 @@
 /area/station/crew_quarters/quarters_west)
 "ldu" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,

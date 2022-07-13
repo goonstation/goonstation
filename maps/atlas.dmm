@@ -5821,7 +5821,7 @@
 /area/station/hallway/primary/north)
 "oy" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "oz" = (

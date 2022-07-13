@@ -41465,7 +41465,7 @@
 /area/tech_outpost)
 "cdx" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,

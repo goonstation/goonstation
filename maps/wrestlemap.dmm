@@ -1810,7 +1810,7 @@
 /area/station/janitor/office)
 "aIp" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
 "aIE" = (
@@ -7530,7 +7530,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/station/crew_quarters/stockex)
 "dfG" = (
@@ -8295,7 +8295,7 @@
 /area/station/security/checkpoint/arrivals)
 "duF" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -8755,7 +8755,7 @@
 "dDs" = (
 /obj/disposalpipe/segment,
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -13751,7 +13751,7 @@
 /area/station/chapel/sanctuary)
 "fIa" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry)
@@ -13760,7 +13760,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/jazz)
 "fIz" = (
@@ -18990,7 +18990,7 @@
 /area/station/medical/medbay)
 "hWN" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 26;
@@ -25957,7 +25957,7 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27756,7 +27756,7 @@
 /area/station/hallway/secondary/exit)
 "lJV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "lKj" = (
@@ -29067,7 +29067,7 @@
 /area/station/maintenance/inner/the_cage)
 "mnw" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "mnG" = (
@@ -32691,7 +32691,7 @@
 /area/station/chapel/sanctuary)
 "nTv" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/crew_quarters/lounge)
 "nTz" = (
@@ -35506,7 +35506,7 @@
 	})
 "pjp" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/security/secwing{
@@ -45070,7 +45070,7 @@
 /area/station/quartermaster/office)
 "tku" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "tkv" = (
@@ -46346,7 +46346,7 @@
 /obj/item/reagent_containers/food/drinks/milk{
 	pixel_x = -8
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_x = 7;
 	pixel_y = 4
 	},
@@ -51728,7 +51728,7 @@
 /area/station/crew_quarters/observatory)
 "wgv" = (
 /obj/table/glass,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -55113,7 +55113,7 @@
 /area/station/maintenance/inner/the_cage)
 "xzp" = (
 /obj/table/glass/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/simulated/floor/green/checker,
 /area/station/hallway/primary/central)
 "xzx" = (

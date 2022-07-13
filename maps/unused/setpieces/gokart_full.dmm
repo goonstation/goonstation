@@ -1550,7 +1550,7 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/delivery,
@@ -1726,7 +1726,7 @@
 	})
 "el" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -2342,7 +2342,7 @@
 	},
 /obj/item/pen,
 /obj/item/pen,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor{
@@ -2383,7 +2383,7 @@
 /area/racing_entry)
 "fx" = (
 /obj/table,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/specialroom/bar,

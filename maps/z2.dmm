@@ -30174,7 +30174,7 @@
 /area/crypt/sigma/crew)
 "bOe" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -31932,7 +31932,7 @@
 /obj/table/virtual{
 	icon_state = "tabledir"
 	},
-/obj/machinery/computer/security/wooden_tv/small/virtual,
+/obj/machinery/computer/security/small/virtual,
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/gauntlet/viewing)
 "bTF" = (
@@ -35779,7 +35779,7 @@
 	})
 "cgp" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/delivery,
@@ -36326,7 +36326,7 @@
 	})
 "chE" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/carpet{
@@ -37244,7 +37244,7 @@
 /area/sim/racing_entry)
 "ckb" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/wood,
@@ -37576,7 +37576,7 @@
 	pixel_x = 13;
 	pixel_y = 4
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_x = -3;
 	pixel_y = 8
 	},
@@ -42629,7 +42629,7 @@
 /area/owlery/staffhall)
 "czj" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	network = "Owlery"
 	},
 /turf/unsimulated/floor/white,
@@ -43072,7 +43072,7 @@
 /area/owlery/staffhall)
 "cAk" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	network = "Owlery"
 	},
 /turf/unsimulated/floor/carpet{
@@ -49058,7 +49058,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	network = "Owlery";
 	pixel_y = 3
 	},
@@ -63711,7 +63711,7 @@
 /area/crypt/sigma/morgue)
 "dGG" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple1";
 	tag = "icon-fpurple1"
@@ -68588,7 +68588,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "dUk" = (
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/map/light/screen,
@@ -77578,7 +77578,7 @@
 /area/iomoon)
 "xCw" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/unsimulated/outdoors/grass,

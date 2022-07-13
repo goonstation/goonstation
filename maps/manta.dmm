@@ -13139,7 +13139,7 @@
 /area/station/crew_quarters/quarters)
 "aLi" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -15434,7 +15434,7 @@
 /area/station/security/brig)
 "aSo" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 5
 	},
 /obj/item_dispenser/handcuffs,
@@ -22977,7 +22977,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 5
 	},
 /turf/simulated/floor/wood/seven,
@@ -24185,7 +24185,7 @@
 /area/station/medical/medbay/lobby)
 "boB" = (
 /obj/table/glass/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 5
 	},
 /turf/simulated/floor/blue,
@@ -34035,7 +34035,7 @@
 /area/station/maintenance/upperstarboard)
 "dUV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/decoration/clock{

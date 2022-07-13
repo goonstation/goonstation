@@ -1093,7 +1093,7 @@
 	})
 "aqo" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
@@ -2916,7 +2916,7 @@
 /area/station/quartermaster/cargooffice)
 "aSt" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -4802,7 +4802,7 @@
 /area/station/medical/staff)
 "bwl" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light{
@@ -7074,7 +7074,7 @@
 /area/shuttle/merchant_shuttle/right_station/cogmap)
 "cem" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = -15
 	},
@@ -12500,7 +12500,7 @@
 /area/station/crew_quarters/barber_shop)
 "dAy" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/engine/caution/west,
@@ -13083,7 +13083,7 @@
 /area/station/crew_quarters/arcade)
 "dHz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -16143,7 +16143,7 @@
 /area/station/crew_quarters/bar)
 "ewO" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple,
@@ -16700,7 +16700,7 @@
 /area/station/hangar/medical)
 "eFH" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
@@ -18100,7 +18100,7 @@
 /area/station/medical/staff)
 "eZI" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -23539,7 +23539,7 @@
 /area/station/hangar/qm)
 "gwz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/west,
@@ -29562,7 +29562,7 @@
 /area/station/medical/staff)
 "hYd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/neutral,
@@ -30819,7 +30819,7 @@
 /area/station/bridge)
 "itB" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar/edge{
@@ -32065,7 +32065,7 @@
 /area/station/ai_monitored/armory)
 "iIM" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -35902,7 +35902,7 @@
 /area/station/mining/refinery)
 "jKg" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/item/decoration/ashtray{
@@ -44293,7 +44293,7 @@
 /area/station/engine/elect)
 "lOD" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/firealarm{
@@ -48420,7 +48420,7 @@
 /area/station/hallway/primary/east)
 "mSI" = (
 /obj/table/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/firealarm{
@@ -50136,7 +50136,7 @@
 /area/station/medical/medbay/surgery)
 "ntt" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -60062,7 +60062,7 @@
 /area/station/security/processing)
 "pWs" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -60362,7 +60362,7 @@
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
 	},
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -68921,7 +68921,7 @@
 	})
 "skL" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/camera{
@@ -72749,7 +72749,7 @@
 /area/station/maintenance/disposal)
 "teE" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grey,
@@ -74424,7 +74424,7 @@
 /area/station/hallway/primary/south)
 "tzz" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/bar,
@@ -75577,7 +75577,7 @@
 /area/space)
 "tOD" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,
@@ -76258,7 +76258,7 @@
 /area/station/storage/emergency2)
 "tXm" = (
 /obj/table/glass/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
@@ -77033,7 +77033,7 @@
 /area/station/science/gen_storage)
 "uhk" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner/nw,
@@ -77768,7 +77768,7 @@
 /area/station/turret_protected/ai_upload)
 "urd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light/small{
@@ -81970,7 +81970,7 @@
 /area/station/hallway/primary/east)
 "vox" = (
 /obj/table/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor,

@@ -1717,7 +1717,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -11093,7 +11093,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -12577,7 +12577,7 @@
 /area/station/crew_quarters/cafeteria)
 "ayl" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /obj/machinery/light,
@@ -15921,7 +15921,7 @@
 /area/station/solar/west)
 "aFD" = (
 /obj/table/wood/auto,
-/obj/machinery/computer/security/wooden_tv/small,
+/obj/machinery/computer/security/small,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -20211,7 +20211,7 @@
 /area/station/security/brig)
 "aOy" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/grime,
@@ -32309,7 +32309,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,

@@ -2414,7 +2414,7 @@
 "gU" = (
 /obj/table/reinforced,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -6572,7 +6572,7 @@
 /area/space)
 "sO" = (
 /obj/table/wood/round/auto,
-/obj/machinery/computer/security/wooden_tv/small{
+/obj/machinery/computer/security/small{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood,
@@ -7052,7 +7052,7 @@
 /area/space)
 "ui" = (
 /turf/simulated/floor/black/side{
-	
+
 	},
 /area/space)
 "uj" = (
