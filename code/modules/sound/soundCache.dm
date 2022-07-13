@@ -1849,6 +1849,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/gunload_heavy.ogg" = 'sound/weapons/gunload_heavy.ogg',\
  	"sound/weapons/gunload_hitek.ogg" = 'sound/weapons/gunload_hitek.ogg',\
  	"sound/weapons/gunload_light.ogg" = 'sound/weapons/gunload_light.ogg',\
+ 	"sound/weapons/gunload_mprt.ogg" = 'sound/weapons/gunload_mprt.ogg',\
  	"sound/weapons/gunload_rigil.ogg" = 'sound/weapons/gunload_rigil.ogg',\
  	"sound/weapons/gunload_sawnoff.ogg" = 'sound/weapons/gunload_sawnoff.ogg',\
  	"sound/weapons/Gunshot.ogg" = 'sound/weapons/Gunshot.ogg',\
