@@ -31,7 +31,6 @@
 		else
 			user.gib()
 
-ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/pet)
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/pet
 	warm_count = 25
 
