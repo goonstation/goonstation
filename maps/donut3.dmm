@@ -25607,8 +25607,7 @@
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
-	pixel_x = 0;
-	pixel_y = 0
+	pixel_x = 8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
