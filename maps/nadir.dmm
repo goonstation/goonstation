@@ -19274,11 +19274,10 @@
 	name = "Northeast Breach Hull"
 	})
 "jWj" = (
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "jWw" = (
@@ -19317,10 +19316,6 @@
 	})
 "jWW" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora";
@@ -19332,6 +19327,10 @@
 	pixel_y = -1
 	},
 /obj/blind_switch/area/west,
+/obj/machinery/light/lamp/green{
+	pixel_x = -1;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_east)
 "jXe" = (
@@ -21124,6 +21123,9 @@
 /area/station/crew_quarters/fitness)
 "kUk" = (
 /obj/machinery/drainage,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/hallway/secondary/exit)
 "kUl" = (
@@ -22349,7 +22351,9 @@
 	pixel_x = -12
 	},
 /obj/table/reinforced/industrial/auto,
-/obj/item/device/gps,
+/obj/machinery/recharger{
+	pixel_y = 5
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/teleporter)
 "lAh" = (
@@ -24643,7 +24647,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/refinery)
 "mCe" = (
-/obj/machinery/door/airlock/pyro/glass/mining{
+/obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
 /obj/firedoor_spawn,
