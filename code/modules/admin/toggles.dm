@@ -1068,4 +1068,6 @@ client/proc/toggle_ghost_respawns()
 
 	cloning_with_records = !cloning_with_records
 
+	logTheThing("admin", usr, null, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+	logTheThing("diary", usr, null, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
 	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")
