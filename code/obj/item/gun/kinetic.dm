@@ -1975,8 +1975,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		setProperty("movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/sawnoff
-	name = "Double Barreled Shotgun"
-	desc = "A double barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
+	name = "double-barreled shotgun"
+	desc = "A double-barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "coachgun"
 	icon_state = "coachgun"
@@ -1984,17 +1984,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	contraband = 4
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 2
-	auto_eject = 0
-	can_dual_wield = 0
-	two_handed = 0
-	add_residue = 1
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = FALSE
+	add_residue = TRUE
 	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
 
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 
 	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
-		if(prob(25))
+		if (prob(25))
 			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
 
 		ammo = new/obj/item/ammo/bullets/abg/two
@@ -2002,47 +2002,46 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	canshoot()
-		if (src.broke_open == FALSE)
-			return 1
+		if (!src.broke_open)
+			return TRUE
 		..()
 
-	shoot(var/target,var/start ,var/mob/user)
-		if(src.broke_open == TRUE)
-			boutput(user, "<span class='notice'>You need to close [src] before you can fire!</span>")
-		if (src.broke_open == FALSE && src.ammo.amount_left > 0)
-			src.shells_to_eject += 1
+	shoot(target, start, mob/user)
+		if (src.broke_open)
+			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
 		..()
 
-	attack_self(mob/user as mob)
-		if (src.broke_open == TRUE)
+	attack_self(mob/user)
+		if (src.broke_open)
 			src.icon_state = "coachgun"
 			src.broke_open = FALSE
-
 		else
 			src.icon_state = "coachgun-empty"
 			src.broke_open = TRUE
 			src.casings_to_eject = src.shells_to_eject
 
-			if (src.casings_to_eject > 0) //this code exists becuase without it the gun ejects double the amount of shells
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
 				src.ejectcasings()
 				src.shells_to_eject = 0
 
-		playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, 1)
+		playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, TRUE)
 
 		..()
 
-	attackby(obj/item/b as obj, mob/user as mob)
-		if (istype(b, /obj/item/ammo/bullets) && src.broke_open == FALSE)
-			boutput(user, "<span class='alert'>You can't load shells into the chambers! You'll have to open the [src] first!</span>")
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, "<span class='alert'>You can't load shells into the chambers! You'll have to open [src] first!</span>")
 			return
 		..()
 
-	attack_hand(mob/user as mob)
-		if (src.broke_open == FALSE && user.find_in_hand(src))
-			boutput(user, "<span class='alert'>The [src] is still closed, you need to open the action to take the shells out!</span>")
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, "<span class='alert'>[src] is still closed, you need to open the action to take the shells out!</span>")
 			return
 		..()
 
-	alter_projectile(var/obj/projectile/P)
+	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
