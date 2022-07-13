@@ -68677,12 +68677,12 @@
 	icon_state = "blue"
 	})
 "ecr" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/stool/chair/comfy/blue{
 	dir = 4;
 	tag = "icon-chair_comfy-blue (EAST)"
+	},
+/obj/machinery/light{
+	dir = 1
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
@@ -69202,6 +69202,12 @@
 	dir = 1
 	},
 /area/moon/museum)
+"fcT" = (
+/obj/stool/chair/couch/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cal)
 "fen" = (
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
@@ -69357,6 +69363,9 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
+"fyn" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cal)
 "fyt" = (
 /obj/cable{
 	d1 = 4;
@@ -71303,11 +71312,11 @@
 /area/centcom/outside)
 "jNl" = (
 /obj/table/wood/auto,
+/obj/item/mutation_orb/cat_orb,
 /obj/item/clothing/head/sunhat/stunhatr{
 	pixel_x = -5;
 	pixel_y = 6
 	},
-/obj/item/mutation_orb/cat_orb,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "jPv" = (
@@ -72801,9 +72810,11 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "noa" = (
-/obj/suggestion_box,
+/obj/stool/chair/couch/blue{
+	dir = 8
+	},
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/tarmunora)
+/area/centcom/offices/cal)
 "noj" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-40"
@@ -75052,34 +75063,19 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
 "rJe" = (
-/obj/storage/crate/bin/lostandfound{
-	desc = "Just what it sounds like.";
-	name = "suggestion box";
-	spawn_contents = null
-	},
-/obj/item/paper{
-	name = "more guns";
-	pixel_x = 5;
-	pixel_y = 4
-	},
-/obj/item/paper{
-	name = "cool hats";
-	pixel_x = -6;
+/obj/item/reagent_containers/food/drinks/milk{
 	pixel_y = 3
 	},
-/obj/item/paper{
-	name = "catgirls?";
-	pixel_x = 8;
-	pixel_y = -4
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = -7;
+	pixel_y = 6
 	},
-/obj/item/paper{
-	name = "less guns";
-	pixel_x = -6;
-	pixel_y = -4
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 5
 	},
-/obj/decal/cleanable/paper,
+/obj/table/wood/round/auto,
 /turf/unsimulated/floor/wood/two,
-/area/centcom/offices/tarmunora)
+/area/centcom/offices/cal)
 "rJF" = (
 /obj/overlay{
 	density = 1;
@@ -76642,6 +76638,16 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"vqX" = (
+/obj/machinery/light,
+/obj/item/mutation_orb/cow_orb,
+/obj/item/clothing/head/cowboy{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/table/wood/round/auto,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/cal)
 "vrn" = (
 /obj/table/auto,
 /obj/deskclutter,
@@ -77045,7 +77051,7 @@
 /area/iomoon/base)
 "wpJ" = (
 /obj/admin_plaque{
-	name = "yass's Office"
+	name = "yass and Cal's Office"
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -157173,8 +157179,8 @@ dDw
 dwE
 wel
 noa
-fQJ
-fQJ
+fyn
+vqX
 wel
 dCs
 dDf
@@ -157474,8 +157480,8 @@ dCM
 dCO
 dwF
 wel
-fQJ
-fQJ
+fcT
+fyn
 rJe
 wel
 dCt
