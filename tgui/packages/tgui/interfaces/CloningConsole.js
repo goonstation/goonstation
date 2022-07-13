@@ -67,11 +67,16 @@ export const CloningConsole = (props, context) => {
     balance,
     cloneSlave,
     clonesForCash,
+    cloningWithRecords,
   } = data;
 
   // N.B. uses `deletionTarget` that is shared with Records component
   const [deletionTarget, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
   const [tab, setTab] = useSharedState(context, 'tab', Tab.Records);
+
+  if (!cloningWithRecords && tab === Tab.Records) {
+    setTab(Tab.Pods);
+  }
 
   return (
     <Window
@@ -122,13 +127,15 @@ export const CloningConsole = (props, context) => {
         )}
         <Section fitted>
           <Tabs>
-            <Tabs.Tab
-              icon="list"
-              selected={tab === Tab.Records}
-              onClick={() => setTab(Tab.Records)}
-            >
-              Records
-            </Tabs.Tab>
+            {!!cloningWithRecords && (
+              <Tabs.Tab
+                icon="list"
+                selected={tab === Tab.Records}
+                onClick={() => setTab(Tab.Records)}
+              >
+                Records
+              </Tabs.Tab>
+            )}
             <Tabs.Tab
               icon="box"
               selected={tab === Tab.Pods}
@@ -151,7 +158,7 @@ export const CloningConsole = (props, context) => {
           </Section>
         )}
         <StatusSection />
-        {tab === Tab.Records && <Records />}
+        {(tab === Tab.Records && !!cloningWithRecords) && <Records />}
         {tab === Tab.Pods && <Pods />}
         {tab === Tab.Functions && <Functions />}
       </Window.Content>
@@ -219,7 +226,7 @@ const Functions = (props, context) => {
           </Box>
         </Section>
       )}
-      {!!disk && (
+      {(!!disk && cloningWithRecords) && (
         <Section
           title="Disk Controls"
           buttons={
@@ -260,6 +267,7 @@ const StatusSection = (props, context) => {
     occupantScanned,
     scannerOccupied,
     scannerGone,
+    cloningWithRecords,
   } = data;
 
   const message = data.message || { text: '', status: '' };
@@ -306,7 +314,7 @@ const StatusSection = (props, context) => {
           </Button>
         }
       >
-        {(!!scannerGone || !!occupantScanned || !scannerOccupied) && (
+        {(!!cloningWithRecords && (!!scannerGone || !!occupantScanned || !scannerOccupied)) && (
           <Box>
             <Icon
               color={(scannerGone || !scannerOccupied) ? 'bad' : 'good'}
@@ -317,7 +325,7 @@ const StatusSection = (props, context) => {
             {!scannerGone && (scannerOccupied ? 'Occupant scanned.' : 'Scanner has no occupant.')}
           </Box>
         )}
-        {(!scannerGone && !occupantScanned && !!scannerOccupied) && (
+        {(!scannerGone && !occupantScanned && !!scannerOccupied && !!cloningWithRecords) && (
           <Button
             width={scannerGone ? 8 : 7}
             icon="dna"
@@ -327,6 +335,16 @@ const StatusSection = (props, context) => {
             onClick={() => act('scan')}
           >
             Scan
+          </Button>
+        )}
+        {(!scannerGone && !!scannerOccupied && !cloningWithRecords) && (
+          <Button
+            icon="dna"
+            align="center"
+            color={'good'}
+            onClick={() => act('scanAndClone')}
+          >
+            Scan & Clone
           </Button>
         )}
       </Section>
