@@ -33,6 +33,6 @@
 					if (limb.remove_stage < 2)
 						limb.remove_stage = 2
 						M.show_message("<span class='alert'>Your [limb] comes loose!</span>")
-						SPAWN(rand(150,200))
+						SPAWN(rand(15,20) SECONDS)
 							if(limb.remove_stage == 2)
 								limb.remove(0)
