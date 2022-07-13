@@ -647,9 +647,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "mavericksabre"
 		ckey = "wrench1"
 
-	whitneystingray
-		name = "\improper Whitney Stingray"
-		icon_state = "whitneystingray"
+	anguishedenglish
+		name = "\improper Whitney Blanchet"
+		icon_state = "whitneyblanchet"
 		ckey = "anguishedenglish"
 
 	fleur
