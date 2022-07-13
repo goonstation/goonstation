@@ -1797,7 +1797,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
-	auto_eject = 1
+	auto_eject = 0
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
 	ammobag_spec_required = TRUE
