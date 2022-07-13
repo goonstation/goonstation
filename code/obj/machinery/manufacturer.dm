@@ -1349,9 +1349,9 @@
 						// bohr hardness = 33
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
+								return mat.getProperty("hard") * 2 + mat.getProperty("tough") >= 10
 							if(3 to INFINITY)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
+								return mat.getProperty("hard") * 2 + mat.getProperty("tough") >= 15
 							else
 								return TRUE
 				if ("CRY")
@@ -1359,7 +1359,7 @@
 
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("density") >= 7
+								return mat.getProperty("tough") >= 7
 							else
 								return TRUE
 				if ("REF")
@@ -1379,9 +1379,9 @@
 				if ("DEN")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("density") >= 6
+							return mat.getProperty("tough") >= 6
 						else
-							return mat.getProperty("density") >= 4
+							return mat.getProperty("tough") >= 4
 				if ("POW")
 					if (mat.material_flags & MATERIAL_ENERGY)
 						switch(secondpart)

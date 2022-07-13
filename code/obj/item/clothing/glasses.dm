@@ -37,7 +37,7 @@
 				block_vision = 1
 			alpha = 255
 
-		setProperty("disorient_resist_eye", src.getProperty("density") * 0.6)
+		setProperty("disorient_resist_eye", src.getProperty("tough") * 0.6)
 
 /obj/item/clothing/glasses/blindfold
 	name = "blindfold"

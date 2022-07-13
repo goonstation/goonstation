@@ -179,11 +179,11 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			health_max = material.getProperty("density") * 10
+			health_max = material.getProperty("tough") * 10
 			health = health_max
 
 			cut_resist = material.getProperty("hard") * 10
-			blunt_resist = material.getProperty("density") * 10
+			blunt_resist = material.getProperty("tough") * 10
 			corrode_resist = material.getProperty("chemical") * 10
 			if (blunt_resist != 0) blunt_resist /= 2
 

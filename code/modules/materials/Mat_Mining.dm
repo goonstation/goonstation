@@ -92,7 +92,7 @@
 		..()
 		if(istype(src.material))
 			src.power = 0
-			src.power += max(10, (src.material.getProperty("density") - 3) * 33)
+			src.power += max(10, (src.material.getProperty("tough") - 3) * 33)
 			src.power += max(10, (src.material.getProperty("hard") - 3) * 33)
 			src.power *= 2.5
 			if(blasting)
@@ -219,7 +219,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.power = max(20, (src.material.getProperty("density") - 3) * 66)
+			src.power = max(20, (src.material.getProperty("tough") - 3) * 66)
 			if(blasting)
 				src.power *= 0.90
 			src.power = round(src.power)

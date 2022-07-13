@@ -1301,7 +1301,7 @@
 			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
 
-			prot = max(0, renf.getProperty("density") - 3) / 2
+			prot = max(0, renf.getProperty("tough") - 3) / 2
 			setProperty("meleeprot", 3 + prot)
 			setProperty("rangedprot", 0.3 + prot / 5)
 			setProperty("space_movespeed", 0.15 + prot / 5)

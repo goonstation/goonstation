@@ -63,9 +63,9 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty("tough") >= 6)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty("tough") <= 2)
 				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
@@ -355,9 +355,9 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty("tough") >= 6)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty("tough") <= 2)
 				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2

@@ -437,8 +437,8 @@
 	var/armor = 0
 
 	if (src.material)
-		if (src.material.getProperty("density") >= 3)
-			armor += round(src.material.getProperty("density"))
+		if (src.material.getProperty("tough") >= 3)
+			armor += round(src.material.getProperty("tough"))
 		else
 			amount += rand(1,3)
 

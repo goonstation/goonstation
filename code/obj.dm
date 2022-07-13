@@ -115,7 +115,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
+			pressure_resistance = max(20, (src.material.getProperty("tough") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality

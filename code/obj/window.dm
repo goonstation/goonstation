@@ -118,11 +118,11 @@
 
 		if (istype(src.material))
 
-			health_max = round(material.getProperty("density") * 15)
+			health_max = round(material.getProperty("tough") * 15)
 			health = health_max
 
 			cut_resist 		= material.getProperty("hard") * 10
-			blunt_resist 	= material.getProperty("density") * 5
+			blunt_resist 	= material.getProperty("tough") * 5
 			stab_resist 	= material.getProperty("hard") * 10
 			corrode_resist 	= material.getProperty("chemical") * 10
 
@@ -133,11 +133,11 @@
 
 		if (istype(reinforcement))
 
-			health_max += round(reinforcement.getProperty("density") * 5)
+			health_max += round(reinforcement.getProperty("tough") * 5)
 			health = health_max
 
 			cut_resist 		+= round(reinforcement.getProperty("hard") * 5)
-			blunt_resist 	+= round(reinforcement.getProperty("density") * 5)
+			blunt_resist 	+= round(reinforcement.getProperty("tough") * 5)
 			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
 			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
