@@ -64548,9 +64548,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"spH" = (
-/turf/simulated/wall/auto/reinforced/jen,
-/area/space)
 "spN" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -143635,7 +143632,7 @@ dSM
 igz
 gQk
 gQk
-spH
+gQk
 rdj
 rdj
 rdj
@@ -143937,7 +143934,7 @@ dSM
 tRZ
 ykH
 wSY
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -144239,7 +144236,7 @@ ekL
 hsL
 skT
 rBB
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -144543,7 +144540,7 @@ diX
 pTC
 gQk
 gDk
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -144845,7 +144842,7 @@ evH
 fCV
 vTC
 bbF
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -145147,7 +145144,7 @@ rBB
 wOD
 wZR
 mFT
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -145449,7 +145446,7 @@ evH
 rBB
 mPI
 wZR
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -145751,7 +145748,7 @@ rBB
 wOD
 dec
 htp
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -146053,7 +146050,7 @@ wAJ
 vVY
 gQk
 gDk
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -146353,7 +146350,7 @@ igz
 iBg
 rFp
 ctI
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -146655,7 +146652,7 @@ igz
 xRM
 gGH
 xog
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -146957,7 +146954,7 @@ igz
 rBB
 tdY
 pHa
-iDf
+gDk
 rdj
 rdj
 rdj
@@ -147259,7 +147256,7 @@ igz
 rBB
 paM
 gQk
-spH
+gQk
 rdj
 rdj
 rdj
@@ -148768,7 +148765,7 @@ eQn
 qMR
 dyz
 gQk
-spH
+gQk
 rdj
 rdj
 rdj
@@ -149069,7 +149066,7 @@ kES
 uNK
 qvR
 gQk
-spH
+gQk
 rdj
 rdj
 rdj
