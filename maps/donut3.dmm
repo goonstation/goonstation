@@ -8605,12 +8605,12 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cjY" = (
+/obj/disposalpipe/segment/mail,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ckh" = (
@@ -14649,6 +14649,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "dXk" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -14989,16 +14993,16 @@
 	},
 /area/station/medical/medbay/cloner)
 "eck" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment,
 /obj/machinery/light/small/sticky{
 	dir = 8
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -27492,14 +27496,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
 /area/station/bridge/captain)
-"hGy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/jen,
-/area/station/maintenance/outer/se)
 "hGA" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner{
 	dir = 6
@@ -50526,6 +50522,11 @@
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -77177,7 +77178,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/hallway/primary/east)
+/area/station/maintenance/outer/se)
 "vWH" = (
 /obj/grille/catwalk/jen/side{
 	dir = 8
@@ -140676,8 +140677,8 @@ gQz
 fKg
 gQz
 fKg
+gQz
 cjY
-tYb
 tYb
 wVk
 kcU
@@ -140978,8 +140979,8 @@ qaW
 roW
 tvD
 tpM
+ihV
 dXk
-ngX
 sKV
 nmJ
 auj
@@ -141280,7 +141281,7 @@ mpG
 mpG
 uCD
 uCD
-hGy
+xqR
 vWG
 xqR
 xqR
