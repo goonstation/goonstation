@@ -177,9 +177,8 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bottlewater"
-	item_state = "contliquid"
+	icon_state = "water"
+	item_state = "water"
 	initial_volume = 50
 	initial_reagents = "water"
 
