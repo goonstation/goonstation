@@ -1,5 +1,32 @@
 
+(t)wed jul 13 22
+(u)MetricDuck
+(p)9611
+(e)🆕|feature
+(+)Changelings can copy the DNA of NPCs for transformation purposes by attempting to absorb them.
 (t)tue jul 12 22
+(u)Azrun
+(e)🆕|feature
+(+)Glue in TEG Circulator Bad! Graphene compound good?
+(u)Ikea
+(p)9488
+(e)⚖|balance
+(+)The corrosion resistance material property has been renamed to chemical resistance. All applications of permeability has been completely merged with chemical resistance and the permeability material property has been removed.
+(u)Moberry
+(p)9376
+(e)⚖⛔|balance, removal
+(+)Changes QM Ore values and removes the electronics commodity.
+(u)TTerc
+(e)🗺|mapping
+(+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
+(u)Chatauscours
+(p)9337
+(e)🗺|mapping
+(*)The Horizon QM does not rely on piping anymore, having now direct imput and export loaders.
+(u)Chatauscours
+(p)9128
+(e)🆕|feature
+(*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
 (u)Kubius
 (p)9550
 (e)🆕|feature
