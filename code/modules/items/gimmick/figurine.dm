@@ -822,6 +822,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "sc077y"
 		ckey = "snowkeith"
 
+	ihaveteeth
+		name = "\improper Teeth Rattletail"
+		icon_state = "teeth"
+		ckey = "ihaveteeth"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
