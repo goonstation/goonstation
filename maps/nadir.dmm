@@ -9700,6 +9700,14 @@
 /obj/access_spawn/research,
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/chemistry)
+"frb" = (
+/obj/decal/fakeobjects/catalytic_doodad{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/north{
+	name = "North Catalytic Substation"
+	})
 "frj" = (
 /obj/rack,
 /obj/item/extinguisher{
@@ -36168,6 +36176,15 @@
 /obj/item/reagent_containers/food/drinks/bottle/champagne,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge)
+"tbu" = (
+/obj/decal/fakeobjects/catalytic_doodad{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation{
+	do_not_irradiate = 1;
+	name = "South Catalytic Substation"
+	})
 "tbC" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
 	dir = 8
@@ -89824,7 +89841,7 @@ bzS
 bzS
 bzS
 rJg
-bQn
+frb
 azY
 nUl
 mPl
@@ -89940,7 +89957,7 @@ kXt
 eKx
 jgX
 vdY
-mIC
+tbu
 rJg
 bzS
 bzS
@@ -91032,7 +91049,7 @@ bzS
 bzS
 bzS
 rJg
-bQn
+frb
 azY
 epj
 edJ
@@ -91148,7 +91165,7 @@ oNs
 vgn
 vtr
 vdY
-mIC
+tbu
 rJg
 bzS
 bzS
