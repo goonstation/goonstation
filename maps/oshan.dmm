@@ -15444,8 +15444,15 @@
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKQ" = (
-/obj/machinery/computer/ordercomp{
-	dir = 8
+/obj/table/round,
+/obj/machinery/coffeemaker/research,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
@@ -32680,17 +32687,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
 "bFP" = (
+/obj/machinery/computer/ordercomp{
+	dir = 8
+	},
 /obj/machinery/light/incandescent/warm/very,
-/obj/table/round,
-/obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "bFR" = (
@@ -45480,8 +45480,8 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch";
-	icon_state = "door1"
+	icon_state = "door1";
+	name = "rusted hatch"
 	},
 /turf/simulated/floor/damaged2,
 /area/space)
