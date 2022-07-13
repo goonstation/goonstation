@@ -289,7 +289,7 @@
 	if(..())
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.owner))
+	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
