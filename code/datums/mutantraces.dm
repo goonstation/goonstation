@@ -60,7 +60,7 @@ TYPEINFO(/datum/mutantrace)
 	var/human_compatible = TRUE
 	/// if FALSE, can only wear clothes if listed in [/obj/item/clothing/var/compatible_species]
 	var/uses_human_clothes = TRUE
-	/// set to an icon to have human.update_clothing() look through its icon_states for matching things
+	/// set to a folder to have human.update_clothing() look through the slot's item_states for matching things
 	var/clothing_icon_override = null
 	/// if TRUE, only understood by others of this mutantrace
 	var/exclusive_language = FALSE
@@ -831,7 +831,7 @@ TYPEINFO(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
-	clothing_icon_override = 'icons/mob/lizard_clothes.dmi'
+	clothing_icon_override = "icons/mob/lizard/"
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
@@ -1312,7 +1312,7 @@ TYPEINFO(/datum/mutantrace)
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
-	clothing_icon_override = 'icons/mob/werewolf_clothes.dmi'
+	clothing_icon_override = "icons/mob/werewolf/"
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
@@ -1493,7 +1493,7 @@ TYPEINFO(/datum/mutantrace)
 	override_language = "monkey"
 	override_attack = FALSE
 	understood_languages = list("english")
-	clothing_icon_override = 'icons/mob/monkey_clothes.dmi'
+	clothing_icon_override = "icons/mob/monkey/"
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
