@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -868,3 +869,29 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+
+/obj/item/assembly/makeshiftshell
+
+	name = "Open pipes"
+	desc = "Four open pipe shells, with propellant in them"
+	icon_state = "pipeshot"
+
+	attackby(obj/item/W, mob/user)
+		..()
+		if(istype(W, /obj/item/raw_material/shard))
+			var/obj/item/ammo/bullets/pipeshotglass/shot = new /obj/item/ammo/bullets/pipeshotglass/(get_turf(src))
+			user.put_in_hand_or_drop(shot)
+			qdel(W)
+			qdel(src)
+
+		if(istype(W, /obj/item/raw_material/scrap_metal))
+			var/obj/item/ammo/bullets/pipeshotglass/shot = new /obj/item/ammo/bullets/pipeshotglass/(get_turf(src))
+			user.put_in_hand_or_drop(shot)
+			qdel(W)
+			qdel(src)
+
+
+

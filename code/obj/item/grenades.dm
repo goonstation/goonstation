@@ -1444,6 +1444,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	attackby(obj/item/W, mob/user)
 
+
+
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
@@ -1457,6 +1459,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
+
+		if(issnippingtool(W) && state == 3) //pipeshot crafting
+			new /obj/item/assembly/makeshiftshell(get_turf(src))
+			qdel(src)
+
+
 
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0

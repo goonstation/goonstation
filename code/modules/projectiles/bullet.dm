@@ -620,6 +620,27 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
+//for makeshift shotgun shells
+/datum/projectile/bullet/improvglass
+	name = "glass"
+	sname = "glass"
+	icon_state = "glass"
+	damage_type = D_SLASHING
+	casing = /obj/item/casing/shotgun/gray
+	dissipation_delay = 2.5
+	dissipation_rate = 2
+	power = 2
+
+/datum/projectile/bullet/improvscrap
+	name = "fragments"
+	sname = "fragments"
+	icon_state = "trace"
+	damage_type = D_SLASHING
+	casing = /obj/item/casing/shotgun/gray
+	dissipation_delay = 4
+	dissipation_rate = 1
+	power = 4
+
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'

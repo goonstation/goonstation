@@ -675,6 +675,33 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+/obj/item/ammo/bullets/pipeshotglass // glass handmade shells
+	sname = "glass load"
+	name = "Pipeshot shells"
+	desc = "What looks to be some broken glass crammed into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
+	icon_state = "makeshiftglass"
+	amount_left = 8.0
+	max_amount = 8.0
+	ammo_cat = AMMO_SHOTGUN_LOW
+	icon_dynamic = 0
+	icon_empty = "makeshiftempty"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+
+/obj/item/ammo/bullets/pipeshotscrap // scrap handmade shells
+	sname = "scrap load"
+	name = "Pipeshot shells"
+	desc = "What looks to be a few chunks of metal crammed into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+	icon_state = "makeshiftscrap"
+	amount_left = 8.0
+	max_amount = 8.0
+	ammo_cat = AMMO_SHOTGUN_LOW
+	icon_dynamic = 0
+	icon_empty = "makeshiftempty"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
