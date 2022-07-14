@@ -222,7 +222,10 @@ var/flock_signal_unleashed = FALSE
 	src.traces |= T
 	var/comp_provided = T.compute_provided()
 	if (comp_provided)
-		src.used_compute += abs(comp_provided)
+		if (comp_provided < 0)
+			src.used_compute += abs(comp_provided)
+		else
+			src.total_compute += comp_provided
 		src.update_computes()
 
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
@@ -233,7 +236,10 @@ var/flock_signal_unleashed = FALSE
 	hideAnnotations(T)
 	var/comp_provided = T.compute_provided()
 	if (comp_provided)
-		src.used_compute -= abs(comp_provided)
+		if (comp_provided < 0)
+			src.used_compute -= abs(comp_provided)
+		else
+			src.total_compute -= comp_provided
 		src.update_computes()
 
 /datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
