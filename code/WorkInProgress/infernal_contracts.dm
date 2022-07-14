@@ -433,7 +433,10 @@ END GUIDE
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
 			return
 		else if (isdiabolical(user))
-			if (M == user)
+			if (isnpc(M))
+				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
+				return
+			else if (M == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			else if (!M.literate)

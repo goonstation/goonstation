@@ -31767,7 +31767,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/cable{
 	d1 = 4;
@@ -36487,7 +36488,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -40624,7 +40626,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
@@ -40978,7 +40981,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -44411,7 +44415,8 @@
 	icon_state = "pdoor0";
 	id = "lockdown";
 	name = "Bridge Lockdown Doors";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /obj/cable{
 	d1 = 4;
