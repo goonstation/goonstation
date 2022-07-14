@@ -1271,7 +1271,7 @@
 	var/mob/living/silicon/ghostdrone/G
 	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
-			if (T.newDrone)
+			if (T.newDrone && !isdead(T))
 				G = T
 				break
 			else // why are you in this list
