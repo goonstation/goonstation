@@ -1074,7 +1074,7 @@
 			var/obj/blob/B = target
 			if(show_message)
 				src.visible_message("<span class='alert'><B>[src] savagely slashes [B]!</span>", "<span class='notice'>You savagely slash at \the [B]</span>")
-			B.take_damage(rand(6,10),1,DAMAGE_CUT)
+			B.take_damage(rand(10,20),1,DAMAGE_CUT)
 			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 			return TRUE
 	return FALSE
