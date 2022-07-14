@@ -35,7 +35,11 @@
 		icon_state = "collectoron"
 	else
 		icon_state = "collector"
-	src.compute = (length(connectedto) * 5) //(5 power per tile)
+	var/comp = (length(connectedto) * 5) //(5 power per tile)
+	if (src.compute != comp)
+		src.update_flock_compute("remove", FALSE)
+		src.compute = comp
+		src.update_flock_compute("apply")
 
 /obj/flock_structure/collector/disposing()
 	for(var/turf/simulated/floor/feather/flocktile as anything in connectedto)

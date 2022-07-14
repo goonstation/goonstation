@@ -62,25 +62,33 @@
 
 	process(mult)
 		if(!src.flock)//if it dont exist it off
-			powered = FALSE
+			if (powered)
+				src.update_flock_compute("remove")
 			src.compute = 0
+			powered = FALSE
 			src.icon_state = "teleblocker-off"
 			return
 
 		if(src.flock.can_afford_compute(base_compute))
-			powered = TRUE
 			src.compute = -base_compute
+			if (!powered)
+				src.update_flock_compute("apply")
+				powered = TRUE
 			src.icon_state = "teleblocker-on"
 		else//if there isnt enough juice
-			powered = FALSE
+			if (powered)
+				src.update_flock_compute("remove")
 			src.compute = 0
+			powered = FALSE
 			src.icon_state = "teleblocker-off"
 			return
 
 		//if we need to generate more juice, do so and up the compute cost appropriately
 		if(src.reagents.total_volume < src.reagents.maximum_volume)
 			if(src.flock.can_afford_compute(base_compute+fluid_gen_cost))
+				src.update_flock_compute("remove", FALSE)
 				src.compute = -(base_compute + fluid_gen_cost)
+				src.update_flock_compute("apply")
 				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
 
 		if(src.reagents.total_volume >= fluid_shot_amt)
