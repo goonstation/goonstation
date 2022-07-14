@@ -675,32 +675,34 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/pipeshotglass // glass handmade shells
+/obj/item/ammo/bullets/pipeshot
+	sname = "pipeshot"
+	name = "pipeshot"
+	desc = "A parent item! If you see this contact a coder."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst
+	icon_state = "makeshiftempty"
+	amount_left = 4.0
+	max_amount = 4.0
+	ammo_cat = AMMO_SHOTGUN_SCRAP
+	delete_on_reload = TRUE
+	icon_dynamic = FALSE
+	icon_empty = "makeshiftempty"
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+
+/obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
-	name = "Pipeshot shells"
-	desc = "What looks to be some broken glass crammed into a few cut open pipe frames."
+	desc = "This appears to be some broken glass haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
 	icon_state = "makeshiftglass"
-	amount_left = 4.0
-	max_amount = 4.0
-	ammo_cat = AMMO_SHOTGUN_SCRAP
-	icon_dynamic = 0
-	icon_empty = "makeshiftempty"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 
-/obj/item/ammo/bullets/pipeshotscrap // scrap handmade shells
+/obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
 	sname = "scrap load"
-	name = "Pipeshot shells"
-	desc = "What looks to be a few chunks of metal crammed into a few cut open pipe frames."
+	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
 	icon_state = "makeshiftscrap"
-	amount_left = 4.0
-	max_amount = 4.0
-	ammo_cat = AMMO_SHOTGUN_SCRAP
-	icon_dynamic = 0
-	icon_empty = "makeshiftempty"
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
