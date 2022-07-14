@@ -197,15 +197,14 @@ var/flock_signal_unleashed = FALSE
 	return (cost <= src.total_compute() - src.used_compute)
 
 /datum/flock/proc/update_computes()
-	var/usedCompute = src.used_compute
 	var/totalCompute = src.total_compute()
 
 	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
-	aH?.updateCompute(usedCompute, totalCompute)
+	aH?.updateCompute(src.used_compute, totalCompute)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		aH = T.abilityHolder
-		aH?.updateCompute(usedCompute, totalCompute)
+		aH?.updateCompute(src.used_compute, totalCompute)
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
