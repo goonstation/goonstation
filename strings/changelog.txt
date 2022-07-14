@@ -1,5 +1,9 @@
 
 (t)thu jul 14 22
+(u)Shiiba
+(p)9620
+(e)🎨|sprites
+(+)Instead of giving raises, NanoTrasen gave out NT branded water bottles, enjoy!
 (u)Stonepillar
 (p)9636
 (e)🐛|bug
