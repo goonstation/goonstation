@@ -380,21 +380,21 @@
 
 		proc/get_stage(val)
 			. = 0
-			switch(val/0.4)
+			switch(val/0.4) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
 				if(0 to 0.1)
-					. = 0
+					. = 0 //normal dose
 				if(0.1 to 1)
-					. = 1
-				if(1 to 2)
-					. = 2
-				if(2 to 3)
-					. = 3
+					. = 1 //you might feel sick
+				if(1 to 3)
+					. = 2 //you're getting into dangerous teritory
 				if(3 to 5)
-					. = 4
+					. = 3 //you're at a 50/50 of kicking it
 				if(5 to 7)
-					. = 5
+					. = 4 //more like 70/30 now
+				if(7 to 10)
+					. = 5 //you will die without treatment
 				if(7 to INFINITY)
-					. = 6
+					. = 6 //you will die.
 
 		onUpdate(timePassed)
 			var/mob/M = null
@@ -410,36 +410,36 @@
 					damage_tox = 0
 					damage_burn = 0
 				if(1)
-					howMuch = "slightly " //it's not great, but you'll be fine
-					damage_tox = prob(70)
+					howMuch = "barely " //you'll be fine
+					damage_tox = prob(10)
 					damage_burn = 0
 				if(2)
-					howMuch = "moderately " //you don't feel so good
-					damage_tox = 1
-					damage_burn = prob(20)
+					howMuch = "slightly " //you don't feel so good
+					damage_tox = prob(25)
+					damage_burn = prob(5)
 				if(3)
-					howMuch = "very " // not great, not terrible
-					damage_tox = 1 + prob(50)
-					damage_burn = 1 + prob(50)
+					howMuch = "moderately " // not great, not terrible
+					damage_tox = prob(50)
+					damage_burn = prob(50)
 				if(4)
 					howMuch = "extremely " //oh no, you're very sick
-					damage_tox = rand(3,7)
-					damage_burn = rand(1,4)
+					damage_tox = prob(75)
+					damage_burn = prob(60)
 				if(5)
 					howMuch = "fatally " //congrats, you're dead in a minute
-					damage_tox = rand(5,10)
-					damage_burn = rand(3,7)
+					damage_tox = 1 + prob(60)
+					damage_burn = 1 + prob(40)
 				if(6)
 					howMuch = "totally " // you are literally dying in seconds
-					damage_tox = rand(15,25)
-					damage_burn = rand(15,25)
+					damage_tox = rand(2,5)
+					damage_burn = rand(1,4)
 			if(stage > 0)
 				visible = TRUE
 			else
 				visible = FALSE
 
 			if(stage > 0 && !isdead(M))
-				if (prob(min(stage-(2+M.traitHolder?.hasTrait("stablegenes")),0)**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if (prob(max(stage-(2+M.traitHolder?.hasTrait("stablegenes")),0)**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob((stage-1)**2) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
