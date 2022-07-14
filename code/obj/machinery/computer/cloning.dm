@@ -808,6 +808,26 @@ proc/find_ghost_by_key(var/find_key)
 			if(!loaded)
 				show_message("Load error.", "warning")
 				. = TRUE
+		if ("loadAndClone")
+			if (cloning_with_records)
+				return
+			var/loaded = FALSE
+			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+				var/mob/ghost = find_ghost_by_key(cloneRecord.fields["ckey"])
+				if (isnull(ghost))
+					show_message("Load error.", "warning")
+					continue
+				var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
+				src.records += R
+				loaded = TRUE
+				var/read_only = src.diskette.read_only
+				src.diskette.read_only = FALSE
+				src.diskette.root.remove_file(cloneRecord)
+				src.diskette.read_only = read_only
+				clone_record(R)
+				break
+
+			. = loaded
 		if("toggleLock")
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))

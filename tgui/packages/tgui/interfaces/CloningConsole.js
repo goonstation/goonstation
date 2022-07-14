@@ -174,6 +174,7 @@ const Functions = (props, context) => {
     diskReadOnly,
     geneticAnalysis,
     mindWipe,
+    cloningWithRecords,
   } = data;
 
   return (
@@ -226,17 +227,27 @@ const Functions = (props, context) => {
           </Box>
         </Section>
       )}
-      {(!!disk && cloningWithRecords) && (
+      {(!!disk) && (
         <Section
           title="Disk Controls"
           buttons={
             <>
-              <Button
-                icon="upload"
-                color={"blue"}
-                onClick={() => act("load")}>
-                Load from disk
-              </Button>
+              {!!cloningWithRecords && (
+                <Button
+                  icon="upload"
+                  color={"blue"}
+                  onClick={() => act("load")}>
+                  Load from disk
+                </Button>
+              )}
+              {!cloningWithRecords && (
+                <Button
+                  icon="upload"
+                  color={"blue"}
+                  onClick={() => act("loadAndClone")}>
+                  Clone from disk
+                </Button>
+              )}
               <Button
                 icon="eject"
                 color={"bad"}
