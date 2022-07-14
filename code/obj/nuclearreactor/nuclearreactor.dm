@@ -102,15 +102,19 @@
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
+				logTheThing("station", src, null, "[src] is at 2000K and may meltdown")
 			if(temperature >= 2500 && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
+				logTheThing("station", src, null, "[src] is at 2500K and is likely to meltdown")
 			else if(temperature < 2500 && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
+				logTheThing("station", src, null, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
+				logTheThing("station", src, null, "[src] is cooling from 2000K")
 				src.ClearSpecificParticles("overheat_smoke")
 
 		src.radiationLevel = tmpRads
@@ -159,6 +163,7 @@
 		src.AddComponent(/datum/component/radioactive, rads, TRUE, FALSE, 5)
 
 	proc/catastrophicOverload()
+		logTheThing("station", src, null, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
 		if(!src.current_gas)
@@ -307,21 +312,35 @@
 		user.u_equip(equipped)
 		equipped.set_loc(src)
 		playsound(src, "sound/machines/law_insert.ogg", 80)
+		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
 		playsound(src, "sound/machines/law_remove.ogg", 80)
+		logTheThing("station", user, null, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [src.component_grid[x][y]] out of the reactor</span>", "<span class='alert'>You slide the [src.component_grid[x][y]] out of the reactor.</span>")
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 
 	ex_act(severity)
+		var/comp_throw_prob = 0
+		switch(severity)
+			if(1.0)
+				comp_throw_prob = 10
+			if(2.0)
+				comp_throw_prob = 25
+			if(3.0)
+				comp_throw_prob = 100
+				logTheThing("station", src, null, "[src] has been destroyed in an explosion!")
+
 		var/turf/epicentre = get_turf(src)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
-				if(src.component_grid[x][y])
+				if(src.component_grid[x][y] && prob(comp_throw_prob))
+					if(severity < 3)
+						logTheThing("station", src, null, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
 					if(prob(50))
 						src.component_grid[x][y].set_loc(epicentre)
 						src.component_grid[x][y].throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
@@ -331,8 +350,8 @@
 						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
-
-		qdel(src)
+		if(severity == 3)
+			qdel(src)
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1

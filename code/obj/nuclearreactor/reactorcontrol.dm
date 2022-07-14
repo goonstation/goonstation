@@ -90,9 +90,11 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.turbine_handle.stator_load = x
+				logTheThing("station", src, null, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
 				src.turbine_handle.flow_rate = x
+				logTheThing("station", src, null, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -168,6 +170,7 @@
 
 		switch(action)
 			if("adjustCR")
+				logTheThing("station", src, null, "[src.reactor_handle] control rod insertion configured to [params["crvalue"]]% by [ui.user]")
 				for(var/x=1 to length(src.reactor_handle.component_grid))
 					for(var/y=1 to length(src.reactor_handle.component_grid[1]))
 						if(src.reactor_handle.component_grid[x][y])
@@ -179,4 +182,5 @@
 				var/y = params["y"]
 				if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
 					var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
-					CR.configured_insertion_level = !CR.configured_insertion_level //TODO better
+					CR.configured_insertion_level = !CR.configured_insertion_level
+					logTheThing("station", src, null, "[src.reactor_handle] control rod at [x],[y] insertion configured to [CR.configured_insertion_level*100]% by [ui.user]")
