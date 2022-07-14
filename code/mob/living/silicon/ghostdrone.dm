@@ -150,6 +150,9 @@
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
 
+		//Don't be on the list of available drones
+		available_ghostdrones -= src
+
 		//So the drone cant pick up an item and then die, sending the item ~to the void~
 		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.tools
 		var/obj/item/magHeld = mag.holding ? mag.holding : null
