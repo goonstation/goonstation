@@ -625,11 +625,9 @@ var/flock_signal_unleashed = FALSE
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
 	src.achievements |= str
-	src.update_computes()
 
 /datum/flock/proc/unAchieve(var/str)
 	src.achievements -= str
-	src.update_computes()
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/hasAchieved(var/str)
