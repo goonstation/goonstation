@@ -1713,7 +1713,7 @@ datum
 				if (!M) M = holder.my_atom
 				//M.changeStatus("radiation", 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
-					for (var/bloodtype in list("blood", "bloodc", "hemolymph", "milk"))
+					for (var/bloodtype in list("blood", "bloodc", "hemolymph", "milk", "calcium"))
 						if(holder.has_reagent(bloodtype))
 							var/datum/reagent/blood = holder.reagent_list[bloodtype]
 							if (blood && istype(blood.data, /datum/bioHolder))
