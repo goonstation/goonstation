@@ -1501,7 +1501,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
-    setProperty("flammable", 3)
+		setProperty("flammable", 3)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
