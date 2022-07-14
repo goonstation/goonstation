@@ -272,7 +272,7 @@
 
 	//despite the name, this means reloading
 	is_on_cooldown(var/mob/user)
-		return GET_COOLDOWN(user, "\ref[src] reloading")
+		return GET_COOLDOWN(user, "\ref[src] reload")
 
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
