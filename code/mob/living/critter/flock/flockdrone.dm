@@ -26,7 +26,7 @@
 	butcherable = TRUE
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
-	var/resources_per_health = 5 // how much resources we get per item health
+	var/resources_per_health = 4 // how much resources we get per item health
 
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
