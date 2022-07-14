@@ -5,6 +5,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
+	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/gunpoint
 
@@ -233,7 +234,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/obj/item/gun/attack(mob/M as mob, mob/user as mob)
+/obj/item/gun/attack(mob/M, mob/user)
 	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
@@ -432,7 +433,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		var/turf/T = target
 		src.log_shoot(user, T, P)
 
-	SEND_SIGNAL(user, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+	SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 	if (ismob(user))
 		var/mob/M = user

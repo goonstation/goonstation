@@ -55,7 +55,7 @@
 		use_power(power_usage)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!active)
 			detect_cameras()
 			current_camera = cameras["HUD1"]

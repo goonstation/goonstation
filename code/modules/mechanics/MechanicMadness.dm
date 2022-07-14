@@ -93,12 +93,12 @@
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -230,7 +230,7 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -301,13 +301,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return 0
 		if(..()) return 1
 		return 1 //attack_hand(user) // was causing issues
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
@@ -343,6 +343,7 @@
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
@@ -410,7 +411,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
@@ -423,7 +424,7 @@
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
 				if (!anchored)
@@ -589,7 +590,7 @@
 				return 0
 		ejectmoney()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
@@ -649,7 +650,7 @@
 		trunk = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user))
 			if(src.level == 1) //wrenched down
 				trunk = locate() in src.loc
@@ -778,7 +779,7 @@
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
@@ -888,7 +889,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)
@@ -910,7 +911,7 @@
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
@@ -1837,7 +1838,7 @@
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1863,7 +1864,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
@@ -1872,7 +1873,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1880,21 +1881,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["data"]), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["message"]), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -2535,6 +2536,8 @@
 						heardname = ID.registered
 					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -2603,12 +2606,12 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1)
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
@@ -2715,7 +2718,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
@@ -2769,7 +2772,7 @@
 		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		var/gun_fits = 0
 		for(var/I in src.compatible_guns)
@@ -2922,7 +2925,7 @@
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")

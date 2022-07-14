@@ -15,6 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
+	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
@@ -522,7 +523,7 @@
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/clothing/under/chameleon,
+		/obj/item/storage/backpack/chameleon,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -731,7 +732,7 @@
 		/obj/item/shipcomponent/sensor/mining)
 
 	clothes
-		spawn_contents = list(/obj/item/clothing/under/gimmick/blackstronaut,
+		spawn_contents = list(/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/shoes/cleats,
 		/obj/item/clothing/mask/balaclava,
 		/obj/item/reagent_containers/glass/beaker/burn)

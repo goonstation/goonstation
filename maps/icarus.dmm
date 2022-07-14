@@ -93,7 +93,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/research_outpost/indigo_rye)
 "aan" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/research_outpost/indigo_rye)
 "aao" = (
 /turf/space,
@@ -1030,7 +1030,7 @@
 /area/station/crew_quarters/quarters_west)
 "acH" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -4014,7 +4014,7 @@
 "ajC" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -4153,7 +4153,7 @@
 "ajN" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -5125,7 +5125,7 @@
 "alG" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -9957,7 +9957,7 @@
 "avT" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Restroom"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -12876,7 +12876,7 @@
 "aCh" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	id = "chapel_visitation";
 	name = "Chapel Office";
 	req_access_txt = "22"
@@ -13191,7 +13191,7 @@
 "aDe" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -14413,7 +14413,7 @@
 "aFG" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -15068,7 +15068,7 @@
 "aHc" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -15696,7 +15696,7 @@
 "aIr" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -22208,7 +22208,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "aVp" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/airless/engine,
 /area/station/mining/refinery)
 "aVq" = (
@@ -25193,7 +25193,7 @@
 /turf/space/asteroid,
 /area/space)
 "bbz" = (
-/turf/simulated/wall/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid/lighted,
 /area/space)
 "bbA" = (
 /obj/cable{
@@ -27465,7 +27465,7 @@
 /area/station/maintenance/east)
 "qUL" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)

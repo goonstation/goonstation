@@ -28,7 +28,7 @@ Fibre wire
 			M.show_text("<B><I>It burns...!</I></B>", "red")
 			if(ishuman(M)) evil_act(M)
 /* oops didn't quite think this through
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/leg))
 			var/obj/machinery/bot/skullbot/B = new /obj/machinery/bot/skullbot
 			B.icon = icon('icons/obj/bots/aibots.dmi', "skullbot-ominous")
@@ -847,7 +847,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"

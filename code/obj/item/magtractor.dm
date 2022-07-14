@@ -53,7 +53,7 @@
 		src.holder = null
 		src.verbs -= /obj/item/magtractor/proc/toggleHighPower
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return 0
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
@@ -260,5 +260,9 @@
 		src.processHeld = 0
 
 		return 1
+
+	Exited(Obj, newloc) // handles the held item going byebye
+		if(Obj == src.holding  && src.holder)
+			actions.stopId("magpickerhold", src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

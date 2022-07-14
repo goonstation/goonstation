@@ -2,7 +2,6 @@
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
 	/datum/matfab_recipe/coillarge,
-	/datum/matfab_recipe/arrowhead,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,
@@ -100,7 +99,7 @@
 			recipes.Add(new R())
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.Browse(buildHtml(), "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
 		return
 

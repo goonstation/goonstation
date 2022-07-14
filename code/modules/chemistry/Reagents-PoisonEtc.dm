@@ -32,7 +32,6 @@ datum
 				fluid_g = 32
 				fluid_b = 32
 				transparency = 120
-				penetrates_skin = 1
 
 		harmful/simple_damage_burn
 			name = "irritant precursor"
@@ -86,8 +85,10 @@ datum
 						if (prob(75))
 							M.TakeDamage("head", 0, 10 * stack_mult, 0, DAMAGE_BURN)
 							M.emote("scream")
-							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-							M.real_name = "Unknown"
+							if(!M.disfigured)
+								boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
+								M.disfigured = TRUE
+								M.UpdateName()
 							M.unlock_medal("Red Hood", 1)
 						else
 							M.TakeDamage("All", 0, 10 * stack_mult, 0, DAMAGE_BURN)
@@ -99,6 +100,11 @@ datum
 					if (volume >= 10)
 						M.TakeDamage("All", 0, clamp((volume - 10) * 2, 4, 20), 0, DAMAGE_BURN)
 						M.emote("scream")
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (!H.vdisfigured)
+								boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+								H.vdisfigured = TRUE
 
 			reaction_obj(var/obj/O, var/volume)
 				if (istype(O,/obj/fluid))
@@ -158,8 +164,10 @@ datum
 					if (volume >= 50 && prob(75))
 						M.TakeDamage("head", 0, 10, 0, DAMAGE_BURN)
 						M.emote("scream")
-						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-						M.real_name = "Unknown"
+						if(!M.disfigured)
+							boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
+							M.disfigured = TRUE
+							M.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
 						random_burn_damage(M, min(5, volume * 0.25))
@@ -400,6 +408,8 @@ datum
 			fluid_g = 75
 			transparency = 20
 			penetrates_skin = 1
+			touch_modifier = 0.5
+
 			value = 4 // 1 1 1 heat
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -424,6 +434,8 @@ datum
 			transparency = 20
 			penetrates_skin = 1
 			value = 4
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -853,8 +865,10 @@ datum
 						if (!H.wear_mask && !H.head)
 							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
-							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
-							H.real_name = "Unknown"
+							if(!H.disfigured)
+								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+								H.disfigured = TRUE
+								H.UpdateName()
 							H.unlock_medal("Red Hood", 1)
 							return
 						else
@@ -913,6 +927,11 @@ datum
 				else if (volume >= 5)
 					M.emote("scream")
 					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if (!H.vdisfigured)
+							boutput(H,"<span class='alert'>Your vocal chords become scarred from ingesting acid!</span>")
+							H.vdisfigured = TRUE
 
 				boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 5 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 				return
@@ -1121,6 +1140,7 @@ datum
 			depletion_rate = 0.1
 			var/counter = 1
 			var/remove_buff = 0
+			var/fainted = FALSE
 			blob_damage = 2
 			threshold = THRESHOLD_INIT
 
@@ -1144,13 +1164,14 @@ datum
 					M.changeStatus("stimulants", -10 SECONDS * mult)
 
 				switch(counter+= (1 * mult))
-					if (1 to 10)
+					if (1 to 11)
 						if (probmult(7)) M.emote("yawn")
-					if (11 to 20)
+					if (11 to 21)
 						M.setStatus("drowsy", 40 SECONDS)
-					if (21)
-						M.emote("faint")
-					if (22 to INFINITY)
+					if (21 to INFINITY)
+						if(!fainted)
+							M.emote("faint")
+							fainted = TRUE
 						if (prob(20))
 							M.emote("faint")
 							M.setStatusMin("paralysis", 8 SECONDS * mult)
@@ -1273,13 +1294,13 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 4)
+					if (1 to 5)
 						return // let's not be incredibly obvious about who stung you for changelings
-					if (5 to 10)
+					if (5 to 11)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(10 * mult)
 						if (probmult(20)) M.emote("drool")
-					if (11 to 17)
+					if (11 to 18)
 						M.setStatus("drowsy", 20 SECONDS)
 						M.make_dizzy(1 * mult)
 						M.change_misstep_chance(20 * mult)
@@ -1297,6 +1318,68 @@ datum
 				else
 					if (prob(10)) M.take_brain_damage(1 * mult) // let's slow down a bit after 80
 				M.take_toxin_damage(1 * mult)
+				..(M, mult)
+				return
+
+		harmful/neurodepressant
+			name = "neurodepressant"
+			id = "neurodepressant"
+			description = "A debilitating compound that affects muscular function, extracted from neurotoxin."
+			reagent_state = LIQUID
+			fluid_r = 140
+			fluid_g = 145
+			fluid_b = 135
+			depletion_rate = 0.2
+			var/counter = 1
+			blob_damage = 1
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M) M = holder.my_atom
+				if (!counter) counter = 1
+				switch(counter += (1 * mult))
+					if (1 to 5)
+						return //evil evil evil make them think it's neurotoxin
+					if (5 to 10)
+						M.make_dizzy(1 * mult)
+						M.change_misstep_chance(10 * mult)
+						if (probmult(20)) M.emote("drool")
+					if (10 to 18)
+						M.setStatus("drowsy", 8 SECONDS)
+						M.make_dizzy(1 * mult)
+						M.change_misstep_chance(15 * mult)
+						if (probmult(35)) M.emote("drool")
+					if (18 to INFINITY)
+						M.setStatus("drowsy", 8 SECONDS)
+						M.make_dizzy(1 * mult)
+						M.change_eye_blurry(6, 6)
+						M.change_misstep_chance(20 * mult)
+						if(probmult(15))
+							if(!M.hasStatus("slowed"))
+								M.setStatus("slowed", 2 SECONDS)
+							boutput(M, pick("<span class='alert'>You feel extremely dizzy!</span>",\
+											"<span class='alert'>You feel like everything is spinning!</span>",\
+											"<span class='alert'>Your [pick("arms", "legs")] quiver!</span>",\
+											"<span class='alert'>Your feel a numbness through your [pick("hands", "fingers")]..</span>",\
+											"<span class='alert'>Your vision [pick("gets all blurry", "goes fuzzy")]!</span>",\
+											"<span class='alert'>You feel very sick!</span>"))
+							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
+								M.vomit() //so dizzy you puke
+								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>",\
+													"<span class='alert'>You puke all over yourself!</span>")
+						else if(probmult(9))
+							M.setStatus("muted", 10 SECONDS)
+							boutput(M, pick("<span class='alert'>You feel like the words are getting caught up in your mouth!</span>",\
+											"<span class='alert'>You can't utter a single word!</span>",\
+											"<span class='alert'>Your [pick("face","chest")] feels numb...</span>",\
+											"<span class='alert'>You can't feel your [pick("mouth","tongue","throat")]!</span>"))
+							if(prob(25)) //no need for probmult in here as it's already behind a probmult statement
+								M.losebreath += (1)
+								M.emote(pick("gasp", "choke"))
+							else if(prob(25)) //same thing
+								M.setStatus("stunned", 3 SECONDS)
+						else if (probmult(40)) M.emote(pick("twitch", "tremble", "drool", "drool", "twitch_v"))
+
+				M.jitteriness = max(M.jitteriness-30,0)
 				..(M, mult)
 				return
 

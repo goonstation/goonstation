@@ -1,4 +1,4 @@
-/mob/living/critter/drone
+/mob/living/critter/robotic/drone
 	name = "Drone"
 	real_name = "Drone"
 	var/drone_designation = "SC"
@@ -55,6 +55,7 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1

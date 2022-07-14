@@ -37,7 +37,7 @@ toxic - poisons
 	color_red = 0.8
 	color_green = 0
 	color_blue = 0
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 
 
 //Any special things when it hits shit?

@@ -82,7 +82,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	damage_slashing()
 	damage_blunt()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
@@ -118,7 +118,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istype(W, /obj/item/card/id))
@@ -181,7 +181,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/mantapropulsion
 	name = "propeller"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "sea_propulsion"
 	var/stateOn = ""
 	var/stateOff = ""
@@ -215,7 +215,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(repairstate)
 			if (0)
 				if (important == 1)
@@ -324,7 +324,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/power/seaheater
 	name = "heater"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 2
 	density = 1
@@ -394,7 +394,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		STOP_TRACKING
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
@@ -409,7 +409,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			UpdateIcon()
 			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (broken == 1 && open == 1)
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		switch(repairstate)
@@ -520,7 +520,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)
@@ -565,7 +565,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)
@@ -610,7 +610,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
-			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged",ALERT_STATION)
+			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged", alert_origin = ALERT_STATION)
 
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
@@ -639,7 +639,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(busy) return
 		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
@@ -1450,7 +1450,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 
-/obj/machinery/handscanner/attack_hand(mob/user as mob)
+/obj/machinery/handscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if (used == 0)

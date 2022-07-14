@@ -211,7 +211,7 @@
 	burn_possible = 1
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		if (user.zone_sel.selecting == "head")
 			M.emote("sneeze")
@@ -472,7 +472,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /datum/projectile/special/paintball
 	name = "red paintball"
 	icon_state = "paintball-r"
-	icon_turf_hit = "paint-r"
+	impact_image_state = "paint-r"
 	power = 1
 	cost = 1
 	dissipation_rate = 1
@@ -562,14 +562,14 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
 			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
@@ -1098,6 +1098,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throw_speed = 1
 	throw_return = 1
 	throw_spin = 0
+	wear_layer = MOB_GLASSES_LAYER2
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
@@ -1271,7 +1272,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
@@ -1362,7 +1363,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shoot(get_turf(target), get_turf(user), user, 0, 0)
 
-	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
+	attackby(var/obj/item/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
@@ -1428,7 +1429,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.open = !src.open
 		src.UpdateIcon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.makeup == 2) // it's messed up
@@ -1594,7 +1595,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob) // big ol hackery here
+	attack(mob/M, mob/user) // big ol hackery here
 		if (M && isvampire(M))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1660,7 +1661,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[switch_select]-throw"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1684,7 +1685,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[board_select]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 

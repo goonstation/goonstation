@@ -48,11 +48,11 @@ export const BugReportForm = (props, context) => {
   const [chosenTag, setTag] = useLocalState(context, 'tag', 'BUG');
 
   const tags = [
-    ["Unclassified", "BUG"],
-    ["Trivial", "TRIVIAL"],
-    ["Minor", "MINOR"],
-    ["Major", "MAJOR"],
-    ["Critical", "CRITICAL"],
+    ["Unclassified", "BUG", "A bug that impacts usage of a feature."],
+    ["Trivial", "TRIVIAL", "A bug that is extremely trivial, such as a spelling issue."],
+    ["Minor", "MINOR", "A bug that does not impact usage of a feature. These are often visual issues."],
+    ["Major", "MAJOR", "A bug that significantly impacts the usage of a feature."],
+    ["Critical", "CRITICAL", "A bug that significantly impacts the progression of the round."],
   ];
 
   const submit = () => {
@@ -96,13 +96,15 @@ export const BugReportForm = (props, context) => {
             </Flex.Item>
             <Flex.Item my={2}>
               <h2>{"Tags"}</h2>
-              {tags.map(pair =>
+              {tags.map(tag =>
                 (
                   <ButtonCheckbox
-                    key={pair[1]}
-                    checked={pair[1] === chosenTag}
-                    onClick={() => setTag(pair[1])}>
-                    {pair[0]}
+                    key={tag[1]}
+                    checked={tag[1] === chosenTag}
+                    onClick={() => setTag(tag[1])}
+                    tooltip={tag[2]}
+                    tooltipPosition="bottom">
+                    {tag[0]}
                   </ButtonCheckbox>
                 )
               )}

@@ -221,7 +221,7 @@
 
 	proc/on_grump()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
@@ -363,11 +363,10 @@
 			return 1 // so things can do if (..())
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		if (!src.alive)
-			..()
-			return
+			return ..()
 
 		if (src.sleeping)
 			sleeping = 0
@@ -1008,13 +1007,13 @@
 		if (src.reagents && src.critter_reagent)
 			src.reagents.add_reagent(src.critter_reagent, 10)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.anchored)
 			return
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
 			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
@@ -1067,45 +1066,44 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN(0)
-				if (shouldThrow && T)
-					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			if (shouldThrow && T)
+				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			else
+				var/hatch_wiggle_counter = rand(3,8)
+				while (hatch_wiggle_counter-- > 0)
+					src.pixel_x++
+					sleep(0.2 SECONDS)
+					src.pixel_x--
+					sleep(1 SECOND)
+				src.visible_message("[src] hatches!")
+
+			if (!ispath(critter_type))
+				if (istext(critter_type))
+					critter_type = text2path(critter_type)
 				else
-					var/hatch_wiggle_counter = rand(3,8)
-					while (hatch_wiggle_counter-- > 0)
-						src.pixel_x++
-						sleep(0.2 SECONDS)
-						src.pixel_x--
-						sleep(1 SECOND)
-					src.visible_message("[src] hatches!")
+					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					src.visible_message("Looks like there wasn't anything inside of [src]!")
+					qdel(src)
+					return
 
-				if (!ispath(critter_type))
-					if (istext(critter_type))
-						critter_type = text2path(critter_type)
-					else
-						logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
-						src.visible_message("Looks like there wasn't anything inside of [src]!")
-						qdel(src)
-						return
+			var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
+			if (critter_name)
+				newCritter.name = critter_name
 
-				if (critter_name)
-					newCritter.name = critter_name
+			if (shouldThrow && T)
+				newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 
-				if (shouldThrow && T)
-					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			//hack. Clownspider queens keep track of their babies.
+			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+				var/mob/living/critter/spider/clownqueen/queen = src.parent
+				if (islist(queen.babies))
+					queen.babies += newCritter
 
-				//hack. Clownspider queens keep track of their babies.
-				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
-					var/mob/living/critter/spider/clownqueen/queen = src.parent
-					if (islist(queen.babies))
-						queen.babies += newCritter
-
-				sleep(0.1 SECONDS)
-				qdel(src)
-				return
+			sleep(0.1 SECONDS)
+			qdel(src)
+			return newCritter
 		else
 			return
 

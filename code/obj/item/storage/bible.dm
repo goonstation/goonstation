@@ -10,7 +10,7 @@ var/global/list/bible_contents = list()
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -55,7 +55,7 @@ var/global/list/bible_contents = list()
 		else
 			..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -116,7 +116,7 @@ var/global/list/bible_contents = list()
 				playsound(src.loc, "punch", 25, 1, -1)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
@@ -179,10 +179,18 @@ var/global/list/bible_contents = list()
 			user?.gib()
 			return TRUE
 		else
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-			user.gib()
+			smite(user)
 			return TRUE
+
+	proc/smite(mob/M)
+		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
+		logTheThing("combat", M, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		var/turf/T = get_turf(M)
+		showlightning_bolt(T)
+		playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+		M.unequip_all()
+		M.emote("scream")
+		M.elecgib()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
@@ -211,7 +219,7 @@ var/global/list/bible_contents = list()
 
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-		user.gib()
+		smite(user)
 		return TRUE
 
 /obj/item/storage/bible/hungry
@@ -276,7 +284,7 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)

@@ -89,7 +89,8 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -232,7 +233,8 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
@@ -265,9 +267,10 @@
 
 	if(!isdead(src))
 		if (src.hibernating == 1)
-			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
+			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
+				src.mind?.dnr = 1
 				src.ghostize()
 				qdel(src)
 			else
@@ -516,6 +519,8 @@
 		src.x--
 	OnMove()
 
+	. = ..()
+
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
@@ -536,7 +541,7 @@
 	set category = null
 	set name = "Re-enter Corpse"
 	if(!corpse || corpse.disposed)
-		alert("You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!")
+		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank

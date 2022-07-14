@@ -127,14 +127,14 @@
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
 			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
@@ -203,6 +203,7 @@
 	'sound/musical_instruments/jukebox/ultralounge.ogg',
 	'sound/musical_instruments/jukebox/jazzpiano.ogg')
 	pick_random_note = 1
+	volume = 40
 
 	show_play_message(mob/user as mob)
 		return
@@ -231,7 +232,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
+/obj/item/instrument/saxophone/attack(mob/M, mob/user)
 	if(ismob(M))
 		playsound(src, pick(sounds_punch), 50, 1, -1)
 		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
@@ -276,7 +277,7 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
@@ -301,12 +302,12 @@
 	show_play_message(mob/user as mob)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -359,7 +360,7 @@
 	note_time = 30
 	mats = 2
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -545,7 +546,7 @@
 	proc/dootize(var/mob/living/carbon/human/S as mob)
 		if (!istype(S))
 			return
-		if (S.mob_flags & IS_BONER)
+		if (S.mob_flags & IS_BONEY)
 			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
 			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
 			return
@@ -591,7 +592,7 @@
 	var/charge = 0 //A certain level of UNHOLY ENERGY is required to knock out a soul, ok.
 	var/charge_required = 10
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		playsound(src, "swing_hit", 50, 1, -1)
 		..()
@@ -673,6 +674,30 @@
 			sounds_instrument += "sound/musical_instruments/tambourine/tambourine_[i].ogg"
 		..()
 
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "Makes a nice 'twang' sound."
+	icon = 'icons/obj/instruments.dmi'
+	icon_state = "banjo"
+	item_state = "banjo"
+	two_handed = 1
+	force = 6
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at E3
+	key_offset = 5
+
+	New()
+		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		sounds_instrument = list()
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
+		..()
+
+
 
 
 /obj/storage/crate/wooden/instruments
@@ -689,3 +714,8 @@
 	name = "wind instruments box"
 	desc = "A wooden crate labeled to contain wind instruments."
 	spawn_contents = list(/obj/item/instrument/trumpet, /obj/item/instrument/saxophone)
+
+/obj/storage/crate/wooden/banjo
+	name = "banjo box"
+	desc = "A wooden crate labeled to contain a banjo."
+	spawn_contents = list(/obj/item/instrument/banjo)

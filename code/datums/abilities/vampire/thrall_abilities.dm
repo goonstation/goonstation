@@ -7,6 +7,7 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 1
 	not_when_handcuffed = 0
 	restricted_area_check = 0
@@ -31,7 +32,7 @@
 		logTheThing("say", M, M.name, "[message]")
 
 		if (!H.master)
-			boutput(M, __red("Your link to your master has been severed!"))
+			boutput(M, "<span class='alert'>Your link to your master has been severed!</span>")
 			return 1
 
 		.= H.msg_to_master(message)

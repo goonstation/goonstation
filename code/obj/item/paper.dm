@@ -89,14 +89,14 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
-	if (menuchoice == "Nothing")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
+	if (!menuchoice || menuchoice == "Nothing")
 		return
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
+		var/fold = tgui_alert(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball"))
+		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
@@ -183,6 +183,7 @@
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+				playsound(usr.loc, "sound/misc/stamp_paper.ogg", 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -1161,7 +1162,6 @@ as it may become compromised.
 	burn_point = 600
 	burn_output = 800
 	burn_possible = 1
-	health = 100
 
 
 /obj/item/paper_bin/proc/update()
@@ -1174,7 +1174,7 @@ as it may become compromised.
 		if (!user.put_in_hand(src))
 			return ..()
 
-/obj/item/paper_bin/attack_hand(mob/user as mob)
+/obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	var/obj/item/paper = locate(/obj/item/paper) in src
 	if (paper)
@@ -1194,7 +1194,7 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P as obj, mob/user as mob) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
 	if (istype(P))
 		user.drop_item()
 		P.set_loc(src)
@@ -1264,7 +1264,7 @@ as it may become compromised.
 		src.assignment = null
 		src.desc = "A rubber stamp for stamping important documents."
 		return
-/obj/item/stamp/attackby(obj/item/C as obj, mob/user as mob)// assignment with ID
+/obj/item/stamp/attackby(obj/item/C, mob/user)// assignment with ID
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
@@ -1458,7 +1458,7 @@ as it may become compromised.
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M as mob, mob/user as mob)
+/obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
 		playsound(M,"sound/misc/gulp.ogg", 30, 1)
@@ -1637,6 +1637,12 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
 That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
 
+/obj/item/paper/artists_anger // for starved artist random maint room
+	name = "stained note"
+	desc = "This paper is stained yellow from old age."
+	icon_state = "paper_caution"
+	info = {"God damnit, why is drawing a simple rubber duck so fucking hard?!"}
+
 /obj/item/paper/synd_lab_note
 	name = "scribbled note"
 	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
@@ -1716,3 +1722,185 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/obj/item/paper/band_notice
+	name = "Internal Memo - NT Marching Band"
+	icon_state = "paper"
+	info = {"
+	-----------------|HEAD|-----------------<br>
+	MAILNET: PUBLIC_NT<br>
+	WORKGROUP: *MARCHING_BAND<br>
+	FROM: OGOTDAM@NT13<br>
+	TO: NTMARCHINGBAND@NT13<br>
+	PRIORITY: HIGH<br>
+	SUBJECT: Imminent Closure<br>
+	----------------------------------------<br>
+	Dearest friends,<br><br>
+
+	It is my great displeasure to inform you all of the imminent cessation of financial support from the Station Morale
+	Organization to all performing arts activities due to budgetary constraints. This therefore means that the NanoTrasen
+	Marching Band will have to close down and stop paying all of its employees.<br><br>
+
+	Off the record, what BUFFOONISH bean-counter cut off our funding?! Do they not know how IMPORTANT the arts are in
+	maintaining our collective sanity in this HELLHOLE of a station?! For Capital-G God's sake, I spend forty hours a
+	day in the engine room, is it so hard to spare us but one of those hours doing something, ANYTHING to keep us from
+	resorting to savagery?! So what if our uniforms make us look like dorks and that half the crew wish to puncture their
+	eardrums, music is all I have, all that ANY of us have!<br><br>
+
+	You know what, these bastards don't even deserve us. I'm out of here.<br><br>
+
+	Yours faithfully,<br><br>
+
+	Ovidius Gotdam<br>
+	NT Marching Band Director
+	"}
+
+
+/obj/item/paper/businesscard
+	name = "business card"
+	icon_state = "businesscard"
+	desc = "A generic looking business card, offering printing services for more business cards."
+
+	sizex = 640
+	sizey = 400
+
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/banjo
+	name = "business card - Tum Tum Phillips"
+	icon_state = "businesscard"
+	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/biteylou
+	name = "business card - Bitey Lou's Bodyshop"
+	icon_state = "businesscard"
+	desc = "A business card for some sorta mechanic's shop."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/bonktek
+	name = "business card - Bonktek Shopping Pyramid"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+
+/obj/item/paper/businesscard/clowntown
+	name = "business card - Clown Town"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	color = "blue"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+
+/obj/item/paper/businesscard/cosmicacres
+	name = "business card - Cosmic Acres"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a retirement community on Earth's moon."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+
+/obj/item/paper/businesscard/ezekian
+	name = "business card - Ezekian Veterinary Clinic"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier veterinarian's office."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg1
+	name = "business card - Amantes Mini Golf"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a mini golf course."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg2
+	name = "business card - Amantes Rock Shop"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a rock collector's shop."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+
+/obj/item/paper/businesscard/josh
+	name = "business card - Josh"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "green"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+
+/obj/item/paper/businesscard/lawyers
+	name = "business card - Hogge & Wylde"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+
+/obj/item/paper/businesscard/hemera_rcd
+	name = "info card - Rapid Construction Device"
+	icon_state = "businesscard-alt"
+	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/skulls
+	name = "business card - Skulls for Cash"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+
+/obj/item/paper/businesscard/taxi
+	name = "business card - Old Fortuna Taxi Company"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier space-taxi and shuttle company."
+	color = "yellow"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+
+/obj/item/paper/businesscard/vurdulak
+	name = "business card - Emporium Vurdulak"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "purple"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"

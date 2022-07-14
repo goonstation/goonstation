@@ -655,15 +655,16 @@
 			switchStage(getStage())
 
 			var/prot = 1
+			if (isliving(owner))
+				var/mob/living/L = owner
+				if(L.is_heat_resistant())
+					prot = 0
+				else
+					prot = (1 - (L.get_heat_protection() / 100))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_heat_protection() / 100))
-
 				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
 					duration += timePassed										//this makes the fire counter not increment on its own
-
-			if(ismob(owner) && owner:is_heat_resistant())
-				prot = 0
 
 			switch(stage)
 				if(1)
@@ -1184,13 +1185,19 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		var/do_slow = FALSE
 		var/mob/living/L
 
 		onAdd(optional=null)
 			. = ..()
-			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 			if (isliving(owner))
 				L = owner
+				L.force_laydown_standup()
+				if(QDELETED(src))
+					return
+				do_slow = TRUE
+
+				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
 					if (!actions.hasAction(L, "fire_roll"))
 						L.last_resist = world.time + 25
@@ -1202,7 +1209,8 @@
 
 		onRemove()
 			. = ..()
-			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
+			if(do_slow)
+				ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -1571,6 +1579,29 @@
 	duration = 0.5 SECONDS
 	visible = 0
 
+/datum/statusEffect/cornicened
+	id = "cornicened"
+	name = "Cornicened"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	icon_state = null
+	visible = FALSE
+	var/stacks = 1
+	maxDuration = 2 SECONDS
+
+	onChange(optional)
+		. = ..()
+
+		stacks++
+		if(stacks >= 3)
+			owner.setStatus("cornicened2")
+
+/datum/statusEffect/cornicened2
+	id = "cornicened2"
+	name = "Cornicened2"
+	visible = FALSE
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	maxDuration = 2 SECONDS
+
 /datum/statusEffect/shivering
 	id = "shivering"
 	name = "Shivering"
@@ -1668,13 +1699,6 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			#ifdef CREATE_PATHOGENS
-			if(!isdead(L))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				wrap_pathogen(L.reagents, P, 10)
-			#endif
 		if(probmult(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
@@ -1704,10 +1728,6 @@
 				. += " Your ghostly essence makes you immune to its poison."
 			else
 				. += " You will take toxic damage."
-				#ifdef CREATE_PATHOGENS
-				if(how_miasma > 4)
-					. += " You might get sick."
-				#endif
 
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"
@@ -2096,3 +2116,93 @@
 			APC.lighting = oldstate
 			APC.UpdateIcon()
 			APC.update()
+
+/datum/statusEffect/filthy
+	id = "filthy"
+	name = "Filthy"
+	desc = "You're absolutely filthy."
+	icon_state = "filthy"
+	maxDuration = 3 MINUTES
+	var/mob/living/carbon/human/H
+
+	onAdd(optional)
+		. = ..()
+		if(ishuman(owner))
+			H = owner
+
+	onUpdate(timePassed)
+		. = ..()
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+			H.delStatus("filthy")
+
+
+	onRemove()
+		. = ..()
+		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
+			H.setStatus("rancid", null)
+
+/datum/statusEffect/rancid
+	id = "rancid"
+	name = "Rancid"
+	desc = "You smell like spoiled milk."
+	icon_state = "rancid"
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder.AddEffect("sims_stinky")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder.RemoveEffect("sims_stinky")
+
+/datum/statusEffect/flock_absorb
+	id = "flock_absorbing"
+	name = "Absorbing"
+	desc = "Please call 1800-CODER"
+	visible = FALSE
+	unique = TRUE
+
+	onRemove()
+		var/mob/living/critter/flock/drone/drone = owner
+		if (istype(drone) && drone.absorber.item)
+			drone.changeStatus("flock_absorbing", drone.absorber.item.health/drone.health_absorb_rate SECONDS, drone.absorber.item)
+		..()
+
+	onUpdate(timePassed)
+		var/mob/living/critter/flock/drone/drone = owner
+		if (!istype(drone) || !drone.absorber.item)
+			owner.delStatus(src.id)
+			return
+		drone.absorber.tick(timePassed/10)
+
+/datum/statusEffect/gnesis_glow
+	id = "gnesis_glow"
+	name = "Gnesis glow"
+	desc = "The gnesis in your veins envelops you in a strange teal glow."
+	visible = FALSE
+	unique = TRUE
+
+	onAdd()
+		. = ..()
+		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
+		owner.simple_light.alpha = 0
+		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		animate(owner.simple_light, time = src.duration/2, alpha = 255)
+		animate(time = src.duration/2, alpha = 0)
+
+	onRemove()
+		owner.remove_simple_light("gnesis_glow")
+		..()
+
+/datum/statusEffect/spry
+	id = "spry"
+	name = "Spry"
+	desc = "You have a spring in your step."
+	icon_state = "spry"
+	maxDuration = 3 MINUTES
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/spry

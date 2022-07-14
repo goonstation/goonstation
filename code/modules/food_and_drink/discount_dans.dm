@@ -168,11 +168,11 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
 			SPAWN(10 SECONDS)
-				reagents.del_reagent("thalmerite")
+				reagents.del_reagent("pyrosium")
 		boutput(user, "The cup emits a soft clack as the heater triggers.")
 		return
 
@@ -187,7 +187,6 @@
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brewable = 1
 	brew_result = list("sewage", "ethanol")
 	food_effects = list("food_sweaty")
 
@@ -284,7 +283,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.handle_reactions()
 		boutput(user, "You crack the burrito like a glow stick, activating the heater mechanism.")
@@ -331,7 +330,6 @@
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brewable = 1
 	brew_result = list("sewage", "yuck")
 	food_effects = list("food_sweaty")
 
@@ -413,7 +411,7 @@
 				src.desc = "A box containing a self-heating TV dinner. Have \"fusion\" dishes gone too far?"
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src))//r_hand == src || user.l_hand == src)
 			if (src.full == 0)
 				user.show_text("The box is empty[prob(20) ? " (much like your head)" : null].", "red")
@@ -552,7 +550,7 @@
 
 		src.activated = 1
 		if (reagents)
-			reagents.add_reagent("thalmerite",2)
+			reagents.add_reagent("pyrosium",2)
 			reagents.add_reagent("oxygen", 2)
 			reagents.add_reagent("radium", 1) //Self Microwaving?!
 			reagents.handle_reactions()

@@ -175,7 +175,7 @@
 
 						if (!fart_on_other)
 							switch(rand(1, 42))
-								if (1) message = "<B>[src]</B> lets out a girly little 'toot' from [his_or_her(src)] butt."
+								if (1) message = "<B>[src]</B> lets out a little 'toot' from [his_or_her(src)] butt."
 								if (2) message = "<B>[src]</B> farts loudly!"
 								if (3) message = "<B>[src]</B> lets one rip!"
 								if (4) message = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."
@@ -359,6 +359,7 @@
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
 					else
+						var/obj/item/I = src.equipped()
 						switch(act)
 							if ("hug", "sidehug")
 								message = "<B>[src]</b> [act]s [himself_or_herself(src)]."
@@ -370,8 +371,12 @@
 								message = "<B>[src]</b> points finger guns at... [himself_or_herself(src)]?"
 								maptext_out = "<I> points finger guns at... [himself_or_herself(src)]?</I>"
 							else
-								message = "<B>[src]</b> [act]s."
-								maptext_out = "<I>[act]s [M]</I>"
+								if ("wave" && istype(I, /obj/item/cloth/handkerchief))
+									message = "<B>[src]</b> waves [I]."
+									maptext_out = "<I>waves [I]</I>"
+								else
+									message = "<B>[src]</b> [act]s."
+									maptext_out = "<I>[act]s</I>"
 								src.add_karma(2)
 
 				else
@@ -672,7 +677,6 @@
 				if (!src.restrained() && !src.stat)
 					if (istype(src.head, /obj/item/clothing/head/mj_hat || /obj/item/clothing/head/det_hat/))
 						src.say (pick("M'lady", "M'lord", "M'liege")) //male, female and non-binary variants with alliteration
-						//maptext_out = "<I>tips their fedora</I>"
 					if (istype(src.head, /obj/item/clothing/head/fedora))
 						src.visible_message("[src] tips [his_or_her(src)] fedora and smirks.")
 						src.say ("M'lady")
@@ -709,7 +713,7 @@
 						message = "<B>[src]</B> throws [his_or_her(src)] [hat_or_beret] on the floor and stomps on it![already_stomped]\
 						<br><B>[src]</B> grumbles, \"<i>rasmn frasmn grmmn</i>.\""
 
-					maptext_out = "<I>stomps on their hat!</I>"
+					maptext_out = "<I>stomps on [his_or_her(src)] hat!</I>"
 
 					src.drop_from_slot(hat) // we're done here, drop that hat!
 					hat.pixel_x = 0
@@ -819,20 +823,29 @@
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
-					message = "<B>[src]</B> [act]s."
-					maptext_out = "<I>[act]s</I>"
+					var/obj/item/I = src.equipped()
+					if (istype(I, /obj/item/cloth/handkerchief))
+						message = "<B>[src]</B> [act]s into [I]."
+						maptext_out = "<I>[act]s into [I]</I>"
+					else if (act == "sneeze" && prob(1) && (src.mind?.assigned_role == "Clown" || src.reagents.has_reagent("honky_tonic")))
+						message = "<B>[src]</B> sneezes out a handkerchief!"
+						maptext_out = "<I>sneezes out a handkerchief!</I>"
+						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
+						var/turf/T = get_edge_target_turf(src, pick(alldirs))
+						HK.throw_at(T, 5, 1)
+					else
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
 				else
 					message = "<B>[src]</B> tries to make a noise."
 					maptext_out = "<I>tries to make a noise</I>"
 				m_type = 2
 
-				maptext_out = "<I>[act]s</I>"
-
 				if (src.emote_check(voluntary,20))
 					if (act == "gasp")
 						if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
-							playsound(src, dying_gasp_sfx, 100, 0, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40, 0, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
 
@@ -944,13 +957,13 @@
 					maptext_out = "<I>raises a hand</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
-					maptext_out = "<I>tries to move their arm</I>"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
 				m_type = 1
 
 			if ("crackknuckles","knuckles")
 				if (!src.restrained())
 					message = "<B>[src]</B> cracks [his_or_her(src)] knuckles."
-					maptext_out = "<I>cracks their knuckles</I>"
+					maptext_out = "<I>cracks [his_or_her(src)] knuckles</I>"
 				else
 					message = "<B>[src]</B> irritably shuffles around."
 					maptext_out = "<I>irritably shuffles around</I>"
@@ -971,7 +984,7 @@
 					maptext_out = "<I>makes a rude gesture</I>"
 				else
 					message = "<B>[src]</B> tries to move [his_or_her(src)] arm."
-					maptext_out = "<I>tries to move their arm</I>"
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
 				m_type = 1
 
 			if ("cry")
@@ -1031,7 +1044,7 @@
 			if ("smug")
 				if (!src.restrained())
 					message = "<B>[src]</B> folds [his_or_her(src)] arms and smirks broadly, making a self-satisfied \"heh\"."
-					maptext_out = "<I>folds their arms and smirks broadly</I>"
+					maptext_out = "<I>folds [his_or_her(src)] arms and smirks broadly</I>"
 				else
 					message = "<B>[src]</B> shuffles a bit and smirks broadly, emitting a rather self-satisfied noise."
 					maptext_out = "<I>shuffles a bit and smirks broadly</I>"
@@ -1042,10 +1055,10 @@
 			if ("nosepick","picknose")
 				if (!src.restrained())
 					message = "<B>[src]</B> picks [his_or_her(src)] nose."
-					maptext_out = "<I>picks their nose</I>"
+					maptext_out = "<I>picks [his_or_her(src)] nose</I>"
 				else
 					message = "<B>[src]</B> sniffs and scrunches [his_or_her(src)] face up irritably."
-					maptext_out = "<I>sniffs and scrunches their face up irritably</I>"
+					maptext_out = "<I>sniffs and scrunches [his_or_her(src)] face up irritably</I>"
 				m_type = 1
 				if (src.mind)
 					src.add_karma(-1)
@@ -1317,7 +1330,7 @@
 
 						if (M)
 							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
-								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
+								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
 										maptext_out = "<I>highfives [M]!</I>"
@@ -1797,7 +1810,7 @@
 										continue
 									if (M in combatflipped)
 										continue
-									if (src.reagents && src.reagents.get_reagent_amount("ethanol") > 10)
+									if (src.reagents?.get_reagent_amount("ethanol") > 10 && src.can_drunk_act())
 										if (!iswrestler(src) && src.traitHolder && !src.traitHolder.hasTrait("glasscannon"))
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
@@ -1811,7 +1824,7 @@
 										playsound(src.loc, pick(sounds_punch), 100, 1)
 										var/turf/newloc = M.loc
 										src.set_loc(newloc)
-									else
+									else if (!(src.reagents?.get_reagent_amount("ethanol") > 30))
 										message = "<B>[src]</B> flips in [M]'s general direction."
 									break
 					if(length(combatflipped))
@@ -2113,7 +2126,7 @@
 						I = P.ID_card
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || ASS_JAM || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2168,7 +2181,7 @@
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
-							src.show_text(__red("Your head hurts!"))
+							src.show_text("<span class='alert'>Your head hurts!</span>")
 					if(locate(/obj/item/storage/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
@@ -2354,8 +2367,6 @@
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
-		if (client?.hellbanned)
-			src.changeStatus("weakened", 4 SECONDS)
 		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
 
 

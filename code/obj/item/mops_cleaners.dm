@@ -81,16 +81,17 @@ WET FLOOR SIGN
 
 /obj/item/spraybottle/cleaner/robot/drone
 	name = "cybernetic cleaning spray bottle"
-	desc = "A small spray bottle that very slowly synthesises space cleaner."
+	desc = "A small spray bottle that slowly synthesises space cleaner."
 	icon_state = "cleaner_robot"
 
 	process()
 		..()
 		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 0.5)
+			src.reagents.add_reagent("cleaner", 0.75)
 		else
 			processing_items.Remove(src)
 		return 0
+
 
 
 /obj/janitorTsunamiWave
@@ -212,7 +213,7 @@ WET FLOOR SIGN
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-/obj/item/spraybottle/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/spraybottle/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -376,8 +377,14 @@ WET FLOOR SIGN
 		else // Lances up!
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
+	else
+		for (var/obj/fluid/fluid in user.loc)
+			src.AfterAttack(fluid, user)
+			return
+		if (isturf(user.loc))
+			src.AfterAttack(user.loc, user)
 
-/obj/item/mop/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/mop/attack(mob/living/M, mob/user)
 	if (user.a_intent == INTENT_HELP)
 		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
 		return
@@ -494,7 +501,7 @@ WET FLOOR SIGN
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/sponge/attack(mob/living/M as mob, mob/user as mob)
+/obj/item/sponge/attack(mob/living/M, mob/user)
 	if (user.a_intent == INTENT_HELP)
 		return
 	return ..()
@@ -514,7 +521,7 @@ WET FLOOR SIGN
 	SPAWN(1 SECOND)
 	spam_flag = 0
 
-/obj/item/sponge/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message("<span class='notice'>[user] cuts [src] into the shape of... cheese?</span>")
 		if(src.loc == user)
@@ -639,6 +646,9 @@ WET FLOOR SIGN
 				JOB_XP(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
+				playsound(src, 'sound/items/sponge.ogg', 20, 1)
+				if (ismob(target))
+					animate_smush(target)
 				return
 
 			if ("Wring out")
@@ -660,7 +670,7 @@ WET FLOOR SIGN
 		..()
 /obj/item/sponge/ghostdronesafe
 	name = "Integrated sponge"
-	desc = "A cleaning utensil with an associated drainage system to prevent fluids from dripping when wrung out."
+	desc = "A cleaning utensil with an associated drainage system to prevent excess fluids from dripping when wrung out."
 
 /obj/item/sponge/ghostdronesafe/attack_self(mob/user as mob)
 	if (ON_COOLDOWN(user, "ghostdrone sponge wringing", 5 SECONDS))// Wtihout the cooldown, this is stupid powerful
@@ -766,7 +776,7 @@ WET FLOOR SIGN
 			return
 		..()
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if (!istype(user))
 			return
 		if(user.key != ownerKey && ownerKey != null)

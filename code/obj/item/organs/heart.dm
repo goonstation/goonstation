@@ -81,6 +81,11 @@
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
 
+			if (!ischangeling(donor) && !donor.nodamage)
+				donor.changeStatus("weakened", 8 SECONDS)
+				donor.losebreath += 20
+				donor.take_oxygen_deprivation(20)
+
 			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
 
 			if (src.robotic)
@@ -188,10 +193,9 @@
 				H.blood_volume += converted_amt
 
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Resource repository
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description

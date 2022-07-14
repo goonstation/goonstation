@@ -386,30 +386,8 @@ var/datum/action_controller/actions
 			shield_bar.invisibility = INVIS_ALWAYS
 
 
-/datum/action/bar/blob_replicator
-	onUpdate()
-		var/obj/blob/deposit/replicator/B = owner
-		if (!owner)
-			return
-		if (!B.converting || (B.converting && !B.converting.maximum_volume))
-			border.invisibility = INVIS_ALWAYS
-			bar.invisibility = INVIS_ALWAYS
-			return
-		else
-			border.invisibility = INVIS_NONE
-			bar.invisibility = INVIS_NONE
-		var/complete = 1 - (B.converting.total_volume / B.converting.maximum_volume)
-		bar.color = "#0000FF"
-		bar.transform = matrix(complete, 1, MATRIX_SCALE)
-		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
-
-	onDelete()
-		bar.invisibility = INVIS_NONE
-		border.invisibility = INVIS_NONE
-		..()
-
 /datum/action/bar/icon //Visible to everyone and has an icon.
-	var/icon
+	var/icon //! Icon to use above the bar. Can also be a mutable_appearance; pretty much anything that can be converted into an image
 	var/icon_state
 	var/icon_y_off = 30
 	var/icon_x_off = 0
@@ -420,8 +398,11 @@ var/datum/action_controller/actions
 
 	onStart()
 		..()
-		if(icon && icon_state && owner)
-			icon_image = image(icon, border ,icon_state, 10)
+		if (icon && owner)
+			if(icon_state)
+				icon_image = image(icon, border, icon_state, 10)
+			else
+				icon_image = image(icon, border, layer = 10)
 			icon_image.pixel_y = icon_y_off
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
@@ -697,6 +678,9 @@ var/datum/action_controller/actions
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if(isliving(owner))
+			var/mob/living/M = owner
+			R.add_fingerprint(M)
 		if (callback)
 			call(callback)(src, R)
 
@@ -1000,6 +984,7 @@ var/datum/action_controller/actions
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
 					target.force_equip(item, slot)
+					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
 				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
@@ -1025,6 +1010,7 @@ var/datum/action_controller/actions
 				I.dropped(target)
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
+				target.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
@@ -1081,6 +1067,7 @@ var/datum/action_controller/actions
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 					T.icon_state = "airoff"
 				target.internal = null
+				target.update_inv()
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[owner] removes [target]'s internals!</B></span>", 1)
 			else
@@ -1090,6 +1077,7 @@ var/datum/action_controller/actions
 				else
 					if (istype(target.back, /obj/item/tank))
 						target.internal = target.back
+						target.update_inv()
 						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 							T.icon_state = "airon"
 						for(var/mob/M in AIviewers(target, 1))
@@ -1226,6 +1214,7 @@ var/datum/action_controller/actions
 		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
+			H.update_inv()
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 
@@ -1308,9 +1297,11 @@ var/datum/action_controller/actions
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "welding"
+	var/call_proc_on = null
 	var/obj/effects/welding/E
 	var/list/start_offset
 	var/list/end_offset
+
 
 	id = null
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1326,7 +1317,7 @@ var/datum/action_controller/actions
 	var/list/proc_args = null
 	bar_on_owner = FALSE
 
-	New(owner, target, duration, proc_path, proc_args, end_message, start, stop)
+	New(owner, target, duration, proc_path, proc_args, end_message, start, stop, call_proc_on)
 		..()
 		src.owner = owner
 		src.target = target
@@ -1339,6 +1330,8 @@ var/datum/action_controller/actions
 		src.end_message = end_message
 		src.start_offset = start
 		src.end_offset = stop
+		if(call_proc_on)
+			src.call_proc_on = call_proc_on
 
 	onStart()
 		..()
@@ -1346,18 +1339,22 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 		if (src.target && !IN_RANGE(src.owner, src.target, src.maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		if(!E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			E = new(M)
-			M.vis_contents += E
+		if(!E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				E = new(M)
+				M.vis_contents += E
+			else
+				E = new(src.target)
 			E.pixel_x = start_offset[1]
 			E.pixel_y = start_offset[2]
 			animate(E, time=src.duration, pixel_x=end_offset[1], pixel_y=end_offset[2])
 
 	onDelete(var/flag)
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 		..()
 
@@ -1371,14 +1368,17 @@ var/datum/action_controller/actions
 		if (end_message)
 			src.owner.visible_message("[src.end_message]")
 
-		if (src.target)
+		if (src.call_proc_on)
+			INVOKE_ASYNC(arglist(list(src.call_proc_on, src.proc_path) + src.proc_args))
+		else if (src.target)
 			INVOKE_ASYNC(arglist(list(src.target, src.proc_path) + src.proc_args))
 		else
 			INVOKE_ASYNC(arglist(list(src.owner, src.proc_path) + src.proc_args))
 
-		if(E && ismovable(src.target))
-			var/atom/movable/M = src.target
-			M.vis_contents -= E
+		if(E)
+			if(ismovable(src.target))
+				var/atom/movable/M = src.target
+				M.vis_contents -= E
 			qdel(E)
 
 //CLASSES & OBJS
@@ -1533,16 +1533,23 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+	onInterrupt()
+		..()
+		if (target?.butcherer == owner)
+			target.butcherer = null
+
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target.butcherer)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		target.butcherer = owner
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>", 1)
 
 	onEnd()
 		..()
+		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
 			for(var/mob/O in AIviewers(owner))
@@ -1700,14 +1707,21 @@ var/datum/action_controller/actions
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
 	var/mob/consumer
-	var/obj/item/reagent_containers/food/snacks/foodish //only works with food for now, will generalize for organs and glasses and such later
+	var/obj/item/reagent_containers/food/snacks/food
+	var/obj/item/reagent_containers/food/drinks/drink
 
-	New(var/mob/consumer, var/foodish, var/icon, var/icon_state)
+	New(var/mob/consumer, var/item, var/icon, var/icon_state)
 		..()
 		src.consumer = consumer
-		src.foodish = foodish
+		if (istype(item, /obj/item/reagent_containers/food/snacks))
+			src.food = item
+		else if (istype(item, /obj/item/reagent_containers/food/drinks/))
+			src.drink = item
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/forcefeed called with invalid food/drink type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
+
 
 	onStart()
 		if (!ismob(owner))
@@ -1716,24 +1730,72 @@ var/datum/action_controller/actions
 
 		src.mob_owner = owner
 
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		..()
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || mob_owner.equipped() != foodish)
+		if(BOUNDS_DIST(owner, consumer) > 0 || !consumer || !owner || (mob_owner.equipped() != food && mob_owner.equipped() != drink))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!isnull(food))
+			food.take_a_bite(consumer, mob_owner)
+		else
+			drink.take_a_drink(consumer, mob_owner)
+
+/datum/action/bar/icon/syringe
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/target
+	var/syringe_mode
+	var/obj/item/reagent_containers/syringe/S
+
+	New(var/mob/target, var/item, var/icon, var/icon_state)
+		..()
+		src.target = target
+		if (istype(item, /obj/item/reagent_containers/syringe))
+			S = item
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/syringe called with invalid type [item].")
+		src.icon = icon
+		src.icon_state = icon_state
+
+
+	onStart()
+		if (!ismob(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		foodish.take_a_bite(consumer, mob_owner)
+		src.mob_owner = owner
+		syringe_mode = S.mode
+
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!isnull(S) && syringe_mode == S.mode)
+			S.syringe_action(owner, target)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30

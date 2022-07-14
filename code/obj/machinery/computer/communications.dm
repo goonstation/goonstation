@@ -4,7 +4,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_COMMSCONSOLES
 	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
@@ -189,12 +189,12 @@
 				AL.open()
 				AL.lockdownbyai = 0
 
-/obj/machinery/computer/communications/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/communications/attack_hand(var/mob/user)
 	if(..())
 		return
 
 	src.add_dialog(user)
-	var/dat = "<head><title>Communications Console</title></head><body>"
+	var/list/dat = list("<head><title>Communications Console</title></head><body>")
 	if (emergency_shuttle.online && emergency_shuttle.location == SHUTTLE_LOC_CENTCOM)
 		var/timeleft = emergency_shuttle.timeleft()
 		dat += "<B>Emergency shuttle</B><br><BR><br>ETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
@@ -203,7 +203,7 @@
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat +=  dat2
-			user.Browse(dat, "window=communications;size=400x500")
+			user.Browse(dat.Join(), "window=communications;size=400x500")
 			onclose(user, "communications")
 		return
 
@@ -261,7 +261,7 @@
 
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?action=mach_close&window=communications'>Close</A> \]"
-	user.Browse(dat, "window=communications;size=400x500")
+	user.Browse(dat.Join(), "window=communications;size=400x500")
 	onclose(user, "communications")
 
 /obj/machinery/computer/communications/proc/interact_ai(var/mob/living/silicon/ai/user as mob)
@@ -327,7 +327,7 @@
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
-	call_shuttle_proc(src, call_reason)
+	call_shuttle_proc(usr, call_reason)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)

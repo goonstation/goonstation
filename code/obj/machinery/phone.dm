@@ -90,7 +90,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		if(src.answered == 1)
 			return
@@ -122,7 +122,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
@@ -291,7 +291,7 @@
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -343,7 +343,7 @@
 				I.talk_into(M, text, null, M.real_name, lang_id)
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		holder = user
 
@@ -424,7 +424,7 @@
 	New()
 		..()
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
 				if(alert("Do you want to un-register this phone?","yes","no") == "yes")

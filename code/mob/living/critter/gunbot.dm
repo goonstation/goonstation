@@ -1,4 +1,4 @@
-/mob/living/critter/gunbot
+/mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -96,6 +96,9 @@
 	get_disorient_protection()
 		return max(..(), 80)
 
+	get_disorient_protection_eye()
+		return(50)
+
 	attack_hand(mob/user)
 		user.lastattacked = src
 		if(!user.stat)
@@ -135,7 +138,7 @@
 					else
 						return ..()
 
-/mob/living/critter/gunbot/syndicate
+/mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."

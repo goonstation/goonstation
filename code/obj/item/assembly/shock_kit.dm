@@ -27,7 +27,7 @@
 		src.part2 = null
 	..()
 
-/obj/item/assembly/shock_kit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
 
 	if (iswrenchingtool(W))

@@ -1,3 +1,5 @@
+
+var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 mob/new_player
 	anchored = 1
 
@@ -185,13 +187,13 @@ mob/new_player
 
 		if(href_list["ready"])
 			if(!ready)
-				if(alert(src,"Are you sure you are ready? This will lock-in your preferences.","Player Setup","Yes","No") == "Yes")
+				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes", "No")) == "Yes")
 					ready = 1
 
 		if(href_list["observe"])
-			if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+			if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
 				if(!src.client) return
-				var/mob/dead/observer/observer = new()
+				var/mob/dead/observer/observer = new(src)
 
 				src.spawning = 1
 
@@ -316,9 +318,13 @@ mob/new_player
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
+
+		global.latespawning.lock()
+
 		if (JOB && (force || IsJobAvailable(JOB)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
+				global.latespawning.unlock()
 				return
 
 			if(istype(ticker.mode, /datum/game_mode/football))
@@ -408,9 +414,11 @@ mob/new_player
 					participationRecorder.record(character.mind.ckey)
 			SPAWN(0)
 				qdel(src)
+			global.latespawning.unlock()
 
 		else
-			src << alert("[JOB.name] is not available. Please try another.")
+			global.latespawning.unlock()
+			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
 
@@ -649,7 +657,7 @@ a.latejoin-card:hover {
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			H.update_colorful_parts()
-		var/client/C = client
+
 		mind.transfer_to(new_character)
 
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
@@ -658,7 +666,7 @@ a.latejoin-card:hover {
 			new_character.mind.late_special_role = 1
 			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !C.hellbanned && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
 					var/livingtraitor = 0
 
@@ -707,6 +715,8 @@ a.latejoin-card:hover {
 		return new_character
 
 	Move()
+		SHOULD_CALL_PARENT(FALSE) // Heeding the warning
+
 		return 1 // do not return 0 in here for the love of god, let me tell you the tale of why:
 		// the default mob/Login (which got called before we actually set our loc onto the start screen), will attempt to put the mob at (1, 1, 1) if the loc is null
 		// however, the documentation actually says "near" (1, 1, 1), and will count Move returning 0 as that it cannot be placed there
@@ -768,6 +778,7 @@ a.latejoin-card:hover {
 
 			if (ROLE_ARCFIEND)
 				traitor.special_role = ROLE_ARCFIEND
+				objective_set_path = /datum/objective_set/arcfiend
 				traitormob.make_arcfiend()
 			#ifdef RP_MODE
 				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
@@ -891,9 +902,9 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(alert(src,"Are you sure you wish to observe? You will not be able to play this round!","Player Setup","Yes","No") == "Yes")
+		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
 			if(!src.client) return
-			var/mob/dead/observer/observer = new()
+			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
 				src.client.using_antag_token = 0
 				src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")

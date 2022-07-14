@@ -41,12 +41,13 @@
 	if(robe) wizard_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(wizard_mob), wizard_mob.slot_wear_suit)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/under/shorts/black(wizard_mob), wizard_mob.slot_w_uniform)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
-	if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
-		wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
-	else
-		wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+	if (!vr)
+		if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
+		else
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/storage/backpack(wizard_mob), wizard_mob.slot_back)
-	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(wizard_mob), wizard_mob.slot_shoes)
+	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/staff(wizard_mob), wizard_mob.slot_r_hand)
 	wizard_mob.equip_if_possible(new /obj/item/paper/Wizardry101(wizard_mob), wizard_mob.slot_l_store)
 	if (vr)
@@ -106,7 +107,7 @@
 	if(src.stat)
 		boutput(src, "You can't cast spells while incapacitated.")
 		return 0
-	if (src.bioHolder.HasEffect("arcane_power") == 2)
+	if(src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
 	if(spell && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
 		var/obj/item/clothing/gloves/ring/wizard/WR = src.gloves
@@ -119,16 +120,24 @@
 	if(!istype(src.head, /obj/item/clothing/head/wizard))
 		boutput(src, "You don't feel strong enough without a magical hat.")
 		return 0
-	var/area/getarea = get_area(src)
-	if(spell.offensive && getarea.sanctuary)
-		boutput( src, "You cannot cast offensive spells in a sanctuary." )
-		return 0
-	if(getarea.name == "Chapel" || getarea.name == "Chapel Office")
+	var/area/A = get_area(src)
+	if(istype(A, /area/station/chapel))
 		boutput(src, "You cannot cast spells on hallowed ground!")// Maybe if the station were more corrupted...")
 		return 0
-	if (spell.offensive == 1 && src.bioHolder.HasEffect("arcane_shame"))
-		boutput(src, "You are too consumed with shame to cast that spell!")
-		return 0
+	if(spell)
+		if(spell.offensive && A.sanctuary)
+			boutput( src, "You cannot cast offensive spells in a sanctuary." )
+			return 0
+		if (spell.offensive && src.bioHolder.HasEffect("arcane_shame"))
+			boutput(src, "You are too consumed with shame to cast that spell!")
+			return 0
+	else
+		if(A.sanctuary)
+			boutput( src, "You cannot cast offensive spells in a sanctuary." )
+			return 0
+		if(src.bioHolder.HasEffect("arcane_shame"))
+			boutput(src, "You are too consumed with shame to cast that spell!")
+			return 0
 	return 1
 
 /mob/living/critter/wizard_castcheck(var/datum/targetable/spell/spell = null)

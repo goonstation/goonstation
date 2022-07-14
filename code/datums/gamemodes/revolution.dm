@@ -322,7 +322,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Consultant","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 
@@ -408,6 +408,14 @@
 		return 0
 	return 1
 
+/datum/game_mode/revolution/victory_msg()
+	switch (finished)
+		if(1)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>"
+		if(2)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
+		if(3)
+			return "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>"
 
 /datum/game_mode/revolution/declare_completion()
 
@@ -488,6 +496,10 @@
 
 	..() // Admin-assigned antagonists or whatever.
 
+	if (finished == 1)
+		for(var/datum/mind/rev_mind as anything in head_revolutionaries)
+			if(rev_mind.current && !isdead(rev_mind.current))
+				rev_mind.current.unlock_medal("This station is ours!", TRUE)
 
 
 

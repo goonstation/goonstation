@@ -117,7 +117,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	req_access = list(access_supply_console)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
@@ -157,12 +157,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, mob/user as mob)
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
 		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
@@ -545,7 +545,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 					var/datum/supply_order/O = new/datum/supply_order ()
 					var/datum/supply_packs/P = locate(href_list["what"])
-					if(P)
+					if(istype(P))
 
 						// The order computer has no emagged / other ability to display hidden or syndicate packs.
 						// It follows that someone's being clever if trying to order either of these items
@@ -618,7 +618,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 			if ("premium_service")
 				var/response = ""
-				response = alert(usr,"Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?",,"Yes","No")
+				response = tgui_alert(usr, "Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?", "Rockbox™ Premium Service", list("Yes", "No"))
 				if(response == "Yes")
 					if(wagesystem.shipping_budget >= 10000)
 						wagesystem.shipping_budget -= 10000

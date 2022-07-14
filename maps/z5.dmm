@@ -79,6 +79,13 @@
 /obj/item/kitchen/utensil/spoon/plastic,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
+"au" = (
+/obj/item/paper/businesscard/gragg1{
+	pixel_x = 5;
+	pixel_y = 25
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/diner/arcade)
 "av" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/green{
@@ -105,10 +112,22 @@
 /area/diner/motel/observatory)
 "ay" = (
 /obj/machinery/computer/arcade,
+/obj/item/paper/businesscard/bonktek{
+	pixel_x = 10;
+	pixel_y = 30
+	},
+/obj/item/paper/businesscard{
+	pixel_x = -1;
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "az" = (
 /obj/machinery/computer/tetris,
+/obj/item/paper/businesscard/skulls{
+	pixel_x = -6;
+	pixel_y = 27
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "aA" = (
@@ -172,6 +191,8 @@
 /area/diner/motel/observatory)
 "aL" = (
 /obj/table/wood/round/auto,
+/obj/item/paper/businesscard/gragg2,
+/obj/item/paper/businesscard/gragg1,
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "aN" = (
@@ -518,7 +539,7 @@
 /area/diner/motel)
 "bT" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "bU" = (
@@ -1049,11 +1070,12 @@
 	},
 /obj/storage/secure/closet/personal,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/paper/businesscard/clowntown,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "dw" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp/bright,
+/obj/machinery/light/lamp/black/bright,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -1675,6 +1697,10 @@
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1;
 	icon_state = "tube1"
+	},
+/obj/item/paper/businesscard/taxi{
+	pixel_x = 6;
+	pixel_y = 26
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
@@ -3038,11 +3064,21 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/paper/businesscard/josh{
+	pixel_x = 8;
+	pixel_y = 21
+	},
+/obj/item/paper/businesscard{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "iF" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/item/paper/businesscard/vurdulak{
+	pixel_y = 26
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
@@ -3917,6 +3953,13 @@
 "kS" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/paper/businesscard/gragg1{
+	pixel_y = 24
+	},
+/obj/item/paper/businesscard/cosmicacres{
+	pixel_x = 16;
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet{
 	dir = 10
 	},
@@ -3926,6 +3969,9 @@
 /obj/item/plate,
 /obj/decal/cleanable/dirt,
 /obj/item/kitchen/utensil/fork,
+/obj/item/paper/businesscard/gragg2{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet{
 	dir = 10
 	},
@@ -3936,6 +3982,10 @@
 	},
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/paper/businesscard/taxi{
+	pixel_x = 6;
+	pixel_y = 26
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -4150,6 +4200,17 @@
 "ly" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/item/paper/businesscard/taxi{
+	pixel_x = 6;
+	pixel_y = 24
+	},
+/obj/item/paper/businesscard/skulls{
+	pixel_x = -11;
+	pixel_y = 27
+	},
+/obj/item/paper/businesscard/biteylou{
+	pixel_y = 30
 	},
 /turf/simulated/floor/stairs/wide/other{
 	dir = 8
@@ -5200,6 +5261,17 @@
 "qU" = (
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/diner/jucer_trader)
+"qY" = (
+/obj/decal/cleanable/dirt,
+/obj/item/paper/businesscard/banjo{
+	pixel_y = 24
+	},
+/obj/item/paper/businesscard/ezekian{
+	pixel_x = -6;
+	pixel_y = 29
+	},
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "ru" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
@@ -5220,6 +5292,16 @@
 /obj/critter/martian/warrior/dead,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
+"rJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/paper/businesscard/lawyers{
+	pixel_x = -8;
+	pixel_y = 30
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/diner/dining)
 "rN" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
@@ -5926,7 +6008,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "Bt" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/noGenerate)
@@ -6029,6 +6111,20 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
+"Dt" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/obj/item/paper/businesscard/clowntown{
+	pixel_x = -6;
+	pixel_y = 29
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/diner/arcade)
 "Dw" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
@@ -6057,7 +6153,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "DW" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/noGenerate)
@@ -6331,13 +6427,19 @@
 	},
 /turf/space,
 /area/noGenerate)
+"HH" = (
+/obj/table/wood/auto,
+/obj/item/paper/businesscard/taxi,
+/obj/item/paper/businesscard,
+/turf/simulated/floor/green/checker,
+/area/diner/arcade)
 "HL" = (
 /obj/machinery/door/unpowered/martian,
 /obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "HU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/noGenerate)
@@ -6351,6 +6453,13 @@
 "Ig" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/security)
+"Ij" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/item/paper/businesscard/biteylou{
+	pixel_y = 24
+	},
+/turf/simulated/floor/grime,
+/area/diner/hallway/docking)
 "Is" = (
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
@@ -6452,7 +6561,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "Kc" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "Ke" = (
 /obj/effects/background_objects/star_red{
@@ -6485,6 +6594,13 @@
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
+"KK" = (
+/obj/table/wood/auto,
+/obj/item/paper/businesscard/cosmicacres,
+/obj/item/paper/businesscard/lawyers,
+/obj/item/paper/businesscard/vurdulak,
+/turf/simulated/floor/green/checker,
+/area/diner/arcade)
 "KW" = (
 /obj/decal/cleanable/oil,
 /obj/item/clothing/suit/space/old,
@@ -6651,6 +6767,14 @@
 "MW" = (
 /obj/map/light/dimred,
 /obj/machinery/computer/shuttle_bus,
+/obj/item/paper/businesscard/josh{
+	pixel_x = 4;
+	pixel_y = 25
+	},
+/obj/item/paper/businesscard/ezekian{
+	pixel_x = -4;
+	pixel_y = 29
+	},
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "Nf" = (
@@ -6694,6 +6818,17 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/diner/solar)
+"NM" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/obj/item/paper/businesscard/josh{
+	pixel_x = 6;
+	pixel_y = 27
+	},
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "NN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -6986,7 +7121,7 @@
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/evilreaver/storage/tools)
 "RK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/noGenerate)
@@ -7344,6 +7479,9 @@
 "Vf" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
+/obj/item/paper/businesscard/lawyers{
+	pixel_y = 27
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -7444,6 +7582,14 @@
 /obj/item/clothing/head/XComHair,
 /turf/simulated/martian/floor,
 /area/noGenerate)
+"VP" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light/lamp/black/bright,
+/obj/item/paper/businesscard/cosmicacres{
+	pixel_y = -4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "VU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -7764,7 +7910,7 @@
 /turf/space,
 /area/noGenerate)
 "ZS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/noGenerate)
@@ -21731,7 +21877,7 @@ iH
 ew
 kc
 kc
-lz
+rJ
 kN
 kc
 nc
@@ -29272,7 +29418,7 @@ ec
 bM
 bM
 bv
-fd
+qY
 fS
 fe
 eY
@@ -29876,7 +30022,7 @@ bF
 bN
 bT
 bv
-ff
+NM
 fS
 gH
 hq
@@ -31376,7 +31522,7 @@ bp
 bv
 bI
 bM
-bT
+VP
 bv
 cE
 df
@@ -36513,9 +36659,9 @@ ak
 ak
 ak
 cI
+KK
 dh
-dh
-dh
+HH
 eg
 ak
 ak
@@ -37720,7 +37866,7 @@ bh
 ak
 ak
 ak
-bh
+au
 bh
 bh
 bh
@@ -38022,7 +38168,7 @@ bh
 ak
 ab
 ak
-cL
+Dt
 di
 dD
 cL
@@ -39238,7 +39384,7 @@ ab
 ab
 ab
 eD
-fo
+Ij
 fX
 fX
 hB

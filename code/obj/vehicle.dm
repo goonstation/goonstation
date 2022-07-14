@@ -54,7 +54,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	return_air()
 		return src.loc.return_air()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)
 			W.attack(src.rider, user)
 			user.lastattacked = src
@@ -127,6 +127,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.rider = null
 		if (ejectall)
 			src.eject_other_stuff()
+
+	was_deconstructed_to_frame(mob/user)
+		eject_rider(FALSE, FALSE, TRUE)
 
 	/// remove the ability buttons from the rider
 	proc/handle_button_removal()
@@ -320,7 +323,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	update()
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
+	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || (rider.reagents && rider.reagents.has_reagent("ethanol"))))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -572,7 +575,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/segway/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -748,7 +751,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 			qdel(D)
 
-/obj/vehicle/floorbuffer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents)
 		if(!W.reagents.total_volume)
 			boutput(user, "<span class='alert'>[W] is empty.</span>")
@@ -884,7 +887,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/floorbuffer/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -992,7 +995,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/clowncar/attack_hand(mob/living/carbon/human/M)
 	if(!M)
 		..()
 		return
@@ -1082,7 +1085,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			clown_tally += 1
 		if(istype(user:wear_mask, /obj/item/clothing/mask/clown_hat))
 			clown_tally += 1
-	if(clown_tally < 2)
+	if(clown_tally < 2 && !IS_LIVING_OBJECT_USING_SELF(user))
 		boutput(user, "<span class='notice'>You don't feel funny enough to use the [src].</span>")
 		return
 
@@ -1120,7 +1123,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	icon_state = "clowncar"
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)))
+	if(isturf(AM))
 		boutput(rider, "<span class='alert'><B>You crash into the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1388,7 +1391,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	walk(src, 0)
 	..()
 	in_bump = 1
-	if((isturf(AM) || istype(AM, /mob/living/carbon/wall)) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
+	if(isturf(AM) && (rider.bioHolder.HasEffect("clumsy") || rider.reagents.has_reagent("ethanol")))
 		boutput(rider, "<span class='alert'><B>You run to the wall!</B></span>")
 		for (var/mob/C in AIviewers(src))
 			if(C == rider)
@@ -1515,7 +1518,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/cat/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -1565,6 +1568,10 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	booster_upgrade =1
 	delay = 1
 	soundproofing = 5
+
+	New()
+		..()
+		booster_image = image('icons/obj/vehicles.dmi', "boost-bus")
 
 /obj/vehicle/adminbus/Move()
 	if(src.darkness)
@@ -1690,7 +1697,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		eject_rider(0, 1, 0)
 	return
 
-/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/adminbus/attack_hand(mob/living/carbon/human/M)
 	if(!M || !(M.client && M.client.holder))
 		..()
 		return
@@ -2351,7 +2358,7 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		src.update_overlays()
 		return
 
-/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/forklift/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

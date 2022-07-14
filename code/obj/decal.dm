@@ -118,7 +118,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 
-proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE)
+proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
 	var/obj/decal/point/point = new
 	point.pixel_x = pixel_x
@@ -126,6 +126,11 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	point.color = color
 	point.invisibility = invisibility
 	target.vis_contents += point
+	if(pointer && GET_DIST(pointer, target) <= 10) // check so that you can't shoot points across the station
+		var/matrix/M = matrix()
+		M.Translate((pointer.x - target.x)*32 - pixel_x, (pointer.y - target.y)*32 - pixel_y)
+		point.transform = M
+		animate(point, transform=null, time=2)
 	SPAWN(time)
 		if(target)
 			target.vis_contents -= point
@@ -281,6 +286,15 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "door0"
 	anchored = 1
 
+/obj/decal/fakeobjects/airlock_broken
+	name = "rusted airlock"
+	desc = "Rust has rendered this airlock useless."
+	icon = 'icons/obj/doors/Door1.dmi';
+	icon_state = "doorl";
+	anchored = 1
+	density = 1
+	opacity = 1
+
 /obj/decal/fakeobjects/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -305,8 +319,8 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttlethruster
 	name = "propulsion unit"
 	desc = "A small impulse drive that moves the shuttle."
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "propulsion"
+	icon = 'icons/obj/shuttle.dmi'
+	icon_state = "alt_propulsion"
 	anchored = 1
 	density = 1
 	opacity = 0
@@ -314,7 +328,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "shuttle_laser"
 	anchored = 1
 	density = 1
@@ -350,7 +364,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/shuttleengine
 	name = "engine unit"
 	desc = "A generator unit that uses complex technology."
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 1
 	density = 1
@@ -398,6 +412,15 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	density = 1
 
+/obj/decal/fakeobjects/lawrack
+	name = "defunct AI Law Mount Rack"
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "airack_empty"
+	anchored = 1
+	density = 1
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_DEFAULT
 
 /obj/decal/bloodtrace
 	name = "blood trace"

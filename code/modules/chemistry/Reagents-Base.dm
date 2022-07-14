@@ -69,6 +69,8 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -111,11 +113,12 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
-				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
+				M.take_toxin_damage(0.75 * mult) // buffin this because fluorine is horrible - adding a burn effect
+				M.TakeDamage("chest", 0, 0.75 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 
@@ -162,7 +165,7 @@ datum
 						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && probmult(10))
+							if (H.can_drunk_act() && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (ethanol_amt >= 25)
@@ -175,7 +178,7 @@ datum
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && probmult(8))
+							if (H.can_drunk_act() && probmult(8))
 								step(H, pick(cardinal))
 						if (ethanol_amt >= 55)
 							liver_damage = 0.4
@@ -184,7 +187,7 @@ datum
 							H.stuttering += 1
 							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && probmult(15))
+							if (H.can_drunk_act() && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
@@ -789,16 +792,16 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
+				. = ..()
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
-				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				..()
+				. = ..()
 				if(!volume)
 					volume = 10
 				if(method == TOUCH)
@@ -806,7 +809,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * volume SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-				return 1
+						. = 0
 
 		water/water_holy
 			name = "holy water"

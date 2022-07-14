@@ -249,6 +249,19 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/removelabels
+	name = "removelabels"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Removes all labels from a chosen server."
+
+	execute(user)
+		for(var/atom/A in world)
+			if(!isnull(A.name_suffixes))
+				A.name_suffixes = null
+				A.UpdateName()
+			LAGCHECK(LAG_LOW)
+		system.reply("Labels removed.", user)
+
 /datum/spacebee_extension_command/prison
 	name = "prison"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -396,6 +409,24 @@
 		logTheThing("admin", "[user] (Discord)", target, "delimbed [constructTarget(target,"admin")]")
 		logTheThing("diary", "[user] (Discord)", target, "delimbed [constructTarget(target,"diary")].", "admin")
 		message_admins("[user] (Discord) delimbed [key_name(target)].")
+		return TRUE
+
+/datum/spacebee_extension_command/state_based/confirmation/mob_targeting/cryo
+	name = "cryo"
+	help_message = "Cryos a given ckey."
+	action_name = "cryo"
+
+	perform_action(user, mob/target)
+		if (!length(by_type[/obj/cryotron]))
+			system.reply("Error, no cryotron detected.", user)
+			return FALSE
+		var/obj/cryotron/C = pick(by_type[/obj/cryotron])
+		if (!C.add_person_to_storage(target, FALSE))
+			system.reply("Error, cryoing failed.", user)
+			return FALSE
+		logTheThing("admin", "[user] (Discord)", target, "cryos [constructTarget(target,"admin")]")
+		logTheThing("diary", "[user] (Discord)", target, "cryos [constructTarget(target,"diary")].", "admin")
+		message_admins("[user] (Discord) cryos [key_name(target)].")
 		return TRUE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/send_to_arrivals
@@ -571,6 +602,7 @@
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing("admin", "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 
@@ -615,3 +647,36 @@
 		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
 		system.reply(success_msg)
+
+/datum/spacebee_extension_command/medal
+	name = "medal"
+	help_message = "Give or revoke a medal for a player. E.g., `;;medal give zewaka Contributor`"
+	argument_types = list(
+		/datum/command_argument/string = "give_or_revoke",
+		/datum/command_argument/string/ckey = "player",
+		/datum/command_argument/string = "medal"
+	)
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, give_or_revoke, player, medal)
+		if(isnull(give_or_revoke) || isnull(player) || isnull(medal) )
+			system.reply("Failed to set medal; insufficient arguments.", user)
+			return
+
+		var/result
+		if (give_or_revoke == "give")
+			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+		else if (give_or_revoke == "revoke")
+			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
+		else
+			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
+			return
+		if (isnull(result))
+			system.reply("Failed to set medal; error communicating with BYOND hub!")
+			return
+
+		var/to_log = "[give_or_revoke ? "revoked" : "gave"] the [medal] medal for [player]."
+		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		logTheThing("admin", "[user] (Discord)", null, "[to_log]")
+		logTheThing("diary", "[user] (Discord)", null, "[to_log]", "admin")
+		system.reply("[user] [to_log]")

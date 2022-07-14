@@ -183,6 +183,37 @@
 	initial_volume = 50
 	initial_reagents = "water"
 
+/obj/item/reagent_containers/food/drinks/mate
+	name = "mate gourd"
+	desc = "A gourd and a straw for drinking mate"
+	icon_state = "mate_empty"
+	initial_volume = 20
+	var/yerba_left = 0
+	var/water_amount
+
+	on_reagent_change()
+		if((yerba_left > 1) && reagents.get_reagent_amount("water") > 0)
+			changetomate()
+		if((yerba_left < 1) && !reagents.get_reagent_amount("mate"))
+			yerba_left = 0
+			icon_state = "mate_empty"
+		..()
+
+	proc/changetomate()
+		water_amount = src.reagents.get_reagent_amount("water")
+		src.reagents.remove_reagent("water", water_amount)
+		src.reagents.add_reagent("mate", water_amount)
+		yerba_left -= water_amount
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
+			src.icon_state = "mate"
+			yerba_left = 100
+			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			qdel (W)
+		else ..()
+
 /obj/item/reagent_containers/food/drinks/tea
 	name = "tea"
 	desc = "A fine cup of tea.  Possibly Earl Grey.  Temperature undetermined."
@@ -216,6 +247,14 @@
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
 
+/obj/item/reagent_containers/food/drinks/fruitmilk
+	name = "Creaca's Fruit Milk"
+	desc = "Milk and fruit of undetermined origin; finally, together at last."
+	icon_state = "fruitmilk"
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("milk"=30,"juice_pineapple"=20)
+
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"
 	desc = "A shake designed to cause weight loss.  The package proudly proclaims that it is 'tapeworm free.'"
@@ -243,7 +282,7 @@
 		..()
 		setup_soda()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return

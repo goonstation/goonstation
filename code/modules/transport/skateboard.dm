@@ -167,7 +167,7 @@
 	if(bumped_queue.len >= 9)
 		bumped_queue.Cut(1,2)
 
-	if(isturf(AM) || istype(AM, /mob/living/carbon/wall) || istype(AM, /obj/window) || istype(AM, /obj/grille))
+	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
 		if(sickness < 100 || z == 2 || z == 4)
 			src.messageNearby("<span class='alert'><B>You crash into the [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into the [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
@@ -303,7 +303,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return

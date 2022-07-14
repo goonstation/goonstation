@@ -75,7 +75,7 @@
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (!istype(target))
 			return
 
@@ -172,7 +172,7 @@
 		else
 			playsound(src, "sound/machines/chainsaw_red_stop.ogg", 90, 0)
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
@@ -365,7 +365,7 @@
 	stamina_cost = 40
 	stamina_crit_chance = 50
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")

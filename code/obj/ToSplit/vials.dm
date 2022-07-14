@@ -298,7 +298,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.contents.len > 0)
 			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)

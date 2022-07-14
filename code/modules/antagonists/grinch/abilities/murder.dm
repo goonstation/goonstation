@@ -22,19 +22,19 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to kill yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to kill yourself?</span>")
 			return 1
 
 		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (isdead(target))
-			boutput(M, __red("It would be a waste of time to murder the dead."))
+			boutput(M, "<span class='alert'>It would be a waste of time to murder the dead.</span>")
 			return 1
 
 		if (!iscarbon(target))
-			boutput(M, __red("[target] is immune to the disease."))
+			boutput(M, "<span class='alert'>[target] is immune to the disease.</span>")
 			return 1
 
 		var/mob/living/L = target

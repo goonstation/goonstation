@@ -45,6 +45,11 @@
 	addPoints(add_points, target_ah_type = src.type)
 		src.lifetime_energy += add_points
 		var/points = min((MAX_ARCFIEND_POINTS - src.points), add_points)
+		if (points > 0 && ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			if (H.sims)
+				H.sims.affectMotive("Thirst", points * 0.1)
+				H.sims.affectMotive("Hunger", points * 0.1)
 		. = ..(points, target_ah_type)
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
@@ -61,16 +66,16 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	castcheck(atom/target)
 		var/mob/living/M = holder.owner
 		if (!container_safety_bypass && !isturf(M.loc))
-			boutput(holder.owner, __red("Interference from [M.loc] is preventing use of this ability!"))
+			boutput(holder.owner, "<span class='alert'>Interference from [M.loc] is preventing use of this ability!</span>")
 			return 0
 		if (!can_act(M) && target != holder.owner) // we can self cast while incapacitated
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		return 1
 
 /datum/targetable/arcfiend/sap_power
 	name = "Sap Power"
-	desc = "Drain power from a target entity or machine"
+	desc = "Drain power from a target person or machine"
 	cooldown = 0
 	target_anything = TRUE
 	targeted = TRUE
@@ -91,7 +96,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 	castcheck()
 		. = ..()
 		if (holder.owner.restrained())
-			boutput(holder.owner, __red("You need an active working hand to use [src]!"))
+			boutput(holder.owner, "<span class='alert'>You need an active working hand to use [src]!</span>")
 			return 0
 /**
  * Sap Power
@@ -351,7 +356,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
  */
 /datum/targetable/arcfiend/jolt
 	name = "Jolt"
-	desc = "Release a series of powerful jolts into your target, eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
+	desc = "Release a series of powerful jolts into your target, burning and eventually stopping their heart. When used on those resistant to electricity it can restart their heart instead."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
 	pointCost = 500
@@ -413,6 +418,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			target.shock(user, wattage, ignore_gloves = TRUE)
 			if (target.bioHolder?.HasEffect("resist_electric") && prob(20))
 				cure_arrest()
+			if (!target.bioHolder?.HasEffect("resist_electric")) //prevent the arcfiend from hurting their heart while shocking it
+				target.organHolder.damage_organ(0, 4, 0, "heart")
 			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			s.set_up(5, FALSE, target)
 			s.start()
@@ -477,13 +484,13 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		else
 			var/turf/T = get_turf(holder.owner)
 			if (!T.z || isrestrictedz(T.z))
-				boutput(holder.owner, __red("You are forbidden from using that here!"))
+				boutput(holder.owner, "<span class='alert'>You are forbidden from using that here!</span>")
 				return TRUE
 			if (T != holder.owner.loc) // See: no escaping port-a-brig
-				boutput(holder.owner, __red("You cannot use this ability while inside [holder.owner.loc]!"))
+				boutput(holder.owner, "<span class='alert'>You cannot use this ability while inside [holder.owner.loc]!</span>")
 				return TRUE
 			if (!(locate(/obj/cable) in T))
-				boutput(holder.owner, __red("You must use this ability on top of a cable!"))
+				boutput(holder.owner, "<span class='alert'>You must use this ability on top of a cable!</span>")
 				return TRUE
 			playsound(holder.owner, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), holder.owner)
@@ -524,9 +531,10 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			deactivate()
 
 	proc/deactivate()
-		boutput(holder.owner, __red("You are ejected from the cable!"))
+		boutput(holder.owner, "<span class='alert'>You are ejected from the cable!</span>")
 		active = FALSE
 		var/atom/movable/screen/ability/topBar/B = src.object
+		pointCost = initial(pointCost)
 		B.update_cooldown_cost()
 
 		UnregisterSignal(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
@@ -541,7 +549,8 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		if(!pointCost) pointCost = initial(pointCost)
 
 	proc/send_images_to_client()
-		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(holder.owner.z)))
+		var/turf/T = get_turf(holder.owner)
+		if ((!holder.owner?.client) || (!isalive(holder.owner)) || (isrestrictedz(T.z)))
 			deactivate()
 			return
 		holder.owner.client.images += cable_images

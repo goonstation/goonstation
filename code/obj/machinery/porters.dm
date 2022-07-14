@@ -155,10 +155,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
 					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
+					logTheThing("station", usr, null, "teleports [P] to [log_loc(our_loc)].")
 				else
 					P.set_loc(home_loc) // Send back to home location.
 					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] sent to home turf.", "blue")
+					logTheThing("station", usr, null, "teleports [P] to its home turf [log_loc(home_loc)].")
 
 				if (hasvar(P, "occupant"))
 					if (istype(P, /obj/machinery/port_a_brig/))
@@ -297,7 +299,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.8
 	req_access = list(access_security)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	mats = 30
 	var/mob/occupant = null
 	var/locked = 0
@@ -371,7 +373,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
@@ -727,7 +729,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
@@ -737,7 +739,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	allow_drop()
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.open && iswrenchingtool(W))
 			return
 		else
@@ -850,6 +852,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		portable_machinery.Add(src)
 
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.homeloc = src.loc
 		//Products
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 20)
@@ -910,7 +913,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief...well, if it wouldn't be the NanoMed.

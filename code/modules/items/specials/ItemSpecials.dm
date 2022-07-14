@@ -502,9 +502,21 @@
 			var/list/attacked = list()
 
 			var/turf/one = get_step(master, direction)
-			var/turf/two = get_step(one, direction)
 
-			showEffect("spear", direction, color=src.stab_color)
+			var/blocked = !one.can_crossed_by(master)
+
+			var/turf/two =  blocked ? null : get_step(one, direction)
+
+			if (blocked)
+				var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+				S.color = src.stab_color
+				S.setup(one)
+
+			else
+				var/obj/itemspecialeffect/spear/S = new /obj/itemspecialeffect/spear
+				S.color = src.stab_color
+				S.set_dir(direction)
+				S.setup(one)
 
 			var/hit = 0
 			for(var/turf/T in list(one, two))
@@ -1082,7 +1094,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(master && istype(master, /obj/item/baton) && !master:can_stun())
+		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 			return
 		..()
@@ -1093,7 +1106,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/gloves
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-		if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+		if(!istype(master, /obj/item/clothing/gloves) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(master:uses)
 			var/obj/item/clothing/gloves/G = master
 			G.uses = max(0, G.uses - 1)
 			if (G.uses < 1)
@@ -1259,6 +1273,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
 
 			var/turf/turf = get_step(master, direction)
+
+			if(!turf.gas_cross(turf)) return
 
 			var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
 			S.set_dir(direction)
@@ -1775,6 +1791,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				if (istype(turf,/turf/simulated/floor))
 					var/turf/simulated/floor/F = turf
+					if (istype(F, /turf/simulated/floor/feather))
+						boutput(user, "<span class='alert'><b>The tile stays stuck to the floor!</b></span>")
+						return
 					var/obj/item/tile = F.pry_tile(master, user, params)
 					if (tile)
 						hit = 1
@@ -1932,7 +1951,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		density = 1
 		del_self = 0
 		clash_time = -1
-	
+		explosion_resistance = 10
+
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -1973,6 +1993,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 				//was_clashed()
 				return
+
+		blob_act(power)
+			. = ..()
+			was_clashed()
 
 	poof
 		icon = 'icons/effects/64x64.dmi'
@@ -2044,6 +2068,22 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	spear
+		icon = 'icons/effects/64x64.dmi'
+		icon_state = "spear"
+		can_clash = 0
+		pixel_x = 0
+		pixel_y = 0
+
+
+		set_dir(new_dir)
+			. = ..()
+			if (new_dir & SOUTH)
+				pixel_y = -32
+			if (new_dir & WEST)
+				pixel_x = -32
+
 
 /obj/itemspecialeffect/impact
 	icon = 'icons/effects/impacts.dmi'

@@ -56,6 +56,8 @@
 	var/turf_flags = 0
 	var/list/list/datum/disjoint_turf/connections
 
+	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
@@ -65,8 +67,6 @@
 		if(istype(src.material))
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
-
-		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -94,12 +94,11 @@
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
 
-	proc/canpass()
-		if( density )
+	proc/can_crossed_by(atom/movable/AM)
+		if(!src.Cross(AM))
 			return 0
-		for( var/thing in contents )
-			var/atom/A = thing
-			if( A.density && !ismob(A) )
+		for(var/atom/A in contents)
+			if(!A.Cross(AM))
 				return 0
 		return 1
 
@@ -149,7 +148,8 @@
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/overlay/tile_gas_effect
 	name = ""
@@ -158,7 +158,8 @@
 	mouse_opacity = 0
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
@@ -351,7 +352,8 @@ proc/generate_space_color()
 	AM.movement_newloc = newloc
 	. = ..()
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/mover, atom/forget)
+
 	if (!mover)
 		return TRUE
 
@@ -435,6 +437,9 @@ proc/generate_space_color()
 			else
 				M.set_loc(warptarget)
 #endif
+	// https://www.byond.com/forum/post/2382205
+	// Default behavior of turf/Entered() is to call Crossed() this will maintain that behavior
+	Crossed(M)
 
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
@@ -549,6 +554,8 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 
+	var/image/old_disposal_image = src.disposal_image
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
@@ -589,7 +596,11 @@ proc/generate_space_color()
 			new_turf = new /turf/unsimulated/floor(src)
 		else
 			if (delay_space_conversion()) return
-			new_turf = new /turf/space(src)
+			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
+				station_repair.repair_turfs(list(src), clear=TRUE)
+				new_turf = src
+			else
+				new_turf = new /turf/space(src)
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
@@ -624,6 +635,8 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+
+	new_turf.disposal_image = old_disposal_image
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
@@ -952,7 +965,7 @@ proc/generate_space_color()
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "vrwall"
 
-/turf/unsimulated/attack_hand(var/mob/user as mob)
+/turf/unsimulated/attack_hand(var/mob/user)
 	if (src.density == 1)
 		return
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -979,7 +992,7 @@ proc/generate_space_color()
 
 // imported from space.dm
 
-/turf/space/attack_hand(mob/user as mob)
+/turf/space/attack_hand(mob/user)
 	if ((user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
@@ -1000,7 +1013,7 @@ proc/generate_space_color()
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C, mob/user)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
 		boutput(user, "<span class='alert'>You can't build here.</span>")
@@ -1159,7 +1172,7 @@ proc/generate_space_color()
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
 				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")

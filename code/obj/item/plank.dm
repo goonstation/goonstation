@@ -58,7 +58,7 @@
 		else
 			return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_build_door(C, src, 30), user)
 

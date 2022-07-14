@@ -11,11 +11,12 @@
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook
 	var/grilltemp = 35 + T0C
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/on = 0
 	var/movable = 1
 	var/datum/light/light
-	var/datum/particleSystem/barrelSmoke/smoke_part
+	var/particles/barrel_embers/part_embers
+	var/particles/barrel_smoke/part_smoke
 
 	New()
 		..()
@@ -29,8 +30,20 @@
 		light.set_brightness(1)
 		light.set_color(0.5, 0.3, 0)
 
+		part_embers = new
+		part_smoke = new
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	disposing()
+		qdel(light)
+		light = null
+		part_embers = null
+		part_smoke = null
+		grillitem = null
+		qdel(reagents)
+		reagents = null
+		. = ..()
+
+	attackby(obj/item/W, mob/user)
 		if(movable && istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
@@ -142,7 +155,7 @@
 	/*		else if (oldval && !newval)
 				UnsubscribeProcess() */
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
 			return
@@ -171,7 +184,8 @@
 
 	process()
 		if (status & BROKEN)
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 			UnsubscribeProcess()
 			return
 
@@ -188,11 +202,11 @@
 				UnsubscribeProcess()
 
 		if (src.grilltemp >= 200 + T0C)
-			if (!smoke_part)
-				smoke_part = particleMaster.SpawnSystem(new /datum/particleSystem/barrelSmoke(src))
+			UpdateParticles(part_embers, "embers")
+			UpdateParticles(part_smoke, "smoke")
 		else
-			particleMaster.RemoveSystem(/datum/particleSystem/barrelSmoke, src)
-			smoke_part = null
+			ClearSpecificParticles("embers")
+			ClearSpecificParticles("smoke")
 
 		if (src.grilltemp >= src.reagents.total_temperature)
 			src.reagents.set_reagent_temp(src.reagents.total_temperature + 5)
@@ -307,14 +321,18 @@
 		shittysteak.reagents.my_atom = shittysteak
 
 		src.grillitem.set_loc(shittysteak)
-
-		src.grillitem = null
-		src.icon_state = "shittygrill_on"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
-		src.cooktime = 0
 	//	UnsubscribeProcess()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.grillitem)
+			src.grillitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			src.cooktime = 0
+			src.icon_state = "shittygrill_on"
 
 	verb/drain()
 		set src in oview(1)

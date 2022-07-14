@@ -184,16 +184,21 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
-		if("radium","porktonium")
+		if("porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
-		if("strange_reagent")
-			src.ArtifactStimulus("radiate", round(volume / 5))
+			src.ArtifactStimulus("carbtouch", round(volume / 5))
+		if("synthflesh","blood","bloodc","meat_slurry") //not carbon, because it's about detecting *lifeforms*, not elements
+			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
+		if("nanites","corruptnanites","goodnanites","flockdrone_fluid") //not silicon&friends for the same reason
+			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
+		if("radium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("uranium","polonium")
 			src.ArtifactStimulus("radiate", round(volume / 2))
 		if("dna_mutagen","mutagen","omega_mutagen")
 			if (A.artitype.name == "martian")
 				ArtifactDevelopFault(80)
-		if("phlogiston","el_diablo","thermite","thalmerite","argine")
+		if("phlogiston","el_diablo","thermite","pyrosium","argine")
 			src.ArtifactStimulus("heat", 310 + (volume * 5))
 		if("napalm_goo","kerosene","ghostchilijuice")
 			src.ArtifactStimulus("heat", 310 + (volume * 10))
@@ -210,7 +215,7 @@
 		if("pacid","clacid","nitric_acid")
 			src.ArtifactTakeDamage(volume * 10)
 		if("george_melonium")
-			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_stimulus = pick("heat","force","radiate","elec", "carbtouch", "silitouch")
 			var/random_strength = 0
 			switch(random_stimulus)
 				if ("heat")
@@ -221,10 +226,12 @@
 					random_strength = rand(3,30)
 				if ("radiate")
 					random_strength = rand(1,10)
+				else // carbon and silicon touch
+					random_strength = 1
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
 
-/obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
+/obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (isrobot(user))
 		src.ArtifactStimulus("silitouch", 1)
 

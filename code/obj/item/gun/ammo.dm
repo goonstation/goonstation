@@ -81,7 +81,7 @@
 			src.UpdateIcon()
 			return 0
 
-	attackby(obj/b as obj, mob/user as mob)
+	attackby(obj/b, mob/user)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
 		else if(b.type == src.type)
@@ -199,7 +199,10 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(K, sound_load, 50, 1)
+		if(K.sound_load_override)
+			playsound(K, K.sound_load_override, 50, 1)
+		else
+			playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -302,9 +305,8 @@
 		ammo_type.material = copyMaterial(src.material)
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") / 2.75)
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 4)
-			ammo_type.ks_ratio = max(0,round(material.getProperty("hard") / 75))
+			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
@@ -364,7 +366,7 @@
 	icon_state = "stenag_mag"
 	amount_left = 20.0
 	max_amount = 20.0
-	ammo_cat = AMMO_AUTO_562
+	ammo_cat = AMMO_AUTO_556
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	armor_piercing
@@ -716,6 +718,10 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
+
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
@@ -738,12 +744,12 @@
 	name = "20mm APHE shells"
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM
 	w_class = W_CLASS_SMALL
 	icon_dynamic = 1
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_lethal-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	single
@@ -766,16 +772,16 @@
 //1.57
 /obj/item/ammo/bullets/autocannon
 	sname = "40mm HE"
-	name = "40mm HE shells"
-	desc = "Some high explosive grenades, for use in 40MM weapons."
+	name = "40mm HE pod shells"
+	desc = "Some high explosive grenades, for use in 40mm weapons."
 	amount_left = 2
 	max_amount = 2
-	icon_state = "40mmR"
+	icon_state = "40mm_HE_pod"
 	ammo_type = new/datum/projectile/bullet/autocannon
 	ammo_cat = AMMO_CANNON_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_HE_pod-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 	single
@@ -792,32 +798,37 @@
 		sname = "40mm HE Knocker"
 		name = "40mm HE airlock-breaching shells"
 		desc = "Some explosive breaching shells."
+		icon_state = "40mm_HE"
 		ammo_type = new/datum/projectile/bullet/autocannon/knocker
 
 /obj/item/ammo/bullets/grenade_round
-	sname = "40mm HEDP"
-	name = "40mm HEDP shells"
+	sname = "40mm"
+	name = "40mm shells"
 	desc = "A box of general utility 40mm grenades."
 	amount_left = 8
 	max_amount = 8
-	icon_state = "40mmR"
+	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/grenade_round/
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_lethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	explosive
+		sname = "40mm HEDP"
+		name = "40mm HEDP shells"
 		desc = "High Explosive Dual Purpose grenade rounds compatible with grenade launchers. Effective against infantry and armour."
+		icon_state = "40mm_HE"
+		icon_empty = "40mm_HE-0"
 		ammo_type = new/datum/projectile/bullet/grenade_round/explosive
 
 	high_explosive
-		desc = "High Explosive grenade rounds compatible with grenade launchers. Devastatingly effective against infantry targets."
 		sname = "40mm HE"
 		name = "40mm HE shells"
-		icon_state = "AEX"
-		icon_empty = "AEX-0"
+		desc = "High Explosive grenade rounds compatible with grenade launchers. Devastatingly effective against infantry targets."
+		icon_state = "40mm_HE_conc"
+		icon_empty = "40mm_HE_conc-0"
 		ammo_type = new/datum/projectile/bullet/grenade_round/high_explosive
 
 /obj/item/ammo/bullets/smoke
@@ -826,12 +837,12 @@
 	desc = "Some smoke shells, for the 40mm platform."
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmB"
+	icon_state = "40mm_smoke"
 	ammo_type = new/datum/projectile/bullet/smoke
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmB-0"
+	icon_empty = "40mm_smoke-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 	single
@@ -845,11 +856,11 @@
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmR"
+	icon_state = "40mm_paint"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmR-0"
+	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 /obj/item/ammo/bullets/pbr
@@ -859,11 +870,11 @@
 	ammo_type = new/datum/projectile/bullet/pbr
 	amount_left = 5
 	max_amount = 5
-	icon_state = "40mmB"
+	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
 	icon_dynamic = 0
-	icon_empty = "40mmB-0"
+	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
@@ -886,7 +897,7 @@
 	rigil
 		max_amount = 4
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
 			return
@@ -908,7 +919,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!user)
 			return
@@ -927,9 +938,9 @@
 		inventory_counter.update_number(src.amount_left)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if (AMMO.has_grenade != 0)
-			src.icon_state = "40mmR"
+			src.icon_state = "40mm_lethal"
 		else
-			src.icon_state = "40mmR-0"
+			src.icon_state = "40mm_lethal-0"
 
 	after_unload(mob/user)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
@@ -953,7 +964,7 @@
 	ammo_cat = AMMO_ROCKET_RPG
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
@@ -967,7 +978,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
@@ -981,7 +992,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 //3.0
 /obj/item/ammo/bullets/gun
@@ -1092,8 +1103,8 @@
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
 				if(20)
@@ -1173,15 +1184,6 @@
 	max_charge = 40.0
 	recharge_rate = 5.0
 
-	process()
-		if(src.material)
-			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 50)
-					if(prob(max(11 - src.material.getProperty("stability"), 0)))
-						var/turf/T = get_turf(src)
-						explosion_new(src, T, 1)
-						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
-
 
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
@@ -1190,20 +1192,32 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
+
+			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
 
 			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+			recharge_rate += material.getProperty("radioactive")/2
+			recharge_rate += material.getProperty("n_radioactive")
+
 
 		charge = max_charge
+
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
+
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			max_charge = round((conductivity ** 2) * 4, 25)
+
+			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
@@ -1231,12 +1245,12 @@
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
 	name = "Power Cell - NTSO D49"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 250PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 250.0
 	max_charge = 250.0
-	recharge_rate = 6
+	recharge_rate = 9
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
@@ -1255,7 +1269,7 @@
 
 /obj/item/ammo/power_cell/self_charging/mediumbig
 	name = "Power Cell - Fission"
-	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU"
+	desc = "Half the power of a Fusion model power cell with a tenth of the cost. Holds 200PU."
 	max_charge = 200
 	charge = 200
 	recharge_rate = 20

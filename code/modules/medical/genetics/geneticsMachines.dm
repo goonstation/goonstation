@@ -9,7 +9,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	req_access = list(access_medlab)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
@@ -52,7 +52,7 @@
 	STOP_TRACKING
 	..()
 
-/obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/genetics/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/genetics_injector/dna_activator))
 		var/obj/item/genetics_injector/dna_activator/DNA = W
 		if (DNA.expended_properly)

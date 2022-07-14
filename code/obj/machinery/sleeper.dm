@@ -344,7 +344,7 @@
 	allow_drop()
 		return 0
 
-	attackby(obj/item/grab/G as obj, mob/user as mob)
+	attackby(obj/item/grab/G, mob/user)
 		src.add_fingerprint(user)
 
 		if (!istype(G) || !ishuman(G.affecting))
@@ -512,7 +512,10 @@
 		if (!src || !src.occupant)
 			return
 		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -527,7 +530,6 @@
 			src.occupant = null
 			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -591,7 +593,7 @@
 		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
@@ -684,6 +686,7 @@
 		our_console.our_sleeper = src
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 	disposing()
@@ -695,7 +698,7 @@
 		..()
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
 			interact_particle(user,src)
@@ -725,7 +728,7 @@
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
@@ -779,7 +782,7 @@
 		if (islist(portable_machinery))
 			portable_machinery.Remove(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (our_console)
 			our_console.Attackhand(user)
 			interact_particle(user,src)

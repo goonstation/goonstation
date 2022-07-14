@@ -117,7 +117,7 @@ MATERIAL
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
@@ -723,7 +723,7 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] rod\s on this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 
@@ -740,7 +740,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -841,6 +841,7 @@ MATERIAL
 					G.setMaterial(src.material)
 					src.change_stack_amount(-2)
 					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					G.add_fingerprint(user)
 		src.add_fingerprint(user)
 		return
 
@@ -860,7 +861,7 @@ MATERIAL
 		SPAWN(0) //wait for the head to be added
 			update()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(heads))
 			var/obj/item/organ/head/head = heads[length(heads)]
 
@@ -881,7 +882,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
@@ -1068,7 +1069,7 @@ MATERIAL
 		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -1108,20 +1109,21 @@ MATERIAL
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
+		var/inMagtractor = istype(W.loc, /obj/item/magtractor)
 		var/success = stack_item(W)
 		if (!success)
 			boutput(user, "<span class='alert'>You can't put any more tiles in this stack!</span>")
 			return
-		if(!user.is_in_hands(src))
+		if(!(user.is_in_hands(src) || inMagtractor))
 			user.put_in_hand(src)
-		if(isrobot(user))
+		if(issilicon(user))
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
@@ -1169,6 +1171,7 @@ MATERIAL
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	force = 0.0
 	New()
 		..()
 		var/datum/material/M = getMaterial("cardboard")

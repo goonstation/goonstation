@@ -91,7 +91,7 @@
 	casing = /obj/item/casing/cannon
 	power = 125
 	implanted = /obj/item/implant/projectile/rakshasa
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	goes_through_walls = 1
 	pierces = -1
 
@@ -191,7 +191,7 @@
 	shot_volume = 66
 	dissipation_delay = 10
 	dissipation_rate = 5
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -305,7 +305,7 @@
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
 	ks_ratio = 1
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
 		O.internal_speed = projectile_speed
@@ -368,7 +368,7 @@
 	dissipation_rate = 5
 	ks_ratio = 1.0
 	implanted = /obj/item/implant/projectile/bullet_50
-	icon_turf_hit = "bhole-large"
+	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
 	shot_sound = 'sound/weapons/deagle.ogg'
 
@@ -495,6 +495,20 @@
 		new /datum/mutation_orb_mutdata(id = "accent_uwu", magical = 1),
 		new /datum/mutation_orb_mutdata(id = "dwarf", magical = 1)
 		)
+
+/obj/item/mutation_orb/cow_orb
+	name = "essence of cowness"
+	desc = "Moo!"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "orb_fire"
+
+	envelop_message = "hair"
+	leaving_message = "mooing softly and vanishing"
+
+	New()
+		. = ..()
+		color = list(0.3, 0.4, 0.1, 0, 1, 0, 0, 0, 1)
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
 /obj/item/storage/desk_drawer/lily/

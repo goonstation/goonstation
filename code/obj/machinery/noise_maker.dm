@@ -4,7 +4,7 @@
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/noise_switch/attack_hand(mob/user as mob)
+/obj/machinery/noise_switch/attack_hand(mob/user)
 	if(status & (NOPOWER|BROKEN))
 		return
 	use_power(5)
@@ -38,7 +38,7 @@
 
 
 
-/obj/machinery/noise_maker/attack_hand(mob/user as mob)
+/obj/machinery/noise_maker/attack_hand(mob/user)
 //	playsound(src.loc, "sound/effects/Explosion1.ogg", 100, 1)
 	src.add_fingerprint(user)
 

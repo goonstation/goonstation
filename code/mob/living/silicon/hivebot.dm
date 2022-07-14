@@ -70,6 +70,7 @@
 			src.cell = new /obj/item/cell/shell_cell/charged (src)
 		src.camera = new /obj/machinery/camera(src)
 		src.camera.c_tag = src.name
+		src.camera.ai_only = TRUE
 
 	..()
 	src.botcard.access = get_all_accesses()
@@ -494,7 +495,7 @@
 			step(AM, t)
 		src.now_pushing = null
 
-/mob/living/silicon/hivebot/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
 			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
@@ -1036,6 +1037,12 @@ Frequency:
 		else
 			return ..()
 
+	disposing()
+		available_ai_shells -= src
+		..()
+
+
+
 /*-----Shell-Creation---------------------------------------*/
 
 /obj/item/ai_interface
@@ -1060,7 +1067,7 @@ Frequency:
 	var/has_radio = 0
 	var/has_interface = 0
 
-/obj/item/shell_frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/shell_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)
 			var/obj/item/sheet/M = W

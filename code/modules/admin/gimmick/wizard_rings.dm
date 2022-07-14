@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
 	desc = "Parent object for wizadry rings, you shouldn't see this..."
@@ -78,7 +77,29 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 				var/obj/item/staff/cthulhu/staff = new /obj/item/staff/cthulhu(get_turf(user))
 				created_staff = staff
 
-			if (created_staff?.wizard_key != user?.mind.key)
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
+				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				created_staff.wizard_key = user?.mind.key
+
+		disposing()
+			created_staff = null
+			..()
+
+	staff_thunder
+		name = "ring of thunder"
+		desc = "Little arcs of electricty run along the outside of this ring."
+		icon_state = "stave_of_thunder"
+		ability_path = /datum/targetable/spell/summon_thunder_staff
+		var/obj/item/staff/thunder/created_staff
+
+		equipped(var/mob/user, var/slot)
+			..()
+
+			if (!created_staff)
+				var/obj/item/staff/thunder/staff = new /obj/item/staff/thunder(get_turf(user))
+				created_staff = staff
+
+			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
 				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
 				created_staff.wizard_key = user?.mind.key
 
@@ -250,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring/wizard)
 			var/ring_type = pick(possible_rings)
 			path = text2path("/obj/item/clothing/gloves/ring/wizard/[ring_type]")
 		else
-			path = pick(concrete_typesof(/obj/item/clothing/gloves/ring/wizard))
+			path = pick(typesof(/obj/item/clothing/gloves/ring/wizard) - /obj/item/clothing/gloves/ring/wizard)
 
 		new path(src.loc)
 		possible_rings = null

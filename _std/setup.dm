@@ -60,15 +60,6 @@
 
 #define LOOC_RANGE 8
 
-//Ass Jam! enables a bunch of wacky and not-good features. BUILD LOCALLY!!!
-#ifdef RP_MODE
-#define ASS_JAM 0
-#elif BUILD_TIME_DAY == 13 && defined(ASS_JAM_ENABLED)
-#define ASS_JAM 0 // ASS JAM DISABLED! FOR NOW! -warc
-#else
-#define ASS_JAM 0
-#endif
-
 // holiday toggles!
 
 #if (BUILD_TIME_MONTH == 10)
@@ -83,14 +74,6 @@
 
 #define FOOTBALL_MODE 1
 //#define RP_MODE
-//#define ASS_JAM_ENABLED 1 //you need to set BUILD_TIME_DAY to 13 manually in __build.dm
-
-//handles ass jam stuff
-#if ASS_JAM
-#ifndef TRAVIS_ASSJAM
-#warn Building with ASS_JAM features enabled. Toggle this by changing BUILD_TIME_DAY in __build.dm
-#endif
-#endif
 
 #ifdef Z_LOG_ENABLE
 var/ZLOG_START_TIME

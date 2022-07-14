@@ -1,59 +1,3 @@
-/obj/critter/livingobj
-	name = ""
-	desc = ""
-	icon_state = "livingobj"
-	density = 0
-	health = 10
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	generic = 0
-	butcherable = 1 //Because "toolbox meat" would be hilarious
-	atk_text = "slams into"
-	atk_brute_amt = 2
-	crit_chance = 0
-	chase_text = "leaps at"
-	var/stunprob = 0
-	layer = 5
-	var/obj/original_object = null
-
-	CritterAttack(var/mob/M)
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-		..()
-
-	attack_hand(mob/user as mob)
-		if (src.alive && (user.a_intent != INTENT_HARM))
-			src.visible_message("<span class='combat'><b>[user]</b> pets [src]!</span>")
-			return
-		..()
-
-	CritterDeath()
-		src.visible_message("<b>[src]</b> stops moving!")
-		animate_float(src, 1, 5)
-		playsound(src.loc, "sound/effects/suck.ogg", 40, 1, -1, 0.6)
-		SPAWN(10 SECONDS) //Give time for people to butcher it if they want.
-			if (!src.disposed && src.loc && original_object)
-				original_object.set_loc(src.loc)
-				original_object = null
-				qdel(src)
-		return ..()
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(stunprob))
-			M.changeStatus("weakened", 2 SECONDS)
-		//playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-
-	disposing()
-		if (original_object)
-			original_object.dispose()
-			original_object = null
-		..()
-
-
 /obj/critter/spore
 	name = "plasma spore"
 	desc = "A barely intelligent colony of organisms. Very volatile."
@@ -385,10 +329,10 @@
 
 		return 1
 
-/obj/critter/spacebee
+/obj/critter/wasp
 	name = "space wasp"
 	desc = "A wasp in space."
-	icon_state = "spacebee"
+	icon_state = "wasp"
 	critter_family = BUG
 	density = 1
 	health = 10
@@ -459,7 +403,7 @@
 	health_gain_from_food = 6
 	angertext = "snips at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 	maxhealth = 60
 
@@ -489,7 +433,7 @@
 			else
 				continue
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(20))
 				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
@@ -508,7 +452,7 @@
 		else
 			..()
 
-	attack_hand(mob/M as mob)
+	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
@@ -546,7 +490,7 @@
 
 
 
-/obj/critter/spacebee/angry
+/obj/critter/wasp/angry
 	name = "angry space wasp"
 	desc = "An angry wasp in space."
 	angertext = "buzzes furiously at"
@@ -556,10 +500,10 @@
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
 	name = "space wasp egg"
-	critter_type = /obj/critter/spacebee
+	critter_type = /obj/critter/wasp
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
-	critter_type = /obj/critter/spacebee/angry
+	critter_type = /obj/critter/wasp/angry
 
 /obj/critter/magiczombie
 	name = "skeleton"
@@ -592,7 +536,7 @@
 		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (!src.alive) return
 		if (istype(W, /obj/item/clothing/head))
@@ -924,25 +868,27 @@
 
 /obj/critter/bloodling
 	name = "Bloodling"
-	desc = "A force of pure sorrow and evil."
+	desc = "A force of pure sorrow and evil. They shy away from that which is holy."
 	icon_state = "bling"
 	density = 1
-	health = 20
+	health = 15
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 0
-	firevuln = 0
-	brutevuln = 0
+	firevuln = 1
+	brutevuln = 0.5
 	seekrange = 5
-	invisibility = INVIS_INFRA
 	flying = 1
 	is_pet = FALSE
-
 	generic = 0
+
+	New()
+		UpdateParticles(new/particles/bloody_aura, "bloodaura")
+		..()
 
 	seek_target()
 		src.anchored = 0
@@ -968,12 +914,9 @@
 		if (narrator_mode)
 			playsound(src.loc, 'sound/vox/ghost.ogg', 50, 1, -1)
 		else
-			playsound(src.loc, 'sound/effects/ghost.ogg', 50, 1, -1)
+			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
-			if(M.see_invisible < INVIS_CLOAK)
-				boutput(M, "<span class='combat'><b>You are forced to the ground by an unseen being!</b></span>")
-			else
-				boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
+			boutput(M, "<span class='combat'><b>You are forced to the ground by the Bloodling!</b></span>")
 			random_brute_damage(M, rand(0,3))
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
@@ -982,20 +925,20 @@
 
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1, -1)
+		playsound(src.loc, "sound/effects/ghost2.ogg", 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
-			if(prob(50))
+			if(prob(30))
 				random_brute_damage(M, rand(3,7))
 				boutput(M, "<span class='combat'><b>You feel blood getting drawn out through your skin!</b></span>")
 			else
-				boutput(M, "<span class='combat'>You feel uncomfortable.</span>")
+				boutput(M, "<span class='combat'>You feel uncomfortable. Your blood seeks to escape you.</span>")
 
 		SPAWN(0.5 SECONDS)
 			attacking = 0
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1012,9 +955,18 @@
 
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1, -1)
-			make_cleanable( /obj/decal/cleanable/blood,loc)
+			if(prob(50))
+				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+				make_cleanable( /obj/decal/cleanable/blood,loc)
 		return ..()
+
+	CritterDeath()
+		if (!src.alive)
+			return
+		..()
+		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+		new /obj/decal/cleanable/blood(src.loc)
+		qdel(src)
 
 /obj/critter/blobman
 	name = "mutant"
@@ -1081,12 +1033,12 @@
 	blob_act(power)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.alive)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			return
 		else
@@ -1180,11 +1132,11 @@
 			src.appear()
 			break
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		..()
 		src.boredom_countdown = rand(5,10)
 
@@ -1234,7 +1186,7 @@
 	aggressive = 1
 	generic = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 
@@ -1534,7 +1486,7 @@
 	brutevuln = 1
 	angertext = "hisses at"
 	butcherable = 1
-	flags = NOSPLASH | OPENCONTAINER | TABLEPASS
+	flags = TABLEPASS
 	flying = 0
 
 	CritterDeath()
@@ -1599,3 +1551,57 @@
 
 	CritterAttack(mob/M)
 		src.task = "chasing"
+
+/obj/critter/livingtail
+	name = "Living tail"
+	desc = "A twitching saurian tail, you feel mildly uncomfortable looking at it."
+	icon_state = "twitchytail"
+	density = 0
+	health = 20
+	flags = NOSPLASH | TABLEPASS
+	maxhealth = 40
+	butcherable = 1
+
+	var/obj/item/organ/tail/lizard/tail_memory = null
+	var/maxsteps
+	var/currentsteps = 0
+	var/primary_color =	"#21a833"
+	var/secondary_color = "#000000"
+
+	New()
+		..()
+		maxsteps = rand(2,12)
+
+	proc/setup_overlays()
+		var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
+		overlayprimary.color = primary_color
+		var/image/overlaysecondary = image('icons/misc/critter.dmi', "twitchytail_colorkey2")
+		overlaysecondary.color = secondary_color
+		src.UpdateOverlays(overlayprimary, "bottomdetail")
+		src.UpdateOverlays(overlaysecondary, "topdetail")
+
+	process()
+		currentsteps++
+
+		if (currentsteps >= maxsteps)
+			CritterDeath()
+
+		if (prob(70))
+			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
+		..()
+
+	CritterDeath()
+		..()
+		if (tail_memory)
+			tail_memory.set_loc(get_turf(src))
+		else
+			new/obj/item/organ/tail/lizard(get_turf(src))
+		qdel(src)
+
+	Crossed(atom/movable/M as mob)
+		..()
+		if (ishuman(M) && prob(25))
+			src.visible_message("<span class='combat'>[src] coils itself around [M]'s legs and trips [him_or_her(M)]!</span>")
+			M:changeStatus("weakened", 2 SECONDS)
+		return

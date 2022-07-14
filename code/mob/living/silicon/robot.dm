@@ -75,6 +75,7 @@
 	var/sound_automaton_ratchet = 'sound/misc/automaton_ratchet.ogg'
 	var/sound_automaton_tickhum = 'sound/misc/automaton_tickhum.ogg'
 	var/sound_sad_robot = 'sound/voice/Sad_Robot.ogg'
+	var/vocal_pitch = 1.0 // set default vocal pitch
 
 	var/image/i_critdmg
 	var/image/i_panel
@@ -171,15 +172,6 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..(loc, null, null, FALSE)
-
-		hud = new(src)
-		src.attach_hud(hud)
-
-		src.zone_sel = new(src, "CENTER+3, SOUTH")
-		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
-		src.attach_hud(zone_sel)
-
 		update_bodypart()
 
 		if (src.shell)
@@ -194,6 +186,16 @@
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 			src.syndicate = syndie
 			src.emagged = frame_emagged
+
+		. = ..(loc) //must be called before hud is attached
+
+		hud = new(src)
+		src.attach_hud(hud)
+
+		src.zone_sel = new(src, "CENTER+3, SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
+		src.attach_hud(zone_sel)
+
 		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
@@ -238,6 +240,9 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if (src.syndicate)
+				src.show_antag_popup("syndieborg")
+				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
@@ -296,6 +301,7 @@
 		var/message
 		var/maptext_out = 0
 		var/custom = 0
+
 
 		switch(lowertext(act))
 
@@ -502,7 +508,7 @@
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> birdwells."
 
 			if ("scream")
@@ -510,7 +516,7 @@
 					if (narrator_mode)
 						playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -672,6 +678,19 @@
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
+
+		// If we have no brain or an inactive spont core, we're dormant.
+		// If we have a brain but no client, we're in hiberation mode.
+		// Otherwise, fully operational.
+		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
+			if (src.client)
+				. += "<span class='success'>[src.name] is fully operational.</span><br>"
+			else
+				. += "<span class='hint'>[src.name] is in temporary hibernation.</span><br>"
+		else
+			. += "<span class='alert'>[src.name] is completely dormant.</span><br>"
+
+
 		if (brute)
 			if (brute < 75)
 				. += "<span class='alert'>[src.name] looks slightly dented</span><br>"
@@ -733,7 +752,7 @@
 					src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 					continue
 				else
-					if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+					if (tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 						src.real_name = newname
 						break
 					else
@@ -848,6 +867,7 @@
 			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
+				src.part_chest?.cell = null
 
 		update_bodypart()
 
@@ -879,7 +899,7 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio == 0)
+		if(P.proj_data.ks_ratio <= 0.1)
 			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
@@ -949,7 +969,7 @@
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
 				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
+				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()
@@ -997,6 +1017,7 @@
 					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
+						src.part_chest?.cell = null
 			src.update_bodypart()
 
 	temperature_expose(null, temp, volume)
@@ -1019,6 +1040,7 @@
 				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
+					src.part_chest?.cell = null
 
 	bump(atom/movable/AM as mob|obj)
 		if ( src.now_pushing)
@@ -1073,7 +1095,7 @@
 			if (src.viewalerts) src.robot_alerts()
 		return !cleared
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
@@ -1093,10 +1115,11 @@
 				return
 
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
-				if(src.emagged)
+				if(src.emagged || src.syndicate)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are emagged, so it failed.")
+					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
 					elecflash(src,power=2)
+					return
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
@@ -1153,6 +1176,7 @@
 				user.drop_item()
 				W.set_loc(src)
 				cell = W
+				src.part_chest?.cell = W
 				boutput(user, "You insert [W].")
 				src.update_appearance()
 
@@ -1557,6 +1581,7 @@
 					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
 					cell.UpdateIcon()
+					src.part_chest.cell = null
 					src.cell = null
 
 			update_appearance()
@@ -1818,8 +1843,9 @@
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-
-		if(src.law_rack_connection)
+		if(src.dependent && src?.mainframe?.law_rack_connection)
+			src.mainframe.law_rack_connection.show_laws(who)
+		else if(!src.dependent && src.law_rack_connection)
 			src.law_rack_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")
@@ -2142,7 +2168,7 @@
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State Laws"
-		if (alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
 
 		var/laws = null
@@ -2195,9 +2221,9 @@
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
 
-		var/newFace = input(usr, "Select your faceplate", "Face settings", targethead.face) as null|anything in targethead.expressions
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions))
 		if (!newFace) return 0
-		var/newMode = input(usr, "Select a display mode", "Face settings", targethead.mode) as null|anything in list("light-on-dark", "dark-on-light")
+		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
 		if (!newMode) return 0
 		newFace = (newFace ? lowertext(newFace) : targethead.face)
 		newMode = (newMode == "light-on-dark" ? "lod" : "dol")
@@ -2217,15 +2243,33 @@
 		else
 			boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
 
+	verb/change_voice_pitch()
+		set category = "Robot Commands"
+		set name = "Change vocal pitch"
+
+		var/list/vocal_pitches = list("Low", "Medium", "High")
+		var/vocal_pitch_choice = tgui_input_list(src, "Select a vocal pitch:", "Robot Voice", vocal_pitches)
+		switch(vocal_pitch_choice)
+			if("Low")
+				vocal_pitch = 0.9
+			if("Medium")
+				vocal_pitch = 1.0
+			if("High")
+				vocal_pitch = 1.25
+
+	// hacky, but this is used for says etc.
+	get_age_pitch_for_talk()
+		return vocal_pitch
+
 	proc/pick_module()
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Civilian", "Engineering", "Mining", "Medical", "Chemistry", "Brobocop")
+		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
-		var/mod = input("Please, select a module!", "Robot", null, null) in starter_modules
+		var/mod = tgui_input_list(src, "Please, select a module!", "Robot", starter_modules)
 		if (!mod || !freemodule)
 			return
 

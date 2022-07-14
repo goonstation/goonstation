@@ -35,9 +35,9 @@
 	var/is_npc = 0
 
 	var/move_laying = null
-	var/last_typing = null
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
+	var/has_typing_indicator = FALSE
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble
+	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null
 	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
@@ -400,18 +400,19 @@
 			W.onMouseUp(object,location,control,params)
 
 /mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
-	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
-		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
-		var/obj/item/organ/dropping_organ = dropped
-		var/success = dropping_organ.attach_organ(src, dropping_user)
-		if (success)
-			return
-	else if (istype(dropped, /obj/item/parts/human_parts/))
-		var/obj/item/parts/dropping_limb = dropped
-		dropping_limb.attach(src, dropping_user)
-	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-		var/obj/item/parts/robot_parts/dropping_limb = dropped
-		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	if(in_interact_range(src, dropping_user) && in_interact_range(dropped, dropping_user))
+		if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+			// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+			var/obj/item/organ/dropping_organ = dropped
+			var/success = dropping_organ.attach_organ(src, dropping_user)
+			if (success)
+				return
+		else if (istype(dropped, /obj/item/parts/human_parts/))
+			var/obj/item/parts/dropping_limb = dropped
+			dropping_limb.attach(src, dropping_user)
+		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+			var/obj/item/parts/robot_parts/dropping_limb = dropped
+			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -505,7 +506,7 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -522,7 +523,7 @@
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -616,7 +617,8 @@
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)
@@ -636,19 +638,31 @@
 		if ("headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
-			if (src.r_hand)
+			if (src.r_hand && src.organHolder.head)
 				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
 
 		if ("left hand")
-			if (src.l_hand)
+			if (src.l_hand && src.organHolder.head)
 				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
@@ -940,9 +954,8 @@
 				message = stutter(message)
 
 	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
 	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
+		if (has_typing_indicator == FALSE)
 			UpdateOverlays(null, "speech_bubble")
 
 	//Blobchat handling
@@ -1046,14 +1059,22 @@
 
 	var/heardname = src.real_name
 
-	if (!skip_open_mics_in_range)
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+
+	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
 
 	var/list/listening = list()
 	var/list/olocs = list()
+	var/atom/say_location = src
 	var/thickness = 0
-	if (isturf(loc))
-		listening = all_hearers(message_range, src)
+	if (is_decapitated_skeleton)	//Decapitated skeletons speak from their heads
+		var/mob/living/carbon/human/H = src
+		var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (S.head_tracker)
+			say_location = S.head_tracker
+	if (isturf(say_location.loc))
+		listening = all_hearers(message_range, say_location)
 	else
 		olocs = obj_loc_chain(src)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
@@ -1086,7 +1107,7 @@
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			src.last_heard_name = src.get_heard_name()
 
-		var/turf/T = get_turf(src)
+		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
@@ -1104,7 +1125,7 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+		chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1129,7 +1150,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
-	var/list/hearers = hearers(src)
+	var/list/hearers = hearers(say_location)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1143,7 +1164,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(src.loc) && src.loc == M.loc) && \
+				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1158,17 +1179,17 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,src) <= viewrange)
+					if (get_dist(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,src) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (get_dist(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,src) <= viewrange)
+				if (get_dist(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
@@ -1436,14 +1457,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	. = 0
 
 /mob/living/proc/update_lying()
-	if (src.buckled)
-		if (src.buckled == src.loc)
-			src.lying = 1
-		else if (istype(src.buckled, /obj/stool/bed))
-			src.lying = 1
-		else
-			src.lying = 0
-
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
@@ -1453,7 +1466,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	animate_rest(src, !lying)
 
 
-/mob/living/attack_hand(mob/living/M as mob, params, location, control)
+/mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
@@ -1642,7 +1655,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
+	var/health_deficiency = 0
+	if (src.max_health > 0)
+		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+	else
+		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
@@ -1929,12 +1946,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (isalive(src))
-						lastgasp()
-					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
-				else
+				if (!P.reagents)
 					src.take_toxin_damage(damage)
 				if(rangedprot > 1)
 					armor_msg = ", but your armor softens the hit!"
@@ -1955,18 +1967,19 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN(0.1 SECONDS) //fix race condition
-		var/newbloss = get_brute_damage()
-		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-		if (reagents)
-			reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-		if ((damage > 0) || W.force)
-			src.was_harmed(M, W)
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
+		return 0
+	if (check_target_immunity(src))
 		return 0
 	var/prot = 1
 
@@ -1976,9 +1989,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/obj/item/clothing/gloves/G = H.gloves
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm)
+		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm)
+		if (H.limbs.r_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 		if (prot <= 0.29)
 			return 0
@@ -2080,3 +2093,15 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+// can stumble or flip while drunk
+/mob/living/proc/can_drunk_act()
+	if (!src.canmove || !isturf(src.loc))
+		return FALSE
+	if (length(src.grabbed_by))
+		for (var/obj/item/grab/G in src.grabbed_by)
+			if (istype(G, /obj/item/grab/block))
+				continue
+			if (G.state > GRAB_PASSIVE)
+				return FALSE
+	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))

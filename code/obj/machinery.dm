@@ -12,7 +12,7 @@
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
-
+	object_flags = NO_GHOSTCRITTER
 	var/status = 0
 	var/power_usage = 0
 	var/power_channel = EQUIP
@@ -160,7 +160,7 @@
 /obj/machinery/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
