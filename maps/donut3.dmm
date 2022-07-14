@@ -5979,13 +5979,8 @@
 	},
 /area/station/crew_quarters/hor)
 "bye" = (
-/obj/decal/fakeobjects/plantpot,
-/obj/shrub/captainshrub{
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
-	pixel_x = 7
-	},
+/obj/shrub/captainshrub,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /obj/decoration/vent{
 	pixel_x = 1;
 	pixel_y = 34

@@ -3546,11 +3546,8 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/decal/fakeobjects/plantpot{
-	pixel_y = 10
-	},
 /obj/shrub/captainshrub{
-	pixel_y = 22
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
 	pixel_y = 12

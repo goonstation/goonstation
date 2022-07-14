@@ -1,4 +1,17 @@
 
+(t)thu jul 14 22
+(u)Shiiba
+(p)9620
+(e)🎨|sprites
+(+)Instead of giving raises, NanoTrasen gave out NT branded water bottles, enjoy!
+(u)Stonepillar
+(p)9636
+(e)🐛|bug
+(+)Bank records computer is now deconstructible
+(u)Ikea
+(p)9639
+(e)⚖|balance
+(*)Vending machines will always fall down on people tossed at them. Vending machine stun has been reduced to ten seconds.
 (t)wed jul 13 22
 (u)MetricDuck
 (p)9611
