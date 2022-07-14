@@ -1,5 +1,9 @@
 
 (t)thu jul 14 22
+(u)Amylizzle
+(p)9635
+(e)🐛|bug
+(+)Ling horror form can now slash at blob flesh. So can bear, brullbar, claw, and KING CRAB arms
 (u)DimWhat
 (p)9660
 (e)|
