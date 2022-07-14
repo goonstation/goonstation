@@ -2,7 +2,6 @@
 	// three types of loot - aesthetic motivated, department motivated, and player motivated
 	var/list/aesthetic = list(
 	// character
-		/obj/item/clothing/head/frog_hat,\
 		/obj/item/clothing/head/bear,\
 		list(/obj/item/clothing/head/rugged, /obj/item/clothing/suit/rugged_jacket),\
 		list(/obj/item/clothing/head/star_tophat, /obj/item/clothing/suit/star_cloak),\
