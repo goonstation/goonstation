@@ -394,6 +394,46 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 35)
 
+/obj/item/clothing/suit/hopjacket
+	name = "Head of Personnel's jacket"
+	desc = "A tacky green and red jacket for a tacky green bureaucrat."
+	icon_state = "hopjacket"
+	uses_multiple_icon_states = TRUE
+	item_state = "hopjacket"
+	var/coat_style = "hopjacket"
+	var/buttoned = TRUE
+	bloodoverlayimage = SUITBLOOD_COAT
+
+	abilities = list(/obj/ability_button/labcoat_toggle)
+
+	setupProperties()
+		..()
+		setProperty("rangedprot", 0.5)
+
+
+	attack_self()
+		..()
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
+
+	proc/button()
+		if (src.coat_style)
+			src.icon_state = src.coat_style
+			usr.set_clothing_icon_dirty()
+		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
+		"You button your [src.name].")
+		src.buttoned = TRUE
+
+	proc/unbutton()
+		if (src.coat_style)
+			src.icon_state = "[initial(src.icon_state)]_o"
+			usr.set_clothing_icon_dirty()
+		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
+		"You unbutton your [src.name].")
+		src.buttoned = FALSE
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
