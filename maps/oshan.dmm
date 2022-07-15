@@ -19574,12 +19574,11 @@
 "aWo" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/splatter,
-/obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWp" = (
 /obj/decal/cleanable/cobweb2,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWq" = (
@@ -19706,7 +19705,7 @@
 /obj/decal/aliencomputer{
 	pixel_x = -32
 	},
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/martian/floor,
 /area/space)
 "aWT" = (
@@ -20370,7 +20369,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aZd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aZf" = (
@@ -48063,7 +48062,6 @@
 /area/station/maintenance/inner/central)
 "xBw" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -127045,7 +127043,7 @@ aXy
 aXy
 aYA
 aYO
-aZd
+aXW
 aYy
 aZB
 xBw
