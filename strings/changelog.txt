@@ -1,5 +1,10 @@
 
 (t)fri jul 15 22
+(u)Flaborized + Flourish
+(p)9605
+(e)🆕🗺🎨🔄|feature, mapping, sprites, rework
+(*)Loot crates (the kind which you can find across the debris field) have been reworked. Along with now randomly spawning across the map, they no longer require you to solve a puzzle and instead are anchored and locked through an anti-tamper device. Smash the anti-tamper device with a hefty object (such as an extinguisher) to unanchor and unlock the crate.
+(*)Loot crate contents have also been adjusted - they now pull from a larger pool of possible loot and will always contain at least three different kinds of items. Sprites by Flab!
 (u)Roddy
 (p)9418
 (e)|
