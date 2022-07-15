@@ -448,7 +448,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		attached.anchored = TRUE
 		attached.update_icon()
 		icon_state = "antitamper-on"
-		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
 
 	proc/detach_from(var/obj/storage/crate/C)
 		if (!C)
@@ -462,7 +462,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			attached.update_icon()
 			attached = null
 			qdel(src)
-		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)
 
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"
