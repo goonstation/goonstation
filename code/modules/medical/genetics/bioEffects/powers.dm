@@ -205,8 +205,8 @@
 					if (ishuman(owner))
 						var/mob/living/carbon/human/H = owner
 						if (istype(the_object, /obj/item/organ))
-							var/obj/item/organ/O = the_object
-							if (O.donor)
+							var/obj/item/organ/organ_obj = the_object
+							if (organ_obj.donor)
 								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
 						else if (istype(the_object, /obj/item/parts))
 							var/obj/item/parts/part = the_object
