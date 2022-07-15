@@ -898,37 +898,23 @@ var/zapLimiter = 0
 
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
-
-		var/light = FALSE
-		var/equip = FALSE
-		var/environ = FALSE
-
-		for(var/obj/machinery/power/apc/APC in src.area)
-			var/list/power_levels = APC.get_power_levels()
-			light |= power_levels["power_light"]
-			equip |= power_levels["power_equip"]
-			environ |= power_levels["power_environ"]
-
-
-		src.area.power_light = light
-		src.area.power_equip = equip
-		src.area.power_environ = environ
-
-		src.area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
-
-/obj/machinery/power/apc/proc/get_power_levels()
-	if(operating && !shorted && !do_not_operate)
-		return list(
-		"power_light" = (lighting > 1),
-		"power_equip" = (equipment > 1),
-		"power_environ" = (environ > 1)
-		)
-	else
-		return list(
-		"power_light" = 0,
-		"power_equip" = 0,
-		"power_environ" = 0
-		)
+		if(operating && !shorted && !do_not_operate)
+			area.power_light = (lighting > 1)
+			area.power_equip = (equipment > 1)
+			area.power_environ = (environ > 1)
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = (lighting > 1)
+				relatedArea.power_equip = (equipment > 1)
+				relatedArea.power_environ = (environ > 1)*/
+		else
+			area.power_light = 0
+			area.power_equip = 0
+			area.power_environ = 0
+			/*for (var/area/relatedArea in area)
+				relatedArea.power_light = 0
+				relatedArea.power_equip = 0
+				relatedArea.power_environ = 0*/
+		area.power_change() //Note: the power_change() for areas ALREADY deals with relatedArea. Don't put it in the loops here!!
 
 /obj/machinery/power/apc/proc/isWireColorCut(var/wireColor)
 	var/wireFlag = APCWireColorToFlag[wireColor]
