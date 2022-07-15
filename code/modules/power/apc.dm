@@ -899,16 +899,16 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
 
-		var/light = FALSE
-		var/equip = FALSE
-		var/environ = FALSE
+		var/list/power_levels = src.get_power_levels()
+		var/light = power_levels["power_light"]
+		var/equip = power_levels["power_equip"]
+		var/environ = power_levels["power_environ"]
 
 		for(var/obj/machinery/power/apc/APC in src.area)
-			var/list/power_levels = APC.get_power_levels()
+			power_levels = APC.get_power_levels()
 			light |= power_levels["power_light"]
 			equip |= power_levels["power_equip"]
 			environ |= power_levels["power_environ"]
-
 
 		src.area.power_light = light
 		src.area.power_equip = equip
