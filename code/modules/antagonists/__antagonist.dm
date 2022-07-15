@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			owner.special_role = null
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
-	proc/is_compatible_with(datum/mind/M)
+	proc/is_compatible_with(datum/mind/mind)
 		return TRUE
 
 	/// Base proc to set up the antagonist. Depending on arguments, it can spawn equipment, assign objectives, move the player (if applicable), and announce itself.
@@ -87,10 +87,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	// Show the player what objectives they have in their mind.
 	proc/announce_objectives()
 		var/obj_count = 1
-		for (var/datum/objective/obj in owner.objectives)
-			if (istype(obj, /datum/objective/crew) || istype(obj, /datum/objective/miscreant))
+		for (var/datum/objective/objective in owner.objectives)
+			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
 				continue
-			boutput(owner.current, "<b>Objective #[obj_count]:</b> [obj.explanation_text]")
+			boutput(owner.current, "<b>Objective #[obj_count]:</b> [objective.explanation_text]")
 			obj_count++
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
@@ -108,10 +108,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()
-		for (var/datum/objective/O as anything in owner.objectives)
-			if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+		for (var/datum/objective/objective as anything in owner.objectives)
+			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
 				continue
-			if (!O.check_completion())
+			if (!objective.check_completion())
 				return FALSE
 		return TRUE
 
@@ -130,19 +130,19 @@ ABSTRACT_TYPE(/datum/antagonist)
 			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
-			for (var/datum/objective/O as anything in owner.objectives)
-				if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+			for (var/datum/objective/objective as anything in owner.objectives)
+				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
 					continue
-				if (O.check_completion())
-					. += "<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='success'><b>Success!</b></span>"
+				if (objective.check_completion())
+					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, null,"completed objective: [O.explanation_text]")
-						if (!isnull(O.medal_name) && !isnull(owner.current))
-							owner.current.unlock_medal(O.medal_name, O.medal_announce)
+						logTheThing("diary", owner, null,"completed objective: [objective.explanation_text]")
+						if (!isnull(objective.medal_name) && !isnull(owner.current))
+							owner.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
-					. += "<b>Objective #[obj_count]:</b> [O.explanation_text] <span class='alert'><b>Failure!</b></span>"
+					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='alert'><b>Failure!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, null, "failed objective: [O.explanation_text]. Womp womp.")
+						logTheThing("diary", owner, null, "failed objective: [objective.explanation_text]. Womp womp.")
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
