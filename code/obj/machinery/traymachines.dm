@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/proc/collect_tray()
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
-		if (!( A.anchored )) //note the tray is anchored
+		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
 			A.set_loc(src)
 	my_tray.set_loc(src)
 	update()
