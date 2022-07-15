@@ -271,12 +271,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral/starstone
 	name = "Starstone"
 	tick_req = 1616
-	shear = 110
+	shear = 161
 	product = /obj/item/raw_material/starstone
 
 	New()
 		src.tick_req = rand(100,120) * 10
-		src.shear = rand(106,115)
+		src.shear = rand(130,230)
 		..()
 
 /datum/siphon_mineral/blob
