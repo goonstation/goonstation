@@ -69,7 +69,6 @@
 	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 	traitors |= chosen_traitors
 	for (var/datum/mind/traitor in traitors)
-		traitor.special_role = ROLE_TRAITOR
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
@@ -83,28 +82,11 @@
 	return 1
 
 /datum/game_mode/traitor/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/traitor in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		switch(traitor.special_role)
-			if(ROLE_TRAITOR)
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-				new objective_set_path(traitor)
-				equip_traitor(traitor.current)
-
-				var/obj_count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
-			if (ROLE_WRAITH)
-				generate_wraith_objectives(traitor)
-
+		if (traitor.special_role == ROLE_WRAITH) // agony.
+			generate_wraith_objectives(traitor)
+		else
+			traitor.add_antagonist(ROLE_TRAITOR)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
