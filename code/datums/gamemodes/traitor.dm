@@ -69,6 +69,8 @@
 	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 	traitors |= chosen_traitors
 	for (var/datum/mind/traitor in traitors)
+		// although this is assigned by the antagonist datum, we need to do it early in gamemode setup to let the job picker catch it
+		traitor.special_role = ROLE_TRAITOR
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
