@@ -426,8 +426,8 @@
 	name = "Consume"
 	icon_state = "blob-consume"
 	desc = "This ability can be used to remove an existing blob tile for biopoints. Any blob tile you own can be consumed."
-	bio_point_cost = 10
-	cooldown_time = 20
+	bio_point_cost = 0
+	cooldown_time = 50
 
 	onUse(var/turf/T)
 		if (..())
