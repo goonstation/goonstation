@@ -548,7 +548,7 @@ names@=
 	Lynch
 	Lysenko
 	Maalouf
-	Maclagan
+	MacLagan
 	Magnusson
 	Magor
 	Mahajan
