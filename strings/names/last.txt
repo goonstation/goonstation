@@ -576,16 +576,16 @@ names@=
 	Matthews
 	Mayberry
 	McNab
-	Mccloud
-	Mcclymonds
-	Mccullough
-	Mccune
-	Mcdonald
-	Mcfall
-	Mcintosh
-	Mckendrick
-	Mcloskey
-	Mcmullen
+	McCloud
+	McClymonds
+	McCullough
+	McCune
+	McDonald
+	McFall
+	McIntosh
+	McKendrick
+	McCloskey
+	McMullen
 	Meier
 	Melnyk
 	Mendis
