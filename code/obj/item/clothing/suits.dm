@@ -402,39 +402,17 @@
 	icon_state = "hopjacket"
 	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
-	var/coat_style = "hopjacket"
-	var/buttoned = TRUE
+	coat_style = "hopjacket"
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
 		setProperty("rangedprot", 0.5)
 
 
-	attack_self()
+	New()
 		..()
-		if (buttoned)
-			src.unbutton()
-		else
-			src.button()
-
-	proc/button()
-		if (src.coat_style)
-			src.icon_state = src.coat_style
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
-		src.buttoned = TRUE
-
-	proc/unbutton()
-		if (src.coat_style)
-			src.icon_state = "[initial(src.icon_state)]_o"
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
-		src.buttoned = FALSE
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
