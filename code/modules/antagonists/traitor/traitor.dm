@@ -35,13 +35,13 @@
 		// if we find a valid item source, then we create one
 		if (istype(uplink_source, /obj/item/device/pda2))
 			var/uplink_path = get_uplink_type(H, /obj/item/uplink/integrated/pda)
-			src.uplink = new uplink_path (uplink_source)
+			src.uplink = new uplink_path(uplink_source)
 		else if (istype(uplink_source, /obj/item/device/radio))
 			var/uplink_path = get_uplink_type(H, /obj/item/uplink/integrated/radio)
-			src.uplink = new uplink_path (uplink_source)
+			src.uplink = new uplink_path(uplink_source)
 		else
 			var/uplink_path = get_uplink_type(H, /obj/item/uplink/syndicate)
-			var/obj/item/uplink/syndicate/S = new uplink_path (get_turf(H))
+			var/obj/item/uplink/syndicate/S = new uplink_path(get_turf(H))
 			src.uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE

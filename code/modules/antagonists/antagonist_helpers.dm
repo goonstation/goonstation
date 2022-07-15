@@ -5,7 +5,7 @@
 /proc/get_all_antagonists(role_id)
 	. = list()
 	for (var/datum/mind/M in ticker.minds)
-		for (var/datum/antagonist/A in M.antagonists)
-			if (A.id == role_id)
-				. += A
+		for (var/datum/antagonist/antag in M.antagonists)
+			if (antag.id == role_id)
+				. += antag
 				break

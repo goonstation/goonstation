@@ -19,14 +19,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	
-	New(datum/mind/M, do_equip, do_objectives, do_relocate, silent, source)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source)
 		. = ..()
-		if (!M)
+		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
 			qdel(src)
 			return FALSE
-		owner = M
-		M.special_role = id
+		owner = new_owner
+		new_owner.special_role = id
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
@@ -87,10 +87,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	// Show the player what objectives they have in their mind.
 	proc/announce_objectives()
 		var/obj_count = 1
-		for (var/datum/objective/O in owner.objectives)
-			if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+		for (var/datum/objective/obj in owner.objectives)
+			if (istype(obj, /datum/objective/crew) || istype(obj, /datum/objective/miscreant))
 				continue
-			boutput(owner.current, "<b>Objective #[obj_count]:</b> [O.explanation_text]")
+			boutput(owner.current, "<b>Objective #[obj_count]:</b> [obj.explanation_text]")
 			obj_count++
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
