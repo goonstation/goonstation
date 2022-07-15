@@ -288,7 +288,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 	New()
 		src.tick_req = rand(12,22) * 10
-		src.shear = (rand(45,50) * 2) + 1 // 123 to 127, in only odd increments
+		src.shear = (rand(56,61) * 2) + 1 // 113 to 127, in only odd increments
 		..()
 
 /datum/siphon_mineral/pizza
