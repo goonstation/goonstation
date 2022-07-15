@@ -248,7 +248,8 @@
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
-	/obj/item/clipboard)
+	/obj/item/clipboard,
+	/obj/item/clothing/suit/hopjacket)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"

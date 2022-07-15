@@ -647,9 +647,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "mavericksabre"
 		ckey = "wrench1"
 
-	whitneystingray
-		name = "\improper Whitney Stingray"
-		icon_state = "whitneystingray"
+	anguishedenglish
+		name = "\improper Whitney Blanchet"
+		icon_state = "whitneyblanchet"
 		ckey = "anguishedenglish"
 
 	fleur
@@ -811,6 +811,21 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Mikey"
 		icon_state = "mikey"
 		ckey = "mikethewalldweller"
+
+	ladygeartheart
+		name = "\improper Piffany Boudle"
+		icon_state = "piffany"
+		ckey = "ladygeartheart"
+
+	snowkeith
+		name = "\improper SC077Y"
+		icon_state = "sc077y"
+		ckey = "snowkeith"
+
+	ihaveteeth
+		name = "\improper Teeth Rattletail"
+		icon_state = "teeth"
+		ckey = "ihaveteeth"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

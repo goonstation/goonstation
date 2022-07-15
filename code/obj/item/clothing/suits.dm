@@ -396,6 +396,46 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 35)
 
+/obj/item/clothing/suit/hopjacket
+	name = "Head of Personnel's jacket"
+	desc = "A tacky green and red jacket for a tacky green bureaucrat."
+	icon_state = "hopjacket"
+	uses_multiple_icon_states = TRUE
+	item_state = "hopjacket"
+	var/coat_style = "hopjacket"
+	var/buttoned = TRUE
+	bloodoverlayimage = SUITBLOOD_COAT
+
+	abilities = list(/obj/ability_button/labcoat_toggle)
+
+	setupProperties()
+		..()
+		setProperty("rangedprot", 0.5)
+
+
+	attack_self()
+		..()
+		if (buttoned)
+			src.unbutton()
+		else
+			src.button()
+
+	proc/button()
+		if (src.coat_style)
+			src.icon_state = src.coat_style
+			usr.set_clothing_icon_dirty()
+		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
+		"You button your [src.name].")
+		src.buttoned = TRUE
+
+	proc/unbutton()
+		if (src.coat_style)
+			src.icon_state = "[initial(src.icon_state)]_o"
+			usr.set_clothing_icon_dirty()
+		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
+		"You unbutton your [src.name].")
+		src.buttoned = FALSE
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
@@ -1083,6 +1123,13 @@
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
 
+/obj/item/clothing/suit/space/syndicate_worn
+	name = "worn red space suit"
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
+	contraband = 3
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
@@ -1110,6 +1157,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",60)
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	disposing()
@@ -1176,7 +1224,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1268,8 +1315,8 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
-			setProperty("viralprot", prot)
+			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			setProperty("chemprot", prot)
 
 			prot = max(0, renf.getProperty("density") - 3) / 2
 			setProperty("meleeprot", 3 + prot)
@@ -1411,6 +1458,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander

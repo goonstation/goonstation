@@ -1390,6 +1390,8 @@
 			rendered += "[src.wear_id:registered]</span>"
 		else
 			rendered += "Unknown</span>"
+	else if (src.vdisfigured)
+		rendered += "Unknown</span>"
 	else
 		rendered += "[src.real_name]</span>[alt_name]"
 
@@ -1675,6 +1677,11 @@
 			continue
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
+
+	UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN(1.5 SECONDS)
+		if (has_typing_indicator == FALSE)
+			UpdateOverlays(null, "speech_bubble")
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -2847,8 +2854,7 @@
 
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
-		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
-			return
+		return
 
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))

@@ -953,6 +953,11 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
+	UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN(1.5 SECONDS)
+		if (has_typing_indicator == FALSE)
+			UpdateOverlays(null, "speech_bubble")
+
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
 		message = html_encode(src.say_quote(message))
@@ -1452,14 +1457,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	. = 0
 
 /mob/living/proc/update_lying()
-	if (src.buckled)
-		if (src.buckled == src.loc)
-			src.lying = 1
-		else if (istype(src.buckled, /obj/stool/bed))
-			src.lying = 1
-		else
-			src.lying = 0
-
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)

@@ -262,8 +262,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags |= MATERIAL_METAL
 		setProperty("electrical", 5)
 		setProperty("thermal", 6)
-		setProperty("permeable", 3)
 		setProperty("density", 4)
+		setProperty("chemical", 6)
 
 /datum/material/metal/rock
 	mat_id = "rock"
@@ -337,6 +337,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		value = 175
 		setProperty("density", 4)
 		setProperty("hard", 2)
+		setProperty("chemical", 8)
 
 
 
@@ -349,6 +350,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 6)
 		setProperty("hard", 5)
+		setProperty("chemical", 7)
 
 
 /datum/material/metal/mauxite
@@ -506,6 +508,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 8)
 		setProperty("hard", 8)
+		setProperty("chemical", 9)
 
 
 /datum/material/metal/negativematter
@@ -545,9 +548,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		material_flags |= MATERIAL_CRYSTAL
 		setProperty("hard", 3)
 		setProperty("electrical", 3)
-		setProperty("permeable", 1)
 		setProperty("thermal", 3)
-		setProperty("corrosion", 5)
+		setProperty("chemical", 5)
 
 /datum/material/crystal/glass
 	mat_id = "glass"
@@ -820,7 +822,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 4)
-		setProperty("corrosion", 6)
+		setProperty("chemical", 9)
 
 
 // hi it me cirr im doing dumb
@@ -880,8 +882,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
 		setProperty("reflective", rand(1, 9))
-		setProperty("corrosion", rand(1, 8))
-		setProperty("permeable", rand(3, 9))
+		setProperty("chemical", rand(1, 8))
 		addTrigger(triggersTemp, new /datum/materialProc/temp_miraclium())
 
 
@@ -977,7 +978,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		. = ..()
 		material_flags |= MATERIAL_ORGANIC
-		setProperty("flammable", 5)
+		setProperty("flammable", 3)
 		setProperty("electrical", 4)
 
 /datum/material/organic/blob
@@ -996,10 +997,10 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		material_flags |= MATERIAL_CRYSTAL | MATERIAL_CLOTH
-		setProperty("corrosion", 3)
+		setProperty("chemical", 3)
 		setProperty("density", 5)
 		setProperty("hard", 1)
-		setProperty("flammable", 9)
+		setProperty("flammable", 5)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
 
 
@@ -1034,7 +1035,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	New()
 		..()
-		setProperty("flammable", 6)
+		setProperty("flammable", 5)
 		setProperty("hard", 3)
 		setProperty("density", 2)
 
@@ -1052,7 +1053,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("radioactive", 2)
 		setProperty("density", 5)
-		setProperty("flammable", 1)
 
 
 /datum/material/organic/viscerite
@@ -1069,8 +1069,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CLOTH
 		setProperty("density", 4)
 		setProperty("hard", 1)
-		setProperty("corrosion", 7)
-		setProperty("permeable", 9)
+		setProperty("chemical", 6)
 		setProperty("flammable", 2)
 		addTrigger(triggersOnEat, new /datum/materialProc/oneat_viscerite())
 
@@ -1100,7 +1099,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 5)
 		setProperty("hard", 3)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/bamboo
@@ -1114,7 +1113,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("density", 4)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/cardboard
@@ -1127,7 +1126,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 2)
 		setProperty("hard", 1)
-		setProperty("flammable", 8)
+		setProperty("flammable", 4)
 		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
 
@@ -1155,7 +1154,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		..()
 		setProperty("density", 1)
 		setProperty("hard", 2)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/organic/honey
@@ -1199,8 +1198,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("density", 5)
-		setProperty("corrosion", 7)
-		setProperty("permeable", 3)
+		setProperty("chemical", 7)
 		setProperty("thermal", 2)
 		setProperty("flammable", 1)
 		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
@@ -1220,7 +1218,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("hard", 1)
-		setProperty("permeable", 9)
 
 
 /datum/material/organic/coral
@@ -1259,7 +1256,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	New()
 		. = ..()
 		material_flags |= MATERIAL_CLOTH
-		setProperty("flammable", 5)
+		setProperty("flammable", 2)
 		setProperty("electrical", 4)
 		setProperty("hard", 1)
 		setProperty("density", 1)
@@ -1318,6 +1315,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 3)
 		setProperty("thermal", 1)
 		setProperty("electrical", 4)
+		setProperty("flammable", 1)
 
 
 /datum/material/fabric/cotton
@@ -1331,7 +1329,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
-		setProperty("flammable", 7)
+		setProperty("flammable", 4)
 
 
 /datum/material/fabric/fibrilith
@@ -1347,7 +1345,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
 		setProperty("flammable", 1)
-		setProperty("permeable", 2)
 
 
 	New()
@@ -1366,7 +1363,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 6)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
-		setProperty("flammable", 8)
+		setProperty("flammable", 5)
 
 
 /datum/material/fabric/carbonfibre
@@ -1380,7 +1377,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 4)
 		setProperty("hard", 4)
 		setProperty("thermal", 9)
-		setProperty("permeable", 8)
 		setProperty("electrical", 7)
 
 
@@ -1397,7 +1393,6 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
-		setProperty("permeable", 1)
 		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
 		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
 
@@ -1430,8 +1425,9 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 4)
-		setProperty("corrosion", 7)
+		setProperty("chemical", 9)
 		setProperty("electrical", 7)
+		setProperty("flammable", 1)
 
 
 
@@ -1447,7 +1443,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		..()
 		setProperty("hard", 2)
 		setProperty("density", 2)
-		setProperty("flammable", 7)
+		setProperty("flammable", 6)
 		setProperty("electrical", 3)
 		setProperty("thermal", 7)
 
@@ -1498,3 +1494,4 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
+		setProperty("flammable", 3)

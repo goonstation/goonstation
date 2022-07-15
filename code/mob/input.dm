@@ -204,6 +204,11 @@
 						do_step = 0
 						break
 
+					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
+						boutput(src, "<span class='alert'>Without a leg to walk with, you flop over!</span>")
+						src.setStatus("resting", duration = INFINITE_STATUS)
+						src.force_laydown_standup()
+
 					if (do_step)
 						step(src, move_dir)
 						if (src.loc != old_loc)
@@ -235,7 +240,7 @@
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
-							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
+							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
 								//just fall over in place when in space (to prevent zooming)
 								var/turf/current_turf = get_turf(src)
 								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
