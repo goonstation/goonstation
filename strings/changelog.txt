@@ -1,5 +1,9 @@
 
 (t)thu jul 14 22
+(u)Blahowsky
+(p)9336
+(e)🎨|sprites
+(*)Added a new, unique Head of Personnel's jacket to the Head of Personnel's locker.
 (u)Amylizzle
 (p)9635
 (e)🐛|bug
