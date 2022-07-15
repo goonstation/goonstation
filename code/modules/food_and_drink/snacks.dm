@@ -2899,10 +2899,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A giant wheel of cheese. It seems a slice is already missing."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "cheesewheel"
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	throwforce = 1
+	throwforce = 6
 	real_name = "cheesewheel"
-	flags = NOSPLASH | FPRINT | TABLEPASS
 	throw_speed = 2
 	throw_range = 5
 	stamina_cost = 5
