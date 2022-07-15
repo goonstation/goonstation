@@ -2920,19 +2920,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
-			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
-				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
-				JOB_XP(user, "Clown", 2)
-				return
-
+		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 4
-			while (makeslices > 0)
-				new slicetype (T)
-				makeslices -= 1
+			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
+			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
+			for (var/i in 1 to src.slice_amount)
+				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
+				slice.reagents.maximum_volume = amount_to_transfer
+				src.reagents.trans_to(slice, amount_to_transfer)
 			qdel (src)
-		else ..()
+		else
+			..()
