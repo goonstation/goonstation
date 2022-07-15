@@ -1872,5 +1872,5 @@
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
 	desc = "A replica of an old space suit. Seems to still work, though."
-	icon_state = "space-replica"
-	item_state = "space-replica"
+	icon_state = "space_replica"
+	item_state = "space_replica"

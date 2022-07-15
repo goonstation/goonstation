@@ -7199,6 +7199,7 @@
 	},
 /obj/item/clothing/suit/space{
 	desc = "A suit that protects against low pressure environments, provided that you are an astronaut over 80 years ago. ";
+	icon_state = "space_replica";
 	name = "Apollo space suit"
 	},
 /turf/unsimulated/floor/black,
@@ -7212,6 +7213,7 @@
 	},
 /obj/item/clothing/head/helmet/space{
 	desc = "The helmet of an A7L space helmet, produced in the 1960s by ILC Dover and used in the Apollo and Skylab programs.";
+	icon_state = "space_replica";
 	name = "Apollo space helmet"
 	},
 /turf/unsimulated/floor/black,
