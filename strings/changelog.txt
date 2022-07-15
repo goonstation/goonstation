@@ -1,5 +1,9 @@
 
 (t)fri jul 15 22
+(u)Moberry
+(p)9582
+(e)⚖|balance
+(+)Increases Spell shield cooldown to 60 seconds.
 (u)Flaborized + Flourish
 (p)9605
 (e)🆕🗺🎨🔄|feature, mapping, sprites, rework
