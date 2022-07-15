@@ -29,15 +29,6 @@
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
-	var/clarity = 20 //probably somewhere between 0-100 ish
-	var/focal_strength = 20 //1-100 ish
-
-	onMaterialChanged()
-		..()
-		if (istype(src.material))
-			clarity = 80 + initial(clarity) - ((src.material.alpha / 255) * 100)
-			if(material.hasProperty("reflective")) focal_strength = 80 + initial(focal_strength) - (material.hasProperty("reflective") ? material.getProperty("reflective") : 15)
-		return
 
 /obj/item/coil
 	desc = "A coil. Not really useful without additional components."
@@ -109,6 +100,7 @@
 
 		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
 		src.set_loc(container)
+
 /obj/item/c_tube
 	name = "cardboard tube"
 	icon = 'icons/obj/items/items.dmi'
@@ -119,7 +111,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
-	w_class = W_CLASS_TINY
 	stamina_damage = 5
 	stamina_cost = 1
 
@@ -151,7 +142,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
-	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 

@@ -145,25 +145,16 @@
 	proc/setupVisorMat(var/datum/material/V)
 		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
 		if (visr_material)
-			if (visr_material.hasProperty("thermal"))
-				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
-				setProperty("coldprot", 10+prot)
-				setProperty("heatprot", 1+round(prot/2))
-			else
-				setProperty("coldprot", 10)
-				setProperty("heatprot", 2)
 
-			if (visr_material.hasProperty("permeable"))
-				var/prot = 100 - visr_material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
+			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
+			setProperty("coldprot", 10+prot)
+			setProperty("heatprot", 2+round(prot/2))
 
-			if (visr_material.hasProperty("density"))
-				var/prot = round(visr_material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
-			else
-				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
+			prot =  clamp(((visr_material.getProperty("chemical") - 4) * 10), 0, 35) // All crystals (assuming default chem value) will give 20 chemprot, same as normal helm.
+			setProperty("chemprot", prot)
+
+			prot = max(0, visr_material.getProperty("density") - 3) / 2
+			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
 
 		// overlay stuff
 
@@ -281,6 +272,7 @@
 
 	New()
 		..()
+		setProperty("chemprot",30)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -398,7 +390,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -478,6 +469,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",30)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
@@ -659,42 +651,61 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
-	color_r = 0.3 // darken
-	color_g = 0.3
-	color_b = 0.3
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_down(mob/user)
+	proc/obscure(mob/user)
+		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/reveal(mob/user)
+		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/flip_down(var/mob/living/carbon/human/user)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		color_r = initial(color_r) // darken
-		color_g = initial(color_g)
-		color_b = initial(color_b)
-		user.set_clothing_icon_dirty()
+		if (user.head == src)
+			src.obscure(user)
+			user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_up(mob/user)
+	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		color_r = 1 // no effect
-		color_g = 1
-		color_b = 1
-		user.set_clothing_icon_dirty()
+		if (user.head == src)
+			src.reveal(user)
+			user.update_clothing()
 
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (!src.up)
+			src.obscure(user)
+
+	unequipped(mob/user)
+		. = ..()
+		src.reveal(user)
+
+	disposing()
+		. = ..()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/owner = src.loc
+			if (owner.head == src) //human is actually wearing it
+				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
 		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)

@@ -177,10 +177,9 @@
 /obj/item/reagent_containers/food/drinks/water
 	name = "water bottle"
 	desc = "I wonder if this is still fresh?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bottlewater"
-	item_state = "contliquid"
-	initial_volume = 50
+	icon_state = "water"
+	item_state = "water"
+	initial_volume = 25
 	initial_reagents = "water"
 
 /obj/item/reagent_containers/food/drinks/mate
@@ -246,6 +245,14 @@
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("chickensoup"=30)
+
+/obj/item/reagent_containers/food/drinks/fruitmilk
+	name = "Creaca's Fruit Milk"
+	desc = "Milk and fruit of undetermined origin; finally, together at last."
+	icon_state = "fruitmilk"
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("milk"=30,"juice_pineapple"=20)
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"

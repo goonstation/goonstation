@@ -354,7 +354,7 @@
 	var/turretArea = null
 
 	req_access = list(access_ai_upload)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	New()
 		..()

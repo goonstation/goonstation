@@ -139,6 +139,10 @@
 	icon_override = "rh"
 	icon_tooltip = "Radio Show Host"
 
+	setupProperties()
+		..()
+		setProperty("disorient_resist_ear", 20)
+
 /obj/item/device/radio/headset/command/comm_officer
 	name = "communications officer's headset"
 	desc = "Used by the communications officer, this headset can communicate over multiple secure frequencies. These things have been a rare sight as of late."
@@ -342,6 +346,18 @@
 		)
 	icon_override = "Min"
 	icon_tooltip = "Miner"
+
+/obj/item/device/radio/headset/mechanic
+	name = "mechanic headset"
+	desc = "A headset line only created due to the sheer effectiveness of packet nerd protesting."
+	icon_state = "engine headset"
+	secure_frequencies = list(
+	"e" = R_FREQ_ENGINEERING)
+	secure_classes = list(
+		"e" = RADIOCL_ENGINEERING,
+		)
+	icon_override = "Mec"
+	icon_tooltip = "Mechanic"
 
 /obj/item/device/radio/headset/mail
 	name = "mailman's headset"
