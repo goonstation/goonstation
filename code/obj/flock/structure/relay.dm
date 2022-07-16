@@ -20,6 +20,7 @@
 	hitTwitch = FALSE
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
+	var/conversion_radius = 1
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
 	var/charge_time_length = 360 // in seconds
@@ -39,16 +40,17 @@
 	emergency_shuttle.disabled = TRUE
 
 	play_sound()
+	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
-	SPAWN(1 SECOND)
-		radial_flock_conversion(src, src.flock, 20)
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
 		msg = radioGarbleText(msg, 7)
 		command_alert(msg, sound_to_play = "sound/misc/announcement_1.ogg", alert_origin = ALERT_ANOMALY)
 
 /obj/flock_structure/relay/disposing()
+	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	..()
+	F?.death(relay_destroyed = TRUE)
 	emergency_shuttle.disabled = FALSE
 
 /obj/flock_structure/relay/get_desc()
@@ -64,6 +66,10 @@
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
 /obj/flock_structure/relay/process()
+	if (src.conversion_radius <= 20)
+		src.convert_turfs()
+		src.conversion_radius++
+
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	if(elapsed >= last_time_sound_played_in_seconds + sound_length_in_seconds)
 		play_sound()
@@ -85,6 +91,14 @@
 	for(var/mob/M in mobs)
 		M.playsound_local(M, "sound/ambience/spooky/Flock_Reactor.ogg", 35, 0, 2)
 		boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
+
+/obj/flock_structure/relay/proc/convert_turfs()
+	var/list/turfs = circular_range(get_turf(src), src.conversion_radius)
+	SPAWN(0)
+		for (var/turf/T as anything in turfs)
+			if (istype(T, /turf/simulated) && !isfeathertile(T))
+				sleep(0.01 SECONDS)
+				src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
 	processing_items -= src
