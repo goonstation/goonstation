@@ -40446,6 +40446,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"ijd" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/space,
+/area/space)
 "ilJ" = (
 /obj/cable{
 	d1 = 1;
@@ -42223,6 +42229,12 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"lGG" = (
+/obj/grille/catwalk/cross{
+	dir = 9
+	},
+/turf/space,
 /area/space)
 "lHl" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -46461,6 +46473,12 @@
 /obj/item/slag_shovel,
 /turf/simulated/floor/caution/north,
 /area/station/quartermaster/refinery)
+"tlV" = (
+/obj/grille/catwalk/cross{
+	dir = 5
+	},
+/turf/space,
+/area/space)
 "tmp" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -48311,6 +48329,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"wMm" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/access_spawn/cargo,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "wMB" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -82760,8 +82788,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aoO
+lGG
+wMm
 api
 api
 api
@@ -83364,7 +83392,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ijd
 aoO
 lLv
 apj
@@ -83666,7 +83694,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ijd
 aoO
 hKJ
 aoN
@@ -83968,7 +83996,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+ijd
 aoO
 lLv
 uGX
@@ -84572,8 +84600,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aoO
+tlV
+wMm
 apf
 aoZ
 api
