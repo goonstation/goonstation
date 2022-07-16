@@ -35861,8 +35861,8 @@
 /turf/space,
 /area/space)
 "khD" = (
-/obj/reagent_dispensers/foamtank,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/recharge_station,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -50705,8 +50705,8 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "oxG" = (
-/obj/machinery/vending/standard,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -51272,11 +51272,11 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/medical/morgue)
 "oHf" = (
-/obj/reagent_dispensers/fueltank,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -63045,8 +63045,8 @@
 	},
 /area/station/hallway/primary/west)
 "rSD" = (
-/obj/machinery/recharge_station,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
