@@ -12816,9 +12816,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/submachine/GTM{
-	pixel_y = 32
-	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "bgl" = (
