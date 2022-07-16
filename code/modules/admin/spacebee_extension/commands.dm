@@ -676,7 +676,7 @@
 			system.reply("Failed to set medal; error communicating with BYOND hub!")
 			return
 
-		var/to_log = "[giverevoke ? "revoked" : "gave"] the [medalname] medal for [player]."
+		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
 		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
 		logTheThing("admin", "[user] (Discord)", null, "[to_log]")
 		logTheThing("diary", "[user] (Discord)", null, "[to_log]", "admin")
