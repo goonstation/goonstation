@@ -9,7 +9,7 @@
 	flock_desc = "Your goal and purpose. Defend it until it can broadcast the Signal."
 	flock_id = "Signal Relay Broadcast Amplifier"
 	build_time = 30
-	health = 5000
+	health = 600 //same as a nukie nuke * 4 because nuke has /4 damage resist
 	resourcecost = 1000
 	bound_width = 160
 	bound_height = 160

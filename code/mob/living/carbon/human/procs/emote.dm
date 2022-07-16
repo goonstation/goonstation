@@ -833,6 +833,12 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "yawn")
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
+						for (var/mob/living/carbon/C in view(5,get_turf(src)))
+							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
+								C.emote("yawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
