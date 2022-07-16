@@ -20851,9 +20851,7 @@
 /area/station/maintenance/west)
 "bcR" = (
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
-/obj/shrub/captainshrub{
-	pixel_y = 9
-	},
+/obj/shrub/captainshrub,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bcS" = (

@@ -15443,12 +15443,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"aKQ" = (
-/obj/machinery/computer/ordercomp{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "aKR" = (
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
@@ -19295,10 +19289,6 @@
 /obj/machinery/vending/standard,
 /turf/simulated/floor/grime,
 /area/iss)
-"aVr" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/grime,
-/area/iss)
 "aVs" = (
 /obj/item/tile,
 /turf/space/fluid,
@@ -19584,12 +19574,11 @@
 "aWo" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/splatter,
-/obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWp" = (
 /obj/decal/cleanable/cobweb2,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "aWq" = (
@@ -19716,7 +19705,7 @@
 /obj/decal/aliencomputer{
 	pixel_x = -32
 	},
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/martian/floor,
 /area/space)
 "aWT" = (
@@ -20380,7 +20369,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aZd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aZf" = (
@@ -20545,19 +20534,6 @@
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
-"aZJ" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/evilreaver/security)
-"aZK" = (
-/obj/decal/cleanable/oil,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/evilreaver/security)
 "aZL" = (
 /obj/table/auto,
 /obj/item/paper/courtroom{
@@ -30455,12 +30431,6 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
-"bAB" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/space)
 "bAC" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/yellow/side{
@@ -30964,10 +30934,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"bBD" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/red,
-/area/space)
 "bBE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -31178,11 +31144,6 @@
 /obj/item/football,
 /turf/space/fluid,
 /area/space)
-"bCi" = (
-/obj/storage/crate/loot,
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/grime,
-/area/iss)
 "bCj" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -31567,11 +31528,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bDl" = (
-/obj/decal/cleanable/robot_debris,
-/obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
 "bDm" = (
 /obj/cable{
 	d1 = 1;
@@ -31864,10 +31820,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/info)
-"bDQ" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
 "bDR" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/simulated/floor/airless/plating/damaged1,
@@ -32679,20 +32631,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/info)
-"bFP" = (
-/obj/machinery/light/incandescent/warm/very,
-/obj/table/round,
-/obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "bFR" = (
 /obj/storage/crate/bloody{
 	welded = 1
@@ -32858,15 +32796,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"bGn" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"bGo" = (
-/obj/storage/crate/loot,
-/obj/storage/crate/loot,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "bGp" = (
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -34699,10 +34628,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"bKP" = (
-/obj/shrub,
-/turf/simulated/floor/grass,
-/area/space)
 "bKR" = (
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
@@ -38680,10 +38605,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
-"bUV" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/grime,
-/area/skeleton_trader)
 "bUW" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell #2";
@@ -38730,10 +38651,6 @@
 "bVc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
-"bVd" = (
-/obj/storage/crate/loot,
-/turf/simulated/floor/damaged2,
-/area/skeleton_trader)
 "bVe" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 1;
@@ -44595,6 +44512,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"dxb" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "rusted hatch"
+	},
+/turf/simulated/floor/damaged2,
+/area/space)
 "dyy" = (
 /obj/storage/crate,
 /obj/item/clothing/mask/horse_mask,
@@ -45070,6 +44996,12 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"fWc" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/space)
 "fYf" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/machinery/camera{
@@ -45191,6 +45123,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/arcade)
+"glf" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/space)
 "glu" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -45210,6 +45146,10 @@
 	dir = 8
 	},
 /area/station/medical/staff)
+"gog" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/iss)
 "gpP" = (
 /obj/machinery/plantpot,
 /obj/machinery/light_switch/auto,
@@ -45476,15 +45416,6 @@
 /obj/machinery/navbeacon/mule/hallway_escape_north,
 /turf/simulated/floor/bot,
 /area/station/hallway/secondary/exit)
-"hVv" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch";
-	icon_state = "door1"
-	},
-/turf/simulated/floor/damaged2,
-/area/space)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -45671,6 +45602,11 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"jcZ" = (
+/obj/landmark/spawner/loot,
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "jdK" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
@@ -46360,6 +46296,13 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"mYn" = (
+/obj/machinery/computer/ordercomp{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "mYN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46429,6 +46372,10 @@
 "nhW" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"njh" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "nkh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46719,6 +46666,14 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"oXE" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/damaged2,
+/area/skeleton_trader)
+"oZt" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grime,
+/area/skeleton_trader)
 "pdH" = (
 /obj/loudspeaker{
 	layer = 4;
@@ -46887,6 +46842,11 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"pOZ" = (
+/obj/decal/cleanable/robot_debris,
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/space)
 "pPb" = (
 /obj/machinery/r_door_control{
 	id = "research_outpost";
@@ -46918,6 +46878,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"pZV" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/red,
+/area/space)
 "qaf" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
@@ -47305,6 +47269,10 @@
 /obj/access_spawn/research,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"shL" = (
+/obj/landmark/spawner/loot,
+/turf/space/fluid,
+/area/space)
 "smn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
@@ -47323,6 +47291,10 @@
 /obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
+"ssS" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/space)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -47493,6 +47465,15 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"tPK" = (
+/obj/shrub,
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grass,
+/area/space)
+"tQo" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "tRf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -47574,6 +47555,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"umj" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/grass,
+/area/space)
 "umv" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
@@ -47640,6 +47628,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"uQQ" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/damaged2,
+/area/space)
 "uTy" = (
 /obj/submachine/cargopad{
 	name = "Security Pod Bay Pad"
@@ -47951,6 +47943,19 @@
 "wOk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
+"wOv" = (
+/obj/table/round,
+/obj/machinery/coffeemaker/research,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "wRa" = (
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/secondary/exit)
@@ -47997,6 +48002,14 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"xgZ" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/dirt,
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/evilreaver/security)
 "xhN" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -48047,6 +48060,12 @@
 /obj/item/furniture_parts/bench/wooden,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"xBw" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/evilreaver/security)
 "xED" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -48124,6 +48143,11 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"yeA" = (
+/obj/landmark/spawner/loot,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/grime,
+/area/iss)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -49673,7 +49697,7 @@ aqn
 aqn
 aqn
 aTt
-aqn
+shL
 cgq
 cgq
 cer
@@ -49972,7 +49996,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+shL
 aTt
 aTt
 aTt
@@ -50276,7 +50300,7 @@ aTt
 aqn
 aqn
 aTu
-aqn
+shL
 aqn
 aeB
 cgq
@@ -50738,7 +50762,7 @@ buR
 buR
 buR
 byc
-bBD
+pZV
 byc
 byc
 buR
@@ -51945,8 +51969,8 @@ byc
 buR
 byD
 bTw
-bAB
-bAB
+fWc
+fWc
 bWe
 byD
 buR
@@ -52549,8 +52573,8 @@ bBW
 buR
 byD
 bzD
-bAB
-bAB
+fWc
+fWc
 bzD
 byD
 buR
@@ -53758,7 +53782,7 @@ buR
 buR
 byc
 byc
-bBD
+pZV
 byc
 buR
 buR
@@ -58683,7 +58707,7 @@ bTS
 bTZ
 bUc
 bUc
-bUV
+oZt
 bTS
 boe
 bTH
@@ -58985,7 +59009,7 @@ bTS
 bTS
 bUe
 bUc
-bVd
+oXE
 bTS
 bVA
 buR
@@ -59744,10 +59768,10 @@ aqn
 aqn
 aUm
 aUm
-aVr
-aVr
-bCi
-aVr
+gog
+gog
+yeA
+gog
 aUm
 aUm
 aqn
@@ -72876,7 +72900,7 @@ aqn
 aqn
 aqn
 aTs
-aqn
+shL
 aqn
 aqn
 aqn
@@ -75321,7 +75345,7 @@ aqn
 aqn
 aTs
 aTs
-aqn
+shL
 aTs
 aqn
 aqn
@@ -78131,7 +78155,7 @@ aqn
 aqn
 aqn
 bnE
-bDl
+pOZ
 bCx
 bnE
 aqn
@@ -78735,7 +78759,7 @@ aqn
 aqn
 aqn
 bnE
-bDQ
+ssS
 bCx
 bnE
 aqn
@@ -83135,7 +83159,7 @@ boe
 boe
 boe
 buR
-bGn
+tQo
 boe
 boe
 boe
@@ -83437,7 +83461,7 @@ buR
 boe
 boe
 buR
-bGn
+tQo
 boe
 boe
 boe
@@ -84336,7 +84360,7 @@ boe
 boe
 buR
 buR
-bGn
+tQo
 boe
 boe
 boe
@@ -84638,7 +84662,7 @@ boe
 buR
 buR
 buR
-bGo
+jcZ
 boe
 boe
 buR
@@ -88008,7 +88032,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+shL
 aTs
 aTs
 aTs
@@ -105989,8 +106013,8 @@ ayO
 beA
 aJH
 aJY
-bFP
-aKQ
+mYn
+wOv
 ayO
 beG
 beK
@@ -110438,7 +110462,7 @@ bNJ
 bOo
 bSe
 bPD
-hVv
+dxb
 bNY
 bOI
 aaE
@@ -110736,7 +110760,7 @@ aqn
 aqn
 aqn
 aUZ
-bOo
+uQQ
 bPE
 bPD
 bOo
@@ -112780,7 +112804,7 @@ aqn
 aqn
 aad
 aad
-aqn
+shL
 aqn
 aad
 aad
@@ -113157,7 +113181,7 @@ bQc
 bQz
 aUZ
 bPD
-bPD
+glf
 aUZ
 aUZ
 aqn
@@ -113689,7 +113713,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+shL
 aad
 aqn
 aad
@@ -126954,7 +126978,7 @@ cbK
 cbV
 cce
 ccr
-caO
+njh
 caA
 caA
 caA
@@ -127019,10 +127043,10 @@ aXy
 aXy
 aYA
 aYO
-aZd
+aXW
 aYy
 aZB
-aZJ
+xBw
 aZU
 bai
 aZM
@@ -127324,7 +127348,7 @@ aYP
 aXT
 aYy
 aZB
-aZK
+xgZ
 aZV
 baj
 aZM
@@ -131510,7 +131534,7 @@ aVl
 aVl
 aVl
 aVl
-bKK
+umj
 buR
 buR
 buR
@@ -133315,7 +133339,7 @@ aqn
 buR
 buR
 buR
-bKP
+tPK
 aVl
 aVl
 aVl
