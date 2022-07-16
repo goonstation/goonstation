@@ -282,12 +282,19 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/build_annotation_imgs()
 	. = list()
 
+	var/image/deconstruct = image('icons/misc/featherzone.dmi', icon_state = "deconstruct")
+	deconstruct.blend_mode = BLEND_ADD
+	deconstruct.plane = PLANE_ABOVE_LIGHTING
+	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	deconstruct.pixel_y = 16
+	.[FLOCK_ANNOTATION_DECONSTRUCT] = deconstruct
+
 	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
 	hazard.blend_mode = BLEND_ADD
 	hazard.plane = PLANE_ABOVE_LIGHTING
 	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	hazard.pixel_y = 16
-	.[FLOCK_ANNOTATION_HAZARD] = .[FLOCK_ANNOTATION_DECONSTRUCT] = hazard
+	.[FLOCK_ANNOTATION_HAZARD] = hazard
 
 	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
 	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
