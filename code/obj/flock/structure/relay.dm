@@ -10,6 +10,7 @@
 	flock_id = "Signal Relay Broadcast Amplifier"
 	build_time = 30
 	health = 5000
+	uses_health_icon = FALSE
 	resourcecost = 1000
 	bound_width = 160
 	bound_height = 160
