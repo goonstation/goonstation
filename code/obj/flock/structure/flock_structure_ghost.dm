@@ -59,16 +59,6 @@
 /obj/flock_structure/ghost/deconstruct()
 	cancelBuild()
 
-/obj/flock_structure/ghost/process()
-	if(currentmats > goal)
-		var/obj/item/flockcache/c = new(get_turf(src))
-		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
-		c.resources = (currentmats - goal)
-		src.completebuild()
-	else if(currentmats == goal)
-		src.completebuild()
-	updatealpha()
-
 /obj/flock_structure/ghost/gib()
 	visible_message("<span class='alert'>[src] suddenly dissolves!</span>")
 	playsound(src.loc, 'sound/impact_sounds/Glass_Shatter_2.ogg', 80, 1)
@@ -79,6 +69,21 @@
 
 /obj/flock_structure/ghost/proc/updatealpha()
 	alpha = lerp(104, 255, currentmats / goal)
+
+/obj/flock_structure/ghost/proc/add_mats(mats)
+	src.currentmats += mats
+
+	if(currentmats > goal)
+		var/obj/item/flockcache/c = new(get_turf(src))
+		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
+		c.resources = (currentmats - goal)
+		src.completebuild()
+		return
+	else if(currentmats == goal)
+		src.completebuild()
+		return
+
+	updatealpha()
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
