@@ -40450,7 +40450,10 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
 /area/space)
 "ilJ" = (
 /obj/cable{
@@ -42234,7 +42237,10 @@
 /obj/grille/catwalk/cross{
 	dir = 9
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9;
+	tag = "icon-catwalk (WEST)"
+	},
 /area/space)
 "lHl" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -46477,7 +46483,10 @@
 /obj/grille/catwalk/cross{
 	dir = 5
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	tag = "icon-catwalk (WEST)"
+	},
 /area/space)
 "tmp" = (
 /obj/stool/chair/yellow{
