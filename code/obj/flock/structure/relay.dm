@@ -48,6 +48,7 @@
 		command_alert(msg, sound_to_play = "sound/misc/announcement_1.ogg", alert_origin = ALERT_ANOMALY)
 
 /obj/flock_structure/relay/disposing()
+	src.flock?.relay_in_progress = FALSE
 	..()
 	emergency_shuttle.disabled = FALSE
 
