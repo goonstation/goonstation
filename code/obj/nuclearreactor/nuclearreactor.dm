@@ -327,11 +327,11 @@
 	ex_act(severity)
 		var/comp_throw_prob = 0
 		switch(severity)
-			if(1.0)
+			if(3.0)
 				comp_throw_prob = 10
 			if(2.0)
 				comp_throw_prob = 25
-			if(3.0)
+			if(1.0)
 				comp_throw_prob = 100
 				logTheThing("station", src, null, "[src] has been destroyed in an explosion!")
 
