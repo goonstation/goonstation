@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
-#ifdef UNDERWATER_MAP
+#if defined(MAP_OVERRIDE_OSHAN)
 	mantahole
 		required = 1
 		underwater = 1
