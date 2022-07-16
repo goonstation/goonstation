@@ -12803,6 +12803,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "bgl" = (
@@ -32289,14 +32292,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
-"jjG" = (
-/obj/machinery/light_switch/east{
-	dir = 4
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/hallway/secondary/exit)
 "jka" = (
 /obj/cable,
 /obj/cable{
@@ -33560,7 +33555,8 @@
 	},
 /obj/item/device/radio/intercom{
 	name = "Station Intercom";
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -34154,7 +34150,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "kiI" = (
-/obj/storage/closet/office,
+/obj/storage/closet/law,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "kiK" = (
@@ -108674,7 +108670,7 @@ qqm
 qqm
 htT
 xLK
-jjG
+qqm
 ixG
 qqm
 qqm
