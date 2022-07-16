@@ -712,7 +712,7 @@
 		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
-			for (var/i=rand(3,4), i>0, i--)
+			for (var/i=0, i<2, i++)
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)

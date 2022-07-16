@@ -445,11 +445,11 @@
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
 			if (H.hand)//gets active arm - left arm is 1, right arm is 0
-				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
 					..()
 					return
 			else
-				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
 					..()
 					return
 			if(istype(H))
