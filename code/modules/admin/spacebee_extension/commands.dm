@@ -654,14 +654,14 @@
 	argument_types = list(
 		/datum/command_argument/string = "giverevoke",
 		/datum/command_argument/string/ckey = "player",
-		/datum/command_argument/string = "medalname"
+		/datum/command_argument/the_rest = "medalname"
 	)
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 
 	execute(user, giverevoke, player, medalname)
-		if(isnull(giverevoke) || isnull(player) || isnull(medalname) )
+		if(isnull(giverevoke) || isnull(player) || isnull(medalname))
 			system.reply("Failed to set medal; insufficient arguments. \
-				Provided: u:[json_encode(user)] gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
+				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
 			return
 
 		var/result
