@@ -1844,7 +1844,7 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
-		icedcoconutmilkespresso
+		iced_coconutmilkespresso
 			name = "Iced Coconut Milk Espresso"
 			id = "icedcoconutmilkespresso"
 			result = "icedcoconutmilkespresso"
@@ -1853,7 +1853,7 @@ datum
 			mix_phrase = "The ice clinks against the container as you blend everything together."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		icedpineapplematcha
+		iced_pineapplematcha
 			name = "Iced Pineapple Matcha"
 			id = "icedpineapplematcha"
 			result = "icedpineapplematcha"
@@ -1862,7 +1862,7 @@ datum
 			mix_phrase = "The milk mixes with the matcha in a soothing green."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		thaiicedcoffee
+		iced_thaiicedcoffee
 			name = "Thai Iced Coffee"
 			id = "thaiicedcoffee"
 			result = "thaiicedcoffee"
@@ -1871,7 +1871,7 @@ datum
 			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		thaiicedcoffee/thaiicedcoffee2
+		iced_thaiicedcoffee/thaiicedcoffee2
 			id = "thaiicedcoffee2"
 			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
 			result_amount = 6
