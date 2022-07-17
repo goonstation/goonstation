@@ -4410,3 +4410,15 @@ datum
 			description = "Coffee with ice in it."
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+		fooddrink/icedcoconutmilkespresso
+			name = "iced coconut milk espresso"
+			id = "icedcoconutmilkespresso"
+			fluid_r = 177
+			fluid_g = 143
+			fluid_b = 106
+			transparency = 200
+			taste = list("sweet", "cold")
+			description = "A creamy iced espresso, mixed with coconut milk."
+			reagent_state = LIQUID
+			thirst_value = 0.8

@@ -1859,6 +1859,14 @@ datum
 			required_reagents = list("ice" = 1, "coffee_fresh" = 2)
 			result_amount = 3
 
+		icedcoconutmilkespresso
+			name = "iced coconut milk espresso"
+			id = "icedcoconutmilkespresso"
+			result = "icedcoconutmilkespresso"
+			required_reagents = list("espresso" = 1, "ice" = 3, "coconut_milk" =2, "sugar" = 2)
+			result_amount = 8
+			mix_phrase = "The ice clinks against the container as you blend everything together."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		explosion_potassium // get in
 			name = "Potassium Explosion"
