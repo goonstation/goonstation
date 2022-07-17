@@ -1916,11 +1916,11 @@
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
 "anc" = (
-/obj/stool/chair/couch{
-	dir = 9
-	},
 /obj/landmark/start{
 	name = "Medical Doctor"
+	},
+/obj/stool/chair/comfy{
+	dir = 1
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
@@ -2489,6 +2489,9 @@
 "avK" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8
+	},
+/obj/stool/chair/comfy{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/breakroom)
@@ -3727,7 +3730,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "aOP" = (
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite,
 /area/station/medical/breakroom)
 "aOR" = (
 /obj/lattice{
@@ -4081,7 +4084,9 @@
 /area/station/science/lobby)
 "aUz" = (
 /obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/medical/breakroom)
 "aUE" = (
 /obj/decal/cleanable/dirt/jen,
@@ -7957,12 +7962,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
 "bZz" = (
-/obj/stool/chair/couch{
-	dir = 8
-	},
 /obj/item/paper/book/from_file/dealing_with_clonelieness{
 	pixel_y = -3
 	},
+/obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "bZW" = (
@@ -18761,7 +18764,9 @@
 	pixel_x = 9;
 	pixel_y = -2
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/medical/breakroom)
 "ffH" = (
 /obj/machinery/computer/secure_data/detective_computer{
@@ -23453,7 +23458,9 @@
 /area/station/crew_quarters/fitness)
 "gxi" = (
 /obj/storage/closet/medicalclothes,
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/medical/breakroom)
 "gxw" = (
 /obj/stool/chair/moveable{
@@ -24597,6 +24604,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "gQC" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/medical/breakroom)
 "gQH" = (
@@ -28090,6 +28100,22 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"hPF" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/breakroom)
 "hPQ" = (
 /obj/rack,
 /obj/item/circuitboard/teleporter{
@@ -28861,12 +28887,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "ibZ" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
+/obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "icb" = (
@@ -35487,7 +35511,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/medical/breakroom)
 "kbD" = (
 /obj/storage/closet/office,
@@ -52465,13 +52491,15 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "oZA" = (
-/obj/stool/chair/couch{
-	dir = 5
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
+/obj/disposalpipe/segment,
+/turf/simulated/floor/bluewhite{
+	dir = 1
 	},
-/turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
 "oZD" = (
 /obj/storage/closet/emergency,
@@ -52701,7 +52729,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
 /area/station/medical/breakroom)
 "pdV" = (
 /obj/shrub,
@@ -63938,7 +63968,9 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
 /area/station/medical/breakroom)
 "sge" = (
 /obj/table/auto,
@@ -64883,11 +64915,11 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/table/glass/reinforced/auto,
 /obj/item/matchbook{
 	pixel_x = 10;
 	pixel_y = 9
 	},
+/obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/breakroom)
 "suy" = (
@@ -65012,7 +65044,9 @@
 /area/station/hangar/main)
 "sws" = (
 /obj/storage/closet/office,
-/turf/simulated/floor/white,
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
 /area/station/medical/breakroom)
 "swI" = (
 /obj/decal/mule/dropoff,
@@ -124357,7 +124391,7 @@ uyI
 ucb
 ibZ
 kYU
-oZA
+anc
 qiF
 yfC
 xiU
@@ -124959,7 +124993,7 @@ dwf
 qRa
 jNi
 phN
-iaM
+oZA
 iaM
 iaM
 iaM
@@ -125265,7 +125299,7 @@ sws
 gxi
 aUz
 ffD
-mdg
+hPF
 jrH
 mRY
 uIi
