@@ -72,7 +72,10 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	New()
 		..()
 		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
-		new /obj/item/antitamper(src)
+		new /obj/item/antitamper(
+			src,
+			TRUE, // Attach it to crate being spawned
+		)
 
 		var/list/loot = list()
 		loot.Add(pick(loot_crate_manager.aesthetic), pick(loot_crate_manager.department), pick(loot_crate_manager.player))
@@ -416,9 +419,10 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	throwforce = 2
 	var/obj/storage/crate/attached = null
 
-	New(var/obj/storage/crate/C)
+	New(var/obj/storage/crate/C, var/attach_to_crate = FALSE)
 		..()
-		attach_to(C)
+		if (attach_to_crate)
+			attach_to(C)
 
 	disposing()
 		. = ..()
@@ -438,9 +442,11 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		add_fingerprint(user)
 		detach_from(attached)
 
-	proc/attach_to(var/obj/storage/crate/C)
+	proc/attach_to(var/obj/storage/crate/C, var/mob/user)
 		if (!C || !istype(C))
 			return
+		if (user != null)
+			user.u_equip(src)
 		set_loc(C)
 		attached = C
 		attached.vis_contents += src
