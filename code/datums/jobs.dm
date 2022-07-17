@@ -1414,7 +1414,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Medical Specialist"
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/research
 	slot_belt = list(/obj/item/device/pda2/medical_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
