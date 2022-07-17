@@ -31,7 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
-	var/linked_human = null
+	var/mob/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -293,6 +293,10 @@
 	on_removal()
 		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
+		if (src.linked_human)
+			src.RegisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
+			src.RegisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
+			src.RegisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
 		. = ..()
 
 	///Taking items off a head
@@ -456,6 +460,10 @@
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
+		if (src.linked_human)
+			src.UnregisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
+			src.UnregisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
+			src.UnregisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0

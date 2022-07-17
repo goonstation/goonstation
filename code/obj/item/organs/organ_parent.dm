@@ -255,6 +255,7 @@
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
 		src.donor = null
+		src.in_body = FALSE
 
 		return
 
