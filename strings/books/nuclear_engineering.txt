@@ -1,0 +1,32 @@
+<HTML>
+<body>
+<h1>Nuclear Engineering for Idiots</h1>
+<p>Congratulations on your purchase of the NTBMK Nuclear Reactor! By reading this manual, you have voided the warranty.</p>
+
+<h2>How 2 Electricity</h2>
+<p>The NTBMK Nuclear Reactor generates electricity by heating large volumes of gas which drive a turbine.</p>
+<p>The turbine is very configurable, allowing an operator to specify the volume of gas pumped through it, as well as the electromagnetic stator load.</p>
+<p>In order to maximise efficiency, the turbine should be operated at 600 RPM. This can be achieved by balancing the stator load with the thermal energy from the reactor.</p>
+
+<h2>Warnings</h2>
+<p>NTBMK Reactor components are rated for temperatures below 2500K. Higher temperatures may result in anomalous behaviour, such as melting and/or exploding into radioactive debris.</p>
+<p>The NTBMK Turbine has an emergency gas dump valve which will vent gas at 3000K.</p>
+
+<h2>Reactor Components</h2>
+<p>There are four main reactor components which may be inserted into the reactor grid.</p>
+<p>The most imporant of these is the fuel rods, which when made of a radioactive material produce heat and high energy neutrons by a fission process. When struck by a low energy neutron, additional heat will be generated.</p>
+<p>In order to control the rate of reaction, control rods are also available. These allow a material to inserted into the reactor at a configurable amount, and will absorb neutrons preventing them from reacting with fuel further.</p>
+<p>In order to utilise the heat of the reactor, gas cooling channels are provided which exchange 100 cubic meters of gas per second over internal heatsinks. When made of thermally conductive materials, these heat the gas flowing through the reactor for the generation of power, while cooling themselves in the process.</p>
+<p>And finally, heat exchange components balance heat between adjacent components, allowing rapid heat transfer from fuel rods to gas channels, and preventing "hot spots" in the reactor grid.</p>
+
+<h2>A Note on Material Properties</h2>
+<p>Reactor components can be constructed from a wide range of materials, with varying effects. NanoTrasen employees are encouraged to experiment with a variety of materials and report their findings to Central Command.</p>
+<p>Some properties are very important for the nuclear reactor. In particular, density of a material controls how often a neutron will interact with that material, whether that's in capturing, moderating, or undergoing fission.</p>
+<p>Standard radiation properties allow for the production of slow and medium speed neutrons, while the rarer neutron radiation generates higher speed neutrons.</p>
+<p>Thermal conductivity is critical for moving heat from the reactor components into the coolant gas, and should be maximised where possible.</p>
+
+<h2>Spent Fuel Reclamation</h2>
+<p>When fuel rods degrade to unnaceptable levels of radioactivity in the reactor, they will be filled with Plutonium. Place a spent fuel rod into the provided centrifuges will extract that Plutonium for refinement into more powerful fuel rods.</p>
+</body>
+</HTML>
+

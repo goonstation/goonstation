@@ -35746,9 +35746,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/shield_generator,
-/obj/item/paper/engine{
-	pixel_x = 5
-	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwN" = (
@@ -35759,6 +35756,10 @@
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/item/paper/book/from_file/nuclear_engineering{
+	pixel_x = 15;
+	pixel_y = 3
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwO" = (
