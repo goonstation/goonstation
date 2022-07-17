@@ -1844,21 +1844,6 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
-		icedcoffee
-			name = "Iced Coffee"
-			id = "icedcoffee"
-			result = "icedcoffee"
-			required_reagents = list("coffee" = 2, "ice" = 1)
-			result_amount = 3
-			mix_phrase = "The ice cubes mix with the coffee, melting slightly."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-			drinkrecipe = 1
-
-		icedcoffee/icedcoffee2
-			id = "icedcoffee2"
-			required_reagents = list("ice" = 1, "coffee_fresh" = 2)
-			result_amount = 3
-
 		icedcoconutmilkespresso
 			name = "Iced Coconut Milk Espresso"
 			id = "icedcoconutmilkespresso"
@@ -1886,6 +1871,11 @@ datum
 			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		thaiicedcoffee/thaiicedcoffee2
+			id = "thaiicedcoffee2"
+			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+
 		pepperminthotchocolate
 			name = "Peppermint Hot Chocolate"
 			id = "pepperminthotchocolate"
@@ -1899,7 +1889,7 @@ datum
 			name = "Mexican Hot Chocolate"
 			id = "mexicanhotchocolate"
 			result = "mexicanhotchocolate"
-			required_reagents = list("chocolate" = 2, "hot sauce" = 1, "milk" = 1)
+			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
 			result_amount = 4
 			mix_phrase = "A spicy smell drifts up from the chocolate."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
