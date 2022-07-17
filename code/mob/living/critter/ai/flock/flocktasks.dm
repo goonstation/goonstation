@@ -94,6 +94,11 @@ stare
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
+/datum/aiTask/sequence/goalbased/flock/switched_to()
+	. = ..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	if(istype(D))
+		D.wander_count = 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RALLY TO GOAL
 // target: the rally target given when this is invoked
@@ -753,6 +758,12 @@ stare
 	ai_turbo = TRUE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
+/datum/aiTask/timed/targeted/flockdrone_shoot/switched_to()
+	. = ..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	if(D)
+		D.wander_count = 0
+
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F.flock?.enemies))
@@ -1207,6 +1218,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1225,6 +1237,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1254,6 +1267,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1267,6 +1281,7 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
 
 	switched_to()
+		..()
 		on_reset()
 		if (!(ismob(src.target) || iscritter(src.target) || isvehicle(src.target)) || isflockmob(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1288,6 +1303,11 @@ stare
 	var/turf/startpos
 	var/turf/targetpos
 	var/path
+
+/datum/aiTask/timed/wander/flock/switched_to()
+	..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	D.wander_count++
 
 /datum/aiTask/timed/wander/flock/on_tick()
 	if(!startpos)

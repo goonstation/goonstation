@@ -103,6 +103,7 @@ const iconLookup = {
   "depositing": "border-style",
   "observing": "eye",
   "deconstructing": "trash",
+  "hibernating": "stop-circle",
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];

@@ -8,7 +8,7 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
-	compute = 10
+	compute = FLOCK_DRONE_COMPUTE
 	death_text = "%src% clatters into a heap of fragments."
 	pet_text = list("taps", "pats", "drums on", "ruffles", "touches", "pokes", "prods")
 	custom_brain_type = /obj/item/organ/brain/flockdrone
@@ -36,6 +36,9 @@
 	var/antigrab_fires_at = 2
 
 	var/glow_color = "#26ffe6a2"
+
+	var/ai_paused = FALSE
+	var/wander_count = 0
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
@@ -91,6 +94,8 @@
 			state["task"] = src.ai.current_task.name
 		else
 			state["task"] = ""
+	else if(src.ai_paused)
+		state["task"] = "hibernating"
 	else
 		state["task"] = "controlled"
 		state["controller_ref"] = "\ref[controller]"
@@ -278,6 +283,39 @@
 	else
 		src.is_npc = TRUE
 
+/mob/living/critter/flock/drone/proc/pause_ai()
+	if(src.controller) //can't pause_ai when controlled, this shouldn't ever happen
+		return
+	src.ai.stop_move()
+	src.ai_paused = TRUE
+	src.icon_state = "drone-dormant"
+	src.remove_simple_light("drone_light")
+	flock_speak(src, "No tasks in queue. Allocating higher functions to resource generation.", src.flock)
+	src.is_npc = FALSE
+	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
+	src.flock.hideAnnotations(src)
+	src.visible_message("<span class='notice'><b>[src]</b> goes dim and settles on the floor.</span>")
+
+/mob/living/critter/flock/drone/proc/wake_from_ai_pause()
+	if(!src.ai_paused)
+		return
+	src.compute = FLOCK_DRONE_COMPUTE
+	src.ai_paused = FALSE
+	src.canmove = TRUE
+	src.anchored = FALSE
+	src.wander_count = 0
+	src.damaged = -1 //force icon refresh
+	src.check_health() // handles updating the icon to something more appropriate
+	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
+	src.set_a_intent(INTENT_HELP)
+	src.add_simple_light("drone_light", rgb2num(glow_color))
+	if(src.client)
+		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		src.is_npc = FALSE
+	else
+		src.is_npc = TRUE
+		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
+		src.ai.interrupt() //force a task re-evaluation
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -290,7 +328,7 @@
 	special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> [isalive(src) && !dormant ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
+		<br><span class='bold'>Cognition:</span> [isalive(src) && !(src.dormant || src.ai_paused) ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
 	if (src.is_npc && istype(src.ai.current_task))
 		special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
 	special_desc += "<br><span class='bold'>###=-</span></span>"
@@ -429,7 +467,20 @@
 		return
 	if (src.dormant)
 		return
-
+	if(src.ai_paused)
+		//wake up if there are enemies in view
+		if(src.flock) //if we have a flock, use the enemies list, otherwise just use non-flock mobs in view
+			for(var/enemy in src.flock.enemies)
+				if(enemy in viewers(src))
+					src.wake_from_ai_pause()
+					break
+		else
+			for(var/mob/living/carbon/human/enemy in viewers(src))
+				if(!isdead(enemy))
+					src.wake_from_ai_pause()
+					break
+	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT)
+		src.pause_ai()
 	//if we're blocking that means we're not grabbed
 	if (!length(src.grabbed_by) || src.find_type_in_hand(/obj/item/grab/block))
 		src.antigrab_counter = 0
