@@ -1,5 +1,34 @@
 
+(t)sun jul 17 22
+(u)TTerc
+(e)⚖|balance
+(+)Vending machine throw stun duration: 10 seconds -> 5 seconds
+(u)Amylizzle
+(p)9606
+(e)🐛|bug
+(+)Matter eater now lets you eat food properly, and also transfers reagents. Eat big bottles of whiskey all at once!
+(u)LeahTheTech
+(p)9721
+(e)|
+(+)People with the mute gene no longer have typing indicators
+(u)Chan Walrus
+(p)9399
+(e)🎨|sprites
+(+)Added a new tour console sprite.
+(u)Kubius
+(p)9677
+(e)🆕🗺|feature, mapping
+(+)Kondaru's kitchen has been upgraded with a second oven and a more robust serving area.
+(t)sat jul 16 22
+(u)Wisemonster
+(p)9692
+(e)🗺|mapping
+(+)Donut 2's qm has been updated to reduce mid-space crate collisions
 (t)fri jul 15 22
+(u)Ilysen
+(p)9366
+(e)|
+(*)Began a refactoring/update of the antagonist system in the code. This should result in only a few user-facing changes (ideally!) but it might cause bugs, broken interactions, or other unintentional changes. Please keep an eye out while playing as an antagonist, and report bugs on GitHub!
 (u)Moberry
 (p)9582
 (e)⚖|balance
