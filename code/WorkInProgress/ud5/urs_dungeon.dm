@@ -628,7 +628,7 @@
 		src.injest(M)
 */
 
-var/johnbill_ursdungeon_code = 0420
+var/johnbill_ursdungeon_code = "0420"
 
 /area/diner/arcade/New()
 		..()

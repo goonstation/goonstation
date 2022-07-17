@@ -66,6 +66,7 @@
 	if(src.client)
 		src.updateOverlaysClient(src.client)
 		src.updateButtons()
+		src.hud.update_ability_hotbar()
 	// ok so in logout we set your ghost to 101 invisibility.
 	// in login we set it back to whatever it was. so you keep your ghost.
 	// is there a better way to do this? probably. i dont care.

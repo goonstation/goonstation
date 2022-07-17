@@ -99,6 +99,7 @@
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
 				src.grenade = CG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.w_class = max(src.w_class, C.w_class)
 
 				if(CG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
@@ -112,6 +113,7 @@
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
 				src.grenade_old = OG
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-grenade")
+				src.w_class = max(src.w_class, C.w_class)
 
 				if(OG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
@@ -125,6 +127,7 @@
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
 				src.pipebomb = PB
 				src.overlays += image('icons/obj/items/weapons.dmi', "trap-pipebomb")
+				src.w_class = max(src.w_class, C.w_class)
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
 				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
@@ -136,6 +139,7 @@
 			user.show_text("You attach [S]'s detonator to [src].", "blue")
 			src.signaler = S
 			src.overlays += image('icons/obj/items/weapons.dmi', "trap-signaler")
+			src.w_class = max(src.w_class, C.w_class)
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
@@ -182,6 +186,7 @@
 			src.pie = C
 			C.set_loc(src)
 			src.overlays += image(C.icon, C.icon_state)
+			src.w_class = max(src.w_class, C.w_class)
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
 			logTheThing("bombing", user, null, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
