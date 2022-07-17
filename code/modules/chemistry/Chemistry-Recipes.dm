@@ -1868,6 +1868,15 @@ datum
 			mix_phrase = "The ice clinks against the container as you blend everything together."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		icedpineapplematcha
+			name = "iced pineapple matcha"
+			id = "icedpineapplematcha"
+			result = "icedpineapplematcha"
+			required_reagents = list("matcha" = 1, "juice_pineapple" = 1, "coconut_milk" = 2, "ice" = 1)
+			result_amount = 5
+			mix_phrase = "The milk mixes with the matcha in a soothing green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"

@@ -4422,3 +4422,15 @@ datum
 			description = "A creamy iced espresso, mixed with coconut milk."
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+		fooddrink/icedpineapplematcha
+			name = "iced pineapple matcha"
+			id = "icedpineapplematcha"
+			fluid_r = 152
+			fluid_g = 184
+			fluid_b = 96
+			transparency = 200
+			taste = list("earthy")
+			description = "Tangy, yet refreshingly earthy."
+			reagent_state = LIQUID
+			thirst_value = 0.8
