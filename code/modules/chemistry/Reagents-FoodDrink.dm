@@ -4420,9 +4420,5 @@ datum
 			fluid_b = 0
 			description = "Whether or not it contains actual pumpkin juice has been up for debate."
 			reagent_state = LIQUID
-<<<<<<< HEAD
 			taste = list("earthy", "sweet")
-=======
-			taste = list("earthy", "sweet")
->>>>>>> 8d859fa0e767fba1fa5de105046338aa010bc9be
 			thirst_value = 1
