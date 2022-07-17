@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 7
+	pellets_to_fire = 6
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 20
 	speed_min = 40
@@ -231,9 +231,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 40
+	speed_max = 20
 	speed_min = 60
-	spread_angle_variance = 10
+	spread_angle_variance = 15
 	dissipation_variance = 10
 
 

@@ -625,21 +625,19 @@ toxic - poisons
 	name = "glass"
 	sname = "glass"
 	icon_state = "glass"
-	damage_type = D_SLASHING
-	casing = /obj/item/casing/shotgun/gray
-	dissipation_delay = 2.5
+	dissipation_delay = 2
 	dissipation_rate = 2
-	power = 2
+	implanted = null
+	power = 4
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
 	icon_state = "trace"
-	damage_type = D_SLASHING
-	casing = /obj/item/casing/shotgun/gray
 	dissipation_delay = 4
 	dissipation_rate = 1
-	power = 4
+	implanted = /obj/item/implant/projectile/shrapnel
+	power = 8
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
