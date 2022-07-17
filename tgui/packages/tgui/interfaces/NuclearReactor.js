@@ -156,16 +156,24 @@ export const NuclearReactor = (props, context) => {
                   }} />
               </Stack.Item>
             </Stack>
-            Control Rod Insertion: {controlRodLevel}%
-            <Knob
-              animated
-              size={2}
-              value={controlRodLevel}
-              minValue={0}
-              maxValue={100}
-              format={value => value + "%"}
-              onDrag={(e, value) => act('adjustCR', { crvalue: value })}
-            />
+          </Box>
+          <Box>
+            <Stack fill>
+              <Stack.Item width="50%">
+                Control Rod Insertion: {controlRodLevel}%
+              </Stack.Item>
+              <Stack.Item width="50%">
+                <Knob
+                  animated
+                  size={2}
+                  value={controlRodLevel}
+                  minValue={0}
+                  maxValue={100}
+                  format={value => value + "%"}
+                  onDrag={(e, value) => act('adjustCR', { crvalue: value })}
+                />
+              </Stack.Item>
+            </Stack>
           </Box>
         </Section>
       </Window.Content>
