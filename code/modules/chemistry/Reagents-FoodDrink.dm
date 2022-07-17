@@ -4434,3 +4434,15 @@ datum
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+		fooddrink/thaiicedcoffee
+			name = "thai iced coffee"
+			id = "thaiicedcoffee"
+			fluid_r = 218
+			fluid_g = 172
+			fluid_b = 140
+			transparency = 200
+			taste = list("bittersweet", "cold")
+			description = "A local favorite, now available on demand."
+			reagent_state = LIQUID
+			thirst_value = 0.8

@@ -1860,7 +1860,7 @@ datum
 			result_amount = 3
 
 		icedcoconutmilkespresso
-			name = "iced coconut milk espresso"
+			name = "Iced Coconut Milk Espresso"
 			id = "icedcoconutmilkespresso"
 			result = "icedcoconutmilkespresso"
 			required_reagents = list("espresso" = 1, "ice" = 3, "coconut_milk" =2, "sugar" = 2)
@@ -1869,12 +1869,21 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		icedpineapplematcha
-			name = "iced pineapple matcha"
+			name = "Iced Pineapple Matcha"
 			id = "icedpineapplematcha"
 			result = "icedpineapplematcha"
 			required_reagents = list("matcha" = 1, "juice_pineapple" = 1, "coconut_milk" = 2, "ice" = 1)
 			result_amount = 5
 			mix_phrase = "The milk mixes with the matcha in a soothing green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		thaiicedcoffee
+			name = "Thai Iced Coffee"
+			id = "thaiicedcoffee"
+			result = "thaiicedcoffee"
+			required_reagents = list("coffee" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		explosion_potassium // get in
