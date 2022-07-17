@@ -24360,12 +24360,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/artifact)
 "gMZ" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
+/obj/warp_beacon{
+	name = "Science Hangar Beacon"
 	},
+/obj/lattice,
 /turf/space,
-/area/station/science/lobby)
+/area/space)
 "gNb" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/cable,
@@ -73927,13 +73927,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"vbS" = (
-/obj/warp_beacon{
-	name = "Science Hangar Beacon"
-	},
-/obj/lattice,
-/turf/space,
-/area/space)
 "vca" = (
 /obj/wingrille_spawn/auto/tuff,
 /obj/window_blinds/cog2/left{
@@ -127771,9 +127764,9 @@ lKW
 hAg
 ciS
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 xJS
@@ -128073,9 +128066,9 @@ lKW
 hAg
 hAg
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 xJS
@@ -128375,9 +128368,9 @@ oiG
 laI
 aUo
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 mNc
 aGD
 odP
@@ -128677,9 +128670,9 @@ gaS
 fBg
 hAg
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 yhV
@@ -128979,9 +128972,9 @@ xJS
 tgq
 hAg
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 yhV
@@ -129281,9 +129274,9 @@ hrd
 wvd
 hAg
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 yhV
@@ -129583,9 +129576,9 @@ xJS
 nUy
 aUo
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 mNc
 aGD
 yhV
@@ -129885,9 +129878,9 @@ xJS
 wSo
 hAg
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 aGD
 sGh
@@ -130187,9 +130180,9 @@ wFD
 tOe
 ciS
 dRf
-gMZ
+jYm
 rfc
-iDf
+dRf
 qva
 qSP
 yhV
@@ -130207,8 +130200,8 @@ rdj
 rdj
 rdj
 rdj
-rdj
 wnV
+rdj
 rdj
 rdj
 rdj
@@ -130505,13 +130498,13 @@ seX
 cNV
 cNV
 xVz
-cNV
 ufk
 cNV
 glP
 cNV
-vbS
+gMZ
 ual
+rdj
 rdj
 rdj
 rdj
@@ -130811,8 +130804,8 @@ rdj
 rdj
 rdj
 rdj
-rdj
 rAW
+rdj
 rdj
 rdj
 rdj
