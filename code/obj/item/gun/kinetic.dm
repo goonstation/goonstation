@@ -1022,7 +1022,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "spas"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_NORMAL)
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 1
 	can_dual_wield = 0
@@ -1071,7 +1071,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotty"
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	ammo_cats = list(AMMO_SHOTGUN_NORMAL)
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 0
 	can_dual_wield = 0
@@ -1622,7 +1622,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
-	ammo_cats = list(AMMO_SHOTGUN_NORMAL)
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 8
 	auto_eject = 1
 	two_handed = 1
