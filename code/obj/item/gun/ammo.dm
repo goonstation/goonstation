@@ -964,7 +964,7 @@
 	ammo_cat = AMMO_ROCKET_RPG
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
@@ -978,7 +978,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
@@ -992,7 +992,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 //3.0
 /obj/item/ammo/bullets/gun

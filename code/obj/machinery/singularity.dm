@@ -57,7 +57,7 @@ Contains:
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 3, 0.8)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -1751,7 +1751,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 5, 0.5)
+		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 5, 0.5)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

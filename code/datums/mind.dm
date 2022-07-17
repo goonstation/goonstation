@@ -23,6 +23,9 @@ datum/mind
 	var/late_special_role = 0
 	var/random_event_special_role = 0
 
+	/// A list of every antagonist datum that we have.
+	var/list/datum/antagonist/antagonists = list()
+
 	// This used for dead/released/etc mindslaves and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindslaves could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
@@ -214,6 +217,49 @@ datum/mind
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
 		src.last_death_time = world.timeofday
+	
+	/// Gets an existing antagonist datum of the provided ID role_id.
+	proc/get_antagonist(role_id)
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (A.id == role_id)
+				return A
+		return null
+
+	/// Attempts to add the antagonist datum of ID role_id to this mind.
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE)
+		// Check for mutual exclusivity
+		if (respect_mutual_exclusives && length(src.antagonists))
+			for (var/datum/antagonist/A as anything in src.antagonists)
+				if (A.mutually_exclusive)
+					return FALSE
+		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist
+		if (!isnull(src.get_antagonist(role_id)))
+			return FALSE
+		for (var/V in concrete_typesof(/datum/antagonist))
+			var/datum/antagonist/A = V
+			if (initial(A.id) == role_id)
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source))
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
+				return TRUE
+		return FALSE
+
+	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
+	proc/remove_antagonist(role_id)
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (A.id == role_id)
+				A.remove_self(TRUE, FALSE)
+				antagonists.Remove(A)
+				qdel(A)
+				return TRUE
+		return FALSE
+	
+	/// Removes ALL antagonists from this mind. Use with caution!
+	proc/wipe_antagonists()
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			A.remove_self(TRUE, FALSE)
+			src.antagonists.Remove(A)
+			qdel(A)
+		return length(src.antagonists) <= 0
 
 	disposing()
 		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")

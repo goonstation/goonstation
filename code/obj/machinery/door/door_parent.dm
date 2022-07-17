@@ -737,6 +737,10 @@
 	..()
 	if (!src.simple_lock)
 		src.verbs -= /obj/machinery/door/unpowered/wood/verb/simple_lock
+	if (istype(get_area(src), /area/centcom/offices))
+		var/area/centcom/offices/O = get_area(src)
+		if (O.icon_state == "blue")
+			src.locked = TRUE
 
 /obj/machinery/door/unpowered/wood/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'

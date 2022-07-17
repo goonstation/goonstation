@@ -421,7 +421,7 @@
 	if (..(parent))
 		return TRUE
 	if (src.floorrunning && src.resources >= 1)
-		src.resources--
+		src.pay_resources(1)
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
 	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
@@ -528,6 +528,18 @@
 		return 0.6
 	else
 		return ..()
+
+/mob/living/critter/flock/drone/proc/add_resources(amount)
+	src.resources += amount
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
+	aH.updateResources(src.resources)
+
+/mob/living/critter/flock/drone/pay_resources(amount)
+	..()
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
+	aH.updateResources(src.resources)
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
@@ -656,7 +668,7 @@
 	var/obj/item/organ/heart/flock/core = src.organHolder.get_organ("heart")
 	if(core)
 		core.resources = src.resources
-		src.resources = 0 // just in case any weirdness happens let's pre-empt the dupe bug
+		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
 	..()
 	src.icon_state = "drone-dead"
 	src.reduce_lifeprocess_on_death()
@@ -1099,10 +1111,10 @@
 	var/health_absorbed = min((flock_owner.health_absorb_rate * mult), I.health)
 	if (flock_owner.absorber.instant_absorb && !flock_owner.absorber.ignore_amount)
 		boutput(flock_owner, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
-		flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed * I.amount)
+		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed * I.amount))
 	else
 		I.health -= health_absorbed
-		flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed)
+		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
 				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
@@ -1133,14 +1145,14 @@
 
 	if (istype(I, /obj/item/flockcache))
 		var/obj/item/flockcache/C = I
-		flock_owner.resources += C.resources
+		flock_owner.add_resources(C.resources)
 		boutput(flock_owner, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resource[C.resources > 1 ? "s" : null] to your own. </span>")
 	else if(istype(I, /obj/item/organ/heart/flock))
 		var/obj/item/organ/heart/flock/F = I
 		if (F.resources == 0)
 			boutput(flock_owner, "<span class='notice'>[F]'s resource cache is assimilated, but contains no resources.</span>")
 		else
-			flock_owner.resources += F.resources
+			flock_owner.add_resources(F.resources)
 			boutput(flock_owner, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resource[F.resources > 1 ? "s" : null] to your own.</span>")
 	else
 		boutput(flock_owner, "<span class='notice'>You finish converting [I] into resources.</span>")
