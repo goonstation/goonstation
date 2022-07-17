@@ -1,5 +1,9 @@
 
 (t)sun jul 17 22
+(u)Chan Walrus
+(p)9399
+(e)🎨|sprites
+(+)Added a new tour console sprite.
 (u)Kubius
 (p)9677
 (e)🆕🗺|feature, mapping
