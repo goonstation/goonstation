@@ -203,23 +203,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]% pierce resist"
 
-	movement
-		name = "Speed"
-		id = "movespeed"
-		desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
-		tooltipImg = "movement.png"
-		defaultValue = 1
-		goodDirection = -1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] movement delay"
-
-		space
-			name = "Speed"
-			id = "space_movespeed"
-
-			getTooltipDesc(var/obj/propOwner, var/propVal)
-				return "[propVal] movement delay - 0 when worn in space."
-
 	viralprot
 		name = "Resistance (Viral)"
 		id = "viralprot"
@@ -255,15 +238,6 @@ var/list/globalPropList = null
 		defaultValue = 10
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "-[propVal]% stamina costs."
-
-	negate_fluid_speed_penalty //important : delay added to dry land!
-		name = "Fluid movement"
-		id = "negate_fluid_speed_penalty"
-		desc = "Negates fluid speed penalties."
-		tooltipImg = "movement.png"
-		defaultValue = 1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
 
 	momentum // force increases as you attack players.
 		name = "Momentum"
@@ -605,5 +579,35 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "+[propVal]x"
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_VAULT_SPEED)
+
+/datum/objectProperty/equipment/movement
+	name = "Speed"
+	id = "movespeed"
+	desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+	tooltipImg = "movement.png"
+	defaultValue = 1
+	goodDirection = -1
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay"
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED)
+
+/datum/objectProperty/equipment/movement/space
+	name = "Speed"
+	id = "space_movespeed"
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn in space."
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+
+/datum/objectProperty/equipment/movement/fluid //important : delay added to dry land!
+	name = "Fluid movement"
+	id = "negate_fluid_speed_penalty"
+	desc = "Negates fluid speed penalties."
+	tooltipImg = "movement.png"
+	defaultValue = 1
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+
 
 #undef ASSOCIATE_ATOM_PROPERTY

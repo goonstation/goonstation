@@ -952,19 +952,7 @@
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
-	equipment_proxy.additive_slowdown += src.getProperty("movespeed")
-	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
-	if (fluidmove)
-		equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-		equipment_proxy.aquatic_movement += fluidmove
-	var/spacemove = src.getProperty("space_movespeed")
-	if (spacemove)
-		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-		equipment_proxy.space_movement += spacemove
+	user.update_equipped_modifiers()
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
@@ -976,19 +964,7 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
-	equipment_proxy.additive_slowdown -= src.getProperty("movespeed")
-	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
-	if (fluidmove)
-		equipment_proxy.additive_slowdown -= fluidmove
-		equipment_proxy.aquatic_movement -= fluidmove
-	var/spacemove = src.getProperty("space_movespeed")
-	if (spacemove)
-		equipment_proxy.additive_slowdown -= spacemove
-		equipment_proxy.space_movement -= spacemove
+	user.update_equipped_modifiers()
 
 /obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
