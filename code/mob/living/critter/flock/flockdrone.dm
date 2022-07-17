@@ -290,7 +290,7 @@
 	src.ai_paused = TRUE
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
-	flock_speak(src, "No tasks in queue. Allocating higher functions to resource generation.", src.flock)
+	flock_speak(src, "No tasks in queue. Allocating higher functions to compute generation.", src.flock)
 	src.is_npc = FALSE
 	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
 	src.flock.hideAnnotations(src)
