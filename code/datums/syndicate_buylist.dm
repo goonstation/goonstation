@@ -974,6 +974,13 @@ This is basically useless for anyone but miners.
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/rose
+	name = "Poison rose"
+	item = /obj/item/plant/flower/rose/poisoned
+	cost = 4
+	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
+	job = list("Mime")
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
