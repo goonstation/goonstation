@@ -1308,7 +1308,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 8)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
