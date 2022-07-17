@@ -46,6 +46,8 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	voice_fem = "sound/voice/wizard/FurryFem.ogg"
 	voice_other = "sound/voice/wizard/FurryLoud.ogg"
 
+	var/maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
+
 	cast(mob/target)
 		if (!holder)
 			return 1
@@ -76,9 +78,6 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	var/datum/abilityHolder/A
 	var/mob/living/M
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
-	var/maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
-
 	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
@@ -102,7 +101,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY", 0, spell.maptext_style, maptext_colors)
+			M.say("YORAF UHRY", 0, spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
