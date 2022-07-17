@@ -121,7 +121,7 @@
 
 
 /obj/ability_button/labcoat_toggle
-	name = "(Un)Button Labcoat"
+	name = "(Un)Button Coat"
 	icon_state = "labcoat"
 
 	execute_ability()

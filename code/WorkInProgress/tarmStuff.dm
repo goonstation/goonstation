@@ -496,6 +496,20 @@
 		new /datum/mutation_orb_mutdata(id = "dwarf", magical = 1)
 		)
 
+/obj/item/mutation_orb/cow_orb
+	name = "essence of cowness"
+	desc = "Moo!"
+	icon = 'icons/misc/GerhazoStuff.dmi'
+	icon_state = "orb_fire"
+
+	envelop_message = "hair"
+	leaving_message = "mooing softly and vanishing"
+
+	New()
+		. = ..()
+		color = list(0.3, 0.4, 0.1, 0, 1, 0, 0, 0, 1)
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
+
 //lily's office
 /obj/item/storage/desk_drawer/lily/
 	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
