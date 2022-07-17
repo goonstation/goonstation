@@ -47,11 +47,17 @@
 					C.HealDamage("All", 1000, 1000)
 					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
+					C.change_misstep_chance(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
+					C.delStatus("drowsy")
+					C.delStatus("passing_out")
+					C.delStatus("n_radiation")
 					C.delStatus("paralysis")
+					C.delStatus("slowed")
 					C.delStatus("stunned")
 					C.delStatus("weakened")
 					C.delStatus("radiation")
+					C.delStatus("disorient")
 					C.health = 100
 					C.reagents.clear_reagents()
 					C.lying = 0
@@ -66,6 +72,11 @@
 							C.implant.Remove(I)
 							I.set_loc(C.loc)
 							continue
+					if(C.bioHolder?.effects && length(C.bioHolder.effects))
+						for(var/bioEffectId in C.bioHolder.effects)
+							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+								C.bioHolder.RemoveEffect(gene.id)
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0

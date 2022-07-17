@@ -58,7 +58,7 @@
 
 	qdel(abilityHolder)
 	setMaterial(getMaterial("gnesis"))
-	src.material.setProperty("reflective", 45)
+	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -652,7 +652,7 @@
 		var/difference = target.goal - target.currentmats
 		amounttopay = min(F.resources, difference, FLOCK_GHOST_DEPOSIT_AMOUNT)
 		F.pay_resources(amounttopay)
-		target.currentmats += amounttopay
+		target.add_mats(amounttopay)
 		if(F.resources)
 			src.onRestart() //restart the action akin to automenders
 

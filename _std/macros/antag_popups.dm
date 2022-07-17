@@ -129,7 +129,7 @@
 			if ("traitorgeneric")
 				window_title = "Antagonist Tips"
 				filename ="html/traitorTips/traitorGenericTips.html"
-			if ("sleeper")
+			if (ROLE_SLEEPER_AGENT)
 				window_title = "Sleeper Agent Tips"
 				filename = "html/traitorTips/traitorsleeperTips.html"
 
@@ -284,6 +284,9 @@
 				filename = "html/ghostcritter_mentor.html"
 
 			// misc
+			if ("syndieborg")
+				window_title = "Syndicate Robot Tips!"
+				filename = "html/traitorTips/syndicaterobotTips.html"
 			if ("rogueborgremoved")
 				window_title = "Rogue Status Removed!"
 				filename = "html/traitorTips/roguerobotRemoved.html"

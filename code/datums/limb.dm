@@ -444,7 +444,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille")))
+			switch (user.smash_through(target, list("window", "grille", "blob")))
 				if (0)
 					if (isitem(target))
 						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
@@ -688,7 +688,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door")))
+			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
 				if (0)
 					if (istype(target, /obj/item/reagent_containers))
 						if (prob(50 * quality))
@@ -896,7 +896,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door")))
+			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1203,7 +1203,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("grille")))
+			switch (user.smash_through(target, list("grille","blob")))
 				if (0)
 					if (isitem(target))
 						if (prob(60))
@@ -1309,55 +1309,9 @@
 		user.lastattacked = target
 
 
-//hey maybe later standardize this into flags per obj so we dont search this huge list every click ok??
-var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
-
-/proc/ghostcritter_blocked_objects() // Generates an associate list of (type = 1) that can be checked much faster than looping istypes
-	var/blocked_types = list(/obj/item/device/flash,\
-	/obj/item/reagent_containers/glass/beaker,\
-	/obj/machinery/light_switch,\
-	/obj/item/reagent_containers/glass/bottle,\
-	/obj/item/scalpel,\
-	/obj/item/circular_saw,\
-	/obj/machinery/emitter,\
-	/obj/item/mechanics,\
-	/obj/item/staple_gun,\
-	/obj/item/scissors,\
-	/obj/item/razor_blade,\
-	/obj/item/raw_material/shard,\
-	/obj/item/kitchen/utensil/knife,\
-	/obj/item/reagent_containers/food/snacks/prison_loaf,\
-	/obj/item/reagent_containers/food/snacks/einstein_loaf,\
-	/obj/reagent_dispensers,\
-	/obj/machinery/chem_dispenser,\
-	/obj/machinery/field_generator,\
-	/obj/machinery/portable_atmospherics/canister,\
-	/obj/machinery/networked/teleconsole,\
-	/obj/storage/crate, /obj/storage/closet,\
-	/obj/storage/secure/closet,\
-	/obj/machinery/firealarm,\
-	/obj/machinery/weapon_stand,\
-	/obj/dummy/chameleon,\
-	/obj/machinery/light,\
-	/obj/machinery/phone,\
-	/obj/machinery/atmospherics/valve,\
-	/obj/machinery/vending,\
-	/obj/machinery/nuclearbomb,\
-	/obj/item/gun/kinetic/airzooka,\
-	/obj/machinery/computer,\
-	/obj/machinery/power/smes,
-	/obj/item/tinyhammer,\
-	/obj/machinery/manufacturer,\
-	/obj/item/device/light/zippo, \
-	/obj/machinery/door_control) //Items that ghostcritters simply cannot interact, regardless of w_class
-	. = list()
-	for (var/blocked_type in blocked_types)
-		for (var/subtype in typesof(blocked_type))
-			.[subtype] = 1
-
 //little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
-	var/max_wclass = 1 // biggest thing we can carry
+	var/max_wclass = W_CLASS_TINY // biggest thing we can carry
 	var/dam_low = 1
 	var/dam_high = 1
 	var/actions = list("scratches", "baps", "slashes", "paws")
@@ -1381,7 +1335,7 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
-					if (C.ghost_spawned && ghostcritter_blocked[O.type])
+					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
 						can_pickup = 0
 
 				if (O.w_class > max_wclass || !can_pickup)
@@ -1390,7 +1344,8 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 			else
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
-					if (C.ghost_spawned && ghostcritter_blocked[target.type])
+					var/obj/O = target
+					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
 						user.show_text("<span class='alert'><b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b></span>")
 						return
 
@@ -1459,16 +1414,16 @@ var/list/ghostcritter_blocked = ghostcritter_blocked_objects()
 		..()
 
 /datum/limb/small_critter/med //same as the previous, but can pick up some heavier shit
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 
 /datum/limb/small_critter/strong
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	stam_damage_mult = 1
 
 /datum/limb/small_critter/pincers
 	dmg_type = DAMAGE_STAB
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 	dam_low = 2
 	dam_high = 4

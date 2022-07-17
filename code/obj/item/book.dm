@@ -518,3 +518,10 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
 		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+
+/obj/item/paper/spaceodyssey
+	name = "strange printout"
+	info = {"<tt>Daisy, Daisy,<BR/>
+give me your answer do.<BR/>
+I'm half crazy,<BR/>
+all for the love of you.</tt>"}

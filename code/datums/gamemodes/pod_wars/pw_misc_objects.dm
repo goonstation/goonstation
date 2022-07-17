@@ -187,6 +187,9 @@
 	ex_act(severity)
 		return
 
+	powered()
+		return TRUE
+
 	disposing()
 		..()
 		UnsubscribeProcess()
@@ -239,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/pod_wars

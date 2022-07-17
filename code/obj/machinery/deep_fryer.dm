@@ -12,7 +12,7 @@
 	var/atom/movable/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()

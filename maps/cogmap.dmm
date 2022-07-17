@@ -4854,7 +4854,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/arrivals)
 "aon" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -4865,6 +4869,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red/side,
@@ -20844,9 +20851,7 @@
 /area/station/maintenance/west)
 "bcR" = (
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
-/obj/shrub/captainshrub{
-	pixel_y = 9
-	},
+/obj/shrub/captainshrub,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bcS" = (
@@ -53330,6 +53335,9 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "geM" = (
@@ -55951,8 +55959,8 @@
 	pixel_y = 11
 	},
 /obj/item/clipboard{
-	pixel_y = 4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/item/pen{
 	pixel_x = 6;
@@ -58419,6 +58427,10 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "oiU" = (
@@ -59013,8 +59025,12 @@
 	pixel_x = 19
 	},
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	pixel_y = -4;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
@@ -60042,9 +60058,13 @@
 /obj/drink_rack/mug{
 	pixel_x = -26
 	},
-/obj/machinery/coffeemaker{
-	pixel_x = -3;
-	pixel_y = 3
+/obj/machinery/coffeemaker/engineering{
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -61215,6 +61235,10 @@
 /obj/drink_rack/mug{
 	pixel_y = -26
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "son" = (
@@ -62305,12 +62329,12 @@
 /obj/item/storage/wall/office,
 /obj/rack,
 /obj/item/robodefibrillator{
-	pixel_y = 6;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/hypospray{
-	pixel_y = 2;
-	pixel_x = -11
+	pixel_x = -11;
+	pixel_y = 2
 	},
 /obj/item/storage/box/health_upgrade_kit{
 	pixel_x = 9;
@@ -62909,9 +62933,13 @@
 /area/station/engine/engineering)
 "uEk" = (
 /obj/table/wood/auto,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = -26
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -63765,8 +63793,8 @@
 "vMs" = (
 /obj/table/auto,
 /obj/item/cigpacket/propuffs{
-	pixel_y = -2;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -2
 	},
 /obj/item/clothing/mask/cigarette/propuffs{
 	pixel_x = -2;
