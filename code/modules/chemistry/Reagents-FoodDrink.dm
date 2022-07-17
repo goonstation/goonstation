@@ -4455,6 +4455,18 @@ datum
 			fluid_b = 43
 			transparency = 200
 			taste = list("minty", "chocolatey")
-			description = "A local favorite, now available on demand."
+			description = "Minty, creamy, and chocolatey; delicious!"
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+		fooddrink/mexicanhotchocolate
+			name = "mexican hot chocolate"
+			id = "mexicanhotchocolate"
+			fluid_r = 76
+			fluid_g = 29
+			fluid_b = 3
+			transparency = 200
+			taste = list("spicy", "chocolatey")
+			description = "Hot! Yet, very tasty."
+			reagent_state = LIQUID
+			thirst_value = 0.75

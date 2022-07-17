@@ -1895,6 +1895,15 @@ datum
 			mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		mexicanhotchocolate
+			name = "Mexican Hot Chocolate"
+			id = "mexicanhotchocolate"
+			result = "mexicanhotchocolate"
+			required_reagents = list("chocolate" = 2, "hot sauce" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "A spicy smell drifts up from the chocolate."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
