@@ -3,6 +3,14 @@
 (u)TTerc
 (e)⚖|balance
 (+)Vending machine throw stun duration: 10 seconds -> 5 seconds
+(u)Amylizzle
+(p)9606
+(e)🐛|bug
+(+)Matter eater now lets you eat food properly, and also transfers reagents. Eat big bottles of whiskey all at once!
+(u)LeahTheTech
+(p)9721
+(e)|
+(+)People with the mute gene no longer have typing indicators
 (u)Chan Walrus
 (p)9399
 (e)🎨|sprites
