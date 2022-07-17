@@ -804,7 +804,7 @@
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
-		victim.changeStatus("weakened", 10 SECONDS)
+		victim.changeStatus("weakened", 5 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)

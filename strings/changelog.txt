@@ -1,5 +1,8 @@
 
 (t)sun jul 17 22
+(u)TTerc
+(e)⚖|balance
+(+)Vending machine throw stun duration: 10 seconds -> 5 seconds
 (u)Chan Walrus
 (p)9399
 (e)🎨|sprites
