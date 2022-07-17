@@ -474,9 +474,9 @@
 
 	attack(mob/living/carbon/human/M, mob/user, def_zone)
 		if (istype(M) && !(M.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
-			M.tri_message(user, "[user] holds [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.",
-				"[user] holds [src] to your nose, letting you take in the fragrance.",
-				"You hold [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance."
+			M.tri_message(user, "<span class='alert'>[user] holds [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>",
+				"<span class='alert'>[user] holds [src] to your nose, letting you take in the fragrance.</span>",
+				"<span class='alert'>You hold [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>"
 			)
 			return TRUE
 		..()
@@ -493,8 +493,14 @@
 
 	proc/poison(mob/M)
 		if (!M.reagents?.has_reagent("capulettium"))
-			M.reagents?.add_reagent("capulettium[M.mind?.assigned_role == "Mime" ? "_plus" : ""]", 12)
-		M.setStatus("muted", 30 SECONDS)
+			if (M.mind?.assigned_role == "Mime")
+				//since this is used for faking your own death, have a little more reagent
+				M.reagents?.add_reagent("capulettium_plus", 20)
+				//mess with medics a little
+				M.bioHolder.AddEffect("dead_scan", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
+			else
+				M.reagents?.add_reagent("capulettium", 13)
+		M.bioHolder?.AddEffect("mute", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
 		SPAWN(rand(2,4) SECONDS)
 			boutput(M, "<span class='alert'You feel woozy.</span>")
 
