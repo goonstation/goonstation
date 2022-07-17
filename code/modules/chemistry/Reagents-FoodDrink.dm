@@ -4446,3 +4446,15 @@ datum
 			description = "A local favorite, now available on demand."
 			reagent_state = LIQUID
 			thirst_value = 0.8
+
+		fooddrink/pepperminthotchocolate
+			name = "peppermint hot chocolate"
+			id = "pepperminthotchocolate"
+			fluid_r = 147
+			fluid_g = 94
+			fluid_b = 43
+			transparency = 200
+			taste = list("minty", "chocolatey")
+			description = "A local favorite, now available on demand."
+			reagent_state = LIQUID
+			thirst_value = 0.8
