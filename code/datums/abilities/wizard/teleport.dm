@@ -7,6 +7,7 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
+	var/maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
 
 	cast()
 		if (!holder)
@@ -22,9 +23,6 @@
 	var/voice_grim = "sound/voice/wizard/TeleportGrim.ogg"
 	var/voice_fem = "sound/voice/wizard/TeleportFem.ogg"
 	var/voice_other = "sound/voice/wizard/TeleportLoud.ogg"
-
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
-	var/maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
@@ -142,7 +140,7 @@
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
-			src.say("SCYAR NILA [uppertext(A)]", 0, maptext_style, maptext_colors)
+			src.say("SCYAR NILA [uppertext(A)]", 0, spell.maptext_style, spell.maptext_colors)
 			if(ishuman(src))
 				var/mob/living/carbon/human/O = src
 				if(istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))

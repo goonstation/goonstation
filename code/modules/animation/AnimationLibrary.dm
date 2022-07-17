@@ -891,7 +891,6 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(A, color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		else
 			animate(color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	return
 
 /proc/animate_fade_to_color_fill(var/atom/A,var/the_color,var/time)
 	if (!istype(A) || !the_color || !time)
