@@ -1848,15 +1848,10 @@ datum
 			name = "Pumpkin Spice Latte"
 			id = "pumpkinspicelatte"
 			result = "pumpkinspicelatte"
-			required_reagents = list("juice_pumpkin"=1, "milk"= 1, "coffee"=1)
-			result_amount = 3
+			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
 			mix_phrase = "The drink smells vaguely like artifical autumn."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
-
-			pumpkinspicelatte/pumpkinspicelatte2
-			id = "pumpkinspicelatte2"
-			required_reagents = list("juice_pumpkin" = 1, "milk" = 1, "coffee_fresh" = 1)
-			result_amount = 3
 
 		explosion_potassium // get in
 			name = "Potassium Explosion"
