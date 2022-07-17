@@ -10,7 +10,6 @@
 	voice_fem = "sound/voice/wizard/BlinkFem.ogg"
 	voice_other = "sound/voice/wizard/BlinkLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()

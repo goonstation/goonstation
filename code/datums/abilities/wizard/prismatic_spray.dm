@@ -26,7 +26,6 @@
 	//instance projectile datum for non-random usage, randomise() is called on this
 	var/datum/projectile/artifact/prismatic_projectile/ps_proj = new
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	New()

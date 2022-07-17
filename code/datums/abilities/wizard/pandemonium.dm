@@ -10,7 +10,6 @@
 	voice_fem = "sound/voice/wizard/PandemoniumFem.ogg"
 	voice_other = "sound/voice/wizard/PandemoniumLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#FF0000", "#00FF00", "#FFFF00", "#0000FF", "#00FFFF", "#FF00FF")
 
 	cast()

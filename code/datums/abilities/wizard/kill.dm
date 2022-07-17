@@ -12,7 +12,6 @@
 	voice_fem = "sound/voice/wizard/ShockingGraspFem.ogg"
 	voice_other = "sound/voice/wizard/ShockingGraspLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 3px black;"
 	var/maptext_colors = list("#ff0000", "#000000")
 
 	cast(mob/target)

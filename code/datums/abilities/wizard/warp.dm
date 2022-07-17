@@ -12,7 +12,6 @@
 	voice_fem = "sound/voice/wizard/WarpFem.ogg"
 	voice_other = "sound/voice/wizard/WarpLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#5cde24", "#167935", "#084623", "#0167935")
 
 	cast(mob/target)

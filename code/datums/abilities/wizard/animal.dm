@@ -102,7 +102,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
+			M.say("YORAF UHRY", 0, spell.maptext_style, maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

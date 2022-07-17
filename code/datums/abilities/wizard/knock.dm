@@ -10,7 +10,6 @@
 	voice_fem = "sound/voice/wizard/KnockFem.ogg"
 	voice_other = "sound/voice/wizard/KnockLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#24639a", "#24bdc6", "#05bd82", "#038463")
 
 	cast()

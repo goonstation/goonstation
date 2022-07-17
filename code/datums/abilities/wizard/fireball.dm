@@ -40,7 +40,6 @@
 
 	var/datum/projectile/fireball/fb_proj = new
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#fcdf74", "#eb9f2b", "#d75015")
 
 	cast(atom/target)

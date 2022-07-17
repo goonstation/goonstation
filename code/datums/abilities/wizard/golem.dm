@@ -11,7 +11,6 @@
 	voice_fem = "sound/voice/wizard/GolemFem.ogg"
 	voice_other = "sound/voice/wizard/GolemLoud.ogg"
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#fcdf74", "#d75015")
 
 	cast()

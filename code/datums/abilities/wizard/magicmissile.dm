@@ -14,7 +14,6 @@
 	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
 	var/datum/projectile/the_missile
 
-	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
 	var/maptext_colors = list("#f57382", "#f8aaaa", "#f7e0e3", "#f8aaaa")
 
 	cast()
