@@ -60,7 +60,9 @@
 					if(istype(D))
 						D.visible_message("[src] scoops up [D]!",\
 						"You feel yourself being torn away from the afterlife and into [src]!")
-						droneize(D, 1)
+						if(!droneize(D, TRUE))
+							D.visible_message("There are no ghost drones available! Your soul is added back to the queue.")
+							ghostdrone_candidates += M
 
 		else
 			src.icon_state = "ghostcatcher0"
