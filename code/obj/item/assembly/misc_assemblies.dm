@@ -875,12 +875,11 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/makeshiftshell
 
-	name = "Open pipes"
-	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them"
+	name = "open pipes"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "pipeshot"
 
 	attackby(obj/item/W, mob/user)
-		..()
 		if(istype(W, /obj/item/raw_material/shard))
 			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
 			user.put_in_hand_or_drop(shot)
@@ -892,6 +891,7 @@ obj/item/assembly/radio_horn/receive_signal()
 			user.put_in_hand_or_drop(shot)
 			qdel(W)
 			qdel(src)
+		..()
 
 
 

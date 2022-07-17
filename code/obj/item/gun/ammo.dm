@@ -675,6 +675,7 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/bullets/pipeshot
 	sname = "pipeshot"
 	name = "pipeshot"
@@ -685,7 +686,6 @@
 	max_amount = 4.0
 	ammo_cat = AMMO_SHOTGUN_SCRAP
 	delete_on_reload = TRUE
-	icon_dynamic = FALSE
 	icon_empty = "makeshiftempty"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 

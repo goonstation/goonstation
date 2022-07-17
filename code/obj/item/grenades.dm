@@ -1444,8 +1444,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	attackby(obj/item/W, mob/user)
 
-
-
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
 				return
@@ -1459,12 +1457,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
-
-		if(issnippingtool(W) && state == 3) //pipeshot crafting
-			new /obj/item/assembly/makeshiftshell(get_turf(src))
-			qdel(src)
-
-
 
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
@@ -1509,6 +1501,17 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					name = "filled [src.material.name] pipe frame"
 				else
 					name = "filled pipe frame"
+
+		if(issnippingtool(W) && state == 3) //pipeshot crafting
+			if(src.strength > 0) // ensure it has actual propellant in it from after the fill stage
+				boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+				new /obj/item/assembly/makeshiftshell(get_turf(src))
+				qdel(src)
+			else// trying to make bullets without propellant? not on MY watch
+				boutput(user, "<span class='notice'>You mangle the pipe horribly!</span>")
+				new /obj/item/implant/projectile/shrapnel(get_turf(src))
+				qdel(src)
+
 
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)
