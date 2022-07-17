@@ -232,15 +232,14 @@ const Functions = (props, context) => {
           title="Disk Controls"
           buttons={
             <>
-              {!!cloningWithRecords && (
+              {cloningWithRecords ? (
                 <Button
                   icon="upload"
                   color={"blue"}
                   onClick={() => act("load")}>
                   Load from disk
                 </Button>
-              )}
-              {!cloningWithRecords && (
+              ) : (
                 <Button
                   icon="upload"
                   color={"blue"}
