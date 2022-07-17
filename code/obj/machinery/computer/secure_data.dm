@@ -21,6 +21,7 @@
 	// var/can_change_id = 0
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
+	var/ai_access
 
 	light_r =1
 	light_g = 0.7
@@ -32,7 +33,7 @@
 	req_access = list(access_forensics_lockers)
 
 /obj/machinery/computer/secure_data/attack_hand(mob/user)
-	if (..())
+	if (!ai_access && ..())
 		return
 	var/dat
 
@@ -560,7 +561,7 @@
 						// <br>
 						// "}
 						else
-							alert(usr, "You do not have the required rank to do this!")
+							tgui_alert(usr, "You do not have the required rank to do this!", "Rank not high enough")
 
 			// if ("rank")
 			// 	if (src.active_record_general)

@@ -172,15 +172,6 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..(loc, null, null, FALSE)
-
-		hud = new(src)
-		src.attach_hud(hud)
-
-		src.zone_sel = new(src, "CENTER+3, SOUTH")
-		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
-		src.attach_hud(zone_sel)
-
 		update_bodypart()
 
 		if (src.shell)
@@ -195,6 +186,16 @@
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 			src.syndicate = syndie
 			src.emagged = frame_emagged
+
+		. = ..(loc) //must be called before hud is attached
+
+		hud = new(src)
+		src.attach_hud(hud)
+
+		src.zone_sel = new(src, "CENTER+3, SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
+		src.attach_hud(zone_sel)
+
 		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
@@ -239,6 +240,9 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if (src.syndicate)
+				src.show_antag_popup("syndieborg")
+				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
@@ -678,13 +682,13 @@
 		// If we have no brain or an inactive spont core, we're dormant.
 		// If we have a brain but no client, we're in hiberation mode.
 		// Otherwise, fully operational.
-		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && src.part_head.brain:activated))
+		if (src.part_head.brain && !(istype(src.part_head.brain, /obj/item/organ/brain/latejoin) && !src.part_head.brain:activated))
 			if (src.client)
-				. += "<span class='success'>[src.name] is fully operational.<span><br>"
+				. += "<span class='success'>[src.name] is fully operational.</span><br>"
 			else
-				. += "<span class='hint'>[src.name] is in temporary hibernation.<span><br>"
+				. += "<span class='hint'>[src.name] is in temporary hibernation.</span><br>"
 		else
-			. += "<span class='alert'>[src.name] is completely dormant.<span><br>"
+			. += "<span class='alert'>[src.name] is completely dormant.</span><br>"
 
 
 		if (brute)
@@ -965,7 +969,7 @@
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
 				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
+				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()
@@ -1839,8 +1843,9 @@
 		else
 			who = src
 			boutput(who, "<b>Obey these laws:</b>")
-
-		if(src.law_rack_connection)
+		if(src.dependent && src?.mainframe?.law_rack_connection)
+			src.mainframe.law_rack_connection.show_laws(who)
+		else if(!src.dependent && src.law_rack_connection)
 			src.law_rack_connection.show_laws(who)
 		else
 			boutput(src,"You have no laws!")

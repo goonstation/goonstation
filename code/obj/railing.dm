@@ -17,7 +17,6 @@
 	var/is_reinforced = 0
 
 	proc/layerify()
-		SPAWN(3 DECI SECONDS)
 		if (dir == SOUTH)
 			layer = MOB_LAYER + 0.1
 		else
@@ -98,14 +97,15 @@
 			return 0
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced) || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			return 1
-		if (dir & get_dir(loc, O))
+		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
 		if (!src.density || (O.flags & TABLEPASS && !src.is_reinforced)  || istype(O, /obj/newmeteor) || istype(O, /obj/lpt_laser) )
 			. = 1
-		else if (dir & get_dir(O.loc, O.movement_newloc))
+		// Second part prevents two same-dir, unanchored railings from infinitely looping and either crashing the server or breaking throwing when they try to cross
+		else if ((src.dir & get_dir(O.loc, O.movement_newloc)) && !(isobj(O) && (O:object_flags & HAS_DIRECTIONAL_BLOCKING) && (O.dir & src.dir)))
 			. = 0
 		else
 			. = 1
@@ -327,7 +327,6 @@
 			else
 				the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
 			O.show_text("[the_text]", "red")
-		logTheThing("combat", ownerMob, the_railing, "[is_athletic_jump ? "leaps over [the_railing] with [his_or_her(ownerMob)] athletic trait" : "crawls over [the_railing]"].")
 
 
 /datum/action/bar/icon/railing_tool_interact

@@ -337,14 +337,14 @@ THROWING DARTS
 /obj/item/implant/freedom
 	name = "freedom implant"
 	icon_state = "implant-r"
-	var/uses = 1.0
+	var/uses = 1
 	impcolor = "r"
 	scan_category = "syndicate"
-	var/activation_emote = "chuckle"
+	var/activation_emote = "shrug"
 
 	New()
-		src.activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
-		src.uses = rand(1, 5)
+		src.activation_emote = pick("eyebrow", "nod", "shrug", "smile", "yawn", "flex", "snap")
+		src.uses = rand(3, 5)
 		..()
 		return
 
@@ -353,22 +353,27 @@ THROWING DARTS
 			return 0
 
 		if (emote == src.activation_emote)
-			src.uses--
-			boutput(source, "You feel a faint click.")
+			var/activated = FALSE
 
 			if (source.hasStatus("handcuffed"))
 				source.handcuffs.drop_handcuffs(source)
+				activated = TRUE
 
 			// Added shackles here (Convair880).
 			if (ishuman(source))
 				var/mob/living/carbon/human/H = source
 				if (H.shoes && H.shoes.chained)
+					activated = TRUE
 					var/obj/item/clothing/shoes/SH = H.shoes
 					H.u_equip(SH)
 					SH.set_loc(H.loc)
 					H.update_clothing()
 					if (SH)
 						SH.layer = initial(SH.layer)
+
+			if (activated)
+				src.uses--
+				boutput(source, "You feel a faint click.")
 
 	implanted(mob/source as mob)
 		..()
@@ -722,7 +727,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		if(M == I)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
 
 		if (M.mind && ticker.mode)
@@ -1475,9 +1480,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else
-			M.tri_message("<span class='alert'>[M] has been implanted by [user].</span>",\
-			M, "<span class='alert'>You have been implanted by [user].</span>",\
-			user, "<span class='alert'>You implanted the implant into [M].</span>")
+			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
+				"<span class='alert'>You have been implanted by [user].</span>",\
+				"<span class='alert'>You implanted the implant into [M].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -2096,7 +2101,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
-	icon_turf_hit = "bhole-small"
+	impact_image_state = "bhole-small"
 	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null

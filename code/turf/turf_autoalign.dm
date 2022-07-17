@@ -175,19 +175,7 @@
 			else
 				return
 
-		if (src.material)
-			var/fail = 0
-			if (src.material.hasProperty("stability") && src.material.getProperty("stability") < 15)
-				fail = 1
-			if (src.material.quality < 0) if(prob(abs(src.material.quality)))
-				fail = 1
-			if (fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
-		src.take_hit(W)
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
@@ -488,10 +476,26 @@
 	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
+// Some fun walls by Walpvrgis
+ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
+/turf/simulated/wall/auto/hedge
+	name = "hedge"
+	desc = "This hedge is sturdy! No light seems to pass through it..."
+	icon = 'icons/turf/walls_hedge.dmi'
+	mod = "hedge-"
+	light_mod = "wall-"
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	connect_diagonal = 1
+	connects_to = list(/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
+	/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+	/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
+	/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old)
 
-
-
-
+	connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
+	/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
 
 
 /* ===================================================== */

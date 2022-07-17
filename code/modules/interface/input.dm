@@ -148,10 +148,6 @@ var/list/dirty_keystates = list()
 		return
 
 	Click(atom/object, location, control, params)
-		if(hellbanned && prob(click_drops)) //Drop some of their clicks
-			if(prob(2)) fake_lagspike()
-			return
-
 		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
 
 		var/list/parameters = params2list(params)
@@ -308,10 +304,6 @@ var/list/dirty_keystates = list()
 /proc/process_keystates()
 	for (var/client/C in dirty_keystates)
 		var/new_state = C.key_state
-		if(C.hellbanned && prob(C.move_drops))
-			if(prob(1) && prob(25)) C.fake_lagspike()
-			new_state = C.last_keys // lol
-
 		if (new_state != C.last_keys) // !?
 			var/mob/M = C.mob
 			usr = M

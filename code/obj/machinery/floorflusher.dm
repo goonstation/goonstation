@@ -21,7 +21,7 @@
 	var/flushing = 0	// true if flushing in progress
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)

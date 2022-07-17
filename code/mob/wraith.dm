@@ -243,8 +243,10 @@
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
 				return 0
-		if (src.density) return 0
-		else return 1
+		if (src.density)
+			return FALSE
+		else
+			return TRUE
 
 
 	projCanHit(datum/projectile/P)
@@ -315,7 +317,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.canpass())
+				if (src.density && !NewLoc.Enter(src))
 					return
 
 			else
@@ -333,26 +335,26 @@
 					horizontal = get_step(src, EAST)
 
 				var/turf/oldloc = loc
-				var/horiz = 0
-				var/vert = 0
+				var/horiz = FALSE
+				var/vert = FALSE
 
-				if (!src.density || vertical.canpass())
-					vert = 1
+				if (!src.density || vertical.Enter(src))
+					vert = TRUE
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.canpass())
+					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.canpass())
-					horiz = 1
+				if (!src.density || horizontal.Enter(src))
+					horiz = TRUE
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.canpass())
-						blocked = 0
+					if (!src.density || NewLoc.Enter(src))
+						blocked = FALSE
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
@@ -366,11 +368,14 @@
 					return
 
 			for(var/obj/decal/cleanable/saltpile/A in NewLoc)
-				if (istype(A)) salted = 1
+				if (istype(A)) salted = TRUE
 				if (salted) break
 
 			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc)
+			if (src.density) // if we're corporeal we follow normal mob restrictions
+				..()
+			else // if we're in ghost mode we get to cheat
+				src.set_loc(NewLoc)
 			OnMove()
 
 			//if tile contains salt, wraith becomes corporeal

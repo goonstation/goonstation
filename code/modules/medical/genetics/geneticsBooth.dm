@@ -389,7 +389,7 @@
 	mob_flip_inside(var/mob/user)
 		..(user)
 		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
-		if (prob(8))
+		if (prob(33))
 			src.eject_occupant(add_power = 0)
 
 	relaymove(mob/user, direction)
@@ -406,6 +406,9 @@
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
 
 //next :
 	//sound effects

@@ -14,6 +14,8 @@
 	anchored = 1.0
 	var/invuln = null
 	var/last_paper = 0
+	///Cameras only the AI can see through
+	var/ai_only = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -122,7 +124,10 @@
 
 /obj/machinery/camera/New()
 	..()
-
+	var/area/area = get_area(src)
+	//if only these had a common parent...
+	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
+		src.ai_only = TRUE
 	START_TRACKING
 	SPAWN(1 SECOND)
 		addToNetwork()

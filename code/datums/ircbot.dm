@@ -201,8 +201,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/res = ircbot.export("link", ircmsg)
 
 	if (res)
-		alert(src, "Please return to Discord and look for any Medical Assistant PMs.")
+		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
 	else
-		alert(src, "An unknown internal error occurred. Please report this.")
+		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0

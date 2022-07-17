@@ -19158,7 +19158,7 @@
 /area/research_outpost/indigo_rye)
 "Ml" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)

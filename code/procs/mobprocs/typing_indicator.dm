@@ -18,15 +18,15 @@ var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.
 
 /*
 Some information on how these work:
-The keybindings for say and me have been modified to call start_typing and immediately open the textbox clientside.
+The keybindings for say, whisper, and me have been modified to call start_typing and immediately open the textbox clientside.
 Because of this, the client doesn't have to wait for a message from the server before opening the textbox, the server
 knows immediately when the user pressed the hotkey, and the clientside textbox can signal success or failure to the server.
 
-When you press the hotkey, the .start_typing verb is called with the source ("say" or "me") to show the typing indicator.
-When you send a message from the custom window, the appropriate verb is called, .say or .me
+When you press the hotkey, the .start_typing verb is called with the source ("say", "whisper", or "me") to show the typing indicator.
+When you send a message from the custom window, the appropriate verb is called, .say, .whisper, or .me
 If you close the window without actually sending the message, the .cancel_typing verb is called with the source.
 
-Both the say/me wrappers and cancel_typing remove the typing indicator.
+The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 */
 
 /// Show the typing indicator. The source signifies what action the user is typing for.
@@ -54,6 +54,15 @@ Both the say/me wrappers and cancel_typing remove the typing indicator.
 	remove_typing_indicator()
 	if(message)
 		say_verb(message)
+
+/mob/verb/whisper_wrapper(message as text)
+	set name = ".Whisper"
+	set hidden = 1
+	set instant = 1
+
+	remove_typing_indicator()
+	if(message)
+		whisper_verb(message)
 
 /mob/verb/me_wrapper(message as text)
 	set name = ".Me"

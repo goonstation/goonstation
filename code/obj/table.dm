@@ -247,6 +247,9 @@
 			else
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
 
+		else if (istype(W, /obj/item/paint_can))
+			return
+
 		else if (isscrewingtool(W))
 			if (istype(src.desk_drawer) && src.desk_drawer.locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
@@ -709,7 +712,7 @@
 		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
-			for (var/i=rand(3,4), i>0, i--)
+			for (var/i=0, i<2, i++)
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
@@ -859,6 +862,9 @@
 					smashprob += 15
 				else
 					return
+
+		else if(istype(W, /obj/item/paint_can))
+			return
 
 		else if (istype(W)) // determine smash chance via item size and user clumsiness  :v
 			if (user.bioHolder.HasEffect("clumsy"))

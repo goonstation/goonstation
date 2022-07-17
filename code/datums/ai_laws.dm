@@ -152,7 +152,7 @@
 				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
 						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 
-			if(!length(laws) && round_end)
-				laws += "No law racks with connected silicons detected."
+		if(!length(laws) && round_end)
+			laws += "No law racks with connected silicons detected."
 
 		return jointext(laws, glue)
