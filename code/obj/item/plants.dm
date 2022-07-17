@@ -493,8 +493,10 @@
 
 	proc/poison(mob/M)
 		if (!M.reagents?.has_reagent("capulettium"))
-			M.reagents?.add_reagent("capulettium[M.mind?.assigned_role == "Mime" ? " plus" : ""]", 13)
+			M.reagents?.add_reagent("capulettium[M.mind?.assigned_role == "Mime" ? "_plus" : ""]", 12)
 		M.setStatus("muted", 30 SECONDS)
+		SPAWN(rand(2,4) SECONDS)
+			boutput(M, "<span class='alert'You feel woozy.</span>")
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"
