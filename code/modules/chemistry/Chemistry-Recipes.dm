@@ -1844,6 +1844,22 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
+		icedcoffee
+			name = "Iced Coffee"
+			id = "icedcoffee"
+			result = "icedcoffee"
+			required_reagents = list("coffee" = 2, "ice" = 1)
+			result_amount = 3
+			mix_phrase = "The ice cubes mix with the coffee, melting slightly."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+			drinkrecipe = 1
+
+		icedcoffee/icedcoffee2
+			id = "icedcoffee2"
+			required_reagents = list("ice" = 1, "coffee_fresh" = 2)
+			result_amount = 3
+
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
