@@ -761,7 +761,7 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/switched_to()
 	. = ..()
 	var/mob/living/critter/flock/drone/D = holder.owner
-	if(D)
+	if(istype(D))
 		D.wander_count = 0
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
@@ -1307,7 +1307,8 @@ stare
 /datum/aiTask/timed/wander/flock/switched_to()
 	..()
 	var/mob/living/critter/flock/drone/D = holder.owner
-	D.wander_count++
+	if(istype(D))
+		D.wander_count++
 
 /datum/aiTask/timed/wander/flock/on_tick()
 	if(!startpos)
