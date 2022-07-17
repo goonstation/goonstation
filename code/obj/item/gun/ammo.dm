@@ -684,7 +684,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_state = "makeshiftempty"
 	amount_left = 4.0
 	max_amount = 4.0
-	ammo_cat = AMMO_SHOTGUN_SCRAP
+	ammo_cat = AMMO_SHOTGUN_LOW
 	delete_on_reload = TRUE
 	icon_empty = "makeshiftempty"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
