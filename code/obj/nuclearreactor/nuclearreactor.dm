@@ -421,6 +421,8 @@
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
+		if(isintangible(hit) || isobserver(hit))
+			return
 		if(hit.material)
 			if(prob(hit.material.getProperty("hardness")*10))
 				//reflect
@@ -435,7 +437,8 @@
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
-		if(hit.material && !prob(hit.material.getProperty("density")*10))
+		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
+		if((hit.material && !prob(hit.material.getProperty("density")*multiplier)) || (isnull(hit.material) && prob(5*multiplier)))
 			O.power /= 2
 			. = TRUE
 
