@@ -1703,8 +1703,8 @@
 	icon_state = "tube1"
 	},
 /obj/item/toy/plush/small/possum{
-	name = "MD's Morty plush";
-	desc = "Part of a matching set."
+	desc = "Part of a matching set.";
+	name = "MD's Morty plush"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/hor)
@@ -6092,30 +6092,13 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"aoR" = (
-/obj/machinery/conveyor{
-	dir = 4;
-	name = "cargo belt - east";
+"aoS" = (
+/obj/machinery/conveyor/south{
+	id = "cargobelt_in";
 	operating = 1
 	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"aoS" = (
-/obj/machinery/launcher_loader/east{
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"aoT" = (
-/obj/machinery/launcher_loader/east{
-	id = "qm_dock_out"
-	},
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qm_dock_out"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
+/turf/space,
+/area/supply/delivery_point)
 "aoV" = (
 /turf/space,
 /area/supply/sell_point)
@@ -6129,8 +6112,9 @@
 /area/shuttle/arrival/station)
 "aoX" = (
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "QMLoad"
+	dir = 1;
+	id = "cargobelt_out";
+	operating = 1
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -6158,32 +6142,27 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
-"apb" = (
-/obj/machinery/launcher_loader/south,
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "apf" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor_switch{
+	id = "cargo-art-in"
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "apg" = (
 /turf/space,
 /area/supply/spawn_point)
 "aph" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "QMLoad"
-	},
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
 	tag = ""
 	},
-/turf/simulated/floor,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargobelt_out";
+	operating = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "api" = (
 /turf/simulated/floor/plating,
@@ -6390,20 +6369,20 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apM" = (
-/obj/machinery/conveyor{
-	dir = 2;
-	id = "QMLoad"
-	},
 /obj/plasticflaps,
-/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargobelt_out";
+	operating = 1
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apN" = (
+/obj/plasticflaps,
 /obj/machinery/conveyor/south{
+	id = "cargobelt_in";
 	operating = 1
 	},
-/obj/plasticflaps,
-/obj/forcefield/energyshield/perma,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apO" = (
@@ -6496,6 +6475,7 @@
 /area/station/quartermaster/office)
 "aqb" = (
 /obj/machinery/conveyor/south{
+	id = "cargobelt_in";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
@@ -6828,7 +6808,7 @@
 /area/station/quartermaster/office)
 "aqR" = (
 /obj/machinery/conveyor_switch{
-	id = "QMLoad"
+	id = "cargobelt_out"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -6836,13 +6816,15 @@
 /area/station/quartermaster/office)
 "aqS" = (
 /obj/machinery/conveyor{
-	dir = 2;
-	id = "QMLoad"
+	dir = 1;
+	id = "cargobelt_out";
+	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "aqU" = (
 /obj/machinery/conveyor/south{
+	id = "cargobelt_in";
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
@@ -14029,12 +14011,12 @@
 	pixel_y = 4
 	},
 /obj/item/paper/book/from_file/icarus_ovid{
-	pixel_y = 2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 14;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 14
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 10
@@ -14125,8 +14107,8 @@
 "aIq" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 11;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 11
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
@@ -15615,12 +15597,12 @@
 	pixel_y = -1
 	},
 /obj/item/hand_labeler{
-	pixel_y = 11;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 11
 	},
 /obj/item/reagent_containers/glass/oilcan{
-	pixel_y = 3;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 3
 	},
 /obj/item_dispenser/medical_mask,
 /turf/simulated/floor/black/side{
@@ -15662,12 +15644,12 @@
 	pixel_y = 9
 	},
 /obj/item/storage/toolbox/emergency{
-	pixel_y = 4;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 4
 	},
 /obj/item/storage/belt/utility{
-	pixel_y = -1;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /obj/item/device/multitool{
 	pixel_x = 10;
@@ -16723,8 +16705,8 @@
 	tag = "icon-plant (NORTH)"
 	},
 /obj/item/paper/folded/ball{
-	pixel_y = 9;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 9
 	},
 /obj/item/paper/folded/ball,
 /obj/item/cigpacket/menthol,
@@ -17627,10 +17609,10 @@
 	pixel_y = 0
 	},
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "medbay_front";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -19148,12 +19130,12 @@
 	pixel_y = 15
 	},
 /obj/item/bandage{
-	pixel_y = 3;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /obj/item/bandage{
-	pixel_y = 3;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 3
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -19706,10 +19688,10 @@
 /area/station/bridge)
 "aVg" = (
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "medbay_front";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -20047,12 +20029,12 @@
 	},
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = 7;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 7
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana,
 /turf/simulated/floor/grass/random,
@@ -20438,12 +20420,12 @@
 /obj/table/auto,
 /obj/bedsheetbin,
 /obj/item/toy/plush/small{
-	pixel_y = 4;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 4
 	},
 /obj/item/toy/plush/small/stress_ball{
-	pixel_y = -5;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -5
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21045,10 +21027,10 @@
 	level = -1
 	},
 /obj/machinery/door_control{
-	name = "Medbay Door Control";
-	pixel_y = -23;
 	id = "donut2_exit";
-	pixel_x = -53
+	name = "Medbay Door Control";
+	pixel_x = -53;
+	pixel_y = -23
 	},
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
@@ -21982,10 +21964,10 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "donut2_exit";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -22002,9 +21984,9 @@
 /area/station/medical/medbay)
 "bao" = (
 /obj/health_scanner/floor{
+	dir = 1;
 	find_in_range = 0;
-	id = "lobby";
-	dir = 1
+	id = "lobby"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -22220,16 +22202,16 @@
 "baM" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
-	pixel_y = 1;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 1
 	},
 /obj/item/stamp/md{
 	pixel_x = 5;
 	pixel_y = 5
 	},
 /obj/machinery/phone{
-	pixel_y = 5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /obj/item/device/light/zippo{
 	pixel_x = -8;
@@ -22263,10 +22245,10 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "donut2_exit";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -22473,8 +22455,8 @@
 /obj/table/auto,
 /obj/item/decoration/flower_vase/vase7,
 /obj/item/decoration/ashtray{
-	pixel_y = 1;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 1
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -23981,12 +23963,12 @@
 	pixel_y = 10
 	},
 /obj/item/cigbutt{
-	pixel_y = 10;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 10
 	},
 /obj/item/storage/firstaid/regular{
-	pixel_y = -1;
-	pixel_x = -12
+	pixel_x = -12;
+	pixel_y = -1
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/head)
@@ -24548,10 +24530,10 @@
 /area/station/medical/medbay)
 "bgz" = (
 /obj/machinery/door_control{
+	id = "donut2_exit";
 	name = "Medbay Door Control";
 	pixel_x = 21;
-	pixel_y = 23;
-	id = "donut2_exit"
+	pixel_y = 23
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1
@@ -30143,10 +30125,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "medbay_front";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -37085,8 +37067,8 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = -14;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -14
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -37208,8 +37190,8 @@
 /obj/table/folding,
 /obj/random_item_spawner/medicine/one_or_zero,
 /obj/item/reagent_containers/pill/crank{
-	pixel_y = -1;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -37865,6 +37847,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"dLT" = (
+/obj/machinery/conveyor/south{
+	id = "cargobelt_in";
+	operating = 1
+	},
+/turf/space,
+/area/space)
 "dMh" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/firedoor_spawn,
@@ -39206,8 +39195,8 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/large/epinephrine{
-	pixel_y = -2;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -39334,14 +39323,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"glG" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	name = "cargo belt - west";
-	operating = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/supply/delivery_point)
 "gmd" = (
 /obj/cable{
 	d1 = 1;
@@ -39898,6 +39879,13 @@
 "hiU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
+"hkx" = (
+/obj/machinery/conveyor/south{
+	id = "cargo-art-in";
+	operating = 1
+	},
+/turf/space,
+/area/space)
 "hkB" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -39975,13 +39963,13 @@
 /area/station/bridge)
 "huX" = (
 /obj/item/robodefibrillator{
-	pixel_y = 2;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /obj/random_item_spawner/medicine/two,
 /obj/item/bandage{
-	pixel_y = 6;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 6
 	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor/bluewhite{
@@ -40181,22 +40169,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "hKJ" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
+/obj/machinery/conveyor/west{
+	id = "cargo-art-in"
 	},
 /obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
-	id = "cargo_in";
-	name = "Cargo Inlet Door"
-	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "hLU" = (
@@ -40470,6 +40446,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"ijd" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/space)
 "ilJ" = (
 /obj/cable{
 	d1 = 1;
@@ -40575,6 +40560,18 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"itF" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargodock_in";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/south{
+	id = "cargobelt_in";
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "ivo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -40583,6 +40580,18 @@
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"iwD" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "Cargo Artifact";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/south{
+	id = "cargo-art-in";
+	operating = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "ixS" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/Cloning,
@@ -41273,24 +41282,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"jMK" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qm_dock_out"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro{
-	id = "cargo_out";
-	name = "Cargo Outlet Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "jMM" = (
 /obj/machinery/phone/wall{
 	pixel_y = -20
@@ -42242,6 +42233,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"lGG" = (
+/obj/grille/catwalk/cross{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/space)
 "lHl" = (
 /obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor/grime,
@@ -42294,12 +42294,10 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "lLv" = (
-/obj/machinery/conveyor{
-	dir = 8;
-	name = "cargo belt - west";
-	operating = 1
+/obj/machinery/conveyor/west{
+	id = "cargo-art-in"
 	},
-/turf/simulated/floor/caution/northsouth,
+/turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "lLC" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
@@ -42849,8 +42847,8 @@
 "mLC" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/mutadone{
-	pixel_y = 2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /obj/item/storage/pill_bottle/mutadone{
 	pixel_x = -2;
@@ -43054,8 +43052,8 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/beaker/large/epinephrine{
-	pixel_y = -3;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -3
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -43196,8 +43194,8 @@
 "nuk" = (
 /obj/table/reinforced,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_y = 2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
@@ -43417,8 +43415,8 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/reagent_containers/food/drinks/bottle/soda/contest/jungle_juice{
-	pixel_y = 18;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 18
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -44191,6 +44189,12 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
+"ptg" = (
+/obj/machinery/launcher_loader/north{
+	id = "outpostla3"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "ptD" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -44244,8 +44248,8 @@
 	pixel_y = -1
 	},
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom{
-	pixel_y = 10;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 10
@@ -44275,12 +44279,12 @@
 /obj/table/auto,
 /obj/bedsheetbin,
 /obj/item/reagent_containers/glass/bottle/cleaner{
-	pixel_y = 1;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 1
 	},
 /obj/item/spraybottle/cleaner{
-	pixel_y = -2;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -2
 	},
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/medbay,
@@ -44692,6 +44696,19 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"qfA" = (
+/obj/forcefield/energyshield/perma,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 1;
+	id = "cargodock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "outpostla3"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "qgr" = (
 /obj/grille/catwalk,
 /obj/machinery/light{
@@ -45361,13 +45378,13 @@
 /obj/item/cargotele,
 /obj/item/cargotele,
 /obj/machinery/door_control{
-	id = "cargo_out";
+	id = "cargodock_out";
 	name = "Outlet Door Control";
 	pixel_x = -8;
 	pixel_y = 22
 	},
 /obj/machinery/door_control{
-	id = "cargo_in";
+	id = "cargodock_in";
 	name = "Intake Door Control";
 	pixel_x = 8;
 	pixel_y = 22
@@ -46403,12 +46420,12 @@
 /area/station/mining/staff_room)
 "tbY" = (
 /obj/item/toy/plush/small{
-	pixel_y = 10;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/snacks/plant/lettuce,
 /obj/table/glass/auto,
@@ -46462,6 +46479,15 @@
 /obj/item/slag_shovel,
 /turf/simulated/floor/caution/north,
 /area/station/quartermaster/refinery)
+"tlV" = (
+/obj/grille/catwalk/cross{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/space)
 "tmp" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -46546,8 +46572,8 @@
 /area/station/ranch)
 "tsC" = (
 /obj/item/reagent_containers/food/snacks/plant/banana{
-	pixel_y = -3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -3
 	},
 /obj/table/glass/auto,
 /turf/simulated/floor/grass/random,
@@ -46926,10 +46952,10 @@
 /area/station/hallway/primary/north)
 "ubD" = (
 /obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
 	id = "medbay_front";
 	name = "Medical Bay";
-	req_access_txt = null;
-	dir = 4
+	req_access_txt = null
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -47262,6 +47288,13 @@
 	dir = 1
 	},
 /area/station/medical/staff)
+"uGX" = (
+/obj/machinery/door_control{
+	id = "Cargo Artifact";
+	pixel_x = -26
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "uHm" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -47672,8 +47705,8 @@
 /area/station/engine/ptl)
 "vzH" = (
 /obj/item/reagent_containers/food/snacks/ingredient/peeled_banana{
-	pixel_y = -4;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = -4
 	},
 /obj/table/glass/auto,
 /obj/item/reagent_containers/food/snacks/plant/lettuce,
@@ -47836,6 +47869,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
+"vVb" = (
+/obj/machinery/conveyor_switch{
+	id = "cargobelt_in"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "vVR" = (
 /obj/cable{
 	d1 = 4;
@@ -48299,6 +48338,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"wMm" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/access_spawn/cargo,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "wMB" = (
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -48866,16 +48915,16 @@
 	pixel_y = 8
 	},
 /obj/item/reagent_containers/glass/bottle/diethylamine{
-	pixel_y = 3;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 3
 	},
 /obj/item/reagent_containers/glass/bottle/phenol{
 	pixel_x = -7;
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/glass/bottle/acetone{
-	pixel_y = 2;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/glass/bottle/ammonia,
 /turf/simulated/floor/white/side{
@@ -81714,9 +81763,9 @@ aaa
 aaa
 "}
 (109,1,1) = {"
-aaa
-aaa
-aaa
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -82016,6 +82065,9 @@ aaa
 aaa
 "}
 (110,1,1) = {"
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -82142,9 +82194,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aoN
-aoN
 aoN
 aoN
 aoN
@@ -82318,6 +82367,9 @@ aaa
 aaa
 "}
 (111,1,1) = {"
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -82444,11 +82496,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aoO
-aoR
-aoX
-aoX
+qfA
+ptg
 aph
 aoX
 apM
@@ -82620,6 +82669,9 @@ aaa
 aaa
 "}
 (112,1,1) = {"
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -82745,18 +82797,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aoO
-aoR
+lGG
+wMm
 api
-auD
-aoY
-apr
+api
+api
 aoO
 aoO
 ruf
-auB
+vVb
 arg
 vSU
 auB
@@ -82922,6 +82971,10 @@ aaa
 aaa
 "}
 (113,1,1) = {"
+aoV
+aoV
+aoV
+apg
 aaa
 aaa
 aaa
@@ -83044,15 +83097,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aoO
+dLT
+dLT
 aoS
-api
-apb
+itF
+aqb
 aqb
 aqb
 apN
@@ -83224,6 +83273,9 @@ aaa
 aaa
 "}
 (114,1,1) = {"
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -83349,11 +83401,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+ijd
 aoO
-aoT
-aoZ
 lLv
 apj
 api
@@ -83526,9 +83575,9 @@ aaa
 aaa
 "}
 (115,1,1) = {"
-aaa
-aaa
-aaa
+aoV
+aoV
+aoV
 aaa
 aaa
 aaa
@@ -83653,9 +83702,9 @@ aaa
 aaa
 aaa
 aaa
-aoN
-jMK
-aoN
+aaa
+ijd
+aoO
 hKJ
 aoN
 aps
@@ -83955,12 +84004,12 @@ aaa
 aaa
 aaa
 aaa
-adQ
 aaa
-aaA
-glG
-acK
-acK
+ijd
+aoO
+lLv
+uGX
+api
 apO
 aqe
 aqt
@@ -84257,14 +84306,14 @@ aaa
 aaa
 aaa
 aaa
-adQ
-aaa
-aaA
-apf
-anM
-acK
-aoO
-aoO
+hkx
+hkx
+iwD
+lLv
+api
+api
+auD
+auD
 auD
 auD
 ari
@@ -84559,14 +84608,14 @@ aaa
 aaa
 aaa
 aaa
-ace
 aaa
-ace
+tlV
+wMm
 apf
-abZ
-aai
-aai
-aai
+aoZ
+api
+aoY
+apr
 aqv
 aqV
 arj
@@ -84863,8 +84912,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-apf
+aoO
+aoO
 apk
 apk
 apk
@@ -138620,7 +138669,7 @@ aaa
 aaa
 aaa
 aaa
-apg
+aaa
 aaa
 aaa
 aaa
@@ -138920,11 +138969,11 @@ aaa
 aaa
 aaa
 aaa
-aoV
-aoV
-aoV
-aoV
-aoV
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -139222,11 +139271,11 @@ aaa
 aaa
 aaa
 aaa
-aoV
-aoV
-aoV
-aoV
-aoV
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -139524,11 +139573,11 @@ aaa
 aaa
 aaa
 aaa
-aoV
-aoV
-aoV
-aoV
-aoV
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
