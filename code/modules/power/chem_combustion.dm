@@ -63,8 +63,8 @@
 
 		var/dat = {"
 		<b>Status:</b><BR>
-		Engine: [active ? "Working..." : "Stopped..."] <BR>
-		Power Grid: [src.powernet ? "Connected..." : "Disconnected..."] <BR>
+		Engine: [active ? "Working..." : "Stopped"] <BR>
+		Power Grid: [src.powernet ? "Connected" : "Disconnected"] <BR>
 		Power Output: [active ? src.last_output : 0]W<BR><BR>
 		<b>Controls:</b><BR>
 		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
@@ -163,7 +163,7 @@
 			if (src.anchored)
 				src.disconnect()
 				boutput(user, "<span class='notice'>You unanchor the [src] to the floor.</span>")
-				src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
+				if (src.active) src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				return
 
@@ -214,43 +214,29 @@
 		src.anchored = 1
 		src.netnum = 0
 
-		if(makingpowernets)
-			return
-
 		for(var/obj/cable/C in src.get_connections())
-			if(src.netnum == 0 && C.netnum != 0)
-				src.netnum = C.netnum
-			else if(C.netnum != 0 && C.netnum != src.netnum)
-				if(!defer_powernet_rebuild)
-					makepowernets()
-				else
-					defer_powernet_rebuild = 2
+			if(C.netnum != 0)
+				C.update_network()
 				return
 
-		if(src.netnum)
-			src.powernet = powernets[src.netnum]
-			if (!(src in src.powernet.nodes))
-				src.powernet.nodes += src
-
 	proc/disconnect()
-		if(src.powernet)
-			for (var/node in src.powernet.nodes)
-				if (node == src)
-					src.powernet.nodes -= src
+		src.stop_engine()
 
-			for (var/node in src.powernet.data_nodes)
-				if (node == src)
-					src.powernet.data_nodes -= src
-			netnum = 0
+		if(src.powernet)
+			src.powernet.nodes -= src
+			src.powernet.data_nodes -= src
+			src.netnum = 0
+
+		else
+			src.netnum = 0
 
 		if(!defer_powernet_rebuild)
 			makepowernets()
+
 		else
 			defer_powernet_rebuild = 2
 
-		src.stop_engine()
 		src.anchored = 0
-		return
 
 	proc/start_engine(var/mob/user as mob)
 		if (!src.active)
@@ -261,7 +247,6 @@
 
 			src.active = 1
 			src.UpdateIcon()
-
 
 			if (istype(user))
 				src.visible_message("<span class='notice'>[user] starts the [src].</span>")
@@ -333,11 +318,11 @@
 						average += 5
 						i++
 
-					if ("fuel", "ethanol", "acetone")
+					if ("fuel", "acetone")
 						average += 3
 						i++
 
-					if ("oil", "butter", "diethylamine")
+					if ("oil", "butter", "diethylamine", "ethanol")
 						average += 2
 						i++
 
