@@ -1892,6 +1892,14 @@ datum
 			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
 			result_amount = 4
 			mix_phrase = "A spicy smell drifts up from the chocolate."
+
+		pumpkinspicelatte
+			name = "Pumpkin Spice Latte"
+			id = "pumpkinspicelatte"
+			result = "pumpkinspicelatte"
+			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "The drink smells vaguely like artifical autumn."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		explosion_potassium // get in

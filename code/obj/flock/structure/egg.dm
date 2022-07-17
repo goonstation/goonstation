@@ -12,6 +12,7 @@
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
 	health = 30
+	uses_health_icon = FALSE
 	var/decal_made = FALSE // for splashing stuff on throw
 
 /obj/flock_structure/egg/building_specific_info()

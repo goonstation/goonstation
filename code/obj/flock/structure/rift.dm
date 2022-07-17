@@ -11,6 +11,7 @@
 	flock_id = "Entry Rift"
 	build_time = 10
 	health = 200
+	uses_health_icon = FALSE
 	var/list/eject = list()
 
 /obj/flock_structure/rift/building_specific_info()

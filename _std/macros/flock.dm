@@ -8,8 +8,8 @@
 #define FLOCK_PROCESS_SCHEDULE_INTERVAL 2 SECONDS
 
 //annotation name macros
-#define FLOCK_ANNOTATION_HAZARD "hazard"
 #define FLOCK_ANNOTATION_DECONSTRUCT "deconstruct"
+#define FLOCK_ANNOTATION_HAZARD "hazard"
 #define FLOCK_ANNOTATION_PRIORITY "priority"
 #define FLOCK_ANNOTATION_RESERVED "reserved"
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
