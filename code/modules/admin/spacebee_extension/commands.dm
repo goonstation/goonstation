@@ -666,9 +666,9 @@
 
 		var/result
 		if (giverevoke == "give")
-			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
-		else if (giverevoke == "revoke")
 			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+		else if (giverevoke == "revoke")
+			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
 		else
 			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
 			return
