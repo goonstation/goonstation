@@ -31,7 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
-	var/mob/linked_human = null
+	var/mob/living/carbon/human/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -74,11 +74,13 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
-		if (src.donor && ishuman(src.donor))
-			var/mob/living/carbon/human/H = src.donor
-			if (isskeleton(H))
-				var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (src.linked_human)
+			if (isskeleton(src.linked_human))
+				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
 				S.head_tracker = null
+			src.UnregisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
+			src.UnregisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
+			src.UnregisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)

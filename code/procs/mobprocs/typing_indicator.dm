@@ -79,37 +79,37 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
 	if(!src.has_typing_indicator && isalive(src)) //Prevents sticky overlays and typing while in any state besides conscious
-		if(src.organHolder?.head)
-			src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
-		else
-			SEND_SIGNAL(src, COMSIG_CREATE_TYPING)
 		src.has_typing_indicator = TRUE
+		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
+			return
+		src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/living/remove_typing_indicator()
 	if(src.has_typing_indicator)
-		if(src.organHolder?.head)
-			src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
-		else
-			SEND_SIGNAL(src, COMSIG_REMOVE_TYPING)
 		src.has_typing_indicator = FALSE
+		if(SEND_SIGNAL(src, COMSIG_REMOVE_TYPING))
+			return
+		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 
 /mob/living/show_speech_bubble(speech_bubble)
-	if (src.organHolder?.head)
-		src.UpdateOverlays(speech_bubble, "speech_bubble")
-		SPAWN(1.5 SECONDS)
-			src.UpdateOverlays(null, "speech_bubble")
-	else
-		SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, speech_bubble)
+	if(SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, speech_bubble))
+		return
+	src.UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN(1.5 SECONDS)
+		src.UpdateOverlays(null, "speech_bubble")
 
 /obj/item/organ/head/proc/create_typing_indicator()
 	src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
+	return TRUE
 
 /obj/item/organ/head/proc/remove_typing_indicator()
 	src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+	return TRUE
 
 /obj/item/organ/head/proc/speech_bubble(datum/source, speech_bubble)
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
 		src.UpdateOverlays(null, "speech_bubble")
+	return TRUE
 
 #undef TYPING_OVERLAY_KEY
