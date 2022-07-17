@@ -40,12 +40,15 @@
 
 	var/datum/projectile/fireball/fb_proj = new
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#fcdf74", "#eb9f2b", "#d75015")
+
 	cast(atom/target)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("MHOL HOTTOV")
+			holder.owner.say("MHOL HOTTOV", 0, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()

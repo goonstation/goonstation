@@ -14,6 +14,9 @@
 	voice_other = "sound/voice/wizard/recordthese.ogg"
 	*/
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#ee59e3", "#ee59e3", "#b320c3", "#e59e3", "#b320c3", "#ee59e3")
+
 	cast(atom/target)
 		if(!holder)
 			return
@@ -62,7 +65,7 @@
 			return 1 // No cooldown when it fails.
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("STYX TUSNEKS")
+			holder.owner.say("STYX TUSNEKS", 0, maptext_style, maptext_colors)
         //..() uncomment this when we have voice files
 
 		var/obj/critter/snake/snake = new(stick.loc, stick)

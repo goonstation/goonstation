@@ -13,6 +13,9 @@
 	voice_fem = "sound/voice/wizard/AnimateDeadFem.ogg"
 	voice_other = "sound/voice/wizard/AnimateDeadLoud.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#5a1d8a", "#790c4f", "#9f0b2d")
+
 	cast(mob/target)
 		if(!holder)
 			return
@@ -20,7 +23,7 @@
 			boutput(holder.owner, "<span class='alert'>That person is still alive! Find a corpse.</span>")
 			return 1 // No cooldown when it fails.
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NECRIS")
+			holder.owner.say("EI NECRIS", 0, maptext_style, maptext_colors)
 		..()
 
 		var/obj/critter/magiczombie/UMMACTUALLYITSASKELETONNOWFUCKZOMBIESFOREVER = new /obj/critter/magiczombie(get_turf(target)) // what the fuck

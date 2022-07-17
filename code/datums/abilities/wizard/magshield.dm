@@ -10,6 +10,9 @@
 	voice_fem = "sound/voice/wizard/MagicShieldFem.ogg"
 	voice_other = "sound/voice/wizard/MagicShieldLoud.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#24639a", "#24bdc6")
+
 	cast()
 		if(!holder)
 			return
@@ -18,7 +21,7 @@
 			return
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("XYZZYX")
+			holder.owner.say("XYZZYX", 0, maptext_style, maptext_colors)
 		..()
 
 		var/image/shield_overlay = null

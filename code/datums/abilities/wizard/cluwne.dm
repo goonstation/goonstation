@@ -44,6 +44,9 @@
 	var/datum/abilityHolder/A
 	var/mob/living/M
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
+
 	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
@@ -67,7 +70,7 @@
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("NWOLC EGNEVER")
+			M.say("NWOLC EGNEVER", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

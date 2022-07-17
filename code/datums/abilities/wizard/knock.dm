@@ -10,11 +10,14 @@
 	voice_fem = "sound/voice/wizard/KnockFem.ogg"
 	voice_other = "sound/voice/wizard/KnockLoud.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#24639a", "#24bdc6", "#05bd82", "#038463")
+
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("AULIE OXIN FIERA")
+			holder.owner.say("AULIE OXIN FIERA", 0, maptext_style, maptext_colors)
 		..()
 
 		var/SPrange = 1

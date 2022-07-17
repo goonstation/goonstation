@@ -11,11 +11,14 @@
 	voice_fem = "sound/voice/wizard/BlindFem.ogg"
 	voice_other = "sound/voice/wizard/BlindLoud.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#ffffff", "#9c9fa2", "#585c68")
+
 	cast(mob/target)
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("YSTIGG MITAZIM")
+			holder.owner.say("YSTIGG MITAZIM", 0, maptext_style, maptext_colors)
 		..()
 
 		elecflash(target)

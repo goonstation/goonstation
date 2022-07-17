@@ -12,6 +12,9 @@
 	voice_fem = "sound/voice/wizard/ShockingGraspFem.ogg"
 	voice_other = "sound/voice/wizard/ShockingGraspLoud.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 3px black;"
+	var/maptext_colors = list("#ff0000", "#000000")
+
 	cast(mob/target)
 		if(!holder)
 			return
@@ -19,7 +22,7 @@
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if (do_mob(holder.owner, target, 20))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("EI NATH")
+				holder.owner.say("EI NATH", 0, maptext_style, maptext_colors)
 			..()
 
 			if (ishuman(target))

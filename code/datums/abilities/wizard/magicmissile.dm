@@ -14,6 +14,9 @@
 	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
 	var/datum/projectile/the_missile
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#f57382", "#f8aaaa", "#f7e0e3", "#f8aaaa")
+
 	cast()
 		if(!holder)
 			return
@@ -33,7 +36,7 @@
 			missile_targets += M
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
+			holder.owner.say("ICEE BEEYEM", 0, maptext_style, maptext_colors) // EHM-EYEARRVEE
 		..()
 
 		var/num_shots = src.base_shots

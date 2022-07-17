@@ -16,6 +16,9 @@
 	var/target_damage_modifier = 1.95
 	var/arc_range = 3
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
+
 	cast(mob/target)
 		if(!holder)
 			return
@@ -25,7 +28,7 @@
 			return 1
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NATH")
+			holder.owner.say("EI NATH", 0, maptext_style, maptext_colors)
 		..()
 
 		playsound(holder.owner.loc, "sound/effects/elec_bigzap.ogg", 25, 1, -1)

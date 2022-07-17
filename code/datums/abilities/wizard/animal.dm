@@ -76,6 +76,9 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	var/datum/abilityHolder/A
 	var/mob/living/M
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
+
 	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
@@ -99,7 +102,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+			M.say("YORAF URRY", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

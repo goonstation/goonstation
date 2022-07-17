@@ -10,6 +10,10 @@
 	voice_fem = "sound/voice/wizard/StaffFem.ogg"
 	//voice_other = "sound/voice/wizard/notdoneyet.ogg"
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#b320c3", "#5a1d8a", "#170d3c", "#5a1d8a")
+
+
 	cast(mob/target)
 		if (!holder)
 			return 1
@@ -25,7 +29,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOMH HEIRE")
+			M.say("KOHM HEIRE", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
 		..()
 
 		var/list/staves = list()
@@ -100,6 +104,9 @@
 	cooldown = 20 SECONDS
 	requires_robes = 1
 
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
+
 	cast(mob/target)
 		var/mob/living/M = holder?.owner
 		if (!ismob(M))
@@ -109,7 +116,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KUH, ABAH'RAH")
+			M.say("KUH, ABAH'RAH", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
 		..()
 
 		var/list/staves = list()
