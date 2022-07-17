@@ -118,6 +118,7 @@
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	src.controller = pilot
+	src.wake_from_ai_pause()
 	src.ai.stop_move()
 	src.is_npc = FALSE
 	src.dormant = FALSE
@@ -315,7 +316,6 @@
 	else
 		src.is_npc = TRUE
 		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
-		src.ai.interrupt() //force a task re-evaluation
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
