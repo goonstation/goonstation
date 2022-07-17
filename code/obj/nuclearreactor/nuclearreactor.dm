@@ -169,11 +169,11 @@
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
 			src.current_gas.vacuum()
-		src.current_gas.radgas += 2000
+		src.current_gas.radgas += 6000
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
-		explosion(src,current_loc,0,0,20,25)
+		explosion_new(src,current_loc,2500,1,0,360,TRUE)
 
 
 
@@ -339,7 +339,7 @@
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y] && prob(comp_throw_prob))
-					if(severity < 3)
+					if(severity > 1)
 						logTheThing("station", src, null, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
 					if(prob(50))
 						src.component_grid[x][y].set_loc(epicentre)
@@ -350,7 +350,7 @@
 						debris.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
-		if(severity == 3)
+		if(severity <= 1)
 			qdel(src)
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
