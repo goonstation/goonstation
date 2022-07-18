@@ -1862,7 +1862,7 @@ datum
 			mix_phrase = "The milk mixes with the matcha in a soothing green."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		iced_thaiicedcoffee
+		iced/thaiicedcoffee
 			name = "Thai Iced Coffee"
 			id = "thaiicedcoffee"
 			result = "thaiicedcoffee"
