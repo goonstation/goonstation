@@ -71028,7 +71028,7 @@
 "del" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "EMERGENCY DISPOSAL";
-	nameOverride = 0
+	
 	},
 /turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
@@ -76186,7 +76186,7 @@
 "ewr" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	nameOverride = 0
+	
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,
@@ -76336,7 +76336,7 @@
 "fwk" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	nameOverride = 0
+	
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
@@ -77249,7 +77249,7 @@
 "jNM" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Research Outpost Shuttle";
-	nameOverride = 0
+	
 	},
 /obj/access_spawn/research,
 /turf/unsimulated/floor/shuttle,
@@ -77328,7 +77328,7 @@
 "kcO" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	nameOverride = 0
+	
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
@@ -79317,7 +79317,6 @@
 "tFo" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Outpost";
-	nameOverride = 0;
 	req_access_txt = "24"
 	},
 /turf/simulated/floor/grey/blackgrime,
@@ -79623,7 +79622,7 @@
 "vuO" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Outpost Shuttle Dock";
-	nameOverride = 0
+	
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,
