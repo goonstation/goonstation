@@ -4411,7 +4411,7 @@ datum
 				flush(M, 3 * mult, flushed_reagents)
 				..()
 
-		fooddrink/icedcoconutmilkespresso
+		fooddrink/iced/coconutmilkespresso
 			name = "iced coconut milk espresso"
 			id = "icedcoconutmilkespresso"
 			fluid_r = 177
