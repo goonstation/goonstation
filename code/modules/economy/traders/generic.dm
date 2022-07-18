@@ -10,7 +10,6 @@
 
 	base_goods_buy = list(/datum/commodity/trader/generic/anyore,
 	/datum/commodity/trader/generic/herbs,
-	/datum/commodity/trader/generic/electronics,
 	/datum/commodity/trader/generic/anyfood,
 	/datum/commodity/trader/generic/shipcomponents,
 	/datum/commodity/trader/generic/jumpsuits,
