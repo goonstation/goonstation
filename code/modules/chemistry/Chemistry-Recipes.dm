@@ -1871,7 +1871,7 @@ datum
 			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		iced_thaiicedcoffee/thaiicedcoffee2
+		iced/thaiicedcoffee/thaiicedcoffee2
 			id = "thaiicedcoffee2"
 			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
 			result_amount = 6
