@@ -4460,7 +4460,7 @@ datum
 			thirst_value = 0.8
 
 		fooddrink/mexicanhotchocolate
-			name = "mexican hot chocolate"
+			name = "Mexican hot chocolate"
 			id = "mexicanhotchocolate"
 			fluid_r = 76
 			fluid_g = 29
