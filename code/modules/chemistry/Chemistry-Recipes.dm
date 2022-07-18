@@ -1853,7 +1853,7 @@ datum
 			mix_phrase = "The ice clinks against the container as you blend everything together."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		iced_pineapplematcha
+		iced/pineapplematcha
 			name = "Iced Pineapple Matcha"
 			id = "icedpineapplematcha"
 			result = "icedpineapplematcha"
