@@ -396,11 +396,7 @@
 					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
-					src.anchored = !(src.anchored)
-					src.stops_space_move = !(src.stops_space_move)
-					user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-					logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
-					src.align_window()
+					assembly_handler(user, W)
 
 		else if (ispryingtool(W) && state <= 1)
 			//no sound here, snap is after the action
