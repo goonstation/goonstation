@@ -28,7 +28,6 @@
 	var/next_deny = 0
 	var/icon_base = "door"
 	var/brainloss_stumble = 0 // Can a mob stumble into this door if they have enough brain damage? Won't work if you override Bumped() or attackby() and don't check for it separately.
-	var/brainloss_nospam = 1 // In relation to world time.
 	var/crush_delay = 60
 	var/sound_deny = 0
 	var/has_crush = 1 //flagged to true when the door has a secret admirer. also if the var == 1 then the door doesn't have the ability to crush items.
