@@ -116,6 +116,7 @@
 ///Presets for standard windows
 var/list/input_window_presets =  list(
 	"say" = list("saywindow", "say \\\"text\\\"", ".say", ".cancel_typing say"),
+	"whisper" = list("whisperwindow", "whisper \\\"text\\\"", ".whisper", ".cancel_typing whisper"),
 	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_typing me"),
 )
 
@@ -130,6 +131,12 @@ var/list/input_window_presets =  list(
 	set hidden = TRUE
 
 	create_preset_input_window("say")
+
+/client/verb/init_whisper()
+	set name = ".init_whisper"
+	set hidden = TRUE
+
+	create_preset_input_window("whisper")
 
 /client/verb/init_me()
 	set name = ".init_me"
@@ -148,10 +155,11 @@ var/list/input_window_presets =  list(
 
 	create_preset_input_window(preset, force=TRUE)
 
-//Create the windows for say and me ahead of time
+//Create the windows for say, whisper, and me ahead of time
 /client/New()
 	. = ..()
 
 	if(src) //In case the client was deleted while New was running
 		create_preset_input_window("say", show=FALSE)
+		create_preset_input_window("whisper", show=FALSE)
 		create_preset_input_window("me", show=FALSE)

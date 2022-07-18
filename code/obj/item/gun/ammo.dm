@@ -199,7 +199,10 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(K, sound_load, 50, 1)
+		if(K.sound_load_override)
+			playsound(K, K.sound_load_override, 50, 1)
+		else
+			playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -715,6 +718,10 @@
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
+
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
 	name = "12ga flares"
@@ -861,8 +868,8 @@
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 5
-	max_amount = 5
+	amount_left = 2
+	max_amount = 2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -957,7 +964,7 @@
 	ammo_cat = AMMO_ROCKET_RPG
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
@@ -971,7 +978,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
@@ -985,7 +992,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 //3.0
 /obj/item/ammo/bullets/gun
@@ -1096,8 +1103,8 @@
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
 				if(20)

@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 1800
 	pointCost = 50
+	not_when_in_an_object = FALSE
 	when_stunned = 0
 	not_when_handcuffed = 0
 	var/duration = 300

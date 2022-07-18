@@ -73,13 +73,32 @@ stare
 
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()
-	walk(holder.owner, 0)
+	if(istype(holder.owner,/mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = holder.owner
+		if(F.floorrunning)
+			F.end_floorrunning(TRUE)
+	holder.stop_move()
+
+//this whole AI thing was built for flock, and even so, flock just has to be special
+/datum/aiTask/succeedable/move/flock/succeeded()
+	if(move_target)
+		. = (get_dist(holder.owner, src.move_target) == 0)
+		if(.)
+			var/mob/living/critter/flock/drone/F = holder.owner
+			if(istype(F) && F.floorrunning)
+				F.end_floorrunning(TRUE)
+		return
+
+/datum/aiTask/sequence/goalbased/flock/New(parentHolder, transTask)
+	..(parentHolder, transTask)
+	src.subtasks = list() //get rid of the move and replace it with flockmove
+	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RALLY TO GOAL
 // target: the rally target given when this is invoked
 // precondition: none, this is an override
-/datum/aiTask/sequence/goalbased/rally
+/datum/aiTask/sequence/goalbased/flock/rally
 	name = "rallying"
 	weight = 0
 	can_be_adjacent_to_target = FALSE
@@ -101,26 +120,26 @@ stare
 // REPLICATION GOAL
 // targets: valid nesting sites
 // precondition: FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
-/datum/aiTask/sequence/goalbased/replicate
+/datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
 	can_be_adjacent_to_target = FALSE
 
-/datum/aiTask/sequence/goalbased/replicate/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/replicate/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/replicate, list(holder)))
 
-/datum/aiTask/sequence/goalbased/replicate/precondition()
+/datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
 		. = TRUE
 
-/datum/aiTask/sequence/goalbased/replicate/get_targets()
+/datum/aiTask/sequence/goalbased/flock/replicate/get_targets()
 	. = list()
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
-		if(isnull(locate(/obj/flock_structure/egg) in F))
+		if(!is_blocked_turf(F) && isnull(locate(/obj/flock_structure/egg) in F))
 			. = get_path_to(holder.owner, list(F), max_dist*2, can_be_adjacent_to_target)
 			if (length(.)) return
 
@@ -147,6 +166,7 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F)
+			F.end_floorrunning(TRUE)
 			F.create_egg()
 			has_started = TRUE
 
@@ -158,17 +178,17 @@ stare
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
 // precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
-/datum/aiTask/sequence/goalbased/nest
+/datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
 	can_be_adjacent_to_target = TRUE
 	max_dist = 2
 
-/datum/aiTask/sequence/goalbased/nest/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/nest/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/build, list(holder)))
 
-/datum/aiTask/sequence/goalbased/nest/precondition()
+/datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
@@ -176,7 +196,7 @@ stare
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
 
-/datum/aiTask/sequence/goalbased/nest/get_targets()
+/datum/aiTask/sequence/goalbased/flock/nest/get_targets()
 	. = list()
 	var/mob/living/critter/flock/F = holder.owner
 	for(var/turf/simulated/floor/T in view(max_dist, holder.owner))
@@ -193,20 +213,20 @@ stare
 // targets: priority tiles, fetched from holder.owner.flock (with casting)
 //			or, if they're not available, whatever's available nearby
 // precondition: FLOCK_CONVERT_COST resources
-/datum/aiTask/sequence/goalbased/build
+/datum/aiTask/sequence/goalbased/flock/build
 	name = "building"
 	weight = 10
 	max_dist = 5
 
-/datum/aiTask/sequence/goalbased/build/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/build/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/build, list(holder)))
 
-/datum/aiTask/sequence/goalbased/build/precondition()
+/datum/aiTask/sequence/goalbased/flock/build/precondition()
 	var/mob/living/critter/flock/F = holder.owner
 	return F?.can_afford(FLOCK_CONVERT_COST)
 
-/datum/aiTask/sequence/goalbased/build/on_tick()
+/datum/aiTask/sequence/goalbased/flock/build/on_tick()
 	var/had_target = holder.target
 	. = ..()
 	if (!had_target && holder.target)
@@ -215,14 +235,14 @@ stare
 		if (F.flock?.isTurfFree(T, F.real_name))
 			F.flock.reserveTurf(T, F.real_name)
 
-/datum/aiTask/sequence/goalbased/build/valid_target(var/atom/target)
+/datum/aiTask/sequence/goalbased/flock/build/valid_target(var/atom/target)
 	var/mob/living/critter/flock/F = holder.owner
 	if(!isfeathertile(target))
 		if(F?.flock && !F.flock.isTurfFree(target, F.real_name))
 			return FALSE
 		return TRUE
 
-/datum/aiTask/sequence/goalbased/build/get_targets()
+/datum/aiTask/sequence/goalbased/flock/build/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
 
 	if(F?.flock)
@@ -275,6 +295,10 @@ stare
 /datum/aiTask/succeedable/build/on_tick()
 	if(!has_started && !failed() && !succeeded())
 		var/mob/living/critter/flock/F = holder.owner
+		if(istype(holder.owner,/mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			if(drone && drone.floorrunning)
+				drone.end_floorrunning(TRUE)
 		if(F?.set_hand(2)) // nanite spray
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
 			F.hand_attack(holder.target)
@@ -292,17 +316,17 @@ stare
 //			or, if they're not available, storage closets, walls and doors
 //			failing that, nearest tiles
 // precondition: FLOCK_CONVERT_COST resources and flock has more than 10 drones
-/datum/aiTask/sequence/goalbased/build/drone
+/datum/aiTask/sequence/goalbased/flock/build/drone
 	name = "building"
 	weight = 1
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/build/drone/precondition()
+/datum/aiTask/sequence/goalbased/flock/build/drone/precondition()
 	var/mob/living/critter/flock/F = holder.owner
 	return F?.can_afford(FLOCK_CONVERT_COST) && (F?.flock?.getComplexDroneCount() > 10) //prioritise egg laying in the early game
 
 
-/datum/aiTask/sequence/goalbased/build/drone/get_targets()
+/datum/aiTask/sequence/goalbased/flock/build/drone/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
 
 	if(F?.flock)
@@ -352,21 +376,21 @@ stare
 // REPAIR GOAL
 // targets: other flockdrones in the same flock
 // precondition: FLOCK_REPAIR_COST resources
-/datum/aiTask/sequence/goalbased/repair
+/datum/aiTask/sequence/goalbased/flock/repair
 	name = "repairing"
 	weight = 4
 
-/datum/aiTask/sequence/goalbased/repair/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/repair/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/repair, list(holder)))
 
-/datum/aiTask/sequence/goalbased/repair/precondition()
+/datum/aiTask/sequence/goalbased/flock/repair/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.can_afford(FLOCK_REPAIR_COST))
 		. = TRUE
 
-/datum/aiTask/sequence/goalbased/repair/on_reset()
+/datum/aiTask/sequence/goalbased/flock/repair/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
@@ -374,7 +398,7 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/repair/get_targets()
+/datum/aiTask/sequence/goalbased/flock/repair/get_targets()
 	. = list()
 	var/mob/living/critter/flock/drone/FH = holder.owner
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
@@ -405,6 +429,10 @@ stare
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
+		if(F && F.floorrunning)
+			F.end_floorrunning(TRUE)
+		if(T && T.floorrunning)
+			T.end_floorrunning(TRUE)
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
@@ -419,21 +447,21 @@ stare
 // DEPOSIT GOAL
 // targets: ghost tealprints in the same flock
 // precondition: FLOCK_GHOST_DEPOSIT_AMOUNT resources
-/datum/aiTask/sequence/goalbased/deposit
+/datum/aiTask/sequence/goalbased/flock/deposit
 	name = "depositing"
 	weight = 8
 
-/datum/aiTask/sequence/goalbased/deposit/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/deposit/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/deposit, list(holder)))
 
-/datum/aiTask/sequence/goalbased/deposit/precondition()
+/datum/aiTask/sequence/goalbased/flock/deposit/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.can_afford(FLOCK_GHOST_DEPOSIT_AMOUNT))
 		. = TRUE
 
-/datum/aiTask/sequence/goalbased/deposit/on_reset()
+/datum/aiTask/sequence/goalbased/flock/deposit/on_reset()
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
@@ -442,7 +470,7 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/deposit/get_targets()
+/datum/aiTask/sequence/goalbased/flock/deposit/get_targets()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	. = list()
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
@@ -472,6 +500,8 @@ stare
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/obj/flock_structure/ghost/T = holder.target
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -486,19 +516,19 @@ stare
 // precondition: none
 // the idea is the drones will open unlocked, unwelded crates and lockers to reveal the delicious things inside
 // the way this shakes out, drones will prioritise making more things available if there's targets in range than taking things
-/datum/aiTask/sequence/goalbased/open_container
+/datum/aiTask/sequence/goalbased/flock/open_container
 	name = "opening container"
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/open_container/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/open_container/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/open_container, list(holder)))
 
-/datum/aiTask/sequence/goalbased/open_container/precondition()
+/datum/aiTask/sequence/goalbased/flock/open_container/precondition()
 	. = TRUE // no precondition required that isn't already checked for targets
 
-/datum/aiTask/sequence/goalbased/open_container/get_targets()
+/datum/aiTask/sequence/goalbased/flock/open_container/get_targets()
 	. = list()
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
@@ -527,6 +557,8 @@ stare
 	var/obj/storage/container_target = holder.target
 	if(container_target && BOUNDS_DIST(holder.owner, container_target) == FALSE && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
+		if(F.floorrunning)
+			F.end_floorrunning(TRUE)
 		if(F?.set_hand(1)) // grip tool
 			F.set_dir(get_dir(F, container_target))
 			F.hand_attack(container_target) // wooo
@@ -541,20 +573,20 @@ stare
 // targets: any small storage object
 // precondition: none
 // rummage through the storage object and throw every item in it we can get all over the place
-/datum/aiTask/sequence/goalbased/rummage
+/datum/aiTask/sequence/goalbased/flock/rummage
 	name = "rummaging"
 	weight = 3
 	max_dist = 4
 
-/datum/aiTask/sequence/goalbased/rummage/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/rummage/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/rummage, list(holder)))
 
-/datum/aiTask/sequence/goalbased/rummage/precondition()
+/datum/aiTask/sequence/goalbased/flock/rummage/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	return !(F?.absorber?.item)
 
-/datum/aiTask/sequence/goalbased/rummage/get_targets()
+/datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
 		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
@@ -586,6 +618,8 @@ stare
 	var/obj/item/storage/container_target = holder.target
 	if(container_target && BOUNDS_DIST(holder.owner, container_target) == 0 && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
+		if(F.floorrunning)
+			F.end_floorrunning(TRUE)
 		usr = F // don't ask, please, don't
 		if(F?.set_hand(1)) // grip tool
 			if(!F.is_in_hands(container_target))
@@ -620,23 +654,23 @@ stare
 // HARVEST GOAL
 // targets: any item
 // precondition: empty absorber slot
-/datum/aiTask/sequence/goalbased/harvest
+/datum/aiTask/sequence/goalbased/flock/harvest
 	name = "harvesting"
 	weight = 2
 	max_dist = 6
 
-/datum/aiTask/sequence/goalbased/harvest/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/harvest/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/harvest, list(holder)))
 
-/datum/aiTask/sequence/goalbased/harvest/precondition()
+/datum/aiTask/sequence/goalbased/flock/harvest/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		return !(F.absorber.item)
 	else
 		return FALSE // can't harvest anyway, if not a flockdrone
 
-/datum/aiTask/sequence/goalbased/harvest/get_targets()
+/datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
 	. = list()
 	for(var/obj/item/I in view(max_dist, holder.owner))
 		if(!I.anchored && I.loc != holder.owner)
@@ -668,6 +702,8 @@ stare
 		return
 	if(harvest_target && in_interact_range(harvest_target, holder.owner) && !succeeded())
 		var/mob/living/critter/flock/drone/F = holder.owner
+		if(F.floorrunning)
+			F.end_floorrunning(TRUE)
 		if(F?.set_hand(1)) // grip tool
 			var/obj/item/already_held = F.get_active_hand().item
 			if(already_held)
@@ -799,30 +835,30 @@ stare
 // FLOCKDRONE-SPECIFIC CAPTURE TASK
 // look through valid targets that are in the flock targets AND are stunned
 // precondition: enemies exist
-/datum/aiTask/sequence/goalbased/flockdrone_capture
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture
 	name = "capturing"
 	weight = 15
 	max_dist = 12
 	can_be_adjacent_to_target = TRUE
 	ai_turbo = TRUE
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/capture, list(holder)))
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/precondition()
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/precondition()
 	var/mob/living/critter/flock/F = holder.owner
 	return (length(F.flock?.enemies))
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/evaluate()
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/evaluate()
 	. = precondition() * weight * score_target(get_best_target(get_targets()))
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/on_tick()
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/on_tick()
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	..()
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/valid_target(atom/target)
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/valid_target(atom/target)
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F.flock.isEnemy(target) || isvehicle(target))
 		return FALSE
@@ -833,7 +869,7 @@ stare
 	if(!istype(target.loc, /obj/flock_structure/cage))
 		return TRUE
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/get_targets()
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/get_targets()
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
@@ -873,11 +909,14 @@ stare
 				holder.interrupt() //this should basically never happen, but sanity check just in case
 				return
 			else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
+				if(owncritter.floorrunning)
+					owncritter.end_floorrunning(TRUE)
 				owncritter.set_dir(get_dir(owncritter, holder.target))
 				owncritter.hand_attack(holder.target)
 		else
 			holder.interrupt() //somehow lost target, go do something else
 			return
+
 /datum/aiTask/succeedable/capture/on_reset()
 	var/mob/living/critter/flock/drone/drone = holder.owner
 	if (drone)
@@ -892,16 +931,16 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BUTCHER GOAL
 // targets: other dead flockdrones in the same flock
-/datum/aiTask/sequence/goalbased/butcher
+/datum/aiTask/sequence/goalbased/flock/butcher
 	name = "butchering"
 	weight = 3
 
-/datum/aiTask/sequence/goalbased/butcher/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/butcher/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/butcher, list(holder)))
 
 
-/datum/aiTask/sequence/goalbased/butcher/on_reset()
+/datum/aiTask/sequence/goalbased/flock/butcher/on_reset()
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
@@ -910,7 +949,7 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/butcher/get_targets()
+/datum/aiTask/sequence/goalbased/flock/butcher/get_targets()
 	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner || F.butcherer)
@@ -941,6 +980,8 @@ stare
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/mob/living/critter/flock/drone/T = holder.target
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
 				F.hand_attack(T)
@@ -950,18 +991,18 @@ stare
 	has_started = FALSE
 
 ///Since we don't want flockdrones building barricades randomly, this task only exists for the targetable version to inherit from
-/datum/aiTask/sequence/goalbased/barricade
+/datum/aiTask/sequence/goalbased/flock/barricade
 	name = "barricading"
 	can_be_adjacent_to_target = TRUE
 
-/datum/aiTask/sequence/goalbased/barricade/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/barricade/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/barricade, list(holder)))
 
-/datum/aiTask/sequence/goalbased/barricade/valid_target(atom/target)
+/datum/aiTask/sequence/goalbased/flock/barricade/valid_target(atom/target)
 	return isfeathertile(target) && !is_blocked_turf(target)
 
-/datum/aiTask/sequence/goalbased/barricade/on_reset()
+/datum/aiTask/sequence/goalbased/flock/barricade/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
 		F.active_hand = 2 // nanite spray
@@ -988,6 +1029,8 @@ stare
 /datum/aiTask/succeedable/barricade/on_tick()
 	if (!has_started && !failed() && !succeeded())
 		var/mob/living/critter/flock/drone/drone = holder.owner
+		if(drone.floorrunning)
+			drone.end_floorrunning(TRUE)
 		var/dist = get_dist(drone, holder.target)
 		if(dist > 1)
 			holder.interrupt() //this should basically never happen, but sanity check just in case
@@ -1005,22 +1048,22 @@ stare
 // DECONSTRUCT GOAL
 // targets: flock deconstruction targets
 // precondition: none
-/datum/aiTask/sequence/goalbased/deconstruct
+/datum/aiTask/sequence/goalbased/flock/deconstruct
 	name = "deconstructing"
 	weight = 8
 	can_be_adjacent_to_target = TRUE
 
-/datum/aiTask/sequence/goalbased/deconstruct/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/deconstruct/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/deconstruct, list(holder)))
 
-/datum/aiTask/sequence/goalbased/deconstruct/precondition()
+/datum/aiTask/sequence/goalbased/flock/deconstruct/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F?.flock?.deconstruct_targets))
 		. = TRUE
 
-/datum/aiTask/sequence/goalbased/deconstruct/on_reset()
+/datum/aiTask/sequence/goalbased/flock/deconstruct/on_reset()
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
@@ -1029,7 +1072,7 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/deconstruct/get_targets()
+/datum/aiTask/sequence/goalbased/flock/deconstruct/get_targets()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	. = list()
 	for(var/atom/S in F?.flock?.deconstruct_targets)
@@ -1060,6 +1103,8 @@ stare
 		var/mob/living/critter/flock/drone/F = holder.owner
 		var/atom/T = holder.target
 		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+			if(F.floorrunning)
+				F.end_floorrunning(TRUE)
 			if(F.set_hand(2)) // nanite spray
 				F.set_a_intent(INTENT_HARM)
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
@@ -1073,30 +1118,30 @@ stare
 // STARE AT BIRDS
 // targets: any bird critters (not obj/critter)
 // precondition: cooldown
-/datum/aiTask/sequence/goalbased/stare
+/datum/aiTask/sequence/goalbased/flock/stare
 	name = "observing"
 	weight = 1
 
-/datum/aiTask/sequence/goalbased/stare/evaluate()
+/datum/aiTask/sequence/goalbased/flock/stare/evaluate()
 	. = src.precondition() && length(src.get_targets()) ? 1 : 0  // it'd require every other task returning very small values for this to get selected
 
-/datum/aiTask/sequence/goalbased/stare/New(parentHolder, transTask)
+/datum/aiTask/sequence/goalbased/flock/stare/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/stare_at_bird, list(holder)))
 
-/datum/aiTask/sequence/goalbased/stare/precondition()
+/datum/aiTask/sequence/goalbased/flock/stare/precondition()
 	. = FALSE
 	if(!GET_COOLDOWN(holder.owner, "bird_staring"))
 		. = TRUE
 
-/datum/aiTask/sequence/goalbased/stare/get_targets()
+/datum/aiTask/sequence/goalbased/flock/stare/get_targets()
 	. = list()
 	for(var/mob/living/critter/C in view(max_dist, holder.owner))
 		if(istype(C,/mob/living/critter/small_animal/bird) || istype(C,/mob/living/critter/small_animal/ranch_base/chicken))
 			. += C
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
-/datum/aiTask/sequence/goalbased/stare/reset()
+/datum/aiTask/sequence/goalbased/flock/stare/reset()
 	return ..()
 ////////
 
@@ -1116,7 +1161,8 @@ stare
 
 	var/mob/living/critter/target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-
+	if(F && F.floorrunning)
+		F.end_floorrunning(TRUE)
 	if(!target)
 		return
 	if(!IN_RANGE(holder.owner, target, 1))
@@ -1153,7 +1199,7 @@ stare
 	has_started = FALSE
 
 /////// Targetable AI tasks, instead of looking for targets around them they just override with their own target var
-/datum/aiTask/sequence/goalbased/build/targetable
+/datum/aiTask/sequence/goalbased/flock/build/targetable
 	New()
 		..()
 		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
@@ -1171,7 +1217,7 @@ stare
 		..()
 		holder.target = get_turf(src.target)
 
-/datum/aiTask/sequence/goalbased/flockdrone_capture/targetable
+/datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 	New()
 		..()
 		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
@@ -1200,7 +1246,7 @@ stare
 		if(!istype(target.loc, /obj/flock_structure/cage))
 			return TRUE
 
-/datum/aiTask/sequence/goalbased/barricade/targetable
+/datum/aiTask/sequence/goalbased/flock/barricade/targetable
 	New()
 		..()
 		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]

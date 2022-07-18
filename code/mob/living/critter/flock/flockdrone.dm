@@ -41,7 +41,9 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
-	abilityHolder = new /datum/abilityHolder/critter/flockdrone(src)
+	var/datum/abilityHolder/composite/composite = new(src)
+	abilityHolder = composite
+	composite.addHolder(/datum/abilityHolder/critter/flockdrone)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
@@ -94,13 +96,15 @@
 		state["controller_ref"] = "\ref[controller]"
 	. = state
 
-
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.color = null
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
+
+/mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
+	boutput(src, message, group, forceScroll)
 
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
@@ -134,6 +138,8 @@
 	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
 	sight_process?.Process()
 	src.hud?.update_intent()
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	composite.addHolderInstance(pilot.abilityHolder, TRUE)
 	if (istype(pilot, /mob/living/intangible/flock/flockmind))
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
@@ -170,6 +176,8 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		var/datum/abilityHolder/composite/composite = src.abilityHolder
+		composite.removeHolder(/datum/abilityHolder/flockmind)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
@@ -413,7 +421,7 @@
 	if (..(parent))
 		return TRUE
 	if (src.floorrunning && src.resources >= 1)
-		src.resources--
+		src.pay_resources(1)
 		if (src.resources < 1)
 			src.end_floorrunning(TRUE)
 	if (!src.dormant && src.z != Z_LEVEL_STATION && src.z != Z_LEVEL_NULL)
@@ -505,6 +513,12 @@
 			if (wall.on)
 				wall.off()
 	animate_flock_floorrun_end(src)
+	if (flock_is_blocked_turf(get_turf(src.loc)))
+		for(var/turf/T in getneighbours(src.loc))
+			if(!flock_is_blocked_turf(T))
+				src.set_loc(T)
+				return
+
 
 /mob/living/critter/flock/drone/restrained()
 	return ..() || src.floorrunning
@@ -514,6 +528,18 @@
 		return 0.6
 	else
 		return ..()
+
+/mob/living/critter/flock/drone/proc/add_resources(amount)
+	src.resources += amount
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
+	aH.updateResources(src.resources)
+
+/mob/living/critter/flock/drone/pay_resources(amount)
+	..()
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
+	aH.updateResources(src.resources)
 
 /mob/living/critter/flock/drone/Cross(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(floorrunning)
@@ -642,7 +668,7 @@
 	var/obj/item/organ/heart/flock/core = src.organHolder.get_organ("heart")
 	if(core)
 		core.resources = src.resources
-		src.resources = 0 // just in case any weirdness happens let's pre-empt the dupe bug
+		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
 	..()
 	src.icon_state = "drone-dead"
 	src.reduce_lifeprocess_on_death()
@@ -730,6 +756,9 @@
 		return
 	if(src.resources < FLOCK_LAY_EGG_COST)
 		boutput(src, "<span class='alert'>Not enough resources (you need [FLOCK_LAY_EGG_COST]).</span>")
+		return
+	if(src.floorrunning)
+		boutput(src, "<span class='alert'>You can't do that while floorrunning.</span>")
 		return
 	var/turf/simulated/floor/feather/nest = get_turf(src)
 	if(!istype(nest, /turf/simulated/floor/feather))
@@ -1082,10 +1111,10 @@
 	var/health_absorbed = min((flock_owner.health_absorb_rate * mult), I.health)
 	if (flock_owner.absorber.instant_absorb && !flock_owner.absorber.ignore_amount)
 		boutput(flock_owner, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
-		flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed * I.amount)
+		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed * I.amount))
 	else
 		I.health -= health_absorbed
-		flock_owner.resources += round(flock_owner.resources_per_health * health_absorbed)
+		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
 				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
@@ -1116,14 +1145,14 @@
 
 	if (istype(I, /obj/item/flockcache))
 		var/obj/item/flockcache/C = I
-		flock_owner.resources += C.resources
+		flock_owner.add_resources(C.resources)
 		boutput(flock_owner, "<span class='notice'>You break down the resource cache, adding <span class='bold'>[C.resources]</span> resource[C.resources > 1 ? "s" : null] to your own. </span>")
 	else if(istype(I, /obj/item/organ/heart/flock))
 		var/obj/item/organ/heart/flock/F = I
 		if (F.resources == 0)
 			boutput(flock_owner, "<span class='notice'>[F]'s resource cache is assimilated, but contains no resources.</span>")
 		else
-			flock_owner.resources += F.resources
+			flock_owner.add_resources(F.resources)
 			boutput(flock_owner, "<span class='notice'>You assimilate [F]'s resource cache, adding <span class='bold'>[F.resources]</span> resource[F.resources > 1 ? "s" : null] to your own.</span>")
 	else
 		boutput(flock_owner, "<span class='notice'>You finish converting [I] into resources.</span>")

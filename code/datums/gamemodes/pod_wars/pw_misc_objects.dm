@@ -187,6 +187,9 @@
 	ex_act(severity)
 		return
 
+	powered()
+		return TRUE
+
 	disposing()
 		..()
 		UnsubscribeProcess()
