@@ -94,6 +94,10 @@
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
 			if (CG.stage == 2 && !CG.state)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(CG)
 				CG.set_loc(src)
 				user.show_text("You attach [CG]'s detonator to [src].", "blue")
@@ -108,6 +112,10 @@
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.state)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(OG)
 				OG.set_loc(src)
 				user.show_text("You attach [OG]'s detonator to [src].", "blue")
@@ -122,6 +130,10 @@
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/pipebomb/bomb/PB = C
 			if (!PB.armed)
+				if(!(src in user.equipped_list()))
+					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					return
+
 				user.u_equip(PB)
 				PB.set_loc(src)
 				user.show_text("You attach [PB]'s detonator to [src].", "blue")
@@ -133,6 +145,10 @@
 				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/device/radio/signaler/S = C
 			user.u_equip(S)
 			S.set_loc(src)
@@ -146,8 +162,8 @@
 
 		else if (istype(C, /obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/PF = C
-			if (src.loc != user)
-				user.show_text("You need to actually be holding [src] to do this.", "red")
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] to do this.</span>")
 				return
 
 			if (PF.state > 2)
@@ -166,6 +182,10 @@
 			return
 
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			user.u_equip(C)
 			src.arm = C
 			C.set_loc(src)
@@ -182,6 +202,10 @@
 			else if (C.w_class > W_CLASS_TINY) // Transfer valve bomb pies are a thing. Shouldn't fit in a backpack, much less a box.
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			user.u_equip(C)
 			src.pie = C
 			C.set_loc(src)
@@ -192,6 +216,10 @@
 			logTheThing("bombing", user, null, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/clothing/head/butt/B = C
 			user.u_equip(B)
 			B.set_loc(src)
@@ -200,6 +228,10 @@
 			src.overlays += image('icons/obj/items/weapons.dmi', "trap-[src.butt.icon_state]")
 
 		else if (istype(C, /obj/item/gimmickbomb/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
+			if(!(src in user.equipped_list()))
+				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				return
+
 			var/obj/item/gimmickbomb/BB = C
 			user.u_equip(BB)
 			BB.set_loc(src)

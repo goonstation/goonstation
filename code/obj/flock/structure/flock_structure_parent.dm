@@ -19,6 +19,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/build_time = 6 // in seconds
 	var/health = 30
 	var/health_max = 30
+	var/uses_health_icon = TRUE
 	var/bruteVuln = 1.2
 	///Should it twitch on being hit?
 	var/hitTwitch = TRUE
@@ -54,9 +55,12 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 
+	src.update_health_icon()
+
 /obj/flock_structure/disposing()
 	STOP_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
 	if (flock)
+		src.update_health_icon()
 		flock.removeStructure(src)
 	flock = null
 	..()
@@ -117,8 +121,24 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	checkhealth()
 
 /obj/flock_structure/proc/checkhealth()
+	src.update_health_icon()
 	if(src.health <= 0)
 		src.gib()
+
+/obj/flock_structure/proc/update_health_icon()
+	if (!src.flock)
+		return
+	if (!src.uses_health_icon)
+		return
+	if (src.health <= 0 || src.disposed)
+		src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+		return
+
+	var/list/annotations = flock.getAnnotations(src)
+	if (!annotations[FLOCK_ANNOTATION_HEALTH])
+		src.flock.addAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+	var/image/annotation = annotations[FLOCK_ANNOTATION_HEALTH]
+	annotation.icon_state = "hp-[round(src.health / src.health_max * 10) * 10]"
 
 /obj/flock_structure/proc/deconstruct()
 	visible_message("<span class='alert'>[src.name] suddenly dissolves!</span>")
@@ -154,6 +174,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 /obj/flock_structure/proc/repair()
 	src.health = min(src.health + 50, src.health_max)
+	src.update_health_icon()
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)

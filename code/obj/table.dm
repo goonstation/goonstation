@@ -595,7 +595,8 @@
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
 			else
-				return ..()
+				boutput(user, "<span class='alert'>You need to weaken the [src.name] with a welding tool before you can disassemble it!</span>")
+				return
 		else
 			return ..()
 
