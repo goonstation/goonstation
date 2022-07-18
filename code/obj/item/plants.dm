@@ -436,16 +436,16 @@
 		..()
 		var/list/possible_names = list()
 		for(var/mob/M in mobs)
-		        if(!M.mind)
-		                continue
+			if(!M.mind)
+				continue
 			if(ishuman(M))
 				if(iswizard(M))
 					continue
 				if(isnukeop(M))
 					continue
-			  	possible_names += M
+				possible_names += M
 			else if(isAI(M) || isrobot(M))
-			        possible_names += M
+				possible_names += M
 		var/rose_name
 		if(!length(possible_names))
 			rose_name = pick_string_autokey("names/first.txt")
