@@ -197,13 +197,6 @@
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 
-/datum/commodity/trader/generic/electronics
-	comname = "Electrical Components"
-	comtype = /obj/item/electronics/
-	price_boundary = list(20,100)
-	possible_names = list("I need to buy electrical components for a project.",
-	"We're rather short on electrical components needed for repairs. We're willing to pay well.")
-
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
 	comtype = /obj/item/shipcomponent/
