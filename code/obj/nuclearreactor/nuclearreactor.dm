@@ -129,6 +129,12 @@
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
+	attackby(obj/item/I, mob/user)
+		if(istype(I,/obj/item/reactor_component))
+			src.Attackhand(user)
+		else
+			. = ..()
+
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
 			var/heat_transfer_mult = 0.95
@@ -286,7 +292,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 2 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -300,7 +306,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 2 SECONDS, .proc/insert_comp_callback, list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/insert_comp_callback, list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
