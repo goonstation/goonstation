@@ -452,11 +452,3 @@
 	setup_material()
 		src.setMaterial(getMaterial("neutronium"), appearance = 0, setname = 0)
 		..()
-
-/obj/item/material_piece/plutonium
-	name = "plutonium"
-	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
-	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("plutonium"), appearance = 0, setname = 0)
-		..()
