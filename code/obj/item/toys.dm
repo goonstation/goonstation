@@ -236,6 +236,21 @@
 		else
 			itemstate = "game-fig"
 
+/obj/item/toy/ornate_baton
+	name = "ornate baton"
+	desc = "Twirly."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "ornate-baton"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "ornate_baton"
+	w_class = W_CLASS_NORMAL
+	throwforce = 1
+	throw_speed = 3
+	throw_range = 7
+	stamina_damage = 25
+	stamina_cost = 10
+	stamina_crit_chance = 5
+
 /obj/item/rubberduck
 	name = "rubber duck"
 	desc = "Awww, it squeaks!"

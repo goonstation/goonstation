@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/gaseous_projectile)
 
 /datum/component/gaseous_projectile/proc/update_pierces(var/obj/projectile/P, var/atom/hit)
 	var/turf/T = get_turf(hit)
-	return PROJ_ATOM_PASSTHROUGH * !!T.gas_cross(get_turf(P))
+	return PROJ_ATOM_PASSTHROUGH * !!T?.gas_cross(get_turf(P))
 
 /datum/component/gaseous_projectile/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_OBJ_PROJ_COLLIDE)

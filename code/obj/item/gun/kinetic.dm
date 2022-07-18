@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/ammobag_spec_required = FALSE
 	/// How many charges it costs an ammobag to fabricate ammo for this gun
 	var/ammobag_restock_cost = 0
+	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
+	var/sound_load_override = null
 
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
@@ -397,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_SHOTGUN_ALL, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE)
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE)
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
@@ -413,9 +415,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	shoot(var/target,var/start ,var/mob/user)
 		if(failured)
-			var/turf/T = get_turf(src)
-			explosion(src, T,-1,-1,1,2)
-			qdel(src)
+			if(canshoot())
+				var/turf/T = get_turf(src)
+				explosion(src, T,-1,-1,1,2)
+				qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
@@ -886,7 +889,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = 0
 	hide_attack = 1
 	gildable = 1
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/blow_darts/single
 
@@ -1164,8 +1167,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 /obj/item/gun/kinetic/slamgun
-	// perhaps refactor later to allow for easy creation of 'manual extract weapons'?
-	// would allow easy implementation of other weps such as weldrods
 	name = "slamgun"
 	desc = "A 12 gauge shotgun. Apparently. It's just two pipes stacked together."
 	icon = 'icons/obj/slamgun.dmi'
@@ -1183,32 +1184,36 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
+	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
+
 
 	New()
-		set_current_projectile(new/datum/projectile/bullet/nails)
-		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/a12)
+		ammo = new /obj/item/ammo/bullets/a12
 		ammo.amount_left = 0 // Spawn empty.
 		..()
 
 	attack_self(mob/user as mob)
 		if (src.icon_state == "slamgun-ready")
-			w_class = W_CLASS_NORMAL
-			if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
-				src.icon_state = "slamgun-open-loaded"
-			else
-				src.icon_state = "slamgun-open"
-			UpdateIcon()
-			two_handed = 0
-			user.updateTwoHanded(src, 0)
+			if(user.updateTwoHanded(src, FALSE)) // should never fail, but respect error codes
+				w_class = W_CLASS_NORMAL
+				force = MELEE_DMG_REVOLVER
+				if (src.ammo.amount_left > 0 || src.casings_to_eject > 0)
+					src.icon_state = "slamgun-open-loaded"
+				else
+					src.icon_state = "slamgun-open"
+				update_icon()
+				two_handed = 0
+
 			user.update_inhands()
 		else
-			w_class = W_CLASS_BULKY
-			src.icon_state = "slamgun-ready"
-			UpdateIcon()
-			two_handed = 1
-			user.updateTwoHanded(src, 1)
-			user.update_inhands()
-		..()
+			if(user.updateTwoHanded(src, TRUE))
+				w_class = W_CLASS_BULKY
+				force = MELEE_DMG_RIFLE
+				src.icon_state = "slamgun-ready"
+				update_icon()
+				two_handed = 1
+				user.update_inhands()
 
 	canshoot()
 		if (src.icon_state == "slamgun-ready")
@@ -1216,10 +1221,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			return 0
 
-	attack_hand(mob/user)
-		if ((src.loc == user) && user.find_in_hand(src))
-			return // Not unloading like that.
+	attack_hand(mob/user as mob)
+		. = src.casings_to_eject
 		..()
+		if(. != src.casings_to_eject)
+			update_icon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
@@ -1237,58 +1243,27 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isghostcritter(usr))
 			return ..()
 		if (over_object == usr && src.icon_state == "slamgun-open-loaded") // sorry for doing it like this, but i have no idea how to do it cleaner.
-			src.add_fingerprint(usr)
-			if (src.sanitycheck(0, 1) == 0)
-				usr.show_text("You can't unload this gun.", "red")
-				return
-			if (src.ammo.amount_left <= 0)
-				if ((src.casings_to_eject > 0))
-					if (src.sanitycheck(1, 0) == 0)
-						src.casings_to_eject = 0
-						return
-					else
-						usr.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						src.casings_to_eject = 0 // needed for bullets that don't have casings (???)
-						src.UpdateIcon()
-						return
-				else
-					usr.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.UpdateIcon()
-			usr.put_in_hand_or_drop(ammoHand)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.ammo.amount_left = 0
-			src.UpdateIcon()
-
-			src.add_fingerprint(usr)
-			ammoHand.add_fingerprint(usr)
-
-			usr.visible_message("<span class='alert'>[usr] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
+			attack_hand(usr)
 			return
-		..()
 
 	attackby(obj/item/b, mob/user)
 		if (istype(b, /obj/item/ammo/bullets) && src.icon_state == "slamgun-ready")
-			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open the [src]!</span>")
+			boutput(user, "<span class='alert'>You can't shove shells down the barrel! You'll have to open \the [src]!</span>")
 			return
 		if (istype(b, /obj/item/ammo/bullets) && (src.ammo.amount_left > 0 || src.casings_to_eject > 0))
-			boutput(user, "<span class='alert'>The [src] already has a shell inside! You'll have to unload the [src]!</span>")
+			boutput(user, "<span class='alert'>\The [src] already has a shell inside! You'll have to unload \the [src]!</span>")
 			return
 		..()
+
+	alter_projectile(var/obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
+
+	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
+		if (src.icon_state == "slamgun-ready")
+			..()
+		else
+			boutput(user, "<span class='alert'>You can't fire \the [src] when it is open!</span>")
 
 
 //1.0
@@ -1822,11 +1797,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	max_ammo_capacity = 4 // to fuss with if i want 6 packs of ammo
 	two_handed = 1
 	can_dual_wield = 0
-	auto_eject = 1
+	auto_eject = 0
 	default_magazine = /obj/item/ammo/bullets/grenade_round/explosive
 	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
+	sound_load_override = "sound/weapons/gunload_rigil.ogg"
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1997,3 +1973,75 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)*/
+
+/obj/item/gun/kinetic/sawnoff
+	name = "double-barreled shotgun"
+	desc = "A double-barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "coachgun"
+	icon_state = "coachgun"
+	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage
+	contraband = 4
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	max_ammo_capacity = 2
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = FALSE
+	add_residue = TRUE
+	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
+
+	var/broke_open = FALSE
+	var/shells_to_eject = 0
+
+	New() //uses a special box of ammo that only starts with 2 shells to prevent issues with overloading
+		if (prob(25))
+			name = pick ("Bessie", "Mule", "Loud Louis", "Boomstick", "Coach Gun", "Shorty", "Sawn-off Shotgun", "Street Sweeper", "Street Howitzer", "Big Boy", "Slugger", "Closing Time", "Garbage Day", "Rooty Tooty Point and Shooty", "Twin 12 Gauge", "Master Blaster", "Ass Blaster", "Blunderbuss", "Dr. Bullous' Thunder-Clapper", "Super Shotgun", "Insurance Policy", "Last Call", "Super-Duper Shotgun")
+
+		ammo = new/obj/item/ammo/bullets/abg/two
+		set_current_projectile(new/datum/projectile/bullet/abg)
+		..()
+
+	canshoot()
+		if (!src.broke_open)
+			return TRUE
+		..()
+
+	shoot(target, start, mob/user)
+		if (src.broke_open)
+			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
+		if (!src.broke_open && src.ammo.amount_left > 0)
+			src.shells_to_eject++
+		..()
+
+	attack_self(mob/user)
+		if (src.broke_open)
+			src.icon_state = "coachgun"
+			src.broke_open = FALSE
+		else
+			src.icon_state = "coachgun-empty"
+			src.broke_open = TRUE
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+
+		playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, TRUE)
+
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && !src.broke_open)
+			boutput(user, "<span class='alert'>You can't load shells into the chambers! You'll have to open [src] first!</span>")
+			return
+		..()
+
+	attack_hand(mob/user)
+		if (!src.broke_open && user.find_in_hand(src))
+			boutput(user, "<span class='alert'>[src] is still closed, you need to open the action to take the shells out!</span>")
+			return
+		..()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"

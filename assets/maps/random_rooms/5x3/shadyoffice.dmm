@@ -1,0 +1,146 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/wood/round,
+/obj/item/reagent_containers/food/drinks/bottle/empty/rectangular{
+	initial_reagents = list("water"=100);
+	pixel_x = -3;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/decal/poster/wallsign/dead_exec_portrait{
+	desc = "A portrait of an Italian-American gentleman.";
+	name = "portrait"
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/decal/fakeobjects/bookcase{
+	dir = 1;
+	pixel_y = 22
+	},
+/obj/item/storage/secure/sbriefcase{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/decoration/regallamp{
+	anchored = 1;
+	deconstructable = 0;
+	lit = 1;
+	pixel_x = 8;
+	pixel_y = 8;
+	securable = 0
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/item/cigarbox{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/table/wood/auto/desk{
+	pixel_x = 13
+	},
+/obj/table/wood/auto/desk{
+	pixel_x = -13
+	},
+/obj/machinery/phone/unlisted{
+	pixel_x = 19;
+	pixel_y = 6;
+	stripe_color = null
+	},
+/obj/item/paper{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/pen/fancy{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/obj/machinery/light/lamp{
+	base_state = "green";
+	icon_state = "green1";
+	on = 1;
+	pixel_x = -18;
+	pixel_y = 7;
+	switchon = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/stool/chair/comfy/red,
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/fakeobjects/bookcase{
+	pixel_y = 22
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/obj/decoration/regallamp{
+	anchored = 1;
+	deconstructable = 0;
+	lit = 1;
+	pixel_x = -8;
+	pixel_y = 8;
+	securable = 0
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"Y" = (
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+h
+Y
+a
+"}
+(2,1,1) = {"
+g
+Y
+Y
+"}
+(3,1,1) = {"
+E
+t
+d
+"}
+(4,1,1) = {"
+v
+Y
+Y
+"}
+(5,1,1) = {"
+S
+Y
+j
+"}

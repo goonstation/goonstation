@@ -189,6 +189,7 @@
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portabrig(src))
@@ -207,6 +208,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
@@ -229,6 +231,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
 			src.file_amount = src.file_used

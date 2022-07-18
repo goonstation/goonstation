@@ -208,6 +208,10 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.real_name = "Father Ted"
 
 /mob/living/carbon/human/fatherjack
+	real_name = "Father Jack"
+	gender = MALE
+	is_npc = TRUE
+
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
@@ -216,8 +220,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.gender = "male"
-		src.real_name = "Father Jack"
 		bioHolder.bloodType = "B+"
 
 	Life(datum/controller/process/mobs/parent)
@@ -347,6 +349,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/biker
 	real_name = "Shitty Bill"
 	gender = MALE
+	is_npc = TRUE
 	var/talk_prob = 5
 	var/greeted_murray = 0
 
@@ -704,6 +707,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // merchant
 
 /mob/living/carbon/human/merchant
+	is_npc = TRUE
+
 	New()
 		..()
 		SPAWN(0)
@@ -806,6 +811,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/don_glab
 	real_name = "Donald \"Don\" Glabs"
 	gender = MALE
+	is_npc = TRUE
 
 	New()
 		..()
@@ -928,7 +934,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 /mob/living/carbon/human/spacer
-	is_npc = 1
+	is_npc = TRUE
 	uses_mobai = 1
 	New()
 		..()
@@ -963,7 +969,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE
-	is_npc = 1
+	is_npc = TRUE
 	uses_mobai = 1
 
 	New()
