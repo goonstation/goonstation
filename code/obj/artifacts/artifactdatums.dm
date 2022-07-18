@@ -221,6 +221,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
 	var/obj/machinery/artifact/turret/turretArt = null
