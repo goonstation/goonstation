@@ -73,7 +73,7 @@
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, var/obj/item/grab/grab)
 	SPAWN(1.5 SECONDS)
-		if (!grab || !grab.affecting || !grab.assailant)
+		if (QDELETED(src) || !isalive(src) || QDELETED(grab) || !grab.affecting || !grab.assailant)
 			return
 		playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
