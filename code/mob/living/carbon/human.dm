@@ -1817,28 +1817,6 @@
 		src.l_hand = null
 		src.update_inhands()
 
-/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
-
-	// reset the modifiers to defaults
-	equipment_proxy.additive_slowdown = 0
-	equipment_proxy.aquatic_movement = 0
-	equipment_proxy.space_movement = 0
-
-	for (var/obj/item/I in src.get_equipped_items())
-		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
-		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
-		if (fluidmove)
-			equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.aquatic_movement += fluidmove
-		var/spacemove = I.getProperty("space_movespeed")
-		if (spacemove)
-			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.space_movement += spacemove
-
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	if(!(I in src) || (src.l_hand != I && src.r_hand != I)) return FALSE

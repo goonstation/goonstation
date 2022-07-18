@@ -206,6 +206,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 10
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
+	assoc_reagents = list("juice_pumpkin")
 
 /datum/plant/fruit/avocado
 	name = "Avocado"
