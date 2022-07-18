@@ -606,7 +606,7 @@
 
 /datum/action/bar/icon/automender_apply
 	duration = 10
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	interrupt_flags = INTERRUPT_STUNNED
 	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
@@ -622,6 +622,8 @@
 		M = tool
 		target = targetmob
 		looped = loopcount
+		if (user == target)
+			src.interrupt_flags |= (INTERRUPT_ATTACKED | INTERRUPT_MOVE)
 		..()
 
 	onUpdate()
