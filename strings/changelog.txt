@@ -1,5 +1,9 @@
 
 (t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
 (u)Munien
 (p)9507
 (e)🆕|feature
