@@ -29,6 +29,7 @@ radioactive - rips apart cells or some shit
 toxic - poisons
 */
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 90
 	//Can we pass windows
