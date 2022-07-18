@@ -1844,6 +1844,15 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
+		pumpkinspicelatte
+			name = "Pumpkin Spice Latte"
+			id = "pumpkinspicelatte"
+			result = "pumpkinspicelatte"
+			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "The drink smells vaguely like artifical autumn."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"
@@ -2610,7 +2619,7 @@ datum
 			id = "flashpowder"
 			result = "flashpowder"
 			required_reagents = list("aluminium" = 1, "potassium" = 1, "sulfur" = 1, "chlorine" = 1, "stabiliser" = 1)
-			result_amount = 5
+			result_amount = 1
 			mix_phrase = "The chemicals hiss and fizz briefly before falling still."
 
 		flash
@@ -2641,7 +2650,7 @@ datum
 			id = "sonicpowder"
 			result = "sonicpowder"
 			required_reagents = list("oxygen" = 1, "cola" = 1, "phosphorus" = 1, "stabiliser" = 1)
-			result_amount = 2
+			result_amount = 1
 			mix_phrase = "The mixture begins to bubble slighly!"
 
 		sonic_boom //The "bang" part of "flashbang"
@@ -2660,62 +2669,15 @@ datum
 
 				if (holder?.my_atom)
 					location = get_turf(holder.my_atom)
-					if (hootmode)
-						playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
-					else
-						playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
-
-					for (var/mob/living/M in all_hearers(world.view, location))
-						if (isintangible(M))
-							continue
-						if (!M.ears_protected_from_sound())
-							boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-						else
-							continue
-
-						var/checkdist = get_dist(M, location)
-						var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
-						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
-
-						if (issilicon(M))
-							M.apply_sonic_stun(weak, 0)
-						else
-							M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
+					sonicpowder_reaction(location, created_volume, hootmode, FALSE)
 				else
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					var/sound_plays = 4
 					created_volume /= amt
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-						if (sound_plays > 0)
-							sound_plays--
-							if (hootmode)
-								playsound(location, 'sound/voice/animal/hoot.ogg', 100, 1)
-							else
-								playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
-						for (var/mob/living/M in all_hearers(world.view, location))
-							if (isintangible(M))
-								continue
-							if (!M.ears_protected_from_sound())
-								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
-
-							var/checkdist = get_dist(M, location)
-							var/weak = max(0, created_volume * 0.2 * (3 - checkdist))
-							var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-							var/ear_damage = max(0, created_volume * 0.2 * (3 - checkdist))
-							var/ear_tempdeaf = max(0, created_volume * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-							var/stamina = clamp(created_volume * (5 + 1 * (7 - checkdist)), 0, 120)
-
-							if (issilicon(M))
-								M.apply_sonic_stun(weak, 0)
-							else
-								M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
+						sonicpowder_reaction(location, created_volume, hootmode, sound_plays-- > 4)
 
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"

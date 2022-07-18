@@ -79,6 +79,8 @@ Contains:
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -416,6 +418,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -592,6 +596,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	if (src.part2)

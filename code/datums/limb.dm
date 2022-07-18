@@ -444,7 +444,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille")))
+			switch (user.smash_through(target, list("window", "grille", "blob")))
 				if (0)
 					if (isitem(target))
 						boutput(user, "<span class='alert'>You try to pick [target] up but it wiggles out of your hand. Opposable thumbs would be nice.</span>")
@@ -688,7 +688,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door")))
+			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
 				if (0)
 					if (istype(target, /obj/item/reagent_containers))
 						if (prob(50 * quality))
@@ -896,7 +896,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("window", "grille", "door")))
+			switch (user.smash_through(target, list("window", "grille", "door", "blob")))
 				if (0)
 					target.Attackhand(user, params, location, control)
 					return
@@ -1203,7 +1203,7 @@
 			return
 
 		if (isobj(target))
-			switch (user.smash_through(target, list("grille")))
+			switch (user.smash_through(target, list("grille","blob")))
 				if (0)
 					if (isitem(target))
 						if (prob(60))

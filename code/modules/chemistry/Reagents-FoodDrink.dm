@@ -3456,6 +3456,18 @@ datum
 			bladder_value = -1
 			taste = "like carrots"
 
+		fooddrink/juice_pumpkin
+			name = "pumpkin juice"
+			id = "juice_pumpkin"
+			fluid_r = 255
+			fluid_g = 117
+			fluid_b = 24
+			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "earthy"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -4398,3 +4410,15 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 3 * mult, flushed_reagents)
 				..()
+
+		fooddrink/pumpkinspicelatte
+			name = "pumpkin spice latte"
+			id = "pumpkinspicelatte"
+			id = "pumpkinspicelatte"
+			fluid_r = 231
+			fluid_g = 106
+			fluid_b = 0
+			description = "Whether or not it contains actual pumpkin juice has been up for debate."
+			reagent_state = LIQUID
+			taste = list("earthy", "sweet")
+			thirst_value = 1
