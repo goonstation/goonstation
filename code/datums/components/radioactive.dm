@@ -35,7 +35,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		), .proc/touched)
-		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eaten)
+		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eaten)
 
 		if(isitem(parent))
 			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
@@ -99,10 +99,10 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
-			M.take_radiation_dose(mult * (neutron ? 0.8 : 0.2) * (radStrength/100))
+			M.take_radiation_dose(mult * (neutron ? 1.6 : 0.4) * (radStrength/100))
 		for(var/mob/M in hearers(effect_range,parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 : 0.2) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 1.6 : 0.4) * (radStrength/100))
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 		if(!src.radStrength)
@@ -111,11 +111,11 @@ TYPEINFO(/datum/component/radioactive)
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
 			if(!ON_COOLDOWN(toucher,"radiation_exposure", 0.5 SECONDS))
-				toucher.take_radiation_dose((neutron ? 1.0 : 0.25) * (radStrength/100))
+				toucher.take_radiation_dose((neutron ? 1.8 : 0.6) * (radStrength/100))
 
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 8 : 4) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 6 : 3) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""
