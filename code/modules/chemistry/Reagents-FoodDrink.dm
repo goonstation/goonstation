@@ -4423,7 +4423,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/icedpineapplematcha
+		fooddrink/iced/pineapplematcha
 			name = "iced pineapple matcha"
 			id = "icedpineapplematcha"
 			fluid_r = 152
