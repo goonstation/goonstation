@@ -6536,6 +6536,10 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
+"arZ" = (
+/obj/machinery/light,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "asa" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -20377,6 +20381,9 @@
 "biN" = (
 /obj/table/reinforced/auto,
 /obj/submachine/mixer,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = -14
+	},
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -20895,13 +20902,15 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bkE" = (
-/obj/table/reinforced/chemistry/auto{
-	name = "prep counter"
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/glass_recycler{
+	glass_amt = 5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -38485,10 +38494,11 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/kitchen,
 /obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
 	dir = 4
 	},
-/obj/access_spawn/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "cov" = (
@@ -40041,6 +40051,9 @@
 /obj/item/reagent_containers/food/snacks/breadloaf,
 /obj/item/kitchen/utensil/knife,
 /obj/machinery/light_switch/east,
+/obj/item/kitchen/rollingpin{
+	pixel_y = -15
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dlp" = (
@@ -40606,8 +40619,14 @@
 /area/station/security/main)
 "dLh" = (
 /obj/table/auto,
-/obj/item/storage/box/plates,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/plates{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/obj/item/storage/box/cutlery{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dMh" = (
@@ -41803,6 +41822,9 @@
 /obj/item/shaker/ketchup{
 	pixel_x = 6
 	},
+/obj/item/matchbook{
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "eRJ" = (
@@ -42899,7 +42921,7 @@
 	},
 /area/station/hallway/primary/south)
 "fTm" = (
-/obj/wingrille_spawn/auto,
+/obj/table/reinforced/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
@@ -42910,7 +42932,13 @@
 	opacity = 0;
 	p_open = 1
 	},
-/turf/simulated/floor/plating,
+/obj/firedoor_spawn,
+/obj/access_spawn/kitchen,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "fUz" = (
 /obj/wingrille_spawn/auto,
@@ -44938,9 +44966,15 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig)
 "hSG" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/stove,
+/obj/item/soup_pot{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/ladle{
+	pixel_x = -2;
+	pixel_y = 11
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "hTE" = (
@@ -46189,15 +46223,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stove,
-/obj/item/soup_pot{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/ladle{
-	pixel_x = -2;
-	pixel_y = 11
-	},
+/obj/submachine/chef_oven,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "jna" = (
@@ -51638,14 +51664,12 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/crew_quarters/quarters_east)
 "oRT" = (
-/obj/table/reinforced/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5;
-	pixel_y = 4
-	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/table/reinforced/chemistry/auto{
+	name = "prep counter"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -51792,6 +51816,7 @@
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
 	dir = 4
 	},
 /obj/access_spawn/kitchen,
@@ -56476,11 +56501,24 @@
 /area/station/crewquarters/cryotron)
 "tCI" = (
 /obj/table/auto,
-/obj/item/storage/box/glassbox,
-/obj/item/storage/box/glassbox,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+/obj/item/storage/box/glassbox{
+	pixel_y = 5
+	},
+/obj/item/storage/box/glassbox{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 14;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 14;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 14;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "tCN" = (
@@ -56636,7 +56674,7 @@
 "tIt" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/eggnog{
-	pixel_y = 8
+	pixel_x = -1
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -120214,7 +120252,7 @@ bsk
 bkM
 cdF
 czr
-beD
+arZ
 xrb
 bow
 qYM

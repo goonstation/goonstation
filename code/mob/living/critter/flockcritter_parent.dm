@@ -652,7 +652,7 @@
 		var/difference = target.goal - target.currentmats
 		amounttopay = min(F.resources, difference, FLOCK_GHOST_DEPOSIT_AMOUNT)
 		F.pay_resources(amounttopay)
-		target.currentmats += amounttopay
+		target.add_mats(amounttopay)
 		if(F.resources)
 			src.onRestart() //restart the action akin to automenders
 
