@@ -12,7 +12,7 @@
 	var/damage = 0
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		armor_value_bullet = max(rangedprot*(1-P.proj_data.armor_ignored),1)
+		armor_value_bullet = max(armor_value_bullet*(1-P.proj_data.armor_ignored),1)
 
 	var/target_organ = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
