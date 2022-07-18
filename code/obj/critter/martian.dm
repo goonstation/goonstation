@@ -112,6 +112,7 @@
 	name = "martian mutant"
 	icon_state = "martianP"
 	health = 10
+	atksilicon = 0
 	aggressive = 1
 	seekrange = 4
 	var/do_stun = 1
