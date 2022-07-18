@@ -1,49 +1,5 @@
 //See bottom of file for valid materials in /simple recipes.
 
-/datum/matfab_recipe/simple/nuclear
-	name = "Nuclear Component - base"
-	desc = "You shouldn't see this"
-	category = "Nuclear"
-	result = /obj/item/reactor_component
-
-	postProcess(obj/item/reactor_component/I)
-		. = ..()
-		//default properties for all materials - everything is a sponge unless otherwise specified
-		if(!I.material.hasProperty("density"))
-			I.material.setProperty("density", 1)
-		if(!I.material.hasProperty("hard"))
-			I.material.setProperty("hard", 1)
-		if(I.material.mat_id=="ice") //ice is cold
-			I.temperature = T0C-10
-
-/datum/matfab_recipe/simple/nuclear/fuel_rod
-	name = "Nuclear Fuel Rod"
-	desc = "A fuel rod for a nuclear reactor"
-	category = "Nuclear"
-	materials = list("!any"=3)
-	result = /obj/item/reactor_component/fuel_rod
-
-/datum/matfab_recipe/simple/nuclear/control_rod
-	name = "Control Rod"
-	desc = "A control rod for a nuclear reactor"
-	category = "Nuclear"
-	materials = list("!any"=3)
-	result = /obj/item/reactor_component/control_rod
-
-/datum/matfab_recipe/simple/nuclear/heat_exchanger
-	name = "Heat Exchanger"
-	desc = "A heat exchanger component for a nuclear reactor"
-	category = "Nuclear"
-	materials = list("!any"=3)
-	result = /obj/item/reactor_component/heat_exchanger
-
-/datum/matfab_recipe/simple/nuclear/gas_channel
-	name = "Coolant Channel"
-	desc = "A coolant channel component for a nuclear reactor"
-	category = "Nuclear"
-	materials = list("!any"=3)
-	result = /obj/item/reactor_component/gas_channel
-
 /datum/matfab_recipe/simple/insbody
 	name = "Instrument body"
 	desc = "The body of an instrument."
@@ -281,25 +237,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/coillarge
-	name = "Large coil"
-	desc = "A large coil used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/coil/large/newObj = new()
-			var/obj/item/source = getObjectByPartName("Coil")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spear
 	name = "Spear"
 	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
@@ -404,25 +341,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/gears
-	name = "Gears"
-	desc = "Some gears used as parts in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/gears/newObj = new()
-			var/obj/item/source = getObjectByPartName("Gears")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/tripod
 	name = "Tripod"
 	desc = "A tripod."
@@ -436,25 +354,6 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/aplates
-	name = "Armor plates"
-	desc = "Armor plates used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/aplate/newObj = new()
-			var/obj/item/source = getObjectByPartName("Armor")
 			if(source?.material)
 				newObj.setMaterial(source.material)
 
