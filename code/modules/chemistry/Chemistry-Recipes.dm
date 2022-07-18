@@ -1885,6 +1885,11 @@ datum
 			mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		pepperminthotchocolate/pepperminthotchocolate2
+			id = "pepperminthotchocolate2"
+			required_reagents =list("mint" = 1, "chocolate_milk" = 3)
+			result_amount = 4
+
 		mexicanhotchocolate
 			name = "Mexican Hot Chocolate"
 			id = "mexicanhotchocolate"
@@ -1892,6 +1897,11 @@ datum
 			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
 			result_amount = 4
 			mix_phrase = "A spicy smell drifts up from the chocolate."
+
+		mexicanhotchocolate/mexicanhotchocolate2
+			id = "mexicanhotchocolate2"
+			required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
+			result_amount = 4
 
 		pumpkinspicelatte
 			name = "Pumpkin Spice Latte"
