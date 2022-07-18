@@ -5,7 +5,7 @@
 	density = 1
 	anchored = 0
 	flags = NOSPLASH
-	mats = list("MET-2" = 20, "CON-1" = 10)
+	mats = list("MET-2" = 12, "CON-1" = 8)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = 0
@@ -14,7 +14,7 @@
 	var/standard_power_output = 5000 // around how much the generator will output running normally
 	var/last_output
 
-	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank // power scales with volatility
+	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank
 	var/obj/item/tank/inlet_tank
 
 	var/image/fuel_tank_image
@@ -63,8 +63,8 @@
 
 		var/dat = {"
 		<b>Status:</b><BR>
-		Engine: [active ? "Working..." : "Stopped"] <BR>
-		Power Grid: [src.powernet ? "Connected" : "Disconnected"] <BR>
+		Engine: [active ? "Active" : "Stopped"] <BR>
+		Floor Bolts: [src.anchored ? "Anchored" : "Unanchored"] <BR>
 		Power Output: [active ? src.last_output : 0]W<BR><BR>
 		<b>Controls:</b><BR>
 		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
@@ -110,7 +110,7 @@
 
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/tank) && (!istype(I, /obj/item/tank/plasma) || !istype(I, /obj/item/tank/jetpack)))
+				if (istype(I, /obj/item/tank) && !(istype(I, /obj/item/tank/plasma) || istype(I, /obj/item/tank/jetpack)))
 					usr.u_equip(I)
 					I.set_loc(src)
 					src.inlet_tank = I
@@ -127,11 +127,11 @@
 		// atmos tank
 		if (istype(W, /obj/item/tank) && (!istype(W, /obj/item/tank/plasma) || !istype(W, /obj/item/tank/jetpack)))
 			if (src.inlet_tank)
-				user.show_text("There appears to be a tank loaded already.", "red")
+				boutput(user, "<span class='alert'>There appears to be a tank loaded already!</span>")
 				return
 
 			if (!check_tank_oxygen(W))
-				user.show_text("The tank doesn't contain any oxygen.", "red")
+				boutput(user, "<span class='alert'>The [W] doesn't contain any oxygen.</span>")
 				return
 
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
@@ -145,11 +145,11 @@
 		// fuel tank
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/fueltank))
 			if (src.fuel_tank)
-				user.show_text("There appears to be a fuel tank loaded already.", "red")
+				boutput(user, "<span class='alert'>There appears to be a fuel tank loaded already!</span>")
 				return
 
 			if (!src.get_average_volatility(W.reagents))
-				user.show_text("The fuel tank doesn't contain any fuel.", "red")
+				boutput(user, "<span class='alert'>The [W] doesn't contain any fuel!</span>")
 				return
 
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
@@ -161,15 +161,18 @@
 
 		else if (iswrenchingtool(W))
 			if (src.anchored)
-				src.disconnect()
-				boutput(user, "<span class='notice'>You unanchor the [src] to the floor.</span>")
-				if (src.active) src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
+				if (src.active)
+					src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
+					src.stop_engine()
+				else
+					src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
+
+				src.anchored = 0
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				return
 
-			src.connect()
-			boutput(user, "<span class='notice'>You anchor the [src] to the floor.</span>")
-			src.visible_message("<span class='notice'>[user] anchors the [src] to the floor.</span>")
+			src.anchored = 1
+			src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 
 	process()
@@ -178,17 +181,29 @@
 
 		var/average_volatility = get_average_volatility(src.fuel_tank.reagents)
 		var/available_oxygen = src.check_available_oxygen()
-		if (!available_oxygen || !src.fuel_tank || !average_volatility)
+		if (!available_oxygen || !average_volatility)
 			src.stop_engine()
-			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
-			src.visible_message("<span class='notice'>The [src] stops, it seems like it ran out of something.</span>")
+			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
 			return
 
-		src.last_output = ((average_volatility * (src.standard_power_output / 3)) * (available_oxygen * 5))
-		src.add_avail(src.last_output WATTS)
+		if (!src.anchored)
+			src.stop_engine()
+			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, its become unanchored!</span>")
+			return
+
+		var/obj/cable/C = src.get_output_cable()
+		if (!C)
+			src.stop_engine(audio = 0)
+			src.visible_message("<span class='alert'>Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!</span>")
+			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
+			return
+
+		src.last_output = src.standard_power_output * ((average_volatility / 3) * (available_oxygen * 5))
+		var/datum/powernet/P = C.get_powernet()
+		P.newavail += src.last_output WATTS
 
 		// debug
-		src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
+		// src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
@@ -207,58 +222,28 @@
 		src.UpdateIcon()
 		src.updateDialog()
 
-	proc/connect()
-		if (!get_turf(src))
-			return
-
-		src.anchored = 1
-		src.netnum = 0
-
-		for(var/obj/cable/C in src.get_connections())
-			if(C.netnum != 0)
-				C.update_network()
-				return
-
-	proc/disconnect()
-		src.stop_engine()
-
-		if(src.powernet)
-			src.powernet.nodes -= src
-			src.powernet.data_nodes -= src
-			src.netnum = 0
-
-		else
-			src.netnum = 0
-
-		if(!defer_powernet_rebuild)
-			makepowernets()
-
-		else
-			defer_powernet_rebuild = 2
-
-		src.anchored = 0
-
-	proc/start_engine(var/mob/user as mob)
+	proc/start_engine(var/mob/user as mob, var/audio = 1)
 		if (!src.active)
 			if (!src.ready_to_start())
 				if (istype(user))
-					boutput(user, "<span class='notice'>You can't seem to get the [src] to start.</span>")
+					boutput(user, "<span class='alert'>The [src] fails to start!</span>")
 				return
 
 			src.active = 1
 			src.UpdateIcon()
+			src.updateDialog()
 
-			if (istype(user))
-				src.visible_message("<span class='notice'>[user] starts the [src].</span>")
-			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+			if (istype(user)) src.visible_message("<span class='notice'>[user] starts the [src].</span>")
+			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
-	proc/stop_engine(var/mob/user as mob)
+	proc/stop_engine(var/mob/user as mob, var/audio = 1)
 		if (src.active)
 			src.active = 0
 			src.UpdateIcon()
-			if (istype(user))
-				src.visible_message("<span class='notice'>[user] stops the [src].</span>")
-			playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+			src.updateDialog()
+
+			if (istype(user)) src.visible_message("<span class='notice'>[user] stops the [src].</span>")
+			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
@@ -284,6 +269,7 @@
 		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air)]</span>")
 		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air.oxygen / TOTAL_MOLES(T.air)]</span>") */
+
 		return T.air.oxygen / TOTAL_MOLES(T.air)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
@@ -339,6 +325,18 @@
 
 		return average / i
 
+	proc/get_output_cable()
+		var/list/cables = src.get_connections()
+
+		if (!cables.len)
+			return 0
+
+		for (var/obj/cable/C in cables)
+			if (C.get_powernet())
+				return C
+
+		return 0
+
 	proc/eject_fuel_tank(var/mob/user as mob)
 		if (!src || !src.fuel_tank)
 			return
@@ -348,11 +346,13 @@
 			src.visible_message("<span class='notice'>[user] removes the [src.fuel_tank] from the [src].</span>")
 			user.put_in_hand_or_eject(src.fuel_tank)
 
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+
 		src.fuel_tank = null
 		src.stop_engine()
-		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
+
 		src.UpdateIcon()
+		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
 
 	proc/eject_inlet_tank(var/mob/user as mob)
 		if (!src || !src.inlet_tank)
@@ -363,9 +363,12 @@
 			src.visible_message("<span class='notice'>[user] removes the [src.inlet_tank] from the [src].</span>")
 			user.put_in_hand_or_eject(src.inlet_tank)
 
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.inlet_tank = null
+
 		src.UpdateIcon()
+		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+
+
 
 /*	smelly verbs
 	verb/start_stop()
