@@ -95,29 +95,24 @@
 		return 0
 
 	if (ishuman(user))
-		var/mob/living/carbon/human/C = user
-		if (isdead(C)) //No need to call for dead people!
+		var/mob/living/carbon/human/H = user
+		if (isdead(H)) //No need to call for dead people!
 			return 0
-		if (C.get_brain_damage() >= 60)
+		if (H.get_brain_damage() >= 60)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
-			if (src.brainloss_nospam && world.time < src.brainloss_nospam + 10)
-				return 1
-
-			if (prob(20))
+			if (prob(20) && !ON_COOLDOWN(H,"brainstumble_cooldown", 1 SECOND))
 				playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
-				src.visible_message("<span class='alert'><b>[C]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
-				if (!istype(C.head, /obj/item/clothing/head/helmet))
-					var/obj/item/affecting = C.organs["head"]
+				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
+				if (!istype(H.head, /obj/item/clothing/head/helmet))
+					var/obj/item/affecting = H.organs["head"]
 					if (affecting)
 						affecting.take_damage(9, 0)
-						C.UpdateDamageIcon()
-					C.changeStatus("weakened", 1 SECOND)
+						H.UpdateDamageIcon()
+					H.changeStatus("weakened", 1 SECOND)
 				else
-					boutput(C, "<span class='notice'>Your helmet protected you from injury!</span>")
-
-				src.brainloss_nospam = world.time
+					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")
 				return 1
 	return 0
 
