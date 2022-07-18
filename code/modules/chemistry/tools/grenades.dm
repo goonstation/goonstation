@@ -336,14 +336,16 @@
 		var/obj/item/reagent_containers/glass/B1 = new(src)
 		var/obj/item/reagent_containers/glass/B2 = new(src)
 
-		B1.reagents.add_reagent("aluminium", 10)
-		B1.reagents.add_reagent("potassium", 10)
-		B1.reagents.add_reagent("cola", 10)
-		B1.reagents.add_reagent("chlorine", 10)
+		B1.reagents.maximum_volume = 100
+		B1.reagents.add_reagent("aluminium", 25)
+		B1.reagents.add_reagent("potassium", 25)
+		B1.reagents.add_reagent("cola", 25)
+		B1.reagents.add_reagent("chlorine", 25)
 
-		B2.reagents.add_reagent("sulfur", 10)
-		B2.reagents.add_reagent("oxygen", 10)
-		B2.reagents.add_reagent("phosphorus", 10)
+		B2.reagents.maximum_volume = 100
+		B2.reagents.add_reagent("sulfur", 25)
+		B2.reagents.add_reagent("oxygen", 25)
+		B2.reagents.add_reagent("phosphorus", 25)
 
 		beakers += B1
 		beakers += B2

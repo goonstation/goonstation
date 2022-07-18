@@ -479,6 +479,17 @@ datum
 			fluid_b = 120
 			transparency = 255
 
+		disease/leprosybacteria
+			name = "mycobacterium leprae"
+			id = "mycobacterium leprae"
+			description = "A bacterial strain that is known to cause leprosy in humans."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/leprosy
+
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"

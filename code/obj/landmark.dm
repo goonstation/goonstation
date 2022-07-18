@@ -229,7 +229,7 @@ var/global/list/job_start_locations = list()
 /obj/landmark/spawner/loot
 	name = "Loot spawn"
 	type_to_spawn = /obj/storage/crate/loot
-	spawnchance = 75
+	spawnchance = 10
 
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
