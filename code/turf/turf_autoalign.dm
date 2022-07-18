@@ -396,6 +396,7 @@
 
 /turf/simulated/wall/auto/reinforced/paper
 	icon = 'icons/turf/walls_paper.dmi'
+	default_material = "bamboo"
 	connects_to = list(/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/wingrille_spawn)
 	connects_with_overlay = list(/obj/table/reinforced/bar/auto)
 
@@ -407,6 +408,7 @@
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
 	mod = ""
+	default_material = "wood"
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
@@ -486,6 +488,7 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_diagonal = 1
+	default_material = "wood"
 	connects_to = list(/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
