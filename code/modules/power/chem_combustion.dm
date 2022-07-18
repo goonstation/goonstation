@@ -1,10 +1,10 @@
 /obj/machinery/power/combustion_generator
 	name = "Portable Generator"
-	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS"
+	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = 0
-	flags = NOSPLASH
+	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
 	mats = list("MET-2" = 12, "CON-1" = 8)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
@@ -117,6 +117,7 @@
 
 					src.visible_message("<span class='notice'>[usr] loads the [I] into the [src].</span>")
 
+		src.add_fingerprint(usr)
 		src.updateDialog()
 		return
 

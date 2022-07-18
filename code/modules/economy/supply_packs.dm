@@ -321,6 +321,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Experimental Local Generator Crate"
 
+/datum/supply_packs/combustion_generator
+	name = "Portable Combustion Generator"
+	desc = "x1 Portable Generator, x1 Complementary Handheld Fueltank"
+	category = "Engineering Department"
+	contains = list(/obj/machinery/power/combustion_generator,
+					/obj/item/reagent_containers/food/drinks/fueltank/empty)
+	cost = 6000
+	containertype = /obj/storage/crate/wooden
+	containername = "Portable Combustion Generator"
+
 /datum/supply_packs/medicalfirstaid
 	name = "Medical: First Aid Crate"
 	desc = "x10 Assorted First Aid Kits"
