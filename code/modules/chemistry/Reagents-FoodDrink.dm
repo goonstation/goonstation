@@ -4436,7 +4436,7 @@ datum
 			thirst_value = 0.8
 
 		fooddrink/iced/thaicoffee
-			name = "thai iced coffee"
+			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
 			fluid_g = 172
