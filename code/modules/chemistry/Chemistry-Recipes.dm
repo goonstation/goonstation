@@ -1844,7 +1844,7 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
-		iced_coconutmilkespresso
+		iced/coconutmilkespresso
 			name = "Iced Coconut Milk Espresso"
 			id = "icedcoconutmilkespresso"
 			result = "icedcoconutmilkespresso"
