@@ -384,8 +384,7 @@
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
 					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
 				else
-					state = 3 - state
-					user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
+					assembly_handler(user, W)
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 				if (deconstruct_time)
