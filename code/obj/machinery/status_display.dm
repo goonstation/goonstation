@@ -186,9 +186,9 @@
 
 	proc/set_maptext(var/line1, var/line2)
 		if(!line2)
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]</span>"}
 		else
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]<BR/>[line2]</span>"}
 
 	proc/set_picture(var/state)
 		var/image/previous = GetOverlayImage("picture")

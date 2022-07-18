@@ -4,6 +4,7 @@
 	flock_desc = "A computing node that provides compute power to the Flock."
 	flock_id = "Compute node"
 	health = 60
+	uses_health_icon = FALSE
 	icon_state = "compute"
 	compute = 60
 	var/static/display_count = 9

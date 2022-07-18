@@ -30,6 +30,15 @@
 		else
 			src.UpdateOverlays(null, "barcode")
 
+	attackby(obj/item/I, mob/user)
+		if(!src.open && istype(I, /obj/item/antitamper))
+			if(src.locked)
+				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				return
+			var/obj/item/antitamper/AT = I
+			AT.attach_to(src, user)
+			return
+		..()
 
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
@@ -299,8 +308,9 @@
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
 					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					if (owner.mind)
-						owner.mind.traitor_crate_items += item_datum
+					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(T))
+						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
 			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")

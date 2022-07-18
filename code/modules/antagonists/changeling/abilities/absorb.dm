@@ -150,7 +150,7 @@
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
 
-		devour.addDNA(target)
+		devour.addBHData(target)
 
 	onEnd()
 		..()
@@ -202,7 +202,7 @@
 			return 1
 		if (isnpc(T))
 			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
-			addDNA(T)
+			addBHData(T)
 			return 1
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
@@ -211,7 +211,7 @@
 		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)
 		return 0
 
-	proc/addDNA(var/mob/living/T)
+	proc/addBHData(var/mob/living/T)
 		var/datum/abilityHolder/changeling/C = holder
 		var/mob/ownerMob = holder.owner
 		if (istype(C) && isnull(C.absorbed_dna[T.real_name]))
