@@ -628,8 +628,7 @@
 	else return
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
-	if(world.time >= user.last_door_knock_time) //slow the fuck down cowboy
-		user.last_door_knock_time = world.time + KNOCK_DELAY
+	if(!ON_COOLDOWN(user,"knocking_cooldown",KNOCK_DELAY))//slow the fuck down cowboy
 		attack_particle(user,src)
 		playsound(src.loc, src.knocksound, 100, 1) //knock knock
 

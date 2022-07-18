@@ -1447,7 +1447,7 @@ About the new airlock wires panel:
 		ui_interact(user)
 		interact_particle(user,src)
 
-	//clicking with no access, door closed, and help intent, and panel closed to knock
+	//clicking with no access, door closed, and help intent to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
 		knockOnDoor(user)
 		return //Opening the door just because knocks are on cooldown is rude!
