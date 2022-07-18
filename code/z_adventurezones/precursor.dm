@@ -118,29 +118,32 @@
 	sound_group = "precursor"  //Differs from the caves it's in, for a mysterious sound-blocking effect.
 	sound_loop = 'sound/ambience/industrial/Precursor_Drone1.ogg'
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/precursor/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg','sound/ambience/industrial/Precursor_Choir.ogg','sound/ambience/industrial/Precursor_Drone3.ogg','sound/ambience/industrial/Precursor_Bells.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/precursor/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	pit
-		name = "Ominous Pit"
-		icon_state = "purple"
-		filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
-		sound_environment = 24
-		sound_group = "ominouspit"
-		skip_sims = 1
-		sims_score = 300
+/area/precursor/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg',\
+			'sound/ambience/industrial/Precursor_Choir.ogg',\
+			'sound/ambience/industrial/Precursor_Drone3.ogg',\
+			'sound/ambience/industrial/Precursor_Bells.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
+
+/area/precursor/pit
+	name = "Ominous Pit"
+	icon_state = "purple"
+	filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
+	sound_environment = 24
+	sound_group = "ominouspit"
+	skip_sims = 1
+	sims_score = 300
 
 ////////////////////// cogwerks - HELL
 

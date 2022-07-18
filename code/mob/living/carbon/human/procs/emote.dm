@@ -833,6 +833,12 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "yawn")
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
+						for (var/mob/living/carbon/C in view(5,get_turf(src)))
+							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
+								C.emote("yawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -1330,7 +1336,7 @@
 
 						if (M)
 							if (!M.restrained() && M.stat != 1 && !isunconscious(M) && !isdead(M))
-								if (alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", "Yes", "No") == "Yes")
+								if (tgui_alert(M, "[src] offers you a highfive! Do you accept it?", "Choice", list("Yes", "No")) == "Yes")
 									if (M in view(1,null))
 										message = "<B>[src]</B> and [M] highfive!"
 										maptext_out = "<I>highfives [M]!</I>"
@@ -2367,8 +2373,6 @@
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
-		if (client?.hellbanned)
-			src.changeStatus("weakened", 4 SECONDS)
 		G.affecting.changeStatus("weakened", max(G.affecting.getStatusDuration("weakened"), 4.4 SECONDS))
 
 

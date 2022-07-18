@@ -228,8 +228,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
-		prefabSizeX = 32
-		prefabSizeY = 24
+		prefabSizeX = 35
+		prefabSizeY = 26
 
 	safehouse // A seemingly abandoned safehouse
 		maxNum = 1

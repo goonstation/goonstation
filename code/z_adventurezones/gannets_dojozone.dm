@@ -101,21 +101,22 @@ Contents:
 	sound_loop = 'sound/ambience/dojo/dojoambi.ogg'
 	sound_loop_vol = 50
 
+/area/dojo/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/dojo/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(rand(125,225))
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg','sound/ambience/nature/Biodome_Birds2.ogg','sound/ambience/nature/Biodome_Bugs.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+/area/dojo/area_process()
+	if(prob(15)) // originally 12-22s
+		src.sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg',\
+			'sound/ambience/nature/Biodome_Birds2.ogg',\
+			'sound/ambience/nature/Biodome_Bugs.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 30)
 
 // Mobs
 
@@ -481,7 +482,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 30 && R.material.getProperty("hard") >= 15)
+					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -705,8 +706,6 @@ Contents:
 	icon_state = "2"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 // -Floors
 

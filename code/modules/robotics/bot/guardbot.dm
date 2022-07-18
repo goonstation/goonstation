@@ -4811,7 +4811,7 @@
 /obj/machinery/computer/tour_console
 	name = "Tour Console"
 	desc = "A computer console, presumably one relating to tours."
-	icon_state = "old2"
+	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
 

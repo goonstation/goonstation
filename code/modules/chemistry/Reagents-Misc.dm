@@ -698,6 +698,76 @@ datum
 					W.icon = I
 				return
 
+		graphene
+			name = "graphene"
+			id = "graphene"
+			description = "A miniscule honeycomb lattice."
+			reagent_state = SOLID
+			fluid_r = 20
+			fluid_g = 20
+			fluid_b = 20
+			value = 5
+
+		graphene_compound
+			name = "Graphene Hardening Compound"
+			id = "graphene_compound"
+			description = "A thick industrial compound used to reinforce things."
+			reagent_state = LIQUID
+			fluid_r = 10
+			fluid_g = 10
+			fluid_b = 10
+			transparency = 180
+			viscosity = 0.8
+			value = 9
+
+			reaction_obj(var/obj/O, var/volume)
+				if (volume < 1)
+					return
+
+				var/colorize
+				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
+					var/obj/machinery/atmospherics/pipe/simple/P = O
+
+					if(P.can_rupture)
+						var/max_reinforcement = 1e9
+						if(P.fatigue_pressure >= max_reinforcement)
+							return
+
+						P.fatigue_pressure = clamp(P.fatigue_pressure * (2**volume), initial(P.fatigue_pressure), max_reinforcement)
+						colorize = TRUE
+
+				else if (istype(O,/obj/window))
+					var/obj/window/W = O
+					var/initial_resistance = initial(W.explosion_resistance)
+					W.explosion_resistance = clamp(W.explosion_resistance + volume, initial_resistance, initial_resistance + 3)
+					colorize = TRUE
+
+				if(colorize)
+					var/icon/I = icon(O.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					O.icon = I
+					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
+				var/turf/simulated/wall/T = target
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/length(covered) < 2) //reduce effect based on dilution
+						volume_mult = min(volume / 9, 1)
+
+				if(istype(T))
+					var/initial_resistance = initial(T.explosion_resistance)
+					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
+
+					var/icon/I = icon(T.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					T.icon = I
+					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+
+
 //foam precursor
 
 		fluorosurfactant
@@ -2057,7 +2127,9 @@ datum
 			transparency = 192
 			viscosity = 0.3
 			depletion_rate = 0.25
-			var/conversion_rate = 1
+			flushing_multiplier = 2
+			var/conversion_rate = 0.7
+			var/gib_threshold = 200
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 							"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
 							"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
@@ -2069,6 +2141,9 @@ datum
 
 			on_remove()
 				active_reagent_holders -= src
+				var/mob/M = holder.my_atom
+				if (istype(M) && !istype(M.loc, /obj/flock_structure/cage))
+					M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 
 			proc/process_reactions()
 				// consume fellow reagents
@@ -2082,7 +2157,8 @@ datum
 
 					if(length(otherReagents) > 0)
 						var/targetReagent = pick(otherReagents) //pick one reagent and convert it
-						if(targetReagent != "blood_placeholder") //blood is handled in on_mob_life
+						//don't convert normal flushing chems in bloodstream, we're not THAT mean
+						if(!ismob(holder.my_atom) || !(targetReagent in list("calomel", "hunchback", "penteticacid", "tealquila", "blood_placeholder"))) //blood is handled in on_mob_life
 							holder.remove_reagent(targetReagent, conversion_rate)
 							holder.add_reagent(id, conversion_rate)
 					else
@@ -2101,32 +2177,50 @@ datum
 					// i'm sorry sir but your blood counts as raw materials
 					var/mob/living/carbon/human/H = M
 					var/amt = conversion_rate * mult
-					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 50)
+					if(H.blood_volume >= amt && holder.get_reagent_amount(src.id) > 40)
 						H.blood_volume -= amt
 						H.reagents.add_reagent(id, amt)
-					if(holder.get_reagent_amount(src.id) > 300)
+					if(holder.get_reagent_amount(src.id) > gib_threshold)
+						//make it obvious that you are about to die horribly
+						M.addOverlayComposition(/datum/overlayComposition/flockmindcircuit)
 						// oh no
 						if(probmult(1)) // i hate you all, players
-							H.visible_message("<span class='alert bold'>[H] is torn apart from the inside as some weird floaty thing rips its way out of their body! Holy fuck!!</span>")
-							var/mob/living/critter/flock/bit/B = new()
-							B.set_loc(get_turf(H))
+							H.flockbit_gib()
 							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
-							H.gib()
 					else
-						// DO SPOOKY THINGS
-						if(holder.get_reagent_amount(src.id) < 100)
-							if(probmult(2))
-								M.playsound_local(get_turf(M), pick(sounds), 20, 1)
-							if(probmult(6))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
-						else
-							if(probmult(20))
-								M.playsound_local(get_turf(M), pick(sounds), 40, 1)
-							if(probmult(30))
-								boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
+						if (!istype(M.loc, /obj/flock_structure/cage))
+							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
+					// DO SPOOKY THINGS
+					if(holder.get_reagent_amount(src.id) < 100)
+						if(probmult(2))
+							M.playsound_local(get_turf(M), pick(sounds), 20, 1)
+						if(probmult(6))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_low")]</span>")
+					else
+						if (probmult(5) && !ON_COOLDOWN(M, "flock_organ", 3 MINUTES))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>You feel something hard and sharp crystallize inside you!</b></span>")
+							src.replace_organ(H)
+						if(probmult(10))
+							M.playsound_local(get_turf(M), pick(sounds), 40, 1)
+							M.setStatus("gnesis_glow", 2 SECONDS)
+						if(probmult(30))
+							boutput(M, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockjuice_high")]</span>")
 
 				..()
 				return
+
+			proc/replace_organ(var/mob/living/carbon/human/H)
+				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/obj/item/organ/organ = H.get_organ(organ_name)
+				if (istype(organ, /obj/item/organ/flock_crystal))
+					return
+				H.drop_organ(organ_name, null)
+				var/obj/item/organ/flock_crystal/new_organ = new()
+				new_organ.organ_name = organ_name
+				new_organ.name = "crystallized [organ.name]"
+				H.receive_organ(new_organ, organ_name, FALSE, TRUE)
+				qdel(organ)
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
@@ -2823,12 +2917,14 @@ datum
 					return
 
 				reacting = 1
-				var/count = 0
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					count++
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
-
+				if(volume >= 5)
+					var/count = 0
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						count++
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count), stun_coeff = min(volume / 25, 1))
+				else
+					elecflash(holder.my_atom)
 				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)

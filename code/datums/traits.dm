@@ -222,18 +222,18 @@
 				if(!(id in usr.client.preferences.traitPreferences.traits_selected))
 					if(traitCategoryAllowed(usr.client.preferences.traitPreferences.traits_selected, id))
 						if(usr.client.preferences.traitPreferences.traits_selected.len >= TRAIT_MAX)
-							alert(usr, "You can not select more than [TRAIT_MAX] traits.")
+							tgui_alert(usr, "You can not select more than [TRAIT_MAX] traits.", "Max traits")
 						else
 							if(((usr.client.preferences.traitPreferences.calcTotal()) + points) < 0)
-								alert(usr, "You do not have enough points available to select this trait.")
+								tgui_alert(usr, "You do not have enough points available to select this trait.", "No points")
 							else
 								usr.client.preferences.traitPreferences.selectTrait(id)
 					else
-						alert(usr, "You can only select one trait of this category.")
+						tgui_alert(usr, "You can only select one trait of this category.", "No more than one")
 			else if (control == "traitssetup_[usr.ckey].traitsSelected")
 				if(id in usr.client.preferences.traitPreferences.traits_selected)
 					if(((usr.client.preferences.traitPreferences.calcTotal()) - points) < 0)
-						alert(usr, "Removing this trait would leave you with less than 0 points. Please remove a different trait.")
+						tgui_alert(usr, "Removing this trait would leave you with less than 0 points. Please remove a different trait.", "Cannot continue")
 					else
 						usr.client.preferences.traitPreferences.unselectTrait(id)
 

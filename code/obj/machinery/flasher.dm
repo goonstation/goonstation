@@ -16,7 +16,7 @@
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
@@ -166,10 +166,15 @@
 
 /obj/machinery/flasher/New()
 	..()
+	START_TRACKING
 	light = new /datum/light/point
 	light.attach(src)
 	light.set_brightness(0.4)
 	light.set_height(0.5)
+
+/obj/machinery/flasher/disposing()
+	..()
+	STOP_TRACKING
 
 /obj/machinery/flasher/power_change()
 	if ( powered() )

@@ -92,6 +92,12 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/vending/monkey)
 				qdel(MAC)
+			if (/obj/machinery/vending/monkey/kitchen)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey/genetics)
+				qdel(MAC)
+			if (/obj/machinery/vending/monkey/research)
+				qdel(MAC)
 			if (/obj/machinery/vending/security)
 				qdel(MAC)
 			if (/obj/machinery/vending/mechanics)
@@ -105,6 +111,8 @@ var/global/area/current_battle_spawn = null
 			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
+				qdel(MAC)
+			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 				qdel(MAC)
 			if (/obj/machinery/teleport/portal_generator)
 				qdel(MAC)
@@ -418,7 +426,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
@@ -451,10 +459,56 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/shirtnjeans,
 		/obj/item/clothing/under/gimmick/hakama/random)
 	jumpsuit = new suit_type(battler)
+	jumpsuit.setProperty("coldprot", 5)
+	jumpsuit.setProperty("heatprot", 5)
+	jumpsuit.setProperty("meleeprot", 1)
+	jumpsuit.setProperty("chemprot", 10)
+	var/obj/item/clothing/head/hat = null
+	var/hat_type = pick(
+		/obj/item/clothing/head/basecap/black,
+		/obj/item/clothing/head/basecap/purple,
+		/obj/item/clothing/head/basecap/red,
+		/obj/item/clothing/head/basecap/yellow,
+		/obj/item/clothing/head/basecap/green,
+		/obj/item/clothing/head/basecap/blue,
+		/obj/item/clothing/head/basecap/white,
+		/obj/item/clothing/head/basecap/pink,
+		/obj/item/clothing/head/red,
+		/obj/item/clothing/head/blue,
+		/obj/item/clothing/head/yellow,
+		/obj/item/clothing/head/pink,
+		/obj/item/clothing/head/orange,
+		/obj/item/clothing/head/purple,
+		/obj/item/clothing/head/dolan,
+		/obj/item/clothing/head/green,
+		/obj/item/clothing/head/black,
+		/obj/item/clothing/head/white,
+		/obj/item/clothing/head/pirate_blk,
+		/obj/item/clothing/head/pirate_brn,
+		/obj/item/clothing/head/westhat,
+		/obj/item/clothing/head/graduation_cap,
+		/obj/item/clothing/head/party/random,
+		/obj/item/clothing/head/beret,
+		/obj/item/clothing/head/beret/prisoner,
+		/obj/item/clothing/head/bigtex,
+		/obj/item/clothing/head/longbee,
+		/obj/item/clothing/head/plunger,
+		/obj/item/clothing/head/chefhat,
+		/obj/item/clothing/head/that/gold,
+		/obj/item/clothing/head/sea_captain)
+	hat = new hat_type(battler)
+	hat.setProperty("meleeprot_head", 3)
+	hat.setProperty("coldprot", 5)
+	hat.setProperty("heatprot", 5)
 	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
+	battler.equip_if_possible(hat, battler.slot_head)
 	battler.equip_if_possible(new /obj/item/clothing/shoes/swat(battler), battler.slot_shoes)
+	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
+	vest.delProperty("heatprot")
+	vest.delProperty("coldprot")
+	battler.equip_if_possible(vest, battler.slot_wear_suit)
 	battler.equip_if_possible(new /obj/item/storage/backpack(battler), battler.slot_back)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_l_store)
+	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_r_store)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary

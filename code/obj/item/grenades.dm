@@ -1273,6 +1273,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
 	flags = ONBELT
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2
 
@@ -1434,7 +1435,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	attack_self(mob/user as mob)
 		if (state == 3)
-			if(alert(user, "Pour out the pipebomb reagents?",,"Yes","No") == "No")
+			if(tgui_alert(user, "Pour out the pipebomb reagents?", "Empty reagents", list("Yes", "No")) != "Yes")
 				return
 			boutput(user, "<span class='notice'>The reagents inside spill out!</span>")
 			src.reagents = null
@@ -1442,6 +1443,16 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		return
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/pipebomb/frame))
+			var/obj/item/pipebomb/frame/other_frame = W
+			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
+				user.u_equip(src)
+				user.u_equip(W)
+				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+				user.put_in_hand_or_drop(S)
+				qdel(W)
+				qdel(src)
 
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))

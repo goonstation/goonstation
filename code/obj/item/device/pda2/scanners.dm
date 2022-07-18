@@ -52,7 +52,7 @@
 	//Forensic scanner
 	forensic_scan
 		name = "Forensic Scan"
-		size = 8
+		size = 6
 
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
@@ -151,6 +151,20 @@
 
 			. = scan_medrecord(src.master, C, visible = 1)
 			update_medical_record(C)
+
+	secrecord_scan
+		name = "Secmate Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if (..())
+				return
+
+			if (!iscarbon(A))
+				return
+			var/mob/living/carbon/C = A
+
+			. = scan_secrecord(src.master, C, visible = 1)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"

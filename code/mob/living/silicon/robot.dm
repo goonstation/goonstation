@@ -172,15 +172,6 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..(loc, null, null, FALSE)
-
-		hud = new(src)
-		src.attach_hud(hud)
-
-		src.zone_sel = new(src, "CENTER+3, SOUTH")
-		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
-		src.attach_hud(zone_sel)
-
 		update_bodypart()
 
 		if (src.shell)
@@ -195,6 +186,16 @@
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 			src.syndicate = syndie
 			src.emagged = frame_emagged
+
+		. = ..(loc) //must be called before hud is attached
+
+		hud = new(src)
+		src.attach_hud(hud)
+
+		src.zone_sel = new(src, "CENTER+3, SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
+		src.attach_hud(zone_sel)
+
 		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
@@ -239,6 +240,9 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if (src.syndicate)
+				src.show_antag_popup("syndieborg")
+				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
@@ -965,7 +969,7 @@
 					if (!(src.mind in ticker.mode.Agimmicks))
 						ticker.mode.Agimmicks += src.mind
 				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
+				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
 				if(src.syndicate)
 					src.antagonist_overlay_refresh(1, 1)
 				update_appearance()

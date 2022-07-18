@@ -28703,7 +28703,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "mdc" = (
-/obj/storage/secure/closet/brig/automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "mdu" = (

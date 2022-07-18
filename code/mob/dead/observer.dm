@@ -66,6 +66,7 @@
 	if(src.client)
 		src.updateOverlaysClient(src.client)
 		src.updateButtons()
+		src.hud.update_ability_hotbar()
 	// ok so in logout we set your ghost to 101 invisibility.
 	// in login we set it back to whatever it was. so you keep your ghost.
 	// is there a better way to do this? probably. i dont care.
@@ -233,7 +234,8 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
@@ -517,6 +519,8 @@
 	if((direct & WEST) && src.x > 1)
 		src.x--
 	OnMove()
+
+	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return

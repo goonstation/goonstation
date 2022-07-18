@@ -112,6 +112,7 @@
 							return
 
 					if(target != user)
+						user.visible_message("<span class='alert'><B>[user] is trying to draw blood from [target]!</B></span>")
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 					else
 						transfer_blood(target, src, src.amount_per_transfer_from_this)
@@ -168,6 +169,7 @@
 						return
 					if (target != user)
 						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
+						user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 						user.update_inhands()
 						return
@@ -186,8 +188,7 @@
 					logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 					// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 					// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).
-
-					var/amount_transferred = src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 					user.update_inhands()
 
 					if (istype(target,/obj/item/reagent_containers/patch))
@@ -198,7 +199,6 @@
 						patch_name += "patch"
 						target.name = patch_name
 
-					boutput(user, "<span class='notice'>You inject [amount_transferred] units of the solution. The [src.name] now contains [src.reagents.total_volume] units.</span>")
 		return
 
 	proc/syringe_action(mob/user, mob/target)
@@ -208,9 +208,8 @@
 				target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
 			if(S_INJECT)
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
-				var/amount_transferred = src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 				target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
-				boutput(user, "<span class='notice'>You inject [amount_transferred] units of the solution. The [src.name] now contains [src.reagents.total_volume] units.</span>")
 				logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 /* =================================================== */

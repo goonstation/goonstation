@@ -150,6 +150,9 @@
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
 
+		//Don't be on the list of available drones
+		available_ghostdrones -= src
+
 		//So the drone cant pick up an item and then die, sending the item ~to the void~
 		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.tools
 		var/obj/item/magHeld = mag.holding ? mag.holding : null
@@ -287,7 +290,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Drone", list("Exclaim", "Eye", "Happy", "Heart", "Kitty", "Lopsy", "Mad", "Question", "Sad", "Sleepy"))
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -1271,7 +1274,7 @@
 	var/mob/living/silicon/ghostdrone/G
 	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
-			if (T.newDrone)
+			if (T.newDrone && !isdead(T))
 				G = T
 				break
 			else // why are you in this list

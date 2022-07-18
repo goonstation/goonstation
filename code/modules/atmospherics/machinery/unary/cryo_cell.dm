@@ -51,6 +51,8 @@
 		build_icon()
 
 	disposing()
+		if (src.occupant)
+			src.go_out()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()
@@ -361,7 +363,7 @@
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
 
-		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [log_reagents(src.beaker)] at [log_loc(src)].")
+		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
 		target.remove_pulling()
 		src.occupant = target
 		src.occupant.set_loc(src)

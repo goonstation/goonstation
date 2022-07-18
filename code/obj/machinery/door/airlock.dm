@@ -149,9 +149,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock
 	name = "airlock"
-	icon = 'icons/obj/doors/doorint.dmi'
+	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-
 	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
@@ -323,10 +322,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/pyro
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
-	icon_state = "generic_closed"
-	icon_base = "generic"
-	panel_icon_state = "panel_open"
-	welded_icon_state = "welded"
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
 
 /obj/machinery/door/airlock/pyro/safe
@@ -1452,16 +1447,28 @@ About the new airlock wires panel:
 	else
 		switch(welded_icon_state)
 			if("welded")
-				if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
-					start = list(0,-15)
-					stop = list(0,15)
+				if(dir == NORTH || dir == SOUTH)
+					if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
+						start = list(0,-15)
+						stop = list(0,15)
+					else
+						start = list(0,15)
+						stop = list(0,-15)
 				else
-					start = list(0,15)
-					stop = list(0,-15)
+					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
+						start = list(-15,0)
+						stop = list(15,0)
+					else
+						start = list(15,0)
+						stop = list(-15,0)
 			if("2_welded")
 				if(dir == NORTH || dir == SOUTH)
-					start = list(0,-15)
-					stop = list(0,5)
+					if(rel_dir == NORTH || rel_dir == NORTHWEST || rel_dir == NORTHEAST)
+						start = list(0,-15)
+						stop = list(0,15)
+					else
+						start = list(0,15)
+						stop = list(0,-15)
 				else
 					if(rel_dir == EAST || rel_dir == SOUTHEAST || rel_dir == NORTHEAST)
 						start = list(-15,0)

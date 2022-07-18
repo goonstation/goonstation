@@ -179,36 +179,45 @@
 			the_server.eaten(owner)
 			using = FALSE
 			return
-		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+
+			// First, restore a little hunger, and heal our organs
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-			for(var/A in owner.organs)
-				var/obj/item/affecting = null
-				if (!owner.organs[A])    continue
-				affecting = owner.organs[A]
-				if (!isitem(affecting))
-					continue
-				affecting.heal_damage(4, 0)
-			owner.UpdateDamageIcon()
+				for(var/A in owner.organs)
+					var/obj/item/affecting = null
+					if (!owner.organs[A])
+						continue
+					affecting = owner.organs[A]
+					if (!isitem(affecting))
+						continue
+					affecting.heal_damage(4, 0)
+				owner.UpdateDamageIcon()
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (istype(the_object, /obj/item/organ))
-				var/obj/item/organ/O = the_object
-				if (O.donor)
-					H.organHolder.drop_organ(the_object)
+		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
+			var/obj/item/I = the_object
+			if(I)
+				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					// Organs and body parts have special behaviors we need to account for
+					if (ishuman(owner))
+						var/mob/living/carbon/human/H = owner
+						if (istype(the_object, /obj/item/organ))
+							var/obj/item/organ/organ_obj = the_object
+							if (organ_obj.donor)
+								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
+						else if (istype(the_object, /obj/item/parts))
+							var/obj/item/parts/part = the_object
+							part.delete()
+							H.hud.update_hands()
+			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
+				playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 				qdel(the_object)
-			else if (istype(the_object, /obj/item/parts))
-				var/obj/item/parts/part = the_object
-				part.delete()
-				H.hud.update_hands()
-		else
-			qdel(the_object)
+
+
 
 		using = FALSE
 

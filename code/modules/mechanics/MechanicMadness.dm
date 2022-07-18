@@ -343,6 +343,7 @@
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
@@ -888,7 +889,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)
@@ -2535,6 +2536,8 @@
 						heardname = ID.registered
 					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)

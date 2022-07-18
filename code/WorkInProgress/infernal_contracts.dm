@@ -254,7 +254,7 @@ proc/is_weak_rollable_contract(type)
 	burn_possible = 0 //Only makes sense since it's from hell.
 	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 80 //buffed from 40
 	stamina_cost = 20 //nerfed from 10
@@ -433,7 +433,10 @@ END GUIDE
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
 			return
 		else if (isdiabolical(user))
-			if (M == user)
+			if (isnpc(M))
+				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
+				return
+			else if (M == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			else if (!M.literate)
