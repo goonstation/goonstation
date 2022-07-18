@@ -9,15 +9,14 @@
 	voice_grim = "sound/voice/wizard/BlinkGrim.ogg"
 	voice_fem = "sound/voice/wizard/BlinkFem.ogg"
 	voice_other = "sound/voice/wizard/BlinkLoud.ogg"
-
-	var/maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("SYCAR TYN", 0, maptext_style, maptext_colors)
+			holder.owner.say("SYCAR TYN", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/accuracy = 3

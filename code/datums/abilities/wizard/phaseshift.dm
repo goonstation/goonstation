@@ -10,8 +10,7 @@
 	voice_grim = "sound/voice/wizard/MistFormGrim.ogg"
 	voice_fem = "sound/voice/wizard/MistFormFem.ogg"
 	voice_other = "sound/voice/wizard/MistFormLoud.ogg"
-
-	var/maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
@@ -20,7 +19,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("PHEE CABUE", 0, maptext_style, maptext_colors)
+			holder.owner.say("PHEE CABUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/SPtime = 35

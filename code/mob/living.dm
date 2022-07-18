@@ -682,7 +682,7 @@
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
-/mob/living/say(var/message, ignore_stamina_winded, unique_maptext_style, maptext_animation_colors)
+/mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)

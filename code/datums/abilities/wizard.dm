@@ -222,6 +222,7 @@
 		voice_fem = null
 		voice_other = null
 		maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+		maptext_colors
 
 	proc/calculate_cooldown()
 		var/cool = src.cooldown

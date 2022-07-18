@@ -11,8 +11,7 @@
 	voice_grim = "sound/voice/wizard/CluwneGrim.ogg"
 	voice_fem = "sound/voice/wizard/CluwneFem.ogg"
 	voice_other = "sound/voice/wizard/CluwneLoud.ogg"
-
-	var/maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
+	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
 
 	cast(mob/target)
 		if(!holder)

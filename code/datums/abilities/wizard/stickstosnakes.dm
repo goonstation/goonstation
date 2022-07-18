@@ -13,8 +13,7 @@
 	voice_fem = "sound/voice/wizard/someoneto.ogg"
 	voice_other = "sound/voice/wizard/recordthese.ogg"
 	*/
-
-	var/maptext_colors = list("#ee59e3", "#ee59e3", "#b320c3", "#e59e3", "#b320c3", "#ee59e3")
+	maptext_colors = list("#ee59e3", "#ee59e3", "#b320c3", "#e59e3", "#b320c3", "#ee59e3")
 
 	cast(atom/target)
 		if(!holder)
@@ -64,7 +63,7 @@
 			return 1 // No cooldown when it fails.
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("STYX TUSNEKS", 0, maptext_style, maptext_colors)
+			holder.owner.say("STYX TUSNEKS", FALSE, maptext_style, maptext_colors)
         //..() uncomment this when we have voice files
 
 		var/obj/critter/snake/snake = new(stick.loc, stick)

@@ -9,8 +9,7 @@
 	voice_grim = "sound/voice/wizard/StaffGrim.ogg"
 	voice_fem = "sound/voice/wizard/StaffFem.ogg"
 	//voice_other = "sound/voice/wizard/notdoneyet.ogg"
-
-	var/maptext_colors = list("#b320c3", "#5a1d8a")
+	maptext_colors = list("#b320c3", "#5a1d8a")
 
 
 	cast(mob/target)
@@ -102,8 +101,7 @@
 	targeted = 0
 	cooldown = 20 SECONDS
 	requires_robes = 1
-
-	var/maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
+	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
 
 	cast(mob/target)
 		var/mob/living/M = holder?.owner
