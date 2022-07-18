@@ -77,7 +77,7 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		))
-		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
 		else if(ismob(parent))
@@ -115,7 +115,7 @@ TYPEINFO(/datum/component/radioactive)
 
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 1.6 : 0.8) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 8 : 4) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""

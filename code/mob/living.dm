@@ -1932,7 +1932,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.take_radiation_dose( damage/100) //power 100 shots will give moderate radiation poisoning instantly without protection
+				src.take_radiation_dose( damage/25) //power 100 shots will give moderate radiation poisoning instantly without protection
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)

@@ -1529,7 +1529,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.take_radiation_dose( (damage)/100) //power 100 shots will give you moderate radiation sickness instantly without protection
+			src.take_radiation_dose( (damage)/25) //power 100 shots will give you moderate radiation sickness instantly without protection
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
@@ -3153,7 +3153,7 @@
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
 	if(Sv > 0)
 		src.radiation_dose += (1-(rad_res/(rad_res+1)))*Sv
-		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, max(max(round(Sv/0.4),1),5))
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
 		if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
 	else

@@ -141,10 +141,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.take_radiation_dose(0.1)
+			L.take_radiation_dose(1.0)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.take_radiation_dose(0.2)
+			L.take_radiation_dose(2.0)
