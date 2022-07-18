@@ -26,7 +26,7 @@
 	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
-	var/deconstruct_time = 10
+	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
@@ -615,7 +615,7 @@
 	health = 80
 	health_max = 80
 	explosion_resistance = 2
-	deconstruct_time = 20
+	deconstruct_time = 2 SECONDS
 
 /obj/window/crystal/pyro
 	icon_state = "pyro"
@@ -626,7 +626,7 @@
 	health = 100
 	health_max = 100
 	explosion_resistance = 4
-	deconstruct_time = 50
+	deconstruct_time = 5 SECONDS
 
 /obj/window/crystal/reinforced/pyro
 	icon_state = "rpyro"
@@ -638,7 +638,7 @@
 	icon_state = "rwindow"
 	default_material = "uqillglass"
 	health_multiplier = 100
-	deconstruct_time = 100
+	deconstruct_time = 10 SECONDS
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
@@ -861,7 +861,7 @@
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	health = 80
 	health_max = 80
-	deconstruct_time = 20
+	deconstruct_time = 2 SECONDS
 
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
@@ -869,7 +869,7 @@
 	default_reinforcement = "steel"
 	health = 100
 	health_max = 100
-	deconstruct_time = 50
+	deconstruct_time = 5 SECONDS
 
 /obj/window/auto/bulletproof
 	name = "bulletproof window"
@@ -877,7 +877,7 @@
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	health_multiplier = 100
-	deconstruct_time = 100
+	deconstruct_time = 10 SECONDS
 
 /obj/window/auto/hardened
 	name = "hardened window"
