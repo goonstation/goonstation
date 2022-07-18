@@ -12,7 +12,7 @@
 	var/datum/targetable/critter/gibstare/ability
 	var/max_range
 
-	New(Target, Gibstare, new_duration, new_max_range = 20)
+	New(Target, Gibstare, new_duration, new_max_range = 10)
 		target = Target
 		ability = Gibstare
 		if(new_duration)
@@ -26,20 +26,19 @@
 			if (!ownerCritter.alive)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || !ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if(!(target in view(owner)) || target == null || owner == null || !ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
-		var/mob/ownerMob = owner
-		playsound(ownerMob.loc, "sound/effects/mindkill.ogg", 50, 1)
+		playsound(owner.loc, "sound/effects/mindkill.ogg", 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
@@ -50,10 +49,9 @@
 			if (!ownerCritter.alive)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		var/mob/ownerMob = owner
-		if(ownerMob && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
-			logTheThing("combat", ownerMob, target, "gibs [constructTarget(target,"combat")] using martin gib stare.")
-			for(var/mob/O in AIviewers(ownerMob))
+		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
+			logTheThing("combat", owner, target, "gibs [constructTarget(target,"combat")] using martin gib stare.")
+			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
 			if (target == owner)
 				boutput(owner, "<span class='success'>Good. Job.</span>")
