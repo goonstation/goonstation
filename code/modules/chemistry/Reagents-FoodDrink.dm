@@ -4435,7 +4435,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/thaiicedcoffee
+		fooddrink/iced/thaicoffee
 			name = "thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
