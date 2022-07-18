@@ -4,7 +4,7 @@
 
 /datum/action/bar/icon/gibstareAbility
 	duration = 6 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
@@ -26,13 +26,13 @@
 			if (!ownerCritter.alive)
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || !ability?.cooldowncheck())
+		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || !ability?.cooldowncheck())
+		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
