@@ -1250,9 +1250,12 @@
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
-				else if(istype(CROP,/obj/item/organ/heart))
-					var/obj/item/organ/heart/H = CROP
-					H.quality = quality_score
+				else if (istype(CROP,/obj/item/organ))
+					var/obj/item/organ/O = CROP
+					if(istype(CROP,/obj/item/organ/heart))
+						O.quality = quality_score
+					O.MAX_DAMAGE += DNA.endurance
+					O.FAIL_DAMAGE += DNA.endurance
 
 				else if(istype(CROP,/obj/item/reagent_containers/balloon))
 					var/obj/item/reagent_containers/balloon/B = CROP
