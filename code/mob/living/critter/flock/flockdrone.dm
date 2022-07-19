@@ -71,7 +71,7 @@
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
-/mob/living/critter/flock/drone/proc/do_antigrab(source, var/obj/item/grab/grab)
+/mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
 	SPAWN(1.5 SECONDS)
 		if (QDELETED(src) || !isalive(src) || QDELETED(grab) || !grab.affecting || !grab.assailant)
 			return
