@@ -2240,7 +2240,9 @@ var/global/noir = 0
 						return
 				break
 			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Antagonist", antag_options)
-			var/do_equipment = tgui_alert(usr, "Equip the antagonist with uplinks, special abilities, etc.?", "Add Antagonist", list("Yes", "No", "Cancel"))
+			if (!selected_keyvalue)
+				return
+			var/do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Antagonist", list("Yes", "No", "Cancel"))
 			if (do_equipment == "Cancel")
 				return
 			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Cancel"))
