@@ -10,13 +10,14 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	var/icon_open = "secure0"
 	var/locked = TRUE
 	var/code = ""
-	var/code_len = 5
+	var/code_len = 4
 	var/l_setshort = FALSE
 	var/l_hacking = FALSE
 	var/configure_mode = TRUE
 	var/emagged = FALSE
 	var/open = FALSE
 	var/hackable = FALSE
+	var/disabled = FALSE
 	w_class = W_CLASS_NORMAL
 	burn_possible = FALSE
 	var/random_code = FALSE // sets things to already have a randomized code on spawning
@@ -103,7 +104,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	return show_lock_panel(user)
 
 /obj/item/storage/secure/proc/show_lock_panel(mob/user as mob)
-		var/dat = {"
+		var/dat = disabled ? "Access Denied" : {"
 <!DOCTYPE html>
 <head>
 <title>[src.name]</title>
@@ -211,109 +212,101 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 
 		user << browse(dat, "window=caselock;size=270x300;can_resize=0;can_minimize=0")
 
+/obj/item/storage/secure/proc/set_code(var/code)
+	// The code is not the correct format: null, wrong length, isn't in hex.
+	if (!code || length(code) != src.code_len || !is_hex(code))
+		usr << output("ERR!&0", "caselock.browser:updateReadout")
+	// The code is in valid format, lets set it.
+	else
+		src.code = code
+		src.configure_mode = FALSE
+		usr << output("SET!&0", "caselock.browser:updateReadout")
+
+/obj/item/storage/secure/proc/gen_hint(var/code_attempt)
+	/*
+	Mastermind game in which the solution is "code" and the guess is "code_attempt"
+	First go through the guess and find any with the exact same position as in the solution
+	Increment rightplace when such occurs.
+	Then go through the guess and, with each letter, go through all the letters of the solution code
+	Increment wrongplace when such occurs.
+
+	In both cases, add a power of two corresponding to the locations of the relevant letters
+	This forms a set of flags which is checked whenever same-letters are found
+
+	Once all of the guess has been iterated through for both rightplace and wrongplace, construct
+	a beep/boop message dependant on what was gotten right.
+	*/
+	var/guessplace = 0
+	var/codeplace = 0
+	var/guessflags = 0
+	var/codeflags = 0
+	var/search_len = src.code_len + 1;
+
+	var/wrongplace = 0
+	var/rightplace = 0
+
+	while (++guessplace < search_len)
+		if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
+			guessflags += 2 ** (guessplace-1)
+			codeflags += 2 ** (guessplace-1)
+			rightplace++
+
+	guessplace = 0
+	while (++guessplace < search_len)
+		codeplace = 0
+		while(++codeplace < search_len)
+			if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
+				guessflags += 2 ** (guessplace-1)
+				codeflags += 2 ** (codeplace-1)
+				wrongplace++
+				codeplace = search_len
+
+	var/desctext = ""
+	if (rightplace > 0)
+		desctext += rightplace == 1 ? "a single grumpy beep" : "[rightplace] grumpy beeps"
+
+	if (desctext && (wrongplace) > 0)
+		desctext += " and "
+
+	if (wrongplace == src.code_len)
+		desctext += "a long, sad, warbly boop"
+	else if (wrongplace > 0)
+		desctext += wrongplace == 1 ? "a single short boop" : "[wrongplace] quick boops"
+
+	return desctext
+
+/obj/item/storage/secure/proc/attempt_code(var/code_attempt)
+	// Player has the correct code, toggle it open / closed.
+	if (code_attempt == src.code)
+		usr << output("!OK!&0", "caselock.browser:updateReadout")
+		src.locked = !src.locked
+		src.overlays = src.locked ? null : list(image('icons/obj/items/storage.dmi', icon_open))
+		src.visible_message("<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
+		playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+	else
+		usr << output("ERR!&0", "caselock.browser:updateReadout")
+
+		if (length(code_attempt) == src.code_len)
+			var/desctext = src.gen_hint(code_attempt)
+			if (desctext)
+				src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
+				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1) // set this to play proper beeps later
+
+
+
 /obj/item/storage/secure/Topic(href, href_list)
 	..()
 	if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 		return
 
 	if ("enter" in href_list)
+		var/input_code = uppertext(ckey(href_list["enter"]));
+		// The safe hasn't been setup yet, try setting it up
 		if (src.configure_mode)
-			var/new_code = uppertext(ckey(href_list["enter"]))
-			if (!new_code || length(new_code) != src.code_len || !is_hex(new_code))
-				usr << output("ERR!&0", "caselock.browser:updateReadout")
-			else
-				src.code = new_code
-				src.configure_mode = FALSE
-				usr << output("SET!&0", "caselock.browser:updateReadout")
-
-		else
-			if (uppertext(href_list["enter"]) == src.code)
-				usr << output("!OK!&0", "caselock.browser:updateReadout")
-
-
-				if (src.locked)
-					src.locked = FALSE
-					src.overlays = list(image('icons/obj/items/storage.dmi', icon_open))
-					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
-
-				else
-					src.locked = TRUE
-					src.overlays = null
-					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
-
-			else if (href_list["enter"] == "")
-				src.locked = TRUE
-				src.overlays = null
-				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
-
-			else
-				usr << output("ERR!&0", "caselock.browser:updateReadout")
-				var/code_attempt = uppertext(ckey(href_list["enter"]))
-				/*
-				Mastermind game in which the solution is "code" and the guess is "code_attempt"
-				First go through the guess and find any with the exact same position as in the solution
-				Increment rightplace when such occurs.
-				Then go through the guess and, with each letter, go through all the letters of the solution code
-				Increment wrongplace when such occurs.
-
-				In both cases, add a power of two corresponding to the locations of the relevant letters
-				This forms a set of flags which is checked whenever same-letters are found
-
-				Once all of the guess has been iterated through for both rightplace and wrongplace, construct
-				a beep/boop message dependant on what was gotten right.
-				*/
-				if (length(code_attempt) == src.code_len)
-					var/guessplace = 0
-					var/codeplace = 0
-					var/guessflags = 0
-					var/codeflags = 0
-
-					var/wrongplace = 0
-					var/rightplace = 0
-
-					var/search_len = src.code_len + 1;
-					while (++guessplace < search_len)
-						if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
-							guessflags += 2 ** (guessplace-1)
-							codeflags += 2 ** (guessplace-1)
-							rightplace++
-
-					guessplace = 0
-					while (++guessplace < search_len)
-						codeplace = 0
-						while(++codeplace < search_len)
-							if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
-								guessflags += 2 ** (guessplace-1)
-								codeflags += 2 ** (codeplace-1)
-								wrongplace++
-								codeplace = search_len
-
-					var/desctext = ""
-					if (rightplace > 0)
-						desctext += rightplace == 1 ? "a single grumpy beep" : "[rightplace] grumpy beeps"
-
-					if (desctext && (wrongplace) > 0)
-						desctext += " and "
-
-					if (wrongplace == src.code_len)
-						desctext += "a long, sad, warbly boop"
-					else if (wrongplace > 0)
-						desctext += wrongplace == 1 ? "a single short boop" : "[wrongplace] quick boops"
-
-					if (desctext)
-						src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
-						playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1) // set this to play proper beeps later
-
-	else if (href_list["lock"])
-		if (!src.locked)
-			src.locked = TRUE
-			src.overlays = null
-			boutput(usr, "<span class='alert'>The lock mechanism clunks locked.</span>")
-			src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+			src.set_code(input_code)
+			return
+		// We're dealing with a configured safe, try to open / close it using the set code
+		src.attempt_code(input_code)
 	return
 
 // SECURE BRIEFCASE
@@ -617,7 +610,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	name = "secure vault"
 	configure_mode = FALSE
 	random_code = TRUE
-	var/disabled = TRUE
+	disabled = TRUE
 
 	New()
 		..()
@@ -671,103 +664,3 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	disposing()
 		. = ..()
 		STOP_TRACKING
-
-	show_lock_panel(mob/user as mob)
-		var/dat = ""
-		if(disabled)
-			dat = "Access Denied"
-		else
-			dat = {"
-			<title>[src.name]</title>
-			<style type="text/css">
-				table.keypad, td.key
-				{
-					text-align:center;
-					color:#1F1F1F;
-					background-color:#7F7F7F;
-					border:2px solid #1F1F1F;
-					padding:10px;
-					font-size:24px;
-					font-weight:bold;
-				}
-			</style>
-
-			</head>
-
-
-
-			<body bgcolor=#2F2F2F>
-				<table border = 2 bgcolor=#7F3030 width = 150px>
-					<tr><td><font face='system' size = 6 color=#FF0000 [src.emagged ? ">ERR" : "id = \"readout\">&nbsp;"]</font></td></tr>
-				</table>
-				<br>
-				<table class = "keypad">
-					<tr><td><a href='javascript:keypadIn(7);'>7</a></td><td><a href='javascript:keypadIn(8);'>8</a></td><td><a href='javascript:keypadIn(9);'>9</a></td></td><td><a href='javascript:keypadIn("A");'>A</a></td></tr>
-					<tr><td><a href='javascript:keypadIn(4);'>4</a></td><td><a href='javascript:keypadIn(5);'>5</a></td><td><a href='javascript:keypadIn(6)'>6</a></td></td><td><a href='javascript:keypadIn("B");'>B</a></td></tr>
-					<tr><td><a href='javascript:keypadIn(1);'>1</a></td><td><a href='javascript:keypadIn(2);'>2</a></td><td><a href='javascript:keypadIn(3)'>3</a></td></td><td><a href='javascript:keypadIn("C");'>C</a></td></tr>
-					<tr><td><a href='javascript:keypadIn(0);'>0</a></td><td><a href='javascript:keypadIn("F");'>F</a></td><td><a href='javascript:keypadIn("E");'>E</a></td></td><td><a href='javascript:keypadIn("D");'>D</a></td></tr>
-
-					<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='javascript:keypadIn("reset");'>RESET</a></td></tr>
-				</table>
-
-			<script language="JavaScript">
-				var currentVal = "";
-
-				function updateReadout(t, additive)
-				{
-					if ((additive != 1 && additive != "1") || currentVal == "")
-					{
-						document.getElementById("readout").innerHTML = "&nbsp;";
-						currentVal = "";
-					}
-					var i = 0
-					while (i++ < [src.code_len] && currentVal.length < [src.code_len])
-					{
-						if (t.length)
-						{
-							document.getElementById("readout").innerHTML += t.substr(0,1) + "&nbsp;";
-							currentVal += t.substr(0,1);
-							t = t.substr(1);
-						}
-					}
-
-					document.getElementById("enterkey").setAttribute("href","?src=\ref[src];enter=" + currentVal + ";");
-				}
-
-				function keypadIn(num)
-				{
-					switch (num)
-					{
-						case 0:
-						case 1:
-						case 2:
-						case 3:
-						case 4:
-						case 5:
-						case 6:
-						case 7:
-						case 8:
-						case 9:
-							updateReadout(num.toString(), 1);
-							break;
-
-						case "A":
-						case "B":
-						case "C":
-						case "D":
-						case "E":
-						case "F":
-							updateReadout(num, 1);
-							break;
-
-						case "reset":
-							updateReadout("", 0);
-							break;
-					}
-				}
-
-			</script>
-
-			</body>"}
-
-		user << browse(dat, "window=caselock;size=270x300;can_resize=0;can_minimize=0")
