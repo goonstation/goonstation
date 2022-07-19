@@ -393,7 +393,7 @@
 					. = 4 //more like 70/30 now
 				if(7 to 10)
 					. = 5 //you will die without treatment
-				if(7 to INFINITY)
+				if(10 to INFINITY)
 					. = 6 //you will die.
 
 		onUpdate(timePassed)
