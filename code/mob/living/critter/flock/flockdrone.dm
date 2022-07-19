@@ -73,8 +73,12 @@
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
 	SPAWN(1.5 SECONDS)
-		if (QDELETED(src) || !isalive(src) || QDELETED(grab) || !grab.affecting || !grab.assailant)
+		if (QDELETED(src) || !isalive(src) || src.dormant || QDELETED(grab) || !grab.affecting || !grab.assailant)
 			return
+		if (istype(grab.assailant, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/F = grab.assailant
+			if (F.flock == src.flock)
+				return
 		playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 		var/mob/living/L = grab.assailant
@@ -669,6 +673,7 @@
 	src.set_density(FALSE)
 	src.desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")
+	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 
 /mob/living/critter/flock/drone/ghostize()
 	if(src.controller)
