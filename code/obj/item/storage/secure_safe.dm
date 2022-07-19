@@ -1,5 +1,6 @@
 // SECURE STORAGE
 
+ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure
 	name = "storage/secure"
 	var/atom/movable/screen/storage/boxes = null
@@ -9,7 +10,7 @@
 	var/icon_open = "secure0"
 	var/locked = TRUE
 	var/code = ""
-	var/code_len = 4
+	var/code_len = 5
 	var/l_setshort = FALSE
 	var/l_hacking = FALSE
 	var/configure_mode = TRUE
@@ -159,7 +160,7 @@
 			currentVal = "";
 		}
 		var i = 0
-		while (i++ < 4 && currentVal.length < 4)
+		while (i++ < [src.code_len] && currentVal.length < [src.code_len])
 		{
 			if (t.length)
 			{
@@ -218,7 +219,7 @@
 	if ("enter" in href_list)
 		if (src.configure_mode)
 			var/new_code = uppertext(ckey(href_list["enter"]))
-			if (!new_code || length(new_code) != 4 || !is_hex(new_code))
+			if (!new_code || length(new_code) != src.code_len || !is_hex(new_code))
 				usr << output("ERR!&0", "caselock.browser:updateReadout")
 			else
 				src.code = new_code
@@ -272,43 +273,35 @@
 
 					var/wrongplace = 0
 					var/rightplace = 0
-					while (++guessplace < 5)
+
+					var/search_len = src.code_len + 1;
+					while (++guessplace < search_len)
 						if ((((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, guessplace, guessplace + 1)))
 							guessflags += 2 ** (guessplace-1)
 							codeflags += 2 ** (guessplace-1)
 							rightplace++
 
 					guessplace = 0
-					while (++guessplace < 5)
+					while (++guessplace < search_len)
 						codeplace = 0
-						while(++codeplace < 5)
+						while(++codeplace < search_len)
 							if(guessplace != codeplace && (((guessflags - guessflags % (2 ** (guessplace - 1))) / (2 ** (guessplace - 1))) % 2 == 0) && (((codeflags - codeflags % (2 ** (codeplace - 1))) / (2 ** (codeplace - 1))) % 2 == 0) && (copytext(code_attempt, guessplace , guessplace + 1) == copytext(code, codeplace , codeplace + 1)))
 								guessflags += 2 ** (guessplace-1)
 								codeflags += 2 ** (codeplace-1)
 								wrongplace++
-								codeplace = 5
+								codeplace = search_len
 
 					var/desctext = ""
-					switch(rightplace)
-						if (1)
-							desctext += "a grumpy beep"
-						if (2)
-							desctext += "a pair of grumpy beeps"
-						if (3)
-							desctext += "a trio of grumpy beeps"
+					if (rightplace > 0)
+						desctext += rightplace == 1 ? "a single grumpy beep" : "[rightplace] grumpy beeps"
 
 					if (desctext && (wrongplace) > 0)
 						desctext += " and "
 
-					switch(wrongplace)
-						if (1)
-							desctext += "a short boop"
-						if (2)
-							desctext += "two harsh boops"
-						if (3)
-							desctext += "a quick three boops"
-						if (4)
-							desctext += "a long, sad, warbly boop"
+					if (wrongplace == src.code_len)
+						desctext += "a long, sad, warbly boop"
+					else if (wrongplace > 0)
+						desctext += wrongplace == 1 ? "a single short boop" : "[wrongplace] quick boops"
 
 					if (desctext)
 						src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
@@ -728,7 +721,7 @@
 						currentVal = "";
 					}
 					var i = 0
-					while (i++ < 4 && currentVal.length < 4)
+					while (i++ < [src.code_len] && currentVal.length < [src.code_len])
 					{
 						if (t.length)
 						{
