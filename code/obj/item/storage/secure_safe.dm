@@ -101,7 +101,27 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure/attack_self(mob/user as mob)
 	src.add_dialog(user)
 	add_fingerprint(user)
-	return show_lock_panel(user)
+	return ui_interact(user)
+
+/obj/item/storage/secure/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user,src, "SecureSafe")
+		ui.open()
+
+/obj/item/storage/secure/ui_static_data(mob/user)
+	. = list(
+		"safeName" = src.name
+	)
+
+/obj/item/storage/secure/ui_data(mob/user)
+	. = list()
+
+/obj/item/storage/secure/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+	. = TRUE
 
 /obj/item/storage/secure/proc/show_lock_panel(mob/user as mob)
 		var/dat = disabled ? "Access Denied" : {"
@@ -209,8 +229,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 </script>
 
 </body>"}
-
 		user << browse(dat, "window=caselock;size=270x300;can_resize=0;can_minimize=0")
+
 
 /obj/item/storage/secure/proc/set_code(var/code)
 	// The code is not the correct format: null, wrong length, isn't in hex.
