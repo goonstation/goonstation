@@ -363,9 +363,10 @@
 
 		else if (src.pipebomb)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
-			src.pipebomb.do_explode()
-			src.pipebomb = null
+			SPAWN(0.7 SECONDS)
+				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
+				src.pipebomb.do_explode()
+				src.pipebomb = null
 
 		else if (src.signaler)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")

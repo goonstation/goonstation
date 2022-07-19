@@ -248,8 +248,7 @@
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
-			if (src.mousetrap_check(usr))
-				return
+			src.mousetrap_check(usr)
 			usr.s_active = src.hud
 			hud.update(usr)
 			usr.attach_hud(src.hud)
@@ -293,8 +292,7 @@
 			if (user.s_active)
 				user.detach_hud(user.s_active)
 				user.s_active = null
-			if (src.mousetrap_check(user))
-				return
+			src.mousetrap_check(user)
 			user.s_active = src.hud
 			hud.update(user)
 			user.attach_hud(src.hud)
