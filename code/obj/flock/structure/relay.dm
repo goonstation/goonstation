@@ -95,11 +95,9 @@
 
 /obj/flock_structure/relay/proc/convert_turfs()
 	var/list/turfs = circular_range(get_turf(src), src.conversion_radius)
-	SPAWN(0)
-		for (var/turf/T as anything in turfs)
-			if (istype(T, /turf/simulated) && !isfeathertile(T))
-				sleep(0.01 SECONDS)
-				src?.flock.claimTurf(flock_convert_turf(T))
+	for (var/turf/T as anything in turfs)
+		if (istype(T, /turf/simulated) && !isfeathertile(T))
+			src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
 	processing_items -= src
