@@ -27,7 +27,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KOHM HEIRE", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
+			M.say("KOHM HEIRE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()
@@ -112,7 +112,7 @@
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
-			M.say("KUH, ABAH'RAH", unique_maptext_style = maptext_style, maptext_animation_colors = maptext_colors)
+			M.say("KUH, ABAH'RAH", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/staves = list()
