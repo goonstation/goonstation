@@ -681,12 +681,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "pipeshot"
 	desc = "A parent item! If you see this contact a coder."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst
-	icon_state = "makeshiftempty"
+	icon_state = "makeshiftscrap"
 	amount_left = 4.0
 	max_amount = 4.0
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
-	icon_empty = "makeshiftempty"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
 
@@ -696,13 +695,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
 	icon_state = "makeshiftglass"
 
-
 /obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
-	icon_state = "makeshiftscrap"
-
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"

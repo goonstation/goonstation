@@ -875,9 +875,9 @@ obj/item/assembly/radio_horn/receive_signal()
 
 /obj/item/assembly/makeshiftshell
 
-	name = "open pipes"
+	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
-	icon_state = "pipeshot"
+	icon_state = "Pipeshotrow"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/raw_material/shard))
