@@ -312,7 +312,7 @@
 		return candidates
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
-/datum/game_mode/proc/equip_antag(var/datum/mind/antag)
+/datum/game_mode/proc/equip_antag(datum/mind/antag)
 	var/objective_set_path = null
 
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
@@ -324,12 +324,7 @@
 
 	switch (antag.special_role)
 		if (ROLE_TRAITOR)
-		#ifdef RP_MODE
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-		#else
-			objective_set_path = pick(typesof(/datum/objective_set/traitor))
-		#endif
-			equip_traitor(antag.current)
+			antag.add_antagonist(ROLE_TRAITOR)
 
 		if (ROLE_CHANGELING)
 			objective_set_path = /datum/objective_set/changeling

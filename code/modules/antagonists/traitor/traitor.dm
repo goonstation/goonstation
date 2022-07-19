@@ -21,6 +21,9 @@
 		if (istype(H.belt, /obj/item/device/pda2) || istype(H.belt, /obj/item/device/radio))
 			uplink_source = H.belt
 			loc_string = "on your belt"
+		else if (istype(H.wear_id, /obj/item/device/pda2))
+			uplink_source = H.wear_id
+			loc_string = "in your ID slot"
 		else if (istype(H.r_store, /obj/item/device/pda2))
 			uplink_source = H.r_store
 			loc_string = "in your pocket"
@@ -45,7 +48,10 @@
 			src.uplink = S
 			uplink_source = S
 			S.lock_code_autogenerate = TRUE
-			loc_string = "on the ground beneath you"
+			if (!(H.equip_if_possible(S, H.slot_in_backpack)))
+				loc_string = "on the ground beneath you"
+			else
+				loc_string = "in [H.back] on your back"
 		uplink.setup(src.owner, uplink_source)
 
 		// step 3 of uplinkification: inform the player about it and store the code in their memory
@@ -73,12 +79,8 @@
 		if (!override) // Display a different popup depending on the type of uplink we got
 			if (!uplink)
 				override = "traitorhard"
-			else if (istype(uplink, /obj/item/uplink/integrated/pda))
-				override = "traitorpda"
-			else if (istype(uplink, /obj/item/uplink/integrated/radio))
-				override = "traitorradio"
 			else
-				override = "traitorgeneric"
+				override = "traitorpda"
 		..(override)
 
 	handle_round_end(log_data)
