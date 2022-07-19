@@ -416,7 +416,6 @@
 			var/obj/item/copy = master.split_stack(1)
 			if(copy)
 				preUse(usr)
-				var/atom/step = get_step(usr, get_dir_pixel(usr, target, params))
 				copy.set_loc(usr.loc)
 				copy.throw_at(target, 20, 3, params)
 				afterUse(usr)
