@@ -9,11 +9,17 @@ TYPEINFO(/datum/component/radioactive)
 
 /datum/component/radioactive
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// Percentage of max value to apply on various actions. A radStrength of 100 is very radioactive, killing most humans quickly
 	var/radStrength = 0
+	/// Does this radiation source slowly decay over time? If so, it will take ~ 6 * radStrength seconds to decay completely.
 	var/decays = FALSE
+	/// Is this radiation source a neutron source? If it is, it does more damage per dose. Associated with n_radiation mat property.
 	var/neutron = FALSE
+	/// Internal, do not touch - keeps a record of whether or not we had to add this to the item processing list
 	var/_added_to_items_processing = FALSE
+	/// How wide a range this radiation source affects. Greater than one should be very rarely used, since all atoms in this range will be exposed per tick
 	var/effect_range = 1
+	/// Internal, do not touch - keeps a record of atom.color since we override it with filters.
 	var/backup_color = null //so hacky
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
@@ -95,6 +101,7 @@ TYPEINFO(/datum/component/radioactive)
 				//either you tried to apply a decay to a permanent, or a non-neutron to a neutron
 				//in which case, do nothing
 
+	/// Called every item process tick, handles applying radiation effect to nearby atoms and also decay.
 	proc/ticked(atom/owner, mult=1)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
@@ -108,15 +115,18 @@ TYPEINFO(/datum/component/radioactive)
 		if(!src.radStrength)
 			src.RemoveComponent()
 
+	/// Called when an item is picked up or hand attacked.
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
 			if(!ON_COOLDOWN(toucher,"radiation_exposure", 0.5 SECONDS))
 				toucher.take_radiation_dose((neutron ? 1.8 SIEVERTS: 0.6 SIEVERTS) * (radStrength/100))
 
+	/// Called when a radioactive thing is eaten. High dose to account for radioactive things continuing to irradiate you from the stomach.
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
 			eater.take_radiation_dose((neutron ? 6 SIEVERTS: 3 SIEVERTS) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
+	/// Adds a line to examine text to indicate level of radiation produced
 	proc/examined(atom/owner, mob/examiner, list/lines)
 		var/rad_word = ""
 		switch(radStrength)
