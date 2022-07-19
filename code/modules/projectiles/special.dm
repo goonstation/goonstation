@@ -219,8 +219,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 1
 	pellets_to_fire = 6
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 20
-	speed_min = 40
+	speed_max = 36
+	speed_min = 28
 	spread_angle_variance = 30
 	dissipation_variance = 40
 
@@ -231,9 +231,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 20
-	speed_min = 60
-	spread_angle_variance = 15
+	speed_max = 40
+	speed_min = 34
+	spread_angle_variance = 10
 	dissipation_variance = 10
 
 

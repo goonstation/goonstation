@@ -882,15 +882,15 @@ obj/item/assembly/radio_horn/receive_signal()
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/raw_material/shard))
 			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
-			user.put_in_hand_or_drop(shot)
 			qdel(W)
 			qdel(src)
+			user.put_in_hand_or_drop(shot)
 
 		if(istype(W, /obj/item/raw_material/scrap_metal))
 			var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
-			user.put_in_hand_or_drop(shot)
 			qdel(W)
 			qdel(src)
+			user.put_in_hand_or_drop(shot)
 		..()
 
 
