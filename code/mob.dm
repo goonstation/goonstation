@@ -1529,7 +1529,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.take_radiation_dose( (damage)/25) //power 100 shots will give you moderate radiation sickness instantly without protection
+			src.take_radiation_dose((damage)/25 SIEVERTS) //power 100 shots will give you moderate radiation sickness instantly without protection - 4Sv
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)

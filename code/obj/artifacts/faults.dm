@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// irradiates the victim
 	type_name = "Radiation"
 	trigger_prob = 8
-	var/rads_amount = 2
+	var/rads_amount = 2 SIEVERTS
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())

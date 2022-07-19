@@ -71,7 +71,7 @@
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.take_radiation_dose(rad_strength/10)
+			M.take_radiation_dose(rad_strength/10 SIEVERTS)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
@@ -123,7 +123,7 @@
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		for (var/mob/A in T.contents)
-			A.take_radiation_dose(rad_strength/5)
+			A.take_radiation_dose(rad_strength/5 SIEVERTS)
 			if(iscarbon(A))
 				var/mob/living/carbon/M = A
 				if (prob(mutate_prob) && M.bioHolder)

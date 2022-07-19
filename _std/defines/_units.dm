@@ -25,6 +25,7 @@
 #define MOLES *1
 #define CANDELAS *1
 #define PASCALS *1
+#define SIEVERTS *1
 
 #define WATT WATTS
 #define METER METERS
