@@ -401,7 +401,7 @@
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
 				return
-			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, user, src)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -435,7 +435,7 @@
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
-			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, user, src)
+			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
 			user.u_equip(src)
 			qdel(src)
 		return 1
