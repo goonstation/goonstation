@@ -380,20 +380,20 @@
 
 		proc/get_stage(val)
 			. = 0
-			switch(val/0.4) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
-				if(0 to 0.1)
+			switch(val) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
+				if(0 to 0.04)
 					. = 0 //normal dose
-				if(0.1 to 1)
+				if(0.04 to 0.4)
 					. = 1 //you might feel sick
-				if(1 to 3)
+				if(0.4 to 1.2)
 					. = 2 //you're getting into dangerous teritory
-				if(3 to 5)
+				if(1.2 to 2)
 					. = 3 //you're at a 50/50 of kicking it
-				if(5 to 7)
+				if(2 to 3)
 					. = 4 //more like 70/30 now
-				if(7 to 10)
+				if(3 to 4)
 					. = 5 //you will die without treatment
-				if(10 to INFINITY)
+				if(4 to INFINITY)
 					. = 6 //you will die.
 
 		onUpdate(timePassed)
