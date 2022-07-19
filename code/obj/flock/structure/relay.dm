@@ -97,8 +97,8 @@
 	var/list/turfs = circular_range(get_turf(src), src.conversion_radius)
 	SPAWN(0)
 		for (var/turf/T as anything in turfs)
-			LAGCHECK(LAG_LOW)
 			if (istype(T, /turf/simulated) && !isfeathertile(T))
+				LAGCHECK(LAG_LOW)
 				src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
