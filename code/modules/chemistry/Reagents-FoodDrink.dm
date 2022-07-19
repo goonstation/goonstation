@@ -698,8 +698,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (probmult(15))
-					var/turf/mob_location = get_turf(M)
-					if (isrestrictedz(mob_location.z))
+					var/turf/mob_turf = get_turf(M)
+					if (isrestrictedz(mob_turf?.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
