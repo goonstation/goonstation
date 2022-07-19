@@ -63,7 +63,7 @@
 #define IMMUNE_TO_ACID 8
 /// prevents items from heating anything up while burning
 #define COLD_BURN 16
-/// allow in-hand use while user is stunned
+/// allow in-hand use while user is stunned and conscious
 #define ALWAYS_INTERACTIVE              32
 
 //tool flags

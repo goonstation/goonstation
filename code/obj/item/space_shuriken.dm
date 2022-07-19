@@ -1,6 +1,6 @@
 /obj/item/weapons/space_shuriken
-	name = "Kepler Techno-Shuriken"
-	desc = ""
+	name = "Kepler Tech-Shuriken"
+	desc = "Cyalume powered and disposable, These shuriken can be toggled to redirect stun power to a built in teleportation device."
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "space_shuriken_harm"
@@ -47,8 +47,10 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(-1)
 			if (!src.throwing)
+				playsound(src.loc, "sound/weapons/lasersound.ogg", 100, 1)
+				elecflash(src.loc,power=2)
 				del(src)
 
 	throw_impact(atom/M)
