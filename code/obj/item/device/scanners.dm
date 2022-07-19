@@ -152,6 +152,9 @@ that cannot be itched
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
+	var/last_scan = "No scans have been done yet."
+	var/printing = null
+
 
 	attack_self(mob/user as mob)
 
@@ -183,7 +186,8 @@ that cannot be itched
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
-				boutput(user, scan_forensic(target, visible = 1))
+				last_scan = scan_forensic(target, visible = 1)
+				boutput(user, last_scan)
 				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -192,7 +196,8 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
-		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		boutput(user, last_scan)
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -232,6 +237,21 @@ that cannot be itched
 				icon_state = "fs_pinfar"
 		SPAWN(0.5 SECONDS)
 			.(T)
+	verb/set_phrase()
+		set name = "Print last report"
+		set category = "Local"
+
+		if (!src.printing )
+			src.printing = 1
+			playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+			SPAWN(1 SECONDS)
+				var/obj/item/paper/P = new /obj/item/paper
+				P.set_loc(get_turf(src))
+
+				P.info = last_scan
+				P.name = "Forensic readout"
+			src.printing = null
+
 
 /obj/item/device/detective_scanner/detective
 	name = "cool forensic scanner"
