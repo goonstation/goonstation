@@ -1707,13 +1707,17 @@ obj/item/whetstone
 	cant_drop = 1
 	cant_self_remove = 1
 	cant_other_remove = 1
+	inventory_counter_enabled = 1
 	flags = FPRINT | CONDUCT | TABLEPASS
 	item_function_flags = IMMUNE_TO_ACID | ALWAYS_INTERACTIVE
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
+	var/special_charge = 0
+	var/specialAttacking = FALSE
 
 	standalone
+		desc = "A sharp sword, somehow pried loose from an operative suit and coated with anticoagulants."
 		cant_drop = 0
 		cant_self_remove = 0
 		cant_other_remove = 0
@@ -1722,41 +1726,66 @@ obj/item/whetstone
 		..()
 		src.setItemSpecial(/datum/item_special/swipe/wakizashi)
 
+	equipped(mob/user, slot)
+		..()
+		inventory_counter?.show_count()
+
 	attack_self(mob/user as mob)
-		var/list/attacked = list()
 
-		for(var/turf/T in orange(1,get_turf(master)))
-			for(var/atom/A in T)
-				if(A in attacked) continue
-				if((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != user)
-					A.Attackby(src, usr)
-					attacked += A
+		if (special_charge >= 100 && !specialAttacking)
+			specialAttacking = TRUE
+			var/list/attacked = list()
+			for(var/turf/T in orange(1,get_turf(master)))
+				for(var/atom/A in T)
+					if(A in attacked) continue
+					if((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != user)
+						A.Attackby(src, usr)
+						attacked += A
 
-		var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
-		E.setup(get_turf(user))
-		E.Scale(0.66,0.66)
-		E.set_dir(NORTH)
-		E.icon_state = "whirlwind"
-		playsound(src, 'sound/effects/swoosh_double.ogg', 100, 1)
+			var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
+			E.setup(get_turf(user))
+			E.Scale(0.66,0.66)
+			E.set_dir(NORTH)
+			E.icon_state = "whirlwind"
+			user.delStatus("stunned")
+			user.delStatus("weakened")
+			user.delStatus("paralysis")
+			user.delStatus("disorient")
+			if (!user.stat)
+				user.visible_message("<span class='alert'>[user.name] bounces to their feet, swinging their [src.name] around them!</span>")
+				user.lying = 0
+			else
+				user.visible_message("<span class='alert'>[user.name] swings their [src.name] in a wide arc!</span>")
+
+			playsound(src, 'sound/effects/swoosh_double.ogg', 100, 1)
+			SPAWN(0)
+				special_charge = 0
+				specialAttacking = FALSE
+				inventory_counter.update_percent(special_charge, 100)
 		..()
 
 	attack(target as mob, mob/user as mob)
-		..()
 		if(isliving(target))
 			var/mob/living/C = target
 
 			//scale blood loss down as they lose more, to save medbay having The Worst Day
+			boutput(world,"[C.blood_volume]")
 			if (C.blood_volume > 310)
 				playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
-				if (C.blood_volume >= 475)
-					blood_slash(C,8,null, turn(usr.dir,90), 4)
+				boutput(world,"[C.blood_volume]")
+				if (C.blood_volume > 475)
+					special_charge = min(special_charge + 20, 100)
+					blood_slash(C,6,null, turn(usr.dir,90), 4)
 					C.reagents.add_reagent("heparin", 5, null) //wahahaha
 				else
-					blood_slash(C,6,null, turn(usr.dir,90), 3)
+					special_charge = min(special_charge + 10, 100)
+					blood_slash(C,4,null, turn(usr.dir,90), 3)
 			else
 				blood_slash(C,1,null, turn(usr.dir,90), 2)
 				playsound(target, "sound/impact_sounds/Blade_Small.ogg", 60, 1)
 			C.reagents.add_reagent("heparin", 3, null)
+			inventory_counter.update_percent(special_charge, 100)
 
 		else
 			playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+		..()
