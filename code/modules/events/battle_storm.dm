@@ -103,7 +103,7 @@
 						if(mob_area?.storming)
 							M.changeStatus("burning", clamp(2 * activations, 2, 8) SECONDS)
 							if  (activations > 1)
-								M.take_radiation_dose( (clamp(1 * activations, 2, 6)/10) SIEVERTS) //0.2 - 0.6 Sv
+								M.take_radiation_dose((clamp(1 * activations, 2, 6)/10) SIEVERTS) //0.2 - 0.6 Sv
 							random_brute_damage(M, clamp(2 * activations, 2, 10))
 
 			command_alert("The storm has almost passed. ETA 5 seconds until all areas are safe.", "BATTLE STORM ABOUT TO END")

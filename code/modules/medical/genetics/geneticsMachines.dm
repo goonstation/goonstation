@@ -561,7 +561,7 @@
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
 			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose( 0.5 SIEVERTS)
+				subject.take_radiation_dose(0.5 SIEVERTS)
 			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
