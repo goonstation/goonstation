@@ -3146,13 +3146,15 @@
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
 
+
 /// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
 /mob/proc/take_radiation_dose(Sv,internal=FALSE)
 	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
 	if(Sv > 0)
-		src.radiation_dose += (1-(rad_res/(rad_res+1)))*Sv
+		var/radres_mult = (tanh(0.02*rad_res)**2)
+		src.radiation_dose += (1.0-radres_mult)*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
 		if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
