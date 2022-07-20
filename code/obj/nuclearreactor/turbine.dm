@@ -3,8 +3,6 @@
 // This is where the power comes from
 /////////////////////////////////////////////////////////////////
 
-//not sure where best to put this
-#define sech(x) 2/((eulers**x)+(eulers**-x)+0.000001)
 
 /obj/machinery/atmospherics/binary/reactor_turbine
 	name = "Gas Turbine"
