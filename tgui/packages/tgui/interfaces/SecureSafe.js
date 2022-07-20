@@ -1,17 +1,36 @@
 import { useBackend } from '../backend';
-import { Stack, Box, ProgressBar, Section, Flex, Button } from '../components';
+import { Stack, Box, ProgressBar, Section, Flex, Button, Blink } from '../components';
 import { Window } from '../layouts';
 
-import { capitalize } from './common/stringUtils';
+import { capitalize, glitch } from './common/stringUtils';
 
-const stylizeText = (text) => {
-  return text.split("").join(" ");
+const KEY_PAD_INPUT_LAYOUT = [
+  ['7', '8', '9', 'A'],
+  ['4', '5', '6', 'B'],
+  ['1', '2', '3', 'C'],
+  ['0', 'F', 'E', 'D'],
+];
+
+const stylizeCode = (attempt, codeLen) => {
+  return attempt.padEnd(codeLen, "*").split("").join(" ");
 };
 
 const SecureSafeScreen = (props, _context) => {
   const {
-    input,
+    attempt,
+    codeLen,
+    disabled,
+    emagged,
+    padMsg,
   } = props;
+
+  let content = padMsg ? padMsg : stylizeCode(attempt, codeLen);
+  if (disabled) {
+    content = "NO ACCESS";
+  }
+  if (emagged) {
+    content = glitch(content, 2);
+  }
   return (
     // Crude hack to get the styling I want
     <ProgressBar
@@ -22,31 +41,44 @@ const SecureSafeScreen = (props, _context) => {
         bold
         textAlign="center"
       >
-        {stylizeText(input)}
+        {content}
       </Box>
     </ProgressBar>
   );
 };
 
-const KEY_PAD_INPUT_LAYOUT = [
-  ['7', '8', '9', 'A'],
-  ['4', '5', '6', 'B'],
-  ['1', '2', '3', 'C'],
-  ['0', 'F', 'E', 'D'],
-];
+const SecureSafeKeyPad = (props, _context) => {
+  const {
+    act,
+  } = props;
 
-const SecureSafeKeyPad = (_props, _context) => {
   return (
     <>
       <Flex.Item>
         {KEY_PAD_INPUT_LAYOUT.map((row, rowIndex) => {
           const rowLen = row.length;
           return (
-            <Flex justify="space-between" key={`row-${rowIndex}`} mt={1}>
+            <Flex
+              key={`row-${rowIndex}`}
+              justify="space-between"
+              mt={1}
+            >
               {row.map((input, colIndex) => {
                 return (
-                  <Flex.Item key={input} grow={1} mr={colIndex < rowLen - 1 ? 1 : 0}>
-                    <Button textAlign="center" fluid fontSize="25px" fontFamily="Courier" bold content={input} />
+                  <Flex.Item
+                    key={input}
+                    grow={1}
+                    mr={colIndex < rowLen - 1 ? 1 : 0}
+                  >
+                    <Button
+                      fluid
+                      textAlign="center"
+                      fontSize="25px"
+                      fontFamily="Courier"
+                      bold
+                      content={input}
+                      onClick={() => act('input', { input })}
+                    />
                   </Flex.Item>
                 );
               })}
@@ -57,10 +89,26 @@ const SecureSafeKeyPad = (_props, _context) => {
       <Flex.Item mt={1}>
         <Flex justify="space-between">
           <Flex.Item grow={1} mr={1}>
-            <Button textAlign="center" fluid fontSize="20px" fontFamily="Courier" bold content="ENTER" />
+            <Button
+              fluid
+              textAlign="center"
+              fontSize="20px"
+              fontFamily="Courier"
+              bold
+              content="ENTER"
+              onClick={() => act('enter')}
+            />
           </Flex.Item>
           <Flex.Item grow={1}>
-            <Button textAlign="center" fluid fontSize="20px" fontFamily="Courier" bold content="RESET" />
+            <Button
+              fluid
+              textAlign="center"
+              fontSize="20px"
+              fontFamily="Courier"
+              bold
+              content="RESET"
+              onClick={() => act('reset')}
+            />
           </Flex.Item>
         </Flex>
       </Flex.Item>
@@ -71,9 +119,13 @@ const SecureSafeKeyPad = (_props, _context) => {
 export const SecureSafe = (_props, context) => {
   const { act, data } = useBackend(context);
   const {
+    attempt,
+    codeLen,
+    disabled,
+    emagged,
+    padMsg,
     safeName,
   } = data;
-  const input = "A***";
   return (
     <Window
       title={capitalize(safeName)}
@@ -84,8 +136,14 @@ export const SecureSafe = (_props, context) => {
       <Window.Content>
         <Section fill>
           <Stack vertical>
-            <SecureSafeScreen input={input} />
-            <SecureSafeKeyPad />
+            <SecureSafeScreen
+              attempt={attempt}
+              codeLen={codeLen}
+              disabled={disabled}
+              emagged={emagged}
+              padMsg={padMsg}
+            />
+            <SecureSafeKeyPad act={act} />
           </Stack>
         </Section>
       </Window.Content>
