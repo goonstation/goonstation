@@ -1844,6 +1844,15 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
+		pumpkinspicelatte
+			name = "Pumpkin Spice Latte"
+			id = "pumpkinspicelatte"
+			result = "pumpkinspicelatte"
+			required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
+			result_amount = 4
+			mix_phrase = "The drink smells vaguely like artifical autumn."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		explosion_potassium // get in
 			name = "Potassium Explosion"
 			id = "explosion_potassium"

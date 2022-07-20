@@ -56755,7 +56755,7 @@
 	id = "mports_door";
 	name = "Cargo Export"
 	},
-/turf/space,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "naJ" = (
 /obj/wingrille_spawn/auto,

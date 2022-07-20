@@ -65,9 +65,15 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/ui_act(action, list/params, datum/tgui/ui)
 	var/mob/user = ui.user;
 	if (!istype(user, /mob/living/intangible/flock/flockmind))
-		return
+		var/mob/living/critter/flock/drone/F = user
+		if (!istype(F) || !istype(F.controller, /mob/living/intangible/flock/flockmind))
+			return
 	switch(action)
 		if("jump_to")
+			if (istype(user, /mob/living/critter/flock/drone/))
+				var/mob/living/critter/flock/drone/F = user
+				user = F.controller
+				F.release_control()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
 				var/turf/T = get_turf(origin)

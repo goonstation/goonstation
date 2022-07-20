@@ -61714,9 +61714,7 @@
 	name = "wood floor";
 	opaque_atom_count = 1
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/sord)
 "dBk" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka{
 	pixel_x = -10;
@@ -74423,9 +74421,9 @@
 /area/adventure/channel/flingy)
 "rUz" = (
 /obj/machinery/door/unpowered/wood{
+	dir = 1;
 	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4;
-	dir = 1
+	lock_dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices{

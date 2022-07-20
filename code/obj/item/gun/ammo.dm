@@ -868,8 +868,8 @@
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 5
-	max_amount = 5
+	amount_left = 2
+	max_amount = 2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL

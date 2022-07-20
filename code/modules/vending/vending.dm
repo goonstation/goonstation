@@ -496,6 +496,9 @@
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
 	if (iscarbon(M) && M.throwing)
+		var/area/T = get_area(src)
+		if(T?.sanctuary)
+			return
 		src.fall(M)
 		return
 
@@ -799,12 +802,13 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
+	playsound(src.loc, "sound/machines/vending_crash.ogg", 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
-		victim.changeStatus("weakened", 10 SECONDS)
+		victim.changeStatus("weakened", 5 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
@@ -1308,7 +1312,7 @@
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO,3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 3)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 5)
+		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 8)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
@@ -2264,6 +2268,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A magic vending machine."
 	icon_state = "wiz"
 	icon_panel = "standard-panel"
+	can_fall = FALSE
 	acceptcard = 0
 	slogan_list = list("Sling spells the proper way with MagiVend!",
 	"Be your own Houdini! Use MagiVend!")
