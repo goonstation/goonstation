@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	src.overlays = null
 	src.pad_msg = null
 	if (user)
-		user.show_text("You repair the lock on [src].", "blue")
+		boutput(user, "You repair the lock on [src].")
 	return TRUE
 
 /obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
@@ -68,23 +68,23 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		if (isscrewingtool(W) && (src.locked))
 			sleep(0.6 SECONDS)
 			src.open = !src.open
-			tooltip_rebuild = 1
-			user.show_message("<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
+			tooltip_rebuild = TRUE
+			boutput(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 
 		if (ispulsingtool(W) && (src.open) && (!src.locked) && (!src.l_hacking))
-			user.show_message(text("<span class='alert'>Now attempting to reset internal memory, please hold.</span>"), 1)
+			boutput(user, "<span class='alert'>Now attempting to reset internal memory, please hold.</span>")
 			src.l_hacking = TRUE
 			SPAWN(10 SECONDS)
 				if (prob(40))
 					src.l_setshort = TRUE
 					src.configure_mode = TRUE
-					user.show_message("<span class='alert'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>", 1)
+					boutput(user, "<span class='alert'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
 					sleep(8 SECONDS)
 					src.l_setshort = FALSE
 					src.l_hacking = FALSE
 				else
-					user.show_message("<span class='alert'>Unable to reset internal memory.</span>", 1)
+					boutput(user, "<span class='alert'>Unable to reset internal memory.</span>")
 					src.l_hacking = FALSE
 			return
 
