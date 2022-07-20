@@ -1,4 +1,18 @@
 
+(t)wed jul 20 22
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
+(t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
+(u)Munien
+(p)9507
+(e)🆕|feature
+(+)Rose names now pull from the names of player mobs. Give someone a rose today!
 (t)sun jul 17 22
 (u)Roddy
 (p)9678
