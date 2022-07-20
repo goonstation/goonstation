@@ -60,8 +60,6 @@ TYPEINFO(/datum/mutantrace)
 	var/human_compatible = TRUE
 	/// if FALSE, can only wear clothes if listed in [/obj/item/clothing/var/compatible_species]
 	var/uses_human_clothes = TRUE
-	/// set to a folder to have human.update_clothing() look through the slot's item_states for matching things
-	var/clothing_icon_override = null
 	/// if TRUE, only understood by others of this mutantrace
 	var/exclusive_language = FALSE
 	/// overrides normal voice message if defined (and others don't understand us, ofc)
@@ -99,6 +97,20 @@ TYPEINFO(/datum/mutantrace)
 	var/list/mutant_organs = list()
 	/// If our mutant has a female variant that has different organs, these will be used instead
 	var/list/mutant_organs_f = null
+
+	/// icon definitions for mutantrace clothing variants. one icon file per slot.
+	var/clothing_icon_uniform = null
+	var/clothing_icon_id = null
+	var/clothing_icon_hands = null
+	var/clothing_icon_feet = null
+	var/clothing_icon_overcoats = null
+	var/clothing_icon_back = null
+	var/clothing_icon_eyes = null
+	var/clothing_icon_ears = null
+	var/clothing_icon_mask = null
+	var/clothing_icon_head = null
+	var/clothing_icon_belt = null
+	var/clothing_icon_tail = null
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -831,7 +843,10 @@ TYPEINFO(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
-	clothing_icon_override = "icons/mob/lizard/"
+	clothing_icon_overcoats = icon('icons/mob/lizard/overcoats.dmi')
+	clothing_icon_eyes = icon('icons/mob/lizard/eyes.dmi')
+	clothing_icon_mask = icon('icons/mob/lizard/mask.dmi')
+	clothing_icon_head = icon('icons/mob/lizard/head.dmi')
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
@@ -1312,7 +1327,8 @@ TYPEINFO(/datum/mutantrace)
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
-	clothing_icon_override = "icons/mob/werewolf/"
+	clothing_icon_back = 'icons/mob/werewolf/back.dmi'
+	clothing_icon_mask = 'icons/mob/werewolf/mask.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
@@ -1493,7 +1509,18 @@ TYPEINFO(/datum/mutantrace)
 	override_language = "monkey"
 	override_attack = FALSE
 	understood_languages = list("english")
-	clothing_icon_override = "icons/mob/monkey/"
+	clothing_icon_uniform = icon('icons/mob/monkey/jumpsuits.dmi')
+	clothing_icon_id = icon('icons/mob/monkey/card.dmi')
+	clothing_icon_hands = icon('icons/mob/monkey/hands.dmi')
+	clothing_icon_feet = icon('icons/mob/monkey/feet.dmi')
+	clothing_icon_overcoats = icon('icons/mob/monkey/overcoats.dmi')
+	clothing_icon_back = icon('icons/mob/monkey/back.dmi')
+	clothing_icon_eyes = icon('icons/mob/monkey/eyes.dmi')
+	clothing_icon_ears = icon('icons/mob/monkey/ears.dmi')
+	clothing_icon_mask = icon('icons/mob/monkey/mask.dmi')
+	clothing_icon_head = icon('icons/mob/monkey/head.dmi')
+	clothing_icon_belt = icon('icons/mob/monkey/belt.dmi')
+	clothing_icon_tail = icon('icons/mob/monkey/tail.dmi')
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
