@@ -99,13 +99,13 @@
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
-	/// Just before an item is eaten
+	/// Just before an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
-	/// When an item is eaten
+	/// When an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
-	/// After an item's been eaten, but there's still some left
+	/// After an item's been eaten, but there's still some left (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
-	/// After we've consumed an item
+	/// After we've consumed an item (eater,item)
 	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 	/// Called before an attackby that uses this item (target, user)
 	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
@@ -157,6 +157,10 @@
 	#define COMSIG_MOB_PICKUP "mob_pickup"
 	/// When a mob drops an item
 	#define COMSIG_MOB_DROPPED "mob_drop"
+	/// Just before an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED_PRE "mob_itm_atk_consumed_pre"
+	/// When an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED "mob_itm_atk_consumed"
 	/// Sent when a mob throws something (target, params)
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby

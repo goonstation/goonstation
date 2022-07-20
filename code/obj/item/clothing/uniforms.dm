@@ -1739,3 +1739,23 @@
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
+
+//Crate Loot
+
+/obj/item/clothing/under/misc/tiedye
+    name = "tiedye shirt"
+    desc = "Featuring a pretty inky pattern."
+    icon_state = "tiedye"
+    item_state = "tiedye"
+
+/obj/item/clothing/under/misc/neapolitan
+    name = "neapolitan shirt"
+    desc = "Like the icecream, not made in Naples."
+    icon_state = "neapolitan"
+    item_state = "neapolitan"
+
+/obj/item/clothing/under/misc/mint_chip
+    name = "mint chip shirt"
+    desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
+    icon_state = "mint_chip"
+    item_state = "mint_chip"

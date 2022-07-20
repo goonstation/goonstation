@@ -22,6 +22,10 @@
 			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
 			return 1
 
+		if (isnpc(target))
+			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			return 1
+
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
 
 		return 0

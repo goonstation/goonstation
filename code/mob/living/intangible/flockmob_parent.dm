@@ -215,9 +215,8 @@
 				O.show_message(message, m_type)
 
 
-/mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
-	//todo check for flocktile underneath flockmind cheers
-	new /obj/flock_structure/ghost(get_turf(src), T, src.flock, resources)
+/mob/living/intangible/flock/proc/createstructure(obj/flock_structure/structure_type, resources = 0)
+	new /obj/flock_structure/ghost(get_turf(src), structure_type, src.flock, resources)
 
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()

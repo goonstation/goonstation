@@ -44,7 +44,9 @@
 		. = TRUE
 
 /obj/table/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	if (istype(mover, /mob/living/critter/flock))
+		return TRUE
+	return ..()
 
 /obj/table/flock/auto
 	auto = TRUE

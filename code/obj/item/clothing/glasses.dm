@@ -19,7 +19,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth/handkerchief))
-			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
 

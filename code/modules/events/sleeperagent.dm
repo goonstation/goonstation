@@ -111,49 +111,9 @@
 		return
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H, var/source)
-		var/list/eligible_objectives = list(
-			/datum/objective/regular/assassinate,
-			/datum/objective/regular/steal,
-			/datum/objective/regular/multigrab,
-			/datum/objective/regular/killstirstir,
-		)
-
-		var/list/escape_objectives = list(
-			/datum/objective/escape,
-#ifndef RP_MODE
-			/datum/objective/escape/hijack,
-#endif
-			/datum/objective/escape/survive,
-			/datum/objective/escape/kamikaze,
-			/datum/objective/escape/stirstir,
-		)
-		var/list/objectives = list()
-		var/num_objectives = rand(1,3)
-		var/datum/objective/new_objective = null
-		for(var/i = 0, i < num_objectives, i++)
-			new_objective = pick(eligible_objectives)
-			if (new_objective == /datum/objective/regular/killstirstir) // single-use
-				eligible_objectives -= /datum/objective/regular/killstirstir
-				escape_objectives -= /datum/objective/escape/stirstir
-			objectives += new new_objective(null, H.mind)
-		var/datum/objective/gimmick = new /datum/objective/regular/gimmick(null, H.mind)
-		objectives += gimmick
-		var/escape_objective = pick(escape_objectives)
-		var/datum/objective/esc = new escape_objective(null, H.mind)
-		objectives += esc
+		H.mind.add_antagonist(ROLE_SLEEPER_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
-		H.show_text("<h2><font color=red><B>You have awakened as a syndicate sleeper agent!</B></font></h2>", "red")
-		H.mind.special_role = ROLE_SLEEPER_AGENT
-		H.show_antag_popup("sleeper")
-		if(!(H.mind in ticker.mode.traitors))
-			ticker.mode.traitors += H.mind
-		if (H.mind.current)
-			H.mind.current.antagonist_overlay_refresh(1, 0)
-		var/obj_count = 1
-		for(var/datum/objective/OBJ in H.mind.objectives)
-			boutput(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
-			obj_count++
 
 	proc/gen_numbers()
 		var/num_numbers = length(numbers)

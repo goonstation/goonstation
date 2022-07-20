@@ -33,6 +33,7 @@ var/flock_signal_unleashed = FALSE
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
+	var/relay_in_progress = FALSE
 	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
 	var/snooping = FALSE //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
@@ -64,9 +65,15 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/ui_act(action, list/params, datum/tgui/ui)
 	var/mob/user = ui.user;
 	if (!istype(user, /mob/living/intangible/flock/flockmind))
-		return
+		var/mob/living/critter/flock/drone/F = user
+		if (!istype(F) || !istype(F.controller, /mob/living/intangible/flock/flockmind))
+			return
 	switch(action)
 		if("jump_to")
+			if (istype(user, /mob/living/critter/flock/drone/))
+				var/mob/living/critter/flock/drone/F = user
+				user = F.controller
+				F.release_control()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
 				var/turf/T = get_turf(origin)
@@ -282,12 +289,19 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/build_annotation_imgs()
 	. = list()
 
+	var/image/deconstruct = image('icons/misc/featherzone.dmi', icon_state = "deconstruct")
+	deconstruct.blend_mode = BLEND_ADD
+	deconstruct.plane = PLANE_ABOVE_LIGHTING
+	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	deconstruct.pixel_y = 16
+	.[FLOCK_ANNOTATION_DECONSTRUCT] = deconstruct
+
 	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
 	hazard.blend_mode = BLEND_ADD
 	hazard.plane = PLANE_ABOVE_LIGHTING
 	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	hazard.pixel_y = 16
-	.[FLOCK_ANNOTATION_HAZARD] = .[FLOCK_ANNOTATION_DECONSTRUCT] = hazard
+	.[FLOCK_ANNOTATION_HAZARD] = hazard
 
 	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
 	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
