@@ -327,7 +327,7 @@ table#cooktime a#start {
 		"}
 		if (!src.working)
 			var/junk = ""
-			for (var/obj/item/I as anything in src.contents)
+			for (var/obj/item/I in src.contents)
 				junk += "[I]<br>"
 
 			var/timeopts = ""
@@ -617,7 +617,7 @@ table#cooktime a#start {
 			if (src.emagged)
 				// Enforce GIGO and prevent infinite reuse
 				var/contentsok = TRUE
-				for(var/obj/item/I as anything in src.contents)
+				for(var/obj/item/I in src.contents)
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
 						contentsok = FALSE
 						break
@@ -870,7 +870,7 @@ table#cooktime a#start {
 		src.visible_message("The [src] begins processing its contents.")
 		sleep(rand(3, 7) SECONDS)
 		// Dispense processed stuff
-		for(var/obj/item/I as anything in src.contents)
+		for(var/obj/item/I in src.contents)
 			switch(I.type)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
@@ -1016,7 +1016,7 @@ table#cooktime a#start {
 					new/obj/item/reagent_containers/food/snacks/condiment/matcha(src.loc)
 					qdel(I)
 		// Wind down
-		for(var/obj/item/I as anything in src.contents)
+		for(var/obj/item/I in src.contents)
 			I.set_loc(get_turf(src))
 		src.working = FALSE
 		src.icon_state = "processor-off"
