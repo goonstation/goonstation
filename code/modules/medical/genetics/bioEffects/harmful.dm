@@ -400,7 +400,7 @@
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
-		owner.AddComponent(/datum/component/radioactive,50,FALSE,FALSE)
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
 	OnRemove()
