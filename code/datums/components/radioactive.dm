@@ -51,7 +51,7 @@ TYPEINFO(/datum/component/radioactive)
 		else
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item, use the item processing loop anyway
 		var/atom/PA = parent
-		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128,round(255*radStrength/100)),2) //base color + alpha
+		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
 		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 		src.backup_color = PA.color
 		PA.color = null
@@ -107,7 +107,7 @@ TYPEINFO(/datum/component/radioactive)
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
 			M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
-		for(var/mob/M in hearers(effect_range,parent)) //hearers is basically line-of-sight
+		for(var/mob/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS)) //shorter than item tick time, so you can get multiple doses but there's a limit
 				M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
 		if(src.decays && prob(33))
@@ -118,7 +118,7 @@ TYPEINFO(/datum/component/radioactive)
 	/// Called when an item is picked up or hand attacked.
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
-			if(!ON_COOLDOWN(toucher,"radiation_exposure", 0.5 SECONDS))
+			if(!ON_COOLDOWN(toucher, "radiation_exposure", 0.5 SECONDS))
 				toucher.take_radiation_dose((neutron ? 1.8 SIEVERTS: 0.6 SIEVERTS) * (radStrength/100))
 
 	/// Called when a radioactive thing is eaten. High dose to account for radioactive things continuing to irradiate you from the stomach.
