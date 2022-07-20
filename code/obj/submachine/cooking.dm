@@ -37,7 +37,7 @@
 			else
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
-				boutput("<span class='notice'>You wet [W].</span>")
+				boutput(user, "<span class='notice'>You wet [W].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 		else if (istype(W, /obj/item/grab))
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
