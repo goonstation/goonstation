@@ -1,4 +1,9 @@
 
+(t)wed jul 20 22
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
 (t)mon jul 18 22
 (u)Kubius
 (p)9476
