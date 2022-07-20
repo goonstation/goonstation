@@ -742,7 +742,7 @@ table#cooktime a#start {
 				src.icon_state = "oven_off"
 				src.working = FALSE
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				for (var/atom/movable/I as anything in src.contents)
+				for (var/atom/movable/I in src.contents)
 					qdel(I)
 				src.updateUsrDialog()
 				return
@@ -769,7 +769,7 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>Too late! It's already cooking, ejecting the food would ruin everything forever!</span>")
 				return
-			for (var/obj/item/I as anything in src.contents)
+			for (var/obj/item/I in src.contents)
 				I.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
@@ -837,7 +837,7 @@ table#cooktime a#start {
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
-		for(var/obj/item/I as anything in src.contents)
+		for(var/obj/item/I in src.contents)
 			if(istype(I, recipeitem))
 				count++
 		if (count < recipecount)
@@ -1066,7 +1066,7 @@ table#cooktime a#start {
 		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (over_object == usr && (in_interact_range(src, usr) || usr.contents.Find(src)))
-			for(var/obj/item/I as anything in src.contents)
+			for(var/obj/item/I in src.contents)
 				I.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
 				O.show_message("<span class='notice'>[usr] empties the [src].</span>")
@@ -1173,7 +1173,7 @@ var/list/mixer_recipes = list()
 			var/dat = {"<B>KitchenHelper Mixer</B><BR>
 			<HR>
 			<B>Contents:</B><BR>"}
-			for (var/obj/item/I as anything in src.contents)
+			for (var/obj/item/I in src.contents)
 				dat += "[I]<BR>"
 			dat += {"<HR>
 			<A href='?src=\ref[src];mix=1'>Mix!</A><BR>
@@ -1216,7 +1216,7 @@ var/list/mixer_recipes = list()
 	proc/bowl_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
-		for(var/obj/item/I as anything in src.contents)
+		for(var/obj/item/I in src.contents)
 			if(istype(I, recipeitem))
 				count++
 				to_remove += I
@@ -1277,7 +1277,7 @@ var/list/mixer_recipes = list()
 					qdel(I)
 				to_remove.len = 0
 
-			for (var/obj/I as anything in src.contents)
+			for (var/obj/I in src.contents)
 				I.set_loc(src.loc)
 				src.visible_message("<span class='alert'>[I] is tossed out of [src]!</span>")
 				var/edge = get_edge_target_turf(src, pick(alldirs))
