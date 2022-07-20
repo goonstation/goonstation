@@ -427,26 +427,26 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE,FALSE)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE)
 		return
 
 /datum/materialProc/radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE,TRUE)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE)
 		return
 
 /datum/materialProc/n_radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
