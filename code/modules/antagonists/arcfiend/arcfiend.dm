@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 		if (target == holder.owner) return
 		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
-		if (isnpcmonkey(target))
+		if (isnpc(target))
 			boutput(holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
 		if (ishuman(target) || issilicon(target) || istype(target, /obj/machinery))

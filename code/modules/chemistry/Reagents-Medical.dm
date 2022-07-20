@@ -605,7 +605,8 @@ datum
 			transparency = 40
 			value = 2 // 1c + 1c
 			target_organs = list("left_kidney", "right_kidney", "liver")
-			threshold = 5
+			threshold = THRESHOLD_INIT
+			threshold_volume = 5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom

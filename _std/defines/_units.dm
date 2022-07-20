@@ -36,6 +36,7 @@
 #define MOLE MOLES
 #define CANDELA CANDELAS
 #define PASCAL PASCALS
+#define SIEVERT SIEVERTS
 
 #define YOTTA *(10**24)
 #define ZETTA *(10**21)
