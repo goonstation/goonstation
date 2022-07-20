@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 /obj/item/storage/secure/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user,src, "SecureSafe")
+		ui = new(user, src, "SecureSafe")
 		ui.open()
 
 /obj/item/storage/secure/ui_static_data(mob/user)
@@ -135,9 +135,10 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	if (.)
 		return
 
+	if (!ON_COOLDOWN(src, "playsound", 0.2 SECONDS))
+		playsound(src.loc, "sound/machines/keypress.ogg", 55, 1)
+
 	if (src.disabled || src.emagged)
-		// TODO (blackrep): Play a sound
-		playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
 		return
 
 	switch(action)
@@ -162,7 +163,6 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		return
 
 	// Otherwise add the input to the code attempt
-	playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
 	src.pad_msg = null
 	src.guess += key
 
@@ -237,13 +237,13 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		src.guess = ""
 		src.locked = !src.locked
 		src.overlays = src.locked ? null : list(image('icons/obj/items/storage.dmi', icon_open))
-		src.visible_message("<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
+		boutput(usr, "<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
 	else
 		if (length(guess) == src.code_len)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)
-				src.visible_message("<span class='alert'>[src]'s lock panel emits [desctext].</span>")
+				boutput(usr, "<span class='alert'>[src]'s lock panel emits [desctext].</span>")
 				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
 
 		src.pad_msg = KEYPAD_ERR
