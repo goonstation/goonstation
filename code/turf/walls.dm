@@ -40,7 +40,7 @@
 		#endif
 
 		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material))
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
 
 
 	ReplaceWithFloor()
