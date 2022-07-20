@@ -45,8 +45,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	pet_text = "cuddles"
 	hand_count = 1 //stabby hands
 	setup_healths()
-		add_hh_robot(27.50, 1)
-		add_hh_robot_burn(27.50, 0.65) // a little fire resistance
+		add_hh_robot(25, 1)
+		add_hh_robot_burn(25, 1)
 
 
 
