@@ -81,6 +81,11 @@
 			var/obj_count = 0
 			var/traitor_name
 
+			// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
+			// Once antagonist datums are completed, this check should be removed entirely.
+			if (traitor.get_antagonist(traitor.special_role))
+				continue
+
 			if (traitor.current)
 				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
@@ -160,22 +165,6 @@
 							else
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
-
-				if (traitor.special_role == ROLE_TRAITOR)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/surplus = length(traitor.traitor_crate_items)
-					stuff_to_output += "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]"
-					if (purchases)
-						var/item_detail = "They purchased: "
-						for (var/i in traitor.purchased_traitor_items)
-							item_detail += "[bicon(i:item)] [i:name], "
-						item_detail = copytext(item_detail, 1, -2)
-						if (surplus)
-							item_detail += "<br>Their surplus crate contained: "
-							for (var/i in traitor.traitor_crate_items)
-								item_detail += "[bicon(i:item)] [i:name], "
-							item_detail = copytext(item_detail, 1, -2)
-						stuff_to_output += item_detail
 
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
@@ -262,6 +251,17 @@
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+	
+	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
+	for (var/V in concrete_typesof(/datum/antagonist))
+		var/datum/antagonist/dummy = V
+		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
+			#ifdef DATA_LOGGER
+			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
+			#endif
+			var/antag_dat = A.handle_round_end(TRUE)
+			if (A.display_at_round_end && length(antag_dat))
+				stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 

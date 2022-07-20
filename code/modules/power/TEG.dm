@@ -84,7 +84,7 @@
 
 	New()
 		. = ..()
-		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
+		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12,"spaceglue"=0.7)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
 		target_pressure = min_circ_pressure
@@ -284,6 +284,20 @@
 			src.reagents.remove_reagent("love", 1)
 			src.generator.grump -= 100
 			src.audible_message("<span class='alert'>A oddly distinctive sound of contentment can be heard from [src]. How wonderful!</span>")
+
+		if( src.reagents.has_reagent("spaceglue"))
+			src.reagents.remove_reagent("spaceglue", 1)
+			src.generator.grump += 25
+			src.visible_message("<span class='alert'><b>[src] [pick("shakes", "vibrates")] [pick("dangerously", "strangely", "grumpily")]!</b></span>")
+			animate_shake(src, rand(5,7), rand(3,8), rand(3,8) )
+			violent_twitch(src)
+
+		if( src.reagents.has_reagent("graphene_compound"))
+			src.reagents.remove_reagent("graphene_compound", 1)
+			src.generator.grump += 10
+			src.explosion_resistance += 0.5
+			src.generator?.explosion_resistance += 0.2
+			violent_twitch(src)
 
 		// Interactions with transferred gas
 		if(gas_passed)

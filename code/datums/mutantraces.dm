@@ -1905,6 +1905,7 @@ TYPEINFO(/datum/mutantrace)
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list("english", "kudzu")
 	movement_modifier = /datum/movement_modifier/kudzu
+	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
 		"left_eye"=/obj/item/organ/eye/synth,\

@@ -1191,13 +1191,13 @@
 		onAdd(optional=null)
 			. = ..()
 			if (isliving(owner))
+				L = owner
 				L.force_laydown_standup()
 				if(QDELETED(src))
 					return
 				do_slow = TRUE
 
 				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
-				L = owner
 				if (L.getStatusDuration("burning"))
 					if (!actions.hasAction(L, "fire_roll"))
 						L.last_resist = world.time + 25

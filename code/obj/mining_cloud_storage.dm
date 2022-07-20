@@ -14,6 +14,8 @@
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/ores = list()
+	var/default_price = 20
+	var/autosell = TRUE
 
 	var/health = 100
 	var/broken = 0
@@ -243,8 +245,8 @@
 		else if (delta > 0)
 			var/datum/ore_cloud_data/OCD = new /datum/ore_cloud_data
 			OCD.amount += delta
-			OCD.for_sale = 0
-			OCD.price = 0
+			OCD.for_sale = autosell
+			OCD.price = default_price
 			OCD.stats = get_ore_properties(ore)
 			ores[material_name] = OCD
 
@@ -257,7 +259,6 @@
 			stat_list += stat.getAdjective(ore.material)
 		if (!stat_list.len) return "no properties"
 		return stat_list.Join(", ")
-
 
 	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
 		if(ores[material_name])
@@ -346,7 +347,9 @@
 			))
 
 		. = list(
-			"ores" = ore_list
+			"ores" = ore_list,
+			"default_price" = src.default_price,
+			"autosell" = src.autosell
 		)
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
@@ -359,6 +362,13 @@
 			if("toggle-ore-sell-status")
 				var/ore = params["ore"]
 				update_ore_for_sale(ore)
+				. = TRUE
+			if("set-default-price")
+				var/price = params["newPrice"]
+				default_price = max(price, 0)
+				. = TRUE
+			if("toggle-auto-sell")
+				autosell = !autosell
 				. = TRUE
 			if("set-ore-price")
 				var/ore = params["ore"]

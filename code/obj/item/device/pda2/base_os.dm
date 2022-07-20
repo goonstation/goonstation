@@ -423,11 +423,11 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/prompt = "Please enter new ring message"
+						var/prompt = "Please enter new ring message."
 						var/default = src.message_tone
 						if (usr.ckey == src.master?.uplink?.owner_ckey)
 							default = src.master.uplink.lock_code
-							prompt += ". Your traitor uplink code has been pre-entered for your convenience"
+							prompt += " Your uplink code has been pre-entered for your convenience."
 
 						var/t = input(usr, prompt, src.name, default) as text
 						if (!t)

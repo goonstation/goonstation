@@ -431,25 +431,38 @@
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
 	var/thorned = 1
-	var/list/names = list("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia",
-	"Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Dakota", "Avery",
-	"Sofia", "Camila", "Aria", "Scarlett", "Liam", "Noah", "William", "James",
-	"Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan",
-	"Jacob", "Michael", "Daniel", "Henry", "Jackson", "Sebastian", "Aiden", "Matthew")
 
 	New()
 		..()
-		desc = desc + pick(names) + "."
+		var/list/possible_names = list()
+		for(var/mob/M in mobs)
+			if(!M.mind)
+				continue
+			if(ishuman(M))
+				if(iswizard(M))
+					continue
+				if(isnukeop(M))
+					continue
+				possible_names += M
+			else if(isAI(M) || isrobot(M))
+				possible_names += M
+		var/rose_name
+		if(!length(possible_names))
+			rose_name = pick_string_autokey("names/first.txt")
+		else
+			var/mob/chosen_mob = pick(possible_names)
+			rose_name = chosen_mob.real_name
+		desc = desc + rose_name + "."
 
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
 			if (H.hand)//gets active arm - left arm is 1, right arm is 0
-				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
 					..()
 					return
 			else
-				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
 					..()
 					return
 			if(istype(H))

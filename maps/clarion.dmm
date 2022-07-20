@@ -25424,9 +25424,11 @@
 	name = "table"
 	},
 /obj/shrub/captainshrub{
-	pixel_y = 12
+	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "purple2"
