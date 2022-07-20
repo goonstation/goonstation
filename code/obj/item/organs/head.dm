@@ -78,9 +78,9 @@
 			if (isskeleton(src.linked_human))
 				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
 				S.head_tracker = null
-			src.UnregisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
-			src.UnregisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
-			src.UnregisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)
@@ -296,9 +296,9 @@
 		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
 		if (src.linked_human)
-			src.RegisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
-			src.RegisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
-			src.RegisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
+			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
+			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, .proc/remove_typing_indicator)
+			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, .proc/speech_bubble)
 		. = ..()
 
 	///Taking items off a head
@@ -463,9 +463,9 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 		if (src.linked_human)
-			src.UnregisterSignal(src.linked_human, "create_typing", .proc/create_typing_indicator)
-			src.UnregisterSignal(src.linked_human, "remove_typing", .proc/remove_typing_indicator)
-			src.UnregisterSignal(src.linked_human, "speech_bubble", .proc/speech_bubble)
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0

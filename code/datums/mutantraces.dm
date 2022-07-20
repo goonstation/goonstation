@@ -1150,9 +1150,9 @@ TYPEINFO(/datum/mutantrace)
 			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
 		// if we were previously linked to another head
 		if (src.head_tracker)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, "create_typing", /obj/item/organ/head.proc/create_typing_indicator)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, "remove_typing", /obj/item/organ/head.proc/remove_typing_indicator)
-			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, "speech_bubble", /obj/item/organ/head.proc/speech_bubble)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
 			src.head_tracker.linked_human = null
 		head_tracker = head
 		head_tracker.linked_human = src.mob
