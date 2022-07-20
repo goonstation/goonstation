@@ -51,11 +51,11 @@ TYPEINFO(/datum/component/radioactive)
 		else
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item, use the item processing loop anyway
 		var/atom/PA = parent
-		var/color = neutron ? "#2e3ae4FF" : "#18e022FF"
+		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128,round(255*radStrength/100)),2) //base color + alpha
 		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 		src.backup_color = PA.color
 		PA.color = null
-		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color)+list(min(128,round(255*radStrength/100))))
+		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
 		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
