@@ -496,6 +496,9 @@
 
 /obj/machinery/vending/hitby(atom/movable/M, datum/thrown_thing/thr)
 	if (iscarbon(M) && M.throwing)
+		var/area/T = get_area(src)
+		if(T?.sanctuary)
+			return
 		src.fall(M)
 		return
 
@@ -799,6 +802,7 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
+	playsound(src.loc, "sound/machines/vending_crash.ogg", 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
@@ -2264,6 +2268,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A magic vending machine."
 	icon_state = "wiz"
 	icon_panel = "standard-panel"
+	can_fall = FALSE
 	acceptcard = 0
 	slogan_list = list("Sling spells the proper way with MagiVend!",
 	"Be your own Houdini! Use MagiVend!")
