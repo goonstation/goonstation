@@ -49,7 +49,7 @@
 					if (!remove_source)
 						my_group.evaporate()
 						return
-				skip_next_update = 1
+				skip_next_update = TRUE
 				my_group.drain(remove_source, fluids_to_remove, remove_reagent = 0)
 
 	get_reagents_fullness()
@@ -249,7 +249,7 @@
 		amt_per_tile = length(members) ? contained_amt / length(members) : 0
 		members -= F //remove after amt per tile ok? otherwise bad thing could happen
 		if (lost_fluid)
-			src.reagents.skip_next_update = 1
+			src.reagents.skip_next_update = TRUE
 			src.reagents.remove_any(amt_per_tile)
 			src.contained_amt = src.reagents.total_volume
 
@@ -297,7 +297,7 @@
 		if(amt_to_remove == amt_per_tile)
 			members -= F //remove after amt per tile ok? otherwise bad thing could happen
 			if (lost_fluid)
-				src.reagents.skip_next_update = 1
+				src.reagents.skip_next_update = TRUE
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
 
@@ -307,7 +307,7 @@
 				F.turf_remove_cleanup(F.loc)
 		else
 			if (lost_fluid)
-				src.reagents.skip_next_update = 1
+				src.reagents.skip_next_update = TRUE
 				R = src.reagents.remove_any_to(amt_to_remove)
 				src.contained_amt = src.reagents.total_volume
 		qdel(F)
@@ -380,7 +380,7 @@
 			src.reagents.copy_to(R)
 			jump_turf.fluid_react(R,amt_per_tile_added)
 
-		src.reagents.skip_next_update = 1
+		src.reagents.skip_next_update = TRUE
 		src.reagents.remove_any(loss)
 
 		return 1
@@ -675,11 +675,11 @@
 		var/removed_len = length(fluids_removed)
 
 		if (transfer_to && transfer_to.reagents && src.reagents)
-			src.reagents.skip_next_update = 1
+			src.reagents.skip_next_update = TRUE
 			src.reagents.trans_to_direct(transfer_to.reagents,src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
 		else if (src.reagents && remove_reagent)
-			src.reagents.skip_next_update = 1
+			src.reagents.skip_next_update = TRUE
 			src.reagents.remove_any(src.amt_per_tile * removed_len)
 			src.contained_amt = src.reagents.total_volume
 
@@ -751,7 +751,7 @@
 		src.members -= FG.members
 
 		if (FG)
-			src.reagents.skip_next_update = 1
+			src.reagents.skip_next_update = TRUE
 			src.reagents.trans_to_direct(FG.reagents, amt_per_tile * connected.len)
 			src.contained_amt = src.reagents.total_volume
 

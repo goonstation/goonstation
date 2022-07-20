@@ -4,7 +4,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
-	needspoon = 1
+	needspoon = TRUE
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
 
@@ -25,7 +25,7 @@
 	desc = "It smells delicious. You just want to plant your face in it."
 	icon_state = "pie"
 	splat = 1
-	needspoon = 1
+	needspoon = TRUE
 	bites_left = 3
 	throwforce = 0
 	force = 0
@@ -95,7 +95,7 @@
 	desc = "More often used in pranks than culinary matters..."
 	icon_state = "creampie"
 	splat = 1
-	needspoon = 1
+	needspoon = TRUE
 	throwforce = 0
 	force = 0
 	bites_left = 2

@@ -6,7 +6,7 @@
 	var/hname = null
 	var/job = null
 	food_color = "#FFFFCC"
-	custom_food = 0
+	custom_food = FALSE
 	initial_volume = 30
 	food_effects = list("food_refreshed")
 	meal_time_flags = MEAL_TIME_LUNCH

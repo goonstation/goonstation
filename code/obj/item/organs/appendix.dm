@@ -32,7 +32,7 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	made_from = "pharosium"
-	edible = 0
+	edible = FALSE
 	mats = 6
 
 	//A bad version of the robutsec... For now.

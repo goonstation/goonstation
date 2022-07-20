@@ -2038,7 +2038,7 @@
 	icon_state = "petfood"
 	bites_left = 4
 	heal_amt = 1
-	doants = 0
+	doants = FALSE
 	initial_volume = 50
 
 	New()

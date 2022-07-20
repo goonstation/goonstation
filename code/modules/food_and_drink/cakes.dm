@@ -549,7 +549,7 @@
 	icon_state = "b_cupcake"
 	bites_left = 4
 	heal_amt = 1
-	doants = 0
+	doants = FALSE
 
 	New()
 		..()

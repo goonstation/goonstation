@@ -353,19 +353,19 @@
 		name = "maraschino cherry"
 		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liquer, which is made from maraschino cherries. Huh."
 		icon_state = "cherry"
-		edible = 1
+		edible = TRUE
 
 	cocktail_olive
 		name = "cocktail olive"
 		desc = "An olive on a toothpick, to put in a drink. I dunno what this accomplishes for the taste of the drink, but hey, you get an olive to eat."
 		icon_state = "olive"
-		edible = 1
+		edible = TRUE
 
 	celery
 		name = "celery stick"
 		desc = "A stick of celery. Does not feature ants. Unless you leave it on the floor, but those would probably not be very tasty. I dunno, though, I've never eaten an ant. They might be delicious."
 		icon_state = "celery"
-		edible = 1
+		edible = TRUE
 
 // empty bottles
 

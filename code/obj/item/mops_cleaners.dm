@@ -1003,7 +1003,7 @@ WET FLOOR SIGN
 				. = FALSE
 			else
 				var/obj/fluid/airborne/F = T.active_airborne_liquid
-				F.group.reagents.skip_next_update = 1
+				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
 				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)

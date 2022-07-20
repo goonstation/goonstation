@@ -37,7 +37,7 @@ datum
 		var/defer_reactions = 0 //Set internally to prevent reactions inside reactions.
 		var/deferred_reaction_checks = 0
 		var/processing_reactions = 0
-		var/inert = 0 //Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
+		var/inert = FALSE //Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
 
 		var/list/addiction_tally = null
 
@@ -488,12 +488,12 @@ datum
 							if (C.consume_all)
 								for(var/B in C.required_reagents)
 									if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
-										FG.skip_next_update = 1
+										FG.skip_next_update = TRUE
 									src.del_reagent(B)
 							else
 								for(var/B in C.required_reagents)
 									if (FG)
-										FG.skip_next_update = 1
+										FG.skip_next_update = TRUE
 									src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
 							src.add_reagent(C.result, created_volume)
 							if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.

@@ -3,41 +3,41 @@
 	desc = "A water-filled unit intended for cookery purposes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	mats = 12
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour))
-			user.show_text("You add water to the flour to make dough!", "blue")
+			boutput(user, "<span class-'notice'>You add water to the flour to make dough!</span>")
 			if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour/semolina))
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough/semolina(src.loc)
 			else
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough(src.loc)
-			qdel (W)
+			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/rice))
-			user.show_text("You add water to the rice to make sticky rice!", "blue")
+			boutput(user, "<span class='notice'>You add water to the rice to make sticky rice!</span>")
 			new /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice(src.loc)
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) || istype(W, /obj/item/reagent_containers/balloon/) || istype(W, /obj/item/soup_pot))
 			var/fill = W.reagents.maximum_volume
 			if (W.reagents.total_volume >= fill)
-				user.show_text("[W] is too full already.", "red")
+				boutput(user, "<span class='alert'>[W] is too full already.</span>")
 			else
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
-				user.show_text("You fill [W] with water.", "blue")
+				boutput("<span class='notice'>You fill [W] with water.</span>")
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
 			if (W.reagents.total_volume >= fill)
-				user.show_text("[W] is too wet already.", "red")
+				boutput(user, "<span class='alert'>[W] is too wet already.</span>")
 			else
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
-				user.show_text("You wet [W].", "blue")
+				boutput("<span class='notice'>You wet [W].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 		else if (istype(W, /obj/item/grab))
 			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
@@ -52,7 +52,7 @@
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+	MouseDrop_T(obj/item/W, mob/user)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.Attackby(W, user)
 		return ..()
@@ -81,15 +81,16 @@
 	desc = "A machine designed to dispense space ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
-	var/list/flavors = list("chocolate","vanilla","coffee")
+	var/list/flavors = list("chocolate", "vanilla", "coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
-	var/doing_a_thing = 0
+	/// Boolean: handles UI updates
+	var/doing_a_thing = FALSE
 
 	attack_hand(var/mob/user)
 		src.add_dialog(user)
@@ -97,7 +98,7 @@
 		if(src.cone)
 			dat += "<a href='?src=\ref[src];eject=cone'>Eject Cone</a><br>"
 			dat += "<b>Select a Flavor:</b><br><ul>"
-			for(var/flavor in flavors)
+			for(var/flavor as anything in flavors)
 				dat += "<li><a href='?src=\ref[src];flavor=[flavor]'>[capitalize(flavor)]</a></li>"
 			if(src.beaker)
 				dat += "<li><a href='?src=\ref[src];flavor=beaker'>From Beaker</a></li>"
@@ -113,7 +114,7 @@
 		onclose(user, "icecream")
 		return
 
-	attack_ai(var/mob/user as mob)
+	attack_ai(var/mob/user)
 		return attack_hand(user)
 
 	Topic(href, href_list)
@@ -143,10 +144,10 @@
 							src.UpdateIcon()
 
 			else if(href_list["flavor"])
-				if(doing_a_thing)
+				if(src.doing_a_thing)
 					src.updateUsrDialog()
 					return
-				if(!cone)
+				if(!src.cone)
 					boutput(usr, "<span class='alert'>There is no cone loaded!</span>")
 					src.updateUsrDialog()
 					return
@@ -158,21 +159,21 @@
 						src.updateUsrDialog()
 						return
 
-					if(!beaker.reagents.total_volume)
+					if(!src.beaker.reagents.total_volume)
 						boutput(usr, "<span class='alert'>The beaker is empty!</span>")
 						src.updateUsrDialog()
 						return
 
-					doing_a_thing = 1
+					doing_a_thing = TRUE
 					qdel(src.cone)
 					src.cone = null
 					var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
-					beaker.reagents.trans_to(newcream,40)
+					src.beaker.reagents.trans_to(newcream,40)
 					newcream.set_loc(src.loc)
 
 				else
 					if(the_flavor in src.flavors)
-						doing_a_thing = 1
+						doing_a_thing = TRUE
 						qdel(src.cone)
 						src.cone = null
 						var/obj/item/reagent_containers/food/snacks/ice_cream/newcream = new
@@ -181,7 +182,7 @@
 					else
 						boutput(usr, "<span class='alert'>Unknown flavor!</span>")
 
-				doing_a_thing = 0
+				doing_a_thing = FALSE
 				src.UpdateIcon()
 
 			src.updateUsrDialog()
@@ -219,7 +220,7 @@
 			src.updateUsrDialog()
 		else ..()
 
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+	MouseDrop_T(obj/item/W, mob/user)
 		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.Attackby(W, user)
 		return ..()
@@ -243,27 +244,29 @@ var/list/oven_recipes = list()
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
-	var/emagged = 0
-	var/working = 0
+	var/emagged = FALSE
+	var/working = FALSE
+	/// Time in seconds: SECONDS properly handled in SPAWN
 	var/time = 5
 	var/heat = "Low"
 	var/list/recipes = null
 	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
+	/// This allows for as-anything speed improvements
 	var/allowed = list(/obj/item)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		if (!emagged)
-			emagged = 1
+		if (!src.emagged)
+			src.emagged = TRUE
 			if (user)
 				boutput(user, "<span class='notice'>[src] produces a strange grinding noise.</span>")
-			return 1
+			return TRUE
 		else
-			return 0
+			return FALSE
 
 	attack_hand(var/mob/user)
 		if (isghostdrone(user))
@@ -300,7 +303,7 @@ table#cooktime a:hover {
 	border: 2px solid #ccc;
 	}
 
-table#cooktime a#ct[time], table#cooktime a#h[heat] {
+table#cooktime a#ct[src.time], table#cooktime a#h[src.heat] {
 	background: #b85;
 	border: 2px solid #db9;
 	color: white;
@@ -318,17 +321,17 @@ table#cooktime a#start {
 </style>
 			<b>Cookomatic Multi-Oven</b><br>
 			<hr>
-			<b>Time:</b> [time]<br>
-			<b>Heat:</b> [heat]<br>
+			<b>Time:</b> [src.time]<br>
+			<b>Heat:</b> [src.heat]<br>
 			<hr>
 		"}
 		if (!src.working)
 			var/junk = ""
-			for (var/obj/item/I in src.contents)
+			for (var/obj/item/I as anything in src.contents)
 				junk += "[I]<br>"
 
 			var/timeopts = ""
-			for (var/i = 1; i <= 10; i++)
+			for (var/i in 1 to 10)
 				timeopts += "<td><a id='ct[i]' href='?src=\ref[src];time=[i]'>[i]</a></td>"
 				if (i == 5)
 					timeopts += "<td><a id='hHigh' href='?src=\ref[src];heat=1'>HIGH</a></td><td rowspan='2' valign='middle'><a id='start' href='?src=\ref[src];cook=1'>START</a></td></tr><tr>"
@@ -351,7 +354,7 @@ table#cooktime a#start {
 		user.Browse(dat, "window=oven;size=400x500")
 		onclose(user, "oven")
 
-	attack_ai(var/mob/user as mob)
+	attack_ai(var/mob/user)
 		return attack_hand(user)
 
 	New()
@@ -600,38 +603,41 @@ table#cooktime a#start {
 				boutput(usr, "<span class='alert'>There's nothing in \the [src] to cook.</span>")
 				return
 			var/output = null
-			var/cook_amt = src.time
+			/// 3-state boolean: 1 is succeed, -1 is fail, 0 is 'null'
 			var/bonus = 0
-			var/derivename = 0
+			/// boolean: TRUE if the output needs a modified name
+			var/derivename = FALSE
+			/// number: takes the recipe bonus (nonboolean). zero default
 			var/recipebonus = 0
-			var/recook = 0
-			if (src.heat == "High") cook_amt *= 2
+			/// boolean: are you reheating a cooked item?
+			var/recook = FALSE
+			if (src.heat == "High") src.time *= 2
 
 			// If emagged produce random output.
-			if (emagged)
+			if (src.emagged)
 				// Enforce GIGO and prevent infinite reuse
-				var/contentsok = 1
-				for(var/obj/item/I in src.contents)
+				var/contentsok = TRUE
+				for(var/obj/item/I as anything in src.contents)
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
-						contentsok = 0
+						contentsok = FALSE
 						break
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuckburn))
-						contentsok = 0
+						contentsok = FALSE
 						break
 					if(istype(I, /obj/item/reagent_containers/food))
 						var/obj/item/reagent_containers/food/F = I
 						if (F.from_emagged_oven) // hyphz checked heal_amt but I think this custom var is a nicer solution (also I'm not sure that valid food not from an emagged oven will never have a heal_amt of 0 (because I am lazy and don't want to read the code))
-							contentsok = 0
+							contentsok = FALSE
 							break
 					// Pick a random recipe
 				var/datum/cookingrecipe/xrecipe = pick(src.recipes)
-				var/xrecipeok = 1
+				var/xrecipeok = TRUE
 				// Don't choose recipes with human meat since we don't have a name for them
 				if (xrecipe.useshumanmeat)
-					xrecipeok = 0
+					xrecipeok = FALSE
 				// Don't choose recipes with special outputs since we don't have valid inputs for them
 				if (isnull(xrecipe.output))
-					xrecipeok = 0
+					xrecipeok = FALSE
 				// Bail out to a mess if we didn't get a valid recipe
 				if (xrecipeok && contentsok)
 					output = xrecipe.output
@@ -641,7 +647,7 @@ table#cooktime a#start {
 				recipebonus = 0
 				bonus = -1
 			else
-				for (var/datum/cookingrecipe/R in src.recipes)
+				for (var/datum/cookingrecipe/R as anything in src.recipes)
 					if (R.item1)
 						if (!OVEN_checkitem(R.item1, R.amt1)) continue
 					if (R.item2)
@@ -665,13 +671,13 @@ table#cooktime a#start {
 					if (isnull(output))
 						output = R.output
 
-					if (R.useshumanmeat) derivename = 1
+					if (R.useshumanmeat) derivename = TRUE
 					recipebonus = R.cookbonus
-					if (cook_amt == R.cookbonus) bonus = 1
-					else if (cook_amt == R.cookbonus + 1) bonus = 1
-					else if (cook_amt == R.cookbonus - 1) bonus = 1
-					else if (cook_amt <= R.cookbonus - 5) bonus = -1
-					else if (cook_amt >= R.cookbonus + 5)
+					if (src.time == R.cookbonus) bonus = 1
+					else if (src.time == R.cookbonus + 1) bonus = 1
+					else if (src.time == R.cookbonus - 1) bonus = 1
+					else if (src.time <= R.cookbonus - 5) bonus = -1
+					else if (src.time >= R.cookbonus + 5)
 						output = /obj/item/reagent_containers/food/snacks/yuckburn
 						bonus = 0
 					break
@@ -682,18 +688,17 @@ table#cooktime a#start {
 			if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
 				for (var/obj/item/reagent_containers/food/snacks/F in src)
 					if(F.quality < 1)
-						recook = 1
-						if (cook_amt == F.quality) F.quality = 1.5
-						else if (cook_amt == F.quality + 1) F.quality = 1
-						else if (cook_amt == F.quality - 1) F.quality = 1
-						else if (cook_amt <= F.quality - 5) F.quality = 0.5
-						else if (cook_amt >= F.quality + 5)
+						recook = TRUE
+						if (src.time == F.quality) F.quality = 1.5
+						else if (src.time == F.quality + 1 || (src.time == F.quality - 1)) F.quality = 1
+						else if (src.time <= F.quality - 5) F.quality = 0.5
+						else if (src.time >= F.quality + 5)
 							output = /obj/item/reagent_containers/food/snacks/yuckburn
 							bonus = 0
-			src.working = 1
+			src.working = TRUE
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN(cook_amt * 10)
+			SPAWN(src.time SECONDS)
 
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
@@ -705,7 +710,7 @@ table#cooktime a#start {
 								F.quality = 0.5
 							F.heal_amt = 0
 						if (src.emagged)
-							F.from_emagged_oven = 1
+							F.from_emagged_oven = TRUE
 						F.set_loc(src.loc)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
@@ -713,16 +718,16 @@ table#cooktime a#start {
 						F = new output(src.loc)
 					else
 						F = output
-						F.set_loc( get_turf(src) )
+						F.set_loc(get_turf(src))
 
 					if (bonus == 1)
 						F.quality = 5
 					else if (bonus == -1)
-						F.quality = recipebonus - cook_amt
+						F.quality = recipebonus - src.time
 						if (istype(F, /obj/item/reagent_containers/food/snacks))
 							F.heal_amt = 0
 					if (src.emagged && istype(F))
-						F.from_emagged_oven = 1
+						F.from_emagged_oven = TRUE
 					if (derivename)
 						var/foodname = F.name
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
@@ -735,9 +740,9 @@ table#cooktime a#start {
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
-				src.working = 0
+				src.working = FALSE
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				for (var/atom/movable/I in src.contents)
+				for (var/atom/movable/I as anything in src.contents)
 					qdel(I)
 				src.updateUsrDialog()
 				return
@@ -764,15 +769,15 @@ table#cooktime a#start {
 			if (src.working)
 				boutput(usr, "<span class='alert'>Too late! It's already cooking, ejecting the food would ruin everything forever!</span>")
 				return
-			for (var/obj/item/I in src.contents)
+			for (var/obj/item/I as anything in src.contents)
 				I.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
 
-	custom_suicide = 1
-	suicide(var/mob/user as mob)
+	custom_suicide = TRUE
+	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		user.visible_message("<span class='alert'><b>[user] shoves [his_or_her(user)] head in the oven and turns it on.</b></span>")
 		src.icon_state = "oven_bake"
 		user.TakeDamage("head", 0, 150)
@@ -780,8 +785,8 @@ table#cooktime a#start {
 		src.icon_state = "oven_off"
 		SPAWN(55 SECONDS)
 			if (user && !isdead(user))
-				user.suiciding = 0
-		return 1
+				user.suiciding = FALSE
+		return TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user))
@@ -801,20 +806,20 @@ table#cooktime a#start {
 			boutput(user, "<span class='alert'>\The [src] cannot hold any more items.</span>")
 			return
 
-		var/proceed = 0
-		for(var/check_path in src.allowed)
+		var/proceed = FALSE
+		for(var/check_path as anything in src.allowed)
 			if(istype(W, check_path))
-				proceed = 1
+				proceed = TRUE
 				break
 		if (istype(W, /obj/item/grab))
-			proceed = 0
+			proceed = FALSE
 		if (istype(W, /obj/item/card/emag))
 			..()
 			return
 		if (amount == 1)
 			var/cakecount
 			for (var/obj/item/reagent_containers/food/snacks/cake/cream/C in src.contents) cakecount++
-			if (cakecount == 1) proceed = 1
+			if (cakecount == 1) proceed = TRUE
 		if (!proceed)
 			boutput(user, "<span class='alert'>You can't put that in [src]!</span>")
 			return
@@ -824,20 +829,20 @@ table#cooktime a#start {
 		W.dropped(user)
 		src.updateUsrDialog()
 
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+	MouseDrop_T(obj/item/W, mob/user)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
 			return src.Attackby(W, user)
 		return ..()
 
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
+		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
-		for(var/obj/item/I in src.contents)
+		for(var/obj/item/I as anything in src.contents)
 			if(istype(I, recipeitem))
 				count++
 		if (count < recipecount)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 /obj/submachine/foodprocessor
@@ -845,185 +850,187 @@ table#cooktime a#start {
 	desc = "Refines various food substances into different forms."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor-off"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	var/working = 0
+	var/working = FALSE
+	/// This allows for as-anything speed improvements
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
 
 	attack_hand(var/mob/user)
-		if (src.contents.len < 1)
+		if (!src.contents.len)
 			boutput(user, "<span class='alert'>There is nothing in the processor!</span>")
 			return
-		if (src.working == 1)
+		if (src.working)
 			boutput(user, "<span class='alert'>The processor is busy!</span>")
 			return
 		src.icon_state = "processor-on"
-		src.working = 1
+		src.working = TRUE
 		src.visible_message("The [src] begins processing its contents.")
-		sleep(rand(30,70))
+		sleep(rand(3, 7) SECONDS)
 		// Dispense processed stuff
-		for(var/obj/item/P in src.contents)
-			switch( P.type )
+		for(var/obj/item/I as anything in src.contents)
+			switch(I.type)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
-					F.name = P:subjectname + " meatball"
-					F.desc = "Meaty balls taken from the station's finest [P:subjectjob]."
-					qdel( P )
+					F.name = I:subjectname + " meatball"
+					F.desc = "Meaty balls taken from the station's finest [I:subjectjob]."
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "monkey meatball"
 					F.desc = "Welcome to Space Station 13, where you too can eat a rhesus macaque's balls."
-					qdel( P )
+					qdel(I)
 				if (/obj/item/organ/brain)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "brain meatball"
 					F.desc = "Oh jesus, brain meatballs? That's just nasty."
-					qdel( P )
+					qdel(I)
 				if (/obj/item/clothing/head/butt)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "buttball"
 					F.desc = "The best you can hope for is that the meat was lean..."
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "synthetic meatball"
 					F.desc = "Let's be honest, this is probably as good as these things are going to get."
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "mystery meatball"
 					F.desc = "A meatball of even more dubious quality than usual."
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/wheat/metal)
 					new/obj/item/reagent_containers/food/snacks/condiment/ironfilings/(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/wheat/durum)
 					new/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/wheat)
 					new/obj/item/reagent_containers/food/snacks/ingredient/flour/(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/oat)
 					new/obj/item/reagent_containers/food/snacks/ingredient/oatmeal/(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/oat/salt)
 					new/obj/item/reagent_containers/food/snacks/ingredient/salt/(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)
 					new/obj/item/reagent_containers/food/snacks/ingredient/rice(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/tomato)
 					new/obj/item/reagent_containers/food/snacks/condiment/ketchup(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/peanuts)
 					new/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/egg)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/chilly)
-					var/datum/plantgenes/DNA = P:plantgenes
+					var/datum/plantgenes/DNA = I:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/coldsauce/F = new(src.loc)
 					F.reagents.add_reagent("cryostylane", DNA.potency)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili)
-					var/datum/plantgenes/DNA = P:plantgenes
+					var/datum/plantgenes/DNA = I:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/ghostchilisauce/F = new(src.loc)
 					F.reagents.add_reagent("ghostchilijuice", 5 + DNA.potency)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/chili)
-					var/datum/plantgenes/DNA = P:plantgenes
+					var/datum/plantgenes/DNA = I:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
 					F.reagents.add_reagent("capsaicin", DNA.potency)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
-					var/datum/plantgenes/DNA = P:plantgenes
+					var/datum/plantgenes/DNA = I:plantgenes
 					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
 					F.reagents.add_reagent("chocolate", DNA.potency)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
-					var/datum/plantgenes/DNA = P:plantgenes
+					var/datum/plantgenes/DNA = I:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
 					F.reagents.add_reagent("milk", DNA.potency)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/drinks/milk)
-					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+					if (I.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
 						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-						qdel( P )
+						qdel(I)
 				if (/obj/item/reagent_containers/food/drinks/milk/soy)
 					//so soy milk is just milk it seems, veganism is a lie
-					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
+					if (I.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
 						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-						qdel( P )
+						qdel(I)
 				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
 					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/candy/chocolate)
 					new/obj/item/reagent_containers/food/snacks/condiment/chocchips(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/corn)
 					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
 					new/obj/item/reagent_containers/food/snacks/ingredient/pepper(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/soy)
 					new/obj/item/reagent_containers/food/drinks/milk/soy(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry)
 					new/obj/item/reagent_containers/food/snacks/plant/coffeebean(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meatpaste)
 					new/obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/ingredient/fishpaste)
 					new/obj/item/reagent_containers/food/snacks/ingredient/kamaboko_log(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/cucumber)
 					new/obj/item/reagent_containers/food/snacks/pickle(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/cherry)
 					new/obj/item/cocktail_stuff/maraschino_cherry(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/reagent_containers/food/snacks/plant/turmeric)
 					new/obj/item/reagent_containers/food/snacks/ingredient/currypowder(src.loc)
-					qdel( P )
+					qdel(I)
 				if (/obj/item/plant/herb/tea)
 					new/obj/item/reagent_containers/food/snacks/condiment/matcha(src.loc)
-					qdel( P )
+					qdel(I)
 		// Wind down
-		for(var/obj/item/S in src.contents)
-			S.set_loc(get_turf(src))
-		src.working = 0
+		for(var/obj/item/I as anything in src.contents)
+			I.set_loc(get_turf(src))
+		src.working = FALSE
 		src.icon_state = "processor-off"
 		playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
 		return
 
-	attack_ai(var/mob/user as mob)
+	attack_ai(var/mob/user)
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
-			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
+			if (!S.contents.len)
+				boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
@@ -1038,10 +1045,10 @@ table#cooktime a#start {
 				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
 			return
 		else
-			var/proceed = 0
-			for(var/check_path in src.allowed)
+			var/proceed = FALSE
+			for(var/check_path as anything in src.allowed)
 				if(istype(W, check_path))
-					proceed = 1
+					proceed = TRUE
 					break
 			if (!proceed)
 				boutput(user, "<span class='alert'>You can't put that in the processor!</span>")
@@ -1059,13 +1066,13 @@ table#cooktime a#start {
 		if (is_incapacitated(usr) || usr.restrained())
 			return
 		if (over_object == usr && (in_interact_range(src, usr) || usr.contents.Find(src)))
-			for(var/obj/item/P in src.contents)
-				P.set_loc(get_turf(src))
+			for(var/obj/item/I as anything in src.contents)
+				I.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
 				O.show_message("<span class='notice'>[usr] empties the [src].</span>")
 			return
 
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
@@ -1107,14 +1114,15 @@ var/list/mixer_recipes = list()
 	desc = "A food Mixer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "blender"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	mats = 15
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()
+	/// This allows for as-anything speed improvements
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
-	var/working = 0
+	var/working = FALSE
 
 	New()
 		..()
@@ -1146,10 +1154,10 @@ var/list/mixer_recipes = list()
 		if (amount >= 4)
 			boutput(user, "<span class='alert'>The mixer is full.</span>")
 			return
-		var/proceed = 0
-		for(var/check_path in src.allowed)
+		var/proceed = FALSE
+		for(var/check_path as anything in src.allowed)
 			if(istype(W, check_path))
-				proceed = 1
+				proceed = TRUE
 				break
 		if (!proceed)
 			boutput(user, "<span class='alert'>You can't put that in the mixer!</span>")
@@ -1165,7 +1173,7 @@ var/list/mixer_recipes = list()
 			var/dat = {"<B>KitchenHelper Mixer</B><BR>
 			<HR>
 			<B>Contents:</B><BR>"}
-			for (var/obj/item/I in src.contents)
+			for (var/obj/item/I as anything in src.contents)
 				dat += "[I]<BR>"
 			dat += {"<HR>
 			<A href='?src=\ref[src];mix=1'>Mix!</A><BR>
@@ -1180,10 +1188,10 @@ var/list/mixer_recipes = list()
 			user.Browse(dat, "window=mixer;size=400x500")
 			onclose(user, "mixer")
 
-	attack_ai(var/mob/user as mob)
+	attack_ai(var/mob/user)
 		return attack_hand(user)
 
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+	MouseDrop_T(obj/item/W, mob/user)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
 			return src.Attackby(W, user)
 		return ..()
@@ -1200,35 +1208,35 @@ var/list/mixer_recipes = list()
 				return
 			mix()
 		if(href_list["eject"])
-			for (var/obj/item/I in src.contents)
+			for (var/obj/item/I as anything in src.contents)
 				I.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
 
 	proc/bowl_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
+		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
-		for(var/obj/item/I in src.contents)
+		for(var/obj/item/I as anything in src.contents)
 			if(istype(I, recipeitem))
 				count++
 				to_remove += I
 
 		if (count < recipecount)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 	proc/mix()
 		var/amount = length(src.contents)
 		if (!amount)
 			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return
-		working = 1
+		working = TRUE
 		src.UpdateIcon()
 		src.updateUsrDialog()
 		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
-		var/derivename = 0
-		for (var/datum/cookingrecipe/R in src.recipes)
+		var/derivename = FALSE
+		for (var/datum/cookingrecipe/R as anything in src.recipes)
 			to_remove.len = 0
 			if (R.item1)
 				if (!bowl_checkitem(R.item1, R.amt1)) continue
@@ -1242,7 +1250,7 @@ var/list/mixer_recipes = list()
 			if (!output)
 				output = R.output
 			if (R.useshumanmeat)
-				derivename = 1
+				derivename = TRUE
 			break
 		SPAWN(2 SECONDS)
 
@@ -1265,17 +1273,17 @@ var/list/mixer_recipes = list()
 							F.unlock_medal_when_eaten = "That tasted funny"
 						else
 							F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
-				for (var/obj/item/I in to_remove)
+				for (var/obj/item/I as anything in to_remove)
 					qdel(I)
 				to_remove.len = 0
 
-			for (var/obj/I in src.contents)
+			for (var/obj/I as anything in src.contents)
 				I.set_loc(src.loc)
 				src.visible_message("<span class='alert'>[I] is tossed out of [src]!</span>")
 				var/edge = get_edge_target_turf(src, pick(alldirs))
 				I.throw_at(edge, 25, 4)
 
-			working = 0
+			working = FALSE
 			src.UpdateIcon()
 			src.updateUsrDialog()
 			return
@@ -1284,9 +1292,8 @@ var/list/mixer_recipes = list()
 		if (!src || !istype(src))
 			return
 
-		if (src.working != 0)
+		if (src.working)
 			src.icon_state = "blender_on"
 		else
 			src.icon_state = "blender"
-
 		return

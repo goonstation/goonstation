@@ -49,6 +49,6 @@
 	made_from = "pharosium"
 	// item_state = "heart_robo1"
 	robotic = 1
-	edible = 0
+	edible = FALSE
 	mats = 6
 	created_decal = /obj/decal/cleanable/oil

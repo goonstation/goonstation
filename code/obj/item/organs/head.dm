@@ -14,7 +14,7 @@
 	icon_state = "invis" // we'll overlay some shit on here
 	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
 	item_state = ""
-	edible = 0
+	edible = FALSE
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??

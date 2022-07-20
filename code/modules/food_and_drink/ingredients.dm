@@ -6,14 +6,14 @@
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	bites_left = 1
 	heal_amt = 0
-	custom_food = 0
+	custom_food = FALSE
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat
 	name = "raw meat"
 	desc = "you shouldnt be able to see this either!!"
 	icon_state = "meat"
 	heal_amt = 0
-	custom_food = 1
+	custom_food = TRUE
 	var/blood = 7 //how much blood cleanables we are allowed to spawn
 
 	heal(var/mob/living/M)
@@ -139,7 +139,7 @@
 	icon_state = "nugget0"
 	bites_left = 2
 	initial_volume = 15
-	doants = 0 // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
+	doants = FALSE // imagine 1000 nuggets on one tile all checking the other 999 nuggets if they aren't a table, yeah
 
 	New()
 		..()
@@ -166,7 +166,7 @@
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	initial_reagents = list("egg"=5)
-	doants = 0 // They're protected by a shell
+	doants = FALSE // They're protected by a shell
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -237,7 +237,7 @@
 	desc = "How sweet."
 	icon_state = "sugar"
 	food_color = "#FFFFFF"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
 	brew_result = "rum"
@@ -249,7 +249,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#996600"
-	custom_food = 1
+	custom_food = TRUE
 	food_effects = list("food_deep_burp")
 
 	attackby(obj/item/W, mob/user)
@@ -275,29 +275,29 @@
 	desc = "A breakfast staple."
 	icon_state = "oatmeal"
 	food_color = "#CC9966"
-	custom_food = 1
+	custom_food = TRUE
 
 /obj/item/reagent_containers/food/snacks/ingredient/salt
 	name = "salt"
 	desc = "A must have in any kitchen, just don't use too much."
 	icon_state = "salt"
 	food_color = "#a7927d"
-	custom_food = 1
+	custom_food = TRUE
 
 /obj/item/reagent_containers/food/snacks/ingredient/pepper
 	name = "pepper"
 	desc = "A must have in any kitchen, just don't use too much."
 	icon_state = "pepper"
 	food_color = "#a7927d"
-	custom_food = 1
+	custom_food = TRUE
 
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."
 	icon_state = "honeyblob"
 	food_color = "#C0C013"
-	custom_food = 1
-	doants = 0
+	custom_food = TRUE
+	doants = FALSE
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
 	brew_result = "mead"
@@ -310,8 +310,8 @@
 	desc = "A blob of nutritive gel for larval bees."
 	icon_state = "jellyblob"
 	food_color = "#990066"
-	custom_food = 1
-	doants = 0
+	custom_food = TRUE
+	doants = FALSE
 	initial_volume = 50
 	initial_reagents = list("royal_jelly"=25)
 
@@ -327,7 +327,7 @@
 	bites_left = 2
 	heal_amt = 1
 	food_color = "#FFD700"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 5
 	initial_reagents = "cheese"
 	sliceable = TRUE
@@ -341,7 +341,7 @@
 	bites_left = 2
 	heal_amt = 1
 	food_color = "#669966"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 50
 	initial_reagents = list("mercury"=5,"LSD"=5,"ethanol"=5,"gcheese"=5)
 	food_effects = list("food_sweaty","food_bad_breath")
@@ -359,7 +359,7 @@
 	name = "meatpaste"
 	desc = "A meaty paste"
 	icon_state = "meatpaste"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 50
 	initial_reagents = list("meat_slurry"=15)
 
@@ -368,7 +368,7 @@
 	desc = "A big lump of sticky rice."
 	icon_state = "rice-sticky"
 	food_color = "#E3E3E3"
-	custom_food = 0
+	custom_food = FALSE
 
 	attack_self(mob/user as mob)
 		boutput(user, "You mold the sticky rice into rice balls.")
@@ -382,7 +382,7 @@
 	desc = "Used for making bready things."
 	icon_state = "dough"
 	food_color = "#FFFFFF"
-	custom_food = 0
+	custom_food = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/sugar))
@@ -481,7 +481,7 @@
 	desc = "A strand of cut up dough. It looks like you can re-attach two of them back together."
 	icon_state = "dough-strip"
 	food_color = "#FFFFF"
-	custom_food = 0
+	custom_food = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/dough_strip))
@@ -517,14 +517,14 @@
 	desc = "Used for making torus-shaped things." //I used to eat out with friends, but bagels just torus apart.
 	icon_state = "dough-circle"
 	food_color = "#FFFFF"
-	custom_food = 0
+	custom_food = FALSE
 
 /obj/item/reagent_containers/food/snacks/ingredient/holey_dough
 	name = "holey dough" //+1 to chaplain magic skills
 	desc = "Some dough with a bunch of holes poked in it. How exotic."
 	icon_state = "dough-holey"
 	food_color = "#FFFFF"
-	custom_food = 0
+	custom_food = FALSE
 
 /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	name = "sweet dough"
@@ -545,7 +545,7 @@
 	name = "cookie dough"
 	desc = "Probably shouldn't be eaten raw, not that THAT'S ever stopped anyone."
 	icon_state = "dough-cookie"
-	custom_food = 1
+	custom_food = TRUE
 
 	New()
 		..()
@@ -610,7 +610,7 @@
 	name = "half-finished pizza base"
 	desc = "You need to add cheese..."
 	icon_state = "pizzabase2"
-	custom_food = 0
+	custom_food = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/cheese))
@@ -635,7 +635,7 @@
 	name = "uncooked pizza"
 	desc = "A plain cheese and tomato pizza. You need to bake it..."
 	icon_state = "pizzabase3"
-	custom_food = 0
+	custom_food = FALSE
 	var/num = null
 	var/topping = 0
 	var/topping_color = null
@@ -861,8 +861,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	desc = "A slice of what you believe could possibly be meat."
 	icon_state = "pepperoni"
 	food_color = "#C90E0E"
-	custom_food = 1
-	doants = 1
+	custom_food = TRUE
+	doants = TRUE
 	initial_volume = 10
 	initial_reagents = "pepperoni"
 	sliceable = FALSE
@@ -871,9 +871,9 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "pepperoni log"
 	desc = "It's like a forest of pepperoni was felled just for you."
 	icon_state = "pepperoni-log"
-	custom_food = 1
+	custom_food = TRUE
 	food_color = "#C90E0E"
-	doants = 0
+	doants = FALSE
 	initial_volume = 40
 	initial_reagents = "pepperoni"
 	sliceable = TRUE
@@ -891,7 +891,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	desc = "A slice of fish cake with a cute little spiral in the center."
 	icon_state = "kamaboko"
 	amount = 1
-	custom_food = 1
+	custom_food = TRUE
 	food_color = "#ffffff"
 
 /obj/item/reagent_containers/food/snacks/ingredient/kamaboko_log
@@ -899,9 +899,9 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	desc = "What a strange-looking fish."
 	icon_state = "kamaboko-log"
 	amount = 3
-	custom_food = 1
+	custom_food = TRUE
 	food_color = "#ffffff"
-	doants = 0
+	doants = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
@@ -933,7 +933,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	icon_state = "tomatoslice"
 	heal_amt = 1
 	food_color = "#f2500c"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 15
 	initial_reagents = list("juice_tomato"=4)
 
@@ -943,7 +943,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	icon_state = "cheeseslice"
 	heal_amt = 1
 	food_color = "#FFD700"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 15
 	initial_reagents = list("cheese"=1)
 
@@ -953,7 +953,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	icon_state = "gcheeseslice"
 	heal_amt = 1
 	food_color = "#669966"
-	custom_food = 1
+	custom_food = TRUE
 	initial_volume = 15
 	initial_reagents = list("mercury"=1,"LSD"=1,"ethanol"=1,"gcheese"=1)
 	food_effects = list("food_sweaty","food_bad_breath")

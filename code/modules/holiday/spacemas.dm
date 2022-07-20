@@ -510,7 +510,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	bites_left = 2
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	doants = 0
+	doants = FALSE
 	food_color = "#FFFFFF"
 	var/melts = TRUE
 

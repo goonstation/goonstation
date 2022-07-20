@@ -400,7 +400,7 @@
 /obj/item/device/light/candle/haunted
 	name = "haunted candle"
 	desc = "As opposed to your more standard spooky candle. It smells horrid."
-	edible = 1 // eat a haunted goddamn candle every day
+	edible = TRUE // eat a haunted goddamn candle every day
 	var/did_thing = 0
 
 	New()

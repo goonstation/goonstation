@@ -183,7 +183,7 @@
 	icon_state = "burrito"
 	bites_left = 3
 	heal_amt = 2
-	doants = 0 //Ants aren't dumb enough to try to eat these.
+	doants = FALSE //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
@@ -434,10 +434,10 @@
 	desc = "A self-heating TV dinner. You should probably use a fork."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
-	needfork = 1
+	needfork = TRUE
 	bites_left = 2
 	heal_amt = 2
-	doants = 0 //Ants aren't dumb enough to try to eat these.
+	doants = FALSE //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
 	food_effects = list("food_hp_up")
@@ -573,7 +573,7 @@
 	icon_state = "strudel"
 	bites_left = 2
 	heal_amt = 2
-	doants = 0
+	doants = FALSE
 	initial_volume = 30
 	initial_reagents = list("juice_strawberry"=15,"vanilla"=6)
 	food_effects = list("food_energized")

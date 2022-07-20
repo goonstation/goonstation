@@ -138,7 +138,7 @@
 	icon_state = "heart_robo1"
 	item_state = "heart_robo1"
 	//created_decal = /obj/decal/cleanable/oil
-	edible = 0
+	edible = FALSE
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	mats = 8

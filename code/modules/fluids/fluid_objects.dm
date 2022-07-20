@@ -62,7 +62,7 @@
 				playsound(src.loc, "sound/misc/drain_glug.ogg", 50, 1)
 
 				//moved to fluid process
-				//F.group.reagents.skip_next_update = 1
+				//F.group.reagents.skip_next_update = TRUE
 				//F.group.drain(F,rand(drain_min,drain_max)) //420 drain it
 
 

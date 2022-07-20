@@ -688,7 +688,7 @@
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
 	name = "smol donut";
-	doants = 0
+	doants = FALSE
 	},
 /obj/reagent_dispensers/cleanable/ants,
 /turf/unsimulated/outdoors/grass,

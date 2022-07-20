@@ -11,7 +11,7 @@
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
-	edible = 0
+	edible = FALSE
 	FAIL_DAMAGE = 120
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often

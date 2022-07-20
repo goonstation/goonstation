@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/melon
 	throwforce = 8
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	food_color = "#7FFF00"
 	validforhat = 1
 
@@ -406,7 +406,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/amount_per_slice = 0
 			if(src.reagents)
 				amount_per_slice = src.reagents.total_volume / makeslices
-				src.reagents.inert = 1
+				src.reagents.inert = TRUE
 			while (makeslices > 0)
 				var/obj/item/reagent_containers/food/snacks/plant/melonslice/P = new(T)
 				P.name = "[src.name] slice"
@@ -416,9 +416,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
-					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
+					P.reagents.inert = TRUE // no stacking of potassium + water explosions on cutting
 					src.reagents.trans_to(P, amount_per_slice)
-					P.reagents.inert = 0
+					P.reagents.inert = FALSE
 				makeslices -= 1
 			qdel(src)
 		..()
@@ -442,7 +442,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	icon_state = "george-melon"
 	throwforce = 0
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	initial_volume = 60
 
 	make_reagents()
@@ -457,7 +457,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/amount_per_slice = 0
 			if(src.reagents)
 				amount_per_slice = src.reagents.total_volume / makeslices
-				src.reagents.inert = 1
+				src.reagents.inert = TRUE
 			while (makeslices > 0)
 				var/obj/item/reagent_containers/food/snacks/plant/melonslice/george/P = new(T)
 				P.name = "[src.name] slice"
@@ -467,9 +467,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 					HYPpassplantgenes(DNA,PDNA)
 				if(src.reagents)
 					P.reagents = new
-					P.reagents.inert = 1 // no stacking of potassium + water explosions on cutting
+					P.reagents.inert = TRUE // no stacking of potassium + water explosions on cutting
 					src.reagents.trans_to(P, amount_per_slice)
-					P.reagents.inert = 0
+					P.reagents.inert = FALSE
 				makeslices -= 1
 			qdel(src)
 		..()
@@ -573,16 +573,16 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				var/amount_per_slice = 0
 				if(src.reagents)
 					amount_per_slice = src.reagents.total_volume / 5
-					src.reagents.inert = 1
+					src.reagents.inert = TRUE
 				while(n_slices)
 					var/obj/item/reagent_containers/food/snacks/plant/melonslice/slice = new(get_turf(src))
 					slice.name = "[src.name] slice"
 					if(src.reagents)
 						slice.reagents = new
 						// temporary inert is here so this doesn't hit people with 5 potassium + water explosions at once
-						slice.reagents.inert = 1
+						slice.reagents.inert = TRUE
 						src.reagents.trans_to(slice, amount_per_slice)
-						slice.reagents.inert = 0
+						slice.reagents.inert = FALSE
 					var/datum/plantgenes/DNA = src.plantgenes
 					var/datum/plantgenes/PDNA = slice.plantgenes
 					if(DNA)
@@ -925,7 +925,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "Spooky!"
 	planttype = /datum/plant/fruit/pumpkin
 	icon_state = "pumpkin"
-	edible = 0
+	edible = FALSE
 	food_color = "#CC6600"
 	validforhat = 1
 
@@ -1215,7 +1215,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/coconut
 	throwforce = 9
 	w_class = W_CLASS_NORMAL
-	edible = 0
+	edible = FALSE
 	food_color = "#4D2600"
 	validforhat = 1
 	event_handler_flags = USE_FLUID_ENTER
@@ -1365,7 +1365,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "An aromatic root from the turmeric plant, a relative of ginger."
 	icon_state = "turmericroot"
 	planttype = /datum/plant/veg/turmeric
-	edible = 0
+	edible = FALSE
 	validforhat = 1
 	food_color = "#e0a80c"
 

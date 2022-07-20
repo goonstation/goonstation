@@ -102,7 +102,7 @@
 	name = "custard"
 	desc = "A perennial favourite of clowns."
 	icon_state = "custard"
-	needspoon = 1
+	needspoon = TRUE
 	bites_left = 2
 	heal_amt = 3
 

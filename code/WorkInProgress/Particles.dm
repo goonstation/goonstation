@@ -1326,7 +1326,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		if(source)
 			affected = list()
 			copied = new/datum/reagents(source.maximum_volume)
-			copied.inert = 1 //No reactions inside the metaphysical concept of smoke thanks.
+			copied.inert = TRUE //No reactions inside the metaphysical concept of smoke thanks.
 			source.copy_to(copied, 1, 1)
 			source.clear_reagents()
 			for (var/banned in banned_reagents)

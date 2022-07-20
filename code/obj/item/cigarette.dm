@@ -72,7 +72,7 @@
 			"<span class='notice'>You crush up [src] and sprinkle it onto [target].</span>")
 			if (!(T.has_cigs))
 				T.desc = "[T.desc]<br>Are those crushed cigarettes on top? That's disgusting!"
-				T.has_cigs = 1
+				T.has_cigs = TRUE
 			if (src.reagents) // copied wirefix
 				src.reagents.trans_to(T, 5)
 			qdel (src)

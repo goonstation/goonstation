@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/datum/material)
 	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
 	var/edible_exact = 0
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
-	var/edible = 0
+	var/edible = FALSE
 
 	var/owner_hasentered_added = FALSE
 
@@ -912,7 +912,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	alpha = 100
 
 	edible_exact = 1
-	edible = 1
+	edible = TRUE
 
 	New()
 		..()
@@ -992,7 +992,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	texture_blend = ICON_MULTIPLY
 
 	edible_exact = 0.6 //Just barely edible
-	edible = 1
+	edible = TRUE
 
 	New()
 		..()
@@ -1012,7 +1012,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	color = "#574846"
 
 	edible_exact = 0.6 //Just barely edible.
-	edible = 1
+	edible = TRUE
 
 	New()
 		..()
@@ -1062,7 +1062,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	color = "#D04FFF"
 
 	edible_exact = 0.6 //Just barely edible.
-	edible = 1
+	edible = TRUE
 
 	New()
 		..()
@@ -1213,7 +1213,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	texture = "pizza2"
 	texture_blend = ICON_OVERLAY
 	edible_exact = 1
-	edible = 1
+	edible = TRUE
 
 	New()
 		..()

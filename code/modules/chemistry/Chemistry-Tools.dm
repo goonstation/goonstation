@@ -18,7 +18,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/initial_volume = 50
 	var/list/initial_reagents = null // can be a list, an associative list (reagent=amt), or a string.  list will add an equal chunk of each reagent, associative list will add amt of reagent, string will add initial_volume of reagent
 	var/incompatible_with_chem_dispensers = 0
-	var/can_mousedrop = 1
+	var/can_mousedrop = TRUE
 	move_triggered = 1
 	///Types that should be quickly refilled by mousedrop
 	var/static/list/mousedrop_refill = list(
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	item_state = "null"
 	amount_per_transfer_from_this = 10
 	var/can_recycle = TRUE //can this be put in a glass recycler?
-	var/splash_all_contents = 1
+	var/splash_all_contents = TRUE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 	afterattack(obj/target, mob/user , flag)
@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
 				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
-				can_mousedrop = 0
+				can_mousedrop = FALSE
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
 				else
@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				SPAWN(0.5 SECONDS)
 					if (src.splash_all_contents) src.reagents.clear_reagents()
 					else src.reagents.remove_any(src.amount_per_transfer_from_this)
-					can_mousedrop = 1
+					can_mousedrop = TRUE
 				return
 		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					return
 				//var/transferamt = min(src.reagents.maximum_volume - src.reagents.total_volume, F.amt)
 
-				F.group.reagents.skip_next_update = 1
+				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
@@ -278,7 +278,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			if (isobj(target)) //Have to do this in 2 lines because byond is shit.
 				if (target:flags & NOSPLASH) return
-			can_mousedrop = 0
+			can_mousedrop = FALSE
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing("combat", user, target, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			SPAWN(0.5 SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
-				can_mousedrop = 1
+				can_mousedrop = TRUE
 			return
 
 	attackby(obj/item/I, mob/user)
@@ -406,10 +406,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
-			src.splash_all_contents = 0
+			src.splash_all_contents = FALSE
 		else
 			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
-			src.splash_all_contents = 1
+			src.splash_all_contents = TRUE
 		return
 
 	proc/smash()

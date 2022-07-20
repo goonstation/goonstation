@@ -58,7 +58,7 @@
 	made_from = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	edible = 0
+	edible = FALSE
 	mats = 6
 
 	emag_act(mob/user, obj/item/card/emag/E)

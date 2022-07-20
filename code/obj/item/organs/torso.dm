@@ -7,7 +7,7 @@
 	organ_name = "chest"
 	desc = "Oh, crap."
 	icon_state = "chest_m"
-	edible = 0
+	edible = FALSE
 	MAX_DAMAGE = INFINITY
 
 	var/datum/appearanceHolder/donor_appearance = null

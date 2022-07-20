@@ -139,7 +139,7 @@
 	made_from = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	edible = 0
+	edible = FALSE
 	mats = 6
 	min_chem_metabolism_modifier = 75
 	max_chem_metabolism_modifier = 150

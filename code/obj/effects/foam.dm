@@ -39,7 +39,7 @@
 	src.set_loc(loc)
 	expand = 1
 	if(!ismetal && reagents)
-		reagents.inert = 1 //Wait for it...
+		reagents.inert = TRUE //Wait for it...
 
 	metal = ismetal
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
@@ -72,7 +72,7 @@
 /obj/effects/foam/proc/die()
 	expand = 0
 	if(!metal && reagents) //We don't want a foam that's done the transfer to do it's own thing
-		reagents.inert = 0 //It's go time!
+		reagents.inert = FALSE //It's go time!
 		reagents.postfoam = 1
 		reagents.handle_reactions()
 		for(var/atom/A in src.loc)
@@ -132,7 +132,7 @@
 			if(!metal && src.reagents)
 				F.overlays.len = 0
 				F.create_reagents(15)
-				F.reagents.inert = 1
+				F.reagents.inert = TRUE
 				//This very slight tweak is to make it so some reactions that require different ratios
 				//can still work in foam.
 				for(var/reagent_id in src.reagents.reagent_list)

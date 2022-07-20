@@ -8,10 +8,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	var/amt2 = 1
 	var/amt3 = 1
 	var/amt4 = 1
-	var/cookbonus = null // how much cooking it needs to get a healing bonus
-	var/output = null // what you get from this recipe
-	var/useshumanmeat = 0 // used for naming of human meat dishes after their victims
-
+	/// how much cooking it needs to get a healing bonus
+	var/cookbonus = null
+	/// what you get from this recipe
+	var/output = null
+	/// used for naming of human meat dishes after their victims
+	var/useshumanmeat = FALSE
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
@@ -20,7 +22,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/humanburger
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 
 /datum/cookingrecipe/fishburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -408,7 +410,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/meat_h
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 
 /datum/cookingrecipe/sandwich_m_m
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
@@ -463,7 +465,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/elvis_meat_h
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 
 /datum/cookingrecipe/c_butty
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
@@ -548,7 +550,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/sandwich/spooky_meat_h
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 
 /datum/cookingrecipe/scarewich_m
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/spooky
@@ -1105,7 +1107,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_h
-	useshumanmeat = 1
+	useshumanmeat = TRUE
 
 /datum/cookingrecipe/steak_m
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat

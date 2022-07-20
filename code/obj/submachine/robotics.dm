@@ -388,7 +388,7 @@
 	icon = 'icons/obj/robot_parts.dmi'
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
-	splash_all_contents = 0
+	splash_all_contents = FALSE
 	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
 	initial_volume = 120

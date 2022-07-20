@@ -1075,7 +1075,7 @@
 "Ng" = (
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	desc = "IT HIM, IT REALLY HIM";
-	doants = 0;
+	doants = FALSE;
 	name = "smol donut"
 	},
 /obj/reagent_dispensers/cleanable/ants,
