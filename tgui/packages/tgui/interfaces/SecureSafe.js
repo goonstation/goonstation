@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author blackrep (https://github.com/blackrep)
+ * @license MIT
+ */
+
+
 import { useBackend } from '../backend';
 import { Stack, Box, ProgressBar, Section, Flex, Button, Blink } from '../components';
 import { Window } from '../layouts';
