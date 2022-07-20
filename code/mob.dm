@@ -223,7 +223,7 @@
 	/// stores total accumulated radiation dose
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
-	var/radiation_dose_decay = 0.005 //at this rate, assuming no lag, it will take 80 life ticks, or ~160 seconds to recover naturally from 1st stage radiation posioning
+	var/radiation_dose_decay = 0.01 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
