@@ -194,8 +194,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
-        /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
-	var/nameOverride = TRUE
 
 	var/no_access = 0
 
@@ -206,7 +204,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	New()
 		..()
-		if(!isrestrictedz(src.z) && nameOverride)
+		if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
