@@ -1,5 +1,9 @@
 
 (t)wed jul 20 22
+(u)NightmarechaMillian
+(p)9726
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added craftable slamgun shells to the game.
 (u)CodeJester
 (p)8835
 (e)🆕📄|feature, tgui
