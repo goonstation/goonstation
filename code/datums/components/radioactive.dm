@@ -141,5 +141,5 @@ TYPEINFO(/datum/component/radioactive)
 			if(90 to INFINITY)
 				rad_word = "radiating blindingly"
 
-		lines += "It is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch it!" : ""]"
+		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch [ismob(owner) ? him_or_her(owner) : "it"]!" : ""]"
 
