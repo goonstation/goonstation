@@ -1468,6 +1468,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
 
+		if(issnippingtool(W) && state == 2) //pipeshot crafting
+			name = "hollow pipe hulls"
+			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+			src.state = 5
+			icon_state = "Pipeshot"
+			desc = "Four open pipe shells. They're currently empty."
+
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
 			for (var/A in allowed_items)
@@ -1512,6 +1519,27 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					name = "filled pipe frame"
 
+		if(istype(W, /obj/item/reagent_containers/) && state == 5) //pipeshot crafting cont'd
+			var/amount = 20
+			var/avg_volatility = 0
+
+			for (var/id in W.reagents.reagent_list)
+				var/datum/reagent/R = W.reagents.reagent_list[id]
+				avg_volatility += R.volatility
+			avg_volatility /= W.reagents.reagent_list.len
+
+			if (avg_volatility < 1) // invalid ingredients/concentration
+				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
+			else
+				//consume the reagents
+				src.reagents = new /datum/reagents(amount)
+				src.reagents.my_atom = src
+				W.reagents.trans_to(src, amount)
+				qdel(src.reagents)
+				//make the hulls
+				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
+				new /obj/item/assembly/makeshiftshell(get_turf(src))
+				qdel(src)
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)
 			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
