@@ -322,8 +322,6 @@ datum
 			id = "sonicpowder_nofluff"
 			no_fluff = 1
 
-// Don't forget to update Reagents-Recipes.dm too, we have duplicate code for sonic and flash powder there (Convair880).
-
 		combustible/flashpowder
 			name = "flash powder"
 			id = "flashpowder"
