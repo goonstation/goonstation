@@ -72479,7 +72479,7 @@
 	amount = 1e+031;
 	desc = "Guzzle it down! This sippable syrup will have you seeing demons in no time.";
 	dir = 4;
-	doants = 0;
+	doants = 1;
 	l_move_time = 27422;
 	last_move = 4;
 	max_stack = 1e+031;
