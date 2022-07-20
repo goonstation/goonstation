@@ -698,6 +698,76 @@ datum
 					W.icon = I
 				return
 
+		graphene
+			name = "graphene"
+			id = "graphene"
+			description = "A miniscule honeycomb lattice."
+			reagent_state = SOLID
+			fluid_r = 20
+			fluid_g = 20
+			fluid_b = 20
+			value = 5
+
+		graphene_compound
+			name = "Graphene Hardening Compound"
+			id = "graphene_compound"
+			description = "A thick industrial compound used to reinforce things."
+			reagent_state = LIQUID
+			fluid_r = 10
+			fluid_g = 10
+			fluid_b = 10
+			transparency = 180
+			viscosity = 0.8
+			value = 9
+
+			reaction_obj(var/obj/O, var/volume)
+				if (volume < 1)
+					return
+
+				var/colorize
+				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
+					var/obj/machinery/atmospherics/pipe/simple/P = O
+
+					if(P.can_rupture)
+						var/max_reinforcement = 1e9
+						if(P.fatigue_pressure >= max_reinforcement)
+							return
+
+						P.fatigue_pressure = clamp(P.fatigue_pressure * (2**volume), initial(P.fatigue_pressure), max_reinforcement)
+						colorize = TRUE
+
+				else if (istype(O,/obj/window))
+					var/obj/window/W = O
+					var/initial_resistance = initial(W.explosion_resistance)
+					W.explosion_resistance = clamp(W.explosion_resistance + volume, initial_resistance, initial_resistance + 3)
+					colorize = TRUE
+
+				if(colorize)
+					var/icon/I = icon(O.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					O.icon = I
+					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
+				var/turf/simulated/wall/T = target
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/length(covered) < 2) //reduce effect based on dilution
+						volume_mult = min(volume / 9, 1)
+
+				if(istype(T))
+					var/initial_resistance = initial(T.explosion_resistance)
+					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
+
+					var/icon/I = icon(T.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					T.icon = I
+					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+
+
 //foam precursor
 
 		fluorosurfactant

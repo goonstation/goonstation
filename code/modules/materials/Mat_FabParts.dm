@@ -183,12 +183,6 @@
 		if(!istype(I, /obj/item/lens) ||  !I.material) return 0
 		return ..()
 
-/datum/matfab_part/arrowhead
-	name = "Arrowhead"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		if(!I.material || !istype(I, /obj/item/arrowhead)) return 0
-		return ..()
 
 /datum/matfab_part/chemical
 	name = "Chemical"

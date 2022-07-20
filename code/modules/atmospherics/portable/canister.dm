@@ -5,6 +5,7 @@
 	density = 1
 	var/health = 100.0
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
 	status = REQ_PHYSICAL_ACCESS
 
@@ -126,7 +127,7 @@
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
-		if(src.material.getProperty("flammable") > 6) //why would you make a canister out of wood/etc
+		if(src.material?.getProperty("flammable") > 3) //why would you make a canister out of wood/etc
 			health -= 1000 //BURN
 		healthcheck()
 

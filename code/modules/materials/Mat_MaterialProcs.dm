@@ -595,7 +595,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/enchanted_add
 	execute(var/obj/item/owner)
 		if(istype(owner))
-			owner.enchant(3, setTo = 1)
+			owner.enchant(1, setTo = 1)
 
 /datum/materialProc/cardboard_blob_hit
 	execute(var/atom/owner, var/blobPower)

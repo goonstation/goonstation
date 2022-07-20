@@ -67,6 +67,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8.0
 	health = 6
@@ -112,6 +113,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	force = 7.0
 	health = 6

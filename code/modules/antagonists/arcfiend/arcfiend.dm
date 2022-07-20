@@ -45,6 +45,11 @@
 	addPoints(add_points, target_ah_type = src.type)
 		src.lifetime_energy += add_points
 		var/points = min((MAX_ARCFIEND_POINTS - src.points), add_points)
+		if (points > 0 && ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
+			if (H.sims)
+				H.sims.affectMotive("Thirst", points * 0.1)
+				H.sims.affectMotive("Hunger", points * 0.1)
 		. = ..(points, target_ah_type)
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
@@ -80,7 +85,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 		. = ..()
 		if (target == holder.owner) return
 		if (!(BOUNDS_DIST(holder.owner, target) == 0)) return TRUE
-		if (isnpcmonkey(target))
+		if (isnpc(target))
 			boutput(holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
 		if (ishuman(target) || issilicon(target) || istype(target, /obj/machinery))

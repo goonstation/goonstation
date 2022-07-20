@@ -4,7 +4,11 @@
 	name = "human"
 	voice_name = "human"
 	icon = 'icons/mob/mob.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#else
 	icon_state = "blank"
+#endif
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
@@ -1217,14 +1221,14 @@
 			src.update_name_tag("")
 	else
 		if (id_name != src.real_name)
-			if (src.decomp_stage > 2)
+			if (src.decomp_stage > 2 || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 		else
-			if (src.decomp_stage > 2)
+			if (src.decomp_stage > 2 || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
@@ -1386,6 +1390,8 @@
 			rendered += "[src.wear_id:registered]</span>"
 		else
 			rendered += "Unknown</span>"
+	else if (src.vdisfigured)
+		rendered += "Unknown</span>"
 	else
 		rendered += "[src.real_name]</span>[alt_name]"
 
@@ -1672,6 +1678,11 @@
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
+	UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN(1.5 SECONDS)
+		if (has_typing_indicator == FALSE)
+			UpdateOverlays(null, "speech_bubble")
+
 /mob/living/carbon/human/var/const
 	slot_back = 1
 	slot_wear_mask = 2
@@ -1805,28 +1816,6 @@
 		W.dropped(src)
 		src.l_hand = null
 		src.update_inhands()
-
-/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
-
-	// reset the modifiers to defaults
-	equipment_proxy.additive_slowdown = 0
-	equipment_proxy.aquatic_movement = 0
-	equipment_proxy.space_movement = 0
-
-	for (var/obj/item/I in src.get_equipped_items())
-		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
-		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
-		if (fluidmove)
-			equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.aquatic_movement += fluidmove
-		var/spacemove = I.getProperty("space_movespeed")
-		if (spacemove)
-			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.space_movement += spacemove
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -2843,8 +2832,7 @@
 
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
-		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
-			return
+		return
 
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))

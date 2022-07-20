@@ -1035,10 +1035,10 @@
 // Avoids some C&P since multiple procs make use of this ability (Convair880).
 /mob/proc/smash_through(var/obj/target, var/list/can_smash, var/show_message = 1)
 	if (!src || !ismob(src) || !target || !isobj(target))
-		return 0
+		return FALSE
 
 	if (!islist(can_smash) || !length(can_smash))
-		return 0
+		return FALSE
 
 	for (var/S in can_smash)
 		if (S == "window" && istype(target, /obj/window))
@@ -1047,7 +1047,7 @@
 				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
 			W.health = 0
 			W.smash()
-			return 1
+			return TRUE
 
 		if (S == "grille" && istype(target, /obj/grille))
 			var/obj/grille/G = target
@@ -1056,21 +1056,28 @@
 					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
 				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
 				G.damage_slashing(15)
-				return 1
+				return TRUE
 
 		if (S == "door" && istype(target, /obj/machinery/door))
 			var/obj/machinery/door/door = target
 			SPAWN(0)
 				door.tear_apart(src)
-			return 1
+			return TRUE
 
 		if (S == "table" && istype(target, /obj/table))
 			var/obj/table/table = target
 			playsound(table.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 			table.deconstruct()
-			return 1
+			return TRUE
 
-	return 0
+		if (S == "blob" && istype(target, /obj/blob))
+			var/obj/blob/B = target
+			if(show_message)
+				src.visible_message("<span class='alert'><B>[src] savagely slashes [B]!</span>", "<span class='notice'>You savagely slash at \the [B]</span>")
+			B.take_damage(rand(10,20),1,DAMAGE_CUT)
+			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
+			return TRUE
+	return FALSE
 
 /mob/proc/saylist(var/message, var/list/heard, var/list/olocs, var/thickness, var/italics, var/list/processed, var/use_voice_name = 0, var/image/chat_maptext/assoc_maptext = null)
 	var/message_a

@@ -11,7 +11,7 @@
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook
 	var/grilltemp = 35 + T0C
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/on = 0
 	var/movable = 1
 	var/datum/light/light
