@@ -28,7 +28,7 @@
 			else
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
-				boutput("<span class='notice'>You fill [W] with water.</span>")
+				boutput(user, "<span class='notice'>You fill [W] with water.</span>")
 				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
