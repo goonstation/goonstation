@@ -98,7 +98,7 @@
 		if(src.cone)
 			dat += "<a href='?src=\ref[src];eject=cone'>Eject Cone</a><br>"
 			dat += "<b>Select a Flavor:</b><br><ul>"
-			for(var/flavor as anything in flavors)
+			for(var/flavor in flavors)
 				dat += "<li><a href='?src=\ref[src];flavor=[flavor]'>[capitalize(flavor)]</a></li>"
 			if(src.beaker)
 				dat += "<li><a href='?src=\ref[src];flavor=beaker'>From Beaker</a></li>"
