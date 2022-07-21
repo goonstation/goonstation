@@ -40,7 +40,7 @@
 /area/dmm_suite/clear_area)
 "m" = (
 /obj/item/toy/plush/small{
-	name = "Dr.Fluffikins";
+	name = "Isabelle Bearnadotte";
 	rand_pos = 0
 	},
 /obj/item/clothing/head/nursehat{
