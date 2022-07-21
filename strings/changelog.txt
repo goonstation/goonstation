@@ -1,5 +1,9 @@
 
 (t)wed jul 20 22
+(u)glowbold
+(p)9581
+(e)|
+(+)The mining cyborg module now includes the cargo appraisal and material analysis tools.
 (u)NightmarechaMillian
 (p)9726
 (e)🆕🎨⚖|feature, sprites, balance
