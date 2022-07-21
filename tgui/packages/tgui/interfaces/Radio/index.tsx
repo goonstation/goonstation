@@ -71,7 +71,6 @@ export const Radio = (_props, context) => {
                   <LabeledList.Item label="Code">
                     <Stack align="center">
                       <Stack.Item>
-
                         <Knob
                           animated
                           value={data.code}
@@ -90,7 +89,6 @@ export const Radio = (_props, context) => {
                 )}
                 {!!data.sendButton && (
                   <LabeledList.Item>
-
                     <Button align="center" onClick={() => { act("send"); }}>Send signal</Button>
                   </LabeledList.Item>
                 )}
