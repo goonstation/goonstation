@@ -1199,7 +1199,7 @@
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
 
-/mob/living/proc/say_decorate(var/message)
+/mob/living/proc/say_decorate(message)
 	return message
 
 // helper proooocs
