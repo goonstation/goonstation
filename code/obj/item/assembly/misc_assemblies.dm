@@ -888,15 +888,17 @@ obj/item/assembly/radio_horn/receive_signal()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/shard))
-			if( !crafttype)
+			if (!crafttype)
 				crafttype = 1
 				thingsneeded = 2
-			src.craftwith(W, src, user)
+			if(crafttype == 1)
+				src.craftwith(W, src, user)
 		if (istype(W, /obj/item/raw_material/scrap_metal))
 			if (!crafttype)
 				crafttype = 2
 				thingsneeded = 1
-			src.craftwith(W, src, user)
+			if(crafttype == 2)
+				src.craftwith(W, src, user)
 		..()
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
@@ -910,7 +912,7 @@ obj/item/assembly/radio_horn/receive_signal()
 				var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
 				qdel(frame)
 				user.put_in_hand_or_drop(shot)
-			if (src.crafttype == 2)
+			if (src.crafttype == 2) //since there's only 1 required we won't need a type check
 				var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
 				qdel(frame)
 				user.put_in_hand_or_drop(shot)

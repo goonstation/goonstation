@@ -219,6 +219,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "glass"
 	cost = 1
 	pellets_to_fire = 6
+	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
 	speed_min = 28
@@ -226,11 +227,12 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_variance = 40
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
+	spread_projectile_type = /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
 	pellets_to_fire = 3
-	spread_projectile_type = /datum/projectile/bullet/improvscrap
+	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40
 	speed_min = 34
