@@ -2043,8 +2043,11 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M))
-						if(!M.wear_mask)
+					if(iscarbon(M) || ismobcritter(M))
+						var/mob/living/carbon/human/H = M
+						if((issmokeimmune(H) && H.glasses?.c_flags & COVERSEYES) || isrobocritter(M) || /mob/living/critter/fire_elemental) // robotic critters and fire elementals will be immune, but not organic critters.
+							return
+						else
 							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
 							if(prob(50))
 								M.emote("scream")
