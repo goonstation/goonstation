@@ -1873,7 +1873,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (rangedprot_mod > 1)
 			armor_msg = ", but your armor softens the hit!"
-		else
+		else if(rangedprot_base > 1)
 			armor_msg = ", but [P] pierces through your armor!"
 
 		switch(P.proj_data.damage_type)
