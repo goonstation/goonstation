@@ -879,6 +879,7 @@ datum
 			bladder_value = -0.1
 			hunger_value = -0.3
 			thirst_value = -0.2
+			var/list/flushed_reagents = list("mannitol","synaptizine")
 
 			on_remove()
 				if(ismob(holder?.my_atom))
@@ -902,12 +903,7 @@ datum
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
-
-				if(holder.has_reagent("synaptizine"))
-					holder.remove_reagent("synaptizine", 5 * mult)
-				if(holder.has_reagent("mannitol"))
-					holder.remove_reagent("mannitol", 5 * mult)
-
+				flush(M, 5 * mult, flushed_reagents)
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -966,6 +962,7 @@ datum
 			thirst_value = -0.09
 			stun_resist = 50
 			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("mannitol","synaptizine")
 			var/purge_brain = TRUE
 
 			on_add()
@@ -1005,10 +1002,7 @@ datum
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
 				if(purge_brain)
-					if(holder.has_reagent("synaptizine"))
-						holder.remove_reagent("synaptizine", 5 * mult)
-					if(holder.has_reagent("mannitol"))
-						holder.remove_reagent("mannitol", 5 * mult)
+					flush(M, 5 * mult, flushed_reagents)
 				..()
 				return
 
