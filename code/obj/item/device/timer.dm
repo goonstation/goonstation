@@ -23,12 +23,9 @@
 			signal.source = src
 			signal.data["message"] = "ACTIVATE"
 			src.master.receive_signal(signal)
-			//qdel(signal)
-			return
 	else
 		for(var/mob/O in hearers(null, null))
 			O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
-	return
 
 //*****RM
 
@@ -63,9 +60,6 @@
 			src.last_tick = 0
 
 		src.last_tick = TIME
-
-		if (src.master)
-			src.master.updateSelfDialog()
 
 	else
 		// If it's not timing, reset the icon so it doesn't look like it's still about to go off.

@@ -64,9 +64,6 @@
 
 		src.last_tick = TIME
 
-		if (src.master)
-			src.master.updateSelfDialog()
-
 	else
 		src.last_tick = 0
 		processing_items.Remove(src)
