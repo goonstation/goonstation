@@ -40,18 +40,22 @@ const SecureSafeScreen = (props, _context) => {
     content = glitch(content, 2);
   }
   return (
-    // Crude hack to get the styling I want
-    <ProgressBar
+    <Box
       fontSize="25px"
+      fontFamily="Courier"
+      bold
+      textAlign="center"
+      style={{
+        "padding": "3px",
+        "background-color": "#342210",
+        "border-width": "0.1em",
+        "border-style": "solid",
+        "border-radius": "0.16em",
+        "border-color": "#FC8E1F",
+      }}
     >
-      <Box
-        fontFamily="Courier"
-        bold
-        textAlign="center"
-      >
-        {content}
-      </Box>
-    </ProgressBar>
+      {content}
+    </Box>
   );
 };
 
