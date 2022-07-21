@@ -639,16 +639,6 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/shrapnel
 	power = 8
 
-/datum/projectile/bullet/improvplasglass
-	name = "plasmaglass"
-	sname = "plasmaglass"
-	icon_state = "plasglass"
-	dissipation_delay = 4
-	dissipation_rate = 1
-	damage_type = D_PIERCING
-	implanted = /obj/item/implant/projectile/shrapnel
-	power = 7
-
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'

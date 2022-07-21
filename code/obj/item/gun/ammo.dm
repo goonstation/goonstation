@@ -703,12 +703,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
 	icon_state = "makeshiftscrap"
 
-/obj/item/ammo/bullets/pipeshot/plasglass // glass handmade shells
-	sname = "plasmaglass load"
-	desc = "This appears to be some plasma glass shards haphazardly shoved into a few cut open pipe frames."
-	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
-	icon_state = "makeshiftplasglass"
-
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
