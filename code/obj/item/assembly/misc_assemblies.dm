@@ -886,13 +886,17 @@ obj/item/assembly/radio_horn/receive_signal()
 	icon_state = "Pipeshotrow"
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/raw_material/shard/plasmacrystal) || )
+		if(istype(W, /obj/item/raw_material/shard/plasmacrystal))
 			var/obj/item/ammo/bullets/pipeshot/plasglass/shot = new /obj/item/ammo/bullets/pipeshot/plasglass/(get_turf(src))
 			src.cleanupcrafting(W, src, shot, user)
 
 		if(istype(W, /obj/item/raw_material/shard))
-			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
-			src.cleanupcrafting(W, src, shot, user)
+			if(W.material == getMaterial("plasmaglass"))
+				var/obj/item/ammo/bullets/pipeshot/plasglass/shot = new /obj/item/ammo/bullets/pipeshot/plasglass/(get_turf(src))
+				src.cleanupcrafting(W, src, shot, user)
+			else
+				var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
+				src.cleanupcrafting(W, src, shot, user)
 
 		if(istype(W, /obj/item/raw_material/scrap_metal))
 			var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
