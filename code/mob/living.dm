@@ -1870,6 +1870,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
+
+		if (rangedprot_mod > 1)
+			armor_msg = ", but your armor softens the hit!"
+		else
+			armor_msg = ", but [P] pierces through your armor!"
+
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
@@ -1879,8 +1885,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if(rangedprot_base > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
@@ -1890,17 +1894,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if (rangedprot_base > 1)
-					armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
 					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (rangedprot_base > 1)
+				if (rangedprot_mod > 1)
 					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
-					armor_msg = ", but your armor softens the hit!"
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1914,8 +1915,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if (src.stuttering < stun)
 					src.stuttering = stun
 				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
-				if(rangedprot_base > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_BURNING)
 				if (stun > 0)
@@ -1928,8 +1927,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					return 0
 				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot_mod)
-				if(rangedprot_base > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
@@ -1942,8 +1939,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
-				if(rangedprot_base > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
@@ -1952,8 +1947,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
-				if(rangedprot_base > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
