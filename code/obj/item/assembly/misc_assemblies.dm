@@ -880,27 +880,37 @@ obj/item/assembly/radio_horn/receive_signal()
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
 
 /obj/item/assembly/makeshiftshell
-
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
+	var/thingsneeded = null //number of things still required to produce ammunition
+	var/crafttype = null //1 is glass, 2 is scrap, 3 is plasmaglass
 
 	attackby(obj/item/W, mob/user)
-
-		if(istype(W, /obj/item/raw_material/shard))
-			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
-			src.cleanupcrafting(W, src, shot, user)
-
-		if(istype(W, /obj/item/raw_material/scrap_metal))
-			var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
-			src.cleanupcrafting(W, src, shot, user)
-
+		if (istype(W, /obj/item/raw_material/shard))
+			if( !crafttype)
+				crafttype = 1
+				thingsneeded = 2
+			src.craftwith(W, src, user)
+		if (istype(W, /obj/item/raw_material/scrap_metal))
+			if (!crafttype)
+				crafttype = 2
+				thingsneeded = 1
+			src.craftwith(W, src, user)
 		..()
 
-	proc/cleanupcrafting(obj/item/material, obj/item/frame, obj/item/bullets, mob/user)
-		qdel(material)
-		qdel(frame)
-		user.put_in_hand_or_drop(bullets)
+	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		qdel(craftingitem) //consume item
+		src.thingsneeded --
+		if (thingsneeded > 0)
+			boutput(user, "<span class='notice'>You add the [craftingitem] to the [src]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
 
-
-
+		if (thingsneeded <= 0) //check completion and produce shells as needed
+			if (src.crafttype == 1)
+				var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
+				qdel(frame)
+				user.put_in_hand_or_drop(shot)
+			if (src.crafttype == 2)
+				var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
+				qdel(frame)
+				user.put_in_hand_or_drop(shot)
