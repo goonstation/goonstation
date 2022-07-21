@@ -122,7 +122,6 @@ export const CloningConsole = (props, context) => {
         )}
         <Stack vertical fill>
           <Stack.Item>
-
             <Section fitted>
               <Tabs>
                 <Tabs.Tab
