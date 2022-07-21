@@ -112,9 +112,9 @@
 	name = "martian mutant"
 	icon_state = "martianP"
 	health = 10
+	atksilicon = 0
 	aggressive = 1
 	seekrange = 4
-	var/gib_delay = 55
 	var/do_stun = 1
 	var/max_gib_distance = 6
 	var/gib_counter = 0
@@ -128,6 +128,8 @@
 			icon_state = initial(icon_state)
 
 	seek_target()
+		if(GET_COOLDOWN(src, "gib_attack"))
+			return
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
@@ -139,29 +141,10 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='alert'><b>[src]</b> stares at [C.name]!</span>")
-				playsound(src.loc, "sound/effects/mindkill.ogg", 50, 1)
-				boutput(C, "<span class='alert'>You feel a horrible pain in your head!</span>")
-				gib_counter = 0
 				if (do_stun)
 					C.changeStatus("stunned", 2 SECONDS)
-				SPAWN(0)
-					for (var/i = 0, i <= round(gib_delay / 10), i++)
-						if ((get_dist(src, C) <= max_gib_distance) && src.alive)
-							if (gib_counter == gib_delay)
-								C.visible_message("<span class='alert'><b>[C.name]'s</b> head explodes!</span>")
-								logTheThing("combat", C, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-								C.gib()
-						else
-							C.show_message("<span class='alert'>You no longer feel the [name]'s psychic glare.</span>")
-							break
-						if (gib_delay - gib_counter >= 10)
-							gib_counter += 10
-							sleep(1 SECOND)
-						else
-							var/slp = gib_delay - gib_counter
-							gib_delay = gib_counter
-							sleep(slp)
+				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 7 SECONDS, max_gib_distance), src)
+				ON_COOLDOWN(src, "gib_attack", 7 SECONDS)
 				src.attack = 0
 				sleeping = 7
 				return
@@ -171,7 +154,6 @@
 
 /obj/critter/martian/psychic/weak
 	name = "martian mutant initiate"
-	gib_delay = 55
 	do_stun = 0
 	seekrange = 3
 	max_gib_distance = 4
