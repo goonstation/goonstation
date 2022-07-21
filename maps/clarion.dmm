@@ -35602,6 +35602,9 @@
 	location = "tour14";
 	name = "tour beacon - engine"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblack"
@@ -35616,6 +35619,11 @@
 	dir = 8;
 	name = "autoname  - SS13";
 	pixel_x = 10
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -36734,6 +36742,9 @@
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "byM" = (
@@ -37219,7 +37230,6 @@
 	},
 /area/station/engine/substation/west)
 "bzK" = (
-/obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
@@ -37234,6 +37244,7 @@
 	dir = 0;
 	icon_state = "0-4"
 	},
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -37248,7 +37259,7 @@
 	layer = 3.5;
 	pixel_y = 28
 	},
-/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -37259,7 +37270,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/reagent_dispensers/fueltank,
 /obj/item/device/radio/intercom/engineering,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -37267,17 +37277,19 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
+/obj/machinery/atmospherics/valve/horizontal,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/station/engine/substation/west)
 "bzN" = (
-/obj/reagent_dispensers/foamtank,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/atmospherics/portables_connector/west,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -37341,23 +37353,15 @@
 "bzU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
-"bzV" = (
+"bzW" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10;
 	tag = ""
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/gas)
-"bzW" = (
-/obj/disposalpipe/segment,
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -37909,7 +37913,6 @@
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "bAX" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/south,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -37940,12 +37943,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "bBc" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
@@ -37956,11 +37953,17 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "bBe" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -37974,6 +37977,9 @@
 	pixel_y = 32
 	},
 /obj/storage/closet/welding_supply,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "bBh" = (
@@ -38483,11 +38489,11 @@
 	},
 /area/station/engine/substation/west)
 "bCk" = (
-/obj/machinery/atmospherics/valve,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -38507,14 +38513,11 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /obj/landmark/start{
 	name = "Engineer"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -38523,7 +38526,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -39006,10 +39009,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
 "bDo" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
 "bDp" = (
@@ -41435,14 +41435,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bIL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 32
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -41524,8 +41524,6 @@
 "bIV" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
@@ -41541,9 +41539,12 @@
 /area/space)
 "bIX" = (
 /obj/cable{
-	d1 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -43898,18 +43899,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
-"cfl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/gas)
 "cfB" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -43971,6 +43960,13 @@
 /area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
+"cjH" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "clX" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -44611,6 +44607,12 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
+"eaX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/gas)
 "edf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44746,13 +44748,11 @@
 /area/station/engine/substation/west)
 "esz" = (
 /obj/machinery/light/small,
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
+	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "esY" = (
@@ -47770,6 +47770,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/science/research_director)
+"lMJ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/vending/pda,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "lNZ" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -47873,6 +47880,12 @@
 	name = "very reinforced wall"
 	},
 /area/station/engine/combustion_chamber)
+"mcK" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/southwest)
 "mdJ" = (
 /obj/machinery/navbeacon/mule/QM2_north,
 /turf/simulated/floor/bot,
@@ -48748,10 +48761,10 @@
 /area/station/garden/aviary)
 "ozt" = (
 /obj/machinery/manufacturer/gas,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "ozN" = (
@@ -50469,6 +50482,15 @@
 	},
 /turf/space,
 /area/station/shield_zone)
+"tnT" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/book,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "tnY" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8;
@@ -51866,6 +51888,22 @@
 	icon_state = "fpurple3"
 	},
 /area/station/science/research_director)
+"wYa" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/southwest)
+"wZL" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "xaJ" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -77055,8 +77093,8 @@ bvn
 bIu
 bIK
 byG
-bzR
 byG
+bzR
 byG
 byG
 byG
@@ -77311,12 +77349,12 @@ bsO
 bvo
 bIu
 bIL
+lMJ
 byI
 bzS
 bAY
 bCl
-bDp
-aaa
+bDq
 aaa
 aay
 aaa
@@ -77568,12 +77606,12 @@ bsP
 bvp
 bIu
 esz
+wZL
 byG
 bzT
 bAZ
 bCm
 bDq
-aaa
 aaa
 aay
 aay
@@ -77825,10 +77863,10 @@ kIg
 bvq
 bIv
 bIV
+tnT
 bJf
 aaI
 bNb
-abH
 abH
 abH
 abH
@@ -78080,12 +78118,12 @@ bsd
 bsR
 bul
 bvr
-bIu
+mcK
 bIX
-bJf
+cjH
+bzU
 bzU
 bBb
-bzU
 bzU
 bEn
 bEn
@@ -78337,10 +78375,10 @@ bse
 dfd
 bop
 bop
-bIu
+wYa
 bJe
 byJ
-bzV
+bzU
 bBc
 bCn
 bDr
@@ -78854,7 +78892,7 @@ bvt
 bwy
 bxM
 byL
-bzX
+eaX
 bBe
 bCp
 bDt
@@ -79370,7 +79408,7 @@ bxN
 byN
 bzY
 ozt
-cfl
+bCp
 bzX
 bzX
 bzX
