@@ -132,6 +132,7 @@ toxic - poisons
 	armor_piercing
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
+		armor_ignored = 0.66
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -142,6 +143,7 @@ toxic - poisons
 	armor_piercing
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
+		armor_ignored = 0.66
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -180,6 +182,7 @@ toxic - poisons
 	name = "bullet"
 	power = 85
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
@@ -207,6 +210,7 @@ toxic - poisons
 	power = 70
 	icon_state = "sniper_bullet"
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
@@ -372,6 +376,7 @@ toxic - poisons
 /datum/projectile/bullet/revolver_357/AP
 	power = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_357AP
 
@@ -379,6 +384,7 @@ toxic - poisons
 /datum/projectile/bullet/revolver_357/AP
 	power = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_357AP
 */
@@ -399,6 +405,7 @@ toxic - poisons
 	power = 35
 	implanted = /obj/item/implant/projectile/bullet_38AP
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
@@ -484,6 +491,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
@@ -506,6 +514,7 @@ toxic - poisons
 	name = "bullet"
 	power = 100
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/flintlock
 	shot_sound = 'sound/weapons/flintlock.ogg'
@@ -799,6 +808,7 @@ toxic - poisons
 	window_pass = 0
 	icon_state = "20mmAPHE"
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
 	power = 150
 	dissipation_delay = 1
@@ -1399,6 +1409,7 @@ datum/projectile/bullet/autocannon
 	name = "shrapnel"
 	power = 10
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
 	window_pass = 0
 	icon = 'icons/obj/scrap.dmi'

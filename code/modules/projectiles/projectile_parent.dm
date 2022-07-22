@@ -18,6 +18,7 @@
 	//var/obj/o_shooter = null
 	var/list/targets = list()
 	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
+	var/armor_ignored = 0
 	var/max_range = PROJ_INFINITE_RANGE //max range
 	var/initial_power = 20 // local copy of power for determining power when hitting things
 	var/implanted = null
@@ -468,6 +469,8 @@ datum/projectile
 									// When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
 	var/ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 	                                eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
+
+	var/armor_ignored = 0		 // Percentage of armor to ignore. Old-style AP is 0.66 = ignore 66% of target's armor
 
 	var/sname = "stun"           // name of the projectile setting, used when you change a guns setting
 	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
