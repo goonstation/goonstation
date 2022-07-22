@@ -13652,7 +13652,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aKD" = (
 /obj/decal/poster/wallsign/security,
@@ -15757,7 +15757,7 @@
 "aPG" = (
 /obj/machinery/vehicle/miniputt/indyputt,
 /obj/machinery/vehicle/miniputt/indyputt,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aPH" = (
 /obj/stool/chair/wooden,
@@ -19059,7 +19059,7 @@
 /obj/machinery/recharge_station,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aXi" = (
 /obj/cable{
@@ -19282,7 +19282,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aXE" = (
 /turf/simulated/floor/white,
@@ -19878,7 +19878,7 @@
 /obj/storage/crate/bloody,
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/mainweapon/rockdrills,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "aYQ" = (
 /obj/item/slag_shovel,
@@ -21214,7 +21214,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "bbU" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
@@ -24812,6 +24812,7 @@
 /obj/machinery/floorflusher/industrial{
 	name = "Front Office"
 	},
+/obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bkn" = (
@@ -25770,20 +25771,14 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmH" = (
-/obj/storage/crate,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/item/device/radio/intercom/cargo,
-/obj/item/device/camera_viewer{
-	network = "Cargo"
-	},
-/obj/item/device/camera_viewer{
-	network = "Cargo"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "bmI" = (
@@ -28049,7 +28044,7 @@
 	tag = ""
 	},
 /obj/machinery/vehicle/pod_smooth/industrial,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "bsI" = (
 /obj/machinery/mass_driver{
@@ -31276,7 +31271,7 @@
 /area/station/hallway/primary/central)
 "bBD" = (
 /obj/machinery/light,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "bBF" = (
 /obj/cable{
@@ -32865,7 +32860,7 @@
 /area/station/hallway/secondary/east)
 "bFt" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
-/obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/black/side,
 /area/station/quartermaster/office)
 "bFu" = (
@@ -32875,7 +32870,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -39325,6 +39320,7 @@
 	dir = 4
 	},
 /obj/access_spawn/engineering,
+/obj/access_spawn/cargo,
 /turf/simulated/floor/delivery,
 /area/station/engine/engineering)
 "bWw" = (
@@ -51253,7 +51249,7 @@
 /area/station/crew_quarters/hor)
 "cBK" = (
 /obj/machinery/vehicle/miniputt/indyputt,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "cBL" = (
 /obj/machinery/floorflusher/industrial{
@@ -51388,7 +51384,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "cCg" = (
 /obj/cable{
@@ -51404,7 +51400,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "cCj" = (
 /obj/cable{
@@ -53121,7 +53117,7 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "eHZ" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -56590,7 +56586,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "mHJ" = (
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "mHR" = (
 /obj/cable{
@@ -56755,7 +56751,7 @@
 	id = "mports_door";
 	name = "Cargo Export"
 	},
-/turf/space,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "naJ" = (
 /obj/wingrille_spawn/auto,
@@ -57195,7 +57191,7 @@
 /area/station/hallway/primary/east)
 "nQs" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "nRu" = (
 /obj/cable{
@@ -61536,7 +61532,7 @@
 /area/station/bridge/hos)
 "xmD" = (
 /obj/machinery/manufacturer/hangar,
-/turf/simulated/floor/airless/engine/vacuum,
+/turf/simulated/floor/engine,
 /area/station/hangar/qm)
 "xmJ" = (
 /obj/stool/chair/office{
