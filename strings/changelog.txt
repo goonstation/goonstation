@@ -1,5 +1,9 @@
 
 (t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
 (u)ZWRh3
 (p)9793
 (e)⚖|balance
