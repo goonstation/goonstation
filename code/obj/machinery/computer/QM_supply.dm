@@ -1069,7 +1069,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
 		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
+			var/datum/req_contract/aid/RCAID = RC
 			src.temp += "URGENT - Cannot Be Reserved<br>"
+			if(RCAID.cycles_remaining)
+				var/formatted_cycles_remaining = RCAID.cycles_remaining + 1
+				src.temp += "Contract leaves market in [formatted_cycles_remaining] cycles<br>"
+			else
+				src.temp += "Contract leaves market with next cycle<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
 		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
