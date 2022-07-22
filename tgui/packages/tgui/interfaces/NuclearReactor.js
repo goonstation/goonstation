@@ -6,6 +6,7 @@ import { Divider, Flex, Stack } from '../components';
 import { capitalize, pluralize } from './common/stringUtils';
 import { freezeTemperature, getTemperatureColor, getTemperatureIcon, getTemperatureChangeName } from './common/temperatureUtils';
 import { clamp, round, toFixed } from 'common/math';
+const T0C = 273.15;
 
 const ReactorRow = (shape) => {
   const {
@@ -49,7 +50,7 @@ const ReactorRow = (shape) => {
               <Button
                 key={name}
                 fluid
-                tooltip={<>{capitalize(name)}<br />{temp} K<br />{extra}</>}
+                tooltip={<>{capitalize(name)}<br />{round(temp-T0C, 2)} °C<br />{extra}</>}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
@@ -128,16 +129,16 @@ export const NuclearReactor = (props, context) => {
               <Stack.Item width="50%">
                 Reactor Temperature:
                 <RoundGauge
-                  minValue={0}
-                  maxValue={2500}
+                  minValue={0-T0C}
+                  maxValue={2500-T0C}
                   size={5}
                   value={reactorTemp}
-                  format={value => round(value, 2) + " K"}
-                  alertAfter={2000}
+                  format={value => round(value-T0C, 2)+ " °C"}
+                  alertAfter={2000-T0C}
                   ranges={{
-                    "good": [0, 1000],
-                    "average": [1000, 2000],
-                    "bad": [2000, 2500],
+                    "good": [0-T0C, 1000-T0C],
+                    "average": [1000-T0C, 2000-T0C],
+                    "bad": [2000-T0C, 2500-T0C],
                   }} />
               </Stack.Item>
               <Stack.Item width="50%">
