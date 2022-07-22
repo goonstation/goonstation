@@ -1,5 +1,9 @@
 
 (t)fri jul 22 22
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
 (u)Amylizzle
 (p)9743
 (e)|
