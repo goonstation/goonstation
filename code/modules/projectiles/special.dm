@@ -213,6 +213,31 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
 
+/datum/projectile/special/spreader/buckshot_burst/glass
+	spread_projectile_type = /datum/projectile/bullet/improvglass
+	name = "glass"
+	sname = "glass"
+	cost = 1
+	pellets_to_fire = 6
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 36
+	speed_min = 28
+	spread_angle_variance = 30
+	dissipation_variance = 40
+
+/datum/projectile/special/spreader/buckshot_burst/scrap
+	name = "fragments"
+	sname = "fragments"
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/improvscrap
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 40
+	speed_min = 34
+	spread_angle_variance = 10
+	dissipation_variance = 10
+
+
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
 	sname = "nails"
