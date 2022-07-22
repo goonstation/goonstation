@@ -45,9 +45,9 @@ const SecureSafeScreen = (props, _context) => {
       fontFamily="Courier"
       bold
       textAlign="center"
+      padding="3px"
+      backgroundColor="#342210"
       style={{
-        "padding": "3px",
-        "background-color": "#342210",
         "border-width": "0.1em",
         "border-style": "solid",
         "border-radius": "0.16em",
