@@ -884,35 +884,35 @@ obj/item/assembly/radio_horn/receive_signal()
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
 	var/thingsneeded = null //number of things still required to produce ammunition
-	var/crafttype = null //1 is glass, 2 is scrap, 3 is plasmaglass
+	var/crafttype = null
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/shard))
-			if (!crafttype)
-				crafttype = 1
+		if (!crafttype)
+			if (istype(W, /obj/item/raw_material/shard))
+				crafttype = "glass"
 				thingsneeded = 2
-			if(crafttype == 1)
-				src.craftwith(W, src, user)
-		if (istype(W, /obj/item/raw_material/scrap_metal))
-			if (!crafttype)
-				crafttype = 2
+			if (istype(W, /obj/item/raw_material/scrap_metal))
+				crafttype = "scrap"
 				thingsneeded = 1
-			if(crafttype == 2)
-				src.craftwith(W, src, user)
+
+		if((crafttype == "glass") && (istype(W, /obj/item/raw_material/shard)))
+			src.craftwith(W, src, user)
+		if((crafttype == "scrap") && (istype(W, /obj/item/raw_material/scrap_metal)))
+			src.craftwith(W, src, user)
 		..()
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
-		qdel(craftingitem) //consume item
 		src.thingsneeded --
 		if (thingsneeded > 0)
 			boutput(user, "<span class='notice'>You add the [craftingitem] to the [src]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
 
 		if (thingsneeded <= 0) //check completion and produce shells as needed
-			if (src.crafttype == 1)
+			if (src.crafttype == "glass")
 				var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
 				qdel(frame)
 				user.put_in_hand_or_drop(shot)
-			if (src.crafttype == 2) //since there's only 1 required we won't need a type check
+			if (src.crafttype == "scrap") //since there's only 1 required we won't need a type check
 				var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
 				qdel(frame)
 				user.put_in_hand_or_drop(shot)
+		qdel(craftingitem)
