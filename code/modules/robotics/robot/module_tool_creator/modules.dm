@@ -46,7 +46,7 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/extinguisher, // TODO: make large version?
+		/obj/item/extinguisher/large,
 	)
 
 // botanist. chef. janitor.
@@ -104,7 +104,7 @@
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/room_marker,
-		/obj/item/extinguisher,
+		/obj/item/extinguisher/large,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -118,7 +118,7 @@
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
-		/obj/item/extinguisher, // TODO: make large version
+		/obj/item/extinguisher/large,
 		/obj/item/weldingtool,
 		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
@@ -159,7 +159,7 @@
 		/obj/item/reagent_containers/dropper,
 	)
 
-// miner.
+// miner. quartermaster.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		// TODO: make versatile satchel (same as civilian module's satchel)
@@ -170,8 +170,9 @@
 		/obj/item/oreprospector,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/extinguisher, // TODO: make large version
+		/obj/item/extinguisher/large,
 		/obj/item/device/gps,
+		/obj/item/device/appraisal,
+		/obj/item/device/matanalyzer,
 		// TODO: make barcode machine
-		// TODO: make internal ore processor
 	)

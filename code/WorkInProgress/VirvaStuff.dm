@@ -106,6 +106,7 @@ obj/item/ammo/bullets/flechette_mag
 	ks_ratio = 1.0
 	hit_ground_chance = 100
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	shot_number = 2
 	shot_delay = 0.07 SECONDS
@@ -205,6 +206,7 @@ obj/item/ammo/bullets/flechette_mag
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
 	power = 15
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	hit_ground_chance = 50
 	projectile_speed = 60
