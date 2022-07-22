@@ -1,5 +1,9 @@
 
 (t)thu jul 21 22
+(u)Luxizzle
+(p)9719
+(e)🆕📄|feature, tgui
+(+)You can now set a preferred cyborg name in your character profile
 (u)DimWhat
 (p)9547
 (e)|
