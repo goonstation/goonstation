@@ -433,7 +433,7 @@
 				qdel(sell_crate)
 				if(return_handling == RET_VOID) return
 			else
-				handle_returns(sell_crate,return_handling)
+				handle_returns(sell_crate, return_handling)
 				if(return_handling == RET_INSUFFICIENT)
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."
