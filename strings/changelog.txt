@@ -1,5 +1,9 @@
 
 (t)fri jul 22 22
+(u)Roddy
+(p)9749
+(e)🆕|feature
+(+)Creaca's Fruit Milk has outsourced production. Local vending machines now contain 10 new flavors of fruit milk; try one today.
 (u)Skorps
 (p)9796
 (e)🎨|sprites
