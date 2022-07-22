@@ -78,6 +78,8 @@
 			"power" = turbine_handle?.lastgen,
 			"volume" = turbine_handle?.flow_rate,
 			"history" = src.history,
+			"overspeed" = turbine_handle.overspeed,
+			"overtemp" = turbine_handle.overtemp,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

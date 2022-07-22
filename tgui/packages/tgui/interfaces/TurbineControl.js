@@ -11,6 +11,8 @@ export const TurbineControl = (_props, context) => {
     power,
     volume,
     history,
+    overspeed,
+    overtemp,
   } = data;
   const rpmHistory = history.map((v) => v[0]);
   const rpmHistoryData = rpmHistory.map((v, i) => [i, v]);
@@ -26,7 +28,10 @@ export const TurbineControl = (_props, context) => {
   const loadmax = Math.max(...loadHistory);
 
   return (
-    <Window>
+    <Window
+      width={375}
+      height={400}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -46,6 +51,8 @@ export const TurbineControl = (_props, context) => {
           <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Turbine Speed">{rpm} RPM</LabeledList.Item>
+              {overspeed ? <LabeledList.Item label="ALERT" color="#FF0000" >OVERSPEED</LabeledList.Item> : ""}
+              {overtemp ? <LabeledList.Item label="ALERT" color="#FF0000">TEMPERATURE</LabeledList.Item> : ""}
             </LabeledList>
             <Chart.Line
               mt="5px"
