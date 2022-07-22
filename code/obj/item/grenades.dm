@@ -608,8 +608,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					else
 						T.assume_air(GM)
 
-			for (var/mob/living/HH in range(8, src))
-				var/checkdist = get_dist(HH.loc, T)
+			for (var/mob/living/HH in hearers(8, T))
+				var/checkdist = GET_DIST(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
 				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
