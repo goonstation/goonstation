@@ -1459,6 +1459,15 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
+/obj/item/clothing/head/headband/bunny
+	name = "bunny ears"
+	desc = "For when you're having a bad hare day."
+	icon = 'icons/obj/clothing/item_ears.dmi'
+	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
+	icon_state = "bunny"
+	item_state = "bunny"
+	w_class = W_CLASS_TINY
+	throwforce = 0
 // BARRETTES
 
 ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
