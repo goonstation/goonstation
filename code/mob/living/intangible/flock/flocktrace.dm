@@ -10,9 +10,10 @@
 
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
-/mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
-	..()
-
+/mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
+	if (free)
+		src.compute = 0
+	..(loc)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
 	if(istype(F))
