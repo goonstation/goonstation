@@ -240,7 +240,7 @@ datum/mind
 			if (initial(A.id) == role_id)
 				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source))
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return TRUE
+				return !isnull(src.get_antagonist(role_id))
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
@@ -248,7 +248,10 @@ datum/mind
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				A.remove_self(TRUE, FALSE)
-				antagonists.Remove(A)
+				src.antagonists.Remove(A)
+				if (!length(src.antagonists) && src.special_role == A.id)
+					src.special_role = null
+					ticker.mode.traitors.Remove(src)
 				qdel(A)
 				return TRUE
 		return FALSE
@@ -259,6 +262,8 @@ datum/mind
 			A.remove_self(TRUE, FALSE)
 			src.antagonists.Remove(A)
 			qdel(A)
+		src.special_role = null
+		ticker.mode.traitors.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()
