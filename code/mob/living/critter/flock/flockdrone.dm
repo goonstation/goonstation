@@ -1013,16 +1013,31 @@
 	proj = new/datum/projectile/energy_bolt/flockdrone
 	shots = 1
 	current_shots = 1
-	cooldown = 15
-	reload_time = 15
+	cooldown = 12
+	reload_time = 12
 	reloading_str = "recharging"
+	var/cost = 10
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = new
+
+/datum/limb/gun/flock_stunner/New()
+	..()
+	RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+
+/datum/limb/gun/flock_stunner/proc/update_overlay()
+	var/mob/living/critter/flock/drone/F = holder.holder
+	var/datum/hud/critter/flock/drone/flockhud = F.hud
+	flockhud.set_stunner_charge(cell.get_charge() / cell.max_charge)
 
 /datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
 	if(!target || !user)
 		return
 	if (isflockmob(target) && point_blank)
 		return
-	return ..()
+	if (cell.get_charge() < src.cost)
+		return
+	. = ..()
+	if (.)
+		SEND_SIGNAL(cell, COMSIG_CELL_USE, src.cost)
 
 /datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
 	src.point_blank(target, user)
