@@ -1,5 +1,9 @@
 
 (t)fri jul 22 22
+(u)ZWRh3
+(p)9745
+(e)|
+(+)Cyborgs now get XL fire extinguishers.
 (u)Roddy
 (p)9749
 (e)🆕|feature
