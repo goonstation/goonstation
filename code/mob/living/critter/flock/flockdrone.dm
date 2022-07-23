@@ -107,6 +107,12 @@
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
+	if(src.dormant)
+		src.undormantize()
+	if(src.ai_paused)
+		src.wake_from_ai_pause()
+	if(src.flock)
+		src.flock.showAnnotations(src)
 
 /mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
 	boutput(src, message, group, forceScroll)
@@ -285,7 +291,7 @@
 		src.is_npc = TRUE
 
 /mob/living/critter/flock/drone/proc/pause_ai()
-	if(src.controller) //can't pause_ai when controlled, this shouldn't ever happen
+	if(src.controller || src.dormant) //can't pause_ai when controlled or dormant, this shouldn't ever happen
 		return
 	src.ai.stop_move()
 	src.ai_paused = TRUE
@@ -298,7 +304,7 @@
 	src.visible_message("<span class='notice'><b>[src]</b> goes dim and settles on the floor.</span>")
 
 /mob/living/critter/flock/drone/proc/wake_from_ai_pause()
-	if(!src.ai_paused)
+	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
 	src.ai_paused = FALSE
@@ -346,13 +352,6 @@
 		src.flock.registerUnit(src, TRUE)
 	controller?.flock = flocks[flockName]
 	boutput(src, "<span class='notice'>You are now part of the <span class='bold'>[src.flock.name]</span> flock.</span>")
-
-/mob/living/critter/flock/drone/Login()
-	..()
-	if(src.dormant)
-		src.undormantize()
-	if(src.flock)
-		src.flock.showAnnotations(src)
 
 /mob/living/critter/flock/drone/is_spacefaring()
 	return TRUE
@@ -473,6 +472,9 @@
 	if (src.dormant)
 		return
 	if(src.ai_paused)
+		//wake up if you're on fire
+		if(getStatusDuration("burning"))
+			src.wake_from_ai_pause()
 		//wake up if there are enemies in view
 		if(src.flock) //if we have a flock, use the enemies list, otherwise just use non-flock mobs in view
 			for(var/enemy in src.flock.enemies)
@@ -490,6 +492,8 @@
 	if (!length(src.grabbed_by) || src.find_type_in_hand(/obj/item/grab/block))
 		src.antigrab_counter = 0
 	else
+		if(src.ai_paused) //wake up when grabbed
+			src.wake_from_ai_pause()
 		src.antigrab_counter++
 		if (src.antigrab_counter >= src.antigrab_fires_at)
 			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
@@ -640,6 +644,8 @@
 /mob/living/critter/flock/drone/was_harmed(mob/M, obj/item/weapon, special, intent)
 	. = ..()
 	if (!M) return
+	if(src.ai_paused)
+		src.wake_from_ai_pause()
 	if (isflockmob(M)) return
 	if (!isdead(src) && src.flock)
 		if (!src.flock.isEnemy(M))
@@ -661,6 +667,8 @@
 	src.check_health()
 	if (brute <= 0 && burn <= 0 && tox <= 0)
 		return
+	if(src.ai_paused)
+		src.wake_from_ai_pause()
 	var/prev_damaged = src.damaged
 	if(!isdead(src) && src.is_npc)
 		if(prev_damaged != src.damaged && src.damaged > 0) // damaged to a new state
@@ -669,7 +677,7 @@
 			src.ai.interrupt()
 
 /mob/living/critter/flock/drone/proc/check_health()
-	if(isdead(src))
+	if(isdead(src) || src.dormant || src.ai_paused)
 		return
 	var/percent_damage = src.get_health_percentage() * 100
 	switch(percent_damage)
