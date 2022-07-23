@@ -9,6 +9,7 @@
 	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
 	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
 	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
+	maptext_colors = list("#55eec2", "#62a5ee", "#3c6dc3", "#12135b", "#3c6dc3", "#62a5ee")
 
 	cast()
 		if(!holder)
@@ -25,7 +26,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("NYTH ERRIN")
+			holder.owner.say("NYTH ERRIN", FALSE, maptext_style, maptext_colors)
 		..()
 
 		if(!holder.owner.wizard_spellpower(src))

@@ -9,12 +9,13 @@
 	voice_grim = "sound/voice/wizard/PandemoniumGrim.ogg"
 	voice_fem = "sound/voice/wizard/PandemoniumFem.ogg"
 	voice_other = "sound/voice/wizard/PandemoniumLoud.ogg"
+	maptext_colors = list("#FF0000", "#00FF00", "#FFFF00", "#0000FF", "#00FFFF", "#FF00FF")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("WATT LEHFUQUE")
+			holder.owner.say("WARR LEHFUQUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
