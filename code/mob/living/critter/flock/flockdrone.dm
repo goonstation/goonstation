@@ -323,10 +323,17 @@
 		special_desc += "<br><span class='bold'>ID:</span> <b>[src.controller.real_name]</b> (controlling [src.real_name])"
 	else
 		special_desc += "<br><span class='bold'>ID:</span> [src.real_name]"
+	var/cog_status = "" //this was becoming one of those long unreadable ternaries
+	if(!isalive(src)) cog_status = "DEAD"
+	else if(src.dormant) cog_status = "ABSENT"
+	else if(src.is_npc) cog_status = "TORPID"
+	else if(src.ai_paused) cog_status = "HIBERNATING"
+	else cog_status = "SAPIENT"
+
 	special_desc += {"<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none"]
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>System Integrity:</span> [max(0, round(src.get_health_percentage() * 100))]%
-		<br><span class='bold'>Cognition:</span> [isalive(src) && !(src.dormant || src.ai_paused) ? src.is_npc ? "TORPID" : "SAPIENT" : "ABSENT"]"}
+		<br><span class='bold'>Cognition:</span> [cog_status]"}
 	if (src.is_npc && istype(src.ai.current_task))
 		special_desc += "<br><span class='bold'>Task:</span> [uppertext(src.ai.current_task.name)]"
 	special_desc += "<br><span class='bold'>###=-</span></span>"
