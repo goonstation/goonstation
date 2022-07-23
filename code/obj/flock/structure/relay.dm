@@ -10,6 +10,7 @@
 	flock_id = "Signal Relay Broadcast Amplifier"
 	build_time = 30
 	health = 600 //same as a nukie nuke * 4 because nuke has /4 damage resist
+	uses_health_icon = FALSE
 	resourcecost = 1000
 	bound_width = 160
 	bound_height = 160

@@ -1,60 +1,60 @@
 /datum/loot_crate_manager
-	// three types of loot - aesthetic motivated, department motivated, and player motivated
+	/// three types of loot - aesthetic motivated, department motivated, and player motivated
 	var/list/aesthetic = list(
 	// character
-		/obj/item/clothing/head/bear,\
-		list(/obj/item/clothing/head/rugged, /obj/item/clothing/suit/rugged_jacket),\
-		list(/obj/item/clothing/head/star_tophat, /obj/item/clothing/suit/star_cloak),\
-		list(/obj/item/clothing/head/cow, /obj/item/clothing/suit/cow_jacket),\
-		/obj/item/clothing/head/torch,\
-		list(/obj/item/clothing/head/helmet/space/replica, /obj/item/clothing/suit/space/replica),\
-		/obj/item/clothing/suit/lined_jacket,\
-		/obj/item/clothing/suit/warm_jacket,\
-		/obj/item/clothing/suit/cool_jacket,\
-		/obj/item/clothing/suit/billow_cape,\
-		/obj/item/clothing/under/misc/tiedye,\
-		/obj/item/clothing/under/misc/neapolitan,\
-		/obj/item/clothing/under/misc/mint_chip,
+		/obj/item/clothing/head/bear = 20,\
+		list(/obj/item/clothing/head/rugged, /obj/item/clothing/suit/rugged_jacket) = 10,\
+		list(/obj/item/clothing/head/star_tophat, /obj/item/clothing/suit/star_cloak) = 10,\
+		list(/obj/item/clothing/head/cow, /obj/item/clothing/suit/cow_jacket) = 10,\
+		/obj/item/clothing/head/torch = 20,\
+		list(/obj/item/clothing/head/helmet/space/replica, /obj/item/clothing/suit/space/replica) = 10,\
+		/obj/item/clothing/suit/lined_jacket = 20,\
+		/obj/item/clothing/suit/warm_jacket = 20,\
+		/obj/item/clothing/suit/cool_jacket = 20,\
+		/obj/item/clothing/suit/billow_cape = 10,\
+		/obj/item/clothing/under/misc/tiedye = 20,\
+		/obj/item/clothing/under/misc/neapolitan = 20,\
+		/obj/item/clothing/under/misc/mint_chip = 20,
 	// station
 	)
 	var/list/department = list(
 	// medbay
-		/obj/item/roboupgrade/efficiency,\
-		/obj/item/roboupgrade/jetpack,\
-		/obj/item/roboupgrade/physshield,\
-		/obj/item/roboupgrade/teleport,\
-		/obj/item/cloner_upgrade,\
-		/obj/item/grinder_upgrade,\
-		/obj/item/reagent_containers/mender/both,\
-		/obj/item/plant/herb/cannabis/white/spawnable,\
-		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster),
+		/obj/item/roboupgrade/efficiency = 20,\
+		/obj/item/roboupgrade/jetpack = 20,\
+		/obj/item/roboupgrade/physshield = 10,\
+		/obj/item/roboupgrade/teleport = 10,\
+		/obj/item/cloner_upgrade = 10,\
+		/obj/item/grinder_upgrade = 20,\
+		/obj/item/reagent_containers/mender/both = 10,\
+		/obj/item/plant/herb/cannabis/white/spawnable = 20,\
+		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,
 	// botany
-		/obj/item/reagent_containers/glass/happyplant,\
+		/obj/item/reagent_containers/glass/happyplant = 20,\
 	// mining
-		/obj/item/clothing/shoes/industrial,\
+		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
-		/obj/item/material_piece/gold,\
-		/obj/item/plant/herb/cannabis/omega/spawnable,\
-		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper),
+		/obj/item/material_piece/gold = 20,\
+		/obj/item/plant/herb/cannabis/omega/spawnable = 20,\
+		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper) = 20,
 	)
 	var/list/player = list(
 	// useful
-		/obj/item/clothing/gloves/psylink_bracelet,\
-		/obj/item/device/voltron,\
-		/obj/item/injector_belt,\
-		/obj/item/clothing/mask/gas/injector_mask,\
-		/obj/item/ammo/power_cell/self_charging/pod_wars_standard,\
-		/obj/item/clothing/gloves/ring/titanium,\
-		/obj/item/gun/energy/phaser_gun,\
-		/obj/item/clothing/ears/earmuffs/yeti,\
+		/obj/item/clothing/gloves/psylink_bracelet = 10,\
+		/obj/item/device/voltron = 5,\
+		/obj/item/injector_belt = 20,\
+		/obj/item/clothing/mask/gas/injector_mask = 10,\
+		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
+		/obj/item/clothing/gloves/ring/titanium = 20,\
+		/obj/item/gun/energy/phaser_gun = 20,\
+		/obj/item/clothing/ears/earmuffs/yeti = 20,\
 	// fun
-		/obj/item/gun/bling_blaster,\
-		/obj/item/clothing/under/gimmick/frog,\
-		/obj/vehicle/skateboard,\
-		/obj/item/device/flyswatter,\
-		/obj/critter/bear,\
-		/obj/item/clothing/shoes/jetpack,\
-		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,
+		/obj/item/gun/bling_blaster = 20,\
+		/obj/item/clothing/under/gimmick/frog = 20,\
+		/obj/vehicle/skateboard = 20,\
+		/obj/item/device/flyswatter = 20,\
+		/obj/critter/bear = 20,\
+		/obj/item/clothing/shoes/jetpack = 20,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20,
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager
@@ -78,7 +78,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		)
 
 		var/list/loot = list()
-		loot.Add(pick(loot_crate_manager.aesthetic), pick(loot_crate_manager.department), pick(loot_crate_manager.player))
+		loot.Add(weighted_pick(loot_crate_manager.aesthetic), weighted_pick(loot_crate_manager.department), weighted_pick(loot_crate_manager.player))
 
 		for (var/l in loot)
 			if (islist(l))

@@ -1,5 +1,80 @@
 
+(t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
+(u)ZWRh3
+(p)9793
+(e)⚖|balance
+(+)Clown cars now make people who they run over fall to the ground instantly.
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
+(u)Amylizzle
+(p)9743
+(e)|
+(+)Walls are made of materials now.
+(u)ZWRh3
+(p)9745
+(e)|
+(+)Cyborgs now get XL fire extinguishers.
+(u)Roddy
+(p)9749
+(e)🆕|feature
+(+)Creaca's Fruit Milk has outsourced production. Local vending machines now contain 10 new flavors of fruit milk; try one today.
+(u)Skorps
+(p)9796
+(e)🎨|sprites
+(+)Resprited the sterile mask icon.
+(t)thu jul 21 22
+(u)Luxizzle
+(p)9719
+(e)🆕📄|feature, tgui
+(+)You can now set a preferred cyborg name in your character profile
+(u)DimWhat
+(p)9547
+(e)|
+(+)Reworked how opening and closing labcoats works, report any unusual things with them.
+(t)wed jul 20 22
+(u)glowbold
+(p)9581
+(e)|
+(+)The mining cyborg module now includes the cargo appraisal and material analysis tools.
+(u)NightmarechaMillian
+(p)9726
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added craftable slamgun shells to the game.
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
+(t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
+(u)Munien
+(p)9507
+(e)🆕|feature
+(+)Rose names now pull from the names of player mobs. Give someone a rose today!
 (t)sun jul 17 22
+(u)Roddy
+(p)9678
+(e)🆕|feature
+(+)Added pumpkin juice and pumpkin spice lattes (milk, pumpkin juice, and coffee)
+(u)TTerc
+(e)⚖|balance
+(+)Vending machine throw stun duration: 10 seconds -> 5 seconds
+(u)Amylizzle
+(p)9606
+(e)🐛|bug
+(+)Matter eater now lets you eat food properly, and also transfers reagents. Eat big bottles of whiskey all at once!
+(u)LeahTheTech
+(p)9721
+(e)|
+(+)People with the mute gene no longer have typing indicators
 (u)Chan Walrus
 (p)9399
 (e)🎨|sprites
