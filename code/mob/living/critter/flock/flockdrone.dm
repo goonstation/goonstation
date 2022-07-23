@@ -312,7 +312,7 @@
 	if(src.client && !src.controller)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
-	else
+	else if (!src.controller)
 		src.is_npc = TRUE
 		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
 
