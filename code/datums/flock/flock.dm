@@ -379,7 +379,7 @@ var/flock_signal_unleashed = FALSE
 	get_image_group(src).add_mob(M)
 
 /datum/flock/proc/hideAnnotations(var/mob/M)
-	get_image_group(src).remove_mob(M)
+	get_image_group(src).remove_mob(M, TRUE)
 
 // naming
 
@@ -520,13 +520,13 @@ var/flock_signal_unleashed = FALSE
 // DEATH
 
 /datum/flock/proc/perish()
-	if(src.flockmind)
-		hideAnnotations(src.flockmind)
-	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		T.death()
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		T.death()
+	if (src.flockmind)
+		hideAnnotations(src.flockmind)
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
 	qdel(get_image_group(src))
