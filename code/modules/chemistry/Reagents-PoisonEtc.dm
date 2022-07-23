@@ -262,34 +262,52 @@ datum
 			penetrates_skin = 1
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
+			target_organs = list("left_lung","right_lung","heart")
+			flushing_multiplier = 0.5
 			var/counter = 1
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (method!=TOUCH)             //is not as effective when entering the skin, takes more time to metabolize
+					counter = max(counter, 12)
+				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				M.take_toxin_damage(1.5 * mult)
-				if (probmult(8))
-					M.emote("drool")
-				if (prob(15))
-					boutput(M, "<span class='alert'>You cannot breathe!</span>")
-					M.losebreath += (1 * mult)
-					M.emote("gasp")
-				switch(counter += (1 * mult))
-					if (20 to 30)
-						if (prob(15))
-							boutput(M, "<span class='alert'>You feel weak.</span>")
-							M.setStatusMin("stunned", 0.5 SECONDS * mult)
-							M.take_toxin_damage(0.5 * mult)
-					if (30 to 45)
-						if (prob(20))
-							boutput(M, "<span class='alert'>You feel very weak.</span>")
-							M.setStatusMin("stunned", 1 SECONDS * mult)
-							M.take_toxin_damage(1 * mult)
-					if (45 to INFINITY)
-						if (prob(25))
-							boutput(M, "<span class='alert'>You feel horribly weak.</span>")
-							M.setStatusMin("stunned", 2 SECONDS * mult)
-							M.take_toxin_damage(1.5 * mult)
+				M.take_toxin_damage(0.5 * mult)  // a bit of tox to show you that something is indeed, not alright
+				M.change_misstep_chance(2 * mult) //stumbling a tad bit
+
+				if(!M.reagents.has_reagent("space_drugs")) //amyl nitrate inhibits cyanide's effects IRL, space drugs is pretty close
+					counter = max(0.5, counter + ( holder.get_reagent_amount(src.id) ** 0.36 / 2) * mult) //speed of poisoning scales nonlinearly
+				else                                                                                        //with dosage
+					counter += 0.25 * mult
+
+				switch(counter)
+					if (1 to 25)
+						if (probmult(12))                              //some not so pleasant  emotes
+							M.emote(pick("drool", "pale", "tremble", "cough"))
+						else if(probmult(5))
+							M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+							M.vomit()
+					if (25 to INFINITY)
+						M.change_eye_blurry(3, 3)
+						if (probmult(12))
+							M.emote(pick("drool", "pale", "tremble"))
+						if(prob(min((counter * 0.4), 50)))  //oxy damage chance rises with time
+							M.losebreath += (3 * mult)
+							M.take_oxygen_deprivation(1 * mult)
+							if (prob(40))   // just so it doesn't show up every time you take damage
+								boutput(M, pick("<span class='alert'>You cannot breathe!</span>", "<span class='alert'>Your chest hurts!</span>"))
+								M.emote(pick("gasp", "cough"))
+						if(prob(min((counter * 0.2), 25)))
+							boutput(M, "<span class='alert'>You feel [pick("weak", "very weak", "so tired")].</span>")
+							M.setStatusMin("stunned", 2 SECONDS * mult) //increasing chance of a small stun
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							if (H.organHolder)                    //chance of damage starts at 15 and rises
+								H.organHolder.damage_organs(0, 0, 3*mult, target_organs, min((counter * 0.6), 60))
+
 
 				..()
 				return
