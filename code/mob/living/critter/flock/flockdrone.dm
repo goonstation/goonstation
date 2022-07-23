@@ -308,7 +308,6 @@
 	src.damaged = -1 //force icon refresh
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
-	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
