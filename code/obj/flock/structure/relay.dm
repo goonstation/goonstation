@@ -25,6 +25,7 @@
 	var/sound_length_in_seconds = 27
 	var/charge_time_length = 360 // in seconds
 	var/final_charge_time_length = 18
+	var/finished = FALSE
 	var/col_r = 0.1
 	var/col_g = 0.7
 	var/col_b = 0.6
@@ -49,9 +50,9 @@
 
 /obj/flock_structure/relay/disposing()
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
-	src.flock?.relay_in_progress = FALSE
 	..()
-	F?.death(relay_destroyed = TRUE)
+	if (!src.finished)
+		F?.death(relay_destroyed = TRUE)
 	emergency_shuttle.disabled = FALSE
 
 /obj/flock_structure/relay/get_desc()
@@ -102,6 +103,7 @@
 				src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
+	src.finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"
