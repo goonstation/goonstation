@@ -309,7 +309,7 @@
 	src.check_health() // handles updating the icon to something more appropriate
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.add_simple_light("drone_light", rgb2num(glow_color))
-	if(src.client)
+	if(src.client && !src.controller)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	else
