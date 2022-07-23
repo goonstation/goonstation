@@ -302,7 +302,6 @@
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
 	src.ai_paused = FALSE
-	src.canmove = TRUE
 	src.anchored = FALSE
 	src.wander_count = 0
 	src.damaged = -1 //force icon refresh
