@@ -1026,11 +1026,8 @@
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
-			for (var/atom in mobs)
-				if (!atom) continue
-				var/mob/O = atom
-				if (get_dist(get_turf(src),O) <= 3)
-					O.show_message(text("[bicon(src)] *[alert_message]*"))
+			for (var/mob/M in hearers(3,get_turf(src)))
+				M.show_message(text("[bicon(src)] *[alert_message]*"))
 
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
