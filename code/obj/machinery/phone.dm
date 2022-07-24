@@ -21,7 +21,7 @@
 	var/labelling = 0
 	var/unlisted = FALSE
 	var/obj/item/phone_handset/handset = null
-	var/chui/window/phonecall/phonebook
+	//var/chui/window/phonecall/phonebook
 	var/phoneicon = "phone"
 	var/ringingicon = "phone_ringing"
 	var/answeredicon = "phone_answered"
@@ -104,13 +104,13 @@
 		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
-			if(src.connected == 1)
-				if(user)
-					if(!src.phonebook)
-						src.phonebook = new /chui/window/phonecall(src)
-					phonebook.Subscribe(user.client)
-			else
-				if(user)
+			if(user)
+				if(src.connected == 1)
+					// if(!src.phonebook)
+					// 	src.phonebook = new /chui/window/phonecall(src)
+					// phonebook.Subscribe(user.client)
+					ui_interact(user)
+				else
 					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
 		else
 			src.ringing = 0
@@ -252,34 +252,49 @@
 		user.TakeDamage("head", 150, 0)
 		return 1
 
+/obj/machinery/phone/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Phone")
+		ui.open()
 
+// /obj/machinery/phone/ui_data(mob/user)
+// 	. = list(
+// 		"var" = var
+// 	)
+
+/obj/machinery/phone/ui_act(action, params)
+	. = ..()
+	if (.)
+		return
+	src.UpdateIcon()
 
 // Interface for placing a call
-/chui/window/phonecall
-	name = "phonebook"
-	windowSize = "250x500"
-	var/obj/machinery/phone/owner = null
+// /chui/window/phonecall
+// 	name = "phonebook"
+// 	windowSize = "250x500"
+// 	var/obj/machinery/phone/owner = null
 
-	New(var/obj/machinery/phone/creator)
-		..()
-		src.owner = creator
+// 	New(var/obj/machinery/phone/creator)
+// 		..()
+// 		src.owner = creator
 
-	GetBody()
-		var/html = ""
-		for_by_tcl(P, /obj/machinery/phone)
-			if (P.unlisted) continue
-			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
-		return html
+// 	GetBody()
+// 		var/html = ""
+// 		for_by_tcl(P, /obj/machinery/phone)
+// 			if (P.unlisted) continue
+// 			html += "[theme.generateButton(P.phone_id, "[P.phone_id]")] <br/>"
+// 		return html
 
-	OnClick(var/client/who, var/id, var/data)
-		if(src.owner.dialing == 1 || src.owner.linked)
-			return
-		if(owner)
-			for_by_tcl(P, /obj/machinery/phone)
-				if(P.phone_id == id)
-					owner.call_other(P)
-					return
-		Unsubscribe(who)
+// 	OnClick(var/client/who, var/id, var/data)
+// 		if(src.owner.dialing == 1 || src.owner.linked)
+// 			return
+// 		if(owner)
+// 			for_by_tcl(P, /obj/machinery/phone)
+// 				if(P.phone_id == id)
+// 					owner.call_other(P)
+// 					return
+// 		Unsubscribe(who)
 
 
 // Item generated when someone picks up a phone
