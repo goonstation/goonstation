@@ -505,7 +505,7 @@
 			take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 	attack(target, mob/user)
-		playsound(target,  'sound/impact_sounds/Flesh_Stab_1.ogg ', 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		if(ismob(target))
 			take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 		..()
