@@ -349,6 +349,13 @@
 		src.icon_state = "mousetrap"
 		src.armed = 0
 
+		var/delay = 0
+		if (type != "feet") //detonate instantly if stepped on, and with a small delay otherwise
+			delay = 0.7 SECONDS
+		SPAWN(delay)
+			src.trigger_payload(target)
+
+	proc/trigger_payload(mob/target)
 		if (src.grenade)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
@@ -363,10 +370,9 @@
 
 		else if (src.pipebomb)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
-			SPAWN(0.7 SECONDS)
-				src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
-				src.pipebomb.do_explode()
-				src.pipebomb = null
+			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
+			src.pipebomb.do_explode()
+			src.pipebomb = null
 
 		else if (src.signaler)
 			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
@@ -398,8 +404,7 @@
 			playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1)
 			qdel(src.buttbomb)
 			src.buttbomb = null
-		clear_armer()
-		return
+		src.clear_armer()
 
 // Added support for old-style grenades and pipe bombs (Convair880).
 /obj/item/mousetrap_roller
