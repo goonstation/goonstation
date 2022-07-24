@@ -17737,7 +17737,8 @@
 	pixel_y = 10
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "jiR" = (
@@ -35079,7 +35080,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Overwatch"
