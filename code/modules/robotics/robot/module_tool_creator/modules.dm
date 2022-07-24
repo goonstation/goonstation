@@ -147,6 +147,8 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/iv_drip/blood,
+		/obj/item/suture,
+		/obj/item/scalpel,
 		/obj/item/circular_saw,
 		/obj/item/surgical_spoon,
 		/obj/item/scissors/surgical_scissors,
