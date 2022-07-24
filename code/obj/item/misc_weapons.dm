@@ -486,29 +486,29 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	overwrite_impact_sfx(original_sound, hit_atom, thr)
-		..()
-		if(ismob(hit_atom))
-			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+/obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	..()
+	if(ismob(hit_atom))
+		. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 
 
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		if (..())
-			return
-		if(ismob(A))
-			var/mob/M = A
-			if (ismob(usr))
-				M.lastattacker = usr
-				M.lastattackertime = world.time
-			M.changeStatus("weakened", 6 SECONDS)
-			M.force_laydown_standup()
-			take_bleeding_damage(M, null, 5, DAMAGE_CUT)
+/obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
+	if (..())
+		return
+	if(ismob(A))
+		var/mob/M = A
+		if (ismob(usr))
+			M.lastattacker = usr
+			M.lastattackertime = world.time
+		M.changeStatus("weakened", 6 SECONDS)
+		M.force_laydown_standup()
+		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
-	attack(target, mob/user)
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
-		if(ismob(target))
-			take_bleeding_damage(target, user, 5, DAMAGE_STAB)
-		..()
+/obj/item/dagger/attack(target, mob/user)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+	if(ismob(target))
+		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
+	..()
 
 /obj/item/dagger/smile
 	name = "switchblade"
@@ -516,11 +516,11 @@
 	throw_range = 10
 	throwforce = 10.0
 
-	attack(mob/living/target, mob/user)
-		if(prob(10))
-			var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
-			user.say(say)
-		..()
+/obj/item/dagger/smile/attack(mob/living/target, mob/user)
+	if(prob(10))
+		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
+		user.say(say)
+	..()
 
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
