@@ -131,8 +131,6 @@
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 
-	var/datum/material/helm_material = null
-	var/datum/material/visr_material = null
 	var/image/fabrItemImg = null
 	var/image/fabrWornImg = null
 	var/image/visrItemImg = null
@@ -140,45 +138,44 @@
 
 	New()
 		..()
-		// prep the world icon_state for building, is made later
+		// Prep the item overlays
 		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
-		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
 		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
+		// Prep the worn overlays
+		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
 		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
-	proc/setupVisorMat(var/datum/material/helm_mat, var/datum/material/visr_mat)
-		helm_material = copyMaterial(helm_mat) // in 99% of all calls this is redundant but just in case
-		visr_material = copyMaterial(visr_mat) // in 99% of all calls this is redundant but just in case
-		if (visr_material != null && helm_material != null)
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
+		src.setMaterial(
+			helmMat,
+			FALSE, // We want to purely rely on the overlay colours
+		)
+		name = "[visrMat]-visored [helmMat] helmet"
 
-			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
-			setProperty("coldprot", 10+prot)
-			setProperty("heatprot", 2+round(prot/2))
-
-			prot =  clamp(((visr_material.getProperty("chemical") - 4) * 10), 0, 35) // All crystals (assuming default chem value) will give 20 chemprot, same as normal helm.
-			setProperty("chemprot", prot)
-
-			prot = max(0, visr_material.getProperty("density") - 3) / 2
-			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
+		// Setup the clothing stats based on material properties
+		var/prot = max(0, (5 - visrMat.getProperty("thermal")) * 5)
+		setProperty("coldprot", 10+prot)
+		setProperty("heatprot", 2+round(prot/2))
+		// All crystals (assuming default chem value) will give 20 chemprot, same as normal helm
+		prot =  clamp(((visrMat.getProperty("chemical") - 4) * 10), 0, 35)
+		setProperty("chemprot", prot)
+		 // Even if soft visor, still gives some value
+		prot = max(0, visrMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot_head", 3 + prot)
 
 		// Setup item overlays
-		fabrItemImg.color = helm_material.color
-		visrItemImg.color = visr_material.color
+		fabrItemImg.color = helmMat.color
+		visrItemImg.color = visrMat.color
 		UpdateOverlays(visrItemImg, "item-visor")
 		UpdateOverlays(fabrItemImg, "item-helmet")
-
 		// Setup worn overlays
-		fabrWornImg.color = helm_material.color
-		visrWornImg.color = visr_material.color
+		fabrWornImg.color = helmMat.color
+		visrWornImg.color = visrMat.color
 		src.wear_image.overlays += fabrWornImg
 		src.wear_image.overlays += visrWornImg
-
-
-	UpdateName()
-		if (helm_material && visr_material)
-			name = "[visr_material]-visored [helm_material] helmet"
-		else if (visr_material)
-			name = " [helm_material] helmet"
+		// Add back the helmet texture since we overide the material apparance
+		if (helmMat.texture)
+			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
 
 // Sealab helmets
 
