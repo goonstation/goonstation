@@ -49,13 +49,12 @@
 		if (src.inlet_tank)
 			src.overlays += src.inlet_tank_image
 
-
 		signal_event("icon_updated")
 
-
 	was_deconstructed_to_frame(mob/user)
+		. = ..()
 		src.stop_engine()
-		..()
+
 
 	attack_hand(var/mob/user, params)
 		if (..(user, params))
@@ -63,9 +62,9 @@
 
 		var/dat = {"
 		<b>Status:</b><BR>
-		Engine: [active ? "Active" : "Stopped"] <BR>
+		Engine: [src.active ? "Active" : "Stopped"] <BR>
 		Floor Bolts: [src.anchored ? "Anchored" : "Unanchored"] <BR>
-		Power Output: [active ? src.last_output : 0]W<BR><BR>
+		Power Output: [src.active && src.last_output ? src.last_output : 0]W<BR><BR>
 		<b>Controls:</b><BR>
 		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
 		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
@@ -85,40 +84,67 @@
 		if (..(href, href_list))
 			return
 
+		src.add_dialog(usr)
+
 		if (href_list["engine"])
 			if (!src.active)
-				src.start_engine(usr)
+				if (src.start_engine())
+					boutput(usr, "<span class='alert'>The [src] fails to start!</span>")
+
+				else
+					src.visible_message("<span class='notice'>[usr] starts the [src].</span>")
+
 			else
-				src.stop_engine(usr)
+				src.stop_engine()
+				src.visible_message("<span class='notice'>[usr] stops the [src].</span>")
 
 		else if (href_list["fuel"])
 			if (src.fuel_tank)
+				src.visible_message("<span class='notice'>[usr] removes the [src.fuel_tank] from the [src].</span>")
 				src.eject_fuel_tank(usr)
 
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/reagent_containers/food/drinks/fueltank))
+					if (src.fuel_tank)
+						boutput(usr, "<span class='alert'>There appears to be a fuel tank loaded already!</span>")
+						return
+
+					if (!src.get_average_volatility(I.reagents))
+						boutput(usr, "<span class='alert'>The [I] doesn't contain any fuel!</span>")
+						return
+
+					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
 					usr.u_equip(I)
 					I.set_loc(src)
 					src.fuel_tank = I
-
-					src.visible_message("<span class='notice'>[usr] loads the [I] into the [src].</span>")
+					src.UpdateIcon()
+					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
 		else if (href_list["inlet"])
 			if (src.inlet_tank)
+				src.visible_message("<span class='notice'>[usr] removes the [src.inlet_tank] from the [src].</span>")
 				src.eject_inlet_tank(usr)
 
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/tank) && !(istype(I, /obj/item/tank/plasma) || istype(I, /obj/item/tank/jetpack)))
+					if (src.inlet_tank)
+						boutput(usr, "<span class='alert'>There appears to be a tank loaded already!</span>")
+						return
+
+					if (src.check_tank_oxygen(I))
+						boutput(usr, "<span class='alert'>The [I] doesn't contain any oxygen.</span>")
+						return
+
+					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
 					usr.u_equip(I)
 					I.set_loc(src)
 					src.inlet_tank = I
+					src.UpdateIcon()
+					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 
-					src.visible_message("<span class='notice'>[usr] loads the [I] into the [src].</span>")
-
-		src.add_fingerprint(usr)
-		src.updateDialog()
+		src.updateUsrDialog()
 		return
 
 
@@ -131,7 +157,7 @@
 				boutput(user, "<span class='alert'>There appears to be a tank loaded already!</span>")
 				return
 
-			if (!check_tank_oxygen(W))
+			if (!src.check_tank_oxygen(W))
 				boutput(user, "<span class='alert'>The [W] doesn't contain any oxygen.</span>")
 				return
 
@@ -175,6 +201,9 @@
 			src.anchored = 1
 			src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
 			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+
+		src.updateUsrDialog()
+		return
 
 	process()
 		if (!src || !src.active)
@@ -223,35 +252,32 @@
 		src.UpdateIcon()
 		src.updateDialog()
 
-	proc/start_engine(var/mob/user as mob, var/audio = 1)
+	proc/start_engine(var/audio = 1)
 		if (!src.active)
 			if (!src.ready_to_start())
-				if (istype(user))
-					boutput(user, "<span class='alert'>The [src] fails to start!</span>")
-				return
+				return 1
 
 			src.active = 1
 			src.UpdateIcon()
 			src.updateDialog()
-
-			if (istype(user)) src.visible_message("<span class='notice'>[user] starts the [src].</span>")
 			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
-	proc/stop_engine(var/mob/user as mob, var/audio = 1)
+			return 0
+
+	proc/stop_engine(var/audio = 1)
 		if (src.active)
 			src.active = 0
 			src.UpdateIcon()
 			src.updateDialog()
 
-			if (istype(user)) src.visible_message("<span class='notice'>[user] stops the [src].</span>")
 			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
-			return
+			return 0
 
 		if (!src.get_average_volatility(src.fuel_tank.reagents) || !src.check_available_oxygen())
-			return
+			return 0
 
 		return 1
 
@@ -262,10 +288,10 @@
 
 		var/turf/simulated/T = get_turf(src)
 		if (!istype(T))
-			return
+			return 0
 
 		if (!T.air || T.air.oxygen <= 0)
-			return
+			return 0
 
 		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air)]</span>")
@@ -275,10 +301,10 @@
 
 	proc/check_tank_oxygen(obj/item/tank/T)
 		if (!src || !T || !T.air_contents)
-			return
+			return 0
 
 		if (T.air_contents.oxygen <= 0)
-			return
+			return 0
 
 		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air_contents.oxygen]</span>")
 		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air_contents)]</span>")
@@ -287,89 +313,91 @@
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
 
+#define QUALITY_VERY_HIGH 5
+#define QUALITY_HIGH 4
+#define QUALITY_AVERAGE 3
+#define QUALITY_LOW 2
+#define QUALITY_VERY_LOW 1
+
 	proc/get_average_volatility(datum/reagents/R)
 		if (!R || !R.total_volume)
 			return
 
-		var/average
-		var/i
+		var/average = 0
 		for (var/reagent_id in R.reagent_list)
 			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 			if (current_reagent)
 				switch(reagent_id)
 					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
-						average += 7
-						i++
+						average += (QUALITY_VERY_HIGH * current_reagent.volume)
 
 					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
-						average += 5
-						i++
+						average += (QUALITY_HIGH * current_reagent.volume)
 
 					if ("fuel", "acetone")
-						average += 3
-						i++
+						average += (QUALITY_AVERAGE * current_reagent.volume)
 
 					if ("oil", "butter", "diethylamine", "ethanol")
-						average += 2
-						i++
+						average += (QUALITY_LOW * current_reagent.volume)
 
 					if ("plasma", "magnesium", "phosphorus")
-						average += 1
-						i++
+						average += (QUALITY_VERY_LOW * current_reagent.volume)
 
 					else
 						var/datum/reagent/fooddrink/alcoholic/current_alcoholic_reagent = current_reagent
-						if (istype(current_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
+						if (istype(current_alcoholic_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
 							average += 3
-							i++
 
+		if (!average)
+			return 0
 
-		return average / i
+		return average / R.total_volume
+
+#undef QUALITY_VERY_HIGH
+#undef QUALITY_HIGH
+#undef QUALITY_AVERAGE
+#undef QUALITY_LOW
+#undef QUALITY_VERY_LOW
 
 	proc/get_output_cable()
 		var/list/cables = src.get_connections()
 
 		if (!cables.len)
-			return 0
+			return
 
 		for (var/obj/cable/C in cables)
 			if (C.get_powernet())
 				return C
 
-		return 0
+		return
 
-	proc/eject_fuel_tank(var/mob/user as mob)
+	proc/eject_fuel_tank(var/mob/user)
 		if (!src || !src.fuel_tank)
 			return
 
-		src.fuel_tank.set_loc(get_turf(src))
-		if (istype(user))
-			src.visible_message("<span class='notice'>[user] removes the [src.fuel_tank] from the [src].</span>")
-			user.put_in_hand_or_eject(src.fuel_tank)
-
-
 		src.fuel_tank = null
 		src.stop_engine()
+
+		src.fuel_tank.set_loc(get_turf(src))
+		if (istype(user))
+			user.put_in_hand_or_eject(src.fuel_tank)
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
 
-	proc/eject_inlet_tank(var/mob/user as mob)
+	proc/eject_inlet_tank(var/mob/user)
 		if (!src || !src.inlet_tank)
 			return
 
+		src.inlet_tank = null
+
 		src.inlet_tank.set_loc(get_turf(src))
 		if (istype(user))
-			src.visible_message("<span class='notice'>[user] removes the [src.inlet_tank] from the [src].</span>")
 			user.put_in_hand_or_eject(src.inlet_tank)
-
-		src.inlet_tank = null
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-
-
 
 /*	smelly verbs
 	verb/start_stop()
