@@ -3384,6 +3384,9 @@
 /area/station/quartermaster/cargobay)
 "bLX" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
 "bMa" = (
@@ -4964,6 +4967,7 @@
 /area/station/hallway/secondary/exit)
 "cGt" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
 "cGB" = (
@@ -6272,7 +6276,12 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_y = -6
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 6
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
@@ -13077,7 +13086,12 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_y = -6
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 6
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 4
 	},
@@ -13632,6 +13646,11 @@
 /obj/item/sponge,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
+"hiY" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment2)
 "hja" = (
 /obj/storage/cart,
 /turf/simulated/floor/yellowblack{
@@ -14031,6 +14050,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
@@ -15913,6 +15933,7 @@
 /area/station/engine/engineering)
 "imA" = (
 /obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "imD" = (
@@ -24498,8 +24519,8 @@
 	name = "Transception Array Control"
 	})
 "mwW" = (
-/obj/machinery/light_switch/east,
 /obj/machinery/vending/medical,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "mxa" = (
@@ -24698,6 +24719,11 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
+"mDu" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment)
 "mDv" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/men{
@@ -33158,6 +33184,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"rAR" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment)
 "rBd" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/black,
@@ -38725,6 +38756,13 @@
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
+"uxj" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment2)
 "uxr" = (
 /obj/table/wood/round/auto,
 /obj/item/card_box/plain{
@@ -93791,7 +93829,7 @@ lDT
 lDT
 eBt
 ioO
-imA
+rAR
 vtH
 lsj
 byA
@@ -94093,7 +94131,7 @@ cmn
 uEe
 dqs
 ioO
-imA
+rAR
 vtH
 lsj
 byA
@@ -94395,7 +94433,7 @@ mwW
 lvy
 bQw
 dSy
-imA
+mDu
 vsT
 lsj
 byA
@@ -94694,9 +94732,9 @@ bLX
 bQG
 bLX
 csA
-cGt
+uxj
 dul
-cGt
+uxj
 csA
 uSB
 bUd
@@ -95301,7 +95339,7 @@ csA
 cRA
 dwY
 dCA
-cGt
+hiY
 vtH
 fgH
 usU
