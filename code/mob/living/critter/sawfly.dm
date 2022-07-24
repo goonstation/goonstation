@@ -30,7 +30,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	//mob variables
 	custom_gib_handler = /proc/robogibs
-
 	isFlying = 1
 	can_grab = FALSE
 	can_help = FALSE
@@ -49,7 +48,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		add_hh_robot_burn(25, 1)
 
 
-
 	New()
 		..()
 		if(isnew)
@@ -57,8 +55,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		deathtimer = rand(1, 5)
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
-		// ai setup
-
 		START_TRACKING
 
 	setup_hands()
