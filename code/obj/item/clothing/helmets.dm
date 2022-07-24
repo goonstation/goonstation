@@ -128,20 +128,23 @@
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
 
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
-	item_state = "s_helmet"
-
 	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+
 	var/datum/material/helm_material = null
 	var/datum/material/visr_material = null
-	var/image/fabrImg = null
-	var/image/visrImg = null
+	var/image/fabrItemImg = null
+	var/image/fabrWornImg = null
+	var/image/visrItemImg = null
+	var/image/visrWornImg = null
 
 	New()
 		..()
-
-		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
-		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
+		// prep the world icon_state for building, is made later
+		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
+		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
+		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
+		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
 	proc/setupVisorMat(var/datum/material/helm_mat, var/datum/material/visr_mat)
 		helm_material = copyMaterial(helm_mat) // in 99% of all calls this is redundant but just in case
@@ -158,13 +161,17 @@
 			prot = max(0, visr_material.getProperty("density") - 3) / 2
 			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
 
-		// overlay stuff
+		// Setup item overlays
+		fabrItemImg.color = helm_material.color
+		visrItemImg.color = visr_material.color
+		UpdateOverlays(visrItemImg, "item-visor")
+		UpdateOverlays(fabrItemImg, "item-helmet")
 
-		fabrImg.color = helm_material.color
-		UpdateOverlays(fabrImg, "helmet")
-
-		visrImg.color = visr_material.color
-		UpdateOverlays(visrImg, "visor")
+		// Setup worn overlays
+		fabrWornImg.color = helm_material.color
+		visrWornImg.color = visr_material.color
+		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += visrWornImg
 
 
 	UpdateName()
