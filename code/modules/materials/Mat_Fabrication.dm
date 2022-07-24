@@ -1,6 +1,7 @@
 /obj/machinery/nanofab/refining
 	name = "Nano-fabricator (Refining)"
 	blueprints = list(/datum/matfab_recipe/coilsmall,
+	/datum/matfab_recipe/catarod,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,

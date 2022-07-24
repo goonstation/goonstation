@@ -439,6 +439,8 @@
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
+		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
+			H.traitHolder.removeTrait("pilot")
 
 		H.Equip_Job_Slots(JOB)
 
