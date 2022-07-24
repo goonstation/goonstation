@@ -476,6 +476,7 @@ THROWING DARTS
 				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
+					H.changeStatus("newcause", 5 SECONDS)
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
