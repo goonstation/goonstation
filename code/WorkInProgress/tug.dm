@@ -154,6 +154,8 @@
 	layer = MOB_LAYER + 1
 //	sealed_cabin = 0
 	mats = 10
+	health = 80
+	health_max = 80
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
@@ -165,6 +167,8 @@
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
 		delay = 2
+		health = 120
+		health_max = 120
 
 
 		/*
