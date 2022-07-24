@@ -460,36 +460,6 @@ THROWING DARTS
 				//src.on_remove(H)
 				//H.implant.Remove(src)
 				//src.set_loc(get_turf(H))
-			else if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1, 1, 0)
-				H.changeStatus("weakened", 1 SECOND)
-				H.force_laydown_standup()
-				H.emote("scream")
-				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 1.6)
-
-	do_process(var/mult = 1)
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if (!ishuman(src.owner))
-				return
-			var/mob/living/carbon/human/H = src.owner
-			if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
-				if (H.health < 0)
-					H.changeStatus("paralysis", 5 SECONDS)
-					H.force_laydown_standup()
-					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
-
-					//heal a small amount for the trouble of bein critted via this thing
-					H.HealDamage("All", max(30 - H.health,0), 0)
-					H.HealDamage("All", 0, max(30 - H.health,0))
-
-					ticker.mode:remove_revolutionary(H.mind)
-				else
-					if (prob(30))
-						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
-						playsound(H.loc, "sound/effects/electric_shock_short.ogg", 60, 0,0,pitch = 0.8)
-						H.emote("twitch_v")
-
 		..()
 
 

@@ -1283,8 +1283,8 @@
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2)
 		product_list += new/datum/data/vending_product(/obj/item/sec_tape/vended, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
-		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
-		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
+		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 5)
+		product_list += new/datum/data/vending_product(/obj/item/implanter, 2)
 #ifdef RP_MODE
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
 #endif

@@ -1034,8 +1034,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Counter-Revolutionary Kit"
 	desc = "Implanters and counter-revolutionary implants to supress rebellion against Nanotrasen."
 	category = "Security Department"
-	contains = list(/obj/item/implantcase/counterrev = 4,
-					/obj/item/implanter = 2)
+	contains = list(/obj/item/implantcase/counterrev = 6,
+					/obj/item/implanter = 3)
 	cost = 6000
 	containertype = /obj/storage/crate
 	containername = "Counter-Revolutionary Kit"
