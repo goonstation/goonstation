@@ -1299,6 +1299,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	uses_multiple_icon_states = 1
+	sneaky = TRUE
 	var/list/clothing_choices = list()
 
 	New()
