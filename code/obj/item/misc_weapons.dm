@@ -498,8 +498,8 @@
 		if(ismob(A))
 			var/mob/M = A
 			if (ismob(usr))
-				M:lastattacker = usr
-				M:lastattackertime = world.time
+				M.lastattacker = usr
+				M.lastattackertime = world.time
 			M.changeStatus("weakened", 6 SECONDS)
 			M.force_laydown_standup()
 			take_bleeding_damage(M, null, 5, DAMAGE_CUT)
