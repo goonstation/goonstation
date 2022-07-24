@@ -162,7 +162,7 @@
 	var/image/target_overlay = null
 
 	/// Override this for the child of `/obj/machinery/broadside_gun` to determine what happens on-firing
-	proc/bombard(var/atom/target, var/mob/user)
+	proc/bombard(atom/target, mob/user)
 		return
 
 	New()
