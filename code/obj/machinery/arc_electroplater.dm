@@ -81,6 +81,10 @@
 			boutput(user, "<span class='alert'>That wouldn't possibly fit!</span>")
 			return
 
+		if (istype(W, /obj/item/implant))
+			boutput(user, "<span class='alert'>Despite your best efforts, you can't seem to make it enter the electroplater somehow.</span>")
+			return
+
 		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure))
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
