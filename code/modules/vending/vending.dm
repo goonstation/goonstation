@@ -2488,8 +2488,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	electrocute(mob/user, netnum)
 		..()
-		playsound(src.loc, sound_laugh, 65, 1)
-		speak("Ha ha ha ha ha!")
+		if(!ON_COOLDOWN(src, "zoldorf_laugh", 5 SECONDS))
+			playsound(src.loc, sound_laugh, 65, 1)
+			speak("Ha ha ha ha ha!")
 		return
 
 	attackby(obj/item/weapon, mob/user) //pretty much just player zoldorf stuffs :)
