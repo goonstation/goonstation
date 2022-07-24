@@ -1422,6 +1422,7 @@
 	spawn_contents = list()
 	in_list_or_max = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
+	sneaky = TRUE
 
 	New()
 		..()
