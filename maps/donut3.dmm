@@ -74380,7 +74380,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 15
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 3;
 	pixel_y = 3
 	},
