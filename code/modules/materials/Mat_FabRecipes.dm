@@ -62,9 +62,10 @@
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/visr = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material) // suit stuff
+			suit.setMaterial(fabr.material, FALSE) // suit stuff
 			suit.setupReinforcement(renf.material)
 			suit.UpdateName()
+			helmet.setMaterial(fabr.material, FALSE)
 			helmet.setupVisorMat(fabr.material, visr.material)// sets color to match the suit, keeps protectiveness from visor
 			helmet.UpdateName()
 		return
