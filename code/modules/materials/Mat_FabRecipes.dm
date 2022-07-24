@@ -65,8 +65,7 @@
 			suit.setMaterial(fabr.material) // suit stuff
 			suit.setupReinforcement(renf.material)
 			suit.UpdateName()
-			helmet.setMaterial(fabr.material) // helmet stuff
-			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
+			helmet.setupVisorMat(fabr.material, visr.material)// sets color to match the suit, keeps protectiveness from visor
 			helmet.UpdateName()
 		return
 

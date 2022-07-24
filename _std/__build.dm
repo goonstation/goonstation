@@ -31,7 +31,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// OPTIONS TO GO FAST
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
 //#define STOP_DISTRACTING_ME //All of the below

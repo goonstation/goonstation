@@ -132,6 +132,7 @@
 	item_state = "s_helmet"
 
 	icon = 'icons/obj/clothing/item_hats.dmi'
+	var/datum/material/helm_material = null
 	var/datum/material/visr_material = null
 	var/image/fabrImg = null
 	var/image/visrImg = null
@@ -142,9 +143,10 @@
 		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
 		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
 
-	proc/setupVisorMat(var/datum/material/V)
-		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
-		if (visr_material)
+	proc/setupVisorMat(var/datum/material/helm_mat, var/datum/material/visr_mat)
+		helm_material = copyMaterial(helm_mat) // in 99% of all calls this is redundant but just in case
+		visr_material = copyMaterial(visr_mat) // in 99% of all calls this is redundant but just in case
+		if (visr_material != null && helm_material != null)
 
 			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
 			setProperty("coldprot", 10+prot)
@@ -158,7 +160,7 @@
 
 		// overlay stuff
 
-		fabrImg.color = src.material
+		fabrImg.color = helm_material.color
 		UpdateOverlays(fabrImg, "helmet")
 
 		visrImg.color = visr_material.color
@@ -166,10 +168,10 @@
 
 
 	UpdateName()
-		if (visr_material && src.material)
-			name = "[visr_material]-visored [src.material] helmet"
+		if (helm_material && visr_material)
+			name = "[visr_material]-visored [helm_material] helmet"
 		else if (visr_material)
-			name = " [src.material] helmet"
+			name = " [helm_material] helmet"
 
 // Sealab helmets
 
