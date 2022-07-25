@@ -924,6 +924,10 @@
 
 	syndicate
 
+		dress
+			icon_state = "mail-dress"
+			item_state = "mail-dress"
+
 /obj/item/clothing/under/misc/barber
 	name = "barber's uniform"
 	desc = "The classic attire of a barber."
