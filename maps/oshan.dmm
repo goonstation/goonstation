@@ -45201,10 +45201,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/arcade)
-"glf" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/grime,
-/area/space)
 "glu" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -45225,7 +45221,7 @@
 	},
 /area/station/medical/staff)
 "gog" = (
-/obj/landmark/spawner/loot,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/grime,
 /area/iss)
 "gpP" = (
@@ -45682,11 +45678,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"jcZ" = (
-/obj/landmark/spawner/loot,
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "jdK" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
@@ -46783,7 +46774,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "oXE" = (
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/damaged2,
 /area/skeleton_trader)
 "oXV" = (
@@ -46791,10 +46781,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery/storage)
-"oZt" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/grime,
-/area/skeleton_trader)
 "pdH" = (
 /obj/loudspeaker{
 	layer = 4;
@@ -46970,7 +46956,6 @@
 /area/station/medical/medbay/lobby)
 "pOZ" = (
 /obj/decal/cleanable/robot_debris,
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "pPb" = (
@@ -47004,10 +46989,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"pZV" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/red,
-/area/space)
 "qaf" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
@@ -47417,10 +47398,6 @@
 /obj/machinery/networked/storage/scanner,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
-"ssS" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
 "sBu" = (
 /obj/cable{
 	d1 = 4;
@@ -48285,11 +48262,6 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
-"yeA" = (
-/obj/landmark/spawner/loot,
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/grime,
-/area/iss)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -50904,7 +50876,7 @@ buR
 buR
 buR
 byc
-pZV
+byc
 byc
 byc
 buR
@@ -52112,7 +52084,7 @@ buR
 byD
 bTw
 fWc
-fWc
+bzD
 bWe
 byD
 buR
@@ -52715,7 +52687,7 @@ bBW
 buR
 byD
 bzD
-fWc
+bzD
 fWc
 bzD
 byD
@@ -53924,7 +53896,7 @@ buR
 buR
 byc
 byc
-pZV
+byc
 byc
 buR
 buR
@@ -58849,7 +58821,7 @@ bTS
 bTZ
 bUc
 bUc
-oZt
+bUc
 bTS
 boe
 bTH
@@ -59911,9 +59883,9 @@ aqn
 aUm
 aUm
 gog
-gog
-yeA
-gog
+aVt
+aVS
+aUL
 aUm
 aUm
 aqn
@@ -73042,7 +73014,7 @@ aqn
 aqn
 aqn
 aTs
-shL
+aqn
 aqn
 aqn
 aqn
@@ -78901,7 +78873,7 @@ aqn
 aqn
 aqn
 bnE
-ssS
+bCx
 bCx
 bnE
 aqn
@@ -83301,7 +83273,7 @@ boe
 boe
 boe
 buR
-tQo
+boe
 boe
 boe
 boe
@@ -83603,7 +83575,7 @@ buR
 boe
 boe
 buR
-tQo
+boe
 boe
 boe
 boe
@@ -84502,7 +84474,7 @@ boe
 boe
 buR
 buR
-tQo
+boe
 boe
 boe
 boe
@@ -84804,7 +84776,7 @@ boe
 buR
 buR
 buR
-jcZ
+boe
 boe
 boe
 buR
@@ -85712,7 +85684,7 @@ boe
 boe
 boe
 buR
-boe
+tQo
 boe
 bxZ
 boe
@@ -88174,7 +88146,7 @@ aqn
 aqn
 aqn
 aqn
-shL
+aqn
 aTs
 aTs
 aTs
@@ -113323,7 +113295,7 @@ bQc
 bQz
 aUZ
 bPD
-glf
+bPD
 aUZ
 aUZ
 aqn

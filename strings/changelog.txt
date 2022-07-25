@@ -1,5 +1,7 @@
 
 (t)mon jul 25 22
+(u)Flourish
+(+)Reduced number of loot crate spawners in the debris field. Increased frequency of loot crates while mining asteroids (including mineral magnet).
 (u)Luxizzle
 (p)9842
 (e)🐛🗺|bug, mapping
