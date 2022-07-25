@@ -49966,7 +49966,7 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -8;
 	pixel_y = 9
 	},

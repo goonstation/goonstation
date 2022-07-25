@@ -2875,7 +2875,7 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 6;
 	pixel_y = 4
 	},
@@ -19369,7 +19369,7 @@
 "aUy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
-	level = 2 
+	level = 2
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
