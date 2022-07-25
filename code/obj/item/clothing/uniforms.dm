@@ -38,12 +38,17 @@
 
 /obj/item/clothing/under/color
 	name = "black jumpsuit"
-	desc = "A generic jumpsuit with no rank markings."
+	desc = "A generic uniform with no rank markings."
 
 	grey
 		name = "grey jumpsuit"
 		icon_state = "grey"
 		item_state = "grey"
+
+		skirt
+			name = "grey jumpskirt"
+			icon_state = "grey-dress"
+			item_state = "grey-dress"
 
 	whitetemp
 		name = "jumpsuit"
@@ -55,95 +60,191 @@
 		icon_state = "white"
 		item_state = "white"
 
+		skirt
+			name = "white jumpskirt"
+			icon_state = "white-dress"
+			item_state = "white-dress"
+
+
 	darkred
 		name = "dark red jumpsuit"
 		icon_state = "darkred"
 		item_state  = "darkred"
+
+		skirt
+			name = "dark red jumpskirt"
+			icon_state = "darkred-dress"
+			item_state = "darkred-dress"
 
 	red
 		name = "red jumpsuit"
 		icon_state = "red"
 		item_state = "red"
 
+		skirt
+			name = "red jumpskirt"
+			icon_state = "red-dress"
+			item_state = "red-dress"
+
 	lightred
 		name = "light red jumpsuit"
 		icon_state = "lightred"
 		item_state  = "lightred"
+
+		skirt
+			name = "light red jumpskirt"
+			icon_state = "lightred-dress"
+			item_state = "lightred-dress"
 
 	orange
 		name = "orange jumpsuit"
 		icon_state = "orange"
 		item_state = "orange"
 
+		skirt
+			name = "orange jumpskirt"
+			icon_state = "orange-dress"
+			item_state = "orange-dress"
+
 	brown
 		name = "brown jumpsuit"
 		icon_state = "brown"
 		item_state  = "brown"
+
+		skirt
+			name = "brown jumpskirt"
+			icon_state = "brown-dress"
+			item_state = "brown-dress"
 
 	lightbrown
 		name = "tan jumpsuit"
 		icon_state = "lightbrown"
 		item_state  = "lightbrown"
 
+		skirt
+			name = "tan jumpskirt"
+			icon_state = "lightbrown-dress"
+			item_state = "lightbrown-dress"
+
 	yellow
 		name = "yellow jumpsuit"
 		icon_state = "yellow"
 		item_state = "yellow"
+
+		skirt
+			name = "yellow jumpskirt"
+			icon_state = "yellow-dress"
+			item_state = "yellow-dress"
 
 	yellowgreen
 		name = "olive jumpsuit"
 		icon_state = "yellowgreen"
 		item_state  = "yellowgreen"
 
+		skirt
+			name = "olive jumpskirt"
+			icon_state = "yellowgreen-dress"
+			item_state = "yellowgreen-dress"
+
 	lime
 		name = "lime jumpsuit"
 		icon_state = "lightgreen"
 		item_state = "lightgreen"
+
+		skirt
+			name = "lime jumpskirt"
+			icon_state = "lightgreen-dress"
+			item_state = "lightgreen-dress"
 
 	green
 		name = "green jumpsuit"
 		icon_state = "green"
 		item_state = "green"
 
+		skirt
+			name = "green jumpskirt"
+			icon_state = "green-dress"
+			item_state = "green-dress"
+
 	aqua
 		name = "cyan jumpsuit"
 		icon_state = "aqua"
 		item_state  = "aqua"
+
+		skirt
+			name = "cyan jumpskirt"
+			icon_state = "aqua-dress"
+			item_state = "aqua-dress"
 
 	lightblue
 		name = "sky blue jumpsuit"
 		icon_state = "lightblue"
 		item_state  = "lightblue"
 
+		skirt
+			name = "sky blue jumpskirt"
+			icon_state = "lightblue-dress"
+			item_state = "lightblue-dress"
+
 	blue
 		name = "blue jumpsuit"
 		icon_state = "blue"
 		item_state = "blue"
+
+		skirt
+			name = "blue jumpskirt"
+			icon_state = "blue-dress"
+			item_state = "blue-dress"
 
 	darkblue
 		name = "indigo jumpsuit"
 		icon_state = "darkblue"
 		item_state  = "darkblue"
 
+		skirt
+			name = "indigo jumpskirt"
+			icon_state = "darkblue-dress"
+			item_state = "darkblue-dress"
+
 	purple
 		name = "purple jumpsuit"
 		icon_state = "purple"
 		item_state  = "purple"
+
+		skirt
+			name = "purple jumpskirt"
+			icon_state = "purple-dress"
+			item_state = "purple-dress"
 
 	lightpurple
 		name = "violet jumpsuit"
 		icon_state = "lightpurple"
 		item_state  = "lightpurple"
 
+		skirt
+			name = "violet jumpskirt"
+			icon_state = "lightpurple-dress"
+			item_state = "lightpurple-dress"
+
 	magenta
 		name = "magenta jumpsuit"
 		icon_state = "magenta"
 		item_state = "magenta"
 
+		skirt
+			name = "magenta jumpskirt"
+			icon_state = "magenta-dress"
+			item_state = "magenta-dress"
+
 	pink
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+
+		skirt
+			name = "pink jumpskirt"
+			icon_state = "pink-dress"
+			item_state = "pink-dress"
 
 	unremovable
 		cant_self_remove = 1
@@ -267,6 +368,12 @@
 		icon_state = "assistant-alt"
 		item_state = "assistant-alt"
 
+	skirt
+		name = "staff assistant's jumpskirt"
+		desc = "It's a generic grey jumpskirt. That's about what assistants are worth, anyway."
+		icon_state = "assistant-dress"
+		item_state = "assistant-dress"
+
 // Heads
 
 /obj/item/clothing/under/rank/captain
@@ -333,6 +440,10 @@
 	fancy_alt
 		icon_state = "hos-fancy-alt"
 		item_state = "hos-fancy-alt"
+
+		dress
+			icon_state = "hos-fancy-alt-dress"
+			item_state = "hos-fancy-alt-dress"
 
 /obj/item/clothing/under/misc/dirty_vest //HoS uniform from the Elite Security era
 	name = "dirty vest"
@@ -401,6 +512,10 @@
 	icon_state = "comm_officer"
 	item_state = "comm_officer"
 
+	dress
+		icon_state = "comm_officer-dress"
+		item_state = "comm_officer-dress"
+
 // Security
 
 /obj/item/clothing/under/rank/security
@@ -409,15 +524,27 @@
 	icon_state = "security"
 	item_state = "security"
 
+	dress
+		icon_state = "security-dress"
+		item_state = "security-dress"
+
 	assistant
 		name = "security assistant uniform"
 		desc = "Wait, is that velcro?"
 		icon_state = "security-assistant"
 		item_state = "security-assistant"
 
+		dress
+			icon_state = "security-assistant-dress"
+			item_state = "security-assistant-dress"
+
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
+
+		dress
+			icon_state = "security-alt-dress"
+			item_state = "security-alt-dress"
 
 /obj/item/clothing/under/rank/det
 	name = "hard worn suit"
@@ -425,79 +552,139 @@
 	icon_state = "detective"
 	item_state = "detective"
 
+	skirt
+		icon_state = "detective-dress"
+		item_state = "detective-dress"
+
 // Research
 
 /obj/item/clothing/under/rank/medical
-	name = "medical doctor's jumpsuit"
+	name = "medical doctor's uniform"
 	desc = "It's got a red plus on it, that's a good thing right?"
 	icon_state = "medical"
 	item_state = "medical"
+
+	dress
+		icon_state = "medical-dress"
+		item_state = "medical-dress"
 
 	april_fools
 		icon_state = "medical-alt"
 		item_state = "medical-alt"
 
+		dress
+			icon_state = "medical-alt-dress"
+			item_state = "medical-alt-dress"
+
 /obj/item/clothing/under/rank/roboticist
-	name = "roboticist's jumpsuit"
+	name = "roboticist's uniform"
 	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
+
+	dress
+			icon_state = "robotics-dress"
+			item_state = "robotics-dress"
 
 	april_fools
 		icon_state = "robotics-alt"
 		item_state = "robotics-alt"
 
+		dress
+			icon_state = "robotics-alt-dress"
+			item_state = "robotics-alt-dress"
+
 /obj/item/clothing/under/rank/scientist
-	name = "scientist's jumpsuit"
-	desc = "A research jumpsuit, supposedly more resistant to biohazards. It had better be!"
+	name = "scientist's uniform"
+	desc = "A research uniform, supposedly more resistant to biohazards. It had better be!"
 	icon_state = "scientist"
 	item_state = "scientist"
+
+	dress
+		icon_state = "scientist-dress"
+		item_state = "scientist-dress"
 
 	april_fools
 		icon_state = "scientist-alt"
 		item_state = "scientist-alt"
 
+		dress
+			icon_state = "scientist-alt-dress"
+			item_state = "scientist-alt-dress"
+
 /obj/item/clothing/under/rank/geneticist
-	name = "geneticist's jumpsuit"
+	name = "geneticist's uniform"
 	desc = "Genetics is very green these days, isn't it?"
 	icon_state = "genetics"
 	item_state = "genetics"
+
+	dress
+		icon_state = "genetics-dress"
+		item_state = "genetics-dress"
 
 	april_fools
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
 
+		dress
+			icon_state = "genetics-dress"
+			item_state = "genetics-alt-dress"
+
 /obj/item/clothing/under/rank/pathologist
-	name = "pathologist's jumpsuit"
+	name = "pathologist's uniform"
 	desc = "Scientifically proven to block up to 99% of pathogens."
 	icon_state = "pathology"
 	item_state = "pathology"
+
+	dress
+		icon_state = "pathology-dress"
+		item_state = "pathology-dress"
 
 	april_fools
 		icon_state = "medical-alt"
 		item_state = "medical-alt"
 
+		dress
+			icon_state = "medical-dress"
+			item_state = "medical-alt-dress"
+
 // Engineering
 
 /obj/item/clothing/under/rank/engineer
-	name = "engineer's jumpsuit"
+	name = "engineer's uniform"
 	desc = "If this suit was non-conductive, maybe engineers would actually do their damn job."
 	icon_state = "engine"
 	item_state = "engine"
+
+	dress
+		icon_state = "engine-dress"
+		item_state = "engine-dress"
 
 	april_fools
 		icon_state = "engine-alt"
 		item_state = "engine-alt"
 
+		dress
+			icon_state = "engine-alt-dress"
+			item_state = "engine-alt-dress"
+
 /obj/item/clothing/under/rank/cargo
-	name = "quartermaster's jumpsuit"
+	name = "quartermaster's uniform"
 	desc = "What can brown do for you?"
 	icon_state = "qm"
 	item_state = "qm"
 
+	dress
+		icon_state = "qm-dress"
+		item_state = "qm-dress"
+
 	april_fools
 		icon_state = "qm-alt"
 		item_state = "qm-alt"
+
+		dress
+			icon_state = "qm-alt-dress"
+			item_state = "qm-alt-dress"
 
 /obj/item/clothing/under/rank/mechanic
 	name = "mechanic's uniform"
@@ -505,9 +692,17 @@
 	icon_state = "mechanic"
 	item_state = "mechanic"
 
+	dress
+		icon_state = "mechanic-dress"
+		item_state = "mechanic-dress"
+
 	april_fools
 		icon_state = "mechanic-alt"
 		item_state = "mechanic-alt"
+
+		dress
+			icon_state = "mechanic-alt-dress"
+			item_state = "mechanic-alt-dress"
 
 /obj/item/clothing/under/rank/overalls
 	name = "miner's overalls"
@@ -515,9 +710,17 @@
 	icon_state = "miner"
 	item_state = "miner"
 
+	dress
+		icon_state = "miner-dress"
+		item_state = "miner-dress"
+
 	april_fools
 		icon_state = "miner-alt"
 		item_state = "miner-alt"
+
+		dress
+			icon_state = "miner-alt-dress"
+			item_state = "miner-alt-dress"
 
 /obj/item/clothing/under/rank/orangeoveralls
 	name = "construction worker's overalls"
@@ -527,22 +730,37 @@
 	icon_state = "overalls_orange"
 	item_state = "overalls_orange"
 
+	dress
+		icon_state = "overalls_orange-dress"
+		item_state = "overalls_orange-dress"
+
 	yellow
 		icon_state = "overalls_yellow"
 		item_state = "overalls_yellow"
 
+		dress
+			icon_state = "overalls_yellow-dress"
+			item_state = "overalls_yellow-dress"
 
 // Civilian
 
 /obj/item/clothing/under/rank/hydroponics
-	name = "botanist's jumpsuit"
+	name = "botanist's uniform"
 	desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
 	icon_state = "hydro"
 	item_state = "hydro"
 
+	dress
+		icon_state = "hydro-dress"
+		item_state = "hydro-dress"
+
 	april_fools
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
+
+		dress
+			icon_state = "hydro-alt-dress"
+			item_state = "hydro-alt-dress"
 
 /obj/item/clothing/under/rank/rancher
 	name = "rancher's overalls"
@@ -550,15 +768,27 @@
 	icon_state = "rancher"
 	item_state = "rancher"
 
+	dress
+		icon_state = "rancher-dress"
+		item_state = "rancher-dress"
+
 /obj/item/clothing/under/rank/janitor
-	name = "janitor's jumpsuit"
+	name = "janitor's uniform"
 	desc = "You don't really want to think about what those stains are from."
 	icon_state = "janitor"
 	item_state = "janitor"
 
+	dress
+		icon_state = "janitor-dress"
+		item_state = "janitor-dress"
+
 	april_fools
 		icon_state = "janitor-alt"
 		item_state = "janitor-alt"
+
+		dress
+			icon_state = "janitor-alt-dress"
+			item_state = "janitor-alt-dress"
 
 /obj/item/clothing/under/rank/bartender
 	name = "bartender's suit"
@@ -566,28 +796,44 @@
 	icon_state = "barman"
 	item_state = "barman"
 
+	dress
+		icon_state = "barman-dress"
+		item_state = "barman-dress"
+
 /obj/item/clothing/under/rank/chef
 	name = "chef's uniform"
 	desc = "Issued only to the most hardcore chefs in space."
 	icon_state = "chef"
 	item_state = "chef"
 
+	dress
+		icon_state = "chef-dress"
+		item_state = "chef-dress"
+
 /obj/item/clothing/under/rank/chaplain
-	name = "chaplain jumpsuit"
+	name = "chaplain uniform"
 	desc = "A protestant vicar's outfit. Used to be a nun's, but it was a rather bad habit."
 	icon_state = "chaplain"
 	item_state = "chaplain"
 
+	dress
+		icon_state = "chaplain-dress"
+		item_state = "chaplain-dress"
+
 // Not jobs, but not gimmicks
 
 /obj/item/clothing/under/misc
-	name = "prisoner's jumpsuit"
+	name = "prisoner's uniform"
 	desc = "Busted."
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 	icon_state = "prisoner"
 	item_state = "prisoner"
+
+	dress
+		icon_state = "prisoner-dress"
+		item_state = "prisoner-dress"
 
 /obj/item/clothing/under/misc/clown
 	name = "clown suit"
@@ -636,23 +882,45 @@
 			src.icon_state = "viceG"
 			src.item_state = "viceG"
 
+	dress
+		icon_state = "viceW-dress"
+		item_state = "viceW-dress"
+
+		New()
+			..()
+			if(prob(50))
+				src.icon_state = "viceG-dress"
+				src.item_state = "viceG-dress"
+
 /obj/item/clothing/under/misc/atmospheric_technician
-	name = "atmospheric technician's jumpsuit"
-	desc = "This jumpsuit is comprised of 4% cotton, 96% burn marks."
+	name = "atmospheric technician's uniform"
+	desc = "This uniform is comprised of 4% cotton, 96% burn marks."
 	icon_state = "atmos"
 	item_state = "atmos"
 
+	dress
+		icon_state = "atmos-dress"
+		item_state = "atmos-dress"
+
 /obj/item/clothing/under/misc/hydroponics
-	name = "senior botanist's jumpsuit"
+	name = "senior botanist's uniform"
 	desc = "Anyone wearing this has probably grown a LOT of weed in their time."
 	icon_state = "hydro-senior"
 	item_state = "hydro-senior"
 
+	dress
+		icon_state = "hydro-senior-dress"
+		item_state = "hydro-senior-dress"
+
 /obj/item/clothing/under/misc/mail
-	name = "mailman's jumpsuit"
+	name = "mailman's uniform"
 	desc = "The crisp threads of a postmaster."
 	icon_state = "mail"
 	item_state = "mail"
+
+	dress
+		icon_state = "mail-dress"
+		item_state = "mail-dress"
 
 	syndicate
 
@@ -662,11 +930,19 @@
 	icon_state = "barber"
 	item_state = "barber"
 
+	dress
+		icon_state = "barber-dress"
+		item_state = "barber-dress"
+
 /obj/item/clothing/under/misc/tourist
 	name = "hawaiian shirt"
 	desc = "How gauche."
 	icon_state = "tourist"
 	item_state = "tourist"
+
+	dress
+		icon_state = "tourist-dress"
+		item_state = "tourist-dress"
 
 	max_payne
 		icon_state = "hawaiian"
@@ -684,6 +960,10 @@
 	icon_state = "souschef"
 	item_state = "souschef"
 
+	dress
+		icon_state = "souschef-dress"
+		item_state = "souschef-dress"
+
 /obj/item/clothing/under/misc/itamae
 	name = "itamae uniform"
 	desc = "A coat and apron worn commonly worn by Japanese Chefs, waiting to be ruined with the blood you'll inevitably cover it in."
@@ -696,13 +976,25 @@
 	icon_state = "lawyerBl"
 	item_state = "lawyerBl"
 
+	dress
+		icon_state = "lawyerBl-dress"
+		item_state = "lawyerBl-dress"
+
 	black
 		icon_state = "lawyerB"
 		item_state = "lawyerB"
 
+		dress
+			icon_state = "lawyerB-dress"
+			item_state = "lawyerB-dress"
+
 	red
 		icon_state = "lawyerR"
 		item_state = "lawyerR"
+
+		dress
+			icon_state = "lawyerR-dress"
+			item_state = "lawyerR-dress"
 
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	item_function_flags = IMMUNE_TO_ACID
@@ -719,12 +1011,17 @@
 	icon_state = "syndicate"
 	item_state = "syndicate"
 	team_num = TEAM_SYNDICATE
+
+	dress
+		icon_state = "syndicate-dress"
+		item_state = "syndicate-dress"
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, "<span class='alert'>The uniform <b>explodes</b> as you reach out to grab it!</span>")
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -733,16 +1030,21 @@
 
 /obj/item/clothing/under/misc/turds
 	name = "NT combat uniform"
-	desc = "A Nanotrasen security jumpsuit."
+	desc = "A Nanotrasen security uniform."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
+
+	dress
+		icon_state = "turdsuit-dress"
+		item_state = "turdsuit-dress"
+
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The jumpsuit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, "<span class='alert'>The uniform <b>explodes</b> as you reach out to grab it!</span>")
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -750,10 +1052,14 @@
 	#endif
 
 /obj/item/clothing/under/misc/NT
-	name = "nanotrasen jumpsuit"
-	desc = "Corporate higher-ups get some pretty comfy jumpsuits."
+	name = "nanotrasen uniform"
+	desc = "Corporate higher-ups get some pretty comfy uniforms."
 	icon_state = "nt"
 	item_state = "nt"
+
+	dress
+		icon_state = "nt-dress"
+		item_state = "nt-dress"
 
 /obj/item/clothing/under/misc/chaplain
 	name = "priest's robe"
@@ -973,7 +1279,18 @@
 		src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 		src.item_state = "[src.icon_state]"
 
-// Black Pants
+	dress
+		name = "shirt and skirt"
+		desc = "A button-down shirt and a skirt."
+		icon_state = "shirt_n_skirt-b"
+		item_state = "shirt_n_skirt-b"
+
+		New()
+			..()
+			src.icon_state = "shirt_n_skirt-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
+			src.item_state = "[src.icon_state]"
+
+// Black Pants and Skirts
 /obj/item/clothing/under/shirt_pants_b
 	name = "shirt and black pants"
 	desc = "A button-down shirt and some black pants."
@@ -982,11 +1299,23 @@
 	icon_state = "shirt_n_pant-b"
 	item_state = "shirt_n_pant-b"
 
+	dress
+		name = "shirt and black skirt"
+		desc = "A button-down shirt and a black skirt."
+		icon_state = "skirt_n_skirt-b"
+		item_state = "shirt_n_skirt-b"
+
 /obj/item/clothing/under/shirt_pants_b/redtie
 	name = "shirt and black pants with a red tie"
 	desc = "A button-down shirt, some black pants and a red tie."
 	icon_state = "shirt_n_pant-b_tie-r"
 	item_state = "shirt_n_pant-b_tie-r"
+
+	dress
+		name = "shirt and black skirt with a red tie"
+		desc = "A button-down shirt, a black skirt and a red tie."
+		icon_state = "skirt_n_skirt-b_tie-r"
+		item_state = "shirt_n_skirt-b_tie-r"
 
 /obj/item/clothing/under/shirt_pants_b/blacktie
 	name = "shirt and black pants with a black tie"
@@ -994,13 +1323,25 @@
 	icon_state = "shirt_n_pant-b_tie-b"
 	item_state = "shirt_n_pant-b_tie-b"
 
+	dress
+		name = "shirt and black skirt with a black tie"
+		desc = "A button-down shirt, a black skirt and a black tie."
+		icon_state = "skirt_n_skirt-b_tie-b"
+		item_state = "shirt_n_skirt-b_tie-b"
+
 /obj/item/clothing/under/shirt_pants_b/bluetie
 	name = "shirt and black pants with a blue tie"
 	desc = "A button-down shirt, some black pants and a blue tie."
 	icon_state = "shirt_n_pant-b_tie-bl"
 	item_state = "shirt_n_pant-b_tie-bl"
 
-// Brown Pants
+	dress
+		name = "shirt and black skirt with a blue tie"
+		desc = "A button-down shirt, a black skirt and a blue tie."
+		icon_state = "skirt_n_skirt-b_tie-bl"
+		item_state = "shirt_n_skirt-b_tie-bl"
+
+// Brown Pants and Skirts
 /obj/item/clothing/under/shirt_pants_br
 	name = "shirt and brown pants"
 	desc = "A button-down shirt and some brown pants."
@@ -1009,11 +1350,23 @@
 	icon_state = "shirt_n_pant-br"
 	item_state = "shirt_n_pant-br"
 
+	dress
+		name = "shirt and brown skirt"
+		desc = "A button-down shirt and a brown skirt."
+		icon_state = "skirt_n_skirt-br"
+		item_state = "shirt_n_skirt-br"
+
 /obj/item/clothing/under/shirt_pants_br/redtie
 	name = "shirt and brown pants with a red tie"
 	desc = "A button-down shirt, some brown pants and a red tie."
 	icon_state = "shirt_n_pant-br_tie-r"
 	item_state = "shirt_n_pant-br_tie-r"
+
+	dress
+		name = "shirt and brown skirt with a red tie"
+		desc = "A button-down shirt, a brown skirt and a red tie."
+		icon_state = "skirt_n_skirt-br_tie-r"
+		item_state = "shirt_n_skirt-br_tie-r"
 
 /obj/item/clothing/under/shirt_pants_br/blacktie
 	name = "shirt and brown pants with a black tie"
@@ -1021,13 +1374,25 @@
 	icon_state = "shirt_n_pant-br_tie-b"
 	item_state = "shirt_n_pant-br_tie-b"
 
+	dress
+		name = "shirt and brown skirt with a black tie"
+		desc = "A button-down shirt, a brown skirt and a black tie."
+		icon_state = "skirt_n_skirt-br_tie-b"
+		item_state = "shirt_n_skirt-br_tie-b"
+
 /obj/item/clothing/under/shirt_pants_br/bluetie
 	name = "shirt and brown pants with a blue tie"
 	desc = "A button-down shirt, some black pants and a blue tie."
 	icon_state = "shirt_n_pant-br_tie-bl"
 	item_state = "shirt_n_pant-br_tie-bl"
 
-// White Pants
+	dress
+		name = "shirt and brown skirt with a blue tie"
+		desc = "A button-down shirt, a brown skirt and a blue tie."
+		icon_state = "skirt_n_skirt-br_tie-bl"
+		item_state = "shirt_n_skirt-br_tie-bl"
+
+// White Pants and Skirts
 /obj/item/clothing/under/shirt_pants_w
 	name = "shirt and white pants"
 	desc = "A button-down shirt and some white pants."
@@ -1036,23 +1401,47 @@
 	icon_state = "shirt_n_pant-w"
 	item_state = "shirt_n_pant-w"
 
+	dress
+		name = "shirt and white skirt"
+		desc = "A button-down shirt and a white skirt."
+		icon_state = "skirt_n_skirt-w"
+		item_state = "shirt_n_skirt-w"
+
 /obj/item/clothing/under/shirt_pants_w/redtie
-	name = "shirt and white pants"
-	desc = "A button-down shirt and some white pants and red tie."
+	name = "shirt and white pants with a red tie"
+	desc = "A button-down shirt, some white pants and red tie."
 	icon_state = "shirt_n_pant-w_tie-r"
 	item_state = "shirt_n_pant-w_tie-r"
 
+	dress
+		name = "shirt and white skirt with a red tie"
+		desc = "A button-down shirt, a white skirt and a tie."
+		icon_state = "skirt_n_skirt-w_tie-"
+		item_state = "shirt_n_skirt-w_tie-"
+
 /obj/item/clothing/under/shirt_pants_w/blacktie
-	name = "shirt and white pants"
-	desc = "A button-down shirt and some white pants and black tie."
+	name = "shirt and white pants with a black tie"
+	desc = "A button-down shirt, some white pants and black tie."
 	icon_state = "shirt_n_pant-w_tie-b"
 	item_state = "shirt_n_pant-w_tie-b"
 
+	dress
+		name = "shirt and white skirt with a black tie"
+		desc = "A button-down shirt, a white skirt and a black tie."
+		icon_state = "skirt_n_skirt-w_tie-b"
+		item_state = "shirt_n_skirt-w_tie-b"
+
 /obj/item/clothing/under/shirt_pants_w/bluetie
-	name = "shirt and white pants"
-	desc = "A button-down shirt and some white pants and blue tie."
+	name = "shirt and white pants with a blue tie"
+	desc = "A button-down shirt, some white pants and a blue tie."
 	icon_state = "shirt_n_pant-w_tie-bl"
 	item_state = "shirt_n_pant-w_tie-bl"
+
+	dress
+		name = "shirt and white skirt with a blue tie"
+		desc = "A button-down shirt, a white skirt and a blue tie."
+		icon_state = "skirt_n_skirt-w_tie-bl"
+		item_state = "shirt_n_skirt-w_tie-bl"
 
 // Suits
 
@@ -1071,6 +1460,10 @@
 	desc = "I wanna offer you some, eh, protection."
 	icon_state = "suitPn"
 	item_state = "suitPn"
+
+	dress
+		icon_state = "suitPn-dress"
+		item_state = "suitPn-dress"
 
 /obj/item/clothing/under/suit/red
 	name = "red suit"
@@ -1461,11 +1854,19 @@
     icon_state = "colmob"
     item_state = "colmob"
 
+	dress
+		icon_state = "colmob-dress"
+		item_state = "colmob-dress"
+
 /obj/item/clothing/under/misc/rusmob
     name = "soviet mobster suit"
     desc = "She Swallows Burning Coals."
     icon_state = "rusmob"
     item_state = "rusmob"
+
+	dress
+		icon_state = "rusmob-dress"
+		item_state = "rusmob-dress"
 
 /obj/item/clothing/under/gimmick/jester
     name = "jester's outfit"

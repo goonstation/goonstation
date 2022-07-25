@@ -6,6 +6,11 @@
 	icon_state = "virtual"
 	item_state = "virtual"
 
+	dress
+		name = "virtual jumpskirt"
+		icon_state = "virtual-dress"
+		item_state = "virtual-dress"
+
 /obj/item/clothing/shoes/virtual
 	name = "virtual shoes"
 	desc = "How can you simulate the sole?"
@@ -700,6 +705,9 @@
 	icon_state = "birdman"
 	item_state = "b_mask"
 
+	dress
+		icon_state = "birdman-dress"
+
 //WARHAMS STUFF
 
 /obj/item/clothing/mask/gas/inquis
@@ -984,6 +992,10 @@
 	desc = "Really, they're just regular overalls, but they have a little bee patch on them. Aww."
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
+
+	dress
+		icon_state = "beekeeper-dress"
+		item_state = "beekeeper-dress"
 
 /obj/item/clothing/under/gimmick/butler
 	name = "butler suit"
@@ -1557,6 +1569,9 @@
 	desc = "Definitely not just a pair of pajamas."
 	body_parts_covered = TORSO|LEGS|ARMS
 	icon_state = "superhero"
+
+	dress
+		icon_state = "superhero-dress"
 
 /obj/item/clothing/under/gimmick/mummy
 	name = "linen body wrappings"
