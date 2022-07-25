@@ -539,7 +539,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
 //pod wars has no AI so this is just a waste of time...
-#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP)
+#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
 		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0

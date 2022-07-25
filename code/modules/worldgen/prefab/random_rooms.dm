@@ -36,6 +36,7 @@ proc/buildRandomRooms()
 
 /obj/landmark/random_room
 	var/size = null
+	icon = 'icons/effects/mapeditor.dmi'
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
 
@@ -57,9 +58,12 @@ proc/buildRandomRooms()
 
 	size3x3
 		size = "3x3"
+		icon_state = "3x3"
 
 	size3x5
 		size = "3x5"
+		icon_state = "3x5"
 
 	size5x3
 		size = "5x3"
+		icon_state = "5x3"

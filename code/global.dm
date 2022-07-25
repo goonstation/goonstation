@@ -243,6 +243,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -350,7 +351,6 @@ var/global
 	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
-	list/wormholeturfs = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 

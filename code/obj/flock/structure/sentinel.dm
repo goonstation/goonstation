@@ -49,16 +49,14 @@
 
 /obj/flock_structure/sentinel/process(mult)
 	updatefilter()
-
+	src.compute = 0
 	if(!src.flock)//if it dont exist it off
 		powered = FALSE
-		src.compute = 0
 	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
 		powered = TRUE
 		src.compute = -online_compute_cost
 	else//if there isnt enough juice
 		powered = FALSE
-		src.compute = 0
 
 	if(powered == 1)
 		switch(charge_status)
@@ -73,7 +71,7 @@
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in range(src.range,src.loc))
+				for(loopmob in view(src.range,src))
 					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
@@ -81,7 +79,7 @@
 				arcFlash(src, mobtohit, wattage, 1.1)
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
-					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
+					for(var/mob/nearbymob in view(2, mobtohit.loc))
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
 							hit += nearbymob

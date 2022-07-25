@@ -39,13 +39,14 @@
 	voice_other = "sound/voice/wizard/FireballLoud.ogg"
 
 	var/datum/projectile/fireball/fb_proj = new
+	maptext_colors = list("#fcdf74", "#eb9f2b", "#d75015")
 
 	cast(atom/target)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("MHOL HOTTOV")
+			holder.owner.say("MHOL HOTTOV", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()

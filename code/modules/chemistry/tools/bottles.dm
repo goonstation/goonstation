@@ -15,6 +15,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = NO_GHOSTCRITTER
 
 	New()
 		if (!src.bottle_style)
@@ -132,6 +133,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "morphine"
 
+/obj/item/reagent_containers/glass/bottle/coldmedicine
+	name = "bottle (robustissin)"
+	desc = "A small bottle containing robustissin, for treating common ailments.  It has a warning label on it about dizziness and minor toxicity."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cold_medicine"
+
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
 /obj/item/reagent_containers/glass/bottle/poison
@@ -164,7 +172,7 @@
 
 /obj/item/reagent_containers/glass/bottle/pfd
 	name = "perfluorodecalin bottle"
-	desc = "A small bottle of an experimental liquid-breathing medicine."
+	desc = "A small bottle of perfluorodecalin, an experimental liquid-breathing medicine."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "perfluorodecalin"
@@ -220,14 +228,14 @@
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
 	name = "bottle (charcoal)"
-	desc = "A small bottle of charcoal, a general antitoxin."
+	desc = "A small bottle of charcoal, a general purpose antitoxin."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
-	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamine, useful for reducing the severity of allergic reactions."
+	name = "bottle (diphenhydramine)"
+	desc = "A small bottle of dyphenhidramine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"

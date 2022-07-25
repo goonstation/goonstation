@@ -5,7 +5,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	force = 8.0
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
@@ -141,7 +141,7 @@
 	throwforce = 15.0
 	throw_range = 5
 	hit_type = DAMAGE_STAB
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	burn_type = 1

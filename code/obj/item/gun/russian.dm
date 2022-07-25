@@ -45,7 +45,9 @@
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
 			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
-			user.tri_message("<span class='alert'><B>BOOM!</B></span>", "<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", "<span class='alert'>You hear someone's head explode.</span>", 2)
+			user.visible_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>",\
+				"<span class='alert'><B>BOOM!</B></span>",\
+				"<span class='alert'>You hear someone's head explode.</span>")
 			user.TakeDamage("head", 300, 0)
 			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			logTheThing("combat", user, null, "shoots themselves with [src] at [log_loc(user)].")

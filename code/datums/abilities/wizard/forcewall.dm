@@ -8,12 +8,13 @@
 	voice_grim = "sound/voice/wizard/ForcewallGrim.ogg"
 	voice_fem = "sound/voice/wizard/ForcewallFem.ogg"
 	voice_other = "sound/voice/wizard/ForcewallLoud.ogg"
+	maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("BRIXHUN MOHTYR")
+			holder.owner.say("BRIXHUN MOHTYR", FALSE, maptext_style, maptext_colors)
 		..()
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")

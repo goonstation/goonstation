@@ -427,9 +427,9 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message("<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
-				user, "<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
-				somebody, "<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
+				user.tri_message(somebody, "<span class='notice'><b>[user]</b> tucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] into bed.</span>",\
+					"<span class='notice'>You tuck [somebody == user ? "yourself" : "[somebody]"] into bed.</span>",\
+					"<span class='notice'>[somebody == user ? "You tuck yourself" : "<b>[user]</b> tucks you"] into bed.</span>")
 				newsheet.layer = EFFECTS_LAYER_BASE-1
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> tucks [newsheet] into [src].</span>",\
@@ -448,9 +448,9 @@
 			else
 				somebody = locate(/mob/living/carbon) in get_turf(src)
 			if (somebody?.lying)
-				user.tri_message("<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
-				user, "<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
-				somebody, "<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
+				user.tri_message(somebody, "<span class='notice'><b>[user]</b> untucks [somebody == user ? "[him_or_her(user)]self" : "[somebody]"] from bed.</span>",\
+					"<span class='notice'>You untuck [somebody == user ? "yourself" : "[somebody]"] from bed.</span>",\
+					"<span class='notice'>[somebody == user ? "You untuck yourself" : "<b>[user]</b> untucks you"] from bed.</span>")
 				oldsheet.layer = initial(oldsheet.layer)
 			else
 				user.visible_message("<span class='notice'><b>[user]</b> untucks [oldsheet] from [src].</span>",\

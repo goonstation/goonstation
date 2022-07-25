@@ -6,7 +6,7 @@
 	name = "Ocular Implanter (SecHUD)"
 	icon_state = "ocular_implanter-full"
 	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT

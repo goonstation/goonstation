@@ -528,6 +528,7 @@ datum
 					//Copy+paste to reduce proc calls
 					//var/amount = get_reagent_amount(reagent)
 					if (!(reagent in reagent_list))
+						speed = 0
 						continue
 					var/datum/reagent/current_reagent = reagent_list[reagent]
 					var/amount = current_reagent ? current_reagent.volume : 0

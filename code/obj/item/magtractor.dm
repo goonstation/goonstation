@@ -261,4 +261,8 @@
 
 		return 1
 
+	Exited(Obj, newloc) // handles the held item going byebye
+		if(Obj == src.holding  && src.holder)
+			actions.stopId("magpickerhold", src.holder)
+
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

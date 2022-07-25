@@ -22,6 +22,7 @@
 	var/health_brute_vuln = 1
 	var/health_burn = 25
 	var/health_burn_vuln = 0.2
+	var/is_inspector = FALSE
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
 	New()
@@ -101,3 +102,7 @@
 	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
 
 	setup_hands()
+
+	proc/make_inspector()
+		icon_state = "scuttlebot_inspector"
+		src.is_inspector = TRUE

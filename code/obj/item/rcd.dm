@@ -44,7 +44,7 @@ Broken RCD + Effects
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 
-	mats = list("MET-3"=20, "DEN-3" = 10, "CON-2" = 10, "POW-2" = 10)
+	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
@@ -126,6 +126,9 @@ Broken RCD + Effects
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = false
 
+	///Custom contextActions list so we can handle opening them ourselves
+	var/list/datum/contextAction/contexts = list()
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
@@ -151,11 +154,10 @@ Broken RCD + Effects
 
 	New()
 		..()
-		src.contextActions = list()
 		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
 			var/datum/contextAction/rcd/action = new actionType()
 			if (action.mode in src.modes)
-				src.contextActions += action
+				src.contexts += action
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
@@ -184,7 +186,7 @@ Broken RCD + Effects
 				boutput(user, "This cartridge is not made of the proper material to be used in \The [src].")
 
 	attack_self(mob/user as mob)
-		user.showContextActions(src.contextActions, src, src.contextLayout)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
 	proc/switch_mode(var/mode, var/mob/user)
 		if (!(mode in src.modes))
@@ -638,7 +640,7 @@ Broken RCD + Effects
 	var/door_access = 0
 	var/door_access_name_cache = null
 	var/door_type_name_cache = null
-	mats = list("MET-3"=100, "DEN-3" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
+	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
 	var/static/list/access_names = list() //ditto the above????
 	var/door_type = null
 
@@ -654,7 +656,7 @@ Broken RCD + Effects
 	name = "rapid construction device custom"
 	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized by the Chief Engineer to have an enhanced feature set and work more efficiently."
 	icon_state = "base_CE"
-	mats = list("MET-3"=20, "DEN-3" = 10, "CON-2" = 10, "POW-2" = 10)
+	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
 
 	max_matter = 50
 	matter_create_wall = 1
@@ -842,7 +844,7 @@ Broken RCD + Effects
 	name = "cardboard rapid construction Device"
 	icon_state = "base_cardboard"
 	desc = "Also known as a C-RCD, this device is able to rapidly construct cardboard props."
-	mats = list("DEN-3" = 10, "POW-2" = 10, "cardboard" = 30)
+	mats = list("CRY-2" = 10, "POW-2" = 10, "cardboard" = 30)
 	force = 0
 	matter_create_floor = 0.5
 	time_create_floor = 0 SECONDS

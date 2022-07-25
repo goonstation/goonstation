@@ -24,7 +24,7 @@ macro "base_macro"
 		command = "looc"
 	elem "whisper"
 		name = "ALT+W"
-		command = "whisper"
+		command = ".winset \"command=\".start_typing whisper\";command=.init_whisper;whisperwindow.is-visible=true;whisperwindow.input.focus=true\""
 	elem
 		name = "Any"
 		command = ".keydown [[*]]"

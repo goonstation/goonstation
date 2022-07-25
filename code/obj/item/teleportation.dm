@@ -177,7 +177,7 @@ Frequency:
 			user.show_text("[src] doesn't have sufficient cell charge to function!", "red")
 			return 0
 
-		if (src.portals.len > 2)
+		if (src.portals.len >= 2)
 			user.show_text("The hand teleporter cannot sustain more than 2 portals!", "red")
 			return
 

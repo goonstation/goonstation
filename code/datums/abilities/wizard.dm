@@ -41,10 +41,11 @@
 	if(robe) wizard_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(wizard_mob), wizard_mob.slot_wear_suit)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/under/shorts/black(wizard_mob), wizard_mob.slot_w_uniform)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
-	if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
-		wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
-	else
-		wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+	if (!vr)
+		if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
+		else
+			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/storage/backpack(wizard_mob), wizard_mob.slot_back)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/staff(wizard_mob), wizard_mob.slot_r_hand)
@@ -211,15 +212,17 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
-	var
-		requires_robes = 0
-		offensive = 0
-		cooldown_staff = 0
-		prepared_count = 0
-		casting_time = 0
-		voice_grim = null
-		voice_fem = null
-		voice_other = null
+
+	var/requires_robes = 0
+	var/offensive = 0
+	var/cooldown_staff = 0
+	var/prepared_count = 0
+	var/casting_time = 0
+	var/voice_grim = null
+	var/voice_fem = null
+	var/voice_other = null
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = null
 
 	proc/calculate_cooldown()
 		var/cool = src.cooldown

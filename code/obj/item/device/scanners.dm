@@ -753,7 +753,7 @@ that cannot be itched
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	mats = 5
-	icon_state = "fs"
+	icon_state = "CargoA"
 	item_state = "electronic"
 
 	attack(mob/M, mob/user)

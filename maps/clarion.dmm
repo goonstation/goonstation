@@ -13850,7 +13850,9 @@
 	},
 /area/station/maintenance/disposal)
 "aBG" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/launcher_loader/east{
+	id = "disposals_vent"
+	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -13859,7 +13861,7 @@
 /obj/machinery/mass_driver{
 	dir = 4;
 	drive_range = 20;
-	id = "evagun1"
+	id = "disposals_vent"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -25422,9 +25424,11 @@
 	name = "table"
 	},
 /obj/shrub/captainshrub{
-	pixel_y = 12
+	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "purple2"
@@ -43991,12 +43995,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
-"cmJ" = (
-/obj/machinery/computer/tanning{
-	pixel_y = 32
-	},
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "cpm" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal,
@@ -48323,6 +48321,9 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "nEo" = (
@@ -48666,6 +48667,10 @@
 	pixel_x = 24;
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -48773,15 +48778,21 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
 /area/station/hydroponics/bay)
 "oBV" = (
 /obj/table/reinforced/auto,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = 28
+	},
+/obj/machinery/coffeemaker/engineering,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
@@ -50283,6 +50294,9 @@
 /area/station/crew_quarters/pool)
 "sOY" = (
 /obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "sQp" = (
@@ -50325,6 +50339,9 @@
 	pixel_y = 28
 	},
 /obj/machinery/coffeemaker/research,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -82898,7 +82915,7 @@ asj
 arT
 asA
 sBO
-cmJ
+usZ
 oRA
 usZ
 usZ

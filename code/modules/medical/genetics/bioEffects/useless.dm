@@ -190,13 +190,18 @@
 	probability = 99
 	isBad = 1
 	color_to_use = "#FFFFFF"
-	skintone_to_use = "#FFFFFF"
 
 	OnAdd()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			eye_color_to_use = AH.e_color
+			src.eye_color_to_use = AH.e_color
+			//totally desaturate skintone
+			var/skin_tone = hex_to_rgb_list(AH.s_tone)
+			skin_tone = rgb2hsv(skin_tone[1], skin_tone[2], skin_tone[3])
+			skin_tone[2] = 0
+			skin_tone = hsv2rgb(skin_tone[1], skin_tone[2], skin_tone[3])
+			src.skintone_to_use = skin_tone
 		. = ..()
 
 /datum/bioEffect/stinky

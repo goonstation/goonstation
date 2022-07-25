@@ -647,9 +647,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "mavericksabre"
 		ckey = "wrench1"
 
-	whitneystingray
-		name = "\improper Whitney Stingray"
-		icon_state = "whitneystingray"
+	anguishedenglish
+		name = "\improper Whitney Blanchet"
+		icon_state = "whitneyblanchet"
 		ckey = "anguishedenglish"
 
 	fleur
@@ -786,6 +786,51 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Zoya Wagner"
 		icon_state = "zoyawagner"
 		ckey = "zigguratx"
+
+	badshot
+		name = "\improper Lydia Aivoras"
+		icon_state = "lydiaaivoras"
+		ckey = "badshot"
+
+	ezio334
+		name = "\improper Ezio Dane"
+		icon_state = "eziodane"
+		ckey = "ezio334"
+
+	ryeanbread
+		name = "\improper Neo Ryder"
+		icon_state = "neoryder"
+		ckey = "ryeanbread"
+
+	twobraids
+		name = "\improper Nurse Dee Ceased"
+		icon_state = "nursedeeceased"
+		ckey = "twobraids"
+
+	mikethewalldweller
+		name = "\improper Mikey"
+		icon_state = "mikey"
+		ckey = "mikethewalldweller"
+
+	ladygeartheart
+		name = "\improper Piffany Boudle"
+		icon_state = "piffany"
+		ckey = "ladygeartheart"
+
+	snowkeith
+		name = "\improper SC077Y"
+		icon_state = "sc077y"
+		ckey = "snowkeith"
+
+	ihaveteeth
+		name = "\improper Teeth Rattletail"
+		icon_state = "teeth"
+		ckey = "ihaveteeth"
+
+	walpvrgis
+		name = "\improper Cygnus Lyedelle"
+		icon_state = "cygnus"
+		ckey = "walpvrgis"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

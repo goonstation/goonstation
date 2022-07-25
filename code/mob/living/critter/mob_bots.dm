@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				list(0.5,0,0.5,0.5,0.5,0,0,0.5,0.5),
 			))
 
-			src.reagents.maximum_volume = 60
+			src.create_reagents(60)
 			src.reagents.add_reagent("cleaner", 10)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/mop_floor)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/reagent_scan_self)

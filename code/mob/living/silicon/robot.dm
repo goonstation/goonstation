@@ -172,15 +172,6 @@
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
-		. = ..(loc, null, null, FALSE)
-
-		hud = new(src)
-		src.attach_hud(hud)
-
-		src.zone_sel = new(src, "CENTER+3, SOUTH")
-		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
-		src.attach_hud(zone_sel)
-
 		update_bodypart()
 
 		if (src.shell)
@@ -195,6 +186,16 @@
 			boutput(src, "<span class='notice'>Your icons have been generated!</span>")
 			src.syndicate = syndie
 			src.emagged = frame_emagged
+
+		. = ..(loc) //must be called before hud is attached
+
+		hud = new(src)
+		src.attach_hud(hud)
+
+		src.zone_sel = new(src, "CENTER+3, SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_robot.dmi')
+		src.attach_hud(zone_sel)
+
 		SPAWN(0.4 SECONDS)
 			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
 				for_by_tcl(A, /mob/living/silicon/ai)
@@ -239,6 +240,9 @@
 					B.set_loc(H)
 					H.brain = B
 			update_bodypart() //TODO probably remove this later. keeping in for safety
+			if (src.syndicate)
+				src.show_antag_popup("syndieborg")
+				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
 			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
@@ -733,7 +737,7 @@
 			if(force_instead)
 				newname = default_name
 			else
-				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
 				if(newname && newname != default_name)
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)

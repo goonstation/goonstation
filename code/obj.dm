@@ -11,7 +11,10 @@
 	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
-	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
+	/// If TRUE, this object can't be scanned at all by device analyzers
+	var/mechanics_blacklist = FALSE
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 	var/artifact = null
 	var/move_triggered = 0
 	var/object_flags = 0
@@ -28,6 +31,8 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
+		if (!isnull(src.mats) && src.mats != 0 && !src.mechanics_blacklist)
+			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
@@ -110,8 +115,8 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			pressure_resistance = round((material.getProperty("density") + material.getProperty("density")) / 2)
-			throwforce = round(max(material.getProperty("hard"),1) / 8)
+			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
+			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality
 			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)

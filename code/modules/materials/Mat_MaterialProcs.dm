@@ -61,8 +61,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
 		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
-			M.remove_item(I)
-			I.set_loc(get_turf(I))
+			if(I in M.get_all_items_on_mob())
+				M.remove_item(I)
+				I.set_loc(get_turf(I))
 		return
 
 /datum/materialProc/brullbar_temp_onlife
@@ -79,7 +80,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("radiation", max(round(owner.material.getProperty("radioactive") / 15),1) SECONDS, 3)
+				M.changeStatus("radiation", owner.material.getProperty("radioactive") SECONDS)
 		return
 
 /datum/materialProc/n_radioactive_on_enter
@@ -89,7 +90,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(ismob(entering))
 			var/mob/M = entering
 			if(owner.material)
-				M.changeStatus("n_radiation", max(round(owner.material.getProperty("n_radioactive") / 15),1) SECONDS, 3)
+				M.changeStatus("n_radiation", owner.material.getProperty("n_radioactive") SECONDS)
 		return
 
 /datum/materialProc/generic_reagent_onattacked
@@ -300,6 +301,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/atom/movable/entering)
 		if (isobserver(entering) || isintangible(entering))
 			return
+		if(ON_COOLDOWN(entering, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(entering)
 		if(prob(50) && owner && isturf(owner) && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(entering), rand(-2, 2), rand(-2, 2))
@@ -313,6 +316,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
+		if(ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
+			return
 		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
 				. = get_offset_target_turf(get_turf(attacked), rand(-8, 8), rand(-8, 8))
@@ -330,6 +335,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
+		if(ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
+			return
 		var/turf/T = get_turf(M)
 		if(probmult(5) && M && !isrestrictedz(T.z))
 			. = get_offset_target_turf(get_turf(M), rand(-8, 8), rand(-8, 8))
@@ -427,7 +434,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 			maxexplode -= 1
 			if(owner)
-				owner.setProperty("resonance", 10)
+				owner.setProperty("resonance", 1)
 
 /datum/materialProc/molitz_on_hit
 	execute(var/atom/owner, var/obj/attackobj)
@@ -446,13 +453,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 20),1)) SECONDS * mult, 2)
+			M.changeStatus("radiation", max(I.material.getProperty("radioactive") / 4, 1) SECONDS * mult)
 		return
 
 /datum/materialProc/radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("radiation", (max(round(I.material.getProperty("radioactive") / 5),1)) SECONDS, 4)
+			M.changeStatus("radiation", I.material.getProperty("radioactive") * 2 SECONDS)
 		return
 
 /datum/materialProc/n_radioactive_add
@@ -463,13 +470,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_life
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 20),1)) SECONDS * mult, 2)
+			M.changeStatus("n_radiation", max(I.material.getProperty("n_radioactive") / 4, 1) SECONDS * mult)
 		return
 
 /datum/materialProc/n_radioactive_pickup
 	execute(var/mob/M, var/obj/item/I)
 		if(I.material)
-			M.changeStatus("n_radiation", (max(round(I.material.getProperty("n_radioactive") / 5),1)) SECONDS, 4)
+			M.changeStatus("n_radiation", I.material.getProperty("n_radioactive") * 2 SECONDS)
 		return
 
 /datum/materialProc/erebite_flash
@@ -588,7 +595,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/enchanted_add
 	execute(var/obj/item/owner)
 		if(istype(owner))
-			owner.enchant(3, setTo = 1)
+			owner.enchant(1, setTo = 1)
 
 /datum/materialProc/cardboard_blob_hit
 	execute(var/atom/owner, var/blobPower)

@@ -1349,46 +1349,50 @@
 						// bohr hardness = 33
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("hard") >= 15
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
 							if(3 to INFINITY)
-								return mat.getProperty("hard") >= 30
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
 							else
 								return TRUE
 				if ("CRY")
-					return (mat.material_flags & MATERIAL_CRYSTAL)
+					if (mat.material_flags & MATERIAL_CRYSTAL)
+
+						switch(secondpart)
+							if(2)
+								return mat.getProperty("density") >= 7
+							else
+								return TRUE
 				if ("REF")
-					return (mat.getProperty("reflective") >= 50)
+					return (mat.getProperty("reflective") >= 6)
 				if ("CON")
 					switch(secondpart)
 						if(2)
-							return (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_CRYSTAL) //Wow! Claretine has a use again!
+							return (mat.getProperty("electrical") >= 8)
 						else
-							return (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_CRYSTAL)
+							return (mat.getProperty("electrical") >= 6)
 				if ("INS")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 2 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 						else
-							return mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 4 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 				if ("DEN")
 					switch(secondpart)
-						if(3)
-							return mat.getProperty("density") >= 75  && (mat.material_flags & MATERIAL_CRYSTAL)
 						if(2)
-							return mat.getProperty("density") >= 60  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 6
 						else
-							return mat.getProperty("density") >= 40  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 4
 				if ("POW")
 					if (mat.material_flags & MATERIAL_ENERGY)
 						switch(secondpart)
 							if(3)
-								return mat.getProperty("radioactive") >= 55 //soulsteel and erebite basically
+								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
 							if(2)
-								return mat.getProperty("radioactive") >= 10
+								return mat.getProperty("radioactive") >= 2
 							else
 								return TRUE
 				if ("FAB")
-					return mat.material_flags & MATERIAL_CLOTH || mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+					return mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
 		else if (pattern == mat.mat_id) // specific material id
 			return TRUE
 		return FALSE
@@ -2000,6 +2004,9 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/meteorshieldgen,
+		/datum/manufacture/shieldgen,
+		/datum/manufacture/doorshieldgen,
 		/datum/manufacture/patch)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
@@ -2398,7 +2405,8 @@
 		/datum/manufacture/o2_can,
 		/datum/manufacture/co2_can,
 		/datum/manufacture/n2_can,
-		/datum/manufacture/plasma_can)
+		/datum/manufacture/plasma_can,
+		/datum/manufacture/red_o2_grenade)
 
 // a blank manufacturer for mechanics
 

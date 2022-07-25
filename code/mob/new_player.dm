@@ -1,3 +1,5 @@
+
+var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 mob/new_player
 	anchored = 1
 
@@ -316,9 +318,13 @@ mob/new_player
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
+
+		global.latespawning.lock()
+
 		if (JOB && (force || IsJobAvailable(JOB)))
 			var/mob/character = create_character(JOB, JOB.allow_traitors)
 			if (isnull(character))
+				global.latespawning.unlock()
 				return
 
 			if(istype(ticker.mode, /datum/game_mode/football))
@@ -408,8 +414,10 @@ mob/new_player
 					participationRecorder.record(character.mind.ckey)
 			SPAWN(0)
 				qdel(src)
+			global.latespawning.unlock()
 
 		else
+			global.latespawning.unlock()
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return

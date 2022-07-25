@@ -23,9 +23,9 @@
 	#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 	/// When reagents change
 	#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
-	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, over_control, params)
+	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, src_control, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
-	/// When something is dragged onto an atom (object, usr)
+	/// When something is dragged onto an atom (object, usr, src_location, over_location, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP_T "atom_mousedrop_t"
 	/// When the atom is a source of an explosion (object, args_to_explode_at)
 	#define COMSIG_ATOM_EXPLODE "atom_explode"
@@ -35,6 +35,8 @@
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
 	/// When something enters the contents of this atom (i.e. Entered())
 	#define COMSIG_ATOM_ENTERED "atom_entered"
+	/// When this atom is analyzed with a device analyzer (item, user)
+	#define COMSIG_ATOM_ANALYZE "atom_analyze"
 	/// Attacking with an item in-hand (item, attacker, params, is_special)
 	#define COMSIG_ATTACKBY "attackby"
 	/// Attacking without an item in-hand (attacker)
@@ -97,14 +99,16 @@
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
-	/// Just before an item is eaten
+	/// Just before an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
-	/// When an item is eaten
+	/// When an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
-	/// After an item's been eaten, but there's still some left
+	/// After an item's been eaten, but there's still some left (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
-	/// After we've consumed an item
+	/// After we've consumed an item (eater,item)
 	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
+	/// Called before an attackby that uses this item (target, user)
+	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
 	/// When an item is used to attack a mob before it actually hurts the mob
 	#define COMSIG_ITEM_ATTACK_PRE "itm_atk_pre"
 	/// When an item is used in-hand
@@ -153,6 +157,10 @@
 	#define COMSIG_MOB_PICKUP "mob_pickup"
 	/// When a mob drops an item
 	#define COMSIG_MOB_DROPPED "mob_drop"
+	/// Just before an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED_PRE "mob_itm_atk_consumed_pre"
+	/// When an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED "mob_itm_atk_consumed"
 	/// Sent when a mob throws something (target, params)
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby

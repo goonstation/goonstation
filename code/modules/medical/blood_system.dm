@@ -678,9 +678,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message(H, "<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding

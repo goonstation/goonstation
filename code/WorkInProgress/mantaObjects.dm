@@ -181,7 +181,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/mantapropulsion
 	name = "propeller"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "sea_propulsion"
 	var/stateOn = ""
 	var/stateOff = ""
@@ -324,7 +324,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/power/seaheater
 	name = "heater"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 2
 	density = 1

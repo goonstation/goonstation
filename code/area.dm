@@ -499,6 +499,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		ambient_light = null
 		force_fullbright = 1
 
+	dark
+		ambient_light = null
+
 /area/cavetiny
 	name = "Caves"
 	icon_state = "purple"

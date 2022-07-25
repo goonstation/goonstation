@@ -176,9 +176,9 @@
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
+				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)

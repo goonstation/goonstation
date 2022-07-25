@@ -4,13 +4,15 @@
 // time to show the message for before removing it
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
+var/global/cloning_with_records = TRUE
+
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	req_access = list(access_heads) //Only used for record deletion right now.
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_CLONINGCONSOLES
 	processing_tier = PROCESSING_32TH
 	power_usage = 5000
@@ -239,6 +241,9 @@
 	if (subject.mob_flags & IS_BONEY)
 		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
 		return
+	if (!cloning_with_records && isalive(subject))
+		show_message("Error: Unable to scan alive patient.")
+		return
 
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
@@ -254,11 +259,12 @@
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
-	if (!isnull(find_record(ckey(subjMind.key))))
+	var/datum/db_record/R = find_record(ckey(subjMind.key))
+	if (!isnull(R))
 		show_message("Subject already in database.", "info")
-		return
+		return R
 
-	var/datum/db_record/R = new /datum/db_record(  )
+	R = new
 	R["ckey"] = ckey(subjMind.key)
 	R["name"] = subject.real_name
 	R["id"] = copytext(md5(subject.real_name), 2, 6)
@@ -290,6 +296,8 @@
 	show_message("Subject successfully scanned.", "success")
 	playsound(src.loc, sound_ping, 50, 1)
 	JOB_XP(usr, "Medical Doctor", 10)
+
+	return R
 
 //Find a specific record by key.
 /obj/machinery/computer/cloning/proc/find_record(var/find_key)
@@ -559,7 +567,7 @@ proc/find_ghost_by_key(var/find_key)
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -571,6 +579,9 @@ proc/find_ghost_by_key(var/find_key)
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 
 		return
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)
@@ -715,6 +726,8 @@ proc/find_ghost_by_key(var/find_key)
 				show_message("Record deleted.", "danger")
 				. = TRUE
 		if("scan")
+			if (!cloning_with_records)
+				return
 			if(usr == src.scanner.occupant)
 				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
 				return TRUE
@@ -722,9 +735,22 @@ proc/find_ghost_by_key(var/find_key)
 				src.scan_mob(src.scanner.occupant)
 				. = TRUE
 		if("clone")
+			if (!cloning_with_records)
+				return
 			var/ckey = params["ckey"]
 			if(ckey)
 				clone_record(find_record(ckey))
+				. = TRUE
+		if ("scanAndClone")
+			if (cloning_with_records)
+				return
+			if(usr == src.scanner.occupant)
+				boutput(usr, "<span class='alert'>You can't quite reach the scan button from inside the scanner, darn!</span>")
+				return TRUE
+			if(!isnull(src.scanner))
+				var/datum/db_record/R = src.scan_mob(src.scanner.occupant)
+				if (!isnull(R))
+					clone_record(R)
 				. = TRUE
 		if("toggleGeneticAnalysis")
 			if (any_active)
@@ -782,6 +808,26 @@ proc/find_ghost_by_key(var/find_key)
 			if(!loaded)
 				show_message("Load error.", "warning")
 				. = TRUE
+		if ("loadAndClone")
+			if (cloning_with_records)
+				return
+			var/loaded = FALSE
+			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
+				var/mob/ghost = find_ghost_by_key(cloneRecord.fields["ckey"])
+				if (isnull(ghost))
+					show_message("Load error.", "warning")
+					continue
+				var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
+				src.records += R
+				loaded = TRUE
+				var/read_only = src.diskette.read_only
+				src.diskette.read_only = FALSE
+				src.diskette.root.remove_file(cloneRecord)
+				src.diskette.read_only = read_only
+				clone_record(R)
+				break
+
+			. = loaded
 		if("toggleLock")
 			if (!isnull(src.scanner))
 				if ((!src.scanner.locked) && (src.scanner.occupant))
@@ -802,6 +848,7 @@ proc/find_ghost_by_key(var/find_key)
 /obj/machinery/computer/cloning/ui_data(mob/user)
 
 	. = list(
+		"cloningWithRecords" = cloning_with_records,
 		"allowedToDelete" = src.allowed(user),
 		"scannerGone" = isnull(src.scanner),
 		"occupantScanned" = FALSE,

@@ -7,7 +7,6 @@
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
 
@@ -93,7 +92,6 @@
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
 	icon_state = "cannabisleaf"
-	brewable = 1
 	brew_result = list("THC", "CBD")
 	contraband = 1
 	w_class = W_CLASS_TINY
@@ -179,7 +177,6 @@
 	name = "tobacco leaf"
 	desc = "A leaf from a tobacco plant. This could probably be smoked..."
 	icon_state = "tobacco"
-	brewable = 1
 	brew_result = list("nicotine")
 
 	build_name(obj/item/W)
@@ -189,21 +186,18 @@
 	name = "twobacco leaf"
 	desc = "A leaf from the twobacco plant. This could probably be smoked- wait, is it already smoking?"
 	icon_state = "twobacco"
-	brewable = 1
 	brew_result = list("nicotine2")
 
 /obj/item/plant/wheat
 	name = "wheat"
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
-	brewable = 1
 	brew_result = "beer"
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"
 	desc = "A harder wheat for a harder palate."
 	icon_state = "wheat"
-	brewable = 1
 	brew_result = "beer"
 
 /obj/item/plant/wheat/metal
@@ -231,7 +225,6 @@
 	crop_suffix	= " cane"
 	desc = "Grown lovingly in our space plantations."
 	icon_state = "sugarcane"
-	brewable = 1
 	brew_result = "rum"
 
 /obj/item/plant/herb/grass
@@ -248,6 +241,18 @@
 	crop_suffix	= " leaves"
 	desc = "Dry, bitter leaves known for their wound-mending properties."
 	icon_state = "contusine"
+
+/obj/item/plant/herb/contusine/shivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The leaves almost appear to be breathing."
+	icon_state = "contusine-s"
+
+/obj/item/plant/herb/contusine/quivering
+	name = "contusine leaves"
+	crop_suffix	= " leaves"
+	desc = "Dry, bitter leaves known for their wound-mending properties. The squirming leaves make your skin crawl."
+	icon_state = "contusine-q"
 
 /obj/item/plant/herb/nureous
 	name = "nureous leaves"
@@ -266,7 +271,6 @@
 	crop_suffix	= " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties."
 	icon_state = "asomna"
-	brewable = 1
 	brew_result = "tea"
 
 /obj/item/plant/herb/asomna/robust
@@ -274,7 +278,6 @@
 	crop_suffix = " bark"
 	desc = "Often regarded as a delicacy when used for tea, Asomna also has stimulant properties. This particular chunk looks extra spicy."
 	icon_state = "asomnarobust"
-	brewable = 1
 	brew_result = "tea"
 
 /obj/item/plant/herb/commol
@@ -282,6 +285,12 @@
 	crop_suffix	= " root"
 	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve."
 	icon_state = "commol"
+
+/obj/item/plant/herb/commol/burning
+	name = "commol root"
+	crop_suffix	= " root"
+	desc = "A tough and waxy root. It is well-regarded as an ingredient in burn salve. This variation feels warm to the touch."
+	icon_state = "commolburn"
 
 /obj/item/plant/herb/ipecacuanha
 	name = "ipecacuanha root"
@@ -300,7 +309,6 @@
 	crop_suffix = " root"
 	desc = "This thick root is covered in abnormal ammounts of bark. A powerful emetic can be extracted from it. This one looks particularly revolting"
 	icon_state = "ipecacuanhabilious"
-	brewable = 1
 	brew_result = "gvomit"
 
 /obj/item/plant/herb/sassafras
@@ -308,7 +316,6 @@
 	crop_suffix	= " root"
 	desc = "Roots from a Sassafras tree. Can be fermented into delicious sarsaparilla."
 	icon_state = "sassafras"
-	brewable = 1
 	brew_result = "sarsaparilla"
 
 /obj/item/plant/herb/venne
@@ -334,7 +341,6 @@
 	crop_suffix	= " leaves"
 	desc = "Aromatic leaves with a clean flavor."
 	icon_state = "mint"
-	brewable = 1
 	brew_result = "menthol"
 
 /obj/item/plant/herb/catnip
@@ -342,7 +348,6 @@
 	crop_suffix	= ""
 	desc = "Otherwise known as catnip or catswort.  Cat drugs."
 	icon_state = "catnip"
-	brewable = 1
 	brew_result = "catdrugs"
 
 /obj/item/plant/herb/poppy
@@ -350,6 +355,13 @@
 	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
+
+/obj/item/plant/herb/tea
+	name = "tea leaves"
+	crop_suffix = " leaves"
+	desc = "Leaves from a green tea plant, which can be used to create matcha."
+	icon_state = "tealeaves"
+	brew_result = "matcha"
 
 /obj/item/plant/herb/aconite
 	name = "aconite"
@@ -419,25 +431,38 @@
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
 	var/thorned = 1
-	var/list/names = list("Emma", "Olivia", "Ava", "Isabella", "Sophia", "Charlotte", "Mia", "Amelia",
-	"Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Mila", "Dakota", "Avery",
-	"Sofia", "Camila", "Aria", "Scarlett", "Liam", "Noah", "William", "James",
-	"Oliver", "Benjamin", "Elijah", "Lucas", "Mason", "Logan", "Alexander", "Ethan",
-	"Jacob", "Michael", "Daniel", "Henry", "Jackson", "Sebastian", "Aiden", "Matthew")
 
 	New()
 		..()
-		desc = desc + pick(names) + "."
+		var/list/possible_names = list()
+		for(var/mob/M in mobs)
+			if(!M.mind)
+				continue
+			if(ishuman(M))
+				if(iswizard(M))
+					continue
+				if(isnukeop(M))
+					continue
+				possible_names += M
+			else if(isAI(M) || isrobot(M))
+				possible_names += M
+		var/rose_name
+		if(!length(possible_names))
+			rose_name = pick_string_autokey("names/first.txt")
+		else
+			var/mob/chosen_mob = pick(possible_names)
+			rose_name = chosen_mob.real_name
+		desc = desc + rose_name + "."
 
 	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(src.thorned)
 			if (H.hand)//gets active arm - left arm is 1, right arm is 0
-				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
 					..()
 					return
 			else
-				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
 					..()
 					return
 			if(istype(H))

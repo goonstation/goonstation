@@ -11,6 +11,7 @@
 	voice_grim = "sound/voice/wizard/WarpGrim.ogg"
 	voice_fem = "sound/voice/wizard/WarpFem.ogg"
 	voice_other = "sound/voice/wizard/WarpLoud.ogg"
+	maptext_colors = list("#5cde24", "#167935", "#084623", "#0167935")
 
 	cast(mob/target)
 		if(!holder)
@@ -26,7 +27,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("GHEIT AUT")
+			holder.owner.say("GHEIT AUT", FALSE, maptext_style, maptext_colors)
 		..()
 
 		if (target.traitHolder.hasTrait("training_chaplain"))

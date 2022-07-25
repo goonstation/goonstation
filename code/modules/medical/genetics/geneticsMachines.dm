@@ -9,7 +9,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
 	req_access = list(access_medlab)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.

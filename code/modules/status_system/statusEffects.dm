@@ -1185,13 +1185,19 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		var/do_slow = FALSE
 		var/mob/living/L
 
 		onAdd(optional=null)
 			. = ..()
-			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 			if (isliving(owner))
 				L = owner
+				L.force_laydown_standup()
+				if(QDELETED(src))
+					return
+				do_slow = TRUE
+
+				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
 					if (!actions.hasAction(L, "fire_roll"))
 						L.last_resist = world.time + 25
@@ -1203,7 +1209,8 @@
 
 		onRemove()
 			. = ..()
-			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
+			if(do_slow)
+				ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -1692,13 +1699,6 @@
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			#ifdef CREATE_PATHOGENS
-			if(!isdead(L))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				wrap_pathogen(L.reagents, P, 10)
-			#endif
 		if(probmult(puke_prob))
 			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
@@ -1728,10 +1728,6 @@
 				. += " Your ghostly essence makes you immune to its poison."
 			else
 				. += " You will take toxic damage."
-				#ifdef CREATE_PATHOGENS
-				if(how_miasma > 4)
-					. += " You might get sick."
-				#endif
 
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"

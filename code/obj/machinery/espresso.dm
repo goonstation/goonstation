@@ -142,7 +142,7 @@
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "coffeemaker-eng"
+	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
@@ -266,6 +266,10 @@
 /obj/machinery/coffeemaker/research
 	icon_state = "coffeemaker-sci"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/research
+
+/obj/machinery/coffeemaker/engineering
+	icon_state = "coffeemaker-eng"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */

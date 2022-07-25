@@ -25,6 +25,9 @@
 	direction = "dir"
 	layer = OBJ_LAYER
 
+	nocell
+		starts_with_cell = FALSE
+
 	New()
 		..()
 		display_active.icon_state = "energyShieldOn"
@@ -38,23 +41,20 @@
 			. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
 		else
 			. += "It seems to be missing a usable battery."
-		. += "The unit will consume [10 * src.range * (src.power_level * src.power_level)] power a second."
+		. += "The unit will consume [get_draw()] power a second."
 		. += "The range setting is set to [src.range]."
 		. += "The power setting is set to [src.power_level]."
 
 	shield_on()
-		if (!PCEL)
-			if (!powered()) //if NOT connected to power grid and there is power
+		if (PCEL && PCEL.charge > 0) //first, try to activate off cell power
+			generate_shield()
+		else //no cell power? attempt to grid boot
+			if (!line_powered()) //no cell, no grid, no activation
 				src.power_usage = 0
-				return
-			else //no power cell, not connected to grid: power down if active, do nothing otherwise
-				src.power_usage = 10 * (src.range) * (power_level * power_level)
+			else //activate off line power
 				generate_shield()
-				return
-		else
-			if (PCEL.charge > 0)
-				generate_shield()
-				return
+				src.power_usage = get_draw()
+
 
 	pulse(var/mob/user)
 		if(active)
@@ -127,7 +127,6 @@
 		else
 			orientation = HORIZONTAL
 
-	//this is so long because I wanted the tiles to look like one seamless object. Otherwise it could just be a single line
 	proc/createForcefieldObject(xa, ya, turf/T)
 		if(isnull(T))
 			T = locate((src.x + xa), (src.y + ya), src.z)
@@ -151,6 +150,83 @@
 		return TRUE
 
 
+
+/obj/machinery/shieldgenerator/energy_shield/doorlink
+	name = "Door-Shield Generator"
+	desc = "Interfaces with nearby doors, generating linked atmospheric or liquid shielding for them."
+	icon_state = "doorShield"
+	direction = ""
+	max_power = SHIELD_BLOCK_FLUID
+	max_range = 3
+	var/emagged = FALSE
+
+	nocell
+		starts_with_cell = FALSE
+
+	New()
+		..()
+		display_active.icon_state = "doorShieldOn"
+
+	emag_act(var/mob/user) //blow out the limiter. max power increases to 3 (total blocking), but it loses the ability to throttle its operation
+		if (!src.emagged)
+			if (user)
+				user.show_text("You short out the integrated limiting circuits.", "blue")
+			src.desc += " Smells faintly of burnt electronics."
+			src.emagged = 1
+			src.max_power = SHIELD_BLOCK_ALL
+			return 1
+		else
+			if (user)
+				user.show_text("This has already been tampered with.", "red")
+			return 0
+
+	generate_shield()
+		if (range < 1)
+			return
+		for (var/obj/machinery/door/D in orange(src.range,src))
+			if(!D.linked_forcefield && !istype(D,/obj/machinery/door/firedoor))
+				createDoorForcefield(D)
+
+		src.anchored = 1
+		src.active = 1
+
+		// update_nearby_tiles()
+		playsound(src.loc, src.sound_on, 50, 1)
+		if (src.power_level == 1)
+			display_active.color = "#0000FA"
+		else if (src.power_level == 2)
+			display_active.color = "#00FF00"
+		else
+			display_active.color = "#FA0000"
+		build_icon()
+
+	get_draw()
+		var/shield_draw = 0
+		for(var/obj/forcefield/energyshield/S in src.deployed_shields)
+			shield_draw += 1 //small maintenance draw per shielded door, and full power if shield is active
+			if(S.isactive) shield_draw += 15 //overall cost slightly higher per shield compared to standard generators
+		return shield_draw * (src.power_level * src.power_level)
+
+	process()
+		if(src.active)
+			src.get_draw()
+		. = ..()
+
+	proc/createDoorForcefield(var/obj/machinery/door/D)
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src, 1) //1 update tiles
+
+		S.layer = 2
+		S.set_dir(D.dir)
+		if(!src.emagged)
+			S.linked_door = D
+			D.linked_forcefield = S
+
+			if(D.density != 0)
+				S.setactive(0)
+
+		src.deployed_shields += S
+
+		return S
 
 /obj/machinery/shieldgenerator/energy_shield/botany
 	name = "smoke shield generator"

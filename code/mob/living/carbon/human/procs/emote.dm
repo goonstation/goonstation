@@ -833,6 +833,12 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "yawn")
+						message = "<B>[src]</B> [act]s."
+						maptext_out = "<I>[act]s</I>"
+						for (var/mob/living/carbon/C in view(5,get_turf(src)))
+							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
+								C.emote("yawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -1512,7 +1518,7 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
-							src.say("GHEIT DAUN!")
+							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler

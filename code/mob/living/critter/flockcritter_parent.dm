@@ -58,7 +58,7 @@
 
 	qdel(abilityHolder)
 	setMaterial(getMaterial("gnesis"))
-	src.material.setProperty("reflective", 45)
+	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -258,9 +258,21 @@
 			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
 
 			var/flick_anim = "spawn-floor"
-			if(istype(target, /turf/simulated/floor) || istype(target, /turf/space))
+			if(istype(target, /turf/space))
+				var/make_floor = FALSE
+				for (var/obj/O in target)
+					if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
+						make_floor = TRUE
+						src.decal = new /obj/decal/flock_build_floor
+						flick_anim = "spawn-floor"
+						break
+				if (!make_floor)
+					src.decal = new /obj/decal/flock_build_fibrenet
+					flick_anim = "spawn-fibrenet"
+			else if(istype(target, /turf/simulated/floor))
 				src.decal = new /obj/decal/flock_build_floor
-			if(istype(target, /turf/simulated/wall))
+				flick_anim = "spawn-floor"
+			else if(istype(target, /turf/simulated/wall))
 				src.decal = new /obj/decal/flock_build_wall
 				flick_anim = "spawn-wall"
 			if(src.decal)
@@ -333,8 +345,8 @@
 			else
 				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
 
-			var/flick_anim = "spawn-wall"
-			src.decal = new /obj/decal/flock_build_wall
+			var/flick_anim = "spawn-barricade"
+			src.decal = new /obj/decal/flock_build_barricade
 			if(src.decal)
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
@@ -431,16 +443,16 @@
 		var/mob/living/critter/flock/C
 		C = target
 		if(istype(C))
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
-				F, "<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
-				target, "<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
+			F.tri_message(C, "<span class='notice'>[owner] begins spraying glowing fibers onto [C].</span>",
+				"<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
+				"<span class='notice'>[F.real_name] begins repairing you. You will both need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
 			if (C.is_npc)
 				C.ai.wait()
 		else
-			F.tri_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
-				F, "<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
-				null, null, "You hear hissing and spraying.")
+			F.visible_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
+				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
+				"You hear hissing and spraying.")
 		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()
@@ -514,10 +526,10 @@
 		if(target)
 			var/mob/living/critter/flock/F = owner
 			if(F)
-				F.tri_message("<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
-					F, "<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
-					target, "<span class='alert'>[F] is forming a structure around you!</span>",
-					"You hear strange building noises.")
+				F.tri_message(target, "<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
+						"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
+						"<span class='alert'>[F] is forming a structure around you!</span>",
+						"You hear strange building noises.")
 				if(istype(target,/mob/living))
 					var/mob/living/M = target
 					M.was_harmed(F, null, "flock", INTENT_DISARM)
@@ -652,7 +664,7 @@
 		var/difference = target.goal - target.currentmats
 		amounttopay = min(F.resources, difference, FLOCK_GHOST_DEPOSIT_AMOUNT)
 		F.pay_resources(amounttopay)
-		target.currentmats += amounttopay
+		target.add_mats(amounttopay)
 		if(F.resources)
 			src.onRestart() //restart the action akin to automenders
 

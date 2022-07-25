@@ -120,7 +120,7 @@
 	desc = "Have fun!"
 	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	slots = 5
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0

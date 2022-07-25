@@ -12,6 +12,14 @@
 	blend_mode = BLEND_ADD
 	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
+/obj/ambient
+	icon = 'icons/effects/white.dmi'
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_BASE
+	blend_mode = BLEND_ADD
+	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
+
+
 /area
 	var
 		force_fullbright = 0

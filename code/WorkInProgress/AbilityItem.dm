@@ -120,16 +120,13 @@
 		..()
 
 
-/obj/ability_button/labcoat_toggle
-	name = "(Un)Button Labcoat"
+/obj/ability_button/coat_toggle
+	name = "(Un)Button Coat"
 	icon_state = "labcoat"
 
 	execute_ability()
-		var/obj/item/clothing/suit/labcoat/W = the_item
-		if(W.buttoned)
-			W.unbutton()
-		else
-			W.button()
+		var/obj/item/clothing/suit/W = the_item
+		W.AttackSelf(the_mob)
 		..()
 
 /obj/ability_button/hood_toggle

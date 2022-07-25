@@ -16,6 +16,7 @@ var/datum/station_zlevel_repair/station_repair = new
 /datum/station_zlevel_repair
 	var/datum/map_generator/station_generator
 	var/image/ambient_light
+	var/obj/ambient/ambient_obj
 	var/image/weather_img
 	var/obj/effects/weather_effect
 	var/overlay_delay
@@ -39,6 +40,8 @@ var/datum/station_zlevel_repair/station_repair = new
 			for(var/turf/T as anything in turfs)
 				if(src.ambient_light)
 					T.UpdateOverlays(src.ambient_light, "ambient")
+				if(src.ambient_obj)
+					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
 					T.UpdateOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
@@ -175,13 +178,18 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/desertify
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#cfcfcf"
 			station_repair.station_generator = new/datum/map_generator/desert_generator
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
 			station_repair.default_air.temperature = 330
 
 			var/list/space = list()
@@ -189,7 +197,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 				space += S
 			station_repair.station_generator.generate_terrain(space)
 			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
@@ -288,6 +299,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("Yes","No", "Particles"))
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -304,8 +316,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
 
 
 			var/list/space = list()
@@ -320,7 +337,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 						S.UpdateOverlays(station_repair.weather_img, "rain")
 					else
 						new station_repair.weather_effect(S)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
@@ -461,14 +481,20 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"))
+	additional_toggles = list("Ambient Light Obj")
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#222"
 			station_repair.station_generator = new/datum/map_generator/snow_generator
 
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = ambient_light
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = new /obj/ambient
+				station_repair.ambient_obj.color = ambient_light
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = ambient_light
+
 			station_repair.default_air.temperature = 235
 
 			var/snow = params["Weather"]
@@ -483,7 +509,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 				space += S
 			station_repair.station_generator.generate_terrain(space)
 			for (var/turf/S as anything in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
+				if(params["Ambient Light Obj"])
+					S.vis_contents |= station_repair.ambient_obj
+				else
+					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 				if(snow)
 					new station_repair.weather_effect(S)
 

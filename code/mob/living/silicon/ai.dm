@@ -239,6 +239,16 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
 
+	abilityHolder = new /datum/abilityHolder/silicon/ai(src)
+	if(eyecam)
+		eyecam.abilityHolder = abilityHolder
+
+	if(law_rack_connection)
+		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+
+		for(var/ability_type in law_rack_connection.ai_abilities)
+			abilityHolder.addAbility(ability_type)
+
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
@@ -2425,7 +2435,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)

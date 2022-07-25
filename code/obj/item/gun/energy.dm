@@ -115,7 +115,7 @@
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1.0
-	desc = "The Xiang-Giesel model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
+	desc = "The XIANG|GIESEL model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
 	two_handed = 1
@@ -351,6 +351,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -499,6 +500,7 @@
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt_v)
@@ -552,7 +554,7 @@
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
-	desc = "The versatile Xiang-Giesel model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun100"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1175,6 +1177,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	hide_attack = 1
 	mats = 100 //yeah no, you can do it if you REALLY want to
@@ -1279,6 +1282,7 @@
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 	is_syndicate = 1
+	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1619,6 +1623,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	custom_cell_max_capacity = 100
 

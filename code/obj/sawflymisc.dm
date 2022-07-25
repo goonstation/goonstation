@@ -22,6 +22,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
 	is_syndicate = TRUE
+	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 	custom_suicide = 1
 
@@ -89,6 +90,7 @@
 	desc = "A small device that can be used to fold or deploy sawflies in range."
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS
+	object_flags = NO_GHOSTCRITTER
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	icon_state = "sawflycontr"
