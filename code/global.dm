@@ -125,9 +125,6 @@ var/global
 	"Panties" = "panties",
 	"Boyshorts" = "boyshort")
 
-	list/uniform_styles = list("Suit" = "suit",
-	"Dress" = "dress")
-
 	list/standard_skintones = list("Albino" = "#FAD7D0",
 	"White" = "#FFCC99",
 	"Pink" = "#EDB8A8",

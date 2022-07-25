@@ -47,7 +47,7 @@ export interface CharacterPreferencesData {
   customStyle3: string;
   underwearColor: string;
   underwearStyle: string;
-  uniformStyle: string;
+  suitStyle: BooleanLike;
   randomAppearance: BooleanLike;
 
   fontSize: string;

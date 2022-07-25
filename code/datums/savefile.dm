@@ -81,6 +81,7 @@
 			F["[profileNum]_detail_style_name"] << AH.customization_third
 			F["[profileNum]_underwear_style_name"] << AH.underwear
 			F["[profileNum]_underwear_color"] << AH.u_color
+			F["[profileNum]_suit_style"] << src.suitStyle
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] << src.job_favorite
@@ -258,6 +259,7 @@
 			F["[profileNum]_detail_style_name"] >> AH.customization_third_original
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
+			F["[profileNum]_suit_style"] >> src.suitStyle
 			if(!istype(src.AH.customization_first,/datum/customization_style))
 				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
 			if(!istype(src.AH.customization_second,/datum/customization_style))

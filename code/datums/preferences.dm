@@ -17,7 +17,6 @@ datum/preferences
 	var/age = 30
 	var/pin = null
 	var/blType = "A+"
-	var/uniform = "suit"
 
 	var/flavor_text // I'm gunna regret this aren't I
 	// These notes are put in the datacore records on the start of the round
@@ -60,6 +59,7 @@ datum/preferences
 	var/use_azerty = 0 // do they have an AZERTY keyboard?
 	var/spessman_direction = SOUTH
 	var/PDAcolor = "#6F7961"
+	var/suitStyle = 0 // jumpsuit if false, dress if true
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -188,7 +188,7 @@ datum/preferences
 			"customStyle3" = src.AH.customization_third.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
-			"uniformStyle" = isnull(uniform) ? "Suit" : src.uniform,
+			"suitStyle" = isnull(uniform) ? "Suit" : src.suitStyle,
 			"randomAppearance" = src.be_random_look,
 
 			"fontSize" = src.font_size,
@@ -686,13 +686,10 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
-			if ("update-uniformStyle")
-				var/new_uniform = input(usr, "Select a uniform style", "Character Generation", src.uniform) as null|anything in uniform_styles
-
-				if (new_uniform)
-					src.uniform = new_uniform
-					src.profile_modified = TRUE
-					return TRUE
+			if ("update-suitStyle")
+				src.suitStyle = !src.suitStyle
+				src.profile_modified = TRUE
+				return TRUE
 
 			if ("update-detail-style-cycle")
 				var/new_style
