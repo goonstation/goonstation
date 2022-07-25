@@ -1161,7 +1161,7 @@
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-
+	mats = list("MET-2"=15)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
 	throwforce = 5.0
