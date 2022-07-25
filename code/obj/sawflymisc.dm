@@ -25,7 +25,6 @@
 	is_syndicate = TRUE
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
-	custom_suicide = 1
 
 	prime()
 		var/turf/T =  get_turf(src)
