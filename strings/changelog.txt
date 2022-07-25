@@ -1,6 +1,10 @@
 
 (t)mon jul 25 22
 (u)Luxizzle
+(p)9842
+(e)🐛🗺|bug, mapping
+(+)Artifact paper dispensers now act like paper bins. You can pick them up and put artifact papers back in.
+(u)Luxizzle
 (p)9841
 (e)🐛🗺|bug, mapping
 (+)Cogmap2's Artifact Lab now includes a thinktape.
