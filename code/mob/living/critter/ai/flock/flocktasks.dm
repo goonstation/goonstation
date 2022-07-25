@@ -888,7 +888,7 @@ stare
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
 		return TRUE
-	if(get_dist(F, holder.target) > 1 || !istype(holder.target?.loc, /turf))
+	if(!in_interact_range(F, holder.target) || !istype(holder.target?.loc, /turf))
 		return TRUE
 
 /datum/aiTask/succeedable/capture/succeeded()
@@ -904,8 +904,7 @@ stare
 					holder.interrupt()
 					return
 			var/mob/living/critter/flock/drone/owncritter = holder.owner
-			var/dist = get_dist(owncritter, holder.target)
-			if(dist > 1 || !istype(T.loc, /turf))
+			if(!in_interact_range(owncritter, holder.target) || !istype(T.loc, /turf))
 				holder.interrupt() //this should basically never happen, but sanity check just in case
 				return
 			else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
