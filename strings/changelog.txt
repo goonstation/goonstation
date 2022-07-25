@@ -1,4 +1,9 @@
 
+(t)mon jul 25 22
+(u)Luxizzle
+(p)9841
+(e)🐛🗺|bug, mapping
+(+)Cogmap2's Artifact Lab now includes a thinktape.
 (t)sat jul 23 22
 (u)Flaborized
 (p)9718
