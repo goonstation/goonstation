@@ -583,8 +583,8 @@
 	item_state = "robotics"
 
 	dress
-			icon_state = "robotics-dress"
-			item_state = "robotics-dress"
+		icon_state = "robotics-dress"
+		item_state = "robotics-dress"
 
 	april_fools
 		icon_state = "robotics-alt"
@@ -1849,20 +1849,20 @@
 		disturbed = 1
 
 /obj/item/clothing/under/misc/colmob
-    name = "columbian mobster suit"
-    desc = "I'm a political prisoner from Space Cuba and I want my fucking human rights now!"
-    icon_state = "colmob"
-    item_state = "colmob"
+	name = "columbian mobster suit"
+	desc = "I'm a political prisoner from Space Cuba and I want my fucking human rights now!"
+	icon_state = "colmob"
+	item_state = "colmob"
 
 	dress
 		icon_state = "colmob-dress"
 		item_state = "colmob-dress"
 
 /obj/item/clothing/under/misc/rusmob
-    name = "soviet mobster suit"
-    desc = "She Swallows Burning Coals."
-    icon_state = "rusmob"
-    item_state = "rusmob"
+	name = "soviet mobster suit"
+	desc = "She Swallows Burning Coals."
+	icon_state = "rusmob"
+	item_state = "rusmob"
 
 	dress
 		icon_state = "rusmob-dress"
