@@ -407,6 +407,9 @@
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
 
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
+
 //next :
 	//sound effects
 	//do slight damage to occupant on jumble?

@@ -261,8 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			force = material.hasProperty("hard") ? initial(force) + round(material.getProperty("hard") / 20) : initial(force)
-			burn_possible = src.material.getProperty("flammable") > 50 ? 1 : 0
+			burn_possible = src.material.getProperty("flammable") >= 1 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
@@ -373,14 +372,16 @@
 
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return 0
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
-	var/edibility_override = SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED_PRE, user, src)
-	if (!src.edible && !(src.material && src.material.edible) && !(edibility_override & FORCE_EDIBILITY))
+	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
+	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
+	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
+	if (!edible_check && !can_matter_eat)
 		return 0
 
 	if (M == user)
@@ -397,10 +398,11 @@
 
 		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
 		eat_twitch(M)
-		SPAWN(1 SECOND)
+		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
 				return
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
+			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
+			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -434,7 +436,8 @@
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
 				return
-			SEND_SIGNAL(M, COMSIG_ITEM_CONSUMED, user, src)
+			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
+			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			user.u_equip(src)
 			qdel(src)
 		return 1
@@ -559,8 +562,13 @@
 
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
-	if(isrobot(other.loc))
-		max_stack = 500
+	var/imrobot
+	var/imdrone
+	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
+		if (imrobot)
+			max_stack = 500
+		else if (imdrone)
+			max_stack = 1000
 		if (other != src && check_valid_stack(src))
 			if (src.amount + other.amount > max_stack)
 				added = max_stack - other.amount
@@ -946,19 +954,7 @@
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
-	equipment_proxy.additive_slowdown += src.getProperty("movespeed")
-	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
-	if (fluidmove)
-		equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-		equipment_proxy.aquatic_movement += fluidmove
-	var/spacemove = src.getProperty("space_movespeed")
-	if (spacemove)
-		equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-		equipment_proxy.space_movement += spacemove
+	user.update_equipped_modifiers()
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
@@ -970,19 +966,7 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in user.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(user, equipment_proxy, /obj/item)
-	equipment_proxy.additive_slowdown -= src.getProperty("movespeed")
-	var/fluidmove = src.getProperty("negate_fluid_speed_penalty")
-	if (fluidmove)
-		equipment_proxy.additive_slowdown -= fluidmove
-		equipment_proxy.aquatic_movement -= fluidmove
-	var/spacemove = src.getProperty("space_movespeed")
-	if (spacemove)
-		equipment_proxy.additive_slowdown -= spacemove
-		equipment_proxy.space_movement -= spacemove
+	user.update_equipped_modifiers()
 
 /obj/item/proc/AfterAttack(atom/target, mob/user, reach, params)
 	SHOULD_NOT_OVERRIDE(TRUE)

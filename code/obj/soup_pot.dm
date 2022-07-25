@@ -296,7 +296,7 @@
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150

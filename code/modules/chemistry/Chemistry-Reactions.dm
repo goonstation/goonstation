@@ -209,18 +209,50 @@
 
 /proc/flashpowder_reaction(turf/center, amount)
 	elecflash(center)
+	amount = clamp(amount/5, 0, 5)
+
 
 	for (var/mob/living/M in all_viewers(5, center))
-		if (isintangible(M))
+		if (isintangible(M) || ON_COOLDOWN(M, "flashpowder_anti_spam", 6 SECONDS))
 			continue
+
 		var/anim_dur = issilicon(M) ? 30 : 60
 		var/dist = get_dist(M, center)
-		var/stunned = max(0, amount * (3 - dist) * 0.1)
-		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.1)
+		var/stunned = max(0, amount * (4 - dist) * 0.2)
+		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.2)
 		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
-		var/stam_damage = 26 * min(amount, 5)
+		var/stam_damage = 15 * amount
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
+
+/proc/sonicpowder_reaction(turf/center, amount, hootmode, no_fluff)
+	amount = clamp(amount/5, 0, 5)
+	if (no_fluff == 0)
+		if (hootmode)
+			playsound(center, 'sound/voice/animal/hoot.ogg', 100, 1)
+		else
+			playsound(center, 'sound/weapons/flashbang.ogg', 25, 1)
+
+	for (var/mob/living/M in all_hearers(world.view, center))
+		if (isintangible(M) )
+			continue
+		if (!M.ears_protected_from_sound() && !ON_COOLDOWN(M, "sonicpowder_anti_spam", 6 SECONDS))
+			boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
+		else
+			continue
+
+		var/checkdist = get_dist(M, center)
+
+		var/weak = max(0, amount * 0.2 * (3 - checkdist))
+		var/misstep = max(0, 2 + amount * (5 - checkdist))
+		var/ear_damage = max(0, amount * 0.2 * (3 - checkdist))
+		var/ear_tempdeaf = max(0, amount * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
+		var/stamina = max(0, 2 * amount * (7 - checkdist))
+
+		if (issilicon(M))
+			M.apply_sonic_stun(weak, 0)
+		else
+			M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
 
 /// Deletes any reagents that are banned in smoke clouds.
 /proc/purge_smoke_blacklist(datum/reagents/FG)

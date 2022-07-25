@@ -441,7 +441,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/req_contract/civilian/architecture
 	//name = "Architecture Deluxe"
 	payout = 5200
-	var/list/namevary = list("Structural Setup","Brick by Brick","New Construction","Building Supply","Structure Fabrication")
+	var/list/namevary = list("Structural Setup","Brick by Brick","New Construction","Building Supply","Structure Fabrication","Asset Development")
 	var/list/desc_thingbuilt = list("A planetary habitation site","A new deluxe retreat","A new station wing","An affiliated construction project")
 	var/list/desc_progress = list("currently underway","delayed by supply difficulties","planned for near-term assembly","commissioned by a third party")
 	var/list/desc_resource = list("stone","turf seed","window treatment","wood","solvent","detailing metal")

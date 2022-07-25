@@ -51,6 +51,8 @@
 		build_icon()
 
 	disposing()
+		if (src.occupant)
+			src.go_out()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()

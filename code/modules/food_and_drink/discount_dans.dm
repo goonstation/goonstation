@@ -187,7 +187,6 @@
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brewable = 1
 	brew_result = list("sewage", "ethanol")
 	food_effects = list("food_sweaty")
 
@@ -331,7 +330,6 @@
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brewable = 1
 	brew_result = list("sewage", "yuck")
 	food_effects = list("food_sweaty")
 

@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL

@@ -478,6 +478,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
+				logTheThing("station", src, null, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null

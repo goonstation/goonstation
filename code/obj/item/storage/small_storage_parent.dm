@@ -20,7 +20,7 @@
 	/// Prevent accessing storage when clicked in pocket
 	var/does_not_open_in_pocket = 1
 	/// Maximum  w_class that can be held
-	var/max_wclass = 2
+	var/max_wclass = W_CLASS_SMALL
 	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
 	var/slots = 7
 	/// Initial contents when created
@@ -332,7 +332,7 @@
 	name = "box"
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 
 	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
@@ -366,7 +366,7 @@
 	item_state = "contsolid"
 	can_hold = list(/obj/item/reagent_containers/pill)
 	w_class = W_CLASS_SMALL
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
 /obj/item/storage/briefcase
@@ -379,7 +379,7 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
 	stamina_cost = 17
@@ -397,7 +397,7 @@
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = 4 // parity with secure briefcase
+	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
@@ -408,7 +408,7 @@
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_BULKY
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
 	var/locked = 0
@@ -441,7 +441,7 @@
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	var/fire_delay = 0.4 SECONDS
 
 	New()

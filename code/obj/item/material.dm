@@ -571,6 +571,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
@@ -608,9 +609,12 @@
 				step_on(H)
 			else
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+
+				if (H.mutantrace?.can_walk_on_shards)
+					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70)) && !iscow(H))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
@@ -853,6 +857,9 @@
 			output_bar(extra_mat, output_amount, O.quality)
 
 	proc/output_bar(material, amount, quality)
+
+		if(amount <= 0)
+			return
 
 		var/datum/material/MAT = material
 		if (!istype(MAT))

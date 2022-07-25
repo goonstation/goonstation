@@ -26,7 +26,7 @@
 	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
-	var/deconstruct_time = 0//20
+	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
@@ -117,13 +117,14 @@
 		name = initial(name)
 
 		if (istype(src.material))
-			health_max = material.hasProperty("density") ? round(material.getProperty("density") * 3) : health_max
+
+			health_max = round(material.getProperty("density") * 15)
 			health = health_max
-			cut_resist = material.hasProperty("hard") ? material.getProperty("hard")*2 : cut_resist
-			blunt_resist = material.hasProperty("density") ? material.getProperty("density")*2 : blunt_resist
-			stab_resist = material.hasProperty("hard") ? material.getProperty("hard")*2 : stab_resist
-			if (blunt_resist != 0) blunt_resist /= 2
-			corrode_resist = material.hasProperty("corrosion") ? material.getProperty("corrosion") : corrode_resist
+
+			cut_resist 		= material.getProperty("hard") * 10
+			blunt_resist 	= material.getProperty("density") * 5
+			stab_resist 	= material.getProperty("hard") * 10
+			corrode_resist 	= material.getProperty("chemical") * 10
 
 			if (material.alpha > 220)
 				opacity = 1 // useless opaque window
@@ -131,16 +132,14 @@
 				opacity = 0
 
 		if (istype(reinforcement))
-			if(reinforcement.hasProperty("density"))
-				health_max += reinforcement.hasProperty("density") ? round(reinforcement.getProperty("density") / 2) : 0
-				health = health_max
-			else
-				health_max += 30
-				health = health_max
-			cut_resist += reinforcement.hasProperty("hard") ? round(reinforcement.getProperty("hard") / 2) : 0
-			blunt_resist += reinforcement.hasProperty("density") ? round(reinforcement.getProperty("density") / 2) : 0
-			stab_resist += reinforcement.hasProperty("hard") ? round(reinforcement.getProperty("hard") / 2) : 0
-			corrode_resist += reinforcement.hasProperty("corrosion") ? round(reinforcement.getProperty("corrosion") / 2) : 0
+
+			health_max += round(reinforcement.getProperty("density") * 5)
+			health = health_max
+
+			cut_resist 		+= round(reinforcement.getProperty("hard") * 5)
+			blunt_resist 	+= round(reinforcement.getProperty("density") * 5)
+			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
+			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
 
 			name = "[reinforcement.name]-reinforced " + name
 
@@ -154,17 +153,7 @@
 		if (!isnum(amount) || amount <= 0)
 			return
 
-		var/armor = 0
-
-		if (src.material)
-			armor = blunt_resist
-
-			if (src.material.getProperty("density") >= 10)
-				armor += round(src.material.getProperty("density") / 10)
-			else if (src.material.hasProperty("density") && src.material.getProperty("density") < 10)
-				amount += rand(1,3)
-
-		amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
+		amount = get_damage_after_percentage_based_armor_reduction(blunt_resist,amount)
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 
@@ -382,67 +371,48 @@
 		user.lastattacked = src
 
 		if (isscrewingtool(W))
-			if (state == 10)
+			if (state == 10) // ???
 				return
 			else if (state >= 1)
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 				if (deconstruct_time)
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
-					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
-						return
-				state = 3 - state
-				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
-			else if (state == 0)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
-				if (deconstruct_time)
-					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
-					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
-						return
-				src.anchored = !(src.anchored)
-				src.stops_space_move = !(src.stops_space_move)
-				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
-				return 1
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+				else
+					assembly_handler(user, W)
 			else
 				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
 				if (deconstruct_time)
-					user.show_text("You begin to [src.anchored ? "unfasten the window from" : "fasten the window to"] the floor...", "red")
-					if (!do_after(user, deconstruct_time))
-						boutput(user, "<span class='alert'>You were interrupted.</span>")
-						return
-				src.anchored = !(src.anchored)
-				src.stops_space_move = !(src.stops_space_move)
-				user.show_text("You have [src.anchored ? "fastened the window to" : "unfastened the window from"] the floor.", "blue")
-				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
-				return 1
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
+					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+				else
+					assembly_handler(user, W)
 
 		else if (ispryingtool(W) && state <= 1)
+			//no sound here, snap is after the action
 			if(!anchored)
-				if (!(src.dir in cardinal))
-					return
-				update_nearby_tiles(need_rebuild=1) //Compel updates before
-				src.set_dir(turn(src.dir, -90))
-				/*var/action = input(user,"Rotate it which way?","Window Rotation",null) in list("Clockwise ->","Anticlockwise <-","180 Degrees")
-				if (!action) return*/
-
-				/*switch(action)
-					if ("Clockwise ->") src.set_dir(turn(src.dir, -90))
-					if ("Anticlockwise <-") src.set_dir(turn(src.dir, 90))
-					if ("180 Degrees") src.set_dir(turn(src.dir, 180))*/
-				update_nearby_tiles(need_rebuild=1)
-				src.ini_dir = src.dir
-				src.set_layer_from_settings()
-				return
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
-			if (deconstruct_time)
-				user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
-				if (!do_after(user, deconstruct_time))
-					boutput(user, "<span class='alert'>You were interrupted.</span>")
-					return
-			state = 1 - state
-			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
+				src.turn_window()
+			else
+				if (deconstruct_time)
+					var/total_decon_time = deconstruct_time
+					if(ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+							total_decon_time = round(total_decon_time / 2)
+					user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+				else
+					assembly_handler(user, W)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
@@ -462,6 +432,38 @@
 			src.damage_blunt(W.force)
 			..()
 		return
+
+	proc/assembly_handler(var/mob/user,var/obj/item/W)
+		if(isscrewingtool(W))
+			if(state >= 1)
+				state = 3 - state //cargo culting this a bit
+				user.show_text("You have [state == 1 ? "unfastened the window from" : "fastened the window to"] the frame.", "blue")
+			else
+				src.anchored = !(src.anchored)
+				src.stops_space_move = !(src.stops_space_move)
+				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
+				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				src.align_window()
+		else if(ispryingtool(W))
+			state = 1 - state
+			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
+			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+
+	proc/align_window()
+		update_nearby_tiles(need_rebuild=1)
+		src.ini_dir = src.dir
+		src.set_layer_from_settings()
+		if(istype(src,/obj/window/auto))
+			var/obj/window/auto/AWI = src
+			AWI.UpdateIcon()
+			AWI.update_neighbors()
+
+	proc/turn_window()
+		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		src.set_dir(turn(src.dir, -90))
+		update_nearby_tiles(need_rebuild=1)
+		src.ini_dir = src.dir
+		src.set_layer_from_settings()
 
 	proc/smash()
 		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
@@ -600,7 +602,6 @@
 	health_max = 50
 	the_tuff_stuff
 		explosion_resistance = 5
-	//deconstruct_time = 30
 
 /obj/window/reinforced/pyro
 	icon_state = "rpyro"
@@ -612,7 +613,7 @@
 	health = 80
 	health_max = 80
 	explosion_resistance = 2
-	//deconstruct_time = 40
+	deconstruct_time = 2 SECONDS
 
 /obj/window/crystal/pyro
 	icon_state = "pyro"
@@ -623,7 +624,7 @@
 	health = 100
 	health_max = 100
 	explosion_resistance = 4
-	//deconstruct_time = 50
+	deconstruct_time = 5 SECONDS
 
 /obj/window/crystal/reinforced/pyro
 	icon_state = "rpyro"
@@ -635,7 +636,7 @@
 	icon_state = "rwindow"
 	default_material = "uqillglass"
 	health_multiplier = 100
-	//deconstruct_time = 100
+	deconstruct_time = 10 SECONDS
 
 /obj/window/bulletproof/pyro
 	icon_state = "rpyro"
@@ -717,7 +718,6 @@
 	icon_state = "mapwin"
 	dir = 5
 	health_multiplier = 2
-	//deconstruct_time = 20
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -767,12 +767,12 @@
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
-
+	/*
 	attackby(obj/item/W, mob/user)
 		if (..(W, user))
 			src.UpdateIcon()
 			src.update_neighbors()
-
+	*/
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
@@ -789,7 +789,6 @@
 	health_max = 50
 	the_tuff_stuff
 		explosion_resistance = 5
-	//deconstruct_time = 30
 
 /obj/window/auto/reinforced/indestructible
 	desc = "A window. A particularly robust one at that."
@@ -860,7 +859,7 @@
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	health = 80
 	health_max = 80
-	//deconstruct_time = 40
+	deconstruct_time = 2 SECONDS
 
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
@@ -868,7 +867,7 @@
 	default_reinforcement = "steel"
 	health = 100
 	health_max = 100
-	//deconstruct_time = 50
+	deconstruct_time = 5 SECONDS
 
 /obj/window/auto/bulletproof
 	name = "bulletproof window"
@@ -876,7 +875,7 @@
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	health_multiplier = 100
-	//deconstruct_time = 100
+	deconstruct_time = 10 SECONDS
 
 /obj/window/auto/hardened
 	name = "hardened window"
@@ -1075,6 +1074,19 @@
 /obj/window/auto/feather/proc/repair()
 	src.health = min(src.health + 10, src.health_max)
 
+/obj/window/auto/feather/Crossed(atom/movable/mover)
+	. = ..()
+	var/mob/living/critter/flock/drone/drone = mover
+	if(istype(drone) && isfeathertile(src.loc) && (drone.is_npc || (drone.client && drone.client.check_key(KEY_RUN))))
+		if(drone.floorrunning || (drone.can_floorrun && drone.resources >= 1))
+			drone.set_loc(src.loc)
+			drone.start_floorrunning()
+			return TRUE
+
+/obj/window/auto/feather/Cross(atom/movable/mover)
+	if(istype(mover, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/F = mover
+		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
 /obj/window/feather
 	icon = 'icons/misc/featherzone.dmi'

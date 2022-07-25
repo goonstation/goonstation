@@ -86,6 +86,9 @@
 	var/obj/decal/cleanable/robot_debris/gib = null
 	var/list/gibs = new()
 
+	if(!location)
+		return
+
 	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 
 	// RUH ROH

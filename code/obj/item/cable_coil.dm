@@ -23,6 +23,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 10

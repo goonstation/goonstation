@@ -58,7 +58,7 @@
 
 	qdel(abilityHolder)
 	setMaterial(getMaterial("gnesis"))
-	src.material.setProperty("reflective", 45)
+	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -258,9 +258,21 @@
 			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
 
 			var/flick_anim = "spawn-floor"
-			if(istype(target, /turf/simulated/floor) || istype(target, /turf/space))
+			if(istype(target, /turf/space))
+				var/make_floor = FALSE
+				for (var/obj/O in target)
+					if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
+						make_floor = TRUE
+						src.decal = new /obj/decal/flock_build_floor
+						flick_anim = "spawn-floor"
+						break
+				if (!make_floor)
+					src.decal = new /obj/decal/flock_build_fibrenet
+					flick_anim = "spawn-fibrenet"
+			else if(istype(target, /turf/simulated/floor))
 				src.decal = new /obj/decal/flock_build_floor
-			if(istype(target, /turf/simulated/wall))
+				flick_anim = "spawn-floor"
+			else if(istype(target, /turf/simulated/wall))
 				src.decal = new /obj/decal/flock_build_wall
 				flick_anim = "spawn-wall"
 			if(src.decal)
@@ -333,8 +345,8 @@
 			else
 				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
 
-			var/flick_anim = "spawn-wall"
-			src.decal = new /obj/decal/flock_build_wall
+			var/flick_anim = "spawn-barricade"
+			src.decal = new /obj/decal/flock_build_barricade
 			if(src.decal)
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
@@ -652,7 +664,7 @@
 		var/difference = target.goal - target.currentmats
 		amounttopay = min(F.resources, difference, FLOCK_GHOST_DEPOSIT_AMOUNT)
 		F.pay_resources(amounttopay)
-		target.currentmats += amounttopay
+		target.add_mats(amounttopay)
 		if(F.resources)
 			src.onRestart() //restart the action akin to automenders
 

@@ -107,8 +107,8 @@
 		var/turf/spawnturf = V.coffin_turf
 		if (istype(spawnturf,/turf/space))
 			spawnturf = get_turf(M)
-
-		if (spawnturf.z != M.z)
+		var/turf/owner_turf = get_turf(M)
+		if (spawnturf.z != owner_turf?.z)
 			boutput(M, "<span class='alert'>You cannot escape to a different Z-level.</span>")
 			return 1
 

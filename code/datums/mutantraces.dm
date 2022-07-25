@@ -73,7 +73,8 @@ TYPEINFO(/datum/mutantrace)
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
 	var/genetics_removable = TRUE
-
+	/// Should they be able to walk on shards barefoot
+	var/can_walk_on_shards = FALSE
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
@@ -1308,6 +1309,7 @@ TYPEINFO(/datum/mutantrace)
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
+	can_walk_on_shards = TRUE
 
 	head_offset = 5
 	hand_offset = 3
@@ -1903,6 +1905,7 @@ TYPEINFO(/datum/mutantrace)
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list("english", "kudzu")
 	movement_modifier = /datum/movement_modifier/kudzu
+	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
 		"left_eye"=/obj/item/organ/eye/synth,\
@@ -2046,6 +2049,7 @@ TYPEINFO(/datum/mutantrace)
 	color_channel_names = list("Horn Detail", "Hoof Detail")
 	eye_state = "eyes-cow"
 	dna_mutagen_banned = FALSE
+	can_walk_on_shards = TRUE
 	self_click_fluff = list("fur", "hooves", "horns")
 
 	New(var/mob/living/carbon/human/H)
@@ -2114,7 +2118,7 @@ TYPEINFO(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B> dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return

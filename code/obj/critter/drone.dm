@@ -16,6 +16,7 @@
 	firevuln = 0.5
 	brutevuln = 1
 	miscvuln = 0
+	attack_range = 7
 	luminosity = 5
 	seekrange = 15
 	flying = 1
@@ -362,7 +363,7 @@
 					src.task = "thinking"
 					walk_to(src,0)
 				if (target)
-					if (get_dist(src, src.target) <= 7)
+					if (get_dist(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
@@ -545,7 +546,7 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
-		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "DEN-3" =17, "erebite" =16)
+		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
@@ -565,7 +566,7 @@
 		projectile_type = /datum/projectile/bullet/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		attack_cooldown = 20
-		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "DEN-3" =17)
+		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
@@ -646,6 +647,7 @@
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
+		attack_range = 1
 		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
@@ -675,6 +677,13 @@
 			..()
 			name = "Drone CR-[rand(1,999)]"
 			return
+
+		bullet_act(var/obj/projectile/P)
+			if (isobj(P.shooter))
+				var/obj/O = P.shooter
+				if(istype(O, /obj/critter/gunbot/drone/buzzdrone)) //No more friendly fire at melee range
+					return
+			..()
 
 		fish
 			name = "Syndicate FishDrone"
@@ -755,7 +764,7 @@
 		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
-		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "DEN-3" =20)
+		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -770,7 +779,7 @@
 		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
-		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "DEN-3" =22, "butt"=10) //heh
+		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
 
 		New()
 			..()

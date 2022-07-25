@@ -40,7 +40,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = 18
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -578,6 +578,7 @@
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuriken"
@@ -1017,6 +1018,7 @@
 	throw_speed = 1
 	throw_range = 5
 	is_syndicate = TRUE
+	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'

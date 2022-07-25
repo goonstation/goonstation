@@ -565,8 +565,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			src.lastattacked = src
 
 	weapon_attack(atom/target, obj/item/W, reach, params)
-		if(issmallanimal(src) && src.ghost_spawned && (ghostcritter_blocked[target.type] || ghostcritter_blocked[W.type]))
-			return
+		if (isobj(target))
+			var/obj/O = target
+			if(issmallanimal(src) && src.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
+				return
 		. = ..()
 
 	hand_attack(atom/target, params)

@@ -784,7 +784,7 @@
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
@@ -876,6 +876,7 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
+	default_material = "rock"
 	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall, /obj/machinery/door/poddoor/blast/asteroid)
 
 #ifdef UNDERWATER_MAP
@@ -1740,6 +1741,7 @@ obj/item/clothing/gloves/concussive
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
 	var/hacked = 0

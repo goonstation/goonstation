@@ -437,9 +437,9 @@
 	var/armor = 0
 
 	if (src.material)
-		if (src.material.getProperty("density") >= 10)
-			armor += round(src.material.getProperty("density") / 10)
-		else if (src.material.hasProperty("density") && src.material.getProperty("density") < 10)
+		if (src.material.getProperty("density") >= 3)
+			armor += round(src.material.getProperty("density"))
+		else
 			amount += rand(1,3)
 
 	amount = get_damage_after_percentage_based_armor_reduction(armor,amount)
@@ -737,6 +737,10 @@
 	..()
 	if (!src.simple_lock)
 		src.verbs -= /obj/machinery/door/unpowered/wood/verb/simple_lock
+	if (istype(get_area(src), /area/centcom/offices))
+		var/area/centcom/offices/O = get_area(src)
+		if (O.icon_state == "blue")
+			src.locked = TRUE
 
 /obj/machinery/door/unpowered/wood/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
