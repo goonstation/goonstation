@@ -319,26 +319,23 @@
 
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
-	var/suit_style_holder
-	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		// Set appropriate jumpsuit/skirt style according to user preference
-		if (H.client.preferences.suitStyle == STYLE_DRESS)
-			suit_style_holder = "[weighted_pick(JOB.slot_jump)]/dress"
-			// See if a dress version actually exists, if not, give them their normally assigned jumpsuit
-			if(!text2path(suit_style_holder))
-				suit_style_holder = "[weighted_pick(JOB.slot_jump)]"
+	if (JOB.slot_jump)
+		var/suit_style_holder
+		var/jump_holder
+		// Are there multiple jumpsuits to choose from? If so, pick a jumpsuit from the list using the weights provided.
+		if (length(JOB.slot_jump) > 1)
+			jump_holder = "[weighted_pick(JOB.slot_jump)]"
+		// If there is only one jumpsuit in the list, just pick the list item.
 		else
-			suit_style_holder = "[weighted_pick(JOB.slot_jump)]"
-		H.equip_new_if_possible(text2path(suit_style_holder), H.slot_w_uniform)
-	else if (length(JOB.slot_jump))
-		// Set appropriate jumpsuit/skirt style according to user preference
+			jump_holder = "[JOB.slot_jump[1]]"
+		// Append "/dress" to the obj path if the client preferences dresses
 		if (H.client.preferences.suitStyle == STYLE_DRESS)
-			suit_style_holder = "[JOB.slot_jump[1]]/dress"
-			// See if a dress version actually exists, if not, give them their normally assigned jumpsuit
-			if(!text2path(suit_style_holder))
-				suit_style_holder = "[JOB.slot_jump[1]]"
+			suit_style_holder = "[jump_holder]/dress"
+			// Test if a dress variant of the jumpsuit exist. If not, set it back to the original jumpsuit.
+			if (!text2path(suit_style_holder))
+				suit_style_holder = "[jump_holder]"
 		else
-			suit_style_holder = "[JOB.slot_jump[1]]"
+			suit_style_holder = "[jump_holder]"
 		H.equip_new_if_possible(text2path(suit_style_holder), H.slot_w_uniform)
 	// Backpack and contents
 	if (JOB.slot_back && length(JOB.slot_back) > 1)
