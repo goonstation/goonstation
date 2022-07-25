@@ -64,6 +64,10 @@ export const CharacterTab = (_props, context) => {
             <CustomDetail id="underwear" color={data.underwearColor} style={data.underwearStyle} />
           </LabeledList.Item>
           <LabeledList.Divider />
+          <LabeledList.Item label="Uniform Style">
+            <Button onClick={() => act('update-uniformStyle')}>{data.uniformStyle}</Button>
+          </LabeledList.Item>
+          <LabeledList.Divider />
         </LabeledList>
       </Section>
       <Section title="Sounds">
