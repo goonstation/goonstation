@@ -100,7 +100,7 @@
 
 		else if (href_list["fuel"])
 			if (src.fuel_tank)
-				src.visible_message("<span class='notice'>[usr] removes the [src.fuel_tank] from the [src].</span>")
+				src.visible_message("<span class='notice'>[usr] removes [src.fuel_tank] from the [src].</span>")
 				src.eject_fuel_tank(usr)
 
 			else
@@ -111,7 +111,7 @@
 						return
 
 					if (!src.get_average_volatility(I.reagents))
-						boutput(usr, "<span class='alert'>The [I] doesn't contain any fuel!</span>")
+						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any fuel!</span>")
 						return
 
 					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
@@ -123,7 +123,7 @@
 
 		else if (href_list["inlet"])
 			if (src.inlet_tank)
-				src.visible_message("<span class='notice'>[usr] removes the [src.inlet_tank] from the [src].</span>")
+				src.visible_message("<span class='notice'>[usr] removes [src.inlet_tank] from the [src].</span>")
 				src.eject_inlet_tank(usr)
 
 			else
@@ -134,7 +134,7 @@
 						return
 
 					if (src.check_tank_oxygen(I))
-						boutput(usr, "<span class='alert'>The [I] doesn't contain any oxygen.</span>")
+						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
 						return
 
 					src.visible_message("<span class='notice'>[usr] loads [I] into the [src].</span>")
@@ -158,7 +158,7 @@
 				return
 
 			if (!src.check_tank_oxygen(W))
-				boutput(user, "<span class='alert'>The [W] doesn't contain any oxygen.</span>")
+				boutput(user, "<span class='alert'>The [W.name] doesn't contain any oxygen.</span>")
 				return
 
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
@@ -176,7 +176,7 @@
 				return
 
 			if (!src.get_average_volatility(W.reagents))
-				boutput(user, "<span class='alert'>The [W] doesn't contain any fuel!</span>")
+				boutput(user, "<span class='alert'>The [W.name] doesn't contain any fuel!</span>")
 				return
 
 			src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
@@ -396,11 +396,11 @@
 		if (!src || !src.inlet_tank)
 			return
 
-		src.inlet_tank = null
-
 		src.inlet_tank.set_loc(get_turf(src))
 		if (istype(user))
 			user.put_in_hand_or_eject(src.inlet_tank)
+
+		src.inlet_tank = null
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
