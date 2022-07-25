@@ -1505,7 +1505,7 @@
 
 	CritterDeath()
 		..()
-		src.reagents.add_reagent("viper_venom", 40, null)
+		src.reagents.add_reagent("viper_venom", 100, null)
 		return
 
 	seek_target()
@@ -1527,7 +1527,7 @@
 						if (issilicon(C) && src.atksilicon) src.attack = 1
 						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
-							C.reagents?.add_reagent("viper_venom", rand(15,25))
+							C.reagents?.add_reagent("viper_venom", rand(25,35))
 							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 							C.emote("scream")
 					if (1 to 2)
@@ -1558,7 +1558,7 @@
 		..()
 		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-			M.reagents?.add_reagent("viper_venom", rand(10,15))
+			M.reagents?.add_reagent("viper_venom", rand(15,30))
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			M.emote("scream")
 		src.task = "chasing"
