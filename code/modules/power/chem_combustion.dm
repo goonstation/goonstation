@@ -205,6 +205,12 @@
 		src.updateUsrDialog()
 		return
 
+#define FUEL_QUALITY_VERY_HIGH 8
+#define FUEL_QUALITY_HIGH 5
+#define FUEL_QUALITY_AVERAGE 3
+#define FUEL_QUALITY_LOW 2
+#define FUEL_QUALITY_VERY_LOW 1
+
 	process()
 		if (!src || !src.active)
 			return
@@ -218,17 +224,17 @@
 
 		if (!src.anchored)
 			src.stop_engine()
-			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, its become unanchored!</span>")
+			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
 			return
 
 		var/obj/cable/C = src.get_output_cable()
 		if (!C)
-			src.stop_engine(audio = 0)
+			src.stop_engine()
 			src.visible_message("<span class='alert'>Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!</span>")
-			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
+			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		src.last_output = src.standard_power_output * ((average_volatility / 3) * (available_oxygen * 5))
+		src.last_output = src.standard_power_output * ((average_volatility / FUEL_QUALITY_AVERAGE) * (available_oxygen * 5))
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output WATTS
 
@@ -252,7 +258,47 @@
 		src.UpdateIcon()
 		src.updateDialog()
 
-	proc/start_engine(var/audio = 1)
+	proc/get_average_volatility(datum/reagents/R)
+		if (!R || !R.total_volume)
+			return
+
+		var/average = 0
+		for (var/reagent_id in R.reagent_list)
+			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+			if (current_reagent)
+				switch(reagent_id)
+					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
+						average += (FUEL_QUALITY_VERY_HIGH * current_reagent.volume)
+
+					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
+						average += (FUEL_QUALITY_HIGH * current_reagent.volume)
+
+					if ("fuel", "acetone")
+						average += (FUEL_QUALITY_AVERAGE * current_reagent.volume)
+
+					if ("oil", "butter", "diethylamine", "ethanol")
+						average += (FUEL_QUALITY_LOW * current_reagent.volume)
+
+					if ("plasma", "magnesium", "phosphorus")
+						average += (FUEL_QUALITY_VERY_LOW * current_reagent.volume)
+
+					else
+						var/datum/reagent/fooddrink/alcoholic/current_alcoholic_reagent = current_reagent
+						if (istype(current_alcoholic_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
+							average += 3
+
+		if (!average)
+			return 0
+
+		return average / R.total_volume
+
+#undef FUEL_QUALITY_VERY_HIGH
+#undef FUEL_QUALITY_HIGH
+#undef FUEL_QUALITY_AVERAGE
+#undef FUEL_QUALITY_LOW
+#undef FUEL_QUALITY_VERY_LOW
+
+	proc/start_engine()
 		if (!src.active)
 			if (!src.ready_to_start())
 				return 1
@@ -260,17 +306,22 @@
 			src.active = 1
 			src.UpdateIcon()
 			src.updateDialog()
-			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+
+			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
+				playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
 
 			return 0
 
-	proc/stop_engine(var/audio = 1)
+	proc/stop_engine()
 		if (src.active)
 			src.active = 0
 			src.UpdateIcon()
 			src.updateDialog()
 
-			if (audio) playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
+				playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+
+			return 0
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
@@ -312,53 +363,6 @@
 
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
-
-#define QUALITY_VERY_HIGH 5
-#define QUALITY_HIGH 4
-#define QUALITY_AVERAGE 3
-#define QUALITY_LOW 2
-#define QUALITY_VERY_LOW 1
-
-	proc/get_average_volatility(datum/reagents/R)
-		if (!R || !R.total_volume)
-			return
-
-		var/average = 0
-		for (var/reagent_id in R.reagent_list)
-			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-			if (current_reagent)
-				switch(reagent_id)
-					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
-						average += (QUALITY_VERY_HIGH * current_reagent.volume)
-
-					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
-						average += (QUALITY_HIGH * current_reagent.volume)
-
-					if ("fuel", "acetone")
-						average += (QUALITY_AVERAGE * current_reagent.volume)
-
-					if ("oil", "butter", "diethylamine", "ethanol")
-						average += (QUALITY_LOW * current_reagent.volume)
-
-					if ("plasma", "magnesium", "phosphorus")
-						average += (QUALITY_VERY_LOW * current_reagent.volume)
-
-					else
-						var/datum/reagent/fooddrink/alcoholic/current_alcoholic_reagent = current_reagent
-						if (istype(current_alcoholic_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
-							average += 3
-
-		if (!average)
-			return 0
-
-		return average / R.total_volume
-
-#undef QUALITY_VERY_HIGH
-#undef QUALITY_HIGH
-#undef QUALITY_AVERAGE
-#undef QUALITY_LOW
-#undef QUALITY_VERY_LOW
-
 	proc/get_output_cable()
 		var/list/cables = src.get_connections()
 
@@ -375,16 +379,18 @@
 		if (!src || !src.fuel_tank)
 			return
 
-		src.fuel_tank = null
-		src.stop_engine()
+		if (src.active)
+			src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
+			src.stop_engine()
 
 		src.fuel_tank.set_loc(get_turf(src))
 		if (istype(user))
 			user.put_in_hand_or_eject(src.fuel_tank)
 
+		src.fuel_tank = null
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-		src.visible_message("<span class='notice'>The [src] stops as the fuel tank is removed.</span>")
+
 
 	proc/eject_inlet_tank(var/mob/user)
 		if (!src || !src.inlet_tank)
@@ -398,6 +404,8 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+
+
 
 /*	smelly verbs
 	verb/start_stop()
