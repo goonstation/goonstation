@@ -25,7 +25,6 @@
 	is_syndicate = TRUE
 	issawfly = TRUE
 	contraband = 5
-	mats = list( "MET-3" = 7, "MET-1"= 15, "INS-1" = 5, "CON-1" = 7, "POW-1" =5, "CRY-1" = 15)
 
 
 	prime()
@@ -89,7 +88,6 @@
 	is_syndicate = TRUE
 	issawfly = TRUE
 	contraband = 5
-	mats = list( "MET-3" =60, "MET-2"= 60, "INS-1" = 30, "CON-1" = 35, "POW-2" =25, "CRY-1" = 60)
 
 	New()
 		..()
