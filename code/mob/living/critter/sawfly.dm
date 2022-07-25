@@ -197,9 +197,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				if(isalive(src))
 					src.is_npc = FALSE
 					ghostize() // should any admins have any funny ideas, prevent crashing
-					SPAWN(1)
-						boutput(user, "You collapse [src].")
-						src.foldself()
+					boutput(user, "You collapse [src].")
+					src.foldself()
 		else
 			if(prob(50)&& isalive(src))
 				boutput(user, "<span class='alert' In your attempt to pet [src], you cut yourself on it's blades!</span>")
@@ -216,7 +215,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(!isalive(src)) src.set_density(FALSE) //according to lizzle something in the mob life resets density so this has to be below parent-
 
 
-/mob/living/critter/robotic/sawfly/withai
+/mob/living/critter/robotic/sawfly/ai_controlled
 
 	New()
 		..()

@@ -29,7 +29,7 @@
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			new /mob/living/critter/robotic/sawfly/withai(T)
+			new /mob/living/critter/robotic/sawfly/ai_controlled(T)
 		qdel(src)
 		return
 
@@ -82,7 +82,7 @@
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
-	payload = /mob/living/critter/robotic/sawfly/withai
+	payload = /mob/living/critter/robotic/sawfly/ai_controlled
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	issawfly = TRUE
@@ -119,7 +119,8 @@
 					S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
 					S.icon_state = "sawfly1"
 					SPAWN(S.det_time)
-						S.prime()
+						if(S)
+							S.prime()
 
 				if (istype(S, /obj/item/old_grenade/spawner/sawflycluster))
 					S.visible_message("<span class='combat'>The [S] suddenly begins beeping as it is primed!</span>")
@@ -128,7 +129,8 @@
 					else
 						S.icon_state = "clusterflyB1"
 					SPAWN(S.det_time)
-						S.prime()
+						if(S)
+							S.prime()
 			else
 				continue
 
