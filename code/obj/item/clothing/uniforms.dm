@@ -45,7 +45,7 @@
 		icon_state = "grey"
 		item_state = "grey"
 
-		skirt
+		dress
 			name = "grey jumpskirt"
 			icon_state = "grey-dress"
 			item_state = "grey-dress"
@@ -60,7 +60,7 @@
 		icon_state = "white"
 		item_state = "white"
 
-		skirt
+		dress
 			name = "white jumpskirt"
 			icon_state = "white-dress"
 			item_state = "white-dress"
@@ -71,7 +71,7 @@
 		icon_state = "darkred"
 		item_state  = "darkred"
 
-		skirt
+		dress
 			name = "dark red jumpskirt"
 			icon_state = "darkred-dress"
 			item_state = "darkred-dress"
@@ -81,7 +81,7 @@
 		icon_state = "red"
 		item_state = "red"
 
-		skirt
+		dress
 			name = "red jumpskirt"
 			icon_state = "red-dress"
 			item_state = "red-dress"
@@ -91,7 +91,7 @@
 		icon_state = "lightred"
 		item_state  = "lightred"
 
-		skirt
+		dress
 			name = "light red jumpskirt"
 			icon_state = "lightred-dress"
 			item_state = "lightred-dress"
@@ -101,7 +101,7 @@
 		icon_state = "orange"
 		item_state = "orange"
 
-		skirt
+		dress
 			name = "orange jumpskirt"
 			icon_state = "orange-dress"
 			item_state = "orange-dress"
@@ -111,7 +111,7 @@
 		icon_state = "brown"
 		item_state  = "brown"
 
-		skirt
+		dress
 			name = "brown jumpskirt"
 			icon_state = "brown-dress"
 			item_state = "brown-dress"
@@ -121,7 +121,7 @@
 		icon_state = "lightbrown"
 		item_state  = "lightbrown"
 
-		skirt
+		dress
 			name = "tan jumpskirt"
 			icon_state = "lightbrown-dress"
 			item_state = "lightbrown-dress"
@@ -131,7 +131,7 @@
 		icon_state = "yellow"
 		item_state = "yellow"
 
-		skirt
+		dress
 			name = "yellow jumpskirt"
 			icon_state = "yellow-dress"
 			item_state = "yellow-dress"
@@ -141,7 +141,7 @@
 		icon_state = "yellowgreen"
 		item_state  = "yellowgreen"
 
-		skirt
+		dress
 			name = "olive jumpskirt"
 			icon_state = "yellowgreen-dress"
 			item_state = "yellowgreen-dress"
@@ -151,7 +151,7 @@
 		icon_state = "lightgreen"
 		item_state = "lightgreen"
 
-		skirt
+		dress
 			name = "lime jumpskirt"
 			icon_state = "lightgreen-dress"
 			item_state = "lightgreen-dress"
@@ -161,7 +161,7 @@
 		icon_state = "green"
 		item_state = "green"
 
-		skirt
+		dress
 			name = "green jumpskirt"
 			icon_state = "green-dress"
 			item_state = "green-dress"
@@ -171,7 +171,7 @@
 		icon_state = "aqua"
 		item_state  = "aqua"
 
-		skirt
+		dress
 			name = "cyan jumpskirt"
 			icon_state = "aqua-dress"
 			item_state = "aqua-dress"
@@ -181,7 +181,7 @@
 		icon_state = "lightblue"
 		item_state  = "lightblue"
 
-		skirt
+		dress
 			name = "sky blue jumpskirt"
 			icon_state = "lightblue-dress"
 			item_state = "lightblue-dress"
@@ -191,7 +191,7 @@
 		icon_state = "blue"
 		item_state = "blue"
 
-		skirt
+		dress
 			name = "blue jumpskirt"
 			icon_state = "blue-dress"
 			item_state = "blue-dress"
@@ -201,7 +201,7 @@
 		icon_state = "darkblue"
 		item_state  = "darkblue"
 
-		skirt
+		dress
 			name = "indigo jumpskirt"
 			icon_state = "darkblue-dress"
 			item_state = "darkblue-dress"
@@ -211,7 +211,7 @@
 		icon_state = "purple"
 		item_state  = "purple"
 
-		skirt
+		dress
 			name = "purple jumpskirt"
 			icon_state = "purple-dress"
 			item_state = "purple-dress"
@@ -221,7 +221,7 @@
 		icon_state = "lightpurple"
 		item_state  = "lightpurple"
 
-		skirt
+		dress
 			name = "violet jumpskirt"
 			icon_state = "lightpurple-dress"
 			item_state = "lightpurple-dress"
@@ -231,7 +231,7 @@
 		icon_state = "magenta"
 		item_state = "magenta"
 
-		skirt
+		dress
 			name = "magenta jumpskirt"
 			icon_state = "magenta-dress"
 			item_state = "magenta-dress"
@@ -241,7 +241,7 @@
 		icon_state = "pink"
 		item_state = "pink"
 
-		skirt
+		dress
 			name = "pink jumpskirt"
 			icon_state = "pink-dress"
 			item_state = "pink-dress"
@@ -368,7 +368,7 @@
 		icon_state = "assistant-alt"
 		item_state = "assistant-alt"
 
-	skirt
+	dress
 		name = "staff assistant's jumpskirt"
 		desc = "It's a generic grey jumpskirt. That's about what assistants are worth, anyway."
 		icon_state = "assistant-dress"
@@ -552,7 +552,7 @@
 	icon_state = "detective"
 	item_state = "detective"
 
-	skirt
+	dress
 		icon_state = "detective-dress"
 		item_state = "detective-dress"
 
