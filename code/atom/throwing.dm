@@ -64,7 +64,6 @@
 	impact_sfx = overwritten_impact_sfx
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
-	return FALSE
 
 /atom/movable/bump(atom/O)
 	if(src.throwing)
