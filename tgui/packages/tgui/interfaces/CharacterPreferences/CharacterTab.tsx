@@ -65,7 +65,7 @@ export const CharacterTab = (_props, context) => {
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Suit Style">
-            <Button onClick={() => act('update-suitStyle')}>{data.suitStyle}</Button>
+            <Button onClick={() => act('update-suitStyle')}>{data.suitStyle ? "Dress" : "Suit"}</Button>
           </LabeledList.Item>
           <LabeledList.Divider />
         </LabeledList>

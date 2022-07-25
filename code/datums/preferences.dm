@@ -188,7 +188,7 @@ datum/preferences
 			"customStyle3" = src.AH.customization_third.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
-			"suitStyle" = isnull(uniform) ? "Suit" : src.suitStyle,
+			"suitStyle" = src.suitStyle,
 			"randomAppearance" = src.be_random_look,
 
 			"fontSize" = src.font_size,
