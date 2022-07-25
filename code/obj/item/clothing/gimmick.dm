@@ -610,6 +610,10 @@
 	icon_state = "merchant"
 	item_state = "merchant"
 
+	dress
+		icon_state = "merchant-dress"
+		item_state = "merchant-dress"
+
 /obj/item/clothing/suit/merchant
 	name = "Salesman's Jacket"
 	desc = "Delightfully tacky."
@@ -1557,6 +1561,9 @@
 	name = "absurdly stylish suit and vest"
 	desc = "You can<i>count</i> on this suit and vest to make you look real suave, yeah."
 	icon_state = "vampcostume"
+
+	dress
+		icon_state = "vampcostume-dress"
 
 /obj/item/clothing/suit/gimmick/vampire
 	name = "absurdly stylish cape"
