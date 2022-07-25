@@ -1255,6 +1255,7 @@ datum
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(1*mult)
 				random_brute_damage(M, 1*mult, FALSE)
+				bleed(M, rand(4,5) * mult, 3 * mult)
 
 				if (prob(25))
 					M.reagents.add_reagent("histamine", rand(5,10) * mult)
@@ -1262,7 +1263,6 @@ datum
 				if (probmult(10))
 					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
-					bleed(M, rand(30,60), rand(3,9))
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
 
