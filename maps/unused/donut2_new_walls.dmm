@@ -6233,6 +6233,10 @@
 /area/station/hangar/main)
 "apv" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -7358,6 +7362,7 @@
 /area/station/hangar/main)
 "asl" = (
 /obj/item/rods/steel,
+/obj/item/sheet/steel,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asm" = (
@@ -7647,11 +7652,11 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "asW" = (
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asX" = (
@@ -8674,10 +8679,6 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "avP" = (
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
 /obj/storage/closet/fire,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/orangeblack/side{
@@ -9642,6 +9643,10 @@
 /obj/machinery/dispenser{
 	pltanks = 0
 	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -9972,7 +9977,7 @@
 	},
 /area/station/hangar/main)
 "azb" = (
-/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/tools/one,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "azc" = (
@@ -10453,7 +10458,7 @@
 /obj/item/sheet/steel{
 	amount = 20
 	},
-/obj/item/sheet/glass,
+/obj/item/sheet/glass/fullstack,
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/main)
 "aAi" = (
@@ -10479,6 +10484,10 @@
 	pixel_x = 4
 	},
 /obj/item/device/light/flashlight,
+/obj/machinery/light/emergency{
+	dir = 4;
+	icon_state = "ebulb1"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
 	},
@@ -37616,6 +37625,10 @@
 "ecY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
+"eeo" = (
+/obj/item/wrench,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "efQ" = (
 /obj/cable{
 	d1 = 4;
@@ -41054,6 +41067,13 @@
 	dir = 5
 	},
 /area/station/mining/staff_room)
+"kiY" = (
+/obj/machinery/light/small{
+	dir = 8;
+	icon_state = "bulb1"
+	},
+/turf/space,
+/area/space)
 "kjH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -43775,6 +43795,14 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"oZB" = (
+/obj/machinery/vehicle/miniputt,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "pao" = (
 /obj/machinery/power/smes{
 	charge = 5e+006
@@ -45124,6 +45152,10 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "rkg" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	icon_state = "ebulb1"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -45761,6 +45793,19 @@
 	},
 /turf/space,
 /area/space)
+"spH" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "sqw" = (
 /obj/machinery/phone/wall{
 	pixel_y = -20
@@ -45803,6 +45848,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"svh" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "svD" = (
 /obj/cable{
 	d1 = 1;
@@ -49011,6 +49063,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"ydP" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "yeB" = (
 /obj/storage/secure/closet/medical/cloning,
 /obj/machinery/light/emergency{
@@ -83350,7 +83409,7 @@ aBc
 ayg
 aza
 aAd
-apk
+jnM
 aIJ
 axc
 axS
@@ -83652,8 +83711,8 @@ axm
 azc
 avg
 aAe
-apk
-aIJ
+jnM
+spH
 axc
 axR
 aEk
@@ -84550,7 +84609,7 @@ asi
 asS
 arF
 avi
-avi
+ydP
 apk
 eQM
 apk
@@ -85450,7 +85509,7 @@ apQ
 azb
 aqw
 apt
-apt
+oZB
 apt
 apR
 asU
@@ -85749,7 +85808,7 @@ aaa
 apl
 apR
 apR
-apR
+eeo
 aqu
 apY
 apY
@@ -86657,7 +86716,7 @@ apx
 apR
 apR
 aqx
-apR
+svh
 apR
 apR
 apR
@@ -87870,9 +87929,9 @@ aaa
 aaa
 aaa
 aaa
+kiY
 aaa
-aaa
-aaa
+kiY
 avk
 avR
 asa
