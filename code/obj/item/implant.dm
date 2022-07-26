@@ -648,7 +648,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "syndicate"
 	var/uses = 1
 	var/expire = TRUE
-	var/mob/implant_hacker = null // who is the person mindslaving the implanted person
+	var/mob/implant_hacker = null // who is the person mindhacking the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
