@@ -320,23 +320,24 @@
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
 	if (JOB.slot_jump)
-		var/suit_style_holder
-		var/jump_holder
-		// Are there multiple jumpsuits to choose from? If so, pick a jumpsuit from the list using the weights provided.
-		if (length(JOB.slot_jump) > 1)
-			jump_holder = "[weighted_pick(JOB.slot_jump)]"
-		// If there is only one jumpsuit in the list, just pick the list item.
-		else
-			jump_holder = "[JOB.slot_jump[1]]"
-		// Append "/dress" to the obj path if the client preferences dresses
-		if (H.client?.preferences.suitStyle == STYLE_DRESS)
-			suit_style_holder = "[jump_holder]/dress"
-			// Test if a dress variant of the jumpsuit exist. If not, set it back to the original jumpsuit.
-			if (!text2path(suit_style_holder))
+		if (length(JOB.slot_jump))
+			var/suit_style_holder
+			var/jump_holder
+			// Are there multiple jumpsuits to choose from? If so, pick a jumpsuit from the list using the weights provided.
+			if (length(JOB.slot_jump) > 1)
+				jump_holder = "[weighted_pick(JOB.slot_jump)]"
+			// If there is only one jumpsuit in the list, just pick the list item.
+			else
+				jump_holder = "[JOB.slot_jump[1]]"
+			// Append "/dress" to the obj path if the client preferences dresses
+			if (H.client?.preferences.suitStyle == STYLE_DRESS)
+				suit_style_holder = "[jump_holder]/dress"
+				// Test if a dress variant of the jumpsuit exist. If not, set it back to the original jumpsuit.
+				if (!text2path(suit_style_holder))
+					suit_style_holder = "[jump_holder]"
+			else
 				suit_style_holder = "[jump_holder]"
-		else
-			suit_style_holder = "[jump_holder]"
-		H.equip_new_if_possible(text2path(suit_style_holder), H.slot_w_uniform)
+			H.equip_new_if_possible(text2path(suit_style_holder), H.slot_w_uniform)
 	// Backpack and contents
 	if (JOB.slot_back && length(JOB.slot_back) > 1)
 		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
