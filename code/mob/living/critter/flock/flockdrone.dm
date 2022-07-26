@@ -1028,13 +1028,10 @@
 	reload_time = 15
 	reloading_str = "recharging"
 
-/datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
-	if (isflockmob(target))
-		return
-	return ..()
-
-/datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
+/datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
 	if(!target || !user)
+		return
+	if (isflockmob(target) && point_blank)
 		return
 	return ..()
 

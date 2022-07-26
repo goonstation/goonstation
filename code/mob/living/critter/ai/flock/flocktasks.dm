@@ -758,7 +758,7 @@ stare
 	if(length(F.flock?.enemies))
 		var/datum/handHolder/HH = F.hands[3]
 		var/datum/limb/gun/stunner = HH?.limb
-		if(istype(stunner) && !stunner.is_on_cooldown())
+		if(istype(stunner) && !stunner.is_on_cooldown(F))
 			return TRUE
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
