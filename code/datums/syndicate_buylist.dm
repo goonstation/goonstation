@@ -352,7 +352,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/mindhack
-	name = "Mind Slave implant"
+	name = "Mind Hack implant"
 	item = /obj/item/implanter/mindhack
 	cost = 3
 	vr_allowed = 0
@@ -360,11 +360,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack
-	name = "Deluxe Mind Slave implant"
+	name = "Deluxe Mind Hack implant"
 	item = /obj/item/implanter/super_mindhack
 	cost = 6
 	vr_allowed = 0
-	desc = "Place an injected victim under your complete control! Enhanced neurostimulators make this version last virtually indefinitely!"
+	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/microbomb
