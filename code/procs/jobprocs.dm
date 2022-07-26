@@ -329,7 +329,7 @@
 		else
 			jump_holder = "[JOB.slot_jump[1]]"
 		// Append "/dress" to the obj path if the client preferences dresses
-		if (H.client.preferences.suitStyle == STYLE_DRESS) //
+		if (H.client.preferences.suitStyle == STYLE_DRESS)
 			suit_style_holder = "[jump_holder]/dress"
 			// Test if a dress variant of the jumpsuit exist. If not, set it back to the original jumpsuit.
 			if (!text2path(suit_style_holder))
