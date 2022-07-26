@@ -30,7 +30,7 @@ Modules to do things with cloning modules
 
 /obj/item/cloneModule/mindhack_module
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "slavemodule"
+	icon_state = "mindhack"
 	name = "Mindhack cloning module"
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"
 

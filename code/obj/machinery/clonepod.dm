@@ -31,7 +31,7 @@
 	var/id = null
 	var/emagged = FALSE
 
-	var/cloneslave = 0 //Is a traitor mindhacking the clones?
+	var/clonehack = 0 //Is a traitor mindhacking the clones?
 	var/mob/implant_hacker = null // Who controls the clones?
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
@@ -159,7 +159,7 @@
 		if (src.mess)
 			src.icon_state = "pod_g"
 		else
-			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.cloneslave ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
+			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.clonehack ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
 
 
 	proc/start_clone(force = 0)
@@ -330,20 +330,14 @@
 			src.reagents.trans_to(src.occupant, 1000)
 
 			// Oh boy someone is cloning themselves up an army!
-		if(cloneslave && implant_hacker != null)
+		if(clonehack && implant_hacker != null)
 			// No need to check near as much with a standard implant, as the cloned person is dead and is therefore enslavable upon cloning.
 			// How did this happen. Why is someone cloning you as a slave to yourself. WHO KNOWS?!
 			if(implant_hacker == src.occupant)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
-				if (src.occupant.mind && ticker.mode)
-					if (!src.occupant.mind.special_role)
-						src.occupant.mind.special_role = ROLE_MINDHACK
-					if (!(src.occupant.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += src.occupant.mind
-					src.occupant.mind.master = implant_hacker.ckey
-				boutput(src.occupant, "<h2><span class='alert'>You feel an unwavering loyalty to [implant_hacker]! You feel you must obey [his_or_her(implant_hacker)] every order! Do not tell anyone about this unless [implant_hacker] tells you to!</span></h2>")
-				src.occupant.show_antag_popup("mindhack")
+				src.occupant.setStatus("mindhack", null, implant_hacker)
+
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
@@ -391,7 +385,7 @@
 				power_usage = 200
 				return ..()
 
-			if (src.cloneslave == 1 && prob(10))
+			if (src.clonehack == 1 && prob(10))
 				// Mindhack cloning modules make obnoxious noises.
 				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
 				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
@@ -598,7 +592,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
-			cloneslave = 1
+			clonehack = 1
 			implant_hacker = user
 			light.enable()
 			src.UpdateIcon()
@@ -606,15 +600,15 @@
 			qdel(W)
 			return
 
-		else if(istype(W, /obj/item/screwdriver) && cloneslave == 1) // Wait nevermind the clone wars were a terrible idea
+		else if(istype(W, /obj/item/screwdriver) && clonehack == 1) // Wait nevermind the clone wars were a terrible idea
 			if (src.occupant && src.attempting)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 50) && cloneslave)
+			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
-				cloneslave = 0
+				clonehack = 0
 				implant_hacker = null
 				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor with a dull thunk!</span>")
 				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
