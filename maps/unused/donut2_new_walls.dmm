@@ -6406,12 +6406,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "apQ" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
-	},
-/turf/simulated/floor/shuttlebay,
+/turf/simulated/floor/plating,
 /area/station/hangar/main)
 "apR" = (
 /turf/simulated/floor/shuttlebay,
@@ -6625,16 +6620,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aqy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	tag = ""
 	},
-/obj/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical{
-	pixel_y = -5
-	},
+/obj/machinery/vehicle/pod_smooth/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aqz" = (
@@ -6934,9 +6925,8 @@
 /turf/simulated/floor,
 /area/station/maintenance/north)
 "arl" = (
-/obj/machinery/vehicle/pod_smooth/light,
-/obj/machinery/light,
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/shieldgenerator/meteorshield,
+/turf/simulated/floor,
 /area/station/hangar/main)
 "arm" = (
 /turf/simulated/floor/escape/corner{
@@ -7103,19 +7093,13 @@
 /turf/simulated/floor,
 /area/station/maintenance/north)
 "arF" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 2.5;
-	name = "VACUUM AREA";
-	pixel_x = 0
+/obj/machinery/dispenser{
+	pltanks = 0
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/hangar/main)
+/turf/simulated/floor/grime,
+/area/station/storage/emergency2)
 "arG" = (
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
+/turf/simulated/floor/stairs,
 /area/station/hangar/main)
 "arI" = (
 /obj/machinery/camera{
@@ -7136,16 +7120,8 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "arL" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Pod Bay"
-	},
-/obj/machinery/secscanner{
-	pixel_y = 11
-	},
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
+/obj/machinery/shieldgenerator/meteorshield,
+/turf/simulated/floor/grime,
 /area/station/hangar/main)
 "arM" = (
 /obj/cable,
@@ -7344,6 +7320,7 @@
 	dir = 8;
 	icon_state = "bulb1"
 	},
+/obj/storage/closet/wardrobe/grey,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "asg" = (
@@ -7374,14 +7351,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ask" = (
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/hangar/main)
 "asl" = (
-/obj/machinery/camera{
-	dir = 0
+/obj/decal/poster/wallsign/space{
+	pixel_y = 2;
+	pixel_x = 33
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/turf/simulated/floor/stairs,
+/area/station/hangar/main)
 "asm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
@@ -7647,21 +7628,8 @@
 /turf/simulated/floor/delivery,
 /area/station/quartermaster/office)
 "asR" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Pod Bay"
-	},
-/obj/machinery/secscanner{
-	pixel_y = 11
-	},
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
+/obj/machinery/light,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asS" = (
 /turf/simulated/floor,
@@ -7670,9 +7638,8 @@
 /turf/simulated/floor/scorched,
 /area/station/maintenance/north)
 "asU" = (
-/turf/simulated/floor/caution/south{
-	dir = 2
-	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asV" = (
 /obj/machinery/light/small{
@@ -7685,8 +7652,9 @@
 	brightness = 2;
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "asX" = (
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
@@ -7871,18 +7839,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "att" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/stairs{
-	dir = 1
-	},
+/turf/simulated/floor/stairs,
 /area/station/hangar/main)
 "atu" = (
 /obj/machinery/light{
@@ -8109,7 +8071,10 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
 /area/station/hangar/main)
 "atW" = (
 /obj/table/wood/auto,
@@ -8270,9 +8235,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/caution/south{
-	dir = 2
-	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aut" = (
 /obj/stool/chair{
@@ -8402,9 +8366,6 @@
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
-	},
-/obj/submachine/cargopad{
-	name = "Pod Bay Pad"
 	},
 /turf/simulated/floor/grime,
 /area/station/hangar/main)
@@ -8556,12 +8517,11 @@
 	},
 /area/station/quartermaster/office)
 "ave" = (
-/obj/item/device/multitool{
-	pixel_x = -7;
-	pixel_y = 1
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/area/space)
 "avf" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -8716,16 +8676,16 @@
 	},
 /area/station/quartermaster/office)
 "avO" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor,
-/area/station/hangar/main)
+/turf/simulated/floor/grime,
+/area/station/chapel/sanctuary)
 "avP" = (
 /obj/machinery/light/small{
 	dir = 4;
 	icon_state = "bulb1"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
+/obj/storage/closet/fire,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "avQ" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/black,
@@ -8942,12 +8902,13 @@
 	},
 /area/station/quartermaster/office)
 "awB" = (
-/obj/item/clothing/shoes/moon,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "awC" = (
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/storage/emergency2)
+/area/space)
 "awD" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -8961,7 +8922,6 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "awF" = (
-/obj/storage/closet/emergency,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1"
@@ -9271,8 +9231,17 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "axm" = (
-/obj/decal/poster/wallsign/chsl,
-/turf/simulated/wall/auto/supernorn,
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/grime,
 /area/station/storage/emergency2)
 "axn" = (
 /obj/wingrille_spawn/auto,
@@ -9622,7 +9591,6 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/grime,
 /area/station/storage/emergency2)
 "ayi" = (
@@ -9631,58 +9599,28 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/rack,
-/obj/item/tank/air,
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath,
-/turf/simulated/floor/grime,
+/turf/simulated/floor,
 /area/station/storage/emergency2)
 "ayj" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
 	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/dispenser{
-	pltanks = 0
-	},
-/turf/simulated/floor/grime,
-/area/station/storage/emergency2)
+/obj/table/folding,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "ayk" = (
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/rack,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/item/tank/air,
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/obj/item/clothing/mask/breath,
 /turf/simulated/floor/grime,
 /area/station/storage/emergency2)
 "ayl" = (
@@ -9691,27 +9629,34 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/storage/closet/wardrobe/grey,
 /turf/simulated/floor/grime,
 /area/station/storage/emergency2)
 "ayn" = (
 /obj/rack,
-/obj/item/storage/toolbox/mechanical,
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/grime,
-/area/station/storage/emergency2)
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/tank/air,
+/obj/item/clothing/mask/breath{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_y = -4
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "ayo" = (
-/obj/decal/cleanable/cobweb,
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
+/obj/rack,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = -5
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "ayp" = (
 /obj/disposalpipe/segment,
@@ -9727,9 +9672,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ayq" = (
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
+/obj/table/auto,
+/turf/simulated/floor,
 /area/station/chapel/sanctuary)
 "ayr" = (
 /obj/machinery/power/apc{
@@ -10033,13 +9977,13 @@
 /turf/simulated/floor,
 /area/station/storage/emergency2)
 "azf" = (
-/obj/table/wood/auto{
-	dir = 6
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 1
-	},
-/area/station/chapel/sanctuary)
+/obj/storage/crate,
+/obj/item/storage/backpack,
+/obj/item/crowbar,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/mask/balaclava,
+/turf/simulated/floor/grime,
+/area/station/storage/emergency2)
 "azg" = (
 /obj/cable{
 	d1 = 1;
@@ -10477,6 +10421,7 @@
 /obj/item/sheet/steel{
 	amount = 20
 	},
+/obj/item/sheet/glass,
 /turf/simulated/floor,
 /area/station/storage/emergency2)
 "aAi" = (
@@ -10484,15 +10429,22 @@
 	c_tag = "Crew Quarters";
 	dir = 1
 	},
-/obj/storage/crate,
-/obj/item/storage/backpack,
 /obj/machinery/light,
+/obj/rack,
+/obj/item/storage/belt/utility{
+	pixel_y = 3;
+	pixel_x = 4
+	},
+/obj/item/storage/belt/utility,
 /turf/simulated/floor,
 /area/station/storage/emergency2)
 "aAj" = (
-/obj/storage/crate,
-/obj/item/crowbar,
+/obj/rack,
 /obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility{
+	pixel_y = 3;
+	pixel_x = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/emergency2)
 "aAk" = (
@@ -38446,6 +38398,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay/surgery)
+"fzg" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "fzy" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -38931,10 +38888,6 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Pod Bay"
-	},
-/obj/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hangar/main)
@@ -38951,6 +38904,10 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
+"gmJ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "gmR" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -40190,6 +40147,12 @@
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"ivZ" = (
+/obj/item/clothing/shoes/moon,
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "iwD" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -41660,6 +41623,12 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
+"lhP" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "lis" = (
 /obj/machinery/light{
 	dir = 1
@@ -41696,6 +41665,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"lkV" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "llu" = (
 /obj/submachine/chem_extractor{
 	dir = 4;
@@ -42279,6 +42252,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"mnq" = (
+/obj/submachine/cargopad{
+	name = "Pod Bay Pad"
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "mnD" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -43656,10 +43635,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "oSK" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/decal/cleanable/blood,
-/turf/simulated/floor/plating,
-/area/station/storage/emergency2)
+/turf/simulated/floor/grime,
+/area/station/hangar/main)
 "oTE" = (
 /obj/cable{
 	d1 = 1;
@@ -45124,6 +45101,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rld" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "rlp" = (
 /obj/cable/black{
 	icon_state = "1-8"
@@ -47222,6 +47203,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"uNO" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "uOE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47579,6 +47569,10 @@
 /obj/machinery/light,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"vsa" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor,
+/area/station/hangar/main)
 "vuf" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -48729,6 +48723,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
+"xHK" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "xHP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -82419,7 +82419,7 @@ avf
 biJ
 aoN
 asf
-asi
+rld
 axp
 aCp
 axk
@@ -83326,9 +83326,9 @@ wOn
 aoN
 asi
 asi
-asm
-oSK
+xHK
 aBc
+azf
 ayg
 aza
 aAd
@@ -83628,8 +83628,8 @@ atr
 atr
 asi
 asi
-asm
-awB
+ayj
+aBc
 axm
 ayh
 azb
@@ -83922,17 +83922,17 @@ apO
 aqe
 aqt
 auD
-asi
+gmJ
 arB
 asg
 arj
 ats
 asi
-asi
-ave
+rld
 asm
-awC
+asm
 aBc
+arF
 ayi
 azc
 aAf
@@ -84230,12 +84230,12 @@ ash
 asi
 kMs
 asi
-asi
-asi
-asm
+fzg
+lkV
+ivZ
 aBc
-aBc
-ayj
+axm
+ayi
 azd
 aAg
 aBf
@@ -84526,7 +84526,7 @@ aoY
 apr
 aqv
 aqV
-arj
+uNO
 arD
 asi
 asS
@@ -84536,7 +84536,7 @@ apk
 apk
 apk
 apk
-apk
+arL
 ayk
 sFr
 lwT
@@ -84822,10 +84822,10 @@ aaa
 aaa
 aoO
 aoO
-apk
-apk
-apk
-apk
+apl
+apQ
+apQ
+apQ
 apk
 aqW
 ark
@@ -84838,7 +84838,7 @@ auF
 pTo
 eQM
 uRD
-jnM
+oSK
 ayl
 dYy
 aAh
@@ -85124,14 +85124,14 @@ aaa
 aaa
 aaa
 aaa
-apk
-apt
-apQ
-apt
+apl
 apk
 apk
 apk
-arF
+apk
+apk
+apk
+apk
 asj
 asj
 apk
@@ -85426,15 +85426,15 @@ aaa
 aaa
 aaa
 aaa
-apk
+apl
 apu
-apR
-apR
+aqy
+awB
 aqw
+apt
+apt
+apt
 apR
-apR
-arL
-ask
 asU
 arG
 ask
@@ -85442,8 +85442,8 @@ auH
 avg
 avg
 avg
-jnM
-ayn
+avg
+azc
 aze
 aAj
 aBf
@@ -85728,24 +85728,24 @@ aaa
 aaa
 aaa
 aaa
-apk
+apl
 apv
 apY
 apY
 aqu
 apY
 apY
-asR
-atV
+apY
+apY
 aus
 att
 atV
 auI
-avi
-avO
+avg
+avg
 awF
-apk
-awN
+avg
+avO
 awN
 awN
 awN
@@ -86030,25 +86030,25 @@ aaa
 aaa
 aaa
 aaa
-apk
+apl
 apR
-apS
+apR
 apR
 aqx
 apR
-arl
-arF
-asj
-asj
-apk
-apk
-apk
-apk
-apk
-apk
-apk
+apR
+apR
+apR
+asR
+jnM
+mnq
+avg
+avg
+avg
+avg
+avg
 ayo
-azf
+awN
 aAk
 tZf
 aBX
@@ -86334,23 +86334,23 @@ aaa
 aaa
 apl
 apw
-apR
+apS
 apR
 aqx
 apR
 apR
-apk
-asi
-asi
-asi
-asi
-asi
-asi
-asi
-asi
-axp
-aAq
-aBg
+apR
+apR
+asU
+arG
+ask
+avg
+avg
+avg
+avg
+avg
+ayo
+awN
 aAl
 azg
 aBY
@@ -86638,21 +86638,21 @@ apl
 apx
 apR
 apR
-aqy
+aqx
 apR
 apR
-apk
-asl
+apR
+apR
 asW
-asi
-asi
-asi
-asi
+asl
+ask
+avg
+arl
 avP
-asi
-axp
+vsa
+avi
 ayq
-azh
+awN
 aAm
 azh
 aAm
@@ -86941,14 +86941,14 @@ apy
 apy
 apy
 aqz
+apl
 apy
 apy
-apk
-asm
-asm
-asm
-asm
-asm
+apy
+apl
+apl
+lhP
+apl
 avj
 avj
 avj
@@ -87243,15 +87243,15 @@ aaa
 aaa
 aaa
 aqA
-aaa
-aaa
 arI
 aaa
 aaa
 aaa
 aaa
-aaa
-avk
+awC
+aJS
+ayn
+avj
 avQ
 awG
 aAD
@@ -87550,10 +87550,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-avk
+acd
+ave
+acd
+avj
 avR
 awH
 axr
