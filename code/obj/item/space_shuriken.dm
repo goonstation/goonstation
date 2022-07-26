@@ -47,7 +47,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN(-1)
+		SPAWN(0)
 			if (!src.throwing)
 				playsound(src.loc, "sound/weapons/lasersound.ogg", 100, 1)
 				elecflash(src.loc,power=2)
