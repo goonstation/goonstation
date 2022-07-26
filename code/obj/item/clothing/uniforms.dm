@@ -1290,12 +1290,12 @@
 	dress
 		name = "shirt and skirt"
 		desc = "A button-down shirt and a skirt."
-		icon_state = "shirt_n_skirt-b"
-		item_state = "shirt_n_skirt-b"
+		icon_state = "shirt_n_pant-b"
+		item_state = "shirt_n_pant-b"
 
 		New()
 			..()
-			src.icon_state = "shirt_n_skirt-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
+			src.icon_state = "shirt_n_pant-[pick("b", "br", "w")][pick("", "_tie-r", "_tie-b", "_tie-bl")]"
 			src.item_state = "[src.icon_state]"
 
 // Black Pants and Skirts
@@ -1310,8 +1310,8 @@
 	dress
 		name = "shirt and black skirt"
 		desc = "A button-down shirt and a black skirt."
-		icon_state = "skirt_n_skirt-b"
-		item_state = "shirt_n_skirt-b"
+		icon_state = "shirt_n_pant-b-dress"
+		item_state = "shirt_n_pant-b-dress"
 
 /obj/item/clothing/under/shirt_pants_b/redtie
 	name = "shirt and black pants with a red tie"
@@ -1322,8 +1322,8 @@
 	dress
 		name = "shirt and black skirt with a red tie"
 		desc = "A button-down shirt, a black skirt and a red tie."
-		icon_state = "skirt_n_skirt-b_tie-r"
-		item_state = "shirt_n_skirt-b_tie-r"
+		icon_state = "shirt_n_pant-b_tie-r-dress"
+		item_state = "shirt_n_pant-b_tie-r-dress"
 
 /obj/item/clothing/under/shirt_pants_b/blacktie
 	name = "shirt and black pants with a black tie"
@@ -1334,8 +1334,8 @@
 	dress
 		name = "shirt and black skirt with a black tie"
 		desc = "A button-down shirt, a black skirt and a black tie."
-		icon_state = "skirt_n_skirt-b_tie-b"
-		item_state = "shirt_n_skirt-b_tie-b"
+		icon_state = "shirt_n_pant-b_tie-b-dress"
+		item_state = "shirt_n_pant-b_tie-b-dress"
 
 /obj/item/clothing/under/shirt_pants_b/bluetie
 	name = "shirt and black pants with a blue tie"
@@ -1346,8 +1346,8 @@
 	dress
 		name = "shirt and black skirt with a blue tie"
 		desc = "A button-down shirt, a black skirt and a blue tie."
-		icon_state = "skirt_n_skirt-b_tie-bl"
-		item_state = "shirt_n_skirt-b_tie-bl"
+		icon_state = "shirt_n_pant-b_tie-bl-dress"
+		item_state = "shirt_n_pant-b_tie-bl-dress"
 
 // Brown Pants and Skirts
 /obj/item/clothing/under/shirt_pants_br
@@ -1361,8 +1361,8 @@
 	dress
 		name = "shirt and brown skirt"
 		desc = "A button-down shirt and a brown skirt."
-		icon_state = "skirt_n_skirt-br"
-		item_state = "shirt_n_skirt-br"
+		icon_state = "shirt_n_pant-br-dress"
+		item_state = "shirt_n_pant-br-dress"
 
 /obj/item/clothing/under/shirt_pants_br/redtie
 	name = "shirt and brown pants with a red tie"
@@ -1373,8 +1373,8 @@
 	dress
 		name = "shirt and brown skirt with a red tie"
 		desc = "A button-down shirt, a brown skirt and a red tie."
-		icon_state = "skirt_n_skirt-br_tie-r"
-		item_state = "shirt_n_skirt-br_tie-r"
+		icon_state = "shirt_n_pant-br_tie-r-dress"
+		item_state = "shirt_n_pant-br_tie-r-dress"
 
 /obj/item/clothing/under/shirt_pants_br/blacktie
 	name = "shirt and brown pants with a black tie"
@@ -1385,8 +1385,8 @@
 	dress
 		name = "shirt and brown skirt with a black tie"
 		desc = "A button-down shirt, a brown skirt and a black tie."
-		icon_state = "skirt_n_skirt-br_tie-b"
-		item_state = "shirt_n_skirt-br_tie-b"
+		icon_state = "shirt_n_pant-br_tie-b-dress"
+		item_state = "shirt_n_pant-br_tie-b-dress"
 
 /obj/item/clothing/under/shirt_pants_br/bluetie
 	name = "shirt and brown pants with a blue tie"
@@ -1397,8 +1397,8 @@
 	dress
 		name = "shirt and brown skirt with a blue tie"
 		desc = "A button-down shirt, a brown skirt and a blue tie."
-		icon_state = "skirt_n_skirt-br_tie-bl"
-		item_state = "shirt_n_skirt-br_tie-bl"
+		icon_state = "shirt_n_pant-br_tie-bl-dress"
+		item_state = "shirt_n_pant-br_tie-bl-dress"
 
 // White Pants and Skirts
 /obj/item/clothing/under/shirt_pants_w
@@ -1412,8 +1412,8 @@
 	dress
 		name = "shirt and white skirt"
 		desc = "A button-down shirt and a white skirt."
-		icon_state = "skirt_n_skirt-w"
-		item_state = "shirt_n_skirt-w"
+		icon_state = "shirt_n_pant-w-dress"
+		item_state = "shirt_n_pant-w-dress"
 
 /obj/item/clothing/under/shirt_pants_w/redtie
 	name = "shirt and white pants with a red tie"
@@ -1424,8 +1424,8 @@
 	dress
 		name = "shirt and white skirt with a red tie"
 		desc = "A button-down shirt, a white skirt and a tie."
-		icon_state = "skirt_n_skirt-w_tie-"
-		item_state = "shirt_n_skirt-w_tie-"
+		icon_state = "shirt_n_pant-w_tie-r-dress"
+		item_state = "shirt_n_pant-w_tie-r-dress"
 
 /obj/item/clothing/under/shirt_pants_w/blacktie
 	name = "shirt and white pants with a black tie"
@@ -1436,8 +1436,8 @@
 	dress
 		name = "shirt and white skirt with a black tie"
 		desc = "A button-down shirt, a white skirt and a black tie."
-		icon_state = "skirt_n_skirt-w_tie-b"
-		item_state = "shirt_n_skirt-w_tie-b"
+		icon_state = "shirt_n_pant-w_tie-b-dress"
+		item_state = "shirt_n_pant-w_tie-b-dress"
 
 /obj/item/clothing/under/shirt_pants_w/bluetie
 	name = "shirt and white pants with a blue tie"
@@ -1448,8 +1448,8 @@
 	dress
 		name = "shirt and white skirt with a blue tie"
 		desc = "A button-down shirt, a white skirt and a blue tie."
-		icon_state = "skirt_n_skirt-w_tie-bl"
-		item_state = "shirt_n_skirt-w_tie-bl"
+		icon_state = "shirt_n_pant-w_tie-bl-dress"
+		item_state = "shirt_n_pant-w_tie-bl-dress"
 
 // Suits
 
