@@ -31,10 +31,6 @@
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
 
-	// antigrab powers
-	var/antigrab_counter = 0
-	var/antigrab_fires_at = 2
-
 	var/glow_color = "#26ffe6a2"
 
 	var/ai_paused = FALSE
@@ -76,6 +72,23 @@
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+
+/mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
+  if(src.ai_paused) //wake up when grabbed
+    src.wake_from_ai_pause()
+	SPAWN(1.5 SECONDS)
+		if (QDELETED(src) || !isalive(src) || src.dormant || QDELETED(grab) || !grab.affecting || !grab.assailant)
+			return
+		if (istype(grab.assailant, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/F = grab.assailant
+			if (F.flock == src.flock)
+				return
+		playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
+		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
+		var/mob/living/L = grab.assailant
+		L.shock(src, 5000)
+		qdel(grab) //in case they don't fall over from our shock
 
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
@@ -263,7 +276,7 @@
 	src.is_npc = TRUE // to ensure right flock_speak message
 	flock_speak(src, "Error: Out of signal range. Disconnecting.", src.flock)
 	src.is_npc = FALSE // turns off ai
-
+	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 	..()
 
 /mob/living/critter/flock/drone/proc/move_controller_to_station()
@@ -284,6 +297,7 @@
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 	if(src.client)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
@@ -488,21 +502,6 @@
 					break
 	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT)
 		src.pause_ai()
-	//if we're blocking that means we're not grabbed
-	if (!length(src.grabbed_by) || src.find_type_in_hand(/obj/item/grab/block))
-		src.antigrab_counter = 0
-	else
-		if(src.ai_paused) //wake up when grabbed
-			src.wake_from_ai_pause()
-		src.antigrab_counter++
-		if (src.antigrab_counter >= src.antigrab_fires_at)
-			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
-			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
-			for(var/obj/item/grab/G in src.grabbed_by)
-				var/mob/living/L = G.assailant
-				L.shock(src, 5000)
-				qdel(G) //in case they don't fall over from our shock
-			src.antigrab_counter = 0
 
 /mob/living/critter/flock/drone/process_move(keys)
 	if(keys & KEY_RUN && src.resources >= 1)
@@ -739,6 +738,7 @@
 	src.set_density(FALSE)
 	src.desc = "[initial(desc)]<br><span class='alert'>\The [src] is a dead, broken heap.</span>"
 	src.remove_simple_light("drone_light")
+	src.UnregisterSignal(src, COMSIG_MOB_GRABBED)
 
 /mob/living/critter/flock/drone/ghostize()
 	if(src.controller)
@@ -1093,13 +1093,10 @@
 	reload_time = 15
 	reloading_str = "recharging"
 
-/datum/limb/gun/flock_stunner/point_blank(mob/living/target, mob/living/user)
-	if (isflockmob(target))
-		return
-	return ..()
-
-/datum/limb/gun/flock_stunner/attack_range(atom/target, var/mob/living/critter/flock/drone/user, params)
+/datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
 	if(!target || !user)
+		return
+	if (isflockmob(target) && point_blank)
 		return
 	return ..()
 

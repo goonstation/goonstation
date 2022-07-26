@@ -2118,7 +2118,7 @@ TYPEINFO(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B> dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return

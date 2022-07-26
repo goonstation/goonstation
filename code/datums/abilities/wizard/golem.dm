@@ -10,6 +10,7 @@
 	voice_grim = "sound/voice/wizard/GolemGrim.ogg"
 	voice_fem = "sound/voice/wizard/GolemFem.ogg"
 	voice_other = "sound/voice/wizard/GolemLoud.ogg"
+	maptext_colors = list("#fcdf74", "#d75015")
 
 	cast()
 		if(!holder)
@@ -47,7 +48,7 @@
 
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("CLAE MASHON")
+			holder.owner.say("CLAE MASHON", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/obj/critter/golem/TheGolem
