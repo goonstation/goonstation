@@ -269,7 +269,7 @@
 
 
 /obj/item/implant/spy_implant
-	name = "mind slave XL"
+	name = "mind hack XL"
 	var/leader_name = null
 	var/datum/mind/leader_mind = null
 	var/datum/objective/linked_objective = null

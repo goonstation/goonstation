@@ -1893,7 +1893,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			else if (istype(src.case.imp, /obj/item/implant/mindhack))
 				dat += {"
 <b>Implant Specifications:</b><br>
-<b>Name:</b> Mind Slave<br>
+<b>Name:</b> Mind Hack<br>
 <b>Zone:</b> Brain Stem<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}

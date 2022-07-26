@@ -332,7 +332,7 @@
 			// Oh boy someone is cloning themselves up an army!
 		if(clonehack && implant_hacker != null)
 			// No need to check near as much with a standard implant, as the cloned person is dead and is therefore enslavable upon cloning.
-			// How did this happen. Why is someone cloning you as a slave to yourself. WHO KNOWS?!
+			// How did this happen. Why is someone cloning you as a mindhack to yourself. WHO KNOWS?!
 			if(implant_hacker == src.occupant)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
