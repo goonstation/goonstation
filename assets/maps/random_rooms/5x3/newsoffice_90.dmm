@@ -31,9 +31,12 @@
 "q" = (
 /obj/storage/crate,
 /obj/item/camera,
-/obj/item/device/audio_log/radioship/small,
 /obj/item/audio_tape,
 /obj/item/hand_labeler,
+/obj/item/device/audio_log{
+	pixel_x = -6;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/grime,
 /area/dmm_suite/clear_area)
 "u" = (
