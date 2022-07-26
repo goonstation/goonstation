@@ -2032,7 +2032,7 @@ proc/countJob(rank)
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDHACK))
+				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
 					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
 				ticker.mode.former_antagonists += M.mind
 
@@ -2069,7 +2069,7 @@ proc/countJob(rank)
 			else
 				M.mind.master = null
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDHACK))
+				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
 					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
 				ticker.mode.former_antagonists += M.mind
 

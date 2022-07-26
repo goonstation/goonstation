@@ -629,7 +629,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				// This is kinda important (Convair880).
 				if (istype(I, /obj/item/implant/mindhack))
-					if (patient.mind && (patient.mind.special_role == ROLE_MINDHACK))
+					if (patient.mind?.special_role == ROLE_MINDHACK)
 						if(surgeon == patient) continue
 						remove_mindhack_status(patient, "mindhack", "surgery")
 					else if (patient.mind && patient.mind.master)
