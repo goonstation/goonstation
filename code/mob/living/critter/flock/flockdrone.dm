@@ -491,8 +491,9 @@
 			src.wake_from_ai_pause()
 		//wake up if there are enemies in view
 		if(src.flock) //if we have a flock, use the enemies list, otherwise just use non-flock mobs in view
+			var/list/nearby_enemies = viewers(src)
 			for(var/enemy in src.flock.enemies)
-				if(enemy in viewers(src))
+				if(enemy in nearby_enemies)
 					src.wake_from_ai_pause()
 					break
 		else
