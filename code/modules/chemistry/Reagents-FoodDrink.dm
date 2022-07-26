@@ -3074,6 +3074,7 @@ datum
 				if (severity == 1)
 					if(probmult(16))
 						M.emote("fart")
+						
 		fooddrink/beff
 			name = "beff"
 			id = "beff"
