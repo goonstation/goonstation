@@ -77,18 +77,18 @@
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
 	if(src.ai_paused) //wake up when grabbed
 		src.wake_from_ai_pause()
-		SPAWN(1.5 SECONDS)
-			if (QDELETED(src) || !isalive(src) || src.dormant || QDELETED(grab) || !grab.affecting || !grab.assailant)
+	SPAWN(1.5 SECONDS)
+		if (QDELETED(src) || !isalive(src) || src.dormant || QDELETED(grab) || !grab.affecting || !grab.assailant)
+			return
+		if (istype(grab.assailant, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/F = grab.assailant
+			if (F.flock == src.flock)
 				return
-			if (istype(grab.assailant, /mob/living/critter/flock/drone))
-				var/mob/living/critter/flock/drone/F = grab.assailant
-				if (F.flock == src.flock)
-					return
-			playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
-			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
-			var/mob/living/L = grab.assailant
-			L.shock(src, 5000)
-			qdel(grab) //in case they don't fall over from our shock
+		playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
+		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
+		var/mob/living/L = grab.assailant
+		L.shock(src, 5000)
+		qdel(grab) //in case they don't fall over from our shock
 
 /mob/living/critter/flock/drone/disposing()
 	if (src.flock)
