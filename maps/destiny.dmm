@@ -5148,9 +5148,6 @@
 	color = "#485e81";
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "auC" = (
@@ -6860,9 +6857,6 @@
 	color = "#485e81";
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/stool/bench/blue/auto,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -8440,11 +8434,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/glass/reinforced/auto,
-/obj/towelbin{
-	pixel_y = 2
-	},
-/obj/item/storage/firstaid/oxygen,
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
@@ -18233,10 +18222,8 @@
 /obj/machinery/light/incandescent/harsh{
 	nostick = 1
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small/floor,
+/obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "csb" = (
@@ -30637,11 +30624,9 @@
 	color = "#485e81";
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/small/floor,
+/obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
 "igG" = (
@@ -33492,9 +33477,6 @@
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
@@ -43480,6 +43462,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"oZS" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/towelbin{
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/toolbox/emergency,
+/turf/simulated/floor/darkblue,
+/area/station/crew_quarters/pool)
 "oZZ" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -45536,9 +45531,6 @@
 	icon_state = "line1"
 	},
 /obj/stool/bench/blue/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -55381,12 +55373,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/water,
-/obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
 "vkA" = (
@@ -106476,7 +106462,7 @@ mnh
 xeb
 eec
 wdH
-wdH
+oZS
 eTU
 agO
 xzB
