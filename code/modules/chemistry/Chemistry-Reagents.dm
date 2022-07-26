@@ -225,7 +225,6 @@ datum
 				src.handle_addiction(M, deplRate)
 
 			if (src.volume - deplRate <= 0)
-				initial_metabolized = FALSE
 				src.on_mob_life_complete(M)
 
 			if (!initial_metabolized)
