@@ -197,6 +197,11 @@
 
 // all flock bots should have the ability to rally somewhere (it's applicable to anything with flock AI)
 /mob/living/critter/flock/proc/rally(atom/movable/target)
+	if(istype(src,/mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/D = src
+		if(D.ai_paused)
+			D.wake_from_ai_pause()
+
 	if(src.is_npc)
 		// tell the npc AI to go after the target
 		if(src.ai)
