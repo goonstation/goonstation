@@ -92,7 +92,7 @@
 				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
 			if (traitor.special_role == ROLE_MINDHACK)
-				stuff_to_output += "<B>[traitor_name]</B> was a mindhack!"
+				stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
 				continue // Objectives are irrelevant for mindhacks and thralls.
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
@@ -244,7 +244,7 @@
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
 					if (string == ROLE_MINDHACK)
-						stuff_to_output += "<B>[traitor_name] was a mindhack!</B>"
+						stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
 					else if (string == ROLE_VAMPTHRALL)
 						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 					else

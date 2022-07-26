@@ -314,7 +314,7 @@
 						break
 		else
 			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MADE A MINDHACK!")
+			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
 		if (M.mind)
 			if (!src.linked_objective)

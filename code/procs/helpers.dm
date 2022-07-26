@@ -2074,11 +2074,11 @@ proc/countJob(rank)
 				ticker.mode.former_antagonists += M.mind
 
 		else
-			logTheThing("debug", M, null, "<b>Convair880</b>: [M] isn't a mindhack or vampire thrall, can't remove mindhack status.")
+			logTheThing("debug", M, null, "<b>Convair880</b>: [M] isn't mindhacked or vampire thrall, can't remove mindhack status.")
 			return
 
 	if (removal_type == "death")
-		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindhack! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
+		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer mindhacked! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
 		M.show_antag_popup("mindhackdeath")
 	else if (removal_type == "override")
 		boutput(M, "<h2><span class='alert'>Your mindhack implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
