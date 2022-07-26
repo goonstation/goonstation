@@ -506,7 +506,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
 			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
 
-		if(BOUNDS_DIST(C, src) > 0)
+		if(in_interact_range(src, C))
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
