@@ -873,7 +873,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	return
 
 /proc/animate_rainbow_glow(var/atom/A)
-	if (!istype(A) && !isclient(A))
+	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
 	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
@@ -882,6 +882,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	animate(color = "#FF00FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
+
+/proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
+	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
+		return
+	for(var/the_color in colors_to_swap)
+		if(the_color == colors_to_swap[1])
+			animate(A, color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+		else
+			animate(color = the_color, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 
 /proc/animate_fade_to_color_fill(var/atom/A,var/the_color,var/time)
 	if (!istype(A) || !the_color || !time)

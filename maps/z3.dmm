@@ -20355,12 +20355,6 @@
 /turf/space,
 /turf/space,
 /area/helldrone)
-"bwV" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "bAc" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20434,10 +20428,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttlebay,
 /area/buddyfactory)
-"cbM" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/industrial,
-/area/space)
 "cdo" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -20576,7 +20566,6 @@
 /area/helldrone)
 "dIz" = (
 /obj/item/device/radio,
-/obj/landmark/spawner/loot,
 /obj/item/device/radio,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/damaged3,
@@ -21153,7 +21142,6 @@
 	name = "dirty bag of swedish fisk";
 	open = 1
 	},
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged2,
 /area/spyshack)
 "jmg" = (
@@ -21178,6 +21166,10 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
+"jsq" = (
+/obj/landmark/spawner/loot,
+/turf/space,
+/area/space)
 "jvm" = (
 /obj/decal/fakeobjects/airlock_broken,
 /turf/simulated/floor/black,
@@ -21219,7 +21211,6 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/landmark/spawner/loot,
 /turf/space,
 /area/abandonedship)
 "jLM" = (
@@ -21485,13 +21476,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/space)
-"lDv" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/industrial,
 /area/space)
 "lGA" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -22177,7 +22161,6 @@
 /obj/item/fish/red_herring,
 /obj/item/reagent_containers/food/snacks/burger,
 /obj/decal/cleanable/dirt,
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "pBN" = (
@@ -22839,7 +22822,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "tPA" = (
-/obj/landmark/spawner/loot,
+/obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "tRk" = (
@@ -22898,12 +22881,6 @@
 	},
 /turf/space,
 /area/space)
-"unw" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "uqs" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -22942,7 +22919,7 @@
 /area/abandonedship)
 "uGl" = (
 /obj/machinery/light/small,
-/obj/landmark/spawner/loot,
+/obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "uGv" = (
@@ -26208,7 +26185,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jsq
 aaa
 aaa
 aaa
@@ -26512,7 +26489,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jsq
 aaa
 aaa
 aaa
@@ -56108,7 +56085,7 @@ amm
 amx
 amE
 amX
-lDv
+and
 anj
 anu
 afR
@@ -56412,7 +56389,7 @@ amF
 amB
 anf
 ank
-cbM
+amB
 afR
 afR
 acS
@@ -72531,7 +72508,7 @@ aaa
 asf
 aIz
 aJN
-unw
+aKX
 aKx
 aKG
 aKW
@@ -72833,7 +72810,7 @@ aaa
 asf
 aIz
 oSn
-bwV
+aKx
 aKx
 aKx
 aKx
@@ -73135,7 +73112,7 @@ aaa
 aIz
 aIz
 aJN
-unw
+aKX
 aKx
 aKx
 aKx
@@ -79766,7 +79743,7 @@ aab
 aab
 aab
 paS
-paS
+aac
 aaA
 aab
 aac
@@ -80066,7 +80043,7 @@ aaa
 aaa
 aab
 aab
-paS
+aac
 aac
 aac
 aac
@@ -80368,7 +80345,7 @@ aaa
 aaa
 aab
 aab
-paS
+aac
 aap
 aav
 aap
@@ -80973,8 +80950,8 @@ aaa
 aaa
 aab
 aab
-paS
-paS
+aac
+aac
 aac
 aac
 aab
@@ -91047,8 +91024,8 @@ aTQ
 mOG
 aTQ
 aTQ
-tPA
-tPA
+bap
+aUe
 aUe
 tPA
 uGl
