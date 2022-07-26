@@ -648,15 +648,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	scan_category = "syndicate"
 	var/uses = 1
 	var/expire = TRUE
-	var/mob/implant_master = null // who is the person mindslaving the implanted person
+	var/mob/implant_hacker = null // who is the person mindslaving the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
 		if (!istype(target))
 			return 0
-		if (!implant_master)
+		if (!implant_hacker)
 			if (ismob(user))
-				implant_master = user
+				implant_hacker = user
 			else
 				return 0
 		// all the stuff in here was added by Convair880, I just adjusted it to work with this can_implant() proc thing - haine
@@ -673,8 +673,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyslave")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
-			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
-			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindhack them at [log_loc(H)].")
+			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
+			logTheThing("combat", H, implant_hacker, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return 0
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)
