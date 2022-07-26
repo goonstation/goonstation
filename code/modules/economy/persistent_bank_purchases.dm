@@ -346,10 +346,12 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 
 				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
-					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
+					var/obj/item/clothing/under/origin = text2path("[H.w_uniform.type]/april_fools")
 					if (ispath(origin))
-						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
-						H.w_uniform.item_state = "[H.w_uniform.item_state]-alt"
+						// i hate how this reward works, this was the only workaround i could come up with - disturbherb
+						var/uniform_regex = replacetext("[H.w_uniform.icon_state]","-dress","-alt-dress")
+						H.w_uniform.icon_state = "[uniform_regex]"
+						H.w_uniform.item_state = "[uniform_regex]"
 						H.w_uniform.desc = initial(origin.desc)
 						succ = 1
 

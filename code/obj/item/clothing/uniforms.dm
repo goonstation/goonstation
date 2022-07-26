@@ -374,6 +374,10 @@
 		icon_state = "assistant-dress"
 		item_state = "assistant-dress"
 
+		april_fools
+			icon_state = "assistant-alt-dress"
+			item_state = "assistant-alt-dress"
+
 // Heads
 
 /obj/item/clothing/under/rank/captain
@@ -528,6 +532,10 @@
 		icon_state = "security-dress"
 		item_state = "security-dress"
 
+		april_fools
+			icon_state = "security-alt-dress"
+			item_state = "security-alt-dress"
+
 	assistant
 		name = "security assistant uniform"
 		desc = "Wait, is that velcro?"
@@ -541,10 +549,6 @@
 	april_fools
 		icon_state = "security-alt"
 		item_state = "security-alt"
-
-		dress
-			icon_state = "security-alt-dress"
-			item_state = "security-alt-dress"
 
 /obj/item/clothing/under/rank/det
 	name = "hard worn suit"
@@ -568,13 +572,13 @@
 		icon_state = "medical-dress"
 		item_state = "medical-dress"
 
+		april_fools
+			icon_state = "medical-alt-dress"
+			item_state = "medical-alt-dress"
+
 	april_fools
 		icon_state = "medical-alt"
 		item_state = "medical-alt"
-
-		dress
-			icon_state = "medical-alt-dress"
-			item_state = "medical-alt-dress"
 
 /obj/item/clothing/under/rank/roboticist
 	name = "roboticist's uniform"
@@ -586,13 +590,13 @@
 		icon_state = "robotics-dress"
 		item_state = "robotics-dress"
 
+		april_fools
+			icon_state = "robotics-alt-dress"
+			item_state = "robotics-alt-dress"
+
 	april_fools
 		icon_state = "robotics-alt"
 		item_state = "robotics-alt"
-
-		dress
-			icon_state = "robotics-alt-dress"
-			item_state = "robotics-alt-dress"
 
 /obj/item/clothing/under/rank/scientist
 	name = "scientist's uniform"
@@ -604,13 +608,13 @@
 		icon_state = "scientist-dress"
 		item_state = "scientist-dress"
 
+		april_fools
+			icon_state = "scientist-alt-dress"
+			item_state = "scientist-alt-dress"
+
 	april_fools
 		icon_state = "scientist-alt"
 		item_state = "scientist-alt"
-
-		dress
-			icon_state = "scientist-alt-dress"
-			item_state = "scientist-alt-dress"
 
 /obj/item/clothing/under/rank/geneticist
 	name = "geneticist's uniform"
@@ -622,13 +626,13 @@
 		icon_state = "genetics-dress"
 		item_state = "genetics-dress"
 
+		april_fools
+			icon_state = "genetics-dress"
+			item_state = "genetics-alt-dress"
+
 	april_fools
 		icon_state = "genetics-alt"
 		item_state = "genetics-alt"
-
-		dress
-			icon_state = "genetics-dress"
-			item_state = "genetics-alt-dress"
 
 /obj/item/clothing/under/rank/pathologist
 	name = "pathologist's uniform"
@@ -640,13 +644,13 @@
 		icon_state = "pathology-dress"
 		item_state = "pathology-dress"
 
+		april_fools
+			icon_state = "medical-alt-dress"
+			item_state = "medical-alt-dress"
+
 	april_fools
 		icon_state = "medical-alt"
 		item_state = "medical-alt"
-
-		dress
-			icon_state = "medical-dress"
-			item_state = "medical-alt-dress"
 
 // Engineering
 
@@ -660,13 +664,13 @@
 		icon_state = "engine-dress"
 		item_state = "engine-dress"
 
+		april_fools
+			icon_state = "engine-alt-dress"
+			item_state = "engine-alt-dress"
+
 	april_fools
 		icon_state = "engine-alt"
 		item_state = "engine-alt"
-
-		dress
-			icon_state = "engine-alt-dress"
-			item_state = "engine-alt-dress"
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's uniform"
@@ -678,13 +682,13 @@
 		icon_state = "qm-dress"
 		item_state = "qm-dress"
 
+		april_fools
+			icon_state = "qm-alt-dress"
+			item_state = "qm-alt-dress"
+
 	april_fools
 		icon_state = "qm-alt"
 		item_state = "qm-alt"
-
-		dress
-			icon_state = "qm-alt-dress"
-			item_state = "qm-alt-dress"
 
 /obj/item/clothing/under/rank/mechanic
 	name = "mechanic's uniform"
@@ -696,13 +700,13 @@
 		icon_state = "mechanic-dress"
 		item_state = "mechanic-dress"
 
+		april_fools
+			icon_state = "mechanic-alt-dress"
+			item_state = "mechanic-alt-dress"
+
 	april_fools
 		icon_state = "mechanic-alt"
 		item_state = "mechanic-alt"
-
-		dress
-			icon_state = "mechanic-alt-dress"
-			item_state = "mechanic-alt-dress"
 
 /obj/item/clothing/under/rank/overalls
 	name = "miner's overalls"
@@ -714,13 +718,13 @@
 		icon_state = "miner-dress"
 		item_state = "miner-dress"
 
+		april_fools
+			icon_state = "miner-alt-dress"
+			item_state = "miner-alt-dress"
+
 	april_fools
 		icon_state = "miner-alt"
 		item_state = "miner-alt"
-
-		dress
-			icon_state = "miner-alt-dress"
-			item_state = "miner-alt-dress"
 
 /obj/item/clothing/under/rank/orangeoveralls
 	name = "construction worker's overalls"
@@ -754,13 +758,13 @@
 		icon_state = "hydro-dress"
 		item_state = "hydro-dress"
 
+		april_fools
+			icon_state = "hydro-alt-dress"
+			item_state = "hydro-alt-dress"
+
 	april_fools
 		icon_state = "hydro-alt"
 		item_state = "hydro-alt"
-
-		dress
-			icon_state = "hydro-alt-dress"
-			item_state = "hydro-alt-dress"
 
 /obj/item/clothing/under/rank/rancher
 	name = "rancher's overalls"
@@ -782,13 +786,13 @@
 		icon_state = "janitor-dress"
 		item_state = "janitor-dress"
 
+		april_fools
+			icon_state = "janitor-alt-dress"
+			item_state = "janitor-alt-dress"
+
 	april_fools
 		icon_state = "janitor-alt"
 		item_state = "janitor-alt"
-
-		dress
-			icon_state = "janitor-alt-dress"
-			item_state = "janitor-alt-dress"
 
 /obj/item/clothing/under/rank/bartender
 	name = "bartender's suit"

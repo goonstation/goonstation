@@ -878,7 +878,10 @@
 					M.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 					M.inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
 					M.wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
-					M.icon_state = "inspectorj"
+					if (istype(M, /obj/item/clothing/under/rank/det/dress))
+						M.icon_state = "inspectorj-dress"
+					else
+						M.icon_state = "inspectorj"
 					M.item_state = "viceG"
 					M.name = "inspector's uniform"
 					M.real_name = "inspector's uniform"
