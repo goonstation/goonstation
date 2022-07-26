@@ -2206,3 +2206,35 @@
 	maxDuration = 3 MINUTES
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/spry
+
+/datum/statusEffect/mindhack
+	id = "mindhack"
+	name = "Mindhack"
+	desc = "You've been mindhacked."
+	icon_state = "mindhack"
+	unique = TRUE
+
+	onAdd(mob/hacker, custom_orders)
+		. = ..()
+		desc = "You've been mindhacked by [hacker] and feel an unwavering loyalty towards [his_or_her(hacker)]."
+		var/mob/M = owner
+		if (M.mind && ticker.mode)
+			if (!M.mind.special_role)
+				M.mind.special_role = ROLE_MINDHACK
+			if (!(M.mind in ticker.mode.Agimmicks))
+				ticker.mode.Agimmicks += M.mind
+			M.mind.master = hacker.ckey
+
+		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker] tells you to!</span></h2>")
+		M.show_antag_popup("mindhack")
+
+		if (custom_orders)
+			boutput(M, "<h2><span class='alert'>[hacker]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (M.mind?.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(M, "mindhack", "expired")
+		else if (M.mind?.master)
+			remove_mindhack_status(M, "otherhack", "expired")

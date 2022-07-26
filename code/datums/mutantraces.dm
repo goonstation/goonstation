@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindslave_status(src.mob)
+				remove_mindhack_status(src.mob)
 		..()
 
 /datum/mutantrace/skeleton

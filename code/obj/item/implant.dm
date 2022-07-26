@@ -329,7 +329,7 @@ THROWING DARTS
 		mailgroups.Add(MGD_SECURITY)
 		..()
 
-/obj/item/implant/health/security/anti_mindslave //HoS implant
+/obj/item/implant/health/security/anti_mindhack //HoS implant
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
@@ -640,16 +640,14 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implant-b"
 	impcolor = "b"
 
-/obj/item/implant/mindslave
-	name = "mindslave implant"
-	icon_state = "implant-r"
+/obj/item/implant/mindhack
+	name = "mindhack implant"
+	icon_state = "implant-mh"
 	impcolor = "r"
 	instant = 1
 	scan_category = "syndicate"
 	var/uses = 1
-	var/expire = 1
-	var/expired = 0
-	var/suppress_mindslave_popup = 0
+	var/expire = TRUE
 	var/mob/implant_master = null // who is the person mindslaving the implanted person
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
@@ -669,119 +667,50 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
 			return 0
-		for(var/obj/item/implant/health/security/anti_mindslave/AM in H.implant)
-			boutput(user, "<span class='alert'>[H] is protected from enslaving by \an [AM.name]!</span>")
+		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
+			boutput(user, "<span class='alert'>[H] is protected from mindhacking by \an [AM.name]!</span>")
 			return 0
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyslave")))
-			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being enslaved!</b>", "red")
+			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_master]'s attempt to enslave you!</b>", "red")
-			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindslave them at [log_loc(H)].")
+			logTheThing("combat", H, implant_master, "resists [constructTarget(implant_master,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return 0
-		// Necessary to get those expiration messages to trigger properly if the same mob is implanted again,
-		// since mindslave implants have spawns  going on.
-		if (src.former_implantee == H)
-			if (istype(src.loc, /obj/item/implanter))
-				var/obj/item/implanter/I = src.loc
-				var/obj/item/implant/mindslave/MSnew = new src.type(I)
-				I.imp = MSnew
-				qdel(src)
-			else if (istype(src.loc, /obj/item/gun/implanter))
-				var/obj/item/gun/implanter/I = src.loc
-				var/obj/item/implant/mindslave/MSnew = new src.type(src)
-				I.my_implant = MSnew
-				qdel(src)
 		// Same here, basically. Multiple active implants is just asking for trouble.
-		for (var/obj/item/implant/mindslave/MS in H.implant)
+		for (var/obj/item/implant/mindhack/MS in H.implant)
 			if (!istype(MS))
 				continue
-			if (!MS.expire || (MS.expire && (MS.expired != 1)))
-				if (H.mind && (H.mind.special_role == ROLE_MINDSLAVE))
-					remove_mindslave_status(H, "mslave", "override")
-				else if (H.mind && H.mind.master)
-					remove_mindslave_status(H, "otherslave", "override")
-				var/obj/item/implant/mindslave/Inew = new MS.type(H)
-				H.implant += Inew
-				qdel(MS)
-				src.suppress_mindslave_popup = 1
+			if (H.mind && (H.mind.special_role == ROLE_MINDHACK))
+				remove_mindhack_status(H, "mindhack", "override")
+			else if (H.mind && H.mind.master)
+				remove_mindhack_status(H, "otherhack", "override")
+			var/obj/item/implant/mindhack/Inew = new MS.type(H)
+			H.implant += Inew
+			qdel(MS)
 		return 1
 
 	implanted(var/mob/M, var/mob/I)
 		..()
-		if (!ishuman(M) || (src.uses == 0))
+		if (!ishuman(M) || (src.uses <= 0))
 			return
 
-		if (src.expire && src.expired)
-			src.expired = 0
-
-/*
-		for(var/obj/item/implant/IMP in M:implant)
-			if(IMP.check_access_imp(5))
-				boutput(I, "<span class='alert'><b>[M] seems immune to being enslaved!</b></span>")
-				boutput(M, "<span class='alert'><b>Your security implant prevents you from being enslaved!</b></span>")
-				return
-*/
 		boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("weakened", 10 SECONDS)
 
-		if(M == I)
-			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
-			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
-			return
+		// if(M == I)
+		// 	boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
+		// 	tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
+		// 	return
 
-		if (M.mind && ticker.mode)
-			if (!M.mind.special_role)
-				M.mind.special_role = ROLE_MINDSLAVE
-			if (!(M.mind in ticker.mode.Agimmicks))
-				ticker.mode.Agimmicks += M.mind
-			M.mind.master = I.ckey
-
-		if (src.suppress_mindslave_popup)
-			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to your new master, [I.real_name]! Do not tell anyone about this unless your new master tells you to!</span></h2>")
-		else
-			boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [I.real_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</span></h2>")
-			M.show_antag_popup("mindslave")
-		if (src.custom_orders)
-			boutput(M, "<h2><span class='alert'>[I.real_name]'s will consumes your mind! <b>\"[src.custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
-
-		if (expire)
-			//25 minutes +/- 5
-			SPAWN((25 + rand(-5,5)) MINUTES)
-				if (src && !ishuman(src.loc)) // Drop-all, gibbed etc (Convair880).
-					if (src.expire && (src.expired != 1)) src.expired = 1
-					return
-				if (!src || !owner || (M != owner) || src.expired)
-					return
-				boutput(M, "<h3><span class='alert'>Your will begins to return. What is this strange compulsion [I.real_name] has over you? Yet you must obey.</span></h3>")
-
-				// 1 minute left
-				sleep(1 MINUTE)
-				if (src && !ishuman(src.loc))
-					if (src.expire && (src.expired != 1)) src.expired = 1
-					return
-				if (!src || !owner || (M != owner) || src.expired)
-					return
-				// There's a proc for this now (Convair880).
-				if (M.mind && M.mind.special_role == ROLE_MINDSLAVE)
-					remove_mindslave_status(M, "mslave", "expired")
-				else if (M.mind && M.mind.master)
-					remove_mindslave_status(M, "otherslave", "expired")
-				src.expired = 1
-		return
+		M.setStatus("mindhack", expire ? (25 + rand(-5,5)) MINUTES : null, I, custom_orders)
+		src.uses -= 1
 
 	on_remove(var/mob/M)
 		..()
 		src.former_implantee = M
-		if (src.expire) src.expired = 1
+		M.delStatus("mindhack")
 		return
-
-	trigger(emote, mob/source as mob)
-		if (!source || (source != src.loc) || (!isdead(source) ))
-			return
-
-		if(emote == "deathgasp") //The neural shock of some jerk dying wears the implant down. Or some shit.
-			src.uses = max(src.uses - 1, 0)
 
 	proc/add_orders(var/orders)
 		if (!orders || !istext(orders))
@@ -790,8 +719,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!(copytext(src.custom_orders, -1) in list(".", "?", "!")))
 			src.custom_orders += "!"
 
-/obj/item/implant/mindslave/super
-	name = "mindslave DELUXE implant"
+/obj/item/implant/mindhack/super
+	name = "mindhack DELUXE implant"
 	expire = 0
 	uses = 2
 
@@ -1594,16 +1523,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.imp = new /obj/item/implant/freedom( src )
 		..()
 
-/obj/item/implanter/mindslave
+/obj/item/implanter/mindhack
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/mindslave( src )
+		src.imp = new /obj/item/implant/mindhack( src )
 		..()
 
-/obj/item/implanter/super_mindslave
+/obj/item/implanter/super_mindhack
 	icon_state = "implanter1-g"
 	New()
-		src.imp = new /obj/item/implant/mindslave/super( src )
+		src.imp = new /obj/item/implant/mindhack/super( src )
 		..()
 
 /obj/item/implanter/microbomb
@@ -1694,13 +1623,13 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "glass case - 'Blood Monitor'"
 	implant_type = "/obj/item/implant/bloodmonitor"
 
-/obj/item/implantcase/mindslave
-	name = "glass case - 'Mindslave'"
-	implant_type = "/obj/item/implant/mindslave"
+/obj/item/implantcase/mindhack
+	name = "glass case - 'Mindhack'"
+	implant_type = "/obj/item/implant/mindhack"
 
-/obj/item/implantcase/super_mindslave
-	name = "glass case - 'Mindslave DELUXE'"
-	implant_type = "/obj/item/implant/mindslave/super"
+/obj/item/implantcase/super_mindhack
+	name = "glass case - 'Mindhack DELUXE'"
+	implant_type = "/obj/item/implant/mindhack/super"
 
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
@@ -1961,7 +1890,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Zone:</b> Jugular Vein<br>
 <b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
 <b>Important Notes:</b> Warns the host of any detected infections or foreign substances in the bloodstream.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/mindslave))
+			else if (istype(src.case.imp, /obj/item/implant/mindhack))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Mind Slave<br>
