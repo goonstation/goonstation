@@ -1759,10 +1759,14 @@ var/datum/action_controller/actions
 	var/mob/mob_owner
 	var/mob/target
 	var/syringe_mode
+	var/harmful
 	var/obj/item/reagent_containers/syringe/S
 
-	New(var/mob/target, var/item, var/icon, var/icon_state)
+	New(var/mob/user, var/mob/target, var/item, var/icon, var/icon_state)
 		..()
+		if (user?.a_intent == INTENT_HARM)
+			src.harmful = 1
+			duration = 6 SECONDS
 		src.target = target
 		if (istype(item, /obj/item/reagent_containers/syringe))
 			S = item
@@ -1785,6 +1789,14 @@ var/datum/action_controller/actions
 			return
 		..()
 
+	onInterrupt()
+		..()
+		if (harmful && target && owner && !isnull(S) && syringe_mode == S.mode)
+			harmful = 0
+			var/completion = ( TIME - started ) / duration
+			if (completion >= 0.17)
+				S.syringe_action(owner, target, min(completion, 1))
+
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
@@ -1797,7 +1809,52 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(S) && syringe_mode == S.mode)
-			S.syringe_action(owner, target)
+			S.syringe_action(owner, target, harmful ? 1.5 : 1)
+
+/datum/action/bar/icon/pill
+	duration = 1.5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/target
+	var/obj/item/reagent_containers/pill/P
+
+	New(var/mob/target, var/item, var/icon, var/icon_state)
+		..()
+		src.target = target
+		if (istype(item, /obj/item/reagent_containers/pill))
+			P = item
+			duration = round(0.75 * clamp(P.reagents.total_volume,10,70) + 7.5)
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/pill called with invalid type [item].")
+		src.icon = icon
+		src.icon_state = icon_state
+
+
+	onStart()
+		if (!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.mob_owner = owner
+
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!isnull(P))
+			P.pill_action(owner, target)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30
