@@ -112,8 +112,11 @@
 							return
 
 					if(target != user)
-						user.visible_message("<span class='alert'><B>[user] is trying to draw blood from [target]!</B></span>")
-						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
+						if (user.a_intent == INTENT_HARM)
+							user.visible_message("<span class='alert'><B>[user] stabs [target] with [src] and starts drawing blood!</B></span>")
+						else
+							user.visible_message("<span class='alert'><B>[user] is trying to draw blood from [target]!</B></span>")
+						actions.start(new/datum/action/bar/icon/syringe(user, target, src, src.icon, src.icon_state), user)
 					else
 						transfer_blood(target, src, src.amount_per_transfer_from_this)
 						boutput(user, "<span class='notice'>You fill [src] with [src.amount_per_transfer_from_this] units of [target]'s blood.</span>")
@@ -169,8 +172,11 @@
 						return
 					if (target != user)
 						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
-						user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
-						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
+						if (user.a_intent == INTENT_HARM)
+							user.visible_message("<span class='alert'><B>[user] stabs [target] with [src] and starts injecting!</B></span>")
+						else
+							user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
+						actions.start(new/datum/action/bar/icon/syringe(user, target, src, src.icon, src.icon_state), user)
 						user.update_inhands()
 						return
 					else
@@ -201,14 +207,17 @@
 
 		return
 
-	proc/syringe_action(mob/user, mob/target)
+	proc/syringe_action(mob/user, mob/target, var/dosage = 1)
 		switch(src.mode)
 			if(S_DRAW)
-				transfer_blood(target, src, src.amount_per_transfer_from_this)
-				target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
+				if (dosage >= 0.33)
+					transfer_blood(target, src, src.amount_per_transfer_from_this * dosage)
+					target.visible_message("<span class='alert'>[user] draws blood from [target]!</span>")
+				else
+					target.visible_message("<span class='alert'>[user] jabs [target] but fails to draw blood!</span>")
 			if(S_INJECT)
-				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
-				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
+				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this * dosage)
+				src.reagents.trans_to(target, src.amount_per_transfer_from_this * dosage)
 				target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
 				logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 

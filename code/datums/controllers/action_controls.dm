@@ -1759,10 +1759,14 @@ var/datum/action_controller/actions
 	var/mob/mob_owner
 	var/mob/target
 	var/syringe_mode
+	var/harmful
 	var/obj/item/reagent_containers/syringe/S
 
-	New(var/mob/target, var/item, var/icon, var/icon_state)
+	New(var/mob/user, var/mob/target, var/item, var/icon, var/icon_state)
 		..()
+		if (user?.a_intent == INTENT_HARM)
+			src.harmful = 1
+			duration = 6 SECONDS
 		src.target = target
 		if (istype(item, /obj/item/reagent_containers/syringe))
 			S = item
@@ -1785,6 +1789,14 @@ var/datum/action_controller/actions
 			return
 		..()
 
+	onInterrupt()
+		..()
+		if (harmful && target && owner && !isnull(S) && syringe_mode == S.mode)
+			harmful = 0
+			var/completion = ( TIME - started ) / duration
+			if (completion >= 0.17)
+				S.syringe_action(owner, target, min(completion, 1))
+
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S || syringe_mode != S.mode)
@@ -1797,7 +1809,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(S) && syringe_mode == S.mode)
-			S.syringe_action(owner, target)
+			S.syringe_action(owner, target, harmful ? 1.5 : 1)
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30
