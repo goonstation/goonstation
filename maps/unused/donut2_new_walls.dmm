@@ -18588,6 +18588,10 @@
 	rand_pos = 0
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/camera{
+	c_tag = "Inner Maintenance West";
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
 "aTz" = (
@@ -38322,6 +38326,10 @@
 /obj/machinery/computer/stockexchange{
 	dir = 8;
 	icon_state = "QMreq"
+	},
+/obj/machinery/camera{
+	c_tag = "West Electrical Substation";
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
