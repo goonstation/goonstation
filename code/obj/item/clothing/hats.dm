@@ -1873,3 +1873,41 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
 	icon_state = "bouffant"
 	item_state = "bouffant"
+
+// Crate Loot
+
+/obj/item/clothing/head/bear
+	name = "bear hat"
+	desc = "A hat in the shape of the mythical Earth-bear."
+	icon_state = "bear"
+	item_state = "bear"
+
+/obj/item/clothing/head/rugged
+	name = "rugged hat"
+	desc = "A cool hat that's come pre-torn. Huh."
+	icon_state = "rugged"
+	item_state = "rugged"
+
+/obj/item/clothing/head/star_tophat
+	name = "starry tophat"
+	desc = "A fancy tophat with a detailed rendition of the night sky sewn in."
+	icon_state = "star_tophat"
+	item_state = "star_tophat"
+
+/obj/item/clothing/head/cow
+	name = "cow"
+	desc = "It looks like a cow and goes on your head. Wow."
+	icon_state = "cow"
+	item_state = "cow"
+
+/obj/item/clothing/head/torch
+	name = "torch hat"
+	desc = "A pretty dangerous looking hat."
+	icon_state = "torch"
+	item_state = "torch"
+
+/obj/item/clothing/head/helmet/space/replica
+	name = "replica space helmet"
+	icon_state = "space_replica"
+	item_state = "space_replica"
+	desc = "A replica of an old space helmet. Looks spaceworthy regardless."

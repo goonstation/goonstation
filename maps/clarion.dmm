@@ -25424,9 +25424,11 @@
 	name = "table"
 	},
 /obj/shrub/captainshrub{
-	pixel_y = 12
+	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "purple2"
@@ -49964,7 +49966,7 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -8;
 	pixel_y = 9
 	},

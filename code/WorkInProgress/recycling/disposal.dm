@@ -1032,7 +1032,7 @@
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
-		src.w_class = min(orderOfLoafitude+1, 4)
+		src.w_class = min(round(orderOfLoafitude/2)+1, W_CLASS_GIGANTIC)
 
 		switch ( orderOfLoafitude )
 

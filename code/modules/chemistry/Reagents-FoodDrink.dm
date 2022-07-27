@@ -3456,6 +3456,18 @@ datum
 			bladder_value = -1
 			taste = "like carrots"
 
+		fooddrink/juice_pumpkin
+			name = "pumpkin juice"
+			id = "juice_pumpkin"
+			fluid_r = 255
+			fluid_g = 117
+			fluid_b = 24
+			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "earthy"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -4158,7 +4170,7 @@ datum
 					boutput(M, "<span class='alert'>Your body feels like it's being tickled from the inside out!</span>")
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
-					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
+					M.visible_message("<span class='alert'>[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!</span>")
 					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
@@ -4398,3 +4410,15 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 3 * mult, flushed_reagents)
 				..()
+
+		fooddrink/pumpkinspicelatte
+			name = "pumpkin spice latte"
+			id = "pumpkinspicelatte"
+			id = "pumpkinspicelatte"
+			fluid_r = 231
+			fluid_g = 106
+			fluid_b = 0
+			description = "Whether or not it contains actual pumpkin juice has been up for debate."
+			reagent_state = LIQUID
+			taste = list("earthy", "sweet")
+			thirst_value = 1

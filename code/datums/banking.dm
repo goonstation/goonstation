@@ -460,6 +460,7 @@
 	icon_state = "databank"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	circuit_type = /obj/item/circuitboard/bank_data
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null

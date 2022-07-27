@@ -25,6 +25,7 @@
 	var/list/proj_types = list()
 	//instance projectile datum for non-random usage, randomise() is called on this
 	var/datum/projectile/artifact/prismatic_projectile/ps_proj = new
+	maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	New()
 		..()
@@ -39,7 +40,7 @@
 	cast(atom/target)
 		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
-				holder.owner.say("PROJEHK TUL IHNFERNUS") //incantation credit to Grifflez
+				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
 			logTheThing("combat", holder.owner, target, "casts Prismatic spray at [constructTarget(target,"combat")].")
 			// Put voice stuff here in the future

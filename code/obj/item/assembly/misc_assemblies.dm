@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -79,6 +80,8 @@ Contains:
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -416,6 +419,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -592,6 +597,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	if (src.part2)
@@ -868,3 +875,29 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+
+/obj/item/assembly/makeshiftshell
+
+	name = "filled pipe hulls"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
+	icon_state = "Pipeshotrow"
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/raw_material/shard))
+			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
+			qdel(W)
+			qdel(src)
+			user.put_in_hand_or_drop(shot)
+
+		if(istype(W, /obj/item/raw_material/scrap_metal))
+			var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
+			qdel(W)
+			qdel(src)
+			user.put_in_hand_or_drop(shot)
+		..()
+
+
+

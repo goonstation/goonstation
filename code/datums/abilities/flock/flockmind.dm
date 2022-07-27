@@ -289,7 +289,7 @@
 	if(..())
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.owner))
+	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
@@ -387,9 +387,12 @@
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
-	var/turf/T = get_turf(holder.owner)
-	if(!istype(T, /turf/simulated/floor/feather))
+	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
+	if(!istype(T))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return TRUE
+	if (T.broken)
+		boutput(holder.get_controlling_mob(), "<span class='alert'>The flocktile you're above is broken!</span>")
 		return TRUE
 	if(locate(/obj/flock_structure/ghost) in T)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>A tealprint has already been scheduled here!</span>")
@@ -464,4 +467,6 @@
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task
+	if(drone.ai_paused)
+		drone.wake_from_ai_pause()
 	drone.ai.interrupt()

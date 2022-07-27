@@ -790,6 +790,9 @@ table#cooktime a#start {
 		if (W.cant_drop) //For borg held items
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
+		if(W.w_class > W_CLASS_BULKY)
+			boutput(user, "<span class='alert'>[W] is far too large and unwieldly to fit in [src]!</span>")
+			return
 		if (src.working)
 			boutput(user, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
@@ -797,6 +800,7 @@ table#cooktime a#start {
 		if (amount >= 8)
 			boutput(user, "<span class='alert'>\The [src] cannot hold any more items.</span>")
 			return
+
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path))
