@@ -249,6 +249,7 @@ There's much less duplicate code here than there used to be, it could probably b
 	proc/check_trigger(mob/M)
 		return 0
 
+ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 /datum/injector_belt_condition/with_threshold
 	var/threshold
 	var/minValue
@@ -407,7 +408,7 @@ There's much less duplicate code here than there used to be, it could probably b
 		else return 0
 
 /proc/autoinjector_trigger_names(var/setType)
-	var/list/cond_types = childrentypesof(/datum/injector_belt_condition)
+	var/list/cond_types = concrete_typesof(/datum/injector_belt_condition)
 	. = new/list()
 
 	if (!setType)

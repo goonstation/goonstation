@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Section, Slider, Dropdown } from "../components";
+import { Button, Section, Slider, Dropdown, Box } from "../components";
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 
@@ -59,7 +59,7 @@ export const AutoInjector = (_props, context) => {
                       onSelected={(value) => act("sel_damage_type", { damagetype: value })}
                       noscroll
                       width="75px"
-                      style={{ "margin-top": "0.5rem" }}
+                      mt="0.5rem"
                     />
                   ) : null}
                 <Slider
@@ -69,15 +69,15 @@ export const AutoInjector = (_props, context) => {
                   maxValue={conditionTreshold.maxValue}
                   step={1}
                   onChange={(e, value) => act('changeConditionValue', { conditionValue: value })}
-                  style={{ "margin-top": "0.5rem" }}
+                  mt="0.5rem"
                 />
               </>
             ) : null}
           {condition
             ? (
-              <p style={{ "margin": "0", "margin-top": "0.5rem" }}>
+              <Box mt="0.5rem">
                 {condition.desc}
-              </p>
+              </Box>
             ) : null}
         </Section>
 
