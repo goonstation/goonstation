@@ -21,7 +21,7 @@ There's much less duplicate code here than there used to be, it could probably b
 	var/active = 0
 	var/obj/item/reagent_containers/glass/container = null
 	var/datum/injector_belt_condition/condition = null
-	var/min_time = 10
+	var/min_time = 10 SECONDS
 	var/inj_amount = 5
 
 	equipped(var/mob/user, var/slot)
@@ -96,7 +96,7 @@ There's much less duplicate code here than there used to be, it could probably b
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
-				SPAWN(min_time*10) can_trigger = 1
+				SPAWN(min_time) can_trigger = 1
 
 				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
 				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
@@ -134,7 +134,7 @@ There's much less duplicate code here than there used to be, it could probably b
 	var/active = 0
 	var/obj/item/reagent_containers/glass/container = null
 	var/datum/injector_belt_condition/condition = null
-	var/min_time = 10
+	var/min_time = 10 SECONDS
 	var/inj_amount = 5
 
 	equipped(var/mob/user, var/slot)
@@ -211,7 +211,7 @@ There's much less duplicate code here than there used to be, it could probably b
 			if(condition.check_trigger(owner) && can_trigger)
 
 				can_trigger = 0
-				SPAWN(min_time*10) can_trigger = 1
+				SPAWN(min_time) can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
 					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
@@ -325,7 +325,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 /datum/injector_belt_condition/tempdiff
 	name = "Temperature !="
 	desc = "Triggers when temperature reaches abnormal levels."
-	var/standard_temp = 307
+	var/standard_temp = 307 KELVIN
 
 	setup(mob/M)
 		return 1
@@ -339,10 +339,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /datum/injector_belt_condition/with_threshold/tempover
 	name = "Temperature >"
-	threshold = 315
+	threshold = 315 KELVIN
 	suffix = " k"
-	minValue = 315
-	maxValue = 600
+	minValue = 315 KELVIN
+	maxValue = 600 KELVIN
 
 	New()
 		..()
@@ -363,10 +363,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /datum/injector_belt_condition/with_threshold/tempunder
 	name = "Temperature <"
-	threshold = 300
+	threshold = 300 KELVIN
 	suffix = " k"
-	minValue = 25
-	maxValue = 300
+	minValue = 25 KELVIN
+	maxValue = 300 KELVIN
 
 	New()
 		..()
@@ -415,10 +415,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		. += "None"
 
 	for(var/A in cond_types)
-		var/datum/injector_belt_condition/C = new A()
-		. += C.name
+		var/datum/injector_belt_condition/C = A
+		. += initial(C.name)
 		if (setType)
-			.[C.name] = A
+			.[initial(C.name)] = A
 
 /proc/autoinjector_ui_data(var/datum/reagents/R, var/datum/injector_belt_condition/condition, var/min_time, var/inj_amount)
 	. = list()
@@ -433,7 +433,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		)
 
 		var/list/contents = reagentData["contents"]
-		if(istype(R) && R.reagent_list.len>0)
+		if(istype(R) && length(R.reagent_list) > 0)
 			reagentData["finalColor"] = R.get_average_rgb()
 			for(var/reagent_id in R.reagent_list)
 				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
@@ -475,11 +475,11 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 				)
 
 	.["injectionAmount"] = inj_amount
-	.["minimumTime"] = min_time
+	.["minimumTime"] = min_time / (1 SECOND)
 
 /proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
 	var/obj/item/injector_belt/current_belt = null
-	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
+	var/obj/item/clothing/mask/ga s/injector_mask/current_mask = null
 	if (istype(source, /obj/item/injector_belt))
 		current_belt = source
 	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
@@ -488,10 +488,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				current_belt.container.set_loc(get_turf(source))
+				usr.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				current_mask.container.set_loc(get_turf(source))
+				usr.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 
@@ -508,7 +508,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 			var/selected = params["condition"]
 			var/selected_type
 			var/datum/injector_belt_condition/selected_condition = null
-			if (selected <> "None")
+			if (selected != "None")
 				selected_type = filtered[selected]
 				selected_condition = new selected_type()
 
@@ -550,7 +550,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 			. = TRUE
 
 		if ("changeMintime")
-			var/clampedTime = clamp(round(params["mintime"]), 3, 300)
+			var/clampedTime = clamp(round(params["mintime"]) SECONDS, 3 SECONDS, 300 SECONDS)
 			if (current_belt)
 				current_belt.min_time = clampedTime
 			else if (current_mask)
