@@ -123,7 +123,7 @@ datum
 			B.take_damage(blob_damage, volume, "poison")
 			return 1
 
-		//Proc to process a mob's chemical protection in advance of reaction.
+		//Proc to check a mob's chemical protection in advance of reaction.
 		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
 		proc/reaction_mob_chemprot_layer(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
 			var/raw_volume = volume
