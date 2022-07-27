@@ -1,5 +1,9 @@
 
 (t)wed jul 27 22
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
 (u)Moberry
 (p)9682
 (e)⚖|balance
