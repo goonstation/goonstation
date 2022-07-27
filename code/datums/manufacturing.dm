@@ -661,6 +661,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/red_o2_grenade
+	name = "Red Oxygen Grenade"
+	item_paths = list("MET-2","CON-1","molitz","char")
+	item_amounts = list(2,2,10,1)
+	item_outputs = list(/obj/item/old_grenade/oxygen)
+	time = 10 SECONDS
+	create = 1
+	category = "Tool"
+
 ////////////////////////////////
 
 /datum/manufacture/player_module

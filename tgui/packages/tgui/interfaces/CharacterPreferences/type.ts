@@ -20,6 +20,7 @@ export interface CharacterPreferencesData {
   nameFirst: string;
   nameMiddle: string;
   nameLast: string;
+  robotName: string;
   randomName: number;
   gender: string;
   pronouns: string;
@@ -56,7 +57,9 @@ export interface CharacterPreferencesData {
   autoCapitalization: BooleanLike;
   localDeadchat: BooleanLike;
   targetingCursor: string;
+  targetingCursorPreview: string;
   hudTheme: string;
+  hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;

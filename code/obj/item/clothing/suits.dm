@@ -20,6 +20,8 @@
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
+	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
+	var/coat_style = null
 
 
 	setupProperties()
@@ -394,6 +396,24 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 35)
 
+/obj/item/clothing/suit/hopjacket
+	name = "Head of Personnel's jacket"
+	desc = "A tacky green and red jacket for a tacky green bureaucrat."
+	icon_state = "hopjacket"
+	uses_multiple_icon_states = TRUE
+	item_state = "hopjacket"
+	coat_style = "hopjacket"
+	bloodoverlayimage = SUITBLOOD_COAT
+
+	setupProperties()
+		..()
+		setProperty("rangedprot", 0.5)
+
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
 	desc = "This robe commands authority."
@@ -482,12 +502,9 @@
 	icon_state = "labcoat"
 	uses_multiple_icon_states = 1
 	item_state = "labcoat"
-	var/coat_style = "labcoat"
+	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
-	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
@@ -497,29 +514,7 @@
 
 	New()
 		..()
-
-	attack_self()
-		..()
-		if (buttoned)
-			src.unbutton()
-		else
-			src.button()
-
-	proc/button()
-		if (src.coat_style)
-			src.icon_state = src.coat_style
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
-		src.buttoned = TRUE
-
-	proc/unbutton()
-		if (src.coat_style)
-			src.icon_state = "[src.coat_style]_o"
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
-		src.buttoned = FALSE
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -1106,6 +1101,13 @@
 		icon_state = "spacecap-red"
 		item_state = "spacecap-red"
 
+/obj/item/clothing/suit/space/syndicate_worn
+	name = "worn red space suit"
+	icon_state = "syndicate"
+	item_state = "space_suit_syndicate"
+	desc = "A suit that protects against low pressure environments. Issued to syndicate operatives. Looks like this one has seen better days."
+	contraband = 3
+
 /obj/item/clothing/suit/space/syndicate
 	name = "red space suit"
 	icon_state = "syndicate"
@@ -1133,6 +1135,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",60)
 		setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 	disposing()
@@ -1199,7 +1202,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 50)
 
 		infiltrator
 			name = "specialist operative espionage suit"
@@ -1291,8 +1293,8 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(0, (7 - src.material.getProperty("permeable")) * 10)
-			setProperty("viralprot", prot)
+			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			setProperty("chemprot", prot)
 
 			prot = max(0, renf.getProperty("density") - 3) / 2
 			setProperty("meleeprot", 3 + prot)
@@ -1434,6 +1436,7 @@
 
 		setupProperties()
 			..()
+			setProperty("chemprot",60)
 			setProperty("space_movespeed", 0)  // syndicate space suits don't suffer from slowdown
 
 		commander
@@ -1755,3 +1758,74 @@
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+
+//crate loot
+
+/obj/item/clothing/suit/lined_jacket
+	name = "lined jacket"
+	desc = "A faux-leather jacket with cozy lining."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "lined_jacket"
+	item_state = "lined_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/rugged_jacket
+	name = "rugged jacket"
+	desc = "A pre-torn jacket for that 'mildly cool' sort of look."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "rugged_jacket"
+	item_state = "rugged_jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/star_cloak
+	name = "starry cloak"
+	desc = "A cloak with an intricate and detailed view of the night sky viewed from space woven into it."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "star_cloak"
+	item_state = "star_cloak"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cow_jacket
+	name = "cow jacket"
+	desc = "Made of faux-cow."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "cow"
+	item_state = "cow"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/warm_jacket
+	name = "warm jacket"
+	desc = "Warm as in its coloration. It's not actually all that insulative."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_warm"
+	item_state = "gradient_warm"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/cool_jacket
+	name = "cool jacket"
+	desc = "Cool as in its coloration. It's not actually all that radical."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "gradient_cool"
+	item_state = "gradient_cool"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/billow_cape
+	name = "cape of flowing"
+	desc = "A cape that flutters when worn, even if it's not worn in space-windy conditions."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "billow_cape"
+	item_state = "billow_cape"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/space/replica
+	name = "replica space suit"
+	desc = "A replica of an old space suit. Seems to still work, though."
+	icon_state = "space_replica"
+	item_state = "space_replica"

@@ -1,25 +1,5 @@
 // The misc crap that used to clutter up item.dm and didn't fit elsewhere.
 
-/obj/item/aplate
-	name = "armor plates"
-	desc = "A bunch of armor plates."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "armorplate"
-	amount = 1
-	throwforce = 1
-	force = 1
-	w_class = W_CLASS_TINY
-
-/obj/item/gears
-	name = "gears"
-	desc = "A bunch of gears. Not very useful like this."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "gears"
-	amount = 1
-	throwforce = 1
-	force = 1
-	w_class = W_CLASS_TINY
-
 /obj/item/lens
 	name = "Lens"
 	desc = "A lens of some sort. Not super useful on its own."
@@ -41,13 +21,6 @@
 		throwforce = 3
 		force = 3
 		w_class = W_CLASS_TINY
-
-	large
-		name = "large coil"
-		icon_state = "large_coil"
-		throwforce = 5
-		force = 5
-		w_class = W_CLASS_SMALL
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"

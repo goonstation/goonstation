@@ -51,6 +51,8 @@
 		build_icon()
 
 	disposing()
+		if (src.occupant)
+			src.go_out()
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 		..()
@@ -229,6 +231,9 @@
 			if (src.defib)
 				boutput(user, "<span class='alert'>[src] already has a Defibrillator installed.</span>")
 			else
+				if (I.cant_drop)
+					boutput(user, "<span class='alert'>You can't put that in [src] while it's attached to you!")
+					return
 				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)

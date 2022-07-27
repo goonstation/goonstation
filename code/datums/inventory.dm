@@ -1,4 +1,5 @@
 #define MAKE_SLOT(slot, item) list("id" = slot, "item" = item?.name)
+#define MAKE_SLOT_CUSTOM(slot, item, name) list("id" = slot, "item" = item ? name : null)
 
 /datum/humanInventory
 	var/mob/living/carbon/human/human = null
@@ -38,8 +39,8 @@
 		MAKE_SLOT("slot_wear_suit", src.human.wear_suit),
 		MAKE_SLOT("slot_back", src.human.back),
 		MAKE_SLOT("slot_wear_id", src.human.wear_id),
-		MAKE_SLOT("slot_l_store", src.human.l_store),
-		MAKE_SLOT("slot_r_store", src.human.r_store),
+		MAKE_SLOT_CUSTOM("slot_l_store", src.human.l_store, "Something"),
+		MAKE_SLOT_CUSTOM("slot_r_store", src.human.r_store, "Something"),
 	)
 
 	. = list(
@@ -110,3 +111,4 @@
 			return
 
 #undef MAKE_SLOT
+#undef MAKE_SLOT_CUSTOM

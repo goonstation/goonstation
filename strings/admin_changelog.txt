@@ -1,3 +1,6 @@
+(t)tue jul 19 22
+(u)Ilysen
+(*)Started integrating the new antagonist system with the player panel. Development is still ongoing, but at bare minimum admins should be able to add and remove traitor status from people now.
 (t)tue jun 14 22
 (u)LeahTheTech
 (*)Added flockgib verb and player option

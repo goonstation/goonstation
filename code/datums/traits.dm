@@ -307,9 +307,7 @@
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
 			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
-				H.equip_new_if_possible(/obj/item/device/radio/headset/deaf, H.slot_ears)
 
 	onLife(var/mob/owner) //Just to be super safe.
 		if(!owner.ear_disability)
@@ -448,9 +446,7 @@
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
 			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
-				H.equip_if_possible(new /obj/item/clothing/glasses/regular(H), H.slot_glasses)
 
 	onLife(var/mob/owner) //Just to be super safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("bad_eyesight"))
@@ -468,9 +464,7 @@
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
 			if(istype(owner, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = owner
 				owner.bioHolder.AddEffect("blind", 0, 0, 0, 1)
-				H.equip_if_possible(new /obj/item/clothing/glasses/visor(H), H.slot_glasses)
 
 	onLife(var/mob/owner) //Just to be safe.
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("blind"))

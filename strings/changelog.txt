@@ -1,5 +1,291 @@
 
+(t)wed jul 27 22
+(u)Zonespace
+(p)9848
+(e)⚖|balance
+(+)Nukeop laser designator now fires faster and has a more powerful explosion
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changed the blob recycling ability to cost 0 biopoints. Increased the cooldown to five seconds.
+(t)tue jul 26 22
+(u)Amylizzle
+(p)9720
+(e)🆕📄|feature, tgui
+(+)Flockdrones with nothing to do will now hibernate, providing 5 extra compute. They will wake from hibernation when given orders or an enemy is detected.
+(u)Gannets
+(p)9852
+(e)⚖|balance
+(+)Added high-capacity fire extinguisher to Nuclear Operative Field Medic class crate.
+(t)mon jul 25 22
+(u)Ikea
+(p)9850
+(e)|
+(+)The medborg inventory has been shuffled around a bit.
+(u)Flourish
+(+)Reduced number of loot crate spawners in the debris field. Increased frequency of loot crates while mining asteroids (including mineral magnet).
+(u)Luxizzle
+(p)9842
+(e)🐛🗺|bug, mapping
+(+)Artifact paper dispensers now act like paper bins. You can pick them up and put artifact papers back in.
+(u)Luxizzle
+(p)9841
+(e)🐛🗺|bug, mapping
+(+)Cogmap2's Artifact Lab now includes a thinktape.
+(t)sat jul 23 22
+(u)Flaborized
+(p)9718
+(e)🆕|feature
+(+)Wizard incantations are now a bit more magical looking.
+(t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
+(u)ZWRh3
+(p)9793
+(e)⚖|balance
+(+)Clown cars now make people who they run over fall to the ground instantly.
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
+(u)Amylizzle
+(p)9743
+(e)|
+(+)Walls are made of materials now.
+(u)ZWRh3
+(p)9745
+(e)|
+(+)Cyborgs now get XL fire extinguishers.
+(u)Roddy
+(p)9749
+(e)🆕|feature
+(+)Creaca's Fruit Milk has outsourced production. Local vending machines now contain 10 new flavors of fruit milk; try one today.
+(u)Skorps
+(p)9796
+(e)🎨|sprites
+(+)Resprited the sterile mask icon.
+(t)thu jul 21 22
+(u)Luxizzle
+(p)9719
+(e)🆕📄|feature, tgui
+(+)You can now set a preferred cyborg name in your character profile
+(u)DimWhat
+(p)9547
+(e)|
+(+)Reworked how opening and closing labcoats works, report any unusual things with them.
+(t)wed jul 20 22
+(u)glowbold
+(p)9581
+(e)|
+(+)The mining cyborg module now includes the cargo appraisal and material analysis tools.
+(u)NightmarechaMillian
+(p)9726
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added craftable slamgun shells to the game.
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
+(t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
+(u)Munien
+(p)9507
+(e)🆕|feature
+(+)Rose names now pull from the names of player mobs. Give someone a rose today!
+(t)sun jul 17 22
+(u)Roddy
+(p)9678
+(e)🆕|feature
+(+)Added pumpkin juice and pumpkin spice lattes (milk, pumpkin juice, and coffee)
+(u)TTerc
+(e)⚖|balance
+(+)Vending machine throw stun duration: 10 seconds -> 5 seconds
+(u)Amylizzle
+(p)9606
+(e)🐛|bug
+(+)Matter eater now lets you eat food properly, and also transfers reagents. Eat big bottles of whiskey all at once!
+(u)LeahTheTech
+(p)9721
+(e)|
+(+)People with the mute gene no longer have typing indicators
+(u)Chan Walrus
+(p)9399
+(e)🎨|sprites
+(+)Added a new tour console sprite.
+(u)Kubius
+(p)9677
+(e)🆕🗺|feature, mapping
+(+)Kondaru's kitchen has been upgraded with a second oven and a more robust serving area.
+(t)sat jul 16 22
+(u)Wisemonster
+(p)9692
+(e)🗺|mapping
+(+)Donut 2's qm has been updated to reduce mid-space crate collisions
+(t)fri jul 15 22
+(u)Ilysen
+(p)9366
+(e)|
+(*)Began a refactoring/update of the antagonist system in the code. This should result in only a few user-facing changes (ideally!) but it might cause bugs, broken interactions, or other unintentional changes. Please keep an eye out while playing as an antagonist, and report bugs on GitHub!
+(u)Moberry
+(p)9582
+(e)⚖|balance
+(+)Increases Spell shield cooldown to 60 seconds.
+(u)Flaborized + Flourish
+(p)9605
+(e)🆕🗺🎨🔄|feature, mapping, sprites, rework
+(*)Loot crates (the kind which you can find across the debris field) have been reworked. Along with now randomly spawning across the map, they no longer require you to solve a puzzle and instead are anchored and locked through an anti-tamper device. Smash the anti-tamper device with a hefty object (such as an extinguisher) to unanchor and unlock the crate.
+(*)Loot crate contents have also been adjusted - they now pull from a larger pool of possible loot and will always contain at least three different kinds of items. Sprites by Flab!
+(u)Roddy
+(p)9418
+(e)|
+(+)Added additional last names to the random name pool.
+(t)thu jul 14 22
+(u)Blahowsky
+(p)9336
+(e)🎨|sprites
+(*)Added a new, unique Head of Personnel's jacket to the Head of Personnel's locker.
+(u)Amylizzle
+(p)9635
+(e)🐛|bug
+(+)Ling horror form can now slash at blob flesh. So can bear, brullbar, claw, and KING CRAB arms
+(u)DimWhat
+(p)9660
+(e)|
+(+)Added sterile masks to the JaniTech vendor
+(u)Shiiba
+(p)9620
+(e)🎨|sprites
+(+)Instead of giving raises, NanoTrasen gave out NT branded water bottles, enjoy!
+(u)Stonepillar
+(p)9636
+(e)🐛|bug
+(+)Bank records computer is now deconstructible
+(u)Ikea
+(p)9639
+(e)⚖|balance
+(*)Vending machines will always fall down on people tossed at them. Vending machine stun has been reduced to ten seconds.
+(t)wed jul 13 22
+(u)MetricDuck
+(p)9611
+(e)🆕|feature
+(+)Changelings can copy the DNA of NPCs for transformation purposes by attempting to absorb them.
+(t)tue jul 12 22
+(u)Azrun
+(e)🆕|feature
+(+)Glue in TEG Circulator Bad! Graphene compound good?
+(u)Ikea
+(p)9488
+(e)⚖|balance
+(+)The corrosion resistance material property has been renamed to chemical resistance. All applications of permeability has been completely merged with chemical resistance and the permeability material property has been removed.
+(u)Moberry
+(p)9376
+(e)⚖⛔|balance, removal
+(+)Changed QM Ore values and removed the electronics commodity.
+(u)TTerc
+(e)🗺|mapping
+(+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
+(u)Chatauscours
+(p)9337
+(e)🗺|mapping
+(*)The Horizon QM does not rely on piping anymore, having now direct imput and export loaders.
+(u)Chatauscours
+(p)9128
+(e)🆕|feature
+(*)Added Security record scanner program for PDAs. Only available on ROBUST, Forensics and ROBUSTER cartridges.
+(u)Kubius
+(p)9550
+(e)🆕|feature
+(+)Gas extractors are now capable of producing red oxygen grenades.
+(u)Roddy
+(p)9439
+(e)🆕🎨|feature, sprites
+(+)Adds in some tasty fruit milk to a vending machine near you.
+(u)DimWhat
+(p)9591
+(e)🐛|bug
+(+)The strange vampire clothing can now only be claimed with the vampire cape
+(u)DimWhat
+(p)9589
+(e)🆕|feature
+(+)Added a vampire costume to Geoff Honkington's shop.
+(u)Flappybat
+(p)9585
+(e)⚖|balance
+(*)Human NPCs are no longer valid targets for Changeling's DNA absorb, Werewolf feast and Vampire blood abilities.
+(u)DimWhat
+(p)9587
+(e)🆕|feature
+(+)Bartenders can now use *twirl and *spin while holding glasses safely.
+(u)Azrun & Virvatuli
+(p)5663
+(e)⚖🔄|balance, rework
+(*)Slamguns are back!
+(+)Zipguns no longer accept shotgun shells.
+(u)Waffleloffle
+(p)9590
+(e)🎨|sprites
+(+)NanoTrasen's interior decoration committee has changed indoor plant suppliers after difficulties with the previous bush wholesaler.
+(u)Azrun
+(p)9529
+(e)🎨⚖|sprites, balance
+(*)New Space Epoxy to give strength to the windows, to the walls, and even pipes!
+(t)mon jul 11 22
+(u)Ikea
+(p)9537
+(e)⚖|balance
+(*)Furnaces can now accept any flammable material, with fuel effectiveness scaling with material flammability.
+(u)CheekyBrdy
+(p)9287
+(e)🎨|sprites
+(+)Mechanics now have mechanic headsets instead of engineering headsets.
+(u)CodeJester
+(p)9171
+(e)🐛|bug
+(+)Using floor tiles as a ghostdrone is less awful now.
+(u)Sord + Flourish
+(e)🆕🗺|feature, mapping
+(+)Added randomized rooms to Cog2.
+(u)HauntedAngel
+(p)9521
+(e)🆕|feature
+(+)Ingesting acid now scars your vocal chords and makes your voice appear as unknown.
+(+)Ingesting Synthflesh can repair the damage done from ingesting acid.
+(u)avimour
+(p)9573
+(e)⛔|removal
+(+)Synthmeat plant mutations are now only infusion based.
+(u)DimWhat
+(p)9522
+(e)🎨|sprites
+(+)Made some edits to the alchemist robe sprites
+(u)ZWRh3
+(p)9343
+(e)🐛⚖|bug, balance
+(+)The Syndicate has upgraded the space suits of nuclear operatives to resist chemicals penetrating them
+(u)Luxizzle
+(p)9572
+(e)🐛|bug
+(+)People can no longer see what are in your pockets like they used to. Finally some privacy again.
 (t)sun jul 10 22
+(u)Mora
+(p)9539
+(e)🆕🎨⚖|feature, sprites, balance
+(*)The bartender has a new shotgun to replace their very out-of-place riot shotgun! It's a sawnoff break-action double barrel that functions the way you'd expect, yeehaw. Still uses standard rubber slugs for the moment. Sprites by cogwerks.
+(u)Ilysen
+(p)9317
+(e)|
+(+)Device analyzers will no longer attack an object when you scan it, meaning you can scan things without potentially smacking fragile objects, angering Beepsky, etc.
+(+)Using a device analyzer on Harm intent will skip the scan and make it function like any other item, meaning you can hit people with it, put it into disposals or on tables, and so on.
+(+)Note that due to the above change, you'll need to be on Harm intent to put device analyzers into your bag.
 (u)Munien
 (p)9508
 (e)🆕|feature
@@ -65,7 +351,7 @@
 (u)Moberry
 (p)9377
 (e)⚖|balance
-(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(*)Changed the shipping market timer from 12-9 minutes to 10-5 minutes.
 (+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409

@@ -608,8 +608,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					else
 						T.assume_air(GM)
 
-			for (var/mob/living/HH in range(8, src))
-				var/checkdist = get_dist(HH.loc, T)
+			for (var/mob/living/HH in hearers(8, T))
+				var/checkdist = GET_DIST(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
 				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
@@ -1443,6 +1443,16 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		return
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/pipebomb/frame))
+			var/obj/item/pipebomb/frame/other_frame = W
+			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
+				user.u_equip(src)
+				user.u_equip(W)
+				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+				user.put_in_hand_or_drop(S)
+				qdel(W)
+				qdel(src)
 
 		if(isweldingtool(W) && state == 1)
 			if(!W:try_weld(user, 1))
@@ -1457,6 +1467,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			else
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
+
+		if(issnippingtool(W) && state == 2) //pipeshot crafting
+			name = "hollow pipe hulls"
+			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+			src.state = 5
+			icon_state = "Pipeshot"
+			desc = "Four open pipe shells. They're currently empty."
 
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
@@ -1502,6 +1519,27 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					name = "filled pipe frame"
 
+		if(istype(W, /obj/item/reagent_containers/) && state == 5) //pipeshot crafting cont'd
+			var/amount = 20
+			var/avg_volatility = 0
+
+			for (var/id in W.reagents.reagent_list)
+				var/datum/reagent/R = W.reagents.reagent_list[id]
+				avg_volatility += R.volatility
+			avg_volatility /= W.reagents.reagent_list.len
+
+			if (avg_volatility < 1) // invalid ingredients/concentration
+				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
+			else
+				//consume the reagents
+				src.reagents = new /datum/reagents(amount)
+				src.reagents.my_atom = src
+				W.reagents.trans_to(src, amount)
+				qdel(src.reagents)
+				//make the hulls
+				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
+				new /obj/item/assembly/makeshiftshell(get_turf(src))
+				qdel(src)
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)
 			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")

@@ -1094,7 +1094,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(master && istype(master, /obj/item/baton) && !master:can_stun())
+		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 			return
 		..()
@@ -1105,7 +1106,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/gloves
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-		if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+		if(!istype(master, /obj/item/clothing/gloves) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(master:uses)
 			var/obj/item/clothing/gloves/G = master
 			G.uses = max(0, G.uses - 1)
 			if (G.uses < 1)

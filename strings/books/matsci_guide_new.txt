@@ -931,14 +931,6 @@ Thank you for your service to Nanotrasen.</i></p>
 			<li>51 to 75 --  Slightly corrosion-resistant</li>
 			<li>76 to 90 --  Corrosion-resistant</li>
 			<li>90+      --  Very corrosion-resistant</li></ul>
-		<p style="margin-right:10%; margin-left:1%"><b>Permeability</b></p>
-			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very impermeable</li>
-			<li>11 to 25 --  Impermeable</li>
-			<li>26 to 50 --  Slightly impermeable</li>
-			<li>51 to 75 --  Slightly permeable</li>
-			<li>76 to 90 --  Permeable</li>
-			<li>90+      --  Very permeable</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b></p>
 			<ul style='list-style-type:circle'>
 			<li>1 to 10  --  Very dull (low reflectivity)</li>

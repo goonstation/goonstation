@@ -2405,7 +2405,8 @@
 		/datum/manufacture/o2_can,
 		/datum/manufacture/co2_can,
 		/datum/manufacture/n2_can,
-		/datum/manufacture/plasma_can)
+		/datum/manufacture/plasma_can,
+		/datum/manufacture/red_o2_grenade)
 
 // a blank manufacturer for mechanics
 

@@ -150,8 +150,8 @@
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  max(0, (7 - visr_material.getProperty("permeable")) * 5)
-			setProperty("viralprot", prot)
+			prot =  clamp(((visr_material.getProperty("chemical") - 4) * 10), 0, 35) // All crystals (assuming default chem value) will give 20 chemprot, same as normal helm.
+			setProperty("chemprot", prot)
 
 			prot = max(0, visr_material.getProperty("density") - 3) / 2
 			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
@@ -272,6 +272,7 @@
 
 	New()
 		..()
+		setProperty("chemprot",30)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -389,7 +390,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -469,6 +469,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",30)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat

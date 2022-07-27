@@ -47,7 +47,6 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
-	var/last_door_knock_time = 0 //anti door knock spam, now seperate from emote anti-spam
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
@@ -70,6 +69,7 @@
 	var/real_name = null
 	var/blinded = null
 	var/disfigured = FALSE
+	var/vdisfigured = FALSE
 	var/druggy = 0
 	var/sleeping = 0.0
 	var/lying = 0.0
@@ -1709,7 +1709,7 @@
 		if(organ.donor == src)
 			organ.on_removal()
 	if (!custom_gib_handler)
-		if (iscarbon(src))
+		if (iscarbon(src) || (ismobcritter(src) & !isrobocritter(src)))
 			if (bdna && btype)
 				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
 			else
@@ -2848,6 +2848,15 @@
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
+	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
+	if (!equipment_proxy)
+		equipment_proxy = new
+		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
+
+	// reset the modifiers to defaults
+	equipment_proxy.additive_slowdown = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED)
+	equipment_proxy.space_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
 // no text description though, because it's all different everywhere

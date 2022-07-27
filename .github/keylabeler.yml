@@ -16,6 +16,7 @@ labelMappings:
     "[BUG]": bug
     "[FIX]": bug
     "[BUGFIX]": bug
+    "fixes #": bug
     "[BUG - MINOR]": bug - minor
     "[MINOR]": bug - minor
     "[BUG - TRIVIAL]": bug - trivial

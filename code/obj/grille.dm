@@ -184,7 +184,7 @@
 
 			cut_resist = material.getProperty("hard") * 10
 			blunt_resist = material.getProperty("density") * 10
-			corrode_resist = material.getProperty("corrosion") * 10
+			corrode_resist = material.getProperty("chemical") * 10
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)

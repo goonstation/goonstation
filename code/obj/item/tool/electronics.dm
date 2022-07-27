@@ -120,6 +120,7 @@
 /obj/item/electronics/frame
 	name = "frame"
 	icon_state = "frame"
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	var/store_type = null
 	var/secured = 0
 	var/viewstat = 0
@@ -339,14 +340,27 @@
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
+	var/density_check = FALSE
 
 	New(Frame)
 		F = Frame
+
+		if(F.deconstructed_thing)
+			density_check = F.deconstructed_thing.density
+		else
+			var/atom/A = F.store_type
+			density_check = initial(A.density)
 		..()
 
 	onUpdate()
 		..()
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -355,12 +369,25 @@
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
 	onEnd()
 		..()
 		if(BOUNDS_DIST(owner, F) > 0 || F == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/turf/T = get_turf(F)
+		if(density_check && !T.can_crossed_by(F))
+			boutput(owner, "<span class='alert'>There's no room to deploy the frame.</span>")
+			src.resumable = FALSE
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && F)
 			F.deploy(owner)
 
@@ -415,30 +442,53 @@
 	var/viewstat = 0
 
 	syndicate
-		is_syndicate = 1
+		is_syndicate = TRUE
+	
+	New()
+		. = ..()
+		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
+	
+	get_desc()
+		// We display this on a separate line and with a different color to show emphasis
+		. = ..()
+		. += "<br><span class='notice'>Use the Help, Disarm, or Grab intents to scan objects when you click them. Switch to Harm intent do other things.</span>"
 
-/obj/item/electronics/scanner/afterattack(var/obj/O, mob/user as mob)
-	if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
-		return
-	if(istype(O,/obj/))
-		if(O.mats == 0 || isnull(O.mats) || O.disposed || (O.is_syndicate != 0 && src.is_syndicate == 0))
-			// if this item doesn't have mats defined or was constructed or
-			// attempting to scan a syndicate item and this is a normal scanner
-			boutput(user, "<span class='alert'>The structure of this object is not compatible with the scanner.</span>")
+	proc/pre_attackby(obj/item/parent_item, atom/A, mob/user)
+		if (user.a_intent == INTENT_HARM)
 			return
-
-		user.visible_message("<B>[user.name]</B> scans [O].")
-
-		var/final_type = O.mechanics_type_override ? O.mechanics_type_override : O.type
-
-		for (var/X in src.scanned)
-			if (final_type == X)
-				boutput(user, "<span class='alert'>You have already scanned that object.</span>")
+		var/skip_if_fail = FALSE
+		if (isobj(A))
+			var/obj/O = A
+			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
 				return
-
-		animate_scanning(O, "#FFFF00")
-		src.scanned += final_type
-		boutput(user, "<span class='notice'>Item scan successful.</span>")
+			skip_if_fail = O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL
+		var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, parent_item, user)
+		if (scan_result != MECHANICS_ANALYSIS_SUCCESS && skip_if_fail)
+			return
+		var/scan_output = null
+		switch (scan_result)
+			if (MECHANICS_ANALYSIS_SUCCESS)
+				scan_output = "<span class='notice'>Item scan successful.</span>"
+				playsound(A.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
+			if (MECHANICS_ANALYSIS_INCOMPATIBLE, 0) // 0 is returned by SEND_SIGNAL if the component is not present, so we use it here too
+				scan_output = "<span class='alert'>The structure of [A] is not compatible with [parent_item].</span>"
+			if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
+				scan_output = "<span class='alert'>You have already scanned this type of object.</span>"
+		if (!isnull(scan_output))
+			// this is technically sleight of hand, since the effects of scanning are only shown after the scan is actually done
+			// doing this is a lot cleaner, though, than displaying some or all of the messages if the target has MECHANICS_INTERACTION_SKIP_IF_FAIL
+			do_scan_effects(A, user)
+			boutput(user, scan_output)
+		return TRUE
+	
+	proc/do_scan_effects(atom/target, mob/user)
+		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
+		user.tri_message(target,
+			"<span class='notice'>[user] scans [user == target ? himself_or_herself(user) : target] with [src].</span>", \
+			"<span class='notice'>You run [src] over [user == target ? "yourself" : target]...</span>", \
+			"<span class='notice'>[user] waves [src] at you. You feel [pick("funny", "weird", "odd", "strange", "off")].</span>"
+		)
+		animate_scanning(target, "#FFFF00")
 
 ////////////////////////////////////////////////////////////////no
 /obj/machinery/rkit
@@ -448,6 +498,7 @@
 	icon_state = "rkit"
 	anchored = 1
 	density = 1
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_engineering_chief)
 
