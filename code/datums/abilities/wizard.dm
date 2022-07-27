@@ -268,10 +268,10 @@
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = 0
 			return 999
-		var/turf/T = get_turf(holder.owner)
 		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
 			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 			return 999
+		var/turf/T = get_turf(holder.owner)
 		if( offensive && T.loc:sanctuary )
 			boutput(holder.owner, "<span class='alert'>You cannot cast offensive spells on someone in a sanctuary.</span>")
 		if (src.restricted_area_check)
