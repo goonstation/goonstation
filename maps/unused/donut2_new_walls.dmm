@@ -6922,7 +6922,6 @@
 /area/station/maintenance/north)
 "arl" = (
 /obj/machinery/light,
-/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/main)
 "arm" = (
@@ -8907,17 +8906,24 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
 /area/station/hangar/main)
 "awC" = (
-/obj/machinery/shieldgenerator/meteorshield,
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
 	},
-/area/station/hangar/main)
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "awD" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -9978,11 +9984,11 @@
 	c_tag = "Barbershop";
 	dir = 4
 	},
-/obj/machinery/space_heater,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -38539,6 +38545,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -41685,19 +41692,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"leW" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "lfr" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/grime,
@@ -41832,7 +41826,6 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/orange/corner{
 	dir = 1
 	},
@@ -42789,6 +42782,15 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"mYz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "mYC" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -44904,15 +44906,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"qHv" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "qIb" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
@@ -45192,6 +45185,9 @@
 	dir = 8;
 	icon_state = "ebulb1"
 	},
+/obj/table/auto,
+/obj/item/weldingtool,
+/obj/item/storage/box/cablesbox,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -48234,6 +48230,10 @@
 /obj/access_spawn/research,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
+"wES" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/grime,
+/area/station/storage/emergency)
 "wFo" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -49107,6 +49107,7 @@
 	dir = 4;
 	icon_state = "bulb1"
 	},
+/obj/machinery/shieldgenerator/meteorshield,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "yeB" = (
@@ -81333,7 +81334,7 @@ kUH
 axi
 aya
 ayX
-aAb
+wES
 aAb
 aJp
 aCE
@@ -84355,7 +84356,7 @@ avg
 avg
 aAg
 jnM
-leW
+awC
 axc
 axQ
 aEl
@@ -84959,7 +84960,7 @@ hyN
 azc
 aAh
 jnM
-qHv
+mYz
 azi
 azM
 aLa
@@ -86763,7 +86764,7 @@ asW
 apu
 azd
 uRD
-awC
+uRD
 avP
 apv
 pTo
