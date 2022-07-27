@@ -2069,6 +2069,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.organHolder.drop_organ("head", get_turf(patient))
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s head with [src].")
 			return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
@@ -2084,6 +2085,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			limb.remove(FALSE)
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 
 #undef CREATE_BLOOD_SPLOOSH

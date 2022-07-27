@@ -33,3 +33,9 @@
 // replication defs
 #define FLOCK_MIN_DESIRED_POP 10
 #define FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE 7.5
+
+// drone compute configs
+#define FLOCK_DRONE_COMPUTE 10
+#define FLOCK_DRONE_COMPUTE_HIBERNATE 15
+// how many times a drone must wander in a row before it hibernates
+#define FLOCK_DRONE_WANDER_PAUSE_COUNT 5

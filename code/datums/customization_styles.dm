@@ -232,6 +232,15 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Visual"
 				id = "visual"
 				gender = MASCULINE
+			combedfront
+				name = "Combed Front"
+				id = "combedfront"
+			combedfrontshort
+				name = "Combed Front Short"
+				id = "combedfrontshort"
+			longfront
+				name = "Long Front"
+				id = "longfront"
 		long
 			chub2_s
 				name = "Bang: Left"
