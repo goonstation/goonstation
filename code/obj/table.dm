@@ -10,6 +10,7 @@
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
 	var/auto = 0
@@ -565,6 +566,66 @@
 
 	auto
 		auto = TRUE
+/* ======================================== */
+/* ---------------------------------------- */
+/* ======================================== */
+
+/obj/table/endtable_classic
+	name = "vintage endtable"
+	desc = "A vintage-styled wooden endtable, complete with decorative doily."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtable-classic"
+	parts_type = /obj/item/furniture_parts/endtable_classic
+
+/obj/table/endtable_gothic
+	name = "gothic endtable"
+	desc = "A gothic-styled wooden endtable, complete with decorative doily."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtable-gothic"
+	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/podium_wood
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood"
+	parts_type = /obj/item/furniture_parts/podium_wood
+
+/obj/table/podium_wood/nanotrasen
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official. Comes with a NT-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood-nt"
+	parts_type = /obj/item/furniture_parts/podium_wood/nt
+
+/obj/table/podium_wood/syndicate
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official. Comes with a Syndicate-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood-snd"
+	parts_type = /obj/item/furniture_parts/podium_wood/syndie
+
+/obj/table/podium_white
+	name = "white podium"
+	desc = "A white podium. Looks official."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite"
+	parts_type = /obj/item/furniture_parts/podium_white
+
+/obj/table/podium_white/nanotrasen
+	name = "white podium"
+	desc = "A white podium. Looks official. Comes with a NT-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite-nt"
+	parts_type = /obj/item/furniture_parts/podium_white/nt
+
+/obj/table/podium_white/syndicate
+	name = "white podium"
+	desc = "A white podium. Looks official. Comes with a Syndicate-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite-snd"
+	parts_type = /obj/item/furniture_parts/podium_white/syndie
+
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */

@@ -575,7 +575,8 @@
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic,
+		/obj/item/extinguisher/large)
 
 	engineer
 		name = "Class Crate - Combat Engineer"

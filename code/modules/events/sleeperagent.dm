@@ -112,6 +112,8 @@
 
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H, var/source)
 		H.mind.add_antagonist(ROLE_SLEEPER_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
+		if(!(H.mind in ticker.mode.traitors))
+			ticker.mode.traitors += H.mind
 		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 

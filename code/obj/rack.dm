@@ -8,6 +8,7 @@
 	anchored = 1.0
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 	proc/rackbreak()
 		icon_state += "-broken"

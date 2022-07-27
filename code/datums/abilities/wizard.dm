@@ -212,15 +212,17 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
-	var
-		requires_robes = 0
-		offensive = 0
-		cooldown_staff = 0
-		prepared_count = 0
-		casting_time = 0
-		voice_grim = null
-		voice_fem = null
-		voice_other = null
+
+	var/requires_robes = 0
+	var/offensive = 0
+	var/cooldown_staff = 0
+	var/prepared_count = 0
+	var/casting_time = 0
+	var/voice_grim = null
+	var/voice_fem = null
+	var/voice_other = null
+	var/maptext_style = "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;"
+	var/maptext_colors = null
 
 	proc/calculate_cooldown()
 		var/cool = src.cooldown

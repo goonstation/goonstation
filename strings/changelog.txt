@@ -1,5 +1,118 @@
 
+(t)wed jul 27 22
+(u)Zonespace
+(p)9848
+(e)⚖|balance
+(+)Nukeop laser designator now fires faster and has a more powerful explosion
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changed the blob recycling ability to cost 0 biopoints. Increased the cooldown to five seconds.
+(t)tue jul 26 22
+(u)Amylizzle
+(p)9720
+(e)🆕📄|feature, tgui
+(+)Flockdrones with nothing to do will now hibernate, providing 5 extra compute. They will wake from hibernation when given orders or an enemy is detected.
+(u)Gannets
+(p)9852
+(e)⚖|balance
+(+)Added high-capacity fire extinguisher to Nuclear Operative Field Medic class crate.
+(t)mon jul 25 22
+(u)Ikea
+(p)9850
+(e)|
+(+)The medborg inventory has been shuffled around a bit.
+(u)Flourish
+(+)Reduced number of loot crate spawners in the debris field. Increased frequency of loot crates while mining asteroids (including mineral magnet).
+(u)Luxizzle
+(p)9842
+(e)🐛🗺|bug, mapping
+(+)Artifact paper dispensers now act like paper bins. You can pick them up and put artifact papers back in.
+(u)Luxizzle
+(p)9841
+(e)🐛🗺|bug, mapping
+(+)Cogmap2's Artifact Lab now includes a thinktape.
+(t)sat jul 23 22
+(u)Flaborized
+(p)9718
+(e)🆕|feature
+(+)Wizard incantations are now a bit more magical looking.
+(t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
+(u)ZWRh3
+(p)9793
+(e)⚖|balance
+(+)Clown cars now make people who they run over fall to the ground instantly.
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
+(u)Amylizzle
+(p)9743
+(e)|
+(+)Walls are made of materials now.
+(u)ZWRh3
+(p)9745
+(e)|
+(+)Cyborgs now get XL fire extinguishers.
+(u)Roddy
+(p)9749
+(e)🆕|feature
+(+)Creaca's Fruit Milk has outsourced production. Local vending machines now contain 10 new flavors of fruit milk; try one today.
+(u)Skorps
+(p)9796
+(e)🎨|sprites
+(+)Resprited the sterile mask icon.
+(t)thu jul 21 22
+(u)Luxizzle
+(p)9719
+(e)🆕📄|feature, tgui
+(+)You can now set a preferred cyborg name in your character profile
+(u)DimWhat
+(p)9547
+(e)|
+(+)Reworked how opening and closing labcoats works, report any unusual things with them.
+(t)wed jul 20 22
+(u)glowbold
+(p)9581
+(e)|
+(+)The mining cyborg module now includes the cargo appraisal and material analysis tools.
+(u)NightmarechaMillian
+(p)9726
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added craftable slamgun shells to the game.
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
+(t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
+(u)Munien
+(p)9507
+(e)🆕|feature
+(+)Rose names now pull from the names of player mobs. Give someone a rose today!
 (t)sun jul 17 22
+(u)Roddy
+(p)9678
+(e)🆕|feature
+(+)Added pumpkin juice and pumpkin spice lattes (milk, pumpkin juice, and coffee)
+(u)TTerc
+(e)⚖|balance
+(+)Vending machine throw stun duration: 10 seconds -> 5 seconds
+(u)Amylizzle
+(p)9606
+(e)🐛|bug
+(+)Matter eater now lets you eat food properly, and also transfers reagents. Eat big bottles of whiskey all at once!
 (u)LeahTheTech
 (p)9721
 (e)|
@@ -76,7 +189,7 @@
 (u)Moberry
 (p)9376
 (e)⚖⛔|balance, removal
-(+)Changes QM Ore values and removes the electronics commodity.
+(+)Changed QM Ore values and removed the electronics commodity.
 (u)TTerc
 (e)🗺|mapping
 (+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
@@ -238,7 +351,7 @@
 (u)Moberry
 (p)9377
 (e)⚖|balance
-(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(*)Changed the shipping market timer from 12-9 minutes to 10-5 minutes.
 (+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409
