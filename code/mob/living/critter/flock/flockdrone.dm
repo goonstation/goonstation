@@ -677,32 +677,32 @@
 			src.ai.interrupt()
 
 /mob/living/critter/flock/drone/proc/check_health()
-	if(isdead(src) || src.dormant || src.ai_paused)
+	if(isdead(src))
 		return
 	var/percent_damage = src.get_health_percentage() * 100
 	switch(percent_damage)
 		if(75 to 100)
 			if(damaged == 0) return
 			damaged = 0
-			if(!dormant)
+			if(!dormant && !ai_paused)
 				src.icon_state = "drone"
 		if(50 to 74)
 			if(damaged == 1) return
 			damaged = 1
 			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks lightly [pick("dented", "scratched", "beaten", "wobbly")].</span>"
-			if(!dormant)
+			if(!dormant && !ai_paused)
 				src.icon_state = "drone-d1"
 		if(25 to 49)
 			if(damaged == 2) return
 			damaged = 2
 			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks [pick("quite", "pretty", "rather")] [pick("dented", "busted", "messed up", "haggard")].</span>"
-			if(!dormant)
+			if(!dormant && !ai_paused)
 				src.icon_state = "drone-d2"
 		if(0 to 24)
 			if(damaged == 3) return
 			damaged = 3
 			desc = "[initial(desc)]<br><span class='alert'>\The [src] looks [pick("really", "totally", "very", "all sorts of", "super")] [pick("mangled", "busted", "messed up", "broken", "haggard", "smashed up", "trashed")].</span>"
-			if(!dormant)
+			if(!dormant && !ai_paused)
 				src.icon_state = "drone-d2"
 	return
 
