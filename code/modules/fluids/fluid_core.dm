@@ -832,7 +832,7 @@ var/mutable_appearance/fluid_ma
 		if (!(src.wear_suit && src.wear_suit.hasProperty ("chemprot") && (src.wear_suit.getProperty("chemprot") >= 40)) && (src.head && src.head.seal_hair))
 			do_reagent_reaction = 1
 */
-	if (do_reagent_reaction && entered_group) //if entered_group == 1, it may not have been set yet
+	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0
