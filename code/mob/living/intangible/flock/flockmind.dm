@@ -99,6 +99,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
 	src.canmove = FALSE
+	playsound(src, 'sound/misc/flockmind/flockmind_deathcry.ogg', 50, 1)
 	flick("flockmind-death", src)
 	src.ghostize()
 	spawn(2 SECONDS) // wait for the animation to finish
