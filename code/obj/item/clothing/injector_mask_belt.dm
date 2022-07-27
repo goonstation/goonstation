@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
 	var/obj/item/injector_belt/current_belt = null
-	var/obj/item/clothing/mask/ga s/injector_mask/current_mask = null
+	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
 	if (istype(source, /obj/item/injector_belt))
 		current_belt = source
 	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
