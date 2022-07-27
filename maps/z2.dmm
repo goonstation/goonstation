@@ -68287,6 +68287,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
+/obj/decal/cleanable/generic,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -68815,6 +68816,10 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
+"fAT" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating/scorched,
+/area/syndicate_station)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -68885,9 +68890,9 @@
 /turf/unsimulated/floor/caution,
 /area/centcom/offices/studenterhue)
 "fJA" = (
-/obj/grille/steel,
-/turf/unsimulated/floor/grime,
-/area/syndicate_station)
+/obj/decal/cleanable/robot_debris,
+/turf/space,
+/area/space)
 "fKi" = (
 /obj/machinery/traymachine/morgue{
 	dir = 2
@@ -69137,10 +69142,6 @@
 	dir = 1
 	},
 /area/iomoon/base)
-"gjS" = (
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
-/area/syndicate_station)
 "gkJ" = (
 /obj/storage/closet{
 	desc = "A fridge that is experiencing severe difficulty cooling things.";
@@ -69183,6 +69184,7 @@
 	pixel_y = -5;
 	pixel_x = 2
 	},
+/obj/random_item_spawner/peripherals,
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
@@ -69467,6 +69469,15 @@
 	dir = 9
 	},
 /area/syndicate_station)
+"gUp" = (
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/syndicate_station)
 "gUy" = (
 /obj/lattice{
 	dir = 4;
@@ -69603,8 +69614,18 @@
 	},
 /obj/grille/steel/broken,
 /obj/item/clothing/suit/jacket/plastic/random_color,
-/obj/item/clothing/suit/bedsheet/random,
-/turf/unsimulated/floor/grime,
+/obj/item/clothing/suit/bedsheet/random{
+	pixel_x = -2
+	},
+/obj/item/material_piece/cloth/cottonfabric{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/obj/item/material_piece/cloth/cottonfabric{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
 "hjf" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -70787,13 +70808,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
-"jGr" = (
-/obj/item/sheet/steel{
-	pixel_y = -5;
-	pixel_x = 2
-	},
-/turf/space,
-/area/space)
 "jHo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9
@@ -71292,9 +71306,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"kOv" = (
+/obj/item/sheet/steel,
+/turf/space,
+/area/space)
 "kOD" = (
-/obj/item/raw_material/shard/plasmacrystal{
-	pixel_x = 5
+/obj/item/sheet/steel{
+	pixel_y = -5;
+	pixel_x = 2
 	},
 /turf/space,
 /area/space)
@@ -71631,6 +71650,9 @@
 /area/syndicate_station)
 "lBl" = (
 /obj/decoration/pottedfern,
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "u_guilty"
+	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 10
 	},
@@ -71903,7 +71925,6 @@
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
 "mau" = (
-/obj/decal/cleanable/tomatosplat,
 /obj/storage/closet/dresser,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/head/helmet/welding,
@@ -71915,8 +71936,11 @@
 /obj/item/clothing/under/color/grey,
 /obj/item/clothing/under/misc/syndicate,
 /obj/random_item_spawner/desk_stuff/one_or_zero,
-/obj/item/sheet/steel,
-/obj/item/clothing/head/helmet/welding,
+/obj/item/clothing/suit/space/emerg{
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/hoodie/random,
+/obj/item/device/pda2,
 /turf/unsimulated/floor/blackwhite{
 	dir = 6
 	},
@@ -71947,6 +71971,12 @@
 /obj/decal/cleanable/generic{
 	pixel_x = -11;
 	pixel_y = -4
+	},
+/turf/space,
+/area/space)
+"mdQ" = (
+/obj/item/raw_material/shard/plasmacrystal{
+	pixel_x = 5
 	},
 /turf/space,
 /area/space)
@@ -72070,9 +72100,7 @@
 	icon_state = "blue"
 	})
 "myg" = (
-/obj/decal/cleanable/blood/tracks{
-	icon_state = "drip5"
-	},
+/obj/decal/cleanable/tomatosplat,
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "mzt" = (
@@ -72416,10 +72444,6 @@
 	dir = 1
 	},
 /area/iomoon/base)
-"nmC" = (
-/obj/item/sheet/steel,
-/turf/space,
-/area/space)
 "nnS" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/marker/supplymarker,
@@ -72578,7 +72602,12 @@
 	},
 /area/centcom/offices/adhara)
 "nvE" = (
-/turf/unsimulated/floor/plating,
+/obj/item/sheet/steel{
+	pixel_y = 4;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/oil,
+/turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "nwm" = (
 /obj/indestructible/shuttle_corner{
@@ -72983,10 +73012,20 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
 "ocB" = (
-/obj/item/clothing/mask/cigarette/dryjoint,
-/obj/item/casing/rifle,
-/turf/unsimulated/floor/plating/scorched,
-/area/syndicate_station)
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (EAST)"
+	},
+/obj/item/rods/steel{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib7"
+	},
+/turf/space,
+/area/space)
 "odD" = (
 /turf/unsimulated/floor/stairs,
 /area/syndicate_station)
@@ -73426,18 +73465,6 @@
 "pfT" = (
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/centcom/offices/azrun)
-"pku" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir-b";
-	tag = "icon-lattice-dir-b (EAST)"
-	},
-/obj/item/rods/steel{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/turf/space,
-/area/space)
 "pkE" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdomea{
@@ -74018,6 +74045,10 @@
 	dir = 8
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/item/device/pda2{
+	pixel_y = -5;
+	pixel_x = 5
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -74082,6 +74113,10 @@
 /area/iomoon)
 "qjM" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 8;
+	pixel_y = -4
+	},
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "qkO" = (
@@ -74320,7 +74355,7 @@
 "qSH" = (
 /obj/decal/cleanable/dirt,
 /obj/grille/steel,
-/turf/unsimulated/floor/grime,
+/turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
 "qSU" = (
 /obj/decal/fakeobjects/lighttube_broken{
@@ -74349,6 +74384,7 @@
 /obj/landmark{
 	name = "Strikeforce-spawns"
 	},
+/obj/item/clothing/mask/cigarette/dryjoint,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 9
 	},
@@ -74743,10 +74779,13 @@
 /turf/unsimulated/floor/void/channel,
 /area/hospital/samostrel)
 "rFo" = (
-/obj/machinery/light{
+/obj/item/storage/firstaid/hangover{
+	pixel_y = -10
+	},
+/obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
 	},
-/obj/item/storage/firstaid/hangover,
+/obj/random_item_spawner/medicine/one,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 8
 	},
@@ -75152,9 +75191,8 @@
 	},
 /area/wizard_station)
 "sqY" = (
-/obj/decal/cleanable/oil,
 /obj/grille/steel,
-/turf/unsimulated/floor/grime,
+/turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
 "ssh" = (
 /obj/table/reinforced/auto,
@@ -76206,13 +76244,6 @@
 /obj/machinery/computer3/generic/personal,
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
-"uVn" = (
-/obj/item/sheet/steel{
-	pixel_y = 4;
-	pixel_x = 8
-	},
-/turf/unsimulated/floor/grime,
-/area/syndicate_station)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
@@ -76522,20 +76553,27 @@
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
 /obj/item/reagent_containers/food/snacks/sandwich/meatball,
-/obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/eggsalad,
+/obj/item/reagent_containers/food/snacks/chips{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/snacks/eggsalad{
+	pixel_y = -2;
+	pixel_x = -4
+	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
 	pixel_x = -2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/sandwich/eggsalad,
+/obj/item/reagent_containers/food/snacks/sandwich/eggsalad{
+	pixel_x = 9
+	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
 	pixel_x = 4;
 	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
 	pixel_x = 4;
-	pixel_y = -2
+	pixel_y = 3
 	},
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
@@ -76739,6 +76777,9 @@
 	tag = "icon-chair_couch-green (WEST)"
 	},
 /obj/decal/cleanable/dirt/jen,
+/obj/item/clothing/suit/bedsheet/green{
+	pixel_x = 9
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -77260,6 +77301,10 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"wUF" = (
+/obj/item/casing/rifle,
+/turf/unsimulated/floor/plating/scorched,
+/area/syndicate_station)
 "wWb" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -77315,6 +77360,13 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"xfK" = (
+/obj/item/raw_material/scrap_metal/steel{
+	pixel_y = 10;
+	pixel_x = -6
+	},
+/turf/space,
+/area/space)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -77461,13 +77513,6 @@
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
-"xum" = (
-/obj/item/raw_material/scrap_metal/steel{
-	pixel_y = 10;
-	pixel_x = -6
-	},
-/turf/space,
-/area/space)
 "xxK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -117840,7 +117885,7 @@ cnw
 cnw
 cnw
 cnw
-cnw
+kOD
 cnw
 aIq
 cnw
@@ -118446,7 +118491,7 @@ jZR
 jZR
 jZR
 xXE
-uVn
+nvE
 jZR
 xXE
 jZR
@@ -118737,9 +118782,9 @@ abp
 aaa
 abj
 cnw
-pku
-xum
-cnw
+ocB
+xfK
+fJA
 cnw
 cnw
 cnw
@@ -118751,7 +118796,7 @@ hwv
 nKD
 hwv
 vOm
-fJA
+sqY
 uNa
 wTu
 cnw
@@ -119042,7 +119087,7 @@ cnw
 tsp
 cnw
 vVm
-kOD
+mdQ
 cnw
 cnw
 tBY
@@ -119056,7 +119101,7 @@ sDZ
 sqY
 uNa
 wTu
-nmC
+kOv
 cnw
 abj
 aaa
@@ -119340,9 +119385,9 @@ aeX
 abp
 aaa
 abj
-jGr
 cnw
 cnw
+fJA
 ylG
 vAT
 paA
@@ -119355,7 +119400,7 @@ qSU
 wee
 oOl
 qjM
-fJA
+sqY
 uNa
 wTu
 cnw
@@ -120251,7 +120296,7 @@ cnw
 mcy
 paA
 dKO
-gyi
+uts
 sah
 flp
 odD
@@ -120259,7 +120304,7 @@ gFX
 diJ
 ibw
 kUH
-vjK
+gUp
 vOv
 dAc
 kan
@@ -120553,8 +120598,8 @@ cnw
 cnw
 paA
 jyn
-uts
-nvE
+gyi
+vjK
 sah
 wrb
 kMh
@@ -121164,7 +121209,7 @@ jZR
 qVy
 nSC
 kMb
-gjS
+fAT
 rFo
 sTz
 hiz
@@ -121467,9 +121512,9 @@ mRL
 yjv
 wTs
 ngF
-ocB
+wUF
 egS
-fJA
+sqY
 sZc
 wTu
 cnw
