@@ -39,8 +39,8 @@
 
 	disabled = 1
 
-	var/num_critters = 0
-	var/critter_type = null
+	//var/num_critters = 0
+	//var/critter_type = null
 
 	required_elapsed_round_time = 5 MINUTES
 
@@ -103,7 +103,7 @@
 			if (!(lucky_dude in ticker.mode.former_antagonists))
 				ticker.mode.former_antagonists.Add(lucky_dude)
 
-		var/role = null
+		//var/role = null
 		/*var/objective_path = null
 		var/send_to = 1 // 1: arrival shuttle/latejoin missile | 2: wizard shuttle | 3: safe start for incorporeal antags
 		var/ASLoc = pick_landmark(LANDMARK_SYNDICATE)
@@ -114,15 +114,14 @@
 		if (R && istype(R))
 			M3 = R
 			R.unequip_all(1)
-			equip_wizard(R, 1)
+			equip_syndicate(R, 1)
 
-			role = ROLE_WIZARD
 			//objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			R.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			SPAWN(0)
 				R.choose_name(3, "Nukie")
 
-				lucky_dude.special_role = role
+				lucky_dude.special_role = ROLE_NUKEOP
 		else
 			return
 			/*
@@ -141,5 +140,5 @@
 		candidates -= lucky_dude
 
 		command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)
-		src.critter_type = null
-		src.num_critters = 0
+		//src.critter_type = null
+		//src.num_critters = 0

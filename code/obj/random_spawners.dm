@@ -1866,3 +1866,4 @@
 	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
