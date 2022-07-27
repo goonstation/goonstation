@@ -6105,7 +6105,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "doj" = (
-/obj/storage/secure/closet/brig_automatic/genpop,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -8346,11 +8346,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "ezP" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light_switch/east{
 	pixel_y = -6
 	},
@@ -8358,6 +8353,7 @@
 /obj/blind_switch/area/east{
 	pixel_y = 6
 	},
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
