@@ -1,4 +1,9 @@
 
+(t)wed jul 27 22
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changes the blob recycling ability to cost 0 Biopoints. Increases the cooldown to five seconds.
 (t)tue jul 26 22
 (u)Amylizzle
 (p)9720
