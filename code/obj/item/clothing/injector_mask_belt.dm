@@ -89,24 +89,24 @@ There's much less duplicate code here than there used to be, it could probably b
 			tgui_process.update_uis(src)
 
 	proc/check()
-		if(!is_equipped()) return
-		if(!active) return
+		if(!src.is_equipped()) return
+		if(!src.active) return
 
-		if(condition && container?.reagents.total_volume)
-			if(condition.check_trigger(owner) && can_trigger)
+		if(src.condition && src.container?.reagents.total_volume)
+			if(src.condition.check_trigger(src.owner) && src.can_trigger)
 
-				can_trigger = 0
-				SPAWN(min_time) can_trigger = 1
+				src.can_trigger = 0
+				SPAWN(src.min_time) src.can_trigger = 1
 
 				playsound(src,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
-				boutput(owner, "<span class='notice'>Your Injector belt activates.</span>")
+				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
-				container.reagents.reaction(owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
-					container.reagents.trans_to(owner, inj_amount)
+					src.container.reagents.trans_to(src.owner, src.inj_amount)
 
 		SPAWN(2.5 SECONDS)
-			if (src) check()
+			if (src) src.check()
 
 	proc/is_equipped()
 		if(!owner) return 0
@@ -204,28 +204,28 @@ There's much less duplicate code here than there used to be, it could probably b
 			return ..()
 
 	proc/check()
-		if(!is_equipped()) return
-		if(!active) return
+		if(!src.is_equipped()) return
+		if(!src.active) return
 
-		if(condition && container?.reagents.total_volume)
-			if(condition.check_trigger(owner) && can_trigger)
+		if(src.condition && src.container?.reagents.total_volume)
+			if(src.condition.check_trigger(src.owner) && src.can_trigger)
 
-				can_trigger = 0
-				SPAWN(min_time) can_trigger = 1
+				src.can_trigger = 0
+				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
 					playsound(T,"sound/items/injectorbelt_active.ogg", 33, 0, -5)
 					SPAWN(0.5 SECONDS)
 						playsound(T,"sound/machines/hiss.ogg", 40, 1, -5)
 
-				boutput(owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 
-				container.reagents.reaction(owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
-					container.reagents.trans_to(owner, inj_amount)
+					src.container.reagents.trans_to(src.owner, src.inj_amount)
 
 		SPAWN(2.5 SECONDS)
-			if (src) check()
+			if (src) src.check()
 
 	proc/is_equipped()
 		if(!owner) return 0
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		desc = "Triggers when health falls below [threshold]."
 
 	check_trigger(mob/M)
-		if(M.health < threshold) return 1
+		if(M.health < src.threshold) return 1
 		else return 0
 
 /datum/injector_belt_condition/with_threshold/damage
@@ -311,15 +311,15 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		return 1
 
 	check_trigger(mob/M)
-		switch(damagetype)
+		switch(src.damagetype)
 			if("brute")
-				if(M.get_brute_damage() > threshold) return 1
+				if(M.get_brute_damage() > src.threshold) return 1
 			if("burn")
-				if(M.get_burn_damage() > threshold) return 1
+				if(M.get_burn_damage() > src.threshold) return 1
 			if("toxin")
-				if(M.get_toxin_damage() > threshold) return 1
+				if(M.get_toxin_damage() > src.threshold) return 1
 			if("oxygen")
-				if(M.get_oxygen_deprivation() > threshold) return 1
+				if(M.get_oxygen_deprivation() > src.threshold) return 1
 		return 0
 
 /datum/injector_belt_condition/tempdiff
@@ -332,9 +332,9 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 	check_trigger(mob/M)
 		if(M.bodytemperature > standard_temp)
-			if((M.bodytemperature - standard_temp) > 20) return 1
+			if((M.bodytemperature - src.standard_temp) > 20) return 1
 		else
-			if((standard_temp - M.bodytemperature) > 20) return 1
+			if((src.standard_temp - M.bodytemperature) > 20) return 1
 		return 0
 
 /datum/injector_belt_condition/with_threshold/tempover
@@ -358,7 +358,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		desc = "Triggers when temperature rises above [threshold]."
 
 	check_trigger(mob/M)
-		if(M.bodytemperature > threshold) return 1
+		if(M.bodytemperature > src.threshold) return 1
 		else return 0
 
 /datum/injector_belt_condition/with_threshold/tempunder
@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		desc = "Triggers when temperature falls below [threshold]."
 
 	check_trigger(mob/M)
-		if(M.bodytemperature < threshold) return 1
+		if(M.bodytemperature < src.threshold) return 1
 		else return 0
 
 /datum/injector_belt_condition/incapacitated
