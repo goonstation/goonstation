@@ -313,8 +313,8 @@
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!", "YOU HAVE BEEN MADE A MINDSLAVE!")
+			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(Implanter)] every order! Do not tell anyone about this unless your master tells you to!</font></h1>")
+			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(Implanter)] every order! Do not tell anyone about this unless your master tells you to!", "YOU HAVE BEEN MADE A MINDSLAVE!")
 
 		if (M.mind)
 			if (!src.linked_objective)

@@ -162,7 +162,7 @@
 	var/image/target_overlay = null
 
 	/// Override this for the child of `/obj/machinery/broadside_gun` to determine what happens on-firing
-	proc/bombard(var/atom/target, var/mob/user)
+	proc/bombard(atom/target, mob/user)
 		return
 
 	New()
@@ -201,7 +201,7 @@
 		playsound(sound_turf, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
-		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 10 seconds.","Central Command Alert")
+		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 5 seconds.","Central Command Alert")
 		flick("152mm_firing", src)
 		firing_turf = get_step(firing_turf, WEST)
 		firing_turf = get_step(firing_turf, WEST)
@@ -213,10 +213,10 @@
 			sleep(1.2 SECONDS)
 			qdel(animation)
 		playsound(sound_turf, "sound/weapons/energy/howitzer_shot.ogg", 50, 1)
-		sleep(rand(60, 110))
+		sleep(rand(3 SECONDS, 7 SECONDS))
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay
-		explosion_new(user, target_turf, 75)
+		explosion_new(user, target_turf, 100)
 		sound_turf = get_turf(src)
 		sound_offset_length = initial(sound_offset_length)
 		return TRUE

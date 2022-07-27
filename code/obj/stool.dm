@@ -1270,7 +1270,7 @@
 				if (istype(thing, /obj/critter/meatslinky)) //slink slink
 					user.emote("scream")
 					random_brute_damage(user, 10)
-					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \his hand out in pain! \An [thing] slithers out of \the [src]!</span>",\
+					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls [his_or_her(user)] hand out in pain! \An [thing] slithers out of \the [src]!</span>",\
 					"<span class='notice'>You rummage through the seams and behind the cushions of [src] and your hand gets bit by \an [thing]!</span>")
 				else
 					user.visible_message("<span class='notice'><b>[user.name]</b> rummages through the seams and behind the cushions of [src] and pulls \an [thing] out of it!</span>",\
