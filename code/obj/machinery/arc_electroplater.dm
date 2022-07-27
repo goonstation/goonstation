@@ -82,7 +82,7 @@
 			return
 
 		if (istype(W, /obj/item/implant))
-			boutput(user, "<span class='alert'>Despite your best efforts, you can't seem to make it enter the electroplater somehow.</span>")
+			boutput(user, "<span class='alert'>You can't plate something this tiny!</span>")
 			return
 
 		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure))
