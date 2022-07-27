@@ -82,6 +82,7 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 10/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-prying"), src)
@@ -101,7 +102,7 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 1/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-
+				src.setItemSpecial(/datum/item_special/elecflash)
 				if(src.animated_changes)
 					flick(("[prefix]-swap-pulsing"), src)
 
@@ -120,6 +121,7 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
@@ -139,6 +141,7 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-snipping"), src)
@@ -158,6 +161,7 @@
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 15/25
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-wrenching"), src)
@@ -177,6 +181,7 @@
 				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
 				src.hit_type = DAMAGE_CUT
 				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-cutting"), src)
@@ -193,6 +198,8 @@
 				src.stamina_cost = STAMINA_ITEM_COST * 30/18
 				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 5/25
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/flame)
+				
 				if(get_fuel())
 					set_icon_state("[prefix]-weldingtool-on")
 					src.force = 15
