@@ -205,7 +205,8 @@
 				if (ismob(target))
 					var/mob/M = target
 					M.TakeDamage(brute = absorption)
-				target:health -= absorption
+				else
+					target:health -= absorption
 				reagents.add_reagent(target_fluid, absorption * 2)
 				if(target:health <= 0)
 					if(isliving(target))
