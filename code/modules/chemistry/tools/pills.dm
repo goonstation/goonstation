@@ -56,30 +56,13 @@
 				user.visible_message("[user] swallows [src].",\
 				"<span class='notice'>You swallow [src].</span>")
 			else if(check_target_immunity(M))
-				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but fail!</span>")
+				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but can't!</span>")
 				return
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
 				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
-
-				if (!do_mob(user, M))
-					if (user && ismob(user))
-						user.show_text("You were interrupted!", "red")
-					return
-				if (!src.reagents || !src.reagents.total_volume)
-					user.show_text("[src] doesn't contain any reagents.", "red")
-					return
-				user.visible_message("<span class='alert'>[user] forces [M] to swallow [src].</span>",\
-				"<span class='alert'>You force [M] to swallow [src].</span>")
-
-			logTheThing("combat", user, M, "[user == M ? "swallows" : "makes [constructTarget(M,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
-			if (reagents.total_volume)
-				reagents.reaction(M, INGEST)
-				sleep(0.1 SECONDS)
-				reagents.trans_to(M, reagents.total_volume)
-			user.u_equip(src)
-			qdel(src)
+				actions.start(new/datum/action/bar/icon/pill(M, src, src.icon, src.icon_state), user)
 			return 1
 
 		return 0
@@ -122,6 +105,26 @@
 		else
 			return ..()
 
+	proc/pill_action(mob/user, mob/target)
+		if (iscarbon(target) || ismobcritter(target))
+			if (target == user)
+				user.visible_message("[user] swallows [src].",\
+				"<span class='notice'>You swallow [src].</span>")
+			else if(check_target_immunity(target))
+				user.show_message( "<span class='alert'>You try to force [target] to swallow [src], but fail!</span>")
+				return
+			else
+				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
+				"<span class='alert'>You force [target] to swallow [src].</span>")
+
+		logTheThing("combat", user, target, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+		
+		if (reagents.total_volume)
+			reagents.reaction(target, INGEST)
+			sleep(0.1 SECONDS)
+			reagents.trans_to(target, reagents.total_volume)
+		user.u_equip(src)
+		qdel(src)
 
 
 
