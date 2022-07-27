@@ -20596,9 +20596,14 @@
 /turf/simulated/floor/black,
 /area/station/storage/eva)
 "kFg" = (
-/obj/machinery/door_timer/solitary2/new_walls/west,
+/obj/machinery/door_timer/solitary2/new_walls/west{
+	pixel_y = -9
+	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
+	},
+/obj/machinery/door_timer/solitary/new_walls/west{
+	pixel_y = 9
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
