@@ -166,7 +166,8 @@
 
 			target.dna_to_absorb = 0
 			target.death(FALSE)
-			target.real_name = "Unknown"
+			target.disfigured = TRUE
+			target.UpdateName()
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
