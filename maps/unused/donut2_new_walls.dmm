@@ -6237,6 +6237,8 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -7099,7 +7101,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/hangar/main)
+/area/station/maintenance/north)
 "arG" = (
 /turf/simulated/floor/stairs,
 /area/station/hangar/main)
@@ -8905,6 +8907,7 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -9235,7 +9238,6 @@
 /area/station/hallway/primary/north)
 "axm" = (
 /obj/rack,
-/obj/item/tank/air,
 /obj/item/clothing/suit/space/emerg{
 	pixel_x = 6
 	},
@@ -9244,6 +9246,9 @@
 	pixel_y = 10
 	},
 /obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen{
+	pixel_x = -8
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -9588,6 +9593,10 @@
 /area/station/hallway/primary/north)
 "ayg" = (
 /obj/machinery/space_heater,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -9608,13 +9617,15 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
-/obj/item/tank/air,
 /obj/item/clothing/mask/breath{
 	pixel_x = -1;
 	pixel_y = 5
 	},
 /obj/item/storage/firstaid/oxygen{
 	pixel_y = -4
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = -8
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
@@ -38184,7 +38195,7 @@
 /obj/item/clothing/shoes/moon,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
-/area/station/hangar/main)
+/area/station/maintenance/north)
 "eRF" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -41527,6 +41538,9 @@
 	},
 /obj/item/clothing/mask/breath,
 /obj/item/device/radio/intercom,
+/obj/item/tank/emergency_oxygen{
+	pixel_x = -8
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -41671,6 +41685,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"leW" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "lfr" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/grime,
@@ -44877,6 +44904,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
+"qHv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/north)
 "qIb" = (
 /obj/table/auto,
 /obj/machinery/defib_mount,
@@ -48970,6 +49006,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -49069,7 +49108,7 @@
 	icon_state = "bulb1"
 	},
 /turf/simulated/floor/plating,
-/area/station/hangar/main)
+/area/station/maintenance/north)
 "yeB" = (
 /obj/storage/secure/closet/medical/cloning,
 /obj/machinery/light/emergency{
@@ -84316,7 +84355,7 @@ avg
 avg
 aAg
 jnM
-aIJ
+leW
 axc
 axQ
 aEl
@@ -84608,9 +84647,9 @@ arD
 asi
 asS
 arF
-avi
+asi
 ydP
-apk
+asm
 eQM
 apk
 ayh
@@ -84920,7 +84959,7 @@ hyN
 azc
 aAh
 jnM
-aBB
+qHv
 azi
 azM
 aLa
