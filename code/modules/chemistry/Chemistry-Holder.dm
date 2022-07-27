@@ -681,7 +681,7 @@ datum
 						//mbc : I put in a check to stop extremely distilled things in fluids from reacting
 						if(current_reagent != null && current_reagent.volume > minimum_react) // Don't put spawn(0) in the below three lines it breaks foam! - IM
 							if(ismob(A) && !isobserver(A))
-								if (!current_reagent.reaction_mob(A, TOUCH, current_reagent.volume*volume_fraction, paramslist))
+								if (!current_reagent.reaction_mob_chemprot_layer(A, TOUCH, current_reagent.volume*volume_fraction, paramslist))
 									.+= current_id
 							if(isturf(A))
 								if (!current_reagent.reaction_turf(A, current_reagent.volume*volume_fraction))
@@ -736,7 +736,7 @@ datum
 							if(ismob(A) && !isobserver(A))
 								//SPAWN(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-								if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
+								if (!current_reagent.reaction_mob_chemprot_layer(A, INGEST, current_reagent.volume*volume_fraction))
 									.+= current_id
 							if(isturf(A))
 								//SPAWN(0)

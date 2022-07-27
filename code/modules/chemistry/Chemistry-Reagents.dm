@@ -123,7 +123,18 @@ datum
 			B.take_damage(blob_damage, volume, "poison")
 			return 1
 
-		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0) //By default we have a chance to transfer some
+		//Proc to process a mob's chemical protection in advance of reaction.
+		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
+		proc/reaction_mob_chemprot_layer(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+			var/raw_volume = volume
+			if(method == TOUCH)
+				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+				if(percent_protection)
+					percent_protection = 1 - (percent_protection/100)
+					volume *= percent_protection
+			. = reaction_mob(M, method, volume, paramslist, raw_volume)
+
+		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume) //By default we have a chance to transfer some
 			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
