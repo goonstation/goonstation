@@ -18,7 +18,7 @@
 		..()
 		src.change_mode(omni_mode)
 
-	attack_self(var/mob/user as mob)
+	attack_self(var/mob/user)
 		..()
 		// cycle between modes
 		var/new_mode = null
@@ -56,7 +56,7 @@
 		if (dist < 3)
 			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
 
-	suicide(var/mob/user as mob)
+	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b></span>")
@@ -227,7 +227,7 @@
 			reagents.remove_reagent("fuel", amount)
 		return
 
-	proc/eyecheck(mob/user as mob)
+	proc/eyecheck(mob/user)
 		if(user.isBlindImmune())
 			return
 		//check eye protection
@@ -281,7 +281,7 @@
 	has_cutting = 1
 	has_welding = 1
 
-	afterattack(obj/O as obj, mob/user as mob)
+	afterattack(obj/O, mob/user)
 
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
