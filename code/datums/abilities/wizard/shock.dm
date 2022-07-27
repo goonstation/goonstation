@@ -15,6 +15,7 @@
 	var/burn_damage = 100
 	var/target_damage_modifier = 1.95
 	var/arc_range = 3
+	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
 
 	cast(mob/target)
 		if(!holder)
@@ -25,7 +26,7 @@
 			return 1
 		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NATH")
+			holder.owner.say("EI NATH", FALSE, maptext_style, maptext_colors)
 		..()
 
 		playsound(holder.owner.loc, "sound/effects/elec_bigzap.ogg", 25, 1, -1)

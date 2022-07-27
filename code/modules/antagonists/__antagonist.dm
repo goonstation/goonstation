@@ -25,6 +25,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
 			qdel(src)
 			return FALSE
+		if (!src.is_compatible_with(new_owner))
+			qdel(src)
+			return FALSE
 		owner = new_owner
 		new_owner.special_role = id
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
@@ -41,7 +44,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null
 
-	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
+	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
 	proc/is_compatible_with(datum/mind/mind)
 		return TRUE
 

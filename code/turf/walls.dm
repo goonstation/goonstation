@@ -14,6 +14,8 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
 	var/list/proj_impacts = list()
 	var/list/forensic_impacts = list()
@@ -36,6 +38,10 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
