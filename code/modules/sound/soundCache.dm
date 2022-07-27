@@ -496,6 +496,7 @@ var/global/list/soundCache = list(
  	"sound/items/Scissor.ogg" = 'sound/items/Scissor.ogg',\
  	"sound/items/Screwdriver.ogg" = 'sound/items/Screwdriver.ogg',\
  	"sound/items/Screwdriver2.ogg" = 'sound/items/Screwdriver2.ogg',\
+	"sound/items/security_alert.ogg" = 'sound/items/security_alert.ogg',\
  	"sound/items/small_fire_hiss.ogg" = 'sound/items/small_fire_hiss.ogg',\
  	"sound/items/sponge.ogg" = 'sound/items/sponge.ogg',\
  	"sound/items/sticker.ogg" = 'sound/items/sticker.ogg',\
