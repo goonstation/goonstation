@@ -736,7 +736,7 @@ datum
 							if(ismob(A) && !isobserver(A))
 								//SPAWN(0)
 									//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-								if (!current_reagent.reaction_mob_chemprot_layer(A, INGEST, current_reagent.volume*volume_fraction))
+								if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
 									.+= current_id
 							if(isturf(A))
 								//SPAWN(0)

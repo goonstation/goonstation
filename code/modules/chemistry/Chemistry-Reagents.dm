@@ -127,12 +127,13 @@ datum
 		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
 		proc/reaction_mob_chemprot_layer(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
 			var/raw_volume = volume
-			if(method == TOUCH && !src.pierces_outerwear)
+			if(method == TOUCH && !src.pierces_outerwear && !("ignore_chemprot" in paramslist))
 				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
 				if(percent_protection)
 					percent_protection = 1 - (percent_protection/100)
 					volume *= percent_protection
 			. = reaction_mob(M, method, volume, paramslist, raw_volume)
+			return
 
 		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume) //By default we have a chance to transfer some
 			SHOULD_CALL_PARENT(TRUE)

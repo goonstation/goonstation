@@ -198,7 +198,7 @@
 					var/mob/living/L = M
 					L.skin_process += src
 			else
-				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate"))
+				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
 
 				var/datum/reagents/R = new
 				reagents.copy_to(R)
@@ -563,7 +563,7 @@
 		var/use_volume_adjusted = use_volume * mult
 
 		if (reagents?.total_volume)
-			var/list/params = list("nopenetrate")
+			var/list/params = list("nopenetrate","ignore_chemprot")
 			if (silent)
 				params.Add("silent")
 

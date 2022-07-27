@@ -64,9 +64,9 @@ datum
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(T), "splash on turf")
 
-			reaction_mob(var/mob/M, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
-				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+				if(reagent_state == LIQUID || prob(2 * raw_volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
@@ -864,18 +864,18 @@ datum
 			block_slippy = 1
 			var/counter
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					. = 0
 
 					if(L.getStatusDuration("slowed")>=10 SECONDS)
-						L.setStatusMin("staggered", (0.3 SECONDS)*volume_passed)
+						L.setStatusMin("staggered", (0.3 SECONDS)*raw_volume)
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
 					else
-						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
+						L.changeStatus("slowed", min((0.4 SECONDS)*raw_volume, 10 SECONDS))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -1009,10 +1009,10 @@ datum
 					if(glued_comp?.glued_to == A)
 						qdel(glued_comp)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
-					remove_stickers(M, volume)
+					remove_stickers(M, raw_volume)
 				unglue_attached_to(M)
 
 			reaction_obj(var/obj/O, var/volume)
