@@ -1,5 +1,9 @@
 
 (t)wed jul 27 22
+(u)Luxizzle
+(p)9758
+(e)🆕|feature
+(+)Silicons can now surround parts of their messages with ` to display it in a monospace font.
 (u)LeahTheTech
 (p)9785
 (e)🐛📄|bug, tgui
