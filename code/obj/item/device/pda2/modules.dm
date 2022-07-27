@@ -313,7 +313,7 @@
 		src.host.post_signal(signal)
 
 		if(isliving(user))
-			playsound(src, "sound/items/security_alert.ogg", 90, 1, 3)
+			playsound(src, "sound/items/security_alert.ogg", 60)
 			var/map_text = null
 			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #8B0000; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
