@@ -1,5 +1,9 @@
 
 (t)wed jul 27 22
+(u)ZWRh3
+(p)9877
+(e)🐛⚖|bug, balance
+(*)Fire no longer clips trough walls
 (u)Zonespace
 (p)9848
 (e)⚖|balance
