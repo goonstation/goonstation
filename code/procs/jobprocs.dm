@@ -551,6 +551,12 @@
 	return
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+	if (src.traitHolder.hasTrait("blind"))
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("shortsighted"))
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("deaf"))
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
 		if (istype(src.back, /obj/item/storage))

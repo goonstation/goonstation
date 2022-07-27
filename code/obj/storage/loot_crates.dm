@@ -440,7 +440,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			boutput(user, "<span class='alert'>You're going to have to use a heftier object if you want to break the crate's anti-tampering system.</span>")
 			return
 		add_fingerprint(user)
-		detach_from(attached)
+		detach_from()
 
 	proc/attach_to(var/obj/storage/crate/C, var/mob/user)
 		if (!C || !istype(C))
@@ -456,17 +456,18 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		icon_state = "antitamper-on"
 		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
 
-	proc/detach_from(var/obj/storage/crate/C)
-		if (!C)
+	proc/detach_from()
+		if (!attached)
 			return
 		icon_state = ""
 		flick("antitamper-break", src)
+		var/obj/storage/crate/C = attached
+		attached = null
 		SPAWN(1 SECOND)
-			attached.vis_contents -= src
-			attached.locked = FALSE
-			attached.anchored = FALSE
-			attached.update_icon()
-			attached = null
+			C.vis_contents -= src
+			C.locked = FALSE
+			C.anchored = FALSE
+			C.update_icon()
 			qdel(src)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)
 
