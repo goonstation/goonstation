@@ -212,7 +212,7 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
-
+	var/requires_being_on_turf = FALSE
 	var/requires_robes = 0
 	var/offensive = 0
 	var/cooldown_staff = 0
@@ -269,6 +269,9 @@
 			src.holder.locked = 0
 			return 999
 		var/turf/T = get_turf(holder.owner)
+		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+			return 999
 		if( offensive && T.loc:sanctuary )
 			boutput(holder.owner, "<span class='alert'>You cannot cast offensive spells on someone in a sanctuary.</span>")
 		if (src.restricted_area_check)

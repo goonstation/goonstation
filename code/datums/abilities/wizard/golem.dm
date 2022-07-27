@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 500
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	cooldown_staff = 1
 	voice_grim = "sound/voice/wizard/GolemGrim.ogg"

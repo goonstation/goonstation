@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
 	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
