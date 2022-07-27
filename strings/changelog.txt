@@ -1,5 +1,9 @@
 
 (t)wed jul 27 22
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
 (u)Ikea
 (p)9833
 (e)|
