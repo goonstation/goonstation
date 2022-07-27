@@ -23,6 +23,8 @@
 
 	var/obj/item/cell/cell = null
 
+	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
+
 	can_bleed = 0
 	blood_id = "oil"
 	use_stamina = 0
@@ -236,8 +238,6 @@
 			return ..(message)
 	else
 		return ..(message)
-
-/mob/living/silicon/var/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
 /mob/living/silicon/say_decorate(message)
 	. = monospace_say_regex.Replace(message, "<span class='monospace'>$1</span>")
