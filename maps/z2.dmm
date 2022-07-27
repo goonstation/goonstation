@@ -69609,9 +69609,6 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/landmark{
-	name = "Strikeforce-spawns"
-	},
 /obj/grille/steel/broken,
 /obj/item/clothing/suit/jacket/plastic/random_color,
 /obj/item/clothing/suit/bedsheet/random{
@@ -69624,6 +69621,9 @@
 /obj/item/material_piece/cloth/cottonfabric{
 	pixel_y = 4;
 	pixel_x = -5
+	},
+/obj/landmark{
+	name = "Surplusops-Spawn"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
@@ -71941,6 +71941,7 @@
 	},
 /obj/item/clothing/suit/hoodie/random,
 /obj/item/device/pda2,
+/obj/item/clothing/gloves/black,
 /turf/unsimulated/floor/blackwhite{
 	dir = 6
 	},
@@ -74381,10 +74382,10 @@
 "qVy" = (
 /obj/stool/bed/moveable/hospital,
 /obj/decal/cleanable/dirt,
-/obj/landmark{
-	name = "Strikeforce-spawns"
-	},
 /obj/item/clothing/mask/cigarette/dryjoint,
+/obj/landmark{
+	name = "Surplusops-Spawn"
+	},
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 9
 	},
@@ -76738,6 +76739,8 @@
 	},
 /obj/item/sheet/steel,
 /obj/item/sheet/steel,
+/obj/item/device/light/flashlight,
+/obj/item/crowbar/red,
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "vOv" = (
@@ -76769,9 +76772,6 @@
 	},
 /area/iomoon/base)
 "vPJ" = (
-/obj/landmark{
-	name = "Strikeforce-spawns"
-	},
 /obj/stool/chair/couch/green{
 	dir = 8;
 	tag = "icon-chair_couch-green (WEST)"
@@ -76779,6 +76779,9 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/item/clothing/suit/bedsheet/green{
 	pixel_x = 9
+	},
+/obj/landmark{
+	name = "Surplusops-Spawn"
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 8
@@ -77484,6 +77487,7 @@
 	layer = 9.1;
 	pixel_x = 4
 	},
+/obj/item/mousetrap,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 4
 	},
@@ -116387,7 +116391,7 @@ aaa
 aaa
 aaa
 aaa
-cnw
+aaa
 cnw
 cnw
 cnw
@@ -116688,8 +116692,8 @@ abj
 abj
 abj
 abj
+abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -116989,9 +116993,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -117291,9 +117295,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -117593,9 +117597,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -117895,9 +117899,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -118197,9 +118201,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -118499,9 +118503,9 @@ jZR
 jZR
 nOM
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -118801,9 +118805,9 @@ uNa
 wTu
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -119103,9 +119107,9 @@ uNa
 wTu
 kOv
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -119405,9 +119409,9 @@ uNa
 wTu
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -119707,9 +119711,9 @@ jZR
 jZR
 fPB
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -120009,9 +120013,9 @@ kan
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -120311,9 +120315,9 @@ kan
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -120613,9 +120617,9 @@ kan
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -120915,9 +120919,9 @@ jZR
 jZR
 nOM
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -121217,9 +121221,9 @@ wyP
 wTu
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -121519,9 +121523,9 @@ sZc
 wTu
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -121821,9 +121825,9 @@ wyP
 wTu
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -122123,9 +122127,9 @@ jZR
 jZR
 fPB
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -122425,9 +122429,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -122727,9 +122731,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -123029,9 +123033,9 @@ cnw
 cnw
 cnw
 cnw
+cnw
 abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -123332,8 +123336,8 @@ abj
 abj
 abj
 abj
+abj
 aaa
-cnw
 cnw
 cnw
 cnw
@@ -123635,7 +123639,7 @@ aaa
 aaa
 aaa
 aaa
-cnw
+aaa
 cnw
 cnw
 cnw

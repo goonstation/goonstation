@@ -114,12 +114,12 @@
 		if (R && istype(R))
 			M3 = R
 			R.unequip_all(1)
-			equip_syndicate(R, 1)
+			equip_shitty_syndicate(R, 1)
 
 			//objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			R.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			R.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
 			SPAWN(0)
-				R.choose_name(3, "Nukie")
+				R.choose_name(3, "Surplus Operative")
 
 				lucky_dude.special_role = ROLE_NUKEOP
 		else

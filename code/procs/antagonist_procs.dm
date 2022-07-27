@@ -293,6 +293,21 @@
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
 
+/proc/equip_shitty_syndicate(mob/living/carbon/human/synd_mob)
+	if (!ishuman(synd_mob))
+		return
+
+	synd_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(synd_mob), synd_mob.slot_ears)
+	synd_mob.equip_if_possible(new /obj/item/clothing/under/color/grey(synd_mob), synd_mob.slot_w_uniform)
+	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/black(synd_mob), synd_mob.slot_shoes)
+	synd_mob.equip_if_possible(new /obj/item/storage/backpack(synd_mob), synd_mob.slot_back)
+	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
+
+	var/obj/item/card/id/syndicate/I = new /obj/item/card/id/syndicate(synd_mob)
+	I.icon_state = "id"
+	I.icon = 'icons/obj/items/card.dmi'
+	synd_mob.equip_if_possible(I, synd_mob.slot_wear_id)
+
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
 	var/alive = 0
