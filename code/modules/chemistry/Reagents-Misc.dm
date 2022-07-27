@@ -1394,7 +1394,9 @@ datum
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
-
+			on_mob_life_complete()
+				message_admins("")
+				return
 		capulettium_plus
 			name = "capulettium plus"
 			id = "capulettium_plus"
