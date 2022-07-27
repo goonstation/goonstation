@@ -142,7 +142,7 @@ datum
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
 						if(M.reagents)
-							M.reagents.add_reagent(self.id,volume*modifier,self.data)
+							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
 					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
