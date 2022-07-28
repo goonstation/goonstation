@@ -682,7 +682,7 @@
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
-/mob/living/say(var/message, ignore_stamina_winded)
+/mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -768,6 +768,8 @@
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
+
+	message = say_decorate(message)
 
 	var/italics = 0
 	var/forced_language = null
@@ -1125,7 +1127,15 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(unique_maptext_style)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
+		else
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(maptext_animation_colors)
+			oscillate_colors(chat_text, maptext_animation_colors)
+
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1196,6 +1206,9 @@
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+/mob/living/proc/say_decorate(message)
+	return message
 
 // helper proooocs
 

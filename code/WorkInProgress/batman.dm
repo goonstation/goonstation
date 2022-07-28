@@ -336,7 +336,7 @@
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
+			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming [him_or_her(T)] in the head</B>!</span>")
 			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			random_brute_damage(T, 25)
 			usr.delStatus("weakened")

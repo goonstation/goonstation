@@ -1397,7 +1397,7 @@
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1453,7 +1453,7 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 

@@ -478,6 +478,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
+				logTheThing("station", src, null, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null
@@ -550,6 +551,12 @@
 	return
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+	if (src.traitHolder.hasTrait("blind"))
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("shortsighted"))
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("deaf"))
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
 		if (istype(src.back, /obj/item/storage))

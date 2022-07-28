@@ -201,39 +201,59 @@
 
 /datum/limb/gun
 	var/datum/projectile/proj = null
-	var/cooldown = 30
-	var/reload_time = 200
+	var/cooldown = 3 SECONDS
+	var/reload_time = 20 SECONDS
 	var/shots = 4
 	var/current_shots = 0
 	var/reloading_str = "reloading"
-	var/reloaded_at = 0
-	var/next_shot_at = 0
 	var/image/default_obscurer
 	var/muzzle_flash = null
 
 	attack_range(atom/target, var/mob/user, params)
-		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
+		src.shoot(target, user, FALSE, params)
+
+	proc/point_blank(atom/target, var/mob/user)
+		src.shoot(target, user, TRUE)
+
+	proc/shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
+		//slightly cursed ref usage because we can't use ON_COOLDOWN with datums
+		if (GET_COOLDOWN(user, "\ref[src] reload") && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
 		else if (current_shots <= 0)
 			current_shots = shots
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
 		if (current_shots > 0)
+			if (ON_COOLDOWN(user, "\ref[src] shoot", src.cooldown))
+				return
 			current_shots--
-			var/pox = text2num(params["icon-x"]) - 16
-			var/poy = text2num(params["icon-y"]) - 16
-			shoot_projectile_ST_pixel(user, proj, target, pox, poy)
-			if (src.muzzle_flash)
-				if (isturf(user.loc))
-					var/turf/origin = user.loc
-					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
-			user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
-			next_shot_at = ticker.round_elapsed_ticks + cooldown
-			if (!current_shots)
-				reloaded_at = ticker.round_elapsed_ticks + reload_time
-		else
-			reloaded_at = ticker.round_elapsed_ticks + reload_time
+			if (pointblank)
+				src.shoot_pointblank(target, user)
+			else
+				src.shoot_range(target, user, params)
+		if (current_shots <= 0)
+			ON_COOLDOWN(user, "\ref[src] reload", src.reload_time)
+
+	proc/shoot_range(atom/target, var/mob/user, params)
+		var/pox = text2num(params["icon-x"]) - 16
+		var/poy = text2num(params["icon-y"]) - 16
+		shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+		if (src.muzzle_flash)
+			if (isturf(user.loc))
+				var/turf/origin = user.loc
+				muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
+		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
+
+	proc/shoot_pointblank(atom/target, var/mob/user)
+		for (var/i = 0; i < proj.shot_number; i++)
+			var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
+			if (!P)
+				return FALSE
+			if(BOUNDS_DIST(user, target) == 0)
+				P.was_pointblank = 1
+				hit_with_existing_projectile(P, target) // Includes log entry.
+			else
+				P.launch()
+		user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
 
 	attack_hand(atom/target, mob/user, var/reach, params, location, control)
 		return
@@ -250,36 +270,9 @@
 	harm(mob/living/target, mob/living/user)
 		src.point_blank(target, user)
 
-	proc/point_blank(mob/living/target, mob/living/user)
-		if (reloaded_at > ticker.round_elapsed_ticks && !current_shots)
-			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
-			return
-		else if (current_shots <= 0)
-			current_shots = shots
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
-		if (current_shots > 0)
-			current_shots--
-			for (var/i = 0; i < proj.shot_number; i++)
-				var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
-				if (!P)
-					return FALSE
-				if(BOUNDS_DIST(user, target) == 0)
-					P.was_pointblank = 1
-					hit_with_existing_projectile(P, target) // Includes log entry.
-				else
-					P.launch()
-			user.visible_message("<b class='alert'>[user] shoots [target] point-blank with the [holder.name]!</b>")
-			next_shot_at = ticker.round_elapsed_ticks + cooldown
-			if (!current_shots)
-				reloaded_at = ticker.round_elapsed_ticks + reload_time
-		else
-			reloaded_at = ticker.round_elapsed_ticks + reload_time
-
-	is_on_cooldown()
-		if (ticker.round_elapsed_ticks < reloaded_at)
-			return reloaded_at - ticker.round_elapsed_ticks
-		return 0
+	//despite the name, this means reloading
+	is_on_cooldown(var/mob/user)
+		return GET_COOLDOWN(user, "\ref[src] reload")
 
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38

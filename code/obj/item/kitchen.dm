@@ -206,7 +206,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -235,7 +235,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -265,7 +265,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] tries to slash  \his own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to slash [his_or_her(user)] own throat with [src]!</b></span>")
 		src.break_utensil(user)
 		SPAWN(10 SECONDS)
 			if(user)

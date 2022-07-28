@@ -18540,7 +18540,7 @@
 /obj/item/disk/data/tape{
 	pixel_y = -5
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 10
 	},
 /turf/simulated/floor/purple,
