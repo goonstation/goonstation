@@ -21,11 +21,11 @@
 	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
 	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
 </div>
-<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindslave</b>
-	<a href='?src=\ref[src];action=mindslave'>Implanted</a> |
-	<a href='?src=\ref[src];action=mindslavedeath'>Death</a> |
-	<a href='?src=\ref[src];action=mindslaveoverride'>Overriden</a> |
-	<a href='?src=\ref[src];action=mindslaveexpired'>Expired</a>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
+	<a href='?src=\ref[src];action=mindhack'>Implanted</a> |
+	<a href='?src=\ref[src];action=mindhackdeath'>Death</a> |
+	<a href='?src=\ref[src];action=mindhackoverride'>Overriden</a> |
+	<a href='?src=\ref[src];action=mindhackexpired'>Expired</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Wizard</b>
 	<a href='?src=\ref[src];action=wizard'>Wizard</a> |
@@ -133,19 +133,19 @@
 				window_title = "Sleeper Agent Tips"
 				filename = "html/traitorTips/traitorsleeperTips.html"
 
-			// mindslave
-			if ("mindslave")
-				window_title = "You've been mindslaved!"
-				filename = "html/mindslave/implanted.html"
-			if ("mindslavedeath")
-				window_title = "Mindslaved Status Removed!"
-				filename = "html/mindslave/death.html"
-			if ("mindslaveoverride")
-				window_title = "Mindslave Master Changed!"
-				filename = "html/mindslave/override.html"
-			if ("mindslaveexpired")
-				window_title = "Mindslave Implant Expired!"
-				filename = "html/mindslave/expire.html"
+			// mindhack
+			if ("mindhack")
+				window_title = "You've been mindhacked!"
+				filename = "html/notice/implanted.html"
+			if ("mindhackdeath")
+				window_title = "Mindhack Status Removed!"
+				filename = "html/notice/death.html"
+			if ("mindhackoverride")
+				window_title = "Mindhack Master Changed!"
+				filename = "html/notice/override.html"
+			if ("mindhackexpired")
+				window_title = "Mindhack Implant Expired!"
+				filename = "html/notice/expire.html"
 
 			// wizard
 			if ("wizard")
@@ -206,22 +206,22 @@
 				filename = "html/traitorTips/changelingTips.html"
 			if ("changeling_absorbed")
 				window_title = "You've been absorbed into the Hivemind!"
-				filename = "html/mindslave/changelingEaten.html"
+				filename = "html/notice/changelingEaten.html"
 			if ("changeling_leave")
 				window_title = "Leaving the Hivemind"
-				filename = "html/mindslave/changelingLeave.html"
+				filename = "html/notice/changelingLeave.html"
 			if ("handspider")
 				window_title = "Handspider Expectations"
-				filename = "html/mindslave/handspider.html"
+				filename = "html/notice/handspider.html"
 			if ("eyespider")
 				window_title = "Eyespider Expectations"
-				filename = "html/mindslave/eyespider.html"
+				filename = "html/notice/eyespider.html"
 			if ("legworm")
 				window_title = "LegWorm Expectations"
-				filename = "html/mindslave/legworm.html"
+				filename = "html/notice/legworm.html"
 			if ("buttcrab")
 				window_title = "Buttcrab Expectations"
-				filename = "html/mindslave/buttcrab.html"
+				filename = "html/notice/buttcrab.html"
 
 			//flock
 			if("flocktrace")
