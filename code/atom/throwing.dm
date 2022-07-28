@@ -37,7 +37,7 @@
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
-/atom/movable/proc/overwrite_impact_sfx(original_sound,hit_atom,thr)
+/atom/movable/proc/overwrite_impact_sfx(original_sound, hit_atom, thr)
 	. = original_sound
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
