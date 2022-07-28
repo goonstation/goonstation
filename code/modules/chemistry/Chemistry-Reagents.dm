@@ -139,6 +139,8 @@ datum
 			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
+			if(!raw_volume) //this should literally never matter but I dare not assume
+				raw_volume = volume
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
