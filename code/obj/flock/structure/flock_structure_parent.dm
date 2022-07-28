@@ -96,6 +96,22 @@ ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure/proc/compute_provided()
 	return src.compute
 
+/obj/flock_structure/proc/update_flock_compute(application, update_hud_compute = TRUE)
+	if (!src.compute)
+		return
+	if (application == "apply")
+		if (src.compute < 0)
+			src.flock.used_compute += abs(src.compute)
+		else
+			src.flock.total_compute += src.compute
+	else if (application == "remove")
+		if (src.compute < 0)
+			src.flock.used_compute -= abs(src.compute)
+		else
+			src.flock.total_compute -= src.compute
+	if (update_hud_compute)
+		src.flock.update_computes()
+
 /obj/flock_structure/proc/building_specific_info()
 	return ""
 

@@ -1,5 +1,34 @@
 
+(t)thu jul 28 22
+(u)Garash
+(p)9875
+(e)🆕🗺🎨📄|feature, mapping, sprites, tgui
+(+)Vapo-Matics and Injector belts have a new UI menu, go ask the HoP to transfer tens of thousands of credit into your account to buy one and check them out!
 (t)wed jul 27 22
+(u)TemThrush
+(p)9834
+(e)🆕|feature
+(*)Added three hairstyles, Combed Front, Combed Front Short, and Longfront.
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
+(u)Ikea
+(p)9833
+(e)|
+(+)You can no longer plate implants with the arc electroplater.
+(u)Luxizzle
+(p)9758
+(e)🆕|feature
+(+)Silicons can now surround parts of their messages with ` to display it in a monospace font.
+(u)LeahTheTech
+(p)9785
+(e)🐛📄|bug, tgui
+(+)Remote signalers are now tgui
+(u)ZWRh3
+(p)9877
+(e)🐛⚖|bug, balance
+(*)Fire no longer clips trough walls
 (u)Zonespace
 (p)9848
 (e)⚖|balance
