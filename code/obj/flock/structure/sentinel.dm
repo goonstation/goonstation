@@ -60,7 +60,7 @@
 		if (!powered)
 			src.update_flock_compute("apply")
 			powered = TRUE
-	else//if there isnt enough juice
+	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
 		if (powered)
 			src.update_flock_compute("remove")
 		src.compute = 0
