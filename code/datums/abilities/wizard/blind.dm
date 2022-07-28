@@ -5,6 +5,7 @@
 	targeted = 1
 	cooldown = 100
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/BlindGrim.ogg"

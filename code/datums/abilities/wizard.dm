@@ -212,7 +212,7 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
-
+	var/requires_being_on_turf = FALSE
 	var/requires_robes = 0
 	var/offensive = 0
 	var/cooldown_staff = 0
@@ -267,6 +267,9 @@
 			return 999
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = 0
+			return 999
+		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
 			return 999
 		var/turf/T = get_turf(holder.owner)
 		if( offensive && T.loc:sanctuary )

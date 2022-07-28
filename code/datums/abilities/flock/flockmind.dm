@@ -17,12 +17,12 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute()
-	var/mob/living/intangible/flock/flockmind/F = owner
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
-		return //someone made a flockmind without a flock, or gave this ability holder to something else.
-	src.totalCompute = F.flock.total_compute()
-	src.points = src.totalCompute - F.flock.used_compute()
+		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
+	src.points = totalCompute - usedCompute
+	src.totalCompute = totalCompute
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
