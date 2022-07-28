@@ -485,6 +485,10 @@
 		set desc = "Change your name."
 		mainframe?.rename_self()
 
+	stopObserving()
+		src.set_loc(get_turf(src))
+		src.observing = null
+
 //---TURF---//
 /turf/var/image/aiImage
 /turf/var/list/cameras = null
