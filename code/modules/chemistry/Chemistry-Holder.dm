@@ -626,6 +626,8 @@ datum
 		proc/reaction(var/atom/A, var/method=TOUCH, var/react_volume, var/can_spawn_fluid = 1, var/minimum_react = 0.01, var/can_burn = 1, var/list/paramslist = 0)
 			if (src.total_volume <= 0)
 				return
+			if (isintangible(A))
+				return
 			if (isobserver(A)) // errrr
 				return
 
