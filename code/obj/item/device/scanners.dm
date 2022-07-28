@@ -153,34 +153,46 @@ that cannot be itched
 	var/distancescan = 0
 	var/target = null
 	var/last_scan = "No scans have been done yet."
-	var/printing = null
 
 
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
 
-		var/holder = src.loc
-		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-		if (src.loc != holder || !search || user.stat)
-			return
-		search = copytext(sanitize(search), 1, 200)
-		search = lowertext(search)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Forensic scanner", list( "Find record", "Print last scan"))
+		switch (choice)
+			if ("Find record")
+				var/holder = src.loc
+				var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+				if (src.loc != holder || !search || user.stat)
+					return
+				search = copytext(sanitize(search), 1, 200)
+				search = lowertext(search)
 
-		for (var/datum/db_record/R as anything in data_core.general.records)
-			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
+				for (var/datum/db_record/R as anything in data_core.general.records)
+					if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
-				var/data = "--------------------------------<br>\
-				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
-				<br>\
-				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
-				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
+						var/data = "--------------------------------<br>\
+						<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
+						<br>\
+						<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+						<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
-				boutput(user, data)
+						boutput(user, data)
+						return
+
+				user.show_text("No match found in security records.", "red")
 				return
+		if("Print last scan")
+			if(!ON_COOLDOWN(src, "print", 2 SECOND))
+				playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+				SPAWN(1 SECONDS)
+					var/obj/item/paper/P = new /obj/item/paper
+					P.set_loc(get_turf(src))
 
-		user.show_text("No match found in security records.", "red")
-		return
+					P.info = last_scan
+					P.name = "Forensic readout"
+
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
@@ -237,20 +249,6 @@ that cannot be itched
 				icon_state = "fs_pinfar"
 		SPAWN(0.5 SECONDS)
 			.(T)
-	verb/set_phrase()
-		set name = "Print last report"
-		set category = "Local"
-
-		if (!src.printing )
-			src.printing = 1
-			playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN(1 SECONDS)
-				var/obj/item/paper/P = new /obj/item/paper
-				P.set_loc(get_turf(src))
-
-				P.info = last_scan
-				P.name = "Forensic readout"
-			src.printing = null
 
 
 /obj/item/device/detective_scanner/detective
