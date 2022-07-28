@@ -363,6 +363,7 @@ h1.alert, h2.alert {color: #000000;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 .lawupdate {color: #6464ff}
+.monospace {font-family: monospace;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}

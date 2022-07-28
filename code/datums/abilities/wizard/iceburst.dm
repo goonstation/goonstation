@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
 	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
@@ -36,11 +37,11 @@
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>[M] has divine protection! The spell refuses to target [him_or_her(M)]!</span>")
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target \him!</span>")
+				boutput(holder.owner, "<span class='alert'>[M] has arcane protection! The spell refuses to target [him_or_her(M)]!</span>")
 				continue
 			else if(check_target_immunity( M ))
 				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )

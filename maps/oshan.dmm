@@ -27439,6 +27439,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
+/obj/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "bte" = (
@@ -39205,6 +39208,9 @@
 /obj/stool/chair/pew/right{
 	name = "wooden bench"
 	},
+/obj/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bWx" = (
@@ -39841,6 +39847,9 @@
 /area/station/hallway/secondary/oshan_arrivals)
 "bYa" = (
 /obj/machinery/light/incandescent/blueish,
+/obj/landmark{
+	name = "blobstart"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bYb" = (
@@ -45606,6 +45615,12 @@
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iKa" = (
+/obj/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "iLO" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -46029,6 +46044,12 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"kUZ" = (
+/obj/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "kVp" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -78039,7 +78060,7 @@ ahb
 ahb
 agY
 bWp
-agY
+iKa
 aia
 agY
 agY
@@ -102775,7 +102796,7 @@ aqn
 any
 aoj
 aoj
-aoj
+kUZ
 amY
 cfJ
 aoj
@@ -111290,7 +111311,7 @@ chO
 clf
 clf
 bok
-aoj
+kUZ
 aoj
 chU
 anx
@@ -112170,7 +112191,7 @@ aqn
 aqn
 aqn
 anx
-aoj
+kUZ
 aoj
 aoj
 aoj
