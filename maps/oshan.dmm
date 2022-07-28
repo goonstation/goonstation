@@ -28747,15 +28747,9 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = -6
-	},
 /obj/item/hand_labeler{
 	pixel_x = 8;
 	pixel_y = 10
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = -3
 	},
 /obj/disposalpipe/junction/right/west,
 /obj/cable{
@@ -38772,7 +38766,6 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
-/obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)

@@ -39254,7 +39254,6 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},

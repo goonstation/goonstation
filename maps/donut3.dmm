@@ -14957,7 +14957,6 @@
 	pixel_x = 9;
 	pixel_y = -1
 	},
-/obj/item/device/detective_scanner,
 /obj/item/pen{
 	pixel_x = -7;
 	pixel_y = -2
@@ -75475,9 +75474,6 @@
 /obj/item/chem_grenade/pepper{
 	pixel_x = -5;
 	pixel_y = 13
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 2
