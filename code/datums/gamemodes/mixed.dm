@@ -57,7 +57,8 @@
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	if ((num_enemies >= 4 && prob(30)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
+	var/major_threat_chance = length(src.major_threats) * 10
+	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
 		var/chosen = weighted_pick(src.major_threats)
 		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 2, 1)
