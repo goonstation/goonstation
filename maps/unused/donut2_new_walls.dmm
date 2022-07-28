@@ -36616,14 +36616,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
-"bUD" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "bVY" = (
 /obj/rack,
 /obj/item/clothing/suit/bio_suit/paramedic{
@@ -37210,16 +37202,6 @@
 	intact = 0
 	},
 /area/station/solar/west)
-"diY" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/junction{
-	dir = 8;
-	icon_state = "pipe-j2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "dlq" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -37255,6 +37237,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/maintenance/west)
 "dlT" = (
@@ -37838,6 +37821,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/dirt5,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eoV" = (
@@ -39630,6 +39614,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "hiU" = (
@@ -41653,12 +41638,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/ptl)
 "kNP" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
 /obj/cable/black{
 	icon_state = "2-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 8;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -43694,6 +43679,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "oys" = (
@@ -45412,17 +45398,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"rkR" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "rlp" = (
 /obj/cable/black{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -45653,6 +45635,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/maintenance/inner/central)
 "rTb" = (
@@ -45910,7 +45893,10 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "sjf" = (
@@ -48117,7 +48103,6 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "vPj" = (
@@ -70525,13 +70510,13 @@ tqq
 aGo
 aHe
 aCh
-diY
-rkR
-ayU
+aLJ
+aJo
+ayR
 vOB
-aDU
-bUD
-ayU
+awm
+axc
+ayR
 siN
 sLs
 sLs
