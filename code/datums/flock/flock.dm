@@ -434,6 +434,7 @@ var/flock_signal_unleashed = FALSE
 			if (comp_provided > 0)
 				src.total_compute -= comp_provided
 			src.update_computes()
+		D.flock = null
 
 // TRACES
 

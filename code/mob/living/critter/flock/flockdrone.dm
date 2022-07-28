@@ -786,6 +786,7 @@
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
+	var/datum/flock/F = src.flock
 	src.flock?.removeDrone(src)
 
 	var/turf/T = get_turf(src)
@@ -801,8 +802,7 @@
 
 	var/mob/living/critter/flock/bit/B
 	for(var/i=1 to num_bits)
-		B = new(T, src.flock)
-		src.flock?.registerUnit(B)
+		B = new(T, F)
 		SPAWN(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
 
