@@ -2049,7 +2049,7 @@ proc/countJob(rank)
 					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
 				ticker.mode.former_antagonists += M.mind
 
-		// This is only used for spy slaves and mindhacked antagonists at the moment.
+		// This is only used for spy minions and mindhacked antagonists at the moment.
 		if ("otherhack")
 			switch (removal_type)
 				if ("expired")
