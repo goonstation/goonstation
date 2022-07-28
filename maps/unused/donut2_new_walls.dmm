@@ -7256,6 +7256,13 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
+"asa" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "asb" = (
 /obj/stool/chair/yellow,
 /obj/disposalpipe/segment/mail{
@@ -8529,11 +8536,14 @@
 "avi" = (
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
+"avj" = (
+/obj/stone,
+/turf/simulated/floor/dojo/sand/vertical,
+/area/station/chapel/sanctuary)
 "avk" = (
-/obj/machinery/traymachine/locking/crematorium{
-	id = "crematorium"
-	},
-/turf/simulated/floor/sanitary,
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
 /area/station/medical/crematorium)
 "avl" = (
 /obj/machinery/light{
@@ -8698,25 +8708,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avR" = (
-/obj/table/auto,
-/obj/item/hand_labeler{
-	pixel_x = -9;
-	pixel_y = 11
-	},
-/obj/item/clothing/mask/surgical{
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/syringe{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/machinery/crema_switch{
-	id = "crematorium";
-	pixel_y = 28
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -9014,10 +9007,13 @@
 	},
 /area/station/solar/west)
 "awJ" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/holywater{
+	pixel_y = 8;
+	pixel_x = -2
 	},
+/obj/item/clothing/suit/cultist/nerd,
+/obj/item/clothing/mask/gas/plague,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "awK" = (
@@ -9328,18 +9324,90 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
-"axs" = (
-/obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2,
-/turf/simulated/floor/plating,
-/area/station/medical/crematorium)
+"axt" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "axw" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
+"axx" = (
+/obj/item/device/light/candle{
+	pixel_x = -6;
+	pixel_y = 19
+	},
+/obj/item/device/light/candle{
+	pixel_y = 10;
+	rand_pos = 0;
+	pixel_x = 6
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -12;
+	rand_pos = 0
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1";
+	pixel_x = 5
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line1";
+	pixel_x = 10
+	},
+/obj/table/wood/auto,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "axy" = (
-/turf/space,
-/area/station/medical/crematorium)
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/item/decoration/incenseholder{
+	pixel_y = 10
+	},
+/obj/item/device/light/candle/small{
+	pixel_y = -6;
+	pixel_x = 9
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
+"axz" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/floorpillstatue{
+	pixel_y = 8
+	},
+/obj/item/device/light/candle{
+	rand_pos = 0;
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 13;
+	pixel_y = -8;
+	rand_pos = 0
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -12;
+	pixel_y = -9;
+	rand_pos = 0
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
 "axA" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
@@ -9723,13 +9791,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
-"ayu" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+"ayv" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 8;
+	icon_state = "tile1"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "ayw" = (
 /turf/simulated/floor/specialroom/chapel{
@@ -9741,25 +9808,12 @@
 	dir = 6
 	},
 /area/station/chapel/sanctuary)
-"ayy" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/specialroom/chapel,
-/area/station/chapel/sanctuary)
 "ayz" = (
 /obj/machinery/camera{
 	c_tag = "Chapel East";
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 10
-	},
+/turf/simulated/floor/dojo/sand/vertical,
 /area/station/chapel/sanctuary)
 "ayA" = (
 /obj/disposalpipe/segment{
@@ -10032,41 +10086,36 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "azl" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
 	},
 /turf/simulated/floor/specialroom/chapel{
-	dir = 9
+	dir = 4
 	},
 /area/station/chapel/sanctuary)
 "azm" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 5
-	},
-/area/station/chapel/sanctuary)
-"azn" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 9
-	},
+/obj/stool/wooden,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "azo" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
+/obj/decal/tile_edge/line/grey{
+	dir = 4;
+	icon_state = "tile1"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
+"azp" = (
+/obj/stone{
+	desc = "There might be something under there.";
+	dir = 9;
+	name = "Rock Pile"
+	},
+/turf/simulated/floor/dojo/sand/circle,
+/area/station/chapel/sanctuary)
+"azq" = (
+/turf/simulated/floor/dojo/sand/circle,
 /area/station/chapel/sanctuary)
 "azr" = (
 /turf/simulated/floor/plating/random{
@@ -10487,18 +10536,75 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
+"aAo" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
 "aAq" = (
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
+"aAs" = (
+/obj/item/plant/flower/rose,
+/obj/table/wood/auto,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/item/plant/herb/poppy{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/plant/herb/hcordata{
+	pixel_y = -5
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
+"aAt" = (
+/obj/table/auto,
+/obj/item/hand_labeler{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/item/clothing/mask/surgical{
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/machinery/crema_switch{
+	id = "crematorium";
+	pixel_y = 28
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
+"aAu" = (
+/obj/decal/stage_edge/alt{
+	pixel_y = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "aAv" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
+"aAw" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 5;
+	icon_state = "tile1";
+	pixel_y = 3
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 10
-	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
+"aAx" = (
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aAy" = (
 /obj/disposalpipe/segment{
@@ -10818,29 +10924,13 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aBh" = (
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 9
-	},
-/area/station/chapel/sanctuary)
 "aBi" = (
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 5
-	},
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
+"aBk" = (
+/turf/space,
+/area/station/chapel/office)
 "aBl" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
@@ -11498,13 +11588,12 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"aCP" = (
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
+"aCQ" = (
+/obj/decal/stage_edge{
+	layer = 2.8
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
+/obj/stool/wooden,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aCR" = (
 /obj/cable{
@@ -11554,14 +11643,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
-"aCV" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aCW" = (
 /obj/disposaloutlet{
 	desc = "An outlet for the pneumatic mail system.";
@@ -11762,14 +11843,6 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"aDA" = (
-/obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/holywater{
-	pixel_y = 8;
-	pixel_x = -2
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "aDD" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -12003,16 +12076,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
-"aEn" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aEq" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
+"aEs" = (
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "aEt" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -12470,6 +12544,39 @@
 "aFq" = (
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
+"aFr" = (
+/obj/item/device/light/candle/small{
+	pixel_x = -4;
+	rand_pos = 0;
+	pixel_y = 7
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = 5;
+	rand_pos = 0;
+	pixel_y = 10
+	},
+/obj/item/device/light/candle{
+	rand_pos = 0;
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1";
+	pixel_x = -5
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line1";
+	pixel_x = -10
+	},
+/obj/table/wood/auto,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "aFt" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
@@ -12783,6 +12890,13 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"aGc" = (
+/obj/stool/wooden,
+/obj/decal/stage_edge{
+	layer = 2.8
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "aGd" = (
 /obj/grille/catwalk/cross{
 	dir = 10
@@ -12801,6 +12915,14 @@
 	layer = 2
 	},
 /area/station/solar/west)
+"aGe" = (
+/obj/decal/tile_edge/line/grey{
+	dir = 9;
+	icon_state = "tile1";
+	pixel_y = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "aGf" = (
 /obj/cable{
 	d2 = 2;
@@ -13378,6 +13500,22 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
+/area/station/chapel/sanctuary)
+"aHC" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/item/decoration/incenseholder{
+	dir = 8;
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/obj/item/device/light/candle{
+	pixel_x = 9;
+	pixel_y = 20
+	},
+/turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aHD" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -37032,6 +37170,13 @@
 	intact = 0
 	},
 /area/station/solar/west)
+"dJU" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	req_access = null
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "dKB" = (
 /obj/disposalpipe/junction{
 	dir = 8
@@ -41961,8 +42106,24 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "mgS" = (
-/turf/space,
-/area/station/chapel/office)
+/obj/table/wood/auto,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/item/plant/herb/tea{
+	pixel_x = -8;
+	pixel_y = 3
+	},
+/obj/item/plant/herb/mint{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/plant/herb/contusine{
+	pixel_y = 1;
+	pixel_x = 6
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "mhg" = (
 /obj/machinery/light{
 	dir = 8;
@@ -46699,16 +46860,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
-"tZf" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 8;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "tZo" = (
 /obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto,
@@ -87241,7 +87392,7 @@ ayi
 aEq
 avQ
 awG
-axs
+avk
 ayr
 aGS
 aAm
@@ -87541,7 +87692,7 @@ apl
 oSK
 apl
 aEq
-avR
+aAt
 awH
 axr
 aCA
@@ -87842,10 +87993,10 @@ aaa
 kiY
 aaa
 kiY
-axs
 avk
-awJ
-axs
+avR
+asa
+avk
 ayt
 aGS
 aAm
@@ -88144,16 +88295,16 @@ aaa
 aaa
 aaa
 aaa
-axs
+avk
 avS
-awJ
-axs
+asa
+avk
 aED
 azj
 aHY
-aCP
-ayy
-tZf
+aEs
+axt
+azl
 aAq
 aFo
 aFo
@@ -88446,10 +88597,10 @@ aaa
 aaa
 aaa
 aaa
-axs
-aDA
+avk
+awJ
 awK
-axs
+avk
 aFq
 aGS
 ayw
@@ -89358,8 +89509,8 @@ aEq
 aEq
 aEq
 aEq
-ayx
-axB
+aFi
+aFi
 aCb
 axB
 ayx
@@ -89657,11 +89808,11 @@ aaa
 aaa
 aaa
 aFi
-aFo
-aFo
-aFo
-ayw
-axA
+aAs
+avj
+azq
+aAu
+aFi
 aCa
 axA
 ayw
@@ -89959,11 +90110,11 @@ aaa
 aaa
 aaa
 aFi
-aFo
-ayx
-axB
-ayx
-axB
+axx
+ayv
+ayv
+aGe
+aFi
 aCb
 axB
 ayx
@@ -90261,11 +90412,11 @@ aaa
 aaa
 aaa
 aFi
-axA
-ayw
-azl
+axy
+aCQ
+azm
 aAv
-aBh
+aFi
 aCc
 aCR
 ayw
@@ -90563,13 +90714,13 @@ aaa
 aaa
 aaa
 aFi
-axB
-ayx
+axz
+aGc
 azm
-ayx
+aAv
 aBi
 aFo
-ayu
+aAo
 aFo
 aFo
 aFo
@@ -90865,11 +91016,11 @@ aaa
 aaa
 aaa
 aFi
-axA
-ayw
-azn
-ayw
-axA
+aHC
+aGc
+azm
+aAv
+aFi
 aFo
 aCT
 aFt
@@ -90877,7 +91028,7 @@ aFt
 aFt
 aFt
 aFt
-aEn
+dJU
 aIu
 aDE
 aJP
@@ -91167,11 +91318,11 @@ aaa
 aaa
 aaa
 aFi
-axB
-ayx
+aFr
 azo
-ayx
-axB
+azo
+aAw
+aFi
 aFo
 aCU
 aGh
@@ -91469,13 +91620,13 @@ aaa
 aaa
 aaa
 aFi
-axA
+mgS
 ayz
-aFo
-ayw
-axA
+azp
+aAx
+aFi
 awN
-aCV
+aGU
 aDG
 aDG
 aDG
@@ -92679,8 +92830,8 @@ aaa
 aaa
 aaa
 aaa
-axy
-axy
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92980,9 +93131,9 @@ aaa
 aaa
 aaa
 aaa
-axy
-axy
-axy
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93282,9 +93433,9 @@ aaa
 aaa
 aaa
 aaa
-axy
-axy
-axy
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93584,8 +93735,8 @@ aaa
 aaa
 aaa
 aaa
-mgS
-mgS
+aBk
+aBk
 aaa
 aaa
 aaa
@@ -93886,9 +94037,9 @@ aaa
 aaa
 aaa
 aaa
-mgS
-mgS
-mgS
+aBk
+aBk
+aBk
 aaa
 aaa
 aaa
