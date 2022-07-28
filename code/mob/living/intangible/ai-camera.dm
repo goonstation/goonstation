@@ -23,7 +23,10 @@
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
-
+	can_bleed = FALSE
+	metabolizes = FALSE
+	blood_id = null
+	
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -270,7 +273,10 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
-
+		
+	vomit()
+		return 0 //can't puke
+		
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
