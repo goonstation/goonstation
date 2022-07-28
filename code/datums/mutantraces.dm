@@ -796,7 +796,7 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> screams with \his mind! Guh, that's creepy!"
+				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
@@ -1530,10 +1530,10 @@ TYPEINFO(/datum/mutantrace)
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> roars."
 			if("tail")
-				. = "<B>[src.mob.name]</B> waves \his tail."
+				. = "<B>[src.mob.name]</B> waves [his_or_her(src.mob)] tail."
 			if("paw")
 				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> flails \his paw."
+					. = "<B>[src.mob.name]</B> flails [his_or_her(src.mob)] paw."
 			if("scretch")
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> scretches."
@@ -1544,7 +1544,7 @@ TYPEINFO(/datum/mutantrace)
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src.mob]</B> gnarls and shows \his teeth.."
+					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
@@ -2118,7 +2118,7 @@ TYPEINFO(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B> dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return

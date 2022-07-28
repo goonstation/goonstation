@@ -94,6 +94,11 @@ stare
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
+/datum/aiTask/sequence/goalbased/flock/switched_to()
+	. = ..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	if(istype(D))
+		D.wander_count = 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // RALLY TO GOAL
 // target: the rally target given when this is invoked
@@ -753,12 +758,18 @@ stare
 	ai_turbo = TRUE
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16)
 
+/datum/aiTask/timed/targeted/flockdrone_shoot/switched_to()
+	. = ..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	if(istype(D))
+		D.wander_count = 0
+
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F.flock?.enemies))
 		var/datum/handHolder/HH = F.hands[3]
 		var/datum/limb/gun/stunner = HH?.limb
-		if(istype(stunner) && !stunner.is_on_cooldown())
+		if(istype(stunner) && !stunner.is_on_cooldown(F))
 			return TRUE
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
@@ -866,7 +877,7 @@ stare
 		var/mob/living/mob = target
 		if(!is_incapacitated(mob))
 			return FALSE
-	if(!istype(target.loc, /obj/flock_structure/cage))
+	if(istype(target.loc, /turf))
 		return TRUE
 
 /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/get_targets()
@@ -888,7 +899,7 @@ stare
 	var/mob/living/critter/flock/F = holder.owner
 	if(!F)
 		return TRUE
-	if(get_dist(F, holder.target) > 1)
+	if(!in_interact_range(F, holder.target) || !istype(holder.target?.loc, /turf))
 		return TRUE
 
 /datum/aiTask/succeedable/capture/succeeded()
@@ -904,8 +915,7 @@ stare
 					holder.interrupt()
 					return
 			var/mob/living/critter/flock/drone/owncritter = holder.owner
-			var/dist = get_dist(owncritter, holder.target)
-			if(dist > 1)
+			if(!in_interact_range(owncritter, holder.target) || !istype(T.loc, /turf))
 				holder.interrupt() //this should basically never happen, but sanity check just in case
 				return
 			else if(!actions.hasAction(owncritter, "flock_entomb")) // let's not keep interrupting our own action
@@ -1207,6 +1217,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1225,6 +1236,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1254,6 +1266,7 @@ stare
 			movesubtask.max_path_dist = 300
 
 	switched_to()
+		..()
 		on_reset()
 		if (!valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1267,6 +1280,7 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
 
 	switched_to()
+		..()
 		on_reset()
 		if (!(ismob(src.target) || iscritter(src.target) || isvehicle(src.target)) || isflockmob(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
@@ -1288,6 +1302,12 @@ stare
 	var/turf/startpos
 	var/turf/targetpos
 	var/path
+
+/datum/aiTask/timed/wander/flock/switched_to()
+	..()
+	var/mob/living/critter/flock/drone/D = holder.owner
+	if(istype(D))
+		D.wander_count++
 
 /datum/aiTask/timed/wander/flock/on_tick()
 	if(!startpos)
