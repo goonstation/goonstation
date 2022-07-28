@@ -1505,7 +1505,7 @@
 
 	CritterDeath()
 		..()
-		src.reagents.add_reagent("viper_venom", 100, null)
+		src.reagents.add_reagent("viper_venom", 40, null)
 		return
 
 	seek_target()
