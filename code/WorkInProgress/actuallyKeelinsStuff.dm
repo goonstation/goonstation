@@ -1487,6 +1487,14 @@ Returns:
 				M.color = color_new
 				animate(M, pixel_x = -32, time = 10, alpha= 175)
 
+/obj/item/experimental/melee/spear/plaswood //probably shouldn't be in here since I'm not keelins but it's got no reason going anywhere else so ¯\_(ツ)_/¯
+	New()
+		..()
+		setHeadMaterial(getMaterial("plasmaglass"))
+		setShaftMaterial(getMaterial("wood"))
+		buildOverlays()
+
+
 /obj/item/experimental/melee/sabre
 	name = "Energy sabre"
 	desc = ""

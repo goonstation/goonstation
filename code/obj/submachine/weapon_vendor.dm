@@ -210,6 +210,103 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+
+/obj/submachine/weapon_vendor/surplus
+
+	name = "Tovarich Yuri Good Deals and Trade Depot"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon"
+	desc = "An old, beat up machine for supplying your rag-tag group with... something resembling weapons and gear. "
+	token_accepted = /obj/item/requisition_token/syndicate
+	log_purchase = TRUE
+
+	ex_act()
+		return
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		// List of avaliable objects for purchase
+		//materiel_stock += new/datum/materiel/sidearm/smartgun
+		//materiel_stock += new/datum/materiel/sidearm/pistol
+		//materiel_stock += new/datum/materiel/sidearm/revolver
+
+		materiel_stock += new/datum/materiel/loadout/longgun
+		materiel_stock += new/datum/materiel/loadout/shortgun
+		materiel_stock += new/datum/materiel/loadout/melee
+
+		materiel_stock += new/datum/materiel/ammo/plinking
+		materiel_stock += new/datum/materiel/ammo/pistol
+		materiel_stock += new/datum/materiel/ammo/revolver
+		materiel_stock += new/datum/materiel/ammo/rifle
+		materiel_stock += new/datum/materiel/ammo/shotgun
+		materiel_stock += new/datum/materiel/ammo/energy
+
+		/*materiel_stock += new/datum/materiel/utility/belt
+		materiel_stock += new/datum/materiel/utility/knife
+		materiel_stock += new/datum/materiel/utility/rpg_ammo
+		materiel_stock += new/datum/materiel/utility/donk
+		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/bomb_decoy
+		materiel_stock += new/datum/materiel/utility/comtac
+		materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/miscpouch
+		materiel_stock += new/datum/materiel/utility/sawflies*/
+
+	accepted_token()
+		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]+=2
+		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=10
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
+		src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+/datum/materiel/loadout/longgun
+	name = "Long gun"
+	path = /obj/random_item_spawner/surplus/longgun
+	description = "Gun that is have power and strike of hammer upon nail."
+
+/datum/materiel/loadout/shortgun
+	name = "Short gun"
+	path = /obj/loadout_shortgun_spawner
+	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and medicine."
+
+/datum/materiel/loadout/melee
+	name = "Attack item"
+	path = /obj/random_item_spawner/surplus/melee
+	description = "Item of attack is proximity to man. With hand in hand combat."
+
+/datum/materiel/ammo/plinking
+	name = ".22 bullets"
+	path = /obj/random_item_spawner/surplus/plinkerrounds
+	description = "Small bullet for little gun."
+
+/datum/materiel/ammo/pistol
+	name = "Pistol bullets"
+	path = /obj/random_item_spawner/surplus/pistolrounds
+	description = "Bullet of types in pistol."
+
+/datum/materiel/ammo/revolver
+	name = "Revolve bullets"
+	path = /obj/random_item_spawner/surplus/revolverrounds
+	description = "Various bullet sets for in revolvers."
+/datum/materiel/ammo/rifle
+	name = "Rifle bullets"
+	path = /obj/random_item_spawner/surplus/riflerounds
+	description = "Western bullet holder of rifle."
+/datum/materiel/ammo/shotgun
+	name = "Bullets of shotgun"
+	path = /obj/random_item_spawner/surplus/shotgunshells
+	description = "These bullets is large that has made of plastic?"
+
+/datum/materiel/ammo/energy
+	name = "Energy bullets"
+	path = /obj/random_item_spawner/surplus/energycells
+	description = "These bullets is confusing, for they is not of bullet, but little square."
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -483,6 +580,10 @@
 	name = "Sawfly pouch"
 	path = /obj/item/storage/sawfly_pouch
 	description = "A pouch of 3 reusable anti-personnel drones."
+
+//SURPLUS
+
+
 // Requisition tokens
 
 /obj/item/requisition_token

@@ -1,18 +1,10 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
 
-/obj/surplus_spawner
+///obj/surplus_spawner
 
 //ammo!
-/obj/random_item_spawner/surplus/shotgunshells
-	min_amt2spawn = 4
-	max_amt2spawn = 5
-	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
-	/obj/item/ammo/bullets/pipeshot/scrap,
-	/obj/item/ammo/bullets/a12,
-	/obj/item/ammo/bullets/abg,
-	/obj/item/ammo/bullets/flare,
-	/obj/item/ammo/bullets/a12/weak)
+
 
 /obj/random_item_spawner/surplus/plinkerrounds
 	amt2spawn = 4
@@ -38,13 +30,32 @@
 	/obj/item/ammo/bullets/a38/stun)
 
 /obj/random_item_spawner/surplus/riflerounds
-	min_amt2spawn = 4
-	max_amt2spawn = 5
+	min_amt2spawn = 3
+	max_amt2spawn = 4
 	items2spawn = list(/obj/item/ammo/bullets/assault_rifle,
 	/obj/item/ammo/bullets/assault_rifle,
 	/obj/item/ammo/bullets/assault_rifle/armor_piercing)
 
+/obj/random_item_spawner/surplus/shotgunshells
+	min_amt2spawn = 4
+	max_amt2spawn = 5
+	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
+	/obj/item/ammo/bullets/pipeshot/scrap,
+	/obj/item/ammo/bullets/a12,
+	/obj/item/ammo/bullets/abg,
+	/obj/item/ammo/bullets/flare,
+	/obj/item/ammo/bullets/a12/weak)
+
 /obj/random_item_spawner/surplus/energycells
+	amt2spawn = 2
+	items2spawn = list(/obj/item/ammo/power_cell,
+		/obj/item/ammo/power_cell,
+		/obj/item/ammo/power_cell/med_power,
+		/obj/item/ammo/power_cell/med_power,
+		/obj/item/ammo/power_cell/self_charging/disruptor)
+
+
+/obj/random_item_spawner/surplus/grenades
 	amt2spawn = 2
 	items2spawn = list(/obj/item/ammo/power_cell,
 		/obj/item/ammo/power_cell,
@@ -74,8 +85,28 @@
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/detectiverevolver,
 	/obj/item/gun/kinetic/derringer,
-	/obj/item/gun/kinetic/slamgun,//lol
+	///obj/item/gun/kinetic/slamgun,//lol
 	/obj/item/gun/kinetic/zipgun, //lmao, even
 	/obj/item/gun/energy/laser_gun,
-	/obj/item/gun/energy/phaser_gun)
+	/obj/item/gun/energy/phaser_gun,
+	///obj/item/gun/energy/blaster_pod_wars/syndicate
+	)
+
+/obj/random_item_spawner/surplus/melee //if anything's going to break convention the most it's gonna be this one
+	amt2spawn = 1
+	items2spawn = list(/obj/item/ratstick,
+	/obj/item/bat,
+	/obj/item/katana_sheath/reverse,
+	/obj/item/breaching_hammer,
+	/obj/item/experimental/melee/spear/plaswood,
+	/obj/item/sword/discount,
+	/obj/item/survival_machete/syndicate,
+	/obj/item/dagger/syndicate/specialist,
+	/obj/item/deconstructor,
+	/obj/item/circular_saw,
+	/obj/item/wrench/battle,
+	/obj/item/mining_tool/powerhammer,
+	/obj/item/brick,
+	/obj/item/rods/steel
+	)
 

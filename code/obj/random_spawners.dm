@@ -73,6 +73,7 @@
 			new new_item(S)
 		else
 			new new_item(src.loc)
+/obj/simple_item_spawner
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
 	icon_state = "rand_snacks"

@@ -71643,7 +71643,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
 "lAk" = (
-/obj/submachine/weapon_vendor,
+/obj/submachine/weapon_vendor/surplus,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 6
 	},
@@ -75501,7 +75501,7 @@
 	},
 /area/crunch/wtc)
 "tdf" = (
-/obj/submachine/weapon_vendor,
+/obj/submachine/weapon_vendor/surplus,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 5
 	},
@@ -77327,7 +77327,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/iomoon/base)
 "wXx" = (
-/obj/submachine/weapon_vendor,
+/obj/submachine/weapon_vendor/surplus,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 4
 	},
