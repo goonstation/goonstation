@@ -850,7 +850,7 @@
 		if(!power)
 			switch(severity)
 				if(1)
-					power = 9		//gib
+					power = 9
 				if(2)
 					power = 5
 				if(3)
