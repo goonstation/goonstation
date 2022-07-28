@@ -815,8 +815,10 @@
 
 /// used to set the a_intent var of a mob
 /mob/proc/set_a_intent(intent)
-	if (!intent) return
-	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	if (!intent)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
+		return
 	src.a_intent = intent
 
 // medals

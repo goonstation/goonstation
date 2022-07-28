@@ -165,7 +165,7 @@
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby
 	#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
-	/// Sent when a mob sets their a_intent var (mob, intent)
+	/// Sent when a mob sets their a_intent var, returning anything will cancel the intent change (mob, intent)
 	#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 	/// Sent when radiation status ticks on mob (stage)
 	#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
