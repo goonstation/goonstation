@@ -827,7 +827,7 @@
 	restrained()
 		return 0
 
-	ex_act(severity)
+	ex_act(severity, lasttouched, power)
 		..() // Logs.
 		src.flash(3 SECONDS)
 
@@ -847,18 +847,29 @@
 				fire_protect = 1
 				severity++
 
-		var/damage = 0
-		switch(severity)
+		if(!power)
+			switch(severity)
+				if(1)
+					power = 9		//gib
+				if(2)
+					power = 5
+				if(3)
+					power = 3
+		power *= clamp(1-src.get_explosion_resistance(), 0, 1)
+		var/brute_damage = power*7.5
+		var/burn_damage = max((power-2.5)*5,0)
+		/*switch(severity)
 			if(1.0)
 				SPAWN(1 DECI SECOND)
 					src.gib(1)
 				return
 			if(2.0) damage = 40
 			if(3.0) damage = 20
+		*/
 
 		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
-				if (RP.ropart_take_damage(damage,damage) == 1)
+				if (RP.ropart_take_damage(brute_damage,burn_damage) == 1)
 					src.compborg_lose_limb(RP)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)

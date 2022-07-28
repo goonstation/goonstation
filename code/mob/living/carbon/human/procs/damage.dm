@@ -134,6 +134,7 @@
 
 
 /mob/living/carbon/human/ex_act(severity, lasttouched, power)
+	message_admins("severity: [severity] power: [power]")
 	..() // Logs.
 	if (src.nodamage) return
 	// there used to be mining radiation check here which increases severity by one
