@@ -272,7 +272,7 @@
 /datum/materiel/loadout/shortgun
 	name = "Short gun"
 	path = /obj/loadout_shortgun_spawner
-	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and medicine."
+	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and grenade."
 
 /datum/materiel/loadout/melee
 	name = "Attack item"

@@ -12,4 +12,5 @@
 		SPAWN(1 DECI SECOND)
 			new /obj/random_item_spawner/surplus/shortgun(src.loc)
 			new /obj/random_item_spawner/surplus/melee(src.loc)
+			new /obj/random_item_spawner/surplus/grenades(src.loc)
 			qdel(src)
