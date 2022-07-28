@@ -35,7 +35,7 @@ var/flock_signal_unleashed = FALSE
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
-	var/relay_in_progress = FALSE
+	var/relay_in_progress_or_finished = FALSE
 	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
 	var/snooping = FALSE //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
@@ -753,27 +753,6 @@ var/flock_signal_unleashed = FALSE
 		return
 
 	flock_spiral_conversion(T, F)
-
-/proc/radial_flock_conversion(var/atom/movable/source, datum/flock/F, var/max_radius=20)
-	if(!source) return
-	var/turf/T = get_turf(source)
-	var/radius = 1
-	while(radius <= max_radius)
-		var/list/turfs = circular_range(T, radius)
-		LAGCHECK(LAG_LOW)
-		for(var/turf/tile in turfs)
-			if(istype(tile, /turf/simulated) && !isfeathertile(tile))
-				if (F)
-					F.claimTurf(flock_convert_turf(tile))
-				else
-					flock_convert_turf(tile)
-				sleep(0.5)
-		LAGCHECK(LAG_LOW)
-		radius++
-		sleep(radius * 10)
-		if(isnull(source))
-			return
-
 
 /proc/flock_spiral_conversion(var/turf/T, datum/flock/F)
 	if(!T) return
