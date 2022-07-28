@@ -84,8 +84,8 @@
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/obj/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.cleanName]"
-			else traitStr = T.cleanName
+			if(length(traitStr)) traitStr += " | [T.name]"
+			else traitStr = T.name
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
