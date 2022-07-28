@@ -251,7 +251,7 @@
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
-	
+
 	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/dummy = V
@@ -389,6 +389,9 @@
 					antag.current.real_name = newname
 					antag.current.name = newname
 
+		if (ROLE_FLOCKMIND)
+			bestow_objective(antag, /datum/objective/specialist/flock)
+			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
 			objective_set_path = /datum/objective_set/spy_theft
 			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
