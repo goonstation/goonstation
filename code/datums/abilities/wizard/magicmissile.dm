@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
 	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
@@ -25,7 +26,7 @@
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!</span>")
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))

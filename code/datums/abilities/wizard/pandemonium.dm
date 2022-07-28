@@ -147,7 +147,7 @@
 					signal_loss -= 100
 			if("grilles")
 				spell_result = "metal grilles"
-				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around \him!</span>")
+				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around [him_or_her(W)]!</span>")
 				playsound(W.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))

@@ -1,4 +1,41 @@
 
+(t)wed jul 27 22
+(u)TemThrush
+(p)9834
+(e)🆕|feature
+(*)Added three hairstyles, Combed Front, Combed Front Short, and Longfront.
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
+(u)Ikea
+(p)9833
+(e)|
+(+)You can no longer plate implants with the arc electroplater.
+(u)Luxizzle
+(p)9758
+(e)🆕|feature
+(+)Silicons can now surround parts of their messages with ` to display it in a monospace font.
+(u)LeahTheTech
+(p)9785
+(e)🐛📄|bug, tgui
+(+)Remote signalers are now tgui
+(u)ZWRh3
+(p)9877
+(e)🐛⚖|bug, balance
+(*)Fire no longer clips trough walls
+(u)Zonespace
+(p)9848
+(e)⚖|balance
+(+)Nukeop laser designator now fires faster and has a more powerful explosion
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changed the blob recycling ability to cost 0 biopoints. Increased the cooldown to five seconds.
 (t)tue jul 26 22
 (u)Amylizzle
 (p)9720
@@ -176,7 +213,7 @@
 (u)Moberry
 (p)9376
 (e)⚖⛔|balance, removal
-(+)Changes QM Ore values and removes the electronics commodity.
+(+)Changed QM Ore values and removed the electronics commodity.
 (u)TTerc
 (e)🗺|mapping
 (+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
@@ -338,7 +375,7 @@
 (u)Moberry
 (p)9377
 (e)⚖|balance
-(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(*)Changed the shipping market timer from 12-9 minutes to 10-5 minutes.
 (+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409
