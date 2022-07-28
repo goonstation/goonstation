@@ -183,15 +183,15 @@ that cannot be itched
 
 				user.show_text("No match found in security records.", "red")
 				return
-		if("Print last scan")
-			if(!ON_COOLDOWN(src, "print", 2 SECOND))
-				playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-				SPAWN(1 SECONDS)
-					var/obj/item/paper/P = new /obj/item/paper
-					P.set_loc(get_turf(src))
+			if("Print last scan")
+				if(!ON_COOLDOWN(src, "print", 2 SECOND))
+					playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+					SPAWN(1 SECONDS)
+						var/obj/item/paper/P = new /obj/item/paper
+						P.set_loc(get_turf(src))
 
-					P.info = last_scan
-					P.name = "Forensic readout"
+						P.info = last_scan
+						P.name = "Forensic readout"
 
 
 	pixelaction(atom/target, params, mob/user, reach)
