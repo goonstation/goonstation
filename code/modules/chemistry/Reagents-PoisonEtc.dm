@@ -1254,7 +1254,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(0.5*mult)
-				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT, 1, get_turf(M))
+				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
