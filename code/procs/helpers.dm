@@ -2064,7 +2064,7 @@ proc/countJob(rank)
 					logTheThing("combat", M, mymaster, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindhack status.")
 
 			// Fix for mindhacked traitors etc losing their antagonist status.
-			if (M.mind && (M.mind.special_role == "spyslave"))
+			if (M.mind && (M.mind.special_role == "spyminion"))
 				remove_antag(M, null, 1, 0)
 			else
 				M.mind.master = null

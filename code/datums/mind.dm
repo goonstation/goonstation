@@ -45,7 +45,7 @@ datum/mind
 
 	var/list/intrinsic_verbs = list()
 
-	// For mindhack/vampthrall/spyslave master references, which are now tracked by ckey.
+	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
 	// Mob references are not very reliable and did cause trouble with automated mindhack status removal
 	// The relevant code snippets call a ckey -> mob reference lookup proc where necessary,
 	// namely ckey_to_mob(mob.mind.master) (Convair880).

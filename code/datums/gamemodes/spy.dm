@@ -129,7 +129,7 @@
 
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
-	spymind.special_role = "spyslave"
+	spymind.special_role = "spyminion"
 	spymind.master = leader.ckey
 
 	return 1

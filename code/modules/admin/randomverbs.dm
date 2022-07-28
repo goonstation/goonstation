@@ -1725,7 +1725,7 @@
 	switch (former_role)
 		if (ROLE_MINDHACK) return
 		if (ROLE_VAMPTHRALL) return
-		if ("spyslave") return
+		if ("spyminion") return
 		if (ROLE_BLOB) M.humanize(1)
 		if (ROLE_WRAITH) M.humanize(1)
 		else
