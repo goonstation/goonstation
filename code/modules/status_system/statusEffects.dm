@@ -2216,7 +2216,7 @@
 
 	onAdd(mob/hacker, custom_orders)
 		. = ..()
-		desc = "You've been mindhacked by [hacker] and feel an unwavering loyalty towards [his_or_her(hacker)]."
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [his_or_her(hacker)]."
 		var/mob/M = owner
 		if (M.mind && ticker.mode)
 			if (!M.mind.special_role)
@@ -2225,11 +2225,11 @@
 				ticker.mode.Agimmicks += M.mind
 			M.mind.master = hacker.ckey
 
-		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker] tells you to!</span></h2>")
+		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
 		M.show_antag_popup("mindhack")
 
 		if (custom_orders)
-			boutput(M, "<h2><span class='alert'>[hacker]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
 
 	onRemove()
 		..()
