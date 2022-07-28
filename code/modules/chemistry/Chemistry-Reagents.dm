@@ -130,7 +130,7 @@ datum
 			if(method == TOUCH && !src.pierces_outerwear && !("ignore_chemprot" in paramslist))
 				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
 				if(percent_protection)
-					percent_protection = 1 - (percent_protection/100)
+					percent_protection = 1 - (percent_protection/100) //inverts the percentage to get the multiplier on effective reagents
 					volume *= percent_protection
 			. = reaction_mob(M, method, volume, paramslist, raw_volume)
 			return
@@ -139,8 +139,6 @@ datum
 			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
-			if(!raw_volume) //this should literally never matter but I dare not assume
-				raw_volume = volume
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
