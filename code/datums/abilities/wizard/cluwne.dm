@@ -6,11 +6,13 @@
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/CluwneGrim.ogg"
 	voice_fem = "sound/voice/wizard/CluwneFem.ogg"
 	voice_other = "sound/voice/wizard/CluwneLoud.ogg"
+	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
 
 	cast(mob/target)
 		if(!holder)
@@ -67,7 +69,7 @@
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("NWOLC EGNEVER")
+			M.say("NWOLC EGNEVER", spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

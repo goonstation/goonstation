@@ -1394,7 +1394,9 @@ datum
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
-
+			on_mob_life_complete()
+				message_admins("")
+				return
 		capulettium_plus
 			name = "capulettium plus"
 			id = "capulettium_plus"
@@ -1873,17 +1875,25 @@ datum
 			value = 13 // 11 2
 			viscosity = 0.3
 
+			proc/no_harm(datum/source, intent)
+				if(intent == INTENT_HARM)
+					boutput(source, "<span class='notice'>You can't bring yourself to harm others!</span>")
+					return TRUE
+				return FALSE
+
 			reaction_mob(var/mob/M)
 				. = ..()
 				boutput(M, "<span class='notice'>You feel loved!</span>")
-				return
+
+			initial_metabolize(mob/M)
+				RegisterSignal(M, COMSIG_MOB_SET_A_INTENT, .proc/no_harm)
+
+			on_mob_life_complete(mob/M)
+				UnregisterSignal(M, COMSIG_MOB_SET_A_INTENT)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-
-				if (M.a_intent == INTENT_HARM)
-					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""
@@ -1920,7 +1930,6 @@ datum
 							break
 
 				..()
-				return
 
 		colors
 			name = "colorful reagent"

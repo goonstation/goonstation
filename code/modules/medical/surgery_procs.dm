@@ -628,13 +628,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			for (var/obj/item/implant/I in patient.implant)
 
 				// This is kinda important (Convair880).
-				if (istype(I, /obj/item/implant/mindslave))
-					if (patient.mind && (patient.mind.special_role == ROLE_MINDSLAVE))
+				if (istype(I, /obj/item/implant/mindhack))
+					if (patient.mind?.special_role == ROLE_MINDHACK)
 						if(surgeon == patient) continue
-						remove_mindslave_status(patient, "mslave", "surgery")
+						remove_mindhack_status(patient, "mindhack", "surgery")
 					else if (patient.mind && patient.mind.master)
 						if(surgeon == patient) continue
-						remove_mindslave_status(patient, "otherslave", "surgery")
+						remove_mindhack_status(patient, "otherhack", "surgery")
 
 				if (!istype(I, /obj/item/implant/artifact))
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
@@ -2069,6 +2069,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.organHolder.drop_organ("head", get_turf(patient))
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s head with [src].")
 			return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
@@ -2084,6 +2085,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			limb.remove(FALSE)
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			logTheThing("combat", surgeon, patient, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 
 #undef CREATE_BLOOD_SPLOOSH

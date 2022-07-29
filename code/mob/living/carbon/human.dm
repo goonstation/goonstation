@@ -734,12 +734,12 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDSLAVE)
-			remove_mindslave_status(src, "mslave", "death")
+		if (src.mind.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(src, "mindhack", "death")
 		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindslave_status(src, "vthrall", "death")
+			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
-			remove_mindslave_status(src, "otherslave", "death")
+			remove_mindhack_status(src, "otherhack", "death")
 #ifdef DATALOGGER
 		if (src.mind.ckey)
 			// game_stats.Increment("playerdeaths")
@@ -1397,7 +1397,7 @@
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1453,7 +1453,7 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 
@@ -1816,28 +1816,6 @@
 		W.dropped(src)
 		src.l_hand = null
 		src.update_inhands()
-
-/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
-
-	// reset the modifiers to defaults
-	equipment_proxy.additive_slowdown = 0
-	equipment_proxy.aquatic_movement = 0
-	equipment_proxy.space_movement = 0
-
-	for (var/obj/item/I in src.get_equipped_items())
-		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
-		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
-		if (fluidmove)
-			equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.aquatic_movement += fluidmove
-		var/spacemove = I.getProperty("space_movespeed")
-		if (spacemove)
-			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.space_movement += spacemove
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)

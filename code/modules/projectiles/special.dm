@@ -213,6 +213,31 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
 
+/datum/projectile/special/spreader/buckshot_burst/glass
+	spread_projectile_type = /datum/projectile/bullet/improvglass
+	name = "glass"
+	sname = "glass"
+	cost = 1
+	pellets_to_fire = 6
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 36
+	speed_min = 28
+	spread_angle_variance = 30
+	dissipation_variance = 40
+
+/datum/projectile/special/spreader/buckshot_burst/scrap
+	name = "fragments"
+	sname = "fragments"
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/improvscrap
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 40
+	speed_min = 34
+	spread_angle_variance = 10
+	dissipation_variance = 10
+
+
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
 	sname = "nails"
@@ -901,7 +926,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
-			hasspawned = 1
+			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		return
 
@@ -909,7 +934,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
-		hasspawned = null
+			hasspawned = TRUE
+		else
+			hasspawned = null
 		return
 
 /datum/projectile/special/spawner/gun //shoot guns
