@@ -3070,10 +3070,9 @@ datum
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
 				
-			do_overdose(var/severity = 1, var/mob/M, var/mult = 1)
-				if (severity == 1)
-					if(probmult(16))
-						M.emote("fart")
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(probmult(16))
+					M.emote("fart")
 						
 		fooddrink/beff
 			name = "beff"
