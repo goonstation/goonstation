@@ -462,35 +462,35 @@
 	// var/pod_turf = 0
 	var/turf_op = 0
 
-	var/list/wallicons = list(\
-	"diner" = 'icons/turf/walls_derelict.dmi',\
-	"martian" = 'icons/turf/walls_martian.dmi',\
-	"shuttle blue" = 'icons/turf/walls_shuttle.dmi',\
-	"shuttle white" = 'icons/turf/walls_shuttle-debris.dmi',\
-	"shuttle dark" = 'icons/turf/walls_shuttle-debris.dmi',\
-	"overgrown" = 'icons/turf/walls_overgrown.dmi',\
-	"meat" = 'icons/turf/walls_meat.dmi',\
-	"ancient" = 'icons/turf/walls_ancient.dmi',\
-	"cave" = 'icons/turf/walls_cave.dmi',\
-	"lead blue" = 'icons/turf/walls_lead.dmi',\
-	"lead gray" = 'icons/turf/walls_lead.dmi',\
-	"lead white" = 'icons/turf/walls_lead.dmi',\
-	"ancient smooth" = 'icons/turf/walls_iomoon.dmi',\
+	var/list/wallicons = list(
+		"diner" = 'icons/turf/walls_derelict.dmi',
+		"martian" = 'icons/turf/walls_martian.dmi',
+		"shuttle blue" = 'icons/turf/walls_shuttle.dmi',
+		"shuttle white" = 'icons/turf/walls_shuttle-debris.dmi',
+		"shuttle dark" = 'icons/turf/walls_shuttle-debris.dmi',
+		"overgrown" = 'icons/turf/walls_overgrown.dmi',
+		"meat" = 'icons/turf/walls_meat.dmi',
+		"ancient" = 'icons/turf/walls_ancient.dmi',
+		"cave" = 'icons/turf/walls_cave.dmi',
+		"lead blue" = 'icons/turf/walls_lead.dmi',
+		"lead gray" = 'icons/turf/walls_lead.dmi',
+		"lead white" = 'icons/turf/walls_lead.dmi',
+		"ancient smooth" = 'icons/turf/walls_iomoon.dmi',
 	)
-	var/list/wallmods = list(\
-	"diner" = "oldr-",\
-	"martian" = "martian-",\
-	"shuttle blue" = "",\
-	"shuttle white" = "shuttle-",\
-	"shuttle dark" = "dshuttle-",\
-	"overgrown" = "root-",\
-	"meat" = "meatier-",\
-	"ancient" = "ancient-",\
-	"cave" = "cave-",\
-	"lead blue" = "leadb-",\
-	"lead gray" = "leadg-",\
-	"lead white" = "leadw-",\
-	"ancient smooth" = "interior-",\
+	var/list/wallmods = list(
+		"diner" = "oldr-",
+		"martian" = "martian-",
+		"shuttle blue" = "",
+		"shuttle white" = "shuttle-",
+		"shuttle dark" = "dshuttle-",
+		"overgrown" = "root-",
+		"meat" = "meatier-",
+		"ancient" = "ancient-",
+		"cave" = "cave-",
+		"lead blue" = "leadb-",
+		"lead gray" = "leadg-",
+		"lead white" = "leadw-",
+		"ancient smooth" = "interior-",
 	)
 
 	attack_self(mob/user as mob)
