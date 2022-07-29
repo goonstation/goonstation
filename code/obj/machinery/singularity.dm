@@ -1554,7 +1554,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	var/state = UNWRENCHED
-	var/timing = 0.0
+	var/timing = 0
 	var/time = 30
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.

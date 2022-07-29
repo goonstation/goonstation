@@ -277,8 +277,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23.0
-	anchored = 1.0
+	var/amount = 23
+	anchored = 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -305,8 +305,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23.0
-	anchored = 1.0
+	var/amount = 23
+	anchored = 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
@@ -335,7 +335,7 @@
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1.0
+	anchored = 1
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -482,7 +482,7 @@
 
 /obj/projection
 	name = "Projection"
-	anchored = 1.0
+	anchored = 1
 
 /obj/deskclutter
 	name = "desk clutter"

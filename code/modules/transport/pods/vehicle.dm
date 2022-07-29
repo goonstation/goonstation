@@ -4,7 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY
-	anchored = 1.0
+	anchored = 1
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null

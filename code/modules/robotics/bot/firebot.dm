@@ -42,8 +42,8 @@
 	name = "toolbox/robot arm assembly"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL

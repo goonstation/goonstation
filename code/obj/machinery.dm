@@ -334,10 +334,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
 	var/obj/item/card/id/scan = null
-	var/a_type = 0.0
+	var/a_type = 0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
-	anchored = 1.0
+	anchored = 1
 	req_access = list(access_armory)
 
 /obj/machinery/noise_switch

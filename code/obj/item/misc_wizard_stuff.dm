@@ -9,7 +9,7 @@
 	name = "Teleportation Scroll"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	var/uses = 4.0
+	var/uses = 4
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -67,8 +67,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "staff"
 	item_state = "staff"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 8
@@ -328,7 +328,7 @@
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "wizard_mirror"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 

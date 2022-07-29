@@ -3,7 +3,7 @@
 	organ_name = "kidney_t"
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 7.0
+	organ_holder_required_op_stage = 7
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1

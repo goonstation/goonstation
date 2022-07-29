@@ -467,7 +467,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
-			src.camera.camera_status = 1.0
+			src.camera.camera_status = 1
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS

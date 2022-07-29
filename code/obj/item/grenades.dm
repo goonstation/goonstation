@@ -979,9 +979,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -1149,7 +1149,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
 	var/state = null
-	var/det_time = 50.0
+	var/det_time = 50
 	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4

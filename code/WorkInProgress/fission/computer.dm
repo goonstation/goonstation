@@ -6,12 +6,12 @@
 //	icon = 'icons/obj/machines/nuclear.dmi'
 //	icon_state = "Sing2"
 
-	var/id = 0.0
+	var/id = 0
 
 	req_access = list(access_heads)
 	var/authenticated = 0
 
-	var/screen = 1.0
+	var/screen = 1
 
 	var/obj/machinery/power/fission/engine/theEngine = null
 	var/obj/machinery/fission/reactor/selectedReactor = null
@@ -105,7 +105,7 @@
 			var/obj/machinery/fission/reactor/R = locate(href_list["reactor"]) in theEngine.reactors
 
 			selectedReactor = R
-			src.screen = 2.0
+			src.screen = 2
 
 		else if(href_list["raise"])
 			if(selectedReactor)
@@ -154,7 +154,7 @@
 		else if(href_list["operation"])
 			switch(href_list["operation"])
 				if("back")
-					src.screen = 1.0
+					src.screen = 1
 
 				if("login")
 					var/mob/M = usr

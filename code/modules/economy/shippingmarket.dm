@@ -16,8 +16,8 @@
 /datum/shipping_market
 
 	var/list/commodities = list()
-	var/time_between_shifts = 0.0
-	var/time_until_shift = 0.0
+	var/time_between_shifts = 0
+	var/time_until_shift = 0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99

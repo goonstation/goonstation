@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1

@@ -4,14 +4,14 @@
 	icon_state = "table2-idle"
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 25
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
-	var/strapped = 0.0
+	var/strapped = 0
 
 	var/obj/machinery/computer/operating/computer = null
-	var/id = 0.0
+	var/id = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 
 /obj/machinery/optable/New()

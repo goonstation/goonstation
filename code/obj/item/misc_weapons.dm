@@ -23,7 +23,7 @@
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
-	var/active = 0.0
+	var/active = 0
 	var/open = 0
 	var/use_glowstick = 1
 	var/obj/item/device/light/glowstick/loaded_glowstick = null
@@ -32,7 +32,7 @@
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 7
@@ -468,8 +468,8 @@
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 5.0
-	throwforce = 15.0
+	force = 5
+	throwforce = 15
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
@@ -506,9 +506,9 @@
 
 /obj/item/dagger/smile
 	name = "switchblade"
-	force = 10.0
+	force = 10
 	throw_range = 10
-	throwforce = 10.0
+	throwforce = 10
 
 /obj/item/dagger/smile/attack(mob/living/target, mob/user)
 	if(prob(10))
@@ -539,8 +539,8 @@
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
-	force = 8.0
-	throwforce = 11.0
+	force = 8
+	throwforce = 11
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
@@ -604,8 +604,8 @@
 	icon_state = "nunchucks"
 	item_state = "nunchucks"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	force = 8.0
-	throwforce = 6.0
+	force = 8
+	throwforce = 6
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_SMALL
@@ -629,8 +629,8 @@
 	item_state = "quarterstaff"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	uses_multiple_icon_states = 1
-	force = 13.0
-	throwforce = 6.0
+	force = 13
+	throwforce = 6
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
@@ -694,8 +694,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife_b"
 	item_state = "knife_b"
-	force = 5.0
-	throwforce = 15.0
+	force = 5
+	throwforce = 15
 	throw_speed = 4
 	throw_range = 8
 	w_class = W_CLASS_NORMAL
@@ -770,8 +770,8 @@
 	icon_state = "hunter_spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "hunter_spear"
-	force = 8.0
-	throwforce = 35.0
+	force = 8
+	throwforce = 35
 	throw_speed = 6
 	throw_range = 10
 	makemeat = 0
@@ -800,10 +800,10 @@
 	icon_state = "axe0"
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	var/active = 0.0
+	var/active = 0
 	hit_type = DAMAGE_CUT
-	force = 40.0
-	throwforce = 25.0
+	force = 40
+	throwforce = 25
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -1014,7 +1014,7 @@
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	is_syndicate = TRUE
@@ -1148,7 +1148,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_BLUNT
 	force = 18
-	throwforce = 5.0
+	throwforce = 5
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
@@ -1164,7 +1164,7 @@
 	mats = list("MET-2"=15)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
-	throwforce = 5.0
+	throwforce = 5
 	delimb_prob = 1
 	contraband = 4
 	tooltip_flags = REBUILD_USER
@@ -1206,7 +1206,7 @@
 
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 20
-	throwforce = 5.0
+	throwforce = 5
 	delimb_prob = 20
 	contraband = 4
 
@@ -1233,7 +1233,7 @@
 	item_state = "sheathedhand"
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL

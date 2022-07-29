@@ -2215,7 +2215,7 @@ Returns:
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null

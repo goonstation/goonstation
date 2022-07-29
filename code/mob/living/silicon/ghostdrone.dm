@@ -432,7 +432,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.90
+		hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 

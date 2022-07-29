@@ -19,8 +19,8 @@ Contains:
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
-	force = 5.0
-	throwforce = 10.0
+	force = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 	stamina_damage = 55
@@ -423,7 +423,7 @@ Contains:
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	health = 5
 	w_class = W_CLASS_SMALL
-	force = 3.0
+	force = 3
 	stamina_damage = 30
 	stamina_cost = 16
 	desc = "A small personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."

@@ -2732,7 +2732,7 @@
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2788,7 +2788,7 @@
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -3211,7 +3211,7 @@
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	var/datum/light/light
 

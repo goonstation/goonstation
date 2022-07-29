@@ -10,7 +10,7 @@
 	health = 1800
 	health_max = 1800
 
-	var/id = 1.0
+	var/id = 1
 
 	New()
 		. = ..()

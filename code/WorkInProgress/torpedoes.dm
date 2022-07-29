@@ -108,9 +108,9 @@
 	name = "torpedo console"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
-	anchored = 1.0
+	anchored = 1
 	appearance_flags = TILE_BOUND
-	density = 1.0
+	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
 	var/id = "torp1"
 	var/obj/machinery/torpedo_tube/tube = null
@@ -204,7 +204,7 @@
 	name = "torpedo button"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	var/id = "torp1"
 	var/list/cachedTubes = list()
 

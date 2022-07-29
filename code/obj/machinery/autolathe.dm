@@ -3,12 +3,12 @@
 	icon_state = "autolathe"
 	desc = "A device that can break down various materials and turn them into other objects."
 	density = 1
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/operating = 0.0
-	var/opened = 0.0
+	var/m_amount = 0
+	var/g_amount = 0
+	var/operating = 0
+	var/opened = 0
 	var/temp = null
-	anchored = 1.0
+	anchored = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0
@@ -45,7 +45,7 @@
 		if (src.m_amount < 150000.0)
 			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
-				src.m_amount += O:height * O:width * O:length * 100000.0
+				src.m_amount += O:height * O:width * O:length * 100000
 				O:amount--
 				if (O:amount < 1)
 					qdel(O)
@@ -56,7 +56,7 @@
 		if (src.g_amount < 75000.0)
 			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
-				src.g_amount += O:height * O:width * O:length * 100000.0
+				src.g_amount += O:height * O:width * O:length * 100000
 				O:amount--
 				if (O:amount < 1)
 					qdel(O)

@@ -22,7 +22,7 @@
 	var/list/obj/item/control_rod/control_rods = list()
 	var/list/
 
-	var/control_rod_level = 100.0
+	var/control_rod_level = 100
 
 	var/temperature = T20C // Start at room temperature
 
@@ -42,12 +42,12 @@
 
 /obj/item/nuclear_fuel_rod
 	desc = "Put it in a reactor core. Ideally while wearing radiation protection gear. Or not. Do whatever, I'm not your mom."
-	var/strength = 0.0
+	var/strength = 0
 
 /obj/item/nuclear_fuel_rod/u235
 	name = "Uranium-235 Fuel Rod"
 	color = "#00FF00"
-	strength = 1.0
+	strength = 1
 
 /obj/item/nuclear_control_rod
 	name = "Control rod"

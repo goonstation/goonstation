@@ -599,7 +599,7 @@
 					tf.tiletype = save["type"]
 					tf.state = save["state"]
 					tf.direction = save["dir"]
-					bp.req_metal += 1.0
+					bp.req_metal += 1
 					bp.req_glass += 0.5
 					for (var/B in save.dir)
 						if(B == "type" || B == "state") continue
