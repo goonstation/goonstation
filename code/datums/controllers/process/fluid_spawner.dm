@@ -2,7 +2,7 @@
 #define FLUID_SPAWNER_TURF_BLOCKED(t) (!t || (t.active_liquid && t.active_liquid.group && t.active_liquid.group.amt_per_tile >= 300) || !t.ocean_canpass())
 
 #ifdef MAP_OVERRIDE_NADIR
-var/global/ocean_reagent_id = "pacid"
+var/global/ocean_reagent_id = "tene"
 #else
 var/global/ocean_reagent_id = "water"
 #endif
