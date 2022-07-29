@@ -21,7 +21,7 @@
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = "sound/misc/announcement_1.ogg"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	light_r =0.6
 	light_g = 1

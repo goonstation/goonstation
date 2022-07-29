@@ -4,7 +4,7 @@
 	name = "Communications Console"
 	icon_state = "comm"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	machine_registry_idx = MACHINES_COMMSCONSOLES
 	circuit_type = /obj/item/circuitboard/communications
 	var/prints_intercept = 1
@@ -327,7 +327,7 @@
 	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
-	call_shuttle_proc(src, call_reason)
+	call_shuttle_proc(usr, call_reason)
 
 	// hack to display shuttle timer
 	if(emergency_shuttle.online)

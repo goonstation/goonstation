@@ -58,7 +58,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && !next.density && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -281,7 +281,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(get_dist(current_turf, T) <= mintargetdist)
+				if(get_dist(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall) && !is_blocked_turf(current_turf))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)
@@ -356,7 +356,7 @@
 		var/list/reached_target_goals = null
 		if(mintargetdist)
 			for(var/turf/T as anything in ends)
-				if(get_dist(current_turf, T) <= mintargetdist)
+				if(get_dist(current_turf, T) <= mintargetdist && !istype(current_turf,/turf/simulated/wall) && !is_blocked_turf(current_turf))
 					LAZYLISTADD(reached_target_goals, ends[T])
 					ends -= T
 		else if(current_turf in ends)
@@ -415,6 +415,12 @@
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
 /proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
 	. = TRUE
+	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
+		var/mob/living/critter/flock/drone/F = passer
+		var/turf/simulated/wall/auto/feather/wall = T
+		if(!wall.broken && (F.floorrunning || (F.can_floorrun && F.resources >= 10))) //greater than 10 to give some wiggle room, actual cost is 1 per wall tile
+			return TRUE // floor running drones can *always* pass through flockwalls
+
 	if(T.density || !T.pathable) // simplest case
 		return FALSE
 	var/direction = get_dir(source, T)
@@ -448,7 +454,6 @@
 						continue
 					else
 						return FALSE
-				return FALSE
 		if(!A.Cross(passer))
 			return FALSE
 

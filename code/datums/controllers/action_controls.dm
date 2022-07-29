@@ -678,6 +678,9 @@ var/datum/action_controller/actions
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
 		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if(isliving(owner))
+			var/mob/living/M = owner
+			R.add_fingerprint(M)
 		if (callback)
 			call(callback)(src, R)
 
@@ -980,7 +983,10 @@ var/datum/action_controller/actions
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
+					if(QDELETED(item))
+						return
 					target.force_equip(item, slot)
+					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
 				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
@@ -1006,6 +1012,7 @@ var/datum/action_controller/actions
 				I.dropped(target)
 				I.layer = initial(I.layer)
 				I.add_fingerprint(source)
+				target.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
 	onUpdate()
@@ -1062,6 +1069,7 @@ var/datum/action_controller/actions
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 					T.icon_state = "airoff"
 				target.internal = null
+				target.update_inv()
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[owner] removes [target]'s internals!</B></span>", 1)
 			else
@@ -1071,6 +1079,7 @@ var/datum/action_controller/actions
 				else
 					if (istype(target.back, /obj/item/tank))
 						target.internal = target.back
+						target.update_inv()
 						for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
 							T.icon_state = "airon"
 						for(var/mob/M in AIviewers(target, 1))
@@ -1207,6 +1216,7 @@ var/datum/action_controller/actions
 		if(owner && target?.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
+			H.update_inv()
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
 

@@ -278,6 +278,12 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/inspector
+	name = "inspector's hat"
+	desc = "Someone who wears this will look very mysterious."
+	icon_state = "inspector"
+	item_state = "ins_hat"
+
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
@@ -301,6 +307,7 @@ proc/filter_trait_hats(var/type)
 
 	var/max_cigs = 15
 	var/list/cigs
+	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
 
 	New()
 		..()
@@ -410,6 +417,8 @@ proc/filter_trait_hats(var/type)
 	attack_self (mob/user as mob)
 		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
 		S.linked_hat = src
 		user.drop_item()
 		src.set_loc(S)
@@ -430,6 +439,10 @@ proc/filter_trait_hats(var/type)
 			src.phrase = n_name
 			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -1860,3 +1873,41 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
 	icon_state = "bouffant"
 	item_state = "bouffant"
+
+// Crate Loot
+
+/obj/item/clothing/head/bear
+	name = "bear hat"
+	desc = "A hat in the shape of the mythical Earth-bear."
+	icon_state = "bear"
+	item_state = "bear"
+
+/obj/item/clothing/head/rugged
+	name = "rugged hat"
+	desc = "A cool hat that's come pre-torn. Huh."
+	icon_state = "rugged"
+	item_state = "rugged"
+
+/obj/item/clothing/head/star_tophat
+	name = "starry tophat"
+	desc = "A fancy tophat with a detailed rendition of the night sky sewn in."
+	icon_state = "star_tophat"
+	item_state = "star_tophat"
+
+/obj/item/clothing/head/cow
+	name = "cow"
+	desc = "It looks like a cow and goes on your head. Wow."
+	icon_state = "cow"
+	item_state = "cow"
+
+/obj/item/clothing/head/torch
+	name = "torch hat"
+	desc = "A pretty dangerous looking hat."
+	icon_state = "torch"
+	item_state = "torch"
+
+/obj/item/clothing/head/helmet/space/replica
+	name = "replica space helmet"
+	icon_state = "space_replica"
+	item_state = "space_replica"
+	desc = "A replica of an old space helmet. Looks spaceworthy regardless."

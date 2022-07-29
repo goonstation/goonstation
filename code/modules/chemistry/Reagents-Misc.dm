@@ -698,6 +698,76 @@ datum
 					W.icon = I
 				return
 
+		graphene
+			name = "graphene"
+			id = "graphene"
+			description = "A miniscule honeycomb lattice."
+			reagent_state = SOLID
+			fluid_r = 20
+			fluid_g = 20
+			fluid_b = 20
+			value = 5
+
+		graphene_compound
+			name = "Graphene Hardening Compound"
+			id = "graphene_compound"
+			description = "A thick industrial compound used to reinforce things."
+			reagent_state = LIQUID
+			fluid_r = 10
+			fluid_g = 10
+			fluid_b = 10
+			transparency = 180
+			viscosity = 0.8
+			value = 9
+
+			reaction_obj(var/obj/O, var/volume)
+				if (volume < 1)
+					return
+
+				var/colorize
+				if (istype(O,/obj/machinery/atmospherics/pipe/simple))
+					var/obj/machinery/atmospherics/pipe/simple/P = O
+
+					if(P.can_rupture)
+						var/max_reinforcement = 1e9
+						if(P.fatigue_pressure >= max_reinforcement)
+							return
+
+						P.fatigue_pressure = clamp(P.fatigue_pressure * (2**volume), initial(P.fatigue_pressure), max_reinforcement)
+						colorize = TRUE
+
+				else if (istype(O,/obj/window))
+					var/obj/window/W = O
+					var/initial_resistance = initial(W.explosion_resistance)
+					W.explosion_resistance = clamp(W.explosion_resistance + volume, initial_resistance, initial_resistance + 3)
+					colorize = TRUE
+
+				if(colorize)
+					var/icon/I = icon(O.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					O.icon = I
+					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+				return
+
+			reaction_turf(var/turf/target, var/volume)
+				var/list/covered = holder.covered_turf()
+				var/turf/simulated/wall/T = target
+				var/volume_mult = 1
+
+				if (length(covered))
+					if (volume/length(covered) < 2) //reduce effect based on dilution
+						volume_mult = min(volume / 9, 1)
+
+				if(istype(T))
+					var/initial_resistance = initial(T.explosion_resistance)
+					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
+
+					var/icon/I = icon(T.icon)
+					I.ColorTone( rgb(20, 30, 30) )
+					T.icon = I
+					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+
+
 //foam precursor
 
 		fluorosurfactant
@@ -1324,7 +1394,9 @@ datum
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
-
+			on_mob_life_complete()
+				message_admins("")
+				return
 		capulettium_plus
 			name = "capulettium plus"
 			id = "capulettium_plus"
@@ -1803,17 +1875,25 @@ datum
 			value = 13 // 11 2
 			viscosity = 0.3
 
+			proc/no_harm(datum/source, intent)
+				if(intent == INTENT_HARM)
+					boutput(source, "<span class='notice'>You can't bring yourself to harm others!</span>")
+					return TRUE
+				return FALSE
+
 			reaction_mob(var/mob/M)
 				. = ..()
 				boutput(M, "<span class='notice'>You feel loved!</span>")
-				return
+
+			initial_metabolize(mob/M)
+				RegisterSignal(M, COMSIG_MOB_SET_A_INTENT, .proc/no_harm)
+
+			on_mob_life_complete(mob/M)
+				UnregisterSignal(M, COMSIG_MOB_SET_A_INTENT)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-
-				if (M.a_intent == INTENT_HARM)
-					M.set_a_intent(INTENT_HELP)
 
 				if (probmult(8))
 					. = ""
@@ -1850,7 +1930,6 @@ datum
 							break
 
 				..()
-				return
 
 		colors
 			name = "colorful reagent"
@@ -2847,12 +2926,14 @@ datum
 					return
 
 				reacting = 1
-				var/count = 0
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					count++
-				for (var/mob/living/L in oview(5, get_turf(holder.my_atom)))
-					arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count))
-
+				if(volume >= 5)
+					var/count = 0
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						count++
+					for (var/mob/living/L in oview(round(min(volume/5, 5)), get_turf(holder.my_atom)))
+						arcFlash(holder.my_atom, L, min(75000 / count, volume * 1000 / count), stun_coeff = min(volume / 25, 1))
+				else
+					elecflash(holder.my_atom)
 				holder.del_reagent(id)
 
 			on_mob_life(mob/M, var/mult = 1)

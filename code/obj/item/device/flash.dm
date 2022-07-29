@@ -9,6 +9,7 @@
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
 	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 

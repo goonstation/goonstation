@@ -306,42 +306,7 @@ datum
 					var/location = covered.len ? covered[1] : 0
 					var/hootmode = prob(5)
 
-					if (src.no_fluff == 0)
-						if (hootmode)
-							playsound(location, "sound/voice/animal/hoot.ogg", 100, 1)
-						else
-							playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
-
-					for (var/mob/living/M in all_hearers(world.view, location))
-						if (issilicon(M) || isintangible(M))
-							continue
-
-						if (src.no_fluff == 0)
-							if (!M.ears_protected_from_sound())
-								boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
-
-						var/checkdist = get_dist(M, location)
-						var/weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-						var/misstep = clamp(1 + 6 * (5 - checkdist), 0, 40)
-						var/ear_damage = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-						var/ear_tempdeaf = max(0, holder.get_reagent_amount(id) * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-						var/stamina = clamp(holder.get_reagent_amount(id) * (5 + 1 * (7 - checkdist)), 0, 120)
-
-						M.apply_sonic_stun(weak, 0, misstep, 0, 0, ear_damage, ear_tempdeaf, stamina)
-
-					for (var/mob/living/silicon/S in all_hearers(world.view, location))
-						if (src.no_fluff == 0)
-							if (!S.ears_protected_from_sound())
-								boutput(S, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
-							else
-								continue
-
-						var/checkdist = get_dist(S, location)
-						var/C_weak = max(0, holder.get_reagent_amount(id) * 0.2 * (3 - checkdist))
-
-						S.apply_sonic_stun(C_weak, 0)
+					sonicpowder_reaction(location, volume, hootmode, no_fluff)
 
 				holder?.del_reagent(id)
 

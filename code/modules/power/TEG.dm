@@ -84,7 +84,7 @@
 
 	New()
 		. = ..()
-		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
+		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12,"spaceglue"=0.7)
 		create_reagents(400)
 		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
 		target_pressure = min_circ_pressure
@@ -285,6 +285,20 @@
 			src.generator.grump -= 100
 			src.audible_message("<span class='alert'>A oddly distinctive sound of contentment can be heard from [src]. How wonderful!</span>")
 
+		if( src.reagents.has_reagent("spaceglue"))
+			src.reagents.remove_reagent("spaceglue", 1)
+			src.generator.grump += 25
+			src.visible_message("<span class='alert'><b>[src] [pick("shakes", "vibrates")] [pick("dangerously", "strangely", "grumpily")]!</b></span>")
+			animate_shake(src, rand(5,7), rand(3,8), rand(3,8) )
+			violent_twitch(src)
+
+		if( src.reagents.has_reagent("graphene_compound"))
+			src.reagents.remove_reagent("graphene_compound", 1)
+			src.generator.grump += 10
+			src.explosion_resistance += 0.5
+			src.generator?.explosion_resistance += 0.2
+			violent_twitch(src)
+
 		// Interactions with transferred gas
 		if(gas_passed)
 			if(src.reagents.has_active_reaction("cryostylane_cold"))
@@ -302,6 +316,13 @@
 
 	proc/is_circulator_active()
 		return last_pressure_delta > src.min_circ_pressure
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		// Protect if hatch is closed
+		if(src.is_open_container())
+			. = ..()
+		else
+			src.material?.triggerTemp(src, exposed_temperature)
 
 	proc/circulate_gas(datum/gas_mixture/gas)
 		var/datum/gas_mixture/gas_input = air1
@@ -1232,7 +1253,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				boutput(owner, "<span class='notice'>You snip the last piece of the electrical system connected to the semiconductor.</span>")
 				playsound(generator, "sound/items/Scissor.ogg", 80, 1)
 				generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
-				generator.status = BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
+				generator.status |= BROKEN // SEMICONDUCTOR DISCONNECTED IT BROKEN
 				generator.UpdateIcon()
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
@@ -1344,7 +1365,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
-	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
 

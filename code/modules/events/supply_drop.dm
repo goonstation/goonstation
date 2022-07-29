@@ -217,7 +217,7 @@
 
 	var/list/possibleStats = list()
 	for(var/x in globalPropList)
-		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty")
+		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty" && x != "movespeed")
 			possibleStats += x
 
 	for(var/i=0,i<numStats,i++)

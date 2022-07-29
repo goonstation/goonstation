@@ -132,7 +132,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	force = 0
 	food_color = "#FFFF00"
 	var/popping = 0
-	brewable = 1
 	brew_result = "bourbon"
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -323,7 +322,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 5
 	heal_amt = 1
 	food_color = "#FF00FF"
-	brewable = 1
 	brew_result = "wine"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
@@ -385,7 +383,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 5
 	heal_amt = 1
 	food_color = "#CC0000"
-	brewable = 1
 	brew_result = "wine"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
@@ -743,7 +740,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/pear
 	bites_left = 1
 	heal_amt = 2
-	brewable = 1
 	brew_result = "cider" // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
 
@@ -755,7 +751,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	//planttype = ///datum/plant/pear
 	bites_left = 1
 	heal_amt = 2
-	brewable = 1
 	brew_result = list("cider","rotting") //bad
 	food_color = "#3FB929"
 	initial_volume = 30
@@ -789,7 +784,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#40C100"
-	brewable = 1
 	brew_result = "cider"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
@@ -1111,7 +1105,6 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 0
 	food_color = "#F0E68C"
-	brewable = 1
 	brew_result = "vodka"
 
 	attackby(obj/item/W, mob/user)

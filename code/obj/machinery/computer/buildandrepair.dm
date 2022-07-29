@@ -31,8 +31,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	mats = 6
 
 /obj/item/circuitboard/security
-	name = "Circuit board (Security)"
+	name = "Circuit board (Security Cameras)"
 	computertype = "/obj/machinery/computer/security"
+/obj/item/circuitboard/security_tv
+	name = "Circuit board (Security Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv"
+/obj/item/circuitboard/small_tv
+	name = "Circuit board (Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv/small"
 
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"

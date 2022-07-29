@@ -390,8 +390,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
 				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)
@@ -618,8 +619,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
 				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
 
 			if (I.item)

@@ -635,8 +635,10 @@ datum
 					else if (prob(75))
 						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
-						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-						M.real_name = "Unknown"
+						if(!H.disfigured)
+							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
 						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)
@@ -3454,6 +3456,18 @@ datum
 			bladder_value = -1
 			taste = "like carrots"
 
+		fooddrink/juice_pumpkin
+			name = "pumpkin juice"
+			id = "juice_pumpkin"
+			fluid_r = 255
+			fluid_g = 117
+			fluid_b = 24
+			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "earthy"
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"
@@ -4156,7 +4170,7 @@ datum
 					boutput(M, "<span class='alert'>Your body feels like it's being tickled from the inside out!</span>")
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
-					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
+					M.visible_message("<span class='alert'>[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!</span>")
 					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
@@ -4365,3 +4379,106 @@ datum
 				if (M.reagents.has_reagent("flockdrone_fluid"))
 					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
 				flush(M, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
+
+		fooddrink/matcha
+			name = "matcha"
+			id = "matcha"
+			fluid_r = 116
+			fluid_g = 161
+			fluid_b = 46
+			description = "A finely ground powder made from green tea leaves."
+			reagent_state = SOLID
+			taste = "grass-like"
+
+		fooddrink/matchatea
+			name = "matcha tea"
+			id = "matchatea"
+			fluid_r = 5
+			fluid_g = 71
+			fluid_b = 42
+			description = "A type of green tea that's been served for centuries in China and Japan."
+			reagent_state = LIQUID
+			taste = "sweet with a hint of bitter"
+			thirst_value = 1
+			bladder_value = 0.04
+			energy_value = 0.04
+			addiction_prob = 1
+			addiction_prob2 = 2
+			addiction_min = 10
+			var/list/flushed_reagents = list("cholesterol")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				flush(M, 3 * mult, flushed_reagents)
+				..()
+
+		fooddrink/iced/coconutmilkespresso
+			name = "iced coconut milk espresso"
+			id = "icedcoconutmilkespresso"
+			fluid_r = 177
+			fluid_g = 143
+			fluid_b = 106
+			transparency = 200
+			taste = list("sweet", "cold")
+			description = "A creamy iced espresso, mixed with coconut milk."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/pineapplematcha
+			name = "iced pineapple matcha"
+			id = "icedpineapplematcha"
+			fluid_r = 152
+			fluid_g = 184
+			fluid_b = 96
+			transparency = 200
+			taste = list("earthy")
+			description = "Tangy, yet refreshingly earthy."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/thaicoffee
+			name = "Thai iced coffee"
+			id = "thaiicedcoffee"
+			fluid_r = 218
+			fluid_g = 172
+			fluid_b = 140
+			transparency = 200
+			taste = list("bittersweet", "cold")
+			description = "A local favorite, now available on demand."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/pepperminthotchocolate
+			name = "peppermint hot chocolate"
+			id = "pepperminthotchocolate"
+			fluid_r = 147
+			fluid_g = 94
+			fluid_b = 43
+			transparency = 200
+			taste = list("minty", "chocolatey")
+			description = "Minty, creamy, and chocolatey; delicious!"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/mexicanhotchocolate
+			name = "Mexican hot chocolate"
+			id = "mexicanhotchocolate"
+			fluid_r = 76
+			fluid_g = 29
+			fluid_b = 3
+			transparency = 200
+			taste = list("spicy", "chocolatey")
+			description = "Hot! Yet, very tasty."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+
+		fooddrink/pumpkinspicelatte
+			name = "pumpkin spice latte"
+			id = "pumpkinspicelatte"
+			id = "pumpkinspicelatte"
+			fluid_r = 231
+			fluid_g = 106
+			fluid_b = 0
+			description = "Whether or not it contains actual pumpkin juice has been up for debate."
+			reagent_state = LIQUID
+			taste = list("earthy", "sweet")
+			thirst_value = 1

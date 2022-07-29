@@ -6,6 +6,7 @@
 	icon_state = "screwdriver"
 
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SCREWING
 	health = 3
 	w_class = W_CLASS_TINY

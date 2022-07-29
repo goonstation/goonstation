@@ -825,3 +825,32 @@
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
 	return
+
+/proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
+	if (!M)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if (!ishuman(M))
+		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+
+	if(visible)
+		animate_scanning(M, "#ef0a0a")
+
+	var/mob/living/carbon/human/H = M
+	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
+	var/datum/db_record/SR = data_core.security.find_record("name", H.name)
+	if (!SR)
+		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+
+	//Find security records program
+	var/list/programs = null
+	for (var/obj/item/disk/data/mod in pda.contents)
+		programs += mod.root.contents.Copy()
+	var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
+	if (!record_prog)
+		return "<span class='alert'>ERROR: NO SECURITY RECORD FILE</span>"
+	pda.run_program(record_prog)
+	record_prog.active1 = GR
+	record_prog.active2 = SR
+	record_prog.mode = 1
+	pda.AttackSelf(usr)

@@ -199,7 +199,10 @@
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
-		playsound(K, sound_load, 50, 1)
+		if(K.sound_load_override)
+			playsound(K, K.sound_load_override, 50, 1)
+		else
+			playsound(K, sound_load, 50, 1)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -302,9 +305,8 @@
 		ammo_type.material = copyMaterial(src.material)
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") / 2.75)
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 4)
-			ammo_type.ks_ratio = max(0,round(material.getProperty("hard") / 75))
+			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
@@ -676,6 +678,31 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
+ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
+/obj/item/ammo/bullets/pipeshot
+	sname = "pipeshot"
+	name = "pipeshot"
+	desc = "A parent item! If you see this contact a coder."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst
+	icon_state = "makeshiftscrap"
+	amount_left = 4.0
+	max_amount = 4.0
+	ammo_cat = AMMO_SHOTGUN_HIGH
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
+	sname = "glass load"
+	desc = "This appears to be some broken glass haphazardly shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
+	icon_state = "makeshiftglass"
+
+/obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
+	sname = "scrap load"
+	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
 	name = "nailshot ammo box"
@@ -715,6 +742,10 @@
 	icon_dynamic = 0
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
+
+/obj/item/ammo/bullets/abg/two //spawns in the break action
+	amount_left = 2
+	max_amount = 2
 
 /obj/item/ammo/bullets/flare
 	sname = "12ga Flare"
@@ -862,8 +893,8 @@
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 5
-	max_amount = 5
+	amount_left = 2
+	max_amount = 2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -958,7 +989,7 @@
 	ammo_cat = AMMO_ROCKET_RPG
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
@@ -972,7 +1003,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/mininuke
 	sname = "Miniature nuclear warhead"
@@ -986,7 +1017,7 @@
 	ammo_cat = AMMO_ROCKET_SING
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
-	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 //3.0
 /obj/item/ammo/bullets/gun
@@ -1097,8 +1128,8 @@
 		overlays = null
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.20) * 100
+			var/ratio = min(1, ret["charge"] / ret["max_charge"]) * 100
+			ratio = round(ratio, 20)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 			switch(ratio)
 				if(20)
@@ -1178,15 +1209,6 @@
 	max_charge = 40.0
 	recharge_rate = 5.0
 
-	process()
-		if(src.material)
-			if(src.material.hasProperty("stability"))
-				if(src.material.getProperty("stability") <= 50)
-					if(prob(max(11 - src.material.getProperty("stability"), 0)))
-						var/turf/T = get_turf(src)
-						explosion_new(src, T, 1)
-						src.visible_message("<span class='alert'>\the [src] detonates.</span>")
-
 
 /obj/item/ammo/power_cell/self_charging/custom
 	name = "Power Cell"
@@ -1195,20 +1217,32 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.hasProperty("electrical"))
-				max_charge = round(material.getProperty("electrical") ** 1.33)
-			else
-				max_charge =  40
+
+			max_charge = round((material.getProperty("electrical") ** 2) * 4, 25)
 
 			recharge_rate = 0
-			if(src.material.hasProperty("radioactive"))
-				recharge_rate += ((src.material.getProperty("radioactive") / 10) / 2.5) //55(cerenkite) should give around 2.2, slightly less than a slow charge cell.
-			if(src.material.hasProperty("n_radioactive"))
-				recharge_rate += ((src.material.getProperty("n_radioactive") / 10) / 2)
+			recharge_rate += material.getProperty("radioactive")/2
+			recharge_rate += material.getProperty("n_radioactive")
+
 
 		charge = max_charge
+
 		AddComponent(/datum/component/power_cell, max_charge, charge, recharge_rate)
 		return
+
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			max_charge = round((conductivity ** 2) * 4, 25)
+
+			recharge_rate = (coreMat.getProperty("radioactive") / 2 + coreMat.getProperty("n_radioactive") \
+			+ genMat.getProperty("radioactive")  + genMat.getProperty("n_radioactive") * 2) / 3 //weight this too
+
+			AddComponent(/datum/component/power_cell, max_charge, max_charge, recharge_rate)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"

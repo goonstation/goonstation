@@ -10,7 +10,6 @@
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
-	unlock_message = "You have gained Hide Coffin. It allows you to hide a coffin somewhere on the station."
 
 	cast(mob/target)
 		if (!holder)
@@ -21,6 +20,10 @@
 
 		if (actions.hasAction(M, "vamp_blood_suck"))
 			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
+			return 1
+
+		if (isnpc(target))
+			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)

@@ -27,7 +27,7 @@ var/datum/disease_controller/disease_controls
 
 /proc/get_disease_from_name(var/disease_name)
 	if (!istext(disease_name))
-		logTheThing("debug", null, null, "<b>Disease:</b> Attempt to find disase with non-string")
+		logTheThing("debug", null, null, "<b>Disease:</b> Attempt to find disease with non-string")
 		return null
 	if (!disease_controls.standard_diseases.len && !length(disease_controls.custom_diseases))
 		logTheThing("debug", null, null, "<b>Disease:</b> Cant find schematic due to empty disease lists")

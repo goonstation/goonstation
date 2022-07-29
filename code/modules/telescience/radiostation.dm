@@ -693,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "sleeve_1"
 	desc = "A sturdy record sleeve, designed to hold multiple records."
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	can_hold = list(/obj/item/record)
 
 /obj/item/storage/box/record/clown_collection

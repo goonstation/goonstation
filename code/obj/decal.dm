@@ -412,6 +412,15 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = 1
 	density = 1
 
+/obj/decal/fakeobjects/lawrack
+	name = "defunct AI Law Mount Rack"
+	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behaivor of connected AIs. This one looks non-functional."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "airack_empty"
+	anchored = 1
+	density = 1
+	layer = EFFECTS_LAYER_UNDER_1
+	plane = PLANE_DEFAULT
 
 /obj/decal/bloodtrace
 	name = "blood trace"

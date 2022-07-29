@@ -503,7 +503,7 @@
 					if(!istype(thing, drag_type))
 						continue
 					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") / 2, 20))) SECONDS, 2)
+						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") * 2, 20))) SECONDS)
 					if (thing in user)
 						continue
 					if (!check_if_enterable(thing))

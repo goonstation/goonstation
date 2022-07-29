@@ -15,6 +15,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	custom_suicide = 1
+	contraband = 2 // Due to the illegalization of basketball in 2041
 
 /obj/item/basketball/attack_hand(mob/user)
 	..()
@@ -37,20 +38,25 @@
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
-				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
+				if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
 					JOB_XP(M, "Clown", 1)
 					return
-				// catch the ball!
-				src.Attackhand(M)
-				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
-				logTheThing("combat", M, null, "catches [src]")
-				return
-			src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-			logTheThing("combat", M, null, "is struck by [src]")
-			M.changeStatus("stunned", 2 SECONDS)
-			return
+				else
+					if (M.equipped() || get_dir(M, src) == M.dir)
+						src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+						logTheThing("combat", M, null, "is struck by [src]")
+						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+					else
+						// catch the ball!
+						src.Attackhand(M)
+						M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
+						logTheThing("combat", M, null, "catches [src]")
+			else
+				src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+				logTheThing("combat", M, null, "is struck by [src]")
+				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)

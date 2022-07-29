@@ -1104,6 +1104,7 @@
 	w_class = W_CLASS_TINY
 	throwforce = 4
 	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS
 	stamina_damage = 5
 	stamina_cost = 5

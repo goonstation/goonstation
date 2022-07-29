@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/food_color = "#FF0000" //Color for various food items
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
-	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
@@ -479,10 +478,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-			logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
-			src.reagents.reaction(get_turf(user), TOUCH)
-			src.reagents.clear_reagents()
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+					JOB_XP(user, "Bartender", 1)
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
 
 	mouse_drop(atom/over_object)
 		..()
@@ -502,6 +506,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
 			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
 
+		if(!in_interact_range(src, C))
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+
+		if(C.restrained()) // Can't chug if your arms are not available
+			if(prob(1)) // Actually you can if you're really lucky
+				C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+			else
+				boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+				return
+
 		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
 			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
 			src.set_loc(get_turf(C))
@@ -511,14 +526,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (!C.hasStatus("weakened"))
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
-		else
-			if (C.restrained()) // Can't chug if your arms are not available
-				if (prob(1)) // Actually you can if you're really lucky
-					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
-				else
-					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
-					return
-			actions.start(new /datum/action/bar/icon/chug(C, src), C)
+			return
+
+		actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -1742,8 +1752,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
-	icon_state = "carafe-eng"
-	item_state = "carafe-eng"
+	icon_state = "carafe-gen"
+	item_state = "carafe-gen"
 	initial_volume = 100
 	can_chug = 0
 	var/smashed = 0
@@ -1828,6 +1838,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon_state = "carafe-sci"
 	item_state = "carafe-sci"
 
+/obj/item/reagent_containers/food/drinks/carafe/engineering
+	icon_state = "carafe-eng"
+	item_state = "carafe-eng"
+
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"
 	desc = "Must be migrational."
@@ -1906,3 +1920,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "golden cocktail shaker"
 	desc = "A golden plated tumbler with a top, used to mix cocktails. Can hold up to 120 units. So rich! So opulent! So... tacky."
 	icon_state = "golden_cocktailshaker"
+
+/obj/item/reagent_containers/food/drinks/creamer
+	name = "coffee creamer"
+	desc = "A bottle of dairy-based coffee creamer. It's been left out at room temperature for a bit too long, don't you think?"
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "creamer"
+	item_state = "creamer"
+	initial_volume = 50
+	initial_reagents = list("milk"=50)
+	can_recycle = 0

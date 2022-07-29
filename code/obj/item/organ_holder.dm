@@ -995,6 +995,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
+				src.donor.butt_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")

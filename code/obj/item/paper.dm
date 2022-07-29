@@ -1163,10 +1163,23 @@ as it may become compromised.
 	burn_output = 800
 	burn_possible = 1
 
+	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
+	var/bin_type = /obj/item/paper
+
+/obj/item/paper_bin/artifact_paper
+	name = "artifact analysis form tray"
+	desc = "A tray full of forms for classifying alien artifacts."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form_tray"
+	amount = INFINITY
+	bin_type = /obj/item/sticker/postit/artifact_paper
+
+	update()
+		tooltip_rebuild = 1
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -1176,17 +1189,18 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	var/obj/item/paper = locate(/obj/item/paper) in src
+	var/obj/item/paper = locate(bin_type) in src
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = new /obj/item/paper
+			var/obj/item/P = new bin_type
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13)
-				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+				var/obj/item/paper/PA = P
+				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
 
@@ -1194,8 +1208,8 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
-	if (istype(P))
+/obj/item/paper_bin/attackby(obj/item/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+	if (istype(P, bin_type))
 		user.drop_item()
 		P.set_loc(src)
 		boutput(user, "You place [P] into [src].")
@@ -1213,7 +1227,7 @@ as it may become compromised.
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+		if (src.amount < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < ticker.round_elapsed_ticks)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
 				src.amount++
@@ -1637,6 +1651,12 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
 That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
 
+/obj/item/paper/artists_anger // for starved artist random maint room
+	name = "stained note"
+	desc = "This paper is stained yellow from old age."
+	icon_state = "paper_caution"
+	info = {"God damnit, why is drawing a simple rubber duck so fucking hard?!"}
+
 /obj/item/paper/synd_lab_note
 	name = "scribbled note"
 	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
@@ -1716,3 +1736,185 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/obj/item/paper/band_notice
+	name = "Internal Memo - NT Marching Band"
+	icon_state = "paper"
+	info = {"
+	-----------------|HEAD|-----------------<br>
+	MAILNET: PUBLIC_NT<br>
+	WORKGROUP: *MARCHING_BAND<br>
+	FROM: OGOTDAM@NT13<br>
+	TO: NTMARCHINGBAND@NT13<br>
+	PRIORITY: HIGH<br>
+	SUBJECT: Imminent Closure<br>
+	----------------------------------------<br>
+	Dearest friends,<br><br>
+
+	It is my great displeasure to inform you all of the imminent cessation of financial support from the Station Morale
+	Organization to all performing arts activities due to budgetary constraints. This therefore means that the NanoTrasen
+	Marching Band will have to close down and stop paying all of its employees.<br><br>
+
+	Off the record, what BUFFOONISH bean-counter cut off our funding?! Do they not know how IMPORTANT the arts are in
+	maintaining our collective sanity in this HELLHOLE of a station?! For Capital-G God's sake, I spend forty hours a
+	day in the engine room, is it so hard to spare us but one of those hours doing something, ANYTHING to keep us from
+	resorting to savagery?! So what if our uniforms make us look like dorks and that half the crew wish to puncture their
+	eardrums, music is all I have, all that ANY of us have!<br><br>
+
+	You know what, these bastards don't even deserve us. I'm out of here.<br><br>
+
+	Yours faithfully,<br><br>
+
+	Ovidius Gotdam<br>
+	NT Marching Band Director
+	"}
+
+
+/obj/item/paper/businesscard
+	name = "business card"
+	icon_state = "businesscard"
+	desc = "A generic looking business card, offering printing services for more business cards."
+
+	sizex = 640
+	sizey = 400
+
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/banjo
+	name = "business card - Tum Tum Phillips"
+	icon_state = "businesscard"
+	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/biteylou
+	name = "business card - Bitey Lou's Bodyshop"
+	icon_state = "businesscard"
+	desc = "A business card for some sorta mechanic's shop."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/bonktek
+	name = "business card - Bonktek Shopping Pyramid"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+
+/obj/item/paper/businesscard/clowntown
+	name = "business card - Clown Town"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	color = "blue"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+
+/obj/item/paper/businesscard/cosmicacres
+	name = "business card - Cosmic Acres"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a retirement community on Earth's moon."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+
+/obj/item/paper/businesscard/ezekian
+	name = "business card - Ezekian Veterinary Clinic"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier veterinarian's office."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg1
+	name = "business card - Amantes Mini Golf"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a mini golf course."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg2
+	name = "business card - Amantes Rock Shop"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a rock collector's shop."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+
+/obj/item/paper/businesscard/josh
+	name = "business card - Josh"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "green"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+
+/obj/item/paper/businesscard/lawyers
+	name = "business card - Hogge & Wylde"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+
+/obj/item/paper/businesscard/hemera_rcd
+	name = "info card - Rapid Construction Device"
+	icon_state = "businesscard-alt"
+	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/skulls
+	name = "business card - Skulls for Cash"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+
+/obj/item/paper/businesscard/taxi
+	name = "business card - Old Fortuna Taxi Company"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier space-taxi and shuttle company."
+	color = "yellow"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+
+/obj/item/paper/businesscard/vurdulak
+	name = "business card - Emporium Vurdulak"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "purple"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
