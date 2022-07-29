@@ -196,6 +196,19 @@
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
 			src.read_only = 1
 
+	investigative
+		name = "\improper NT-CSI cartridge"
+		desc = "Looking closer, the label reads NanoTrasen Crap Shoot Investigator Cartridge."
+		icon_state = "cart-forensics"
+		file_amount = 64
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src))
+			src.read_only = 1
+
 	forensic
 		name = "\improper Forensic Analysis cartridge"
 		desc = "Judging from the stains, someone tried to use this cartridge directly."
