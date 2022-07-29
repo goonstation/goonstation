@@ -1844,6 +1844,65 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
+		iced/coconutmilkespresso
+			name = "Iced Coconut Milk Espresso"
+			id = "icedcoconutmilkespresso"
+			result = "icedcoconutmilkespresso"
+			required_reagents = list("espresso" = 1, "ice" = 3, "coconut_milk" =2, "sugar" = 2)
+			result_amount = 8
+			mix_phrase = "The ice clinks against the container as you blend everything together."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/pineapplematcha
+			name = "Iced Pineapple Matcha"
+			id = "icedpineapplematcha"
+			result = "icedpineapplematcha"
+			required_reagents = list("matcha" = 1, "juice_pineapple" = 1, "coconut_milk" = 2, "ice" = 1)
+			result_amount = 5
+			mix_phrase = "The milk mixes with the matcha in a soothing green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee
+			name = "Thai Iced Coffee"
+			id = "thaiicedcoffee"
+			result = "thaiicedcoffee"
+			required_reagents = list("coffee" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee/thaiicedcoffee2
+			id = "thaiicedcoffee2"
+			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+
+		pepperminthotchocolate
+			name = "Peppermint Hot Chocolate"
+			id = "pepperminthotchocolate"
+			result = "pepperminthotchocolate"
+			required_reagents = list("chocolate" = 2, "mint" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		pepperminthotchocolate/pepperminthotchocolate2
+			id = "pepperminthotchocolate2"
+			required_reagents =list("mint" = 1, "chocolate_milk" = 3)
+			result_amount = 4
+
+		mexicanhotchocolate
+			name = "Mexican Hot Chocolate"
+			id = "mexicanhotchocolate"
+			result = "mexicanhotchocolate"
+			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "A spicy smell drifts up from the chocolate."
+
+		mexicanhotchocolate/mexicanhotchocolate2
+			id = "mexicanhotchocolate2"
+			required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
+			result_amount = 4
+
 		pumpkinspicelatte
 			name = "Pumpkin Spice Latte"
 			id = "pumpkinspicelatte"

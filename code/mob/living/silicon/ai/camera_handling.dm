@@ -213,13 +213,13 @@
 		process() //Process now!!!
 
 	proc/cease_track()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 		tracking = null
 		delay = success_delay
 		owner.hud.update_tracking()
 
 	proc/cease_track_temporary()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 
 	proc/process()
 		if(!tracking || !owner || ( ( (last_track + delay) > world.timeofday ) && (world.timeofday > last_track) ) )
@@ -244,7 +244,7 @@
 			delay = fail_delay
 		else
 			delay = success_delay
-			owner.eyecam.set_loc(tracking)
+			owner.eyecam.observeMob(tracking)
 
 		owner.hud.update_tracking()
 		owner.eyecam.update_statics()
