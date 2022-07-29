@@ -175,7 +175,7 @@
 /obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
 	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
-	icon_state = "ammopouch-large"
+	icon_state = "ammopouch-ntsc"
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5

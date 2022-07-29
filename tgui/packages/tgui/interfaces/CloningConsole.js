@@ -65,7 +65,7 @@ export const CloningConsole = (props, context) => {
   const { data, act } = useBackend(context);
   const {
     balance,
-    cloneSlave,
+    cloneHack,
     clonesForCash,
     cloningWithRecords,
   } = data;
@@ -80,7 +80,7 @@ export const CloningConsole = (props, context) => {
 
   return (
     <Window
-      theme={cloneSlave.some(Boolean) ? 'syndicate' : 'ntos'}
+      theme={cloneHack.some(Boolean) ? 'syndicate' : 'ntos'}
       width={540}
       height={595}>
       <Window.Content>

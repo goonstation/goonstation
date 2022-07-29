@@ -26,8 +26,8 @@ datum/mind
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
 
-	// This used for dead/released/etc mindslaves and rogue robots we still want them to show up
-	// in the game over stats. It's a list because former mindslaves could also end up as an emagged
+	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
+	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
 	// cyborg or something. Use strings here, just like special_role (Convair880).
 	var/list/former_antagonist_roles = list()
 
@@ -45,8 +45,8 @@ datum/mind
 
 	var/list/intrinsic_verbs = list()
 
-	// For mindslave/vampthrall/spyslave master references, which are now tracked by ckey.
-	// Mob references are not very reliable and did cause trouble with automated mindslave status removal
+	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
+	// Mob references are not very reliable and did cause trouble with automated mindhack status removal
 	// The relevant code snippets call a ckey -> mob reference lookup proc where necessary,
 	// namely ckey_to_mob(mob.mind.master) (Convair880).
 	var/master = null
@@ -217,7 +217,7 @@ datum/mind
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
 		src.last_death_time = world.timeofday
-	
+
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
@@ -255,7 +255,7 @@ datum/mind
 				qdel(A)
 				return TRUE
 		return FALSE
-	
+
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
