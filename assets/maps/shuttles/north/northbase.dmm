@@ -36,7 +36,7 @@
 /area/centcom/outside)
 "aq" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	
+	req_access = list(5)
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
