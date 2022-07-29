@@ -486,22 +486,28 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
+/obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = ..()
+	if(ismob(hit_atom))
+		. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+
+
 /obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
-	if(iscarbon(A))
+	if (..())
+		return
+	if(ismob(A))
+		var/mob/M = A
 		if (ismob(usr))
-			A:lastattacker = usr
-			A:lastattackertime = world.time
-		A.changeStatus("weakened", 6 SECONDS)
-		A:force_laydown_standup()
-		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
-		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			M.lastattacker = usr
+			M.lastattackertime = world.time
+		M.changeStatus("weakened", 6 SECONDS)
+		M.force_laydown_standup()
+		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(!isdead(C))
-			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+	if(ismob(target))
+		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
 
 /obj/item/dagger/smile
