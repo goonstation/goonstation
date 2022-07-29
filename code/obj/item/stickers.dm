@@ -599,7 +599,7 @@
 ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow
 	name = "glow sticker"
-	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
+	desc = "A sticker that has been engineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
 	var/datum/component/loctargeting/simple_light/light_c
