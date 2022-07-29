@@ -6,7 +6,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/purpleish,
 /turf/simulated/floor/plating/random,
 /area/space)
 "l" = (
@@ -15,10 +14,6 @@
 	},
 /obj/cable{
 	icon_state = "9-10"
-	},
-/obj/machinery/light/incandescent/purpleish{
-	dir = 8;
-	pixel_x = -10
 	},
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -32,10 +27,6 @@
 	},
 /obj/cable{
 	icon_state = "5-6"
-	},
-/obj/machinery/light/incandescent/purpleish{
-	dir = 4;
-	pixel_x = 10
 	},
 /obj/cable/yellow,
 /obj/cable/yellow{
@@ -52,10 +43,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/purpleish{
-	dir = 1;
-	pixel_y = 21
-	},
 /turf/simulated/floor/plating/random,
 /area/space)
 "z" = (
@@ -70,6 +57,7 @@
 /obj/cable/yellow{
 	icon_state = "4-5"
 	},
+/obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
 /area/space)
 "L" = (
@@ -84,6 +72,7 @@
 /obj/cable/yellow{
 	icon_state = "4-10"
 	},
+/obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
 /area/space)
 "N" = (
@@ -98,6 +87,7 @@
 /obj/cable/yellow{
 	icon_state = "8-9"
 	},
+/obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
 /area/space)
 "Q" = (
@@ -110,6 +100,7 @@
 /obj/cable/yellow{
 	icon_state = "6-8"
 	},
+/obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/plating/random,
 /area/space)
 "T" = (
