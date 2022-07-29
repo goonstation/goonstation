@@ -9,7 +9,7 @@
 
 	cast()
 		if (..())
-			return 1
+			return TRUE
 		var/mob/wraith/W = null
 		if(istype(holder.owner, /mob/living/critter/wraith/nascent))
 			var/mob/living/critter/wraith/nascent/N = holder.owner
