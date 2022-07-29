@@ -487,7 +487,7 @@
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
-	..()
+	. = ..()
 	if(ismob(hit_atom))
 		. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 
