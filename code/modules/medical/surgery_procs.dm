@@ -701,7 +701,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
-				if (0.0)
+				if (0)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
@@ -719,7 +719,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//second cut, path for stomach/Intestines
-				if (1.0)
+				if (1)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -739,7 +739,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove liver with this cut
-				if (3.0)
+				if (3)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.liver)
@@ -765,7 +765,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove intestines with this cut
-				if (4.0)
+				if (4)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.intestines)
@@ -791,7 +791,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//path for kidneys/spleen/pancreas
-				if (5.0)
+				if (5)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -813,7 +813,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				// kyle-note fix this, it should be able to make a sound and damage if there's no spleen here
 				//remove spleen with this cut
-				if (6.0)
+				if (6)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.spleen)
@@ -840,7 +840,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						return 1
 
 				//heart path
-				if (8.0)
+				if (8)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1094,7 +1094,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
 		switch (patient.butt_op_stage)
-			if (1.0)
+			if (1)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
@@ -1113,7 +1113,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.butt_op_stage = 2
 				return 1
 
-			if (3.0)
+			if (3)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
@@ -1143,7 +1143,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest")
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
-				if(0.0)	// Tail!
+				if(0)	// Tail!
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					if (prob(screw_up_prob))
 						surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
@@ -1192,7 +1192,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.organHolder.drop_organ("tail")
 					return 1
 
-				if (1.0)
+				if (1)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1212,7 +1212,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					return 1
 
-				if (5.0)
+				if (5)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1231,7 +1231,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.organHolder.chest.op_stage = 8
 					return 1
 
-				if (9.0)
+				if (9)
 					playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 					if (!patient.organHolder.get_organ("heart"))
@@ -1759,7 +1759,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (surgeon.zone_sel.selecting == "chest")
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
-				if (0.0)
+				if (0)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1779,7 +1779,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//second cut, path for appendix/liver
-				if (1.0)
+				if (1)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (prob(screw_up_prob))
@@ -1799,7 +1799,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove lungs
-				if (2.0)
+				if (2)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					var/obj/item/organ/lung/target_organ = null
@@ -1838,7 +1838,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove appendix or liver
-				if (3.0)
+				if (3)
 					//remove appendix with this cut
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
@@ -1864,7 +1864,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//path for stomach and intestines
-				if (4.0)
+				if (4)
 					//remove stomach with this cut
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
@@ -1891,7 +1891,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//paths for pancreas and kidneys
-				if (5.0)
+				if (5)
 					//path for pancreas
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
@@ -1913,7 +1913,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove pancreas
-				if (6.0)
+				if (6)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					if (!patient.organHolder.pancreas)
@@ -1940,7 +1940,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				//remove kidneys
-				if (7.0)
+				if (7)
 					playsound(patient, "sound/items/Scissor.ogg", 50, 1)
 
 					var/obj/item/organ/kidney/target_organ = null

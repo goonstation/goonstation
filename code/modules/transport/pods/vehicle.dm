@@ -552,15 +552,15 @@
 		severity += sevmod
 
 		switch (severity)
-			if (1.0)
+			if (1)
 				src.health -= round(src.maxhealth / 3)
 				src.health -= 65
 				checkhealth()
-			if(2.0)
+			if(2)
 				src.health -= round(src.maxhealth / 4)
 				src.health -= 40
 				checkhealth()
-			if(3.0)
+			if(3)
 				src.health -= round(src.maxhealth / 5)
 				src.health -= 25
 				checkhealth()

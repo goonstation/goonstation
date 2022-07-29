@@ -161,17 +161,17 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
 				else
 					src.deconstruct()
 					return
-			if (3.0)
+			if (3)
 				if (prob(25))
 					src.deconstruct()
 					return

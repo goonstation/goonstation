@@ -313,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
-			O.ex_act(1.0)
+			O.ex_act(1)
 			if (O)
 				qdel(O)
 			gain = 2

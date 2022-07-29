@@ -701,15 +701,15 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (!isdead(src))
 				b_loss += rand(90,120)
 				f_loss += rand(90,120)
-		if(2.0)
+		if(2)
 			if (!isdead(src))
 				b_loss += rand(60,90)
 				f_loss += rand(60,90)
-		if(3.0)
+		if(3)
 			if (!isdead(src))
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss

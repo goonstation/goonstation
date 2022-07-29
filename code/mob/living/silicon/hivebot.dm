@@ -455,17 +455,17 @@
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (!isdead(src))
 				b_loss += 100
 				f_loss += 100
 				src.gib(1)
 				return
-		if(2.0)
+		if(2)
 			if (!isdead(src))
 				b_loss += 60
 				f_loss += 60
-		if(3.0)
+		if(3)
 			if (!isdead(src))
 				b_loss += 30
 	src.bruteloss = b_loss

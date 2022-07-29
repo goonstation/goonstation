@@ -335,14 +335,14 @@ REACTOR
 		// Called when an object is in an explosion
 		// Higher "severity" means the object was further from the centre of the explosion
 		switch(severity)
-			if(1.0)
+			if(1)
 				status |= BROKEN
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					status |= BROKEN
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					status |= BROKEN
 					return

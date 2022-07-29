@@ -77,12 +77,12 @@
 			on_wake()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()

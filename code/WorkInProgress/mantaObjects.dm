@@ -259,10 +259,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -510,10 +510,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -555,10 +555,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)

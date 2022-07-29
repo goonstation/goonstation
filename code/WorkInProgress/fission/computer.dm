@@ -37,7 +37,7 @@
 				switch(src.screen)
 
 					// Main engine screen
-					if(1.0)
+					if(1)
 
 						dat += {"<BR>
 						\[ This is where image of power goes \]<BR>
@@ -51,7 +51,7 @@
 							dat += "<BR>\[ <A HREF='?src=\ref[src];reactor=\ref[R]'>Reactor [i++]</A> \]"
 
 					// Screen for individual reactor
-					if(2.0)
+					if(2)
 
 						dat += {"
 						<BR>

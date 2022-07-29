@@ -122,16 +122,16 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//gib(src.loc) NO.
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				for(var/x in src.verbs)
 					src.verbs -= x
