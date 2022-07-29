@@ -24382,6 +24382,12 @@
 "gMT" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "gMZ" = (
@@ -26178,7 +26184,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "lockdown";
+	id = "artlab";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -26215,6 +26221,12 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
@@ -37302,7 +37314,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "lockdown";
+	id = "artlab";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -42266,7 +42278,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "lockdown";
+	id = "artlab";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -45821,6 +45833,12 @@
 /area/station/engine/gas)
 "ncS" = (
 /obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "ncZ" = (
@@ -51088,7 +51106,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "fuq_3";
+	id = "artlab";
 	opacity = 0
 	},
 /obj/firedoor_spawn,
@@ -54683,6 +54701,16 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"pDt" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "pDF" = (
 /obj/cable{
 	d1 = 1;
@@ -75371,7 +75399,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "lockdown";
+	id = "artlab";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -125086,7 +125114,7 @@ rGo
 nxf
 wVP
 aGD
-uBi
+pDt
 oNe
 iJg
 iFU
@@ -125388,7 +125416,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 kgu
 gIT
 lCT
@@ -125690,7 +125718,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 tbu
 iJg
 iFU
@@ -126897,7 +126925,7 @@ hAg
 hAg
 dKA
 tQs
-uBi
+pDt
 qDC
 fDw
 oOH
