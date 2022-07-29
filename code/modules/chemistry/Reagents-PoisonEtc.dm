@@ -1010,7 +1010,7 @@ datum
 					if(do_an_ouch)
 						boutput(M, "<span class='alert'>The blueish acidic substance burns[damage2deal ? null : " you, but isn't concentrated enough to harm you"]!</span>")
 				else //applied by a beaker splash
-					if (method == TOUCH && volume >= 10)
+					if (method == TOUCH && volume >= 30)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							var/blocked = 0
@@ -1048,10 +1048,10 @@ datum
 									return
 						else
 							random_brute_damage(M, min(15,volume))
-					else if (volume >= 5)
+					else if (volume >= 6)
 						M.emote("scream")
-						M.TakeDamage("All", 0, clamp((volume - 5), 8, 75), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 5 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
+						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
+					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 				return
 
 			reaction_obj(var/obj/O, var/volume)
