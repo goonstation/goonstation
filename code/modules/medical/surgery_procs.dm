@@ -25,7 +25,7 @@ butt_op_stage 3.0 is just before a butt is removed. 4.0 is a missing butt, and 5
 Removing a head is done with patient.organHolder.head.op_stage and represents cuts to the neck. 3.0 is just before removing a head.
 
 Brain and skull use patient.organHolder.head.scalp_op_stage , ranging from 0.0 to 5.0 and is used to track an incisions in the top of the head/scalp.
-3.0 is right before brain removal, 4.0 is a missing brain, 5.0 is before skull removal. Skull must be there to add a brain, adding a brain resets the stage to 3
+3.0 is right before brain removal, 4 is a missing brain, 5 is before skull removal. Skull must be there to add a brain, adding a brain resets the stage to 3
 
 Eyes use the op_stage on each eyeball (patient.organHolder.left_eye.op_stage for example)
 
