@@ -287,7 +287,7 @@
 		if (real_name)
 			speaker_name = real_name
 
-		else if (speaker.vdisfigured)
+		if (speaker.vdisfigured)
 			speaker_name = "Unknown"
 
 		if(ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))

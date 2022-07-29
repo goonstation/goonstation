@@ -1,4 +1,22 @@
 
+(t)fri jul 29 22
+(u)Blackrep
+(p)9776
+(e)📄|tgui
+(+)Safes have a fancy new UI
+(t)thu jul 28 22
+(u)Flourish
+(p)9868
+(e)🆕⚖|feature, balance
+(*)"Mindslave" implants and cloning modules have now been renamed to "mindhack". Additionally, when you are mindhacked, you now receive a special status effect that tells you your mindhacker's name and how long you are mindhacked for.
+(u)Roddy
+(p)9727
+(e)🆕|feature
+(*)Added in five new drink recipes for the bartender; Iced Coconut Milk Espresso, Iced Pineapple Matcha, Thai Iced Coffee, Peppermint Hot Chocolate, and Mexican Hot Chocolate!
+(u)Garash
+(p)9875
+(e)🆕🗺🎨📄|feature, mapping, sprites, tgui
+(+)Vapo-Matics and Injector belts have a new UI menu, go ask the HoP to transfer tens of thousands of credit into your account to buy one and check them out!
 (t)wed jul 27 22
 (u)TemThrush
 (p)9834
