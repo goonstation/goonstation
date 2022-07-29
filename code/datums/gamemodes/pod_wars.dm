@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
-	fraction = clamp(fraction, 0.0, 0.99)
+	fraction = clamp(fraction, 0, 0.99)
 
 
 	var/matrix/M1 = matrix()
