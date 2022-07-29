@@ -75,7 +75,7 @@
 	if (isliving)
 		var/mob/living/L = M
 
-		if (blood_system)
+		if (blood_system && L.can_bleed)
 			var/bp_col
 			switch (L.blood_pressure["total"])
 				if (-INFINITY to 299) // very low (70/50)
