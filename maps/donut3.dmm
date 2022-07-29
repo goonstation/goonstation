@@ -75414,7 +75414,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "artlab";
+	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
