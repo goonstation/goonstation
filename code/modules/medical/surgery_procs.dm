@@ -361,7 +361,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.organHolder.head.op_stage = 1
 				return 1
 
-			else if (patient.organHolder.head.op_stage == 2.0)
+			else if (patient.organHolder.head.op_stage == 2)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
@@ -445,7 +445,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.organHolder.head.scalp_op_stage = 1
 				return 1
 
-			else if (patient.organHolder.head.scalp_op_stage == 2.0)
+			else if (patient.organHolder.head.scalp_op_stage == 2)
 				playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 				if (prob(screw_up_prob))
@@ -521,7 +521,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.butt_op_stage = 1
 			return 1
 
-		else if (patient.butt_op_stage == 2.0)
+		else if (patient.butt_op_stage == 2)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
@@ -675,7 +675,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			op_stage = (actions you can take) -> where it will send you
 			0.0 = snip -> 1.0 || cut -> 5
 			1.0 = snip -> 3.0 || cut -> 4.0 || (G)saw -> 2
-			2.0 = cut is remove lungs R/L
+			2 = cut is remove lungs R/L
 			3.0 = snip is remove appendix || cut is remove liver
 			4.0 = snip is remove stomach || cut is remove intestines
 
@@ -1687,7 +1687,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			target_eye.op_stage = 1
 			return 1
 
-		else if (target_eye.op_stage == 2.0)
+		else if (target_eye.op_stage == 2)
 			playsound(patient, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 
 			if (prob(screw_up_prob))
