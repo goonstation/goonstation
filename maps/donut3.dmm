@@ -26184,7 +26184,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "artlab";
+	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -37314,7 +37314,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "artlab";
+	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -42278,7 +42278,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "artlab";
+	id = "lockdown";
 	name = "Bridge Lockdown Doors";
 	opacity = 0
 	},
@@ -51106,7 +51106,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "artlab";
+	id = "fuq_3";
 	opacity = 0
 	},
 /obj/firedoor_spawn,
@@ -55841,6 +55841,21 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"pVh" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "pVv" = (
 /obj/cable{
 	d1 = 4;
@@ -116293,7 +116308,7 @@ hvl
 whF
 mxw
 rdj
-vwG
+pVh
 bCJ
 vyE
 abv
