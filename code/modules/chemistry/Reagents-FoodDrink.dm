@@ -541,7 +541,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 200
-			alch_strength = 0.30
+			alch_strength = 0.3
 
 		fooddrink/alcoholic/snakebite
 			name = "Snakebite"

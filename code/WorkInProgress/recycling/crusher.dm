@@ -5,7 +5,7 @@
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1.0
+	anchored = 1
 	mats = 20
 	is_syndicate = 1
 	flags = FLUID_SUBMERGE | UNCRUSHABLE

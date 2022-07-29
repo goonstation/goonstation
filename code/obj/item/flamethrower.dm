@@ -31,8 +31,8 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -167,7 +167,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.25
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
-				P_special_data["chem_pct_app_tile"] = 0.10
+				P_special_data["chem_pct_app_tile"] = 0.1
 			else //default to backtank??
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
@@ -180,8 +180,8 @@ A Flamethrower in various states of assembly
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -213,7 +213,7 @@ A Flamethrower in various states of assembly
 	equipped(mob/user, slot)
 		..()
 		inventory_counter?.show_count()
-		
+
 	examine()
 		. = ..()
 		if(linkedflamer && (linkedflamer in src.contents))
@@ -361,8 +361,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -382,8 +382,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/device/igniter/igniter = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL

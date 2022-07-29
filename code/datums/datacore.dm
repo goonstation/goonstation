@@ -203,7 +203,7 @@
 
 
 	B["job"] = H.job
-	B["current_money"] = 100.0
+	B["current_money"] = 100
 	B["notes"] = "No notes."
 
 	// If it exists for a job give them the correct wage

@@ -55,7 +55,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0.0
+	var/stat = 0
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -71,13 +71,13 @@
 	var/disfigured = FALSE
 	var/vdisfigured = FALSE
 	var/druggy = 0
-	var/sleeping = 0.0
-	var/lying = 0.0
+	var/sleeping = 0
+	var/lying = 0
 	var/lying_old = 0
 	var/can_lie = 0
-	var/canmove = 1.0
+	var/canmove = 1
 	var/incrit = 0
-	var/timeofdeath = 0.0
+	var/timeofdeath = 0
 	var/fakeloss = 0
 	var/fakedead = 0
 	var/health = 100
@@ -92,10 +92,10 @@
 	var/is_jittery = 0
 	var/is_zombie = 0
 	var/jitteriness = 0
-	var/charges = 0.0
-	var/urine = 0.0
+	var/charges = 0
+	var/urine = 0
 	var/nutrition = 100
-	var/losebreath = 0.0
+	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
 	var/a_intent = "help"
@@ -1644,7 +1644,7 @@
 	var/difference = abs(actual-desired)   // get difference
 	var/increments = difference * divisor  //find how many increments apart they are
 	var/change = increments*incrementboost // Get the amount to change by (x per increment)
-	//change = change * 0.10
+	//change = change * 0.1
 
 	if (actual < desired) // Too cold
 		temperature += change
@@ -1781,7 +1781,7 @@
 
 	var/col_r = 0.4
 	var/col_g = 0.8
-	var/col_b = 1.0
+	var/col_b = 1
 	var/brightness = 0.7
 	var/height = 1
 	var/datum/light/light

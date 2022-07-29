@@ -11,10 +11,10 @@
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
 	var/alarm_frequency = FREQ_ALARM
-	var/detecting = 1.0
-	var/working = 1.0
+	var/detecting = 1
+	var/working = 1
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = 1
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0

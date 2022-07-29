@@ -374,10 +374,10 @@
 				var/obj/item/organ/eye/E = new /obj/item/organ/eye()
 				E.donor = C
 				if(!C.organHolder.left_eye)
-					C.organHolder.receive_organ(E, "left_eye", 2.0)
+					C.organHolder.receive_organ(E, "left_eye", 2)
 					C.update_body()
 				else
-					C.organHolder.receive_organ(E, "right_eye", 2.0)
+					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
 				dna_gain = 2 // bad_ideas.txt

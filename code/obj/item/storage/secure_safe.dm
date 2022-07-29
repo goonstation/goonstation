@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
 	flags = FPRINT | TABLEPASS
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
@@ -277,9 +277,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
 	flags = FPRINT | TABLEPASS
-	force = 8.0
+	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	mats = 8
 	desc = "A extremely tough secure safe."

@@ -101,13 +101,13 @@
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				changeHealth(-100)
 				return
-			if(2.0)
+			if(2)
 				changeHealth(-70)
 				return
-			if(3.0)
+			if(3)
 				changeHealth(-40)
 				return
 			else
@@ -277,8 +277,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23.0
-	anchored = 1.0
+	var/amount = 23
+	anchored = 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -305,8 +305,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	var/amount = 23.0
-	anchored = 1.0
+	var/amount = 23
+	anchored = 1
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
@@ -335,7 +335,7 @@
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1.0
+	anchored = 1
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -349,13 +349,13 @@
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				qdel(src)
 				return
-			if(3.0)
+			if(3)
 				return
 			else
 
@@ -433,11 +433,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0) src.barricade_damage(3)
-			if(3.0) src.barricade_damage(1)
+			if(2) src.barricade_damage(3)
+			if(3) src.barricade_damage(1)
 		return
 
 	blob_act(var/power)
@@ -482,7 +482,7 @@
 
 /obj/projection
 	name = "Projection"
-	anchored = 1.0
+	anchored = 1
 
 /obj/deskclutter
 	name = "desk clutter"

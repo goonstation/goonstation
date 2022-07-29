@@ -1126,7 +1126,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	staminaCost = 0
 	moveDelay = 5
 	moveDelayDuration = 5
-	damageMult = 0.80
+	damageMult = 0.8
 
 	image = "dagger"
 	name = "Slice"

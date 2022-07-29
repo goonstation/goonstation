@@ -1053,11 +1053,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_asteroid(7)
-			if(2.0)
+			if(2)
 				src.damage_asteroid(5)
-			if(3.0)
+			if(3)
 				src.damage_asteroid(3)
 		return
 

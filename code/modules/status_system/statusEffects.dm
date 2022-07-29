@@ -1684,17 +1684,17 @@
 				tox = 0.05
 			if(3)
 				puke_prob = 0.5
-				tox = 0.20
+				tox = 0.2
 			if(4)
 				puke_prob = 1
 				tox = 0.45
 			if(5)
 				puke_prob = 2
-				tox = 0.70
+				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
 			if(critter.ghost_spawned)
-				tox = 0.00
+				tox = 0
 				weighted_average = 0
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)

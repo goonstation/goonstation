@@ -279,7 +279,7 @@
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.30)
+	else if (damage >= O.MAX_DAMAGE*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
