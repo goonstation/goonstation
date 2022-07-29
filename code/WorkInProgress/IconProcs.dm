@@ -1,7 +1,7 @@
 /*
 	IconProcs
 	by Lummox JR
-	version 1
+	version 1.0
 
 	A library for manipulating icons and colors in BYOND
 
