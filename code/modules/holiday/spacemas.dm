@@ -622,7 +622,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	New()
 		..()
 		light = new /datum/light/point
-		light.set_color(0.20, 0.60, 0.90)
+		light.set_color(0.2, 0.6, 0.9)
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()

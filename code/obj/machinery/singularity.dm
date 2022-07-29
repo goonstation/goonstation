@@ -138,7 +138,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.Dtime = Ti
 
 	var/offset = rand(1000)
-	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 	..()

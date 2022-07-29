@@ -86,7 +86,7 @@
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12,"spaceglue"=0.7)
 		create_reagents(400)
-		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
+		reagents.add_reagent("oil", reagents.maximum_volume*0.5)
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
 

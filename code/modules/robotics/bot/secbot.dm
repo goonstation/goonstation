@@ -1378,7 +1378,7 @@
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
 			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
-			duration = round(duration * 0.60)
+			duration = round(duration * 0.6)
 		else
 			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
 
