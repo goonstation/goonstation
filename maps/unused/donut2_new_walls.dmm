@@ -7258,13 +7258,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
-"asa" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "asb" = (
 /obj/stool/chair/yellow,
 /obj/disposalpipe/segment/mail{
@@ -8733,9 +8726,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avS" = (
-/obj/machinery/traymachine/morgue{
-	dir = 2
-	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avT" = (
@@ -8990,12 +8980,6 @@
 	pixel_x = -22;
 	pixel_y = 4
 	},
-/obj/submachine/chef_sink/chem_sink{
-	desc = "It seems a bit busted.";
-	dir = 4;
-	name = "leaky sink";
-	pixel_x = -2
-	},
 /obj/machinery/light_switch{
 	name = "W light switch";
 	on = 0;
@@ -9003,14 +8987,12 @@
 	pixel_y = -4;
 	dir = 8
 	},
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "awH" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -9038,29 +9020,10 @@
 	layer = 2
 	},
 /area/station/solar/west)
-"awJ" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "awK" = (
-/obj/disposaloutlet{
+/obj/submachine/chef_sink/chem_sink{
 	dir = 8;
-	mailgroup = "chaplain";
-	mailgroup2 = "security";
-	message = "Delivery alert in Crematorium.";
-	name = "Crematorium Outlet"
-	},
-/obj/disposalpipe/trunk/morgue{
-	dir = 8;
-	name = "crematorium pipe"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+	pixel_x = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -9355,17 +9318,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"axr" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Crematorium"
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/crematorium,
-/turf/simulated/floor/sanitary,
-/area/station/medical/crematorium)
 "axs" = (
 /obj/table/wood/auto,
 /obj/decoration/floralarrangement,
@@ -9860,10 +9812,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/stool/chair/comfy{
-	dir = 4;
-	icon_state = "chair_comfy"
-	},
 /obj/machinery/power/apc/autoname_west,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -9871,7 +9819,18 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/wood/seven,
+/obj/disposaloutlet{
+	dir = 4;
+	mailgroup = "chaplain";
+	mailgroup2 = "security";
+	message = "Delivery alert in Crematorium.";
+	name = "Crematorium Outlet"
+	},
+/obj/disposalpipe/trunk/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ays" = (
 /obj/machinery/disposal/small/west,
@@ -9880,26 +9839,14 @@
 	pixel_x = 24
 	},
 /obj/disposalpipe/trunk,
-/turf/simulated/floor/wood/seven,
-/area/station/medical/crematorium)
-"ayt" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ayu" = (
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ayv" = (
 /obj/decal/tile_edge/line/black{
@@ -10188,6 +10135,7 @@
 	name = "crematorium pipe"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/crematorium,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "azk" = (
@@ -10693,13 +10641,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aAo" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
+/obj/loudspeaker,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aAp" = (
@@ -11449,6 +11391,7 @@
 "aBY" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/crematorium)
 "aBZ" = (
@@ -11683,11 +11626,10 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/morgue{
-	dir = 1;
-	icon_state = "pipe-c";
+	dir = 4;
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aCB" = (
 /obj/disposalpipe/trunk{
@@ -12578,7 +12520,7 @@
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
 	},
-/turf/simulated/floor/wood/seven,
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aEE" = (
 /obj/cable{
@@ -12808,10 +12750,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"aFc" = (
-/obj/decal/poster/wallsign/pool,
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/pool)
 "aFd" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/suit/bathrobe,
@@ -12930,10 +12868,17 @@
 "aFk" = (
 /obj/table/wood/auto,
 /obj/machinery/light,
-/obj/machinery/networked/printer{
-	name = "Printer - Chapel";
-	pixel_y = 5;
-	print_id = "Chapel"
+/obj/item/decoration/incenseholder{
+	pixel_y = 9;
+	pixel_x = 13
+	},
+/obj/item/device/light/candle/small{
+	pixel_x = -1;
+	pixel_y = -1
+	},
+/obj/item/device/light/candle/small{
+	pixel_y = 6;
+	pixel_x = -8
 	},
 /turf/simulated/floor/carpet{
 	dir = 2;
@@ -13263,6 +13208,9 @@
 /obj/item/clothing/glasses/sunglasses/tanning,
 /obj/landmark/start{
 	name = "Staff Assistant"
+	},
+/obj/decal/poster/wallsign/pool{
+	pixel_y = 29
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -13659,8 +13607,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aGS" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "aGT" = (
 /obj/disposalpipe/segment/mail{
@@ -14610,11 +14564,16 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/machinery/vending/snack,
+/obj/decal/poster/wallsign/escape_left{
+	pixel_y = 31
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
 /area/station/hallway/primary/east)
 "aIV" = (
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -16220,8 +16179,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aMM" = (
-/obj/machinery/vending/medical_public,
-/turf/simulated/floor,
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
 /area/station/hallway/primary/east)
 "aMN" = (
 /obj/cable{
@@ -43635,6 +43596,9 @@
 /obj/item/clothing/under/gimmick/toga,
 /obj/item/clothing/head/laurels,
 /obj/item/clothing/head/laurels/gold,
+/obj/decal/poster/wallsign/poster_sol{
+	pixel_y = 31
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "nwq" = (
@@ -46043,7 +46007,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "rLt" = (
-/turf/simulated/floor/wood/seven,
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "rMl" = (
 /obj/machinery/computer/teleporter{
@@ -48683,6 +48648,7 @@
 /area/station/medical/morgue)
 "vRm" = (
 /obj/item/device/radio/intercom,
+/obj/mic_stand,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "vSU" = (
@@ -84699,7 +84665,7 @@ spH
 axc
 axR
 aEk
-aFc
+aEk
 aFU
 aGE
 aHu
@@ -86823,7 +86789,7 @@ aJB
 aIf
 aJz
 aJC
-aMM
+aJC
 aPr
 bgO
 bos
@@ -87120,7 +87086,7 @@ aFi
 azg
 aHB
 awN
-aIV
+aMM
 aJC
 aJC
 aJA
@@ -88314,9 +88280,9 @@ ayi
 aEq
 avQ
 awG
-axu
+rLt
 ayr
-aGS
+axu
 aAo
 azh
 azn
@@ -88616,9 +88582,9 @@ apl
 aEq
 aFZ
 awH
-axr
+avS
 aCA
-aGS
+axu
 aAp
 aBg
 aLy
@@ -88917,10 +88883,10 @@ aaa
 kiY
 axu
 upK
-asa
+avS
+avS
+aCA
 axu
-ayt
-aGS
 moS
 ayf
 aAm
@@ -89219,8 +89185,8 @@ aaa
 aaa
 axu
 avS
-awJ
-axu
+avS
+avS
 aED
 azj
 aHY
@@ -89522,9 +89488,9 @@ aaa
 axu
 avR
 awK
-axu
-rLt
 aGS
+avS
+axu
 vRm
 xKb
 aCa
@@ -89826,7 +89792,7 @@ aEq
 aEq
 aEq
 ayu
-aGS
+axu
 aAr
 aHC
 aCb
