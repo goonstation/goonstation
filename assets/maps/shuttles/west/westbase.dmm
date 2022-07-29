@@ -1025,7 +1025,8 @@
 /area/centcom/outside)
 "NZ" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+	dir = 8;
+	req_access = list(5)
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"

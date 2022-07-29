@@ -76,7 +76,8 @@
 /area/shuttle/escape/centcom)
 "cd" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+	dir = 8;
+	req_access = list(5)
 	},
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)

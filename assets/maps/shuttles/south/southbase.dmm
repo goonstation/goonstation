@@ -1187,7 +1187,9 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "Xe" = (
-/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	req_access = list(5)
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},

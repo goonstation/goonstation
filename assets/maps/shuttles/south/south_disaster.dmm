@@ -1111,10 +1111,6 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/mug_rack{
-	pixel_x = -26;
-	pixel_y = 4
-	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "KU" = (
@@ -1458,7 +1454,7 @@
 /area/centcom)
 "Xe" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0
+	req_access = list(5)
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
