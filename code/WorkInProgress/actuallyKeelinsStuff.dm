@@ -2849,13 +2849,13 @@ var/list/lag_list = new/list()
 	switch( ((average_tenth * world.cpu) / 100) )
 		if(0 to 0.1)
 			lag_string = "Minimal"
-		if(0.101 to 0.18)
+		if(0.1 to 0.18)
 			lag_string = "Normal"
-		if(0.181 to 0.35)
+		if(0.18 to 0.35)
 			lag_string = "High"
-		if(0.351 to 0.5)
+		if(0.35 to 0.5)
 			lag_string = "Very High"
-		if(0.501 to INFINITY)
+		if(0.5 to INFINITY)
 			lag_string = "Oh Sh*t"
 
 /proc/lag_loop()
