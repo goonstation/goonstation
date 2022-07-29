@@ -990,7 +990,6 @@ datum
 					var/damage2deal = clamp(volume / 6, 0, 10)
 					if(damage2deal)
 						random_burn_damage(M, damage2deal)
-					boutput(world,"[volume] - [damage2deal]")
 					if(damage2deal >= 5) //scream and face melty
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
