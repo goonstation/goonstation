@@ -5,7 +5,7 @@
 	return ""
 
 /proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
+	for (var/i = length(text) to 1 step -1)
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 

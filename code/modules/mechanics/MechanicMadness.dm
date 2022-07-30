@@ -495,7 +495,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
