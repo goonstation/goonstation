@@ -35592,6 +35592,9 @@
 	location = "tour14";
 	name = "tour beacon - engine"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "yellowblack"
@@ -35606,6 +35609,11 @@
 	dir = 8;
 	name = "autoname  - SS13";
 	pixel_x = 10
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -37204,14 +37212,11 @@
 	},
 /area/station/engine/substation/west)
 "bzR" = (
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 4;
-	name = "West SMES"
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/southwest)
 "bzS" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -37220,13 +37225,12 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzT" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/station/engine/substation/west)
+/area/station/maintenance/southwest)
 "bzU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
@@ -37236,20 +37240,17 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decal/poster/wallsign/no_smoking{
 	pixel_y = 32
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "bzW" = (
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -37753,15 +37754,22 @@
 	},
 /area/station/engine/substation/west)
 "bAY" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
-"bAZ" = (
-/obj/decal/poster/wallsign/fire,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 1
+	},
+/turf/space,
+/area/space)
+"bAZ" = (
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/obj/access_spawn/engineering,
+/turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bBa" = (
 /obj/disposalpipe/segment{
@@ -37778,12 +37786,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "bBc" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
@@ -37793,6 +37795,11 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -38228,24 +38235,22 @@
 /turf/space,
 /area/space)
 "bCm" = (
-/obj/machinery/atmospherics/pipe/vent{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
 	},
-/turf/simulated/floor/plating/airless,
-/area/space)
+/obj/decal/poster/wallsign/fire,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/substation/west)
 "bCn" = (
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /obj/landmark/start{
 	name = "Engineer"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -38254,7 +38259,9 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -40083,14 +40090,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bIL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 32
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -40153,9 +40158,14 @@
 /area/station/maintenance/southwest)
 "bIX" = (
 /obj/cable{
-	d1 = 4;
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -40200,7 +40210,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bJf" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/book,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bJg" = (
 /obj/grille/catwalk{
@@ -41637,12 +41651,9 @@
 	},
 /area/station/solar/east)
 "bNb" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4;
-	layer = 2.13
+	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
@@ -42665,10 +42676,6 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 10;
-	pixel_y = 10
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dxC" = (
@@ -42734,13 +42741,7 @@
 	},
 /area/space)
 "dIw" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "dII" = (
 /obj/disposalpipe/segment/mail{
@@ -43077,12 +43078,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "esz" = (
-/obj/machinery/light/small,
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating,
@@ -44988,6 +44985,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"iHe" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	dir = 0;
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/southwest)
 "iIl" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
@@ -45881,9 +45887,6 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 12
-	},
 /obj/disposalpipe/segment/food,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46401,10 +46404,6 @@
 	dir = 2
 	},
 /obj/item/paper_bin,
-/obj/item/device/detective_scanner{
-	pixel_x = -10;
-	pixel_y = 9
-	},
 /obj/item/pen,
 /obj/item/storage/box/evidence{
 	pixel_x = 5;
@@ -47126,6 +47125,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
+"nRK" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "nUB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/qm)
@@ -48701,6 +48709,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"rPe" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "West SMES"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "rPE" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
@@ -48812,7 +48829,7 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -8;
 	pixel_y = 9
 	},
@@ -51156,6 +51173,15 @@
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"xXu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/vending/pda,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "xZe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -76106,8 +76132,8 @@ bvn
 bIu
 bIK
 byG
-bzR
 byG
+rPe
 byG
 byG
 byG
@@ -76362,10 +76388,10 @@ bsO
 bvo
 bIu
 bIL
+xXu
 byI
 bzS
-bAY
-bCl
+byG
 bDp
 aaa
 aaa
@@ -76619,11 +76645,11 @@ bsP
 bvp
 bIu
 esz
-byG
 bzT
+byG
 bAZ
 bCm
-bDq
+bAY
 aaa
 aaa
 aay
@@ -76878,8 +76904,8 @@ bIv
 bIV
 bJf
 dIw
+lID
 bNb
-bBw
 bBw
 bBw
 bBw
@@ -77131,12 +77157,12 @@ bsd
 bsR
 bul
 bvr
-bIu
+iHe
 bIX
-bJf
+nRK
+bzU
 bzU
 bBb
-bzU
 bzU
 bEn
 bEn
@@ -77388,7 +77414,7 @@ bse
 dfd
 bop
 bop
-bIu
+bzR
 bJe
 bzU
 bzV
