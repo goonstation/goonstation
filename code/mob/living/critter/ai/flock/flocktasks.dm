@@ -822,24 +822,26 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(!F?.flock)
+	if(!length(F?.flock.enemies))
 		return
 
-	for(var/atom/T in F.flock.enemies)
-		if(istype(T.loc, /obj/flock_structure/cage))
+	var/list/O = view(holder.owner, target_range)
+
+	for(var/atom/A as anything in F.flock.enemies)
+		if(istype(A.loc, /obj/flock_structure/cage))
 			continue
-		if (isvehicle(T.loc))
-			if(T.loc in view(holder.owner, target_range))
-				F.flock.updateEnemy(T)
-				F.flock.updateEnemy(T.loc)
-				. += T.loc
-		else if(T in view(holder.owner,target_range))
-			F.flock.updateEnemy(T)
-			if(isliving(T))
-				var/mob/living/M = T
+		if (isvehicle(A.loc))
+			if(A.loc in O)
+				F.flock.updateEnemy(A)
+				F.flock.updateEnemy(A.loc)
+				. += A.loc
+		else if(A in O)
+			F.flock.updateEnemy(A)
+			if(isliving(A))
+				var/mob/living/M = A
 				if(is_incapacitated(M))
 					continue
-			. += T
+			. += A
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
