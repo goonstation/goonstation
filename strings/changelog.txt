@@ -1,4 +1,9 @@
 
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
 (t)fri jul 29 22
 (u)DisturbHerb
 (p)9770
