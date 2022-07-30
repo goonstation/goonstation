@@ -8,6 +8,8 @@ MATERIAL
 */
 
 /proc/window_reinforce_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
+	sheet_crafting_callback(B)
+
 	W.ini_dir = 2
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
@@ -19,6 +21,8 @@ MATERIAL
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/window_reinforce_full_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
+	sheet_crafting_callback(B)
+
 	W.set_dir(SOUTHWEST)
 	W.ini_dir = SOUTHWEST
 	if (!istype(W))
@@ -31,6 +35,9 @@ MATERIAL
 			W = new map_settings.rwindows (usr.loc)
 		else
 			W = new /obj/window/reinforced(usr.loc)
+
+/proc/sheet_crafting_callback(var/datum/action/bar/icon/build/B)
+	tgui_process.update_uis(B.sheet)
 
 /obj/item/sheet
 	name = "sheet"
@@ -72,9 +79,7 @@ MATERIAL
 		. = ..()
 		if (amount < 1)
 			if (isliving(src.loc))
-				var/mob/living/L = src.loc
-				L.Browse(null, "window=met_sheet")
-				onclose(L, "met_sheet")
+				tgui_process.update_uis(src)
 
 	proc/set_reinforcement(var/datum/material/M)
 		if (!istype(M))
@@ -132,6 +137,7 @@ MATERIAL
 			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
+			tgui_process.update_uis(src)
 		else
 			..(user)
 
@@ -153,7 +159,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, src, 1), user)
+						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, src, 1), user)
 					return
 				else if (src.material.material_flags & MATERIAL_CRYSTAL && S.material.material_flags & MATERIAL_METAL) // we're a glass and they're a metal
 					if (src.amount_check(2,user) && S.amount_check(1,user))
@@ -161,7 +167,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, null, S, 1), user)
+						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, S, 1), user)
 					return
 
 				else
@@ -180,6 +186,7 @@ MATERIAL
 					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [S.amount] sheets.</span>")
 				else
 					boutput(user, "<span class='notice'>You add [success] sheets to the stack. It now has [src.amount] sheets.</span>")
+				tgui_process.update_uis(src)
 			return
 
 		else if (istype(W,/obj/item/rods))
@@ -424,6 +431,8 @@ MATERIAL
 					a_amount = initial(currentRecipe.yield)
 				if (!a_cost)
 					a_cost = initial(currentRecipe.sheet_cost)
+				if (!a_callback)
+					a_callback = /proc/sheet_crafting_callback
 
 				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, initial(currentRecipe.icon), initial(currentRecipe.icon_state), initial(currentRecipe.name), a_callback), usr)
 				. = TRUE
