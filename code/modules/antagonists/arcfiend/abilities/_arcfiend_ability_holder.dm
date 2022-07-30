@@ -48,5 +48,10 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return FALSE
 		return TRUE
+	
+	cast(atom/target)
+		. = ..()
+		// updateButtons is already called automatically in the parent ability's tryCast
+		src.holder.updateText()
 
 #undef MAX_ARCFIEND_POINTS

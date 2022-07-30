@@ -235,4 +235,4 @@
 		makeAntag(mob/living/carbon/human/M)
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
 			// No need to specify other arguments here; pseudo does most of this on its own
-			M.mind?.add_antagonist(ROLE_ARCFIEND, pseudo = TRUE)
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE)

@@ -2242,21 +2242,16 @@ var/global/noir = 0
 			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Antagonist", antag_options)
 			if (!selected_keyvalue)
 				return
-			var/do_pseudo = tgui_alert(usr, "Is this a pseudo antagonist? If you don't know what that means, hit No.", "Add Antagonist", list("Yes", "No", "Cancel"))
-			var/do_equipment
-			var/do_objectives
-			if (do_pseudo != "Yes")
-				do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Antagonist", list("Yes", "No", "Cancel"))
-				if (do_equipment == "Cancel")
-					return
-				do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Cancel"))
-				if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
-					return
-			var/alert_body = do_pseudo != "Yes" ? "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?" : "[M.real_name] (ckey [M.ckey]) will gain the abilities of \a [selected_keyvalue]. They will NOT become an actual antagonist, and will thus lack antagonist status according to the rules, in addition to not having any objectives. Is this what you want?"
-			if (tgui_alert(usr, alert_body, "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+			var/do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Antagonist", list("Yes", "No", "Cancel"))
+			if (do_equipment == "Cancel")
+				return
+			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Cancel"))
+			if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
+				return
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
 			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
-			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE, pseudo = do_pseudo == "Yes")
+			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
 			else

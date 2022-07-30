@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, pseudo)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -31,13 +31,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 			qdel(src)
 			return FALSE
 		src.owner = new_owner
-		src.pseudo = pseudo
-		if (!pseudo)
+		src.pseudo = do_pseudo
+		if (!do_pseudo) // there is a special place in code hell for mind.special_role
 			new_owner.special_role = id
-		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, pseudo)
+		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear, silent)
+	proc/remove_self(take_gear = TRUE, silent)
 		if (take_gear)
 			src.remove_equipment()
 		
@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		return TRUE
 
 	/// Base proc to set up the antagonist. Depending on arguments, it can spawn equipment, assign objectives, move the player (if applicable), and announce itself.
-	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, pseudo)
+	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 		SHOULD_NOT_OVERRIDE(TRUE)
 
 		src.assigned_by = source
@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (do_equip)
 			src.give_equipment()
 		
-		if (src.pseudo) // For pseudo antags, do nothing else
+		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
 		if (!silent)

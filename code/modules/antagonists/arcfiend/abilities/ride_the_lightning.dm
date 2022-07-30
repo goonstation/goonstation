@@ -40,6 +40,7 @@
 		. = ..()
 		if (src.active)
 			src.deactivate()
+			return TRUE
 		else
 			var/turf/T = get_turf(src.holder.owner)
 			if (!T.z || isrestrictedz(T.z))
@@ -85,6 +86,8 @@
 
 		src.holder.owner.client.images += src.cable_images
 		src.holder.points = max((src.holder.points - step_cost), 0)
+		src.holder.updateText()
+		src.holder.updateButtons()
 		if (!src.holder.points)
 			deactivate(TRUE)
 
@@ -138,5 +141,7 @@
 		. = ..()
 		if (!ON_COOLDOWN(src.owner, "ev_voltron", 1 SECOND))
 			src.holder.points = max((src.holder.points - (timePassed)), 0)
+			src.holder.updateText()
+			src.holder.updateButtons()
 			if (!src.holder.points)
 				ability.deactivate()

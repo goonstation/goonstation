@@ -25,11 +25,11 @@
 	cast(atom/target)
 		. = ..()
 		if (target == src.holder.owner)
-			return
+			return TRUE
 		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return
+			return TRUE
 		if (!src.is_valid_target(target, src.holder.owner))
-			return
+			return TRUE
 		src.holder.owner.tri_message(target, 
 			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand on [target]. A static charge fills the air.",
 			"<span class='alert'>You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy.</span>",
