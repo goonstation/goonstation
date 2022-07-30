@@ -78,8 +78,8 @@
 			"power" = turbine_handle?.lastgen,
 			"volume" = turbine_handle?.flow_rate,
 			"history" = src.history,
-			"overspeed" = turbine_handle.overspeed,
-			"overtemp" = turbine_handle.overtemp,
+			"overspeed" = turbine_handle?.overspeed,
+			"overtemp" = turbine_handle?.overtemp,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -91,11 +91,11 @@
 		switch(action)
 			if("loadChange")
 				var/x = params["newVal"]
-				src.turbine_handle.stator_load = x
+				src.turbine_handle.stator_load = min(max(x,1),INFINITY-1)
 				logTheThing("station", src, null, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.turbine_handle.flow_rate = x
+				src.turbine_handle.flow_rate = min(max(x,1),INFINITY-1)
 				logTheThing("station", src, null, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
