@@ -1,14 +1,18 @@
-#define POWER_CELL_DRAIN_RATE 80
+#define POWER_CELL_DRAIN_RATE 80 WATTS
 #define POWER_CELL_CHARGE_PERCENT_MINIMUM 10
-#define SMES_DRAIN_RATE 100000
-#define SAP_LIMIT_APC 30
+#define SMES_DRAIN_RATE 100 KILO WATTS
+#define SAP_LIMIT_APC 30 WATTS
 #define SAP_LIMIT_MACHINE (SAP_LIMIT_APC - 5)
 #define SAP_LIMIT_MOB (SAP_LIMIT_APC + 10)
 
 /**
- * Sap Power
- * Arcfiend's main method of obtaining electricity for their abilities.
- * Also very deadly to humans and cyborgs.
+ * Arcfiend's main way of obtaining power for their abilities.
+ * Can be used on:
+ * - Machines (drains from the area APC's cell)
+ * - APCs (drains from the cell, 1% chance per tick to break the APC)
+ * - SMES units (drains from internal charge)
+ * - Humans (quickly saps stamina, causes burn damage)
+ * - Cyborgs (drains from the power cell, causes burn damage)
  */
 /datum/targetable/arcfiend/sap_power
 	name = "Sap Power"
@@ -21,26 +25,39 @@
 	cast(atom/target)
 		. = ..()
 		if (target == src.holder.owner)
-			boutput(holder.owner, "<span class='notice'>You try to drain power from [src.holder.owner.loc], but some idiot is in the way!</span>")
 			return
 		if (!(BOUNDS_DIST(src.holder.owner, target) == 0))
-			return TRUE
-		if (isnpc(target))
-			boutput(src.holder.owner, "<span class='alert'>This creature lacks sufficient energy to consume.")
 			return
-		if (ishuman(target) || issilicon(target) || istype(target, /obj/machinery))
-			src.holder.owner.tri_message(target, 
-				"<span class='alert'>[src.holder.owner] places [his_or_her(target)] hand on [target]. A static charge fills the air.",
-				"<span class='alert'>You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy.</span>",
-				"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you.</span>")
-			actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
-			logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+		if (!src.is_valid_target(target, src.holder.owner))
+			return
+		src.holder.owner.tri_message(target, 
+			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand on [target]. A static charge fills the air.",
+			"<span class='alert'>You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy.</span>",
+			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you.</span>")
+		actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
+		logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 	castcheck()
 		. = ..()
 		if (src.holder.owner.restrained())
 			boutput(src.holder.owner, "<span class='alert'>You need an active working hand to sap power from things!</span>")
 			return FALSE
+	
+	proc/is_valid_target(atom/target, mob/user)
+		if (ismob(target))
+			var/mob/M = target
+			if (isnpc(M))
+				boutput(user, "<span class='alert'>[M] lacks sufficient energy to consume.</span>")
+				return FALSE
+			else if (isdead(M))
+				boutput(user, "<span class='alert'>[M] is dead, and can provide no usable energy.</span>")
+				return FALSE
+			else if (issilicon(M))
+				var/mob/living/silicon/S = M
+				if ((S.cell?.charge < POWER_CELL_DRAIN_RATE))
+					boutput(user, "<span class='alert'>[S]'s power cell is completely drained.</span>")
+					return FALSE
+		return ishuman(target) || issilicon(target) || istype(target, /obj/machinery)
 
 
 /datum/action/bar/private/icon/sap_power
@@ -68,13 +85,13 @@
 
 	onUpdate()
 		..()
-		if(!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		P.spawning = initial(P.spawning)
-		if(!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -84,18 +101,18 @@
 		. = ..()
 
 	onEnd()
-		if(!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 
 		if (ishuman(src.target))
 			var/mob/living/carbon/human/H = src.target
 			if (isdead(H))
-				boutput(src.holder.owner, "<span class='alert'>[src.target] is dead, and can provide no usable energy.</span>")
+				boutput(src.holder.owner, "<span class='alert'>[src.target] has died, and can no longer provide usable energy.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if (!src.scary_message)
-				H.visible_message("<span class='alert'>[H] starts convulsing violently!</span>", "<span class='alert'>You feel a sharp pain in your chest!</span>")
+				H.visible_message("<span class='alert'>[H] spasms violently!</span>", "<span class='alert'>Sharp pains start wracking your chest!</span>")
 				src.scary_message = TRUE
 			H.TakeDamage("All", 0, 5)
 			H.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
@@ -149,18 +166,18 @@
 				var/obj/machinery/M = src.target
 				points_gained = clamp(round((M.power_usage * 0.1)), 0, SAP_LIMIT_MACHINE)
 
-			if (points_gained == 0)
+			if (!points_gained)
 				boutput(src.holder.owner, "<span class='alert'>[src.target] doesn't have enough energy for you to absorb!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			holder.addPoints(points_gained)
 			// drain is proportional to points gained
 			target_apc?.cell.use(POWER_CELL_DRAIN_RATE * (points_gained / SAP_LIMIT_APC))
-		if (prob(35))
-			var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-			s.set_up(2, FALSE, src.holder.owner)
-			s.start()
 
+		if (prob(35))
+			var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
+			S.set_up(2, FALSE, src.holder.owner)
+			S.start()
 		playsound(owner.loc, "sound/effects/electric_shock_short.ogg", 30, TRUE, FALSE, pitch = 0.8)
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)

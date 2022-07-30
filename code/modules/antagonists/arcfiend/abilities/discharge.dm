@@ -1,10 +1,7 @@
-/**
- * Discharge
- * Melee attack, unleash stored charge to burn a target and blast them backwards.
- */
+/// Melee attack. Shocks a targeted mob, or can be used on an airlock to temporarily cut its power.
 /datum/targetable/arcfiend/discharge
 	name = "Discharge"
-	desc = "Run a powerful current through a target in melee range. Mobs will be shocked, while airlocks will be temporarily depowered."
+	desc = "Run a powerful current through a target in melee range. Mobs will be shocked, while airlocks will be briefly depowered."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
 	target_anything = TRUE
@@ -30,10 +27,10 @@
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
 			playsound(src.holder.owner, "sound/effects/electric_shock.ogg", 50, TRUE)
-			boutput(src.holder.owner, "<span class='alert'>You run a powerful current into [target] temporarily cutting the power!</span>")
+			boutput(src.holder.owner, "<span class='alert'>You run a powerful current into [target], temporarily cutting its power!</span>")
 		else
 			return TRUE
-		var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
-		s.set_up(2, FALSE, target)
-		s.start()
+		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
+		S.set_up(2, FALSE, target)
+		S.start()
 		src.holder.owner.set_dir(get_dir(src.holder.owner, target))

@@ -697,7 +697,7 @@ a.latejoin-card:hover {
 						bad_type = ROLE_TRAITOR
 
 					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
-						makebad(new_character, bad_type.)
+						makebad(new_character, bad_type)
 						new_character.mind.late_special_role = 1
 						logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)

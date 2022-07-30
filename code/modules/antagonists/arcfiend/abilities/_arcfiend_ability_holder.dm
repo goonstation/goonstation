@@ -24,6 +24,7 @@
 			if (H.sims)
 				H.sims.affectMotive("Thirst", points * 0.1)
 				H.sims.affectMotive("Hunger", points * 0.1)
+		src.updateText()
 		. = ..(points, target_ah_type)
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)

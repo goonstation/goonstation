@@ -1,7 +1,4 @@
-/**
- * Flash
- * Short and simple CC.
- */
+/// Super simple CC. Short-ranged elecflash.
 /datum/targetable/arcfiend/elecflash
 	name = "Flash"
 	desc = "Release a sudden burst of power around yourself, disorienting nearby creatures."

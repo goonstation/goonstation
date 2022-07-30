@@ -1,7 +1,4 @@
-/**
- * Polarize
- * Applies the magnetic aura effect to nearby mobs.
- */
+/// Applies a magnetic aura to nearby humans, as with the bio-magnetic fields random event. All auras will be of the same polarity.
 /datum/targetable/arcfiend/polarize
 	name = "Polarize"
 	desc = "Unleash a wave of charged particles, polarizing nearby mobs and giving them identical magnetic auras."
@@ -19,4 +16,4 @@
 		for (var/mob/living/carbon/human/H in range(src.range, get_turf(src.holder.owner)))
 			if (H == src.holder.owner)
 				continue
-			H.changeStatus("magnetized", duration, charge)
+			H.changeStatus("magnetized", src.duration, charge)
