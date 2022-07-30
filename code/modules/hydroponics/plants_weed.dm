@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 					radstrength = 50
 					radrange = 3
 			for (var/mob/living/carbon/M in range(radrange,POT))
-				M.take_radiation_dose(radstrength/10 SIEVERTS)
+				M.take_radiation_dose(radstrength/30 SIEVERTS)
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
 				if (POT.health <= P.starthealth / 2) break
