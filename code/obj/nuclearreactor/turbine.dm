@@ -120,8 +120,6 @@
 			else
 				nextRPM = max(newRPM,0) - sqrt(2*(max(nextgen - delta_E,0))/turbine_mass)
 
-			boutput(world, "RPM: [src.RPM] newRPM: [newRPM] nextRPM: [nextRPM]")
-
 			if((newRPM < 0) || (nextRPM < 0))
 				//stator load is too high
 				src.stalling = TRUE

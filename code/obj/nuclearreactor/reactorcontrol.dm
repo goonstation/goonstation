@@ -91,11 +91,11 @@
 		switch(action)
 			if("loadChange")
 				var/x = params["newVal"]
-				src.turbine_handle.stator_load = min(max(x,1),INFINITY-1)
+				src.turbine_handle.stator_load = min(max(x,1),10e30)
 				logTheThing("station", src, null, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
-				src.turbine_handle.flow_rate = min(max(x,1),INFINITY-1)
+				src.turbine_handle.flow_rate = min(max(x,1),10e5)
 				logTheThing("station", src, null, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
