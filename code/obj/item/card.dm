@@ -87,7 +87,7 @@ GAUNTLET CARDS
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
-	var/money = 0.0
+	var/money = 0
 	var/pin = 0000
 
 	//It's a..smart card.  Sure.

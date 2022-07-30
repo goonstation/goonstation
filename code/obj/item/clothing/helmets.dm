@@ -19,7 +19,7 @@
 	name = "space helmet"
 	icon_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
@@ -46,7 +46,7 @@
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	var/on = 0
 
@@ -345,7 +345,7 @@
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = 0.0
+			see_face = 0
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -811,7 +811,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 8)

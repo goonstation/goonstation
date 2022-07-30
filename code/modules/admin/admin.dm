@@ -111,7 +111,7 @@ var/global/noir = 0
 				href_list["target"] = "\ref[M]"
 				targetClient = M.client
 				break
-	else if (href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
+	if (isnull(href_list["target"]) && href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
 		href_list["target"] = href_list["targetmob"]
 
 	var/originWindow
@@ -2709,6 +2709,35 @@ var/global/noir = 0
 								//teleport security person
 								H.set_loc(pick_landmark(LANDMARK_PRISONSECURITYWARP))
 							prisonwarped += H
+					if("critterize_all")
+						if (src.level >= LEVEL_PA)
+							if(!ticker)
+								tgui_alert(usr,"The game hasn't started yet!")
+								return
+
+							var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
+
+							var/list/matches = get_matches(CT, "/mob/living/critter")
+
+							if (!length(matches))
+								return
+							if (length(matches) == 1)
+								CT = matches[1]
+							else
+								CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
+
+							if (!CT)
+								return
+
+							for(var/mob/living/carbon/human/H in mobs)
+								if(isdead(H) || !(H.client)) continue
+								H.make_critter(CT, get_turf(H))
+
+							message_admins("<span class='internal'>[key_name(usr)] critterized everyone into [CT].</span>")
+							logTheThing("admin", usr, null, "critterized everyone into [CT]")
+							logTheThing("diary", usr, null, "critterized everyone into a critter [CT]", "admin")
+						else
+							tgui_alert(usr,"You're not of a high enough rank to do this")
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
@@ -4371,6 +4400,7 @@ var/global/noir = 0
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_all'>All</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=traitor_all'>Make everyone an Antagonist</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=critterize_all'>Critterize everyone</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=stupify'>Give everyone severe brain damage</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=flipstation'>Set station direction</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=yeolde'>Replace all airlocks with doors</A><BR>

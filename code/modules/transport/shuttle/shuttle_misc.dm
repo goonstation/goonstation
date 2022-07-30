@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 
 /obj/machinery/shuttle/engine/heater

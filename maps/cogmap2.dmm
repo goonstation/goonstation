@@ -29892,18 +29892,6 @@
 	name = "Robust Donuts";
 	pixel_y = 10
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;

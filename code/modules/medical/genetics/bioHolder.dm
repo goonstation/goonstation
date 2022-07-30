@@ -348,7 +348,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/bloodType = "AB+-"
 	var/bloodColor = null
-	var/age = 30.0
+	var/age = 30
 	var/genetic_stability = 125
 	var/clone_generation = 0 //Get this high enough and you can be like Arnold. Maybe. I found that movie fun. Don't judge me.
 

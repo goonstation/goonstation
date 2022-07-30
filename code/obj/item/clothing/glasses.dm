@@ -664,7 +664,7 @@
 	icon_state = "glasses"
 	color = "#a0ffa0"
 	color_r = 0.9
-	color_g = 1.0
+	color_g = 1
 	color_b = 0.9
 
 	equipped(var/mob/user, var/slot)

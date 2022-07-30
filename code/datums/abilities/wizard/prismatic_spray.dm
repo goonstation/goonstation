@@ -86,9 +86,9 @@
 	random = 1
 
 /datum/targetable/spell/prismatic_spray/admin/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120
 
 /datum/targetable/spell/prismatic_spray/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120

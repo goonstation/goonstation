@@ -425,7 +425,7 @@ proc/find_ghost_by_key(var/find_key)
 	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -864,13 +864,13 @@ proc/find_ghost_by_key(var/find_key)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
-		"cloneSlave" = list(),
+		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
-		.["cloneSlave"] += P.cloneslave
+		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(

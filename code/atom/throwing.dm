@@ -37,26 +37,30 @@
 		src.pixel_x = text2num(params["icon-x"]) - 16
 		src.pixel_y = text2num(params["icon-y"]) - 16
 
+/atom/movable/proc/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = original_sound
+
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrown_thing/thr=null)
 	if(src.disposed)
-		return
+		return TRUE
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
-		return
+		return TRUE
 	src.material?.triggerOnAttack(src, src, hit_atom)
 	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
 	for(var/atom/A in hit_atom)
 		A.material?.triggerOnAttacked(A, src, hit_atom, src)
 
 	if(!hit_atom)
-		return
+		return TRUE
 
-	reagents?.physical_shock(20)
+	src.reagents?.physical_shock(20)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_HIT_THROWN, hit_atom, thr))
 		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_HITBY_THROWN, src, thr))
 		return
 	var/impact_sfx = hit_atom.hitby(src, thr)
+	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
 		playsound(src, impact_sfx, 40, 1)
 
