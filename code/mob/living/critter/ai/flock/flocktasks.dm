@@ -822,7 +822,7 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(!length(F?.flock.enemies))
+	if(!F?.flock)
 		return
 
 	var/list/O = view(holder.owner, target_range)
