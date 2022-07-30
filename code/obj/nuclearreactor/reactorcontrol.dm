@@ -157,7 +157,7 @@
 							"img" = comp.ui_image,
 							"temp" = comp.temperature,
 							"extra" = comp.extra_info(),
-							"flux" = can_see_neutrons? length(src.flux_grid[x][y]) : null
+							"flux" = can_see_neutrons? length(src.reactor_handle.flux_grid[x][y]) : null
 						)
 
 		. = list(
