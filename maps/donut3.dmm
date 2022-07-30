@@ -14957,7 +14957,6 @@
 	pixel_x = 9;
 	pixel_y = -1
 	},
-/obj/item/device/detective_scanner,
 /obj/item/pen{
 	pixel_x = -7;
 	pixel_y = -2
@@ -24382,6 +24381,12 @@
 "gMT" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "gMZ" = (
@@ -26215,6 +26220,12 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
 	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
@@ -45821,6 +45832,12 @@
 /area/station/engine/gas)
 "ncS" = (
 /obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "ncZ" = (
@@ -54683,6 +54700,16 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"pDt" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "pDF" = (
 /obj/cable{
 	d1 = 1;
@@ -55813,6 +55840,21 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"pVh" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "pVv" = (
 /obj/cable{
 	d1 = 4;
@@ -74380,7 +74422,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 15
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -75475,9 +75517,6 @@
 /obj/item/chem_grenade/pepper{
 	pixel_x = -5;
 	pixel_y = 13
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 2
@@ -116265,7 +116304,7 @@ hvl
 whF
 mxw
 rdj
-vwG
+pVh
 bCJ
 vyE
 abv
@@ -125086,7 +125125,7 @@ rGo
 nxf
 wVP
 aGD
-uBi
+pDt
 oNe
 iJg
 iFU
@@ -125388,7 +125427,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 kgu
 gIT
 lCT
@@ -125690,7 +125729,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 tbu
 iJg
 iFU
@@ -126897,7 +126936,7 @@ hAg
 hAg
 dKA
 tQs
-uBi
+pDt
 qDC
 fDw
 oOH

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 

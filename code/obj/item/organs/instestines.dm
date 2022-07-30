@@ -4,7 +4,7 @@
 	desc = "Did you know that if you laid your guts out in a straight line, they'd be about 9 meters long? Also, you'd probably be dying, so it's not something you should do. Probably."
 	organ_holder_name = "intestines"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4.0
+	organ_holder_required_op_stage = 4
 	icon_state = "intestines"
 	var/digestion_efficiency = 1
 

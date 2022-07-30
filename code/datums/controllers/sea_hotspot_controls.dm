@@ -261,7 +261,7 @@
 	var/static/heat_dropoff_per_dist_unit = 0.1 // possible todo : a quad curve
 	var/static/base_heat = 1000
 	//var/static/max_activity_heat_bonus = 2000 //when mining underneath this hotspot on the trench zlevel, increase bonus heat (NOT USED)
-	//var/static/heat_polled_past_max_factor = 0.10 //When polled at cap, return heat with this multiplier applied.
+	//var/static/heat_polled_past_max_factor = 0.1 //When polled at cap, return heat with this multiplier applied.
 
 	var/static/per_activity = 95
 

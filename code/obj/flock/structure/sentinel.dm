@@ -49,13 +49,21 @@
 
 /obj/flock_structure/sentinel/process(mult)
 	updatefilter()
-	src.compute = 0
+
 	if(!src.flock)//if it dont exist it off
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
 	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
-		powered = TRUE
 		src.compute = -online_compute_cost
-	else//if there isnt enough juice
+		if (!powered)
+			src.update_flock_compute("apply")
+			powered = TRUE
+	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
 
 	if(powered == 1)

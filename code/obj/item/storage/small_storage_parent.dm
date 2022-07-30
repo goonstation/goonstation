@@ -28,6 +28,7 @@
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -375,7 +376,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY

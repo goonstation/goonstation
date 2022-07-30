@@ -34,6 +34,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_armed = null
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
+	var/issawfly = FALSE //for sawfly remote
 
 	attack_self(mob/user as mob)
 		if (!src.state)
@@ -608,8 +609,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					else
 						T.assume_air(GM)
 
-			for (var/mob/living/HH in range(8, src))
-				var/checkdist = get_dist(HH.loc, T)
+			for (var/mob/living/HH in hearers(8, T))
+				var/checkdist = GET_DIST(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
 				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
@@ -979,9 +980,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -1149,7 +1150,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
 	var/state = null
-	var/det_time = 50.0
+	var/det_time = 50
 	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4

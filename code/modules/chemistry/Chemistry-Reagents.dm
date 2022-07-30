@@ -54,6 +54,8 @@ datum
 		var/can_crack = 0 // used by organic chems
 		var/threshold_volume = null //defaults to not using threshold
 		var/threshold = null
+		/// Has this chem been in the person's bloodstream for at least one cycle?
+		var/initial_metabolized = FALSE
 
 		New()
 			..()
@@ -69,6 +71,10 @@ datum
 			return
 
 		proc/on_remove()
+			return
+
+		/// Called once on the first cycle that this chem is processed in the target
+		proc/initial_metabolize()
 			return
 
 		proc/check_threshold()
@@ -220,6 +226,10 @@ datum
 
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
+
+			if (!initial_metabolized)
+				initial_metabolized = TRUE
+				initial_metabolize(M)
 
 			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 

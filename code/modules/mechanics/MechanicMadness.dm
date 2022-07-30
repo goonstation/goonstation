@@ -60,10 +60,10 @@
 		return
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
 				return
-			if (2.0)
+			if (2)
 				if(prob(25))
 					src.dispose()
 					return
@@ -71,7 +71,7 @@
 				src.welded=false
 				src.UpdateIcon()
 				return
-			if (3.0)
+			if (3)
 				if(prob(50) && !src.welded)
 					src.open=true
 					src.UpdateIcon()
@@ -495,7 +495,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 

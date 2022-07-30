@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 25
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "laser"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -885,7 +885,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	power = 60
 	cost = 40
-	ks_ratio = 1.0
+	ks_ratio = 1
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
@@ -927,7 +927,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
-			hasspawned = 1
+			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		return
 
@@ -935,7 +935,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
-		hasspawned = null
+			hasspawned = TRUE
+		else
+			hasspawned = null
 		return
 
 /datum/projectile/special/spawner/gun //shoot guns
@@ -965,7 +967,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 15
 	dissipation_delay = 30
 	dissipation_rate = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	cost = 10
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
@@ -991,7 +993,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot

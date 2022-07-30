@@ -415,7 +415,7 @@ Code:
 /datum/computer/file/pda_program/door_control
 	name = "DoorMaster"
 	size = 8
-	var/id = 1.0
+	var/id = 1
 	var/last_toggle = 0
 
 	syndicate

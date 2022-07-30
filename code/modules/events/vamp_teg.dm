@@ -264,7 +264,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindslave_status(M)
+			remove_mindhack_status(M)
 		. = ..()
 
 	on_grump(mult)

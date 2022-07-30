@@ -47,7 +47,6 @@
 	var/emote_allowed = 1
 	var/last_emote_time = 0
 	var/last_emote_wait = 0
-	var/last_door_knock_time = 0 //anti door knock spam, now seperate from emote anti-spam
 	var/computer_id = null
 	var/lastattacker = null
 	var/lastattacked = null //tell us whether or not to use Combat or Default click delays depending on whether this var was set.
@@ -56,7 +55,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0.0
+	var/stat = 0
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -72,13 +71,13 @@
 	var/disfigured = FALSE
 	var/vdisfigured = FALSE
 	var/druggy = 0
-	var/sleeping = 0.0
-	var/lying = 0.0
+	var/sleeping = 0
+	var/lying = 0
 	var/lying_old = 0
 	var/can_lie = 0
-	var/canmove = 1.0
+	var/canmove = 1
 	var/incrit = 0
-	var/timeofdeath = 0.0
+	var/timeofdeath = 0
 	var/fakeloss = 0
 	var/fakedead = 0
 	var/health = 100
@@ -93,10 +92,10 @@
 	var/is_jittery = 0
 	var/is_zombie = 0
 	var/jitteriness = 0
-	var/charges = 0.0
-	var/urine = 0.0
+	var/charges = 0
+	var/urine = 0
 	var/nutrition = 100
-	var/losebreath = 0.0
+	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
 	var/a_intent = "help"
@@ -220,6 +219,9 @@
 
 	var/last_pulled_time = 0
 
+	/// set to observed mob if you're currently observing a mob, otherwise null
+	var/mob/observing = null
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -323,9 +325,12 @@
 		observers -= TO
 		TO.ghostize()
 
-	for(var/mob/m in src) //just in case...
-		m.set_loc(src.loc)
-		m.ghostize()
+	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
+		if(m.observing == src)
+			m.stopObserving()
+		else
+			m.set_loc(src.loc)
+			m.ghostize()
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -816,8 +821,10 @@
 
 /// used to set the a_intent var of a mob
 /mob/proc/set_a_intent(intent)
-	if (!intent) return
-	SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent)
+	if (!intent)
+		return
+	if(SEND_SIGNAL(src, COMSIG_MOB_SET_A_INTENT, intent))
+		return
 	src.a_intent = intent
 
 // medals
@@ -1637,7 +1644,7 @@
 	var/difference = abs(actual-desired)   // get difference
 	var/increments = difference * divisor  //find how many increments apart they are
 	var/change = increments*incrementboost // Get the amount to change by (x per increment)
-	//change = change * 0.10
+	//change = change * 0.1
 
 	if (actual < desired) // Too cold
 		temperature += change
@@ -1774,7 +1781,7 @@
 
 	var/col_r = 0.4
 	var/col_g = 0.8
-	var/col_b = 1.0
+	var/col_b = 1
 	var/brightness = 0.7
 	var/height = 1
 	var/datum/light/light
@@ -3140,3 +3147,14 @@
 				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
+
+/// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
+/mob/proc/observeMob(mob/target)
+	src.set_loc(target)
+	src.observing = target
+
+/// called when the observed mob is deleted, override for custom behaviour.
+/mob/proc/stopObserving()
+	src.set_loc(get_turf(src.observing))
+	src.observing = null
+	src.ghostize()

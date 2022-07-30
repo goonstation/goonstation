@@ -573,7 +573,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole"
 	icon_state = "arrow"
 

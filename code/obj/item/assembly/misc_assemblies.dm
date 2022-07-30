@@ -22,7 +22,7 @@ Contains:
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
-	var/status = 0.0
+	var/status = 0
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
@@ -709,7 +709,7 @@ Contains:
 	icon_state = "radio-horn"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()

@@ -131,7 +131,7 @@
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	burn_possible = 0
 

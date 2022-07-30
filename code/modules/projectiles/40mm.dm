@@ -11,7 +11,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 1.0
+	ks_ratio = 1
 //name of the projectile setting, used when you change a guns setting
 	sname = "40mm"
 //file location for the sound you want it to play
@@ -29,6 +29,7 @@ radioactive - rips apart cells or some shit
 toxic - poisons
 */
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 90
 	//Can we pass windows
