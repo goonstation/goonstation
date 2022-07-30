@@ -864,13 +864,13 @@ proc/find_ghost_by_key(var/find_key)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
-		"cloneSlave" = list(),
+		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
-		.["cloneSlave"] += P.cloneslave
+		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(
