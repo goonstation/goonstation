@@ -33,7 +33,6 @@
 
 /obj/trait/phobia
 	name = "Phobias suck"
-	cleanName = "Phobias suck"
 	desc = "Wow, phobias are no fun! Report this to a coder please."
 	unselectable = TRUE
 

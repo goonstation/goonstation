@@ -972,7 +972,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 
 /obj/trait/super_slips
 	name = "Slipping Hazard (+1)"
-	cleanName = "Slipping Hazard"
 	id = "super_slips"
 	desc = "You never were good at managing yourself slipping."
 	points = 1
@@ -980,7 +979,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 //Infernal Contract Traits
 /obj/trait/hair
 	name = "Wickedly Good Hair"
-	cleanName = "Wickedly Good Hair"
 	desc = "Sold your soul for the best hair around"
 	id = "contract_hair"
 	points = 0
@@ -999,7 +997,6 @@ ABSTRACT_TYPE(/obj/trait/job)
 
 /obj/trait/contractlimbs
 	name = "Wacky Waving Limbs"
-	cleanName = "Wacky Waving Limbs"
 	desc = "Sold your soul for ever shifting limbs"
 	id = "contract_limbs"
 	points = 0
