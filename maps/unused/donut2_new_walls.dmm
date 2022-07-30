@@ -19228,8 +19228,9 @@
 	},
 /area/station/medical/medbay/cloner)
 "aVu" = (
-/obj/machinery/clonegrinder,
 /obj/machinery/light/emergency,
+/obj/table/reinforced/auto,
+/obj/item/paper/Cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -40160,12 +40161,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ixS" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/Cloning,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/machinery/clonegrinder,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
