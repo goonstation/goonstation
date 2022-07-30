@@ -3,7 +3,8 @@
 		if(!owner || !owner.radiation_dose)
 			return
 
-		//apply effects
+		//apply effects - by this point you have received a non-zero dose, so give the user an infinite duration radiation effect
+		//if they haven't got one already
 		if(!owner.hasStatus("radiation"))
 			owner.changeStatus("radiation",null)
 

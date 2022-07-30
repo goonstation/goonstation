@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/radioactive)
 	/// How wide a range this radiation source affects. Greater than one should be very rarely used, since all atoms in this range will be exposed per tick
 	var/effect_range = 1
 	/// Internal, do not touch - keeps a record of atom.color since we override it with filters.
-	var/backup_color = null //so hacky
+	var/_backup_color = null //so hacky
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
 		if(!istype(parent,/atom))
@@ -53,7 +53,7 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
 		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
-		src.backup_color = PA.color
+		src._backup_color = PA.color
 		PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
 		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
@@ -73,7 +73,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_simple_light("radiation_light_\ref[src]")
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
-		PA.color = backup_color
+		PA.color = src._backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
