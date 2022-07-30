@@ -33703,11 +33703,6 @@
 /area/station/engine/engineering)
 "btm" = (
 /obj/storage/secure/closet/engineering/engineer,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1;
@@ -33807,6 +33802,11 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/printer{
 	print_id = "Engineering"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
 	},
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
@@ -37213,12 +37213,9 @@
 /area/station/engine/substation/west)
 "bzR" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
-/obj/machinery/vending/pda,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
 "bzS" = (
 /obj/machinery/light/small{
@@ -37228,14 +37225,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bzT" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	dir = 0;
-	icon_state = "2-4"
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4;
+	name = "West SMES"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/southwest)
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering,
+/turf/simulated/floor/plating,
+/area/station/engine/substation/west)
 "bzU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
@@ -37759,14 +37756,15 @@
 	},
 /area/station/engine/substation/west)
 "bAY" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
 	},
-/obj/machinery/vending/air_vendor,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 1
+	},
+/turf/space,
+/area/space)
 "bAZ" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -40215,9 +40213,11 @@
 /area/station/maintenance/southwest)
 "bJf" = (
 /obj/cable{
-	icon_state = "4-8"
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/machinery/vending/book,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bJg" = (
@@ -41656,10 +41656,12 @@
 /area/station/solar/east)
 "bNb" = (
 /obj/cable{
-	icon_state = "4-8"
+	d1 = 2;
+	d2 = 4;
+	dir = 0;
+	icon_state = "2-4"
 	},
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/simulated/floor/plating,
+/turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
 "bNc" = (
 /obj/machinery/light,
@@ -42918,12 +42920,6 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
-"ebM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/southwest)
 "ecK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -43452,16 +43448,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"ffm" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/atmospherics/pipe/vent{
-	dir = 1
-	},
-/turf/space,
-/area/space)
 "fho" = (
 /obj/machinery/light_switch/west{
 	dir = 4
@@ -46590,13 +46576,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
-"mtU" = (
-/obj/grille/catwalk,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
 "mvv" = (
 /obj/airbridge_controller{
 	id = "escape";
@@ -47005,6 +46984,13 @@
 	dir = 9
 	},
 /area/mining/magnet)
+"nBF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "nEo" = (
 /obj/item/device/radio/beacon,
 /obj/decal/tile_edge/line/blue{
@@ -48083,6 +48069,13 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"qjT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/book,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "qkV" = (
 /obj/machinery/computer3/terminal/network{
 	dir = 4;
@@ -48670,6 +48663,13 @@
 	name = "solar paneling"
 	},
 /area/station/solar/west)
+"rHZ" = (
+/obj/grille/catwalk,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "rIp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable,
@@ -49358,15 +49358,6 @@
 	},
 /turf/space,
 /area/station/shield_zone)
-"tnV" = (
-/obj/machinery/door/airlock/pyro/engineering/alt{
-	dir = 4;
-	name = "West SMES"
-	},
-/obj/firedoor_spawn,
-/obj/access_spawn/engineering,
-/turf/simulated/floor/plating,
-/area/station/engine/substation/west)
 "tnY" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8;
@@ -49394,6 +49385,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"tuf" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/obj/machinery/vending/pda,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "twB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -76133,7 +76133,7 @@ bIu
 bIK
 byG
 byG
-tnV
+bzT
 byG
 byG
 byG
@@ -76388,7 +76388,7 @@ bsO
 bvo
 bIu
 bIL
-bzR
+tuf
 byI
 bzS
 byG
@@ -76645,11 +76645,11 @@ bsP
 bvp
 bIu
 esz
-bNb
+nBF
 byG
 bAZ
 bCm
-ffm
+bAY
 aaa
 aaa
 aay
@@ -76902,10 +76902,10 @@ kIg
 bvq
 bIv
 bIV
-bJf
+qjT
 dIw
 lID
-mtU
+rHZ
 bBw
 bBw
 bBw
@@ -77157,9 +77157,9 @@ bsd
 bsR
 bul
 bvr
-bzT
+bNb
 bIX
-bAY
+bJf
 bzU
 bzU
 bBb
@@ -77414,7 +77414,7 @@ bse
 dfd
 bop
 bop
-ebM
+bzR
 bJe
 bzU
 bzV
@@ -84092,7 +84092,7 @@ bgz
 lWI
 lql
 brn
-bsq
+bso
 bts
 buC
 bvK
