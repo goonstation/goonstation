@@ -213,10 +213,10 @@
 
 /obj/submachine/weapon_vendor/surplus
 
-	name = "Tovarich Yuri Good Deals and Trade Depot"
+	name = "Tovarich Yuri is Have Good Deals and Militarily Trade Depot"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon"
-	desc = "An old, beat up machine for supplying your rag-tag group with... something resembling weapons and gear. "
+	desc = "An incredibly poorly-translated trading interface with a private auctioneer."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
@@ -306,6 +306,15 @@
 	name = "Energy bullets"
 	path = /obj/random_item_spawner/surplus/energycells
 	description = "These bullets is confusing, for they is not of bullet, but little square."
+
+/datum/materiel/utility/healing
+	name = "items of healing"
+	path = /obj/random_item_spawner/surplus/healing
+	description = "good for keeping alive. Cannot make them not dead."
+/datum/materiel/utility/grenade
+	name = "greande"
+	path = /obj/random_item_spawner/surplus/grenades
+	description = "thrown explosives of the grenides"
 
 // Materiel avaliable for purchase:
 
@@ -599,6 +608,15 @@
 		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 		icon_state = "req-token"
 
+		surplus
+			name = "Prepaid check"
+			desc = "A written check of 450000 space reubles to an individual named Yuri Aleskivankihaslovanonyiakhornovitch."
+			icon_state = "req-token"
+
+		surplusutility
+			name = "2400 space reubels"
+			desc = "Some change, from a russian trader. It should be enough to afford you another utility item."
+			icon_state = "req-token"
 		vr
 			name = "syndicoin requisition token"
 

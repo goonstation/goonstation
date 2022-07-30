@@ -1,6 +1,6 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
-
+	rare_chance = 5
 ///obj/surplus_spawner
 
 //ammo!
@@ -72,22 +72,25 @@
 
 /obj/random_item_spawner/surplus/shortgun //PRAY TO RNJESUS, SONNY
 	amt2spawn = 1
+	rare_chance = 5
 	items2spawn = list(/obj/item/gun/kinetic/riot40mm,
 		/obj/item/gun/kinetic/pistol,
 		/obj/item/gun/kinetic/pistol/smart/mkII,
 		/obj/item/gun/kinetic/sawnoff,
 		/obj/item/gun/kinetic/silenced_22,
 		/obj/item/gun/kinetic/clock_188,
+		/obj/item/gun/kinetic/slamgun, //lol
+		/obj/item/gun/kinetic/zipgun, //lmao, even
 		/obj/item/gun/kinetic/detectiverevolver,
 		/obj/item/gun/kinetic/derringer,
 		/obj/item/gun/energy/laser_gun,
 		/obj/item/gun/energy/phaser_gun,
+
 	///obj/item/gun/energy/blaster_pod_wars/syndicate
 	)
 
 	rare_items2spawn = list(
-	/obj/item/gun/kinetic/slamgun, //lol
-	/obj/item/gun/kinetic/zipgun, //lmao, even
+
 	/obj/item/gun/kinetic/revolver)
 
 /obj/random_item_spawner/surplus/melee //if anything's going to break convention the most it's gonna be this one
@@ -105,12 +108,14 @@
 		/obj/item/wrench/battle,
 		/obj/item/mining_tool/powerhammer,
 		/obj/item/brick,
-		/obj/item/rods/steel
+		/obj/item/rods/steel,
+		/obj/item/quarterstaff
 	)
 
 //utility
 /obj/random_item_spawner/surplus/grenades
-	amt2spawn = 3
+	min_amt2spawn = 2
+	max_amt2spawn = 3
 	items2spawn = list(/obj/item/chem_grenade/incendiary,
 		/obj/item/chem_grenade/flashbang,
 		/obj/item/chem_grenade/napalm, //I am very much so aware that this does nothing without a light
@@ -127,3 +132,33 @@
 		/obj/item/chem_grenade/pepper,
 		/obj/item/chem_grenade/fog,
 		/obj/item/gimmickbomb/butt)
+
+
+
+/*/obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
+
+/obj/random_item_spawner/surplus/backup
+
+/obj/random_item_spawner/surplus/entry emag, can of explosive, knocker rounds, breaching charges, one mprt
+
+/obj/random_item_spawner/surplus/fancy //c sabers, katanas, wrestling belts, stims. Add somethat useless fancy items too like crown and bullion
+
+/obj/random_item_spawner/surplus/storage*/
+/obj/random_item_spawner/surplus/healing
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/donkpocket_w,
+	/obj/item/storage/firstaid/crit,
+	/obj/item/storage/firstaid/fire,
+	/obj/item/storage/firstaid/brute,
+	/obj/item/storage/firstaid/regular,
+	/obj/item/storage/firstaid/regular/emergency,
+	/obj/item/canned_laughter, //you know what they say about laughter and medicine
+	/obj/item/canned_laughter,
+	/obj/item/item_box/medical_patches/mini_synthflesh,
+	/obj/item/item_box/medical_patches/mini_styptic,
+	/obj/item/item_box/medical_patches/mini_silver_sulf,
+	/obj/item/storage/pill_bottle/salicylic_acid,
+	/obj/item/storage/pill_bottle/menthol
+	//add funny hypospray here/nukie injectors
+	)
+	rare_items2spawn = list(/obj/item/storage/box/donkpocket_w_kit,
+	/obj/item/storage/firstaid/regular/doctor_spawn)
