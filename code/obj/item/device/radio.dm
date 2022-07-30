@@ -13,7 +13,7 @@
 	var/list/secure_colors = list()
 	var/list/secure_classes = list(RADIOCL_STANDARD) // respects dark mode, gets overriden by secure_colors
 	var/protected_radio = 0 // Cannot be picked up by radio_brain bioeffect.
-	var/traitor_frequency = 0.0
+	var/traitor_frequency = 0
 	var/obj/item/device/radio/patch_link = null
 	var/obj/item/uplink/integrated/radio/traitorradio = null
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
@@ -732,9 +732,9 @@ var/list/headset_channel_lookup
 	name = "\improper Electropack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
-	var/code = 2.0
-	var/on = 0.0
-//	var/e_pads = 0.0
+	var/code = 2
+	var/on = 0
+//	var/e_pads = 0
 	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
@@ -882,7 +882,7 @@ Code:
 	name = "\improper Remote Signaling Device"
 	icon_state = "signaller"
 	item_state = "signaler"
-	var/code = 30.0
+	var/code = 30
 	w_class = W_CLASS_TINY
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
@@ -1009,7 +1009,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	name = "Loudspeaker Transmitter"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "transmitter"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 0
 	mats = 0
 	chat_class = RADIOCL_INTERCOM
@@ -1052,7 +1052,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
 	icon_state = "loudspeaker"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 7
 	mats = 0
 	broadcasting = 1

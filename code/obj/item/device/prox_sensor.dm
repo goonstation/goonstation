@@ -1,8 +1,8 @@
 /obj/item/device/prox_sensor
 	name = "Proximity Sensor"
 	icon_state = "motion0"
-	var/armed = 0.0
-	var/timing = 0.0
+	var/armed = 0
+	var/timing = 0
 	var/time = null
 	flags = FPRINT | TABLEPASS| CONDUCT
 	event_handler_flags = USE_FLUID_ENTER

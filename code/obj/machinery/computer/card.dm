@@ -5,8 +5,8 @@
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/obj/item/eject = null //Overrides modify slot set_loc. sometimes we want to eject something that's not a card. like an implant!
-	var/authenticated = 0.0
-	var/mode = 0.0
+	var/authenticated = 0
+	var/mode = 0
 	var/printing = null
 	var/list/scan_access = null
 	var/list/custom_names = list("Custom 1", "Custom 2", "Custom 3")
@@ -40,7 +40,7 @@
 	item_state = "hopcaseC"
 	icon_state = "hopcaseC"
 
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY

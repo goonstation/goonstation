@@ -4252,7 +4252,6 @@
 "are" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/detective_scanner,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
@@ -19615,7 +19614,6 @@
 	},
 /obj/item/device/radio/headset/security,
 /obj/item/device/prisoner_scanner,
-/obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -60793,7 +60791,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xZr" = (
@@ -61102,7 +61099,6 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},

@@ -928,8 +928,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(target, mob/user)
 		if (src.broken && !src.unbreakable)
-			force = 5.0
-			throwforce = 10.0
+			force = 5
+			throwforce = 10
 			throw_range = 5
 			w_class = W_CLASS_SMALL
 			stamina_damage = 15

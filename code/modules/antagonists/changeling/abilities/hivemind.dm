@@ -24,7 +24,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -124,7 +124,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -222,7 +222,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -319,7 +319,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot release a sub-form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -431,7 +431,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot boot other members of the hivemind!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -483,7 +483,7 @@
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A slave cannot relinquish control of the shared form!.</span>")
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
 			return 1
 
 		var/list/eligible = list()

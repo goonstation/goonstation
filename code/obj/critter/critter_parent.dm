@@ -11,7 +11,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/living_state = null
 	var/dead_state = null
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
@@ -459,12 +459,12 @@
 		on_damaged()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75
 				if (src.health <= 0)
 					src.CritterDeath()

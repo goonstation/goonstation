@@ -18,7 +18,7 @@
 	var/list/datum/mind/traitors = list() // enemies assigned at round start
 	var/list/datum/mind/token_players = list() //players redeeming an antag token
 	var/list/datum/mind/Agimmicks = list() // admin assigned and certain gimmick enemies
-	var/list/datum/mind/former_antagonists = list() // For mindslaves and rogue cyborgs we'd want to show in the game over stats (Convair880).
+	var/list/datum/mind/former_antagonists = list() // For mindhacks and rogue cyborgs we'd want to show in the game over stats (Convair880).
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
@@ -91,9 +91,9 @@
 			else
 				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
-			if (traitor.special_role == ROLE_MINDSLAVE)
-				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
-				continue // Objectives are irrelevant for mindslaves and thralls.
+			if (traitor.special_role == ROLE_MINDHACK)
+				stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
+				continue // Objectives are irrelevant for mindhacks and thralls.
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
@@ -243,15 +243,15 @@
 
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
-					if (string == ROLE_MINDSLAVE)
-						stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
+					if (string == ROLE_MINDHACK)
+						stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
 					else if (string == ROLE_VAMPTHRALL)
 						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 					else
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
-	
+
 	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/dummy = V

@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindslave_status(src.mob)
+				remove_mindhack_status(src.mob)
 		..()
 
 /datum/mutantrace/skeleton
@@ -2110,7 +2110,7 @@ TYPEINFO(/datum/mutantrace)
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
 				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
-				T.clogged += 0.10
+				T.clogged += 0.1
 				break
 		else if (beaker)
 			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")

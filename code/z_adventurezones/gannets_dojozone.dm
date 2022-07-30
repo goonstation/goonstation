@@ -477,7 +477,7 @@ Contents:
 			if(istype(O,/obj/item/unfinished_katana))
 				var/obj/item/unfinished_katana/K = O
 				K.temperature = lerp(K.temperature, src.temperature, 0.3)
-				if(K.temperature >= src.temperature * 0.90)
+				if(K.temperature >= src.temperature * 0.9)
 					effect.spark_up()
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
