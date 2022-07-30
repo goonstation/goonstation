@@ -1468,6 +1468,7 @@ obj/item/fragile_sword
 			if(!isdead(C))
 				if(force >= minimum_force)
 					force -= 5
+					throwforce = force
 					boutput(user, "<span class='alert'>The [src]'s edge dulls slightly on impact!</span>")
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
@@ -1476,6 +1477,7 @@ obj/item/fragile_sword
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
+				throwforce = force
 				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
 				playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 		..()
