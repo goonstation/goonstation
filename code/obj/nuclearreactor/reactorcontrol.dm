@@ -137,7 +137,8 @@
 			"emptySlotIcon" = icon2base64(icon('icons/misc/reactorcomponents.dmi',"empty"))
 		)
 
-	ui_data()
+	ui_data(mob/user)
+		var/can_see_neutrons = isadmin(user)
 		var/control_rod_level = 0
 		var/control_rod_count = 0
 		var/comps[length(reactor_handle.component_grid)][length(src.reactor_handle.component_grid[1])]
@@ -155,7 +156,8 @@
 							"name" = comp.name,
 							"img" = comp.ui_image,
 							"temp" = comp.temperature,
-							"extra" = comp.extra_info()
+							"extra" = comp.extra_info(),
+							"flux" = can_see_neutrons? length(src.flux_grid[x][y]) : null
 						)
 
 		. = list(

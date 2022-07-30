@@ -44,13 +44,13 @@ const ReactorRow = (shape) => {
         }
         else
         {
-          const { x, y, name, img, temp, extra } = c;
+          const { x, y, name, img, temp, extra, flux } = c;
           return (
             <Table.Cell>
               <Button
                 key={name}
                 fluid
-                tooltip={<>{capitalize(name)}<br />{round(temp-T0C, 2)} °C<br />{extra}</>}
+                tooltip={<>{capitalize(name)}<br />{round(temp-T0C, 2)} °C{extra !== "" ? <><br />{extra}</> : ""}{flux !== null ? <><br />{flux} Neutrons</> : ""}</>}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
@@ -158,24 +158,24 @@ export const NuclearReactor = (props, context) => {
               </Stack.Item>
             </Stack>
           </Box>
-          <Box>
-            <Stack fill>
-              <Stack.Item width="50%">
-                Control Rod Insertion: {controlRodLevel}%
-              </Stack.Item>
-              <Stack.Item width="50%">
-                <Knob
-                  animated
-                  size={2}
-                  value={controlRodLevel}
-                  minValue={0}
-                  maxValue={100}
-                  format={value => value + "%"}
-                  onDrag={(e, value) => act('adjustCR', { crvalue: value })}
-                />
-              </Stack.Item>
-            </Stack>
-          </Box>
+        </Section>
+        <Section>
+          <Stack fill>
+            <Stack.Item width="50%">
+              Control Rod Insertion: {controlRodLevel}%
+            </Stack.Item>
+            <Stack.Item width="50%">
+              <Knob
+                animated
+                size={2}
+                value={controlRodLevel}
+                minValue={0}
+                maxValue={100}
+                format={value => value + "%"}
+                onDrag={(e, value) => act('adjustCR', { crvalue: value })}
+              />
+            </Stack.Item>
+          </Stack>
         </Section>
       </Window.Content>
     </Window>
