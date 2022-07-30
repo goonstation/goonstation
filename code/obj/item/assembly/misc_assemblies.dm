@@ -885,10 +885,10 @@ obj/item/assembly/radio_horn/receive_signal()
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 		if (istype(craftingitem, accepteditem)) //success! items match
-
+			src.thingsneeded --
 			if (thingsneeded > 0)//craft successful, but they'll need more
 				boutput(user, "<span class='notice'>You add the [craftingitem] to the [frame]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
-			src.thingsneeded --
+
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
 				user.put_in_hand_or_drop(shot)
