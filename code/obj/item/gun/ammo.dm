@@ -696,12 +696,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "glass load"
 	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
+	icon_state = "makeshiftglass"
 
 /obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
-	icon_state = "makeshiftscrap"
+
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"

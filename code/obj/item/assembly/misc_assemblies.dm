@@ -911,7 +911,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
 
-	var/datum/pipeshotrecipie/recipe = null
+	var/datum/pipeshotrecipe/recipe = null
 
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
@@ -919,7 +919,7 @@ obj/item/assembly/radio_horn/receive_signal()
 				recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
 				recipe = new/datum/pipeshotrecipe/scrap
-		if(recipie) //probably a better way to do this but my feverish brain is not coming up with it
+		if(recipe) //probably a better way to do this but my feverish brain is not coming up with it
 			recipe.craftwith(W, src, user)
 		..()
 
