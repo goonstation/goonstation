@@ -1918,3 +1918,31 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	New()
 		..()
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+
+obj/item/paper/donut2smesinstructions
+	name = "Donut 2 SMES Units and YOU"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	Donut 2 SMES Units and YOU<br><br>
+
+	A full guide to ensuring the station is powered up properly<br>
+	----------------------------------------<br><br>
+	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
+
+	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
+	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
+
+	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
+	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
+	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
+
+	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
+
+	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
+	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
+	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
+
+	Keep that power flowing,<br>
+	S.L.
+	"}
