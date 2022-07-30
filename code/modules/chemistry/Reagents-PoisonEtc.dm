@@ -1026,7 +1026,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose(0.1 SIEVERTS * mult, internal=TRUE)
+				M.take_radiation_dose(0.2 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -1440,7 +1440,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose(0.05 SIEVERTS * mult, internal=TRUE)
+				M.take_radiation_dose(0.1 SIEVERTS * mult, internal=TRUE)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
