@@ -40,7 +40,7 @@ MATERIAL
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -668,8 +668,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -1018,8 +1018,8 @@ MATERIAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20
-	force = 6.0
-	throwforce = 5.0
+	force = 6
+	throwforce = 5
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 15
@@ -1171,7 +1171,7 @@ MATERIAL
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
-	force = 0.0
+	force = 0
 	New()
 		..()
 		var/datum/material/M = getMaterial("cardboard")

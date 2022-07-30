@@ -1,4 +1,17 @@
 
+(t)fri jul 29 22
+(u)DisturbHerb
+(p)9770
+(e)🎨|sprites
+(+)Chemical bottles have been resprited.
+(u)NightmareChamillian
+(p)9350
+(e)🐛|bug
+(+)Sawflies have had their targeting AI reworked, and should be much more responsive now! Ping me if this breaks anything.
+(u)Blackrep
+(p)9776
+(e)📄|tgui
+(+)Safes have a fancy new UI
 (t)thu jul 28 22
 (u)Flourish
 (p)9868

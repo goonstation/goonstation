@@ -16,7 +16,7 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 10.0
+	force = 10
 	item_state = "fireextinguisher0"
 	m_amt = 90
 	desc = "A portable container with a spray nozzle that contains specially mixed fire-fighting foam. The safety is removed, the nozzle pointed at the base of the fire, and the trigger squeezed to extinguish fire."

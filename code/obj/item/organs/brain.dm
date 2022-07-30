@@ -77,7 +77,7 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
-			H.organHolder.head.scalp_op_stage = 3.0
+			H.organHolder.head.scalp_op_stage = 3
 			return 1
 
 		return 0

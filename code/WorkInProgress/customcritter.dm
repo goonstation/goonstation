@@ -77,12 +77,12 @@
 			on_wake()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -723,7 +723,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			RT = C.vars[matchVar] * mult
 			last_value = C.vars[matchVar]
 		else
@@ -779,7 +779,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			real_threshold = C.vars[matchVar] * mult
 		else if (matchVar)
 			real_threshold = threshold
@@ -808,9 +808,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = minimum / 100.0
+			var/mult = minimum / 100
 			RM = C.vars[matchVar] * mult
-			mult = maximum / 100.0
+			mult = maximum / 100
 			RX = C.vars[matchVar] * mult
 		else
 			RM = minimum

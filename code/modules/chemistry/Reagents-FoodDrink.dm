@@ -541,7 +541,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 200
-			alch_strength = 0.30
+			alch_strength = 0.3
 
 		fooddrink/alcoholic/snakebite
 			name = "Snakebite"
@@ -3057,6 +3057,7 @@ datum
 			fluid_g = 220
 			fluid_b = 0
 			transparency = 225
+			overdose = 10
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 			hunger_value = 1
 			viscosity = 0.2
@@ -3065,13 +3066,14 @@ datum
 				if(!M) M = holder.my_atom
 				M.nutrition += 1 * mult
 
-				if(probmult(8))
-					M.emote("fart")
-
 				if(prob(3))
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
-
+				
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(probmult(16))
+					M.emote("fart")
+						
 		fooddrink/beff
 			name = "beff"
 			id = "beff"

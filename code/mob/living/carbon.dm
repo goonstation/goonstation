@@ -6,8 +6,8 @@
 	var/oxyloss = 0
 	var/toxloss = 0
 	var/brainloss = 0
-	//var/brain_op_stage = 0.0
-	//var/heart_op_stage = 0.0
+	//var/brain_op_stage = 0
+	//var/heart_op_stage = 0
 
 	infra_luminosity = 4
 

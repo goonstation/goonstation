@@ -55,7 +55,7 @@
 	desc = "An impenetrable magic barrier. Its only flaw is that it cannot last long."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "forcewall"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 	luminosity = 3

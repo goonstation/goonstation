@@ -11,8 +11,8 @@
 	health = 3
 	w_class = W_CLASS_TINY
 
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 10

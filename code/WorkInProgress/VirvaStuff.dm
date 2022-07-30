@@ -92,8 +92,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "Flechette magazine"
 	ammo_type = new/datum/projectile/bullet/flechette
 	icon_state = "flech_mag"
-	amount_left = 24.0
-	max_amount = 24.0
+	amount_left = 24
+	max_amount = 24
 	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
@@ -103,7 +103,7 @@ obj/item/ammo/bullets/flechette_mag
 	shot_volume = 70
 	power = 20
 	cost = 2
-	ks_ratio = 1.0
+	ks_ratio = 1
 	hit_ground_chance = 100
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
@@ -196,8 +196,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "6.5×20mm SOKK magazine"
 	desc = "High-velocity pistol cartridges, loaded with armor-piercing bullets."
 	icon_state = "pistol_clip"
-	amount_left = 21.0
-	max_amount = 21.0
+	amount_left = 21
+	max_amount = 21
 	ammo_type = new/datum/projectile/bullet/sokk
 	ammo_cat = AMMO_FLECHETTE
 

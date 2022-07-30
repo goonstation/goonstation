@@ -356,11 +356,11 @@
 			return
 		if(destination == "home")
 			if(user.homebooth)
-				user.set_loc(user.homebooth)
+				user.stopObserving()
 			else
 				return
 		else
-			user.set_loc(destination)
+			user.observeMob(destination)
 
 /datum/targetable/zoldorfAbility/medium
 	name = "Medium"

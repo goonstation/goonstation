@@ -6,13 +6,13 @@ TOILET
 /obj/item/storage/toilet
 	name = "toilet"
 	w_class = W_CLASS_BULKY
-	anchored = 1.0
-	density = 0.0
+	anchored = 1
+	density = 0
 	mats = 5
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	var/status = 0.0
-	var/clogged = 0.0
-	anchored = 1.0
+	var/status = 0
+	var/clogged = 0
+	anchored = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0

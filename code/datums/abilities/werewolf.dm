@@ -383,7 +383,7 @@
 
 		return
 
-//percent, give number 0.0-1.0
+//percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
 		A.cooldown = A.cooldown * (1-percent)

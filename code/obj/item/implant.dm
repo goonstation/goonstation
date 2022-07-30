@@ -385,7 +385,7 @@ THROWING DARTS
 	//life_tick_energy = 0.1
 	uses_radio = 1
 	mailgroups = list(MGD_SECURITY)
-	var/id = 1.0
+	var/id = 1
 	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
 	New()
@@ -1744,7 +1744,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon_state = "implantpad-0"
 	var/obj/item/implantcase/case = null
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	item_state = "electronic"
 	throw_speed = 1
 	throw_range = 5

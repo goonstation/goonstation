@@ -3,7 +3,7 @@
 	desc = "My best friend plank!"
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "plank"
-	force = 4.0
+	force = 4
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1500
