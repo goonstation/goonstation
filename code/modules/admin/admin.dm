@@ -111,7 +111,7 @@ var/global/noir = 0
 				href_list["target"] = "\ref[M]"
 				targetClient = M.client
 				break
-	else if (href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
+	if (isnull(href_list["target"]) && href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
 		href_list["target"] = href_list["targetmob"]
 
 	var/originWindow

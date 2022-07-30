@@ -12,6 +12,6 @@
 
 	num_enemies_divisor = 20
 
-/datum/game_mode/mixed/vampire/announce()
+/datum/game_mode/mixed/arcfiend/announce()
 	boutput(world, "<B>The current game mode is - Arcfiend!</B>")
 	boutput(world, "<B>Energy draining monsters are hiding aboard the ship!</B>")

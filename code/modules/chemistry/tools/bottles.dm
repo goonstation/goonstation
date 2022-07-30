@@ -28,6 +28,8 @@
 
 	update_icon()
 		..()
+		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
+			return
 		src.underlays = null
 		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
