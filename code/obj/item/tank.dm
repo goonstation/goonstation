@@ -102,7 +102,8 @@ Contains:
 			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-					T.icon_state = "airoff"
+					if(T.the_item == src)
+						T.icon_state = "airoff"
 				location.internal = null
 				if (location.internals)
 					location.internals.icon_state = "internal0"
@@ -110,9 +111,14 @@ Contains:
 				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+					if(!isnull(location.internal)) //you're already using a tank and it's not this one
+						location.internal.toggle_valve()
+						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
 					location.internal = src
+
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						T.icon_state = "airon"
+						if(T.the_item == src)
+							T.icon_state = "airon"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
