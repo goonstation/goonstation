@@ -405,8 +405,7 @@
 			antag.current.make_werewolf()
 
 		if (ROLE_ARCFIEND)
-			objective_set_path = /datum/objective_set/arcfiend
-			antag.current.make_arcfiend()
+			antag.add_antagonist(ROLE_ARCFIEND)
 
 	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 		new objective_set_path(antag)

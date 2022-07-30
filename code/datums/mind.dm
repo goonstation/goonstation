@@ -226,7 +226,7 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, pseudo = FALSE)
 		// Check for mutual exclusivity
 		if (respect_mutual_exclusives && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
@@ -238,7 +238,7 @@ datum/mind
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source))
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, pseudo))
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return !isnull(src.get_antagonist(role_id))
 		return FALSE
