@@ -27,7 +27,7 @@
 		H.ClearSpecificOverlays("resist_electric")
 	
 	remove_equipment()
-		src.owner.current.remove_ability_holder(src.ability_holder)
+		src.owner.current.remove_ability_holder(/datum/abilityHolder/arcfiend)
 
 	assign_objectives()
 		new /datum/objective_set/arcfiend(src.owner)

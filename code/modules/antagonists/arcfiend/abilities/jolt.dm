@@ -6,7 +6,8 @@
 /datum/targetable/arcfiend/jolt
 	name = "Jolt"
 	desc = "Release a series of powerful jolts into your target over time, burning them and eventually stopping their heart. \
-		When used on those resistant to electricity, it can restart their heart instead."
+		When used on those resistant to electricity, it can restart their heart instead.<br><br>\
+		Self-use is instantaneous, but burns you badly."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
 	pointCost = 500
@@ -95,6 +96,8 @@
 
 	onEnd()
 		boutput(src.user, "<span class='alert'>You send a massive electrical surge through [src.target]'s body!</span>")
+		playsound(src.target, "sound/impact_sounds/Energy_Hit_3.ogg", 100)
+		playsound(src.target, "sound/effects/elec_bzzz.ogg", 25, TRUE)
 		src.target.emote("twitch_v")
 		src.particles.spawning = FALSE
 		src.target.add_fingerprint(src.user)

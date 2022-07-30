@@ -11,10 +11,9 @@
 
 	onAbilityStat()
 		..()
-		if (src.owner?.mind?.special_role == ROLE_ARCFIEND)
-			. = list()
-			.["Energy:"] = round(src.points)
-			.["Total:"] = round(src.lifetime_energy)
+		. = list()
+		.["Energy:"] = round(src.points)
+		.["Total:"] = round(src.lifetime_energy)
 
 	addPoints(add_points, target_ah_type = src.type)
 		src.lifetime_energy += add_points
@@ -24,8 +23,9 @@
 			if (H.sims)
 				H.sims.affectMotive("Thirst", points * 0.1)
 				H.sims.affectMotive("Hunger", points * 0.1)
-		src.updateText()
 		. = ..(points, target_ah_type)
+		src.updateText()
+		src.updateButtons()
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
