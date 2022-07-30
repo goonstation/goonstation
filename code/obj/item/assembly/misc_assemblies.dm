@@ -878,41 +878,48 @@ obj/item/assembly/radio_horn/receive_signal()
 
 
 //////////////////////////////////handmade shotgun shells//////////////////////////////////
+/datum/pipeshotrecipe
+	var/thingsneeded = null
+	var/obj/item/ammo/bullets/result = null
+	var/obj/item/accepteditem = null
+
+	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if (istype(craftingitem, accepteditem)) //success! items match
+
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You add the [craftingitem] to the [frame]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
+			src.thingsneeded --
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+
+			qdel(craftingitem)
+
+/datum/pipeshotrecipe/scrap
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/scrap/
+	accepteditem = /obj/item/raw_material/scrap_metal
+/datum/pipeshotrecipe/glass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/glass/
+	accepteditem = /obj/item/raw_material/shard
 
 /obj/item/assembly/makeshiftshell
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
-	var/thingsneeded = null //number of things still required to produce ammunition
-	var/crafttype = null
+
+	var/datum/pipeshotrecipie/recipe = null
 
 	attackby(obj/item/W, mob/user)
-		if (!crafttype)
+		if (!recipe) //no recipie? assign one
 			if (istype(W, /obj/item/raw_material/shard))
-				crafttype = "glass"
-				thingsneeded = 2
+				recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
-				crafttype = "scrap"
-				thingsneeded = 1
-
-		if((crafttype == "glass") && (istype(W, /obj/item/raw_material/shard)))
-			src.craftwith(W, src, user)
-		if((crafttype == "scrap") && (istype(W, /obj/item/raw_material/scrap_metal)))
-			src.craftwith(W, src, user)
+				recipe = new/datum/pipeshotrecipe/scrap
+		if(recipie) //probably a better way to do this but my feverish brain is not coming up with it
+			recipe.craftwith(W, src, user)
 		..()
 
-	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
-		src.thingsneeded --
-		if (thingsneeded > 0)
-			boutput(user, "<span class='notice'>You add the [craftingitem] to the [src]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
-
-		if (thingsneeded <= 0) //check completion and produce shells as needed
-			if (src.crafttype == "glass")
-				var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
-				qdel(frame)
-				user.put_in_hand_or_drop(shot)
-			if (src.crafttype == "scrap") //since there's only 1 required we won't need a type check
-				var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
-				qdel(frame)
-				user.put_in_hand_or_drop(shot)
-		qdel(craftingitem)
