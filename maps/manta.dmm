@@ -498,7 +498,7 @@
 /area/station/bridge)
 "abw" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -17445,16 +17445,6 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = -3;
-	rand_pos = 0
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = 11;
-	rand_pos = 0
-	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer)
 "aXP" = (
@@ -18883,10 +18873,6 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
-/obj/item/device/detective_scanner{
-	pixel_x = 6;
-	pixel_y = 6
-	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -31557,7 +31543,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 8;
 	pixel_y = 6
 	},
@@ -41515,9 +41501,6 @@
 	pixel_y = 20
 	},
 /obj/machinery/phone,
-/obj/item/device/detective_scanner{
-	rand_pos = 0
-	},
 /obj/noticeboard/persistent{
 	name = "Security persistent notice board";
 	persistent_id = "security"

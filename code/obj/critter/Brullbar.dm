@@ -105,7 +105,7 @@
 						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
 						src.left_arm_stage++
 
-						src.left_arm.quality = (src.quality + 150) / 350.0
+						src.left_arm.quality = (src.quality + 150) / 350
 						var/nickname = "king"
 						if (src.quality < 200)
 							nickname = src.quality_name
@@ -126,7 +126,7 @@
 						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
 						src.right_arm_stage++
 
-						src.right_arm.quality = (src.quality + 100) / 350.0
+						src.right_arm.quality = (src.quality + 100) / 350
 						var/nickname = "king"
 						if (src.quality < 200)
 							nickname = src.quality_name

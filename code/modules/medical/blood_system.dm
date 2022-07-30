@@ -841,8 +841,8 @@ this is already used where it needs to be used, you can probably ignore it.
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 0.0
-	throwforce = 0.0
+	force = 0
+	throwforce = 0
 	throw_range = 16
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1

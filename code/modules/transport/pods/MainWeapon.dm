@@ -203,7 +203,7 @@
 	name = "Rock Drilling Rig"
 	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
 	power_used = 100
-	weapon_score = 1.0
+	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
 	firerate = 10

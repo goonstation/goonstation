@@ -8,7 +8,7 @@
 	desc = "Well, shit."
 	organ_holder_name = "head"
 	organ_holder_location = "head"
-	organ_holder_required_op_stage = 0.0
+	organ_holder_required_op_stage = 0
 	var/scalp_op_stage = 0.0 // Needed to track a scalp gash (brain and skull removal) separately from op_stage (head removal)
 	icon = 'icons/mob/human_head.dmi'
 	icon_state = "invis" // we'll overlay some shit on here
@@ -370,30 +370,30 @@
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
-					src.right_eye.op_stage = 2.0
+					src.right_eye.op_stage = 2
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
-					src.left_eye.op_stage = 2.0
+					src.left_eye.op_stage = 2
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
 						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
 						"<span class='alert'>You cut [src] open with [W]!</span>")
-						src.brain.op_stage = 1.0
-					else if (src.brain.op_stage == 2.0)
+						src.brain.op_stage = 1
+					else if (src.brain.op_stage == 2)
 						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
 						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
-						src.brain.op_stage = 3.0
+						src.brain.op_stage = 3
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
 					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
-					src.skull.op_stage = 1.0
+					src.skull.op_stage = 1
 				else
 					return ..()
 
@@ -404,7 +404,7 @@
 						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
-						src.brain.op_stage = 2.0
+						src.brain.op_stage = 2
 					else if (src.brain.op_stage == 3.0)
 						playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
@@ -428,19 +428,19 @@
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
-					src.right_eye.op_stage = 1.0
+					src.right_eye.op_stage = 1
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
-					src.left_eye.op_stage = 1.0
-				else if (src.right_eye && src.right_eye.op_stage == 2.0 && user.find_in_hand(W) == user.r_hand)
+					src.left_eye.op_stage = 1
+				else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
-				else if (src.left_eye && src.left_eye.op_stage == 2.0 && user.find_in_hand(W) == user.l_hand)
+				else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
@@ -488,8 +488,8 @@
 			// rebuild, start with a human head
 			src.name = "head"
 			src.desc = "Well, shit."
-			src.organ_holder_required_op_stage = 0.0
-			src.scalp_op_stage = 0.0
+			src.organ_holder_required_op_stage = 0
+			src.scalp_op_stage = 0
 			src.head_type = mutant_race
 
 			// then set the head icon

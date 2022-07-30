@@ -1067,7 +1067,7 @@ obj/effects/bees
 particles/swarm/bees
 	icon = 'icons/misc/bee.dmi'
 	icon_state = list("mini-bee"=1, "mini-bee2"=1)
-	friction = 0.10
+	friction = 0.1
 	count = 10
 	spawning = 0.35
 	fade = 5

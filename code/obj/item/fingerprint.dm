@@ -107,7 +107,7 @@
 	name = "Finger Print Card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "fingerprint0"
-	amount = 10.0
+	amount = 10
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throwforce = 1

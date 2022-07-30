@@ -7,7 +7,7 @@
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 
@@ -488,7 +488,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	/// compatible machines with a matching id will be activated
 	var/id = null
 	var/active = FALSE
-	anchored = 1.0
+	anchored = 1
 
 	proc/activate()
 		return
@@ -574,7 +574,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = POD_ACCESS_STANDARD
-	anchored = 1.0
+	anchored = 1
 	var/datum/light/light
 
 	syndicate

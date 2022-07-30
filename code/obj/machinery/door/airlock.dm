@@ -194,8 +194,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/has_panel = 1
 	var/hackMessage = ""
 	var/net_access_code = null
-        /// Set nameOverride to FALSE to stop New() from overwriting door name with Area name
-	var/nameOverride = TRUE
 
 	var/no_access = 0
 
@@ -206,7 +204,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	New()
 		..()
-		if(!isrestrictedz(src.z) && nameOverride)
+		if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 			var/area/station/A = get_area(src)
 			src.name = A.name
 		src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
@@ -1199,94 +1197,17 @@ About the new airlock wires panel:
 	if(!prob(prb))
 		return 0 //you lucked out, no shock for you
 
-	var/net = get_connection()		// find the powernet of the connected cable
+	var/net = get_connection() //find the powernet of the connected cable
 
-	if(!net)		// cable is unpowered
+	if(!net) // cable is unpowered
 		return 0
 
-
-	//if (src.airlockelectrocute(user, net))
-		//return 1
-	/// cogwerks: unifying this with cabl electrocution
-	//var/atom/A = src
 	if(src.electrocute(user, prb, net))
 		return 1
 
 	else
 		return 0
 
-/obj/machinery/door/airlock/proc/airlockelectrocute(mob/user, netnum) // cogwerks - this should be commented out or removed later but i am too tired right now
-	//You're probably getting shocked deal w/ it
-
-	if(!netnum || can_shock)		// unconnected cable is unpowered or the door is unable to shock
-		return 0
-
-	var/prot = 1
-
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-
-		if(H.gloves && H.gloves.hasProperty("conductivity"))
-			var/obj/item/clothing/gloves/G = H.gloves
-			prot = G.getProperty("conductivity")
-
-	else if (issilicon(user))
-		return 0
-
-	if(prot <= 0.29)		// elec insulted gloves protect completely
-		return 0
-
-	//ok you're getting shocked now
-	var/datum/powernet/PN			// find the powernet
-	if(powernets && powernets.len >= netnum)
-		PN = powernets[netnum]
-
-	elecflash(user,power = 2)
-
-	var/shock_damage = 0
-	if(PN.avail > 750000)	//someone juiced up the grid enough, people going to die!
-		shock_damage = min(rand(70,145),rand(70,145))*prot
-	else if(PN.avail > 100000)
-		shock_damage = min(rand(35,110),rand(35,110))*prot
-	else if(PN.avail > 75000)
-		shock_damage = min(rand(30,100),rand(30,100))*prot
-	else if(PN.avail > 50000)
-		shock_damage = min(rand(25,90),rand(25,90))*prot
-	else if(PN.avail > 25000)
-		shock_damage = min(rand(20,80),rand(20,80))*prot
-	else if(PN.avail > 10000)
-		shock_damage = min(rand(20,65),rand(20,65))*prot
-	else
-		shock_damage = min(rand(20,45),rand(20,45))*prot
-
-//		message_admins("<span class='internal'><B>ADMIN: </B>DEBUG: shock_damage = [shock_damage] PN.avail = [PN.avail] user = [user] netnum = [netnum]</span>")
-
-	if (user.bioHolder.HasEffect("resist_electric_heal"))
-		var/healing = 0
-		if (shock_damage)
-			healing = shock_damage / 3
-		user.HealDamage("All", healing, healing)
-		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
-		return
-	else if (user.bioHolder.HasEffect("resist_electric"))
-		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
-		return
-
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
-	user.unlock_medal("HIGH VOLTAGE", 1)
-	if (isliving(user))
-		var/mob/living/L = user
-		L.Virus_ShockCure(33)
-		L.shock_cyberheart(33)
-	sleep(0.1 SECONDS)
-	if(user.getStatusDuration("stunned") < shock_damage * 10) user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 10) user.changeStatus("weakened", prot SECONDS)
-	for(var/mob/M in AIviewers(src))
-		if(M == user)	continue
-		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
-	return 1
 
 /obj/machinery/door/airlock/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling ? !density : density)
@@ -1536,7 +1457,7 @@ About the new airlock wires panel:
 		ui_interact(user)
 		interact_particle(user,src)
 
-	//clicking with no access, door closed, and help intent, and panel closed to knock
+	//clicking with no access, door closed, and help intent to knock
 	else if (!src.allowed(user) && (user.a_intent == INTENT_HELP) && src.density && src.requiresID())
 		knockOnDoor(user)
 		return //Opening the door just because knocks are on cooldown is rude!

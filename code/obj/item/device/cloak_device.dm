@@ -4,10 +4,10 @@
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
 	uses_multiple_icon_states = 1
-	var/active = 0.0
+	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL

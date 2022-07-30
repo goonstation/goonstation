@@ -265,7 +265,7 @@
 	icon_state = "guitar"
 	item_state = "guitar"
 	two_handed = 1
-	force = 10.0
+	force = 10
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0

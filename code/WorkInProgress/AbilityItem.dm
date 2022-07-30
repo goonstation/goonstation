@@ -120,16 +120,13 @@
 		..()
 
 
-/obj/ability_button/labcoat_toggle
+/obj/ability_button/coat_toggle
 	name = "(Un)Button Coat"
 	icon_state = "labcoat"
 
 	execute_ability()
-		var/obj/item/clothing/suit/labcoat/W = the_item
-		if(W.buttoned)
-			W.unbutton()
-		else
-			W.button()
+		var/obj/item/clothing/suit/W = the_item
+		W.AttackSelf(the_mob)
 		..()
 
 /obj/ability_button/hood_toggle
@@ -797,6 +794,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 	flags = NOSPLASH
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0
