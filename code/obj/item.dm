@@ -38,7 +38,7 @@
 	var/force = 0
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1
-	var/r_speed = 1.0
+	var/r_speed = 1
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
@@ -985,7 +985,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (2.0)
+		if (2)
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -994,7 +994,7 @@
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-		if (3.0)
+		if (3)
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)

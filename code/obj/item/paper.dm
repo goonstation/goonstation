@@ -538,7 +538,7 @@ ASC: Aux. Solar Control<BR>
 	icon_state = "flag_neutral"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
@@ -1058,7 +1058,7 @@ as it may become compromised.
 /obj/item/paper/photograph
 	name = "photo"
 	icon_state = "photo"
-	var/photo_id = 0.0
+	var/photo_id = 0
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -1151,7 +1151,7 @@ as it may become compromised.
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
 	uses_multiple_icon_states = 1
-	amount = 10.0
+	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL

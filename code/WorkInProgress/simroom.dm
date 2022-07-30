@@ -193,8 +193,8 @@
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null
-	var/time = 30.0
-	var/timing = 0.0
+	var/time = 30
+	var/timing = 0
 	var/last_tick = 0
 	//var/emagged = 0
 

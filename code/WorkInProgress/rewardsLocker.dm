@@ -1377,7 +1377,7 @@ datum/achievementReward/ai_dwaine
 	name = "shelterbee"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "shelterbee"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1442,7 +1442,7 @@ datum/achievementReward/ai_dwaine
 	name = "smug"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "smug"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 

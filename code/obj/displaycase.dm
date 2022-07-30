@@ -170,7 +170,7 @@
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "gun"
-	force = 1.0
+	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
 	var/stability = 10
 

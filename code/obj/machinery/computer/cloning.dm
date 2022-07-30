@@ -425,7 +425,7 @@ proc/find_ghost_by_key(var/find_key)
 	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null

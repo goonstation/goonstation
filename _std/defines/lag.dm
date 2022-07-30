@@ -41,7 +41,7 @@
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
 /// where to start ticklag if many players present
-#define SEMIOVERLOADED_WORLD_TICKLAG 1.0
+#define SEMIOVERLOADED_WORLD_TICKLAG 1
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW

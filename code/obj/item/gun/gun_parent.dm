@@ -11,7 +11,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	item_state = "gun"
 	m_amt = 2000
-	force = 10.0
+	force = 10
 	throwforce = 5
 	health = 7
 	w_class = W_CLASS_NORMAL

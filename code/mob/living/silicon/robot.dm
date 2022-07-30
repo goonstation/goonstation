@@ -849,12 +849,12 @@
 
 		var/damage = 0
 		switch(severity)
-			if(1.0)
+			if(1)
 				SPAWN(1 DECI SECOND)
 					src.gib(1)
 				return
-			if(2.0) damage = 40
-			if(3.0) damage = 20
+			if(2) damage = 40
+			if(3) damage = 20
 
 		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -2253,7 +2253,7 @@
 			if("Low")
 				vocal_pitch = 0.9
 			if("Medium")
-				vocal_pitch = 1.0
+				vocal_pitch = 1
 			if("High")
 				vocal_pitch = 1.25
 
@@ -2407,7 +2407,7 @@
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
 		src.lying = 0
 		src.set_density(1)
-		if(src.stat) src.camera.camera_status = 0.0
+		if(src.stat) src.camera.camera_status = 0
 
 	use_power()
 		..()

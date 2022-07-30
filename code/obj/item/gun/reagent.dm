@@ -117,7 +117,7 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 4.0
+	force = 4
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
 	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
@@ -205,7 +205,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 	name = "ectoblaster"
 	icon_state = "ecto0"
 	ammo_reagents = list("ectoplasm")
-	force = 7.0
+	force = 7
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()

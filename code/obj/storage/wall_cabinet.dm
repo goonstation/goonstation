@@ -6,9 +6,9 @@
 	icon_state = "wall"
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
-	force = 8.0
+	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	mats = 8
 	deconstruct_flags = DECON_SIMPLE

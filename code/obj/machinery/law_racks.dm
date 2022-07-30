@@ -205,13 +205,13 @@
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				changeHealth(rand(-105,-90),"explosion severity [severity]")
 				return
-			if(2.0)
+			if(2)
 				changeHealth(rand(-80,-50),"explosion severity [severity]")
 				return
-			if(3.0)
+			if(3)
 				changeHealth(rand(-30,-10),"explosion severity [severity]")
 				return
 

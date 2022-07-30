@@ -320,7 +320,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0.0
+			src.donor.butt_op_stage = 0
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -611,7 +611,7 @@
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4.0
+				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt

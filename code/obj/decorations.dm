@@ -46,7 +46,7 @@
 	name = "Tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
-	icon_state = "tree" // changed from 0.0
+	icon_state = "tree" // changed from 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -1282,8 +1282,8 @@ obj/decoration/gibberBroken
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "table_parts"
 	density = 1
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL

@@ -996,7 +996,7 @@ datum
 
 				// weigh contribution of each reagent to the average color by amount present and it's transparency
 
-				var/weight = current_reagent.volume * current_reagent.transparency / 255.0
+				var/weight = current_reagent.volume * current_reagent.transparency / 255
 				total_weight += weight
 
 				average.r += weight * current_reagent.fluid_r

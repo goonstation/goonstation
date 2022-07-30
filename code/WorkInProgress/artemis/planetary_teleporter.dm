@@ -89,7 +89,7 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	w_class = W_CLASS_SMALL
 	var/ship_id = "artemis"
 	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null

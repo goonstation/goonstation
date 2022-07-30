@@ -60,7 +60,7 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 
-	var/last_b_state = 1.0
+	var/last_b_state = 1
 
 	var/chest_cavity_open = 0
 	var/obj/item/chest_item = null	// Item stored in chest cavity

@@ -204,14 +204,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				for(var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				src.take_damage(rand(100,120))
-			if(2.0)
+			if(2)
 				src.take_damage(rand(40,80))
-			if(3.0)
+			if(3)
 				src.take_damage(rand(20,40))
 		return
 

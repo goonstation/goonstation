@@ -134,7 +134,7 @@
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	brightness = 0.33
@@ -211,7 +211,7 @@
 	icon_state = "glowstick-green0"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	color_name = "green"
@@ -288,7 +288,7 @@
 	desc = "A regular emergency glowstick edgy and red!"
 	col_r = 0.9
 	col_g = 0.1
-	col_b = 0.0
+	col_b = 0
 	color_name = "red"
 
 /obj/item/device/light/candle
@@ -303,7 +303,7 @@
 	icon_on = "candle"
 	col_r = 0.5
 	col_g = 0.3
-	col_b = 0.0
+	col_b = 0
 
 	attack_self(mob/user as mob)
 		if (src.on)

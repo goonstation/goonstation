@@ -370,17 +370,17 @@ obj/machinery/atmospherics/pipe
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
-				if(1.0)
+				if(1)
 					if(prob(5))
 						qdel(src)
 					else
 						rupture(destroy=TRUE)
-				if(2.0)
+				if(2)
 					if(prob(10))
 						rupture(destroy=TRUE)
 					else
 						rupture()
-				if(3.0)
+				if(3)
 					if (prob(50))
 						rupture()
 			return
