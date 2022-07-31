@@ -2216,7 +2216,7 @@
 
 	onAdd(mob/hacker, custom_orders)
 		. = ..()
-		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [his_or_her(hacker)]."
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
 		var/mob/M = owner
 		if (M.mind && ticker.mode)
 			if (!M.mind.special_role)
