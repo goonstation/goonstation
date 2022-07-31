@@ -205,7 +205,7 @@ export const BioEffect = (props, context) => {
             Check Stability
           </Button>
         )}
-        {haveDevice(equipmentCooldown, "Reclaimer") && (isStorage || isActive) && !!canReclaim && (
+        {haveDevice(equipmentCooldown, "Reclaimer") && activeOrStorage && !!canReclaim && (
           <Button
             disabled={onCooldown(equipmentCooldown, "Reclaimer")}
             icon="times"
