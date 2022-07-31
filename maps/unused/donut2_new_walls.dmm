@@ -23818,7 +23818,7 @@
 "blm" = (
 /obj/rack,
 /obj/item/clothing/mask/horse_mask,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/market)
 "bln" = (
 /obj/cable{
@@ -23826,7 +23826,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/market)
 "blp" = (
 /turf/simulated/floor,
@@ -23843,7 +23843,9 @@
 	name = "Door Toggle";
 	pixel_y = 22
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 9
+	},
 /area/station/crew_quarters/market)
 "blt" = (
 /obj/rack,
@@ -23852,7 +23854,9 @@
 	pixel_x = -31
 	},
 /obj/random_item_spawner/hat/two,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 5
+	},
 /area/station/crew_quarters/market)
 "blu" = (
 /obj/cable,
@@ -24173,7 +24177,7 @@
 	icon_state = "tube1"
 	},
 /obj/random_item_spawner/dressup/two,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/arcade/blank,
 /area/station/crew_quarters/market)
 "bmo" = (
 /obj/stool/bench/auto,
@@ -24187,7 +24191,11 @@
 	},
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 4
+	},
 /area/station/crew_quarters/market)
 "bmq" = (
 /obj/disposalpipe/segment/mail,
@@ -24444,14 +24452,16 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/market)
 "bmX" = (
 /obj/stool,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 4
+	},
 /area/station/crew_quarters/market)
 "bmY" = (
 /obj/cable{
@@ -24742,7 +24752,9 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 10
+	},
 /area/station/crew_quarters/market)
 "bnT" = (
 /obj/cable{
@@ -24751,7 +24763,9 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/turf/simulated/floor,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 6
+	},
 /area/station/crew_quarters/market)
 "bnU" = (
 /obj/cable{
@@ -24983,6 +24997,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
+/obj/stool/neon,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "boA" = (
@@ -24996,6 +25011,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/stool/bar,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "boB" = (
@@ -25015,6 +25031,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/neonretro{
+	pixel_y = 33
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -25224,10 +25243,6 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bpn" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/market)
 "bpo" = (
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -25690,13 +25705,6 @@
 /obj/machinery/light/emergency{
 	dir = 8;
 	icon_state = "ebulb1"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
-"bqJ" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_x = -1
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -28350,6 +28358,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/stool/wooden,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "byb" = (
@@ -37118,6 +37127,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/north)
+"hbK" = (
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24;
+	pixel_y = 8
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
 "hbS" = (
 /obj/storage/crate,
 /obj/item/body_bag,
@@ -39004,16 +39021,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"jAK" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "jBd" = (
 /turf/simulated/floor,
 /area/station/science/testchamber)
@@ -41028,12 +41035,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lYf" = (
@@ -41576,7 +41577,9 @@
 	name = "Public Market";
 	opacity = 0
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
 /area/station/crew_quarters/market)
 "mHx" = (
 /turf/simulated/floor/green/side{
@@ -41913,7 +41916,9 @@
 /obj/decal/poster/wallsign/mantaposter{
 	pixel_y = 32
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
 /area/station/crew_quarters/market)
 "mVH" = (
 /obj/machinery/door_control{
@@ -43071,6 +43076,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
+"orn" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade/blank,
+/area/station/crew_quarters/market)
 "orp" = (
 /obj/decal/cleanable/leaves,
 /turf/simulated/floor/grass,
@@ -44763,6 +44776,9 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/item/plant/flower/rose{
+	name = "Rose of Demeter"
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "qvi" = (
@@ -44949,6 +44965,20 @@
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
+"qIZ" = (
+/obj/table/wood/auto,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/item/plant/flower/rose{
+	name = "Rose of Apollo"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "qKs" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -45485,6 +45515,10 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rwt" = (
@@ -46080,6 +46114,14 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/decal/poster/wallsign/poster_beach{
+	pixel_y = 35;
+	pixel_x = 3
+	},
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_x = -4;
+	pixel_y = 42
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "skf" = (
@@ -46248,6 +46290,11 @@
 	},
 /turf/space,
 /area/space)
+"spl" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/market)
 "spC" = (
 /obj/cable{
 	d1 = 4;
@@ -47971,6 +48018,10 @@
 "umW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/donkpocket_kit,
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "unj" = (
@@ -48076,6 +48127,14 @@
 	},
 /turf/space,
 /area/station/science/lab)
+"uvr" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/market)
 "uvz" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -48360,6 +48419,10 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -50584,6 +50647,10 @@
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
+"xDC" = (
+/obj/stool/wooden,
+/turf/simulated/floor,
+/area/station/crew_quarters/market)
 "xEd" = (
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
@@ -50870,6 +50937,14 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
+/area/station/crew_quarters/bar)
+"xWQ" = (
+/obj/machinery/firealarm{
+	pixel_y = 64;
+	text = "NF";
+	pixel_x = 32
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "xWR" = (
 /obj/machinery/power/data_terminal,
@@ -70089,7 +70164,7 @@ bGd
 ghL
 faf
 reb
-jAK
+reb
 vkL
 rRw
 rRw
@@ -73396,7 +73471,7 @@ ygD
 bwR
 bro
 uFT
-bqD
+xWQ
 bmh
 jne
 fuh
@@ -73706,7 +73781,7 @@ yll
 gZv
 wny
 mpj
-bli
+hbK
 vkj
 btx
 teD
@@ -75212,8 +75287,8 @@ bkf
 bkf
 bkf
 bkf
-bki
-bpn
+bkf
+bkj
 bkj
 bhm
 mGp
@@ -75812,8 +75887,8 @@ bhV
 aFq
 azQ
 rXn
-bln
-bln
+orn
+uvr
 bln
 bnQ
 boA
@@ -76423,7 +76498,7 @@ uZn
 boB
 blp
 bki
-bqJ
+bhm
 mGp
 bsD
 btx
@@ -77323,8 +77398,8 @@ adQ
 aaa
 bkf
 bls
-blp
-blp
+spl
+spl
 bnS
 bya
 blp
@@ -77628,7 +77703,7 @@ blt
 bmp
 bmX
 bnT
-blp
+xDC
 blp
 bkj
 bhm
@@ -93572,7 +93647,7 @@ aaa
 aaa
 aaa
 aFi
-quQ
+qIZ
 ayz
 azp
 aAx
