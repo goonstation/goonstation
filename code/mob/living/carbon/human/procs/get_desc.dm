@@ -381,7 +381,7 @@
 	. += "<br><span class='notice'>*---------*</span>"
 
 	if (get_dist(usr, src) < 4)
-		if (!isnull(GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))
+		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br><span class='alert'>You analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)
