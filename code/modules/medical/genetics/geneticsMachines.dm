@@ -706,7 +706,11 @@
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
-				subject.bioHolder.RemovePoolEffect(E)
+				subject.bioHolder.RemoveEffect(E.id)
+				E.owner = null
+				E.holder = null
+				saved_mutations -= E
+				qdel(E)
 			playsound(src, "sound/machines/pc_process.ogg", 50, 1)
 			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
 		if("save")
