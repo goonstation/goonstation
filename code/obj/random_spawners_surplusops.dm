@@ -118,15 +118,15 @@
 		/obj/item/rods/steel,
 		/obj/item/quarterstaff)
 
-
 //utility
 /obj/random_item_spawner/surplus/grenades
 	min_amt2spawn = 3
 	max_amt2spawn = 4
-	items2spawn = list(/obj/item/chem_grenade/incendiary,
+	items2spawn = list(
+		/obj/item/chem_grenade/incendiary,
 		/obj/item/chem_grenade/very_incendiary,
 		/obj/item/chem_grenade/flashbang,
-		/obj/item/chem_grenade/napalm, //I am very much so aware that this does nothing without a light
+		/obj/item/chem_grenade/napalm, //I am very much aware that this does nothing without a light, but that opens the door up for gamer plays
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/old_grenade/stinger,
 		/obj/item/old_grenade/high_explosive,
@@ -145,19 +145,18 @@
 
 
 /obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
-		amt2spawn = 1
-		items2spawn = list(
-			/obj/item/device/chameleon,
-			/obj/item/storage/backpack/chameleon,
-			/obj/item/radiojammer,
-			/obj/item/clothing/suit/armor/sneaking_suit,
-			/obj/item/pen/sleepypen,
-			/datum/syndicate_buylist/generic/trickcigs,
-			/obj/item/voice_changer,
-			/obj/item/clothing/suit/cardboard_box
-			)
-		rare_items2spawn = list(/obj/item/device/powersink,
-			)
+	amt2spawn = 1
+	items2spawn = list(
+		/obj/item/device/chameleon,
+		/obj/item/storage/backpack/chameleon,
+		/obj/item/radiojammer,
+		/obj/item/clothing/suit/armor/sneaking_suit,
+		/obj/item/pen/sleepypen,
+		/datum/syndicate_buylist/generic/trickcigs,
+		/obj/item/voice_changer,
+		/obj/item/clothing/suit/cardboard_box)
+
+	rare_items2spawn = list(/obj/item/device/powersink)
 /*/obj/random_item_spawner/surplus/backup
 
 /obj/random_item_spawner/surplus/entry emag, can of explosive, knocker rounds, breaching charges, one mprt
@@ -166,21 +165,28 @@
 
 /obj/random_item_spawner/surplus/storage*/
 /obj/random_item_spawner/surplus/healing
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/donkpocket_w,
-	/obj/item/storage/firstaid/crit,
-	/obj/item/storage/firstaid/fire,
-	/obj/item/storage/firstaid/brute,
-	/obj/item/storage/firstaid/regular,
-	/obj/item/storage/firstaid/regular/emergency,
-	/obj/item/canned_laughter, //you know what they say about laughter and medicine
-	/obj/item/canned_laughter,
-	/obj/item/storage/firstaid/old,
-	/obj/item/item_box/medical_patches/mini_synthflesh,
-	/obj/item/item_box/medical_patches/mini_styptic,
-	/obj/item/item_box/medical_patches/mini_silver_sulf,
-	/obj/item/storage/pill_bottle/salicylic_acid,
-	/obj/item/storage/pill_bottle/menthol
-	//add funny hypospray here/nukie injectors
-	)
+	items2spawn = list(
+		///obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/storage/firstaid/crit,
+		/obj/item/storage/firstaid/fire,
+		/obj/item/storage/firstaid/brute,
+		/obj/item/storage/firstaid/regular,
+		/obj/item/storage/firstaid/regular/emergency,
+		/obj/item/canned_laughter, //you know what they say about laughter and medicine
+		/obj/item/canned_laughter,
+		/obj/item/storage/firstaid/old,
+		/obj/item/item_box/medical_patches/mini_synthflesh,
+		/obj/item/item_box/medical_patches/mini_styptic,
+		/obj/item/item_box/medical_patches/mini_silver_sulf,
+		/obj/item/storage/pill_bottle/salicylic_acid,
+		/obj/item/storage/pill_bottle/menthol)
+		//add funny hypospray here/nukie injectors
+
 	rare_items2spawn = list(/obj/item/storage/box/donkpocket_w_kit,
 	/obj/item/storage/firstaid/regular/doctor_spawn)
+
+	spawn_items()
+		SPAWN(1 DECI SECOND)
+			var/obj/new_item = pick(items2spawn)
+			new new_item(src.loc)
+			qdel(src)

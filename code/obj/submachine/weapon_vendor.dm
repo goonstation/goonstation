@@ -277,9 +277,9 @@
 	path = /obj/surplusopspawner/loadout_shortgun_spawner
 	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and change."
 
-/datum/materiel/loadout/melee
+/datum/materiel/loadout/melee //unfathomably cringe
 	name = "Attack item"
-	path = /obj/surplusopspawner/loadout_melee_spawner
+	path = /obj/surplusopspawner/melee_item_spawner
 	description = "Item of attack is with hand in hand combat. For those whom are not wishing of allow gun to be in hand of pig-dogs. Bonus deal of many partial refund."
 
 /datum/materiel/ammo/plinking
@@ -310,7 +310,7 @@
 	path = /obj/random_item_spawner/surplus/energycells
 	description = "These bullets is confusing, for they is not of bullet, but little square."
 
-/datum/materiel/utility/healing
+/datum/materiel/utility/healing //cringe
 	name = "items of healing"
 	path = /obj/random_item_spawner/surplus/healing
 	description = "good for keeping alive. Cannot make them not dead."
