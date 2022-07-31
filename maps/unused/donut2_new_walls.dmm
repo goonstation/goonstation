@@ -17738,10 +17738,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Break Room";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -23818,6 +23816,10 @@
 "blm" = (
 /obj/rack,
 /obj/item/clothing/mask/horse_mask,
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/market)
 "bln" = (
@@ -24998,6 +25000,9 @@
 	pixel_y = 0
 	},
 /obj/stool/neon,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "boA" = (
@@ -26660,6 +26665,9 @@
 	},
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -35766,6 +35774,13 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/bar)
+"fvG" = (
+/obj/disposalpipe/segment,
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "fvM" = (
 /obj/cable{
 	d1 = 1;
@@ -38514,6 +38529,11 @@
 	dir = 6
 	},
 /area/station/engine/inner)
+"iVX" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/rollingpin,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "iWz" = (
 /obj/cable{
 	d1 = 2;
@@ -39048,6 +39068,7 @@
 /area/station/mining/staff_room)
 "jDu" = (
 /obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/cookbook,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jEI" = (
@@ -42125,6 +42146,7 @@
 	network = "Armory Perimeter";
 	tag = ""
 	},
+/obj/random_item_spawner/snacks/one,
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ngz" = (
@@ -45533,6 +45555,12 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor,
 /area/station/maintenance/southwest)
+"rwP" = (
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "rxi" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
@@ -48378,6 +48406,7 @@
 /area/station/ai_monitored/armory)
 "uLH" = (
 /obj/storage/closet/wardrobe/black/formalwear,
+/obj/item/clothing/suit/apron,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "uMP" = (
@@ -50649,6 +50678,9 @@
 	})
 "xDC" = (
 /obj/stool/wooden,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "xEd" = (
@@ -68041,7 +68073,7 @@ tgP
 xOv
 nNs
 ixk
-jDu
+iVX
 gHn
 eOq
 gmL
@@ -70164,7 +70196,7 @@ bGd
 ghL
 faf
 reb
-reb
+fvG
 vkL
 rRw
 rRw
@@ -73483,7 +73515,7 @@ brG
 bik
 btx
 kyl
-wQE
+rwP
 wQE
 wQE
 wQE
@@ -73788,7 +73820,7 @@ teD
 sOV
 wQE
 wQE
-wQE
+rwP
 rwt
 btx
 bzg
