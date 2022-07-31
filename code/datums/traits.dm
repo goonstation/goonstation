@@ -456,6 +456,24 @@
 		if(owner.bioHolder && !owner.bioHolder.HasEffect("bad_eyesight"))
 			owner.bioHolder.AddEffect("bad_eyesight", 0, 0, 0, 1)
 
+/obj/trait/missing_left_eye
+	name = "Missing Left Eye (0) \[Vision\]"
+	cleanName = "Missing Left Eye"
+	desc = "Missing your left eye gives you no tactical advantage whatsoever."
+	id = "missingeyeL"
+	icon_state = "missingeyeL"
+	category = list("vision")
+	points = 0
+
+/obj/trait/missing_right_eye
+	name = "Missing Right Eye (0) \[Vision\]"
+	cleanName = "Missing Right Eye"
+	desc = "Kept you waiting, huh?"
+	id = "missingeyeR"
+	icon_state = "missingeyeR"
+	category = list("vision")
+	points = 0
+
 /obj/trait/blind
 	name = "Blind (+2)"
 	cleanName = "Blind"
