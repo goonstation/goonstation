@@ -1518,7 +1518,7 @@
 					else
 						if (iswizard(src) && prob(10))
 							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
-							src.say("GHEIT DAUN!")
+							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
 							SPAWN(0) // some movement to make it look cooler
@@ -1740,7 +1740,7 @@
 								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
 							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
-								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
+								src.remove_stamina(STAMINA_FLIP_COST * 2)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
@@ -1899,7 +1899,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1915,7 +1915,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1940,7 +1940,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1973,7 +1973,7 @@
 								for (var/obj/item/storage/toilet/T in src.loc)
 									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
 									src.urine = 0
-									T.clogged += 0.10
+									T.clogged += 0.1
 									break
 							else
 								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"

@@ -254,7 +254,7 @@ var/list/miningModifiers = list()
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid)
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)

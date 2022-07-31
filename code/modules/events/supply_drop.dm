@@ -174,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1

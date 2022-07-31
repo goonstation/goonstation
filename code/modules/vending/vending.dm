@@ -98,7 +98,7 @@
 	var/pay = 0 // Does this vending machine require money?
 	var/acceptcard = 1 // does the machine accept ID swiping?
 	var/credit = 0 //How much money is currently in the machine?
-	var/profit = 0.90 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
+	var/profit = 0.9 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
 
 	var/HTML = null // guh
 	var/vending_HTML = null // buh
@@ -234,14 +234,14 @@
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				SPAWN(0)
 					src.malfunction()
@@ -810,6 +810,7 @@
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 5 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
+		logTheThing("combat", src, victim, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
 		if (src.layer < victim.layer)
@@ -2488,8 +2489,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	electrocute(mob/user, netnum)
 		..()
-		playsound(src.loc, sound_laugh, 65, 1)
-		speak("Ha ha ha ha ha!")
+		if(!ON_COOLDOWN(src, "zoldorf_laugh", 5 SECONDS))
+			playsound(src.loc, sound_laugh, 65, 1)
+			speak("Ha ha ha ha ha!")
 		return
 
 	attackby(obj/item/weapon, mob/user) //pretty much just player zoldorf stuffs :)

@@ -7,20 +7,20 @@
 /datum/wage_system
 
 	// Stations budget
-	var/station_budget = 0.0
-	var/shipping_budget = 0.0
-	var/research_budget = 0.0
-	var/payroll_stipend = 0.0
+	var/station_budget = 0
+	var/shipping_budget = 0
+	var/research_budget = 0
+	var/payroll_stipend = 0
 
 	var/list/jobs = new/list()
 
 	var/pay_active = 1
 	var/lottery_active = 0		// inactive until someone actually buys a ticket
-	var/time_between_paydays = 0.0
-	var/time_until_payday = 0.0
+	var/time_between_paydays = 0
+	var/time_until_payday = 0
 
-	var/time_between_lotto = 0.0
-	var/time_until_lotto = 0.0
+	var/time_between_lotto = 0
+	var/time_until_lotto = 0
 
 	// We'll start at 0 credits, and increase it in the lotteryday proc
 	var/lotteryJackpot = 0
@@ -46,16 +46,16 @@
 			// If its not already in the list add it
 			if (!(jobs.Find(occupation)))
 				// 0.0 is the default wage
-				jobs[occupation] = 0.0
+				jobs[occupation] = 0
 
 		for(var/occupation in assistant_occupations)
 			// If its not already in the list add it
 			if (!(jobs.Find(occupation)))
 				// 0.0 is the default wage
-				jobs[occupation] = 0.0
+				jobs[occupation] = 0
 
 		// Captain isn't in the occupation list
-		jobs["Captain"] = 0.0
+		jobs["Captain"] = 0
 
 		default_wages()
 

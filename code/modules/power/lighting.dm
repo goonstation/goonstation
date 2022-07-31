@@ -861,13 +861,13 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(75))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(50))
 				broken()
 	return
@@ -1100,7 +1100,7 @@
 		icon_state = "itube-purple"
 		base_state = "itube-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool
@@ -1266,7 +1266,7 @@
 		icon_state = "ibulb-purple"
 		base_state = "ibulb-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool

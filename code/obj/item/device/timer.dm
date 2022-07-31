@@ -2,8 +2,8 @@
 	name = "timer"
 	icon_state = "timer0"
 	item_state = "electronic"
-	var/timing = 0.0
-	var/time = 0
+	var/timing = 0
+	var/time = null
 	var/last_tick = 0
 	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0

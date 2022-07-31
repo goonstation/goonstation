@@ -10,8 +10,8 @@
 	layer = EFFECTS_LAYER_UNDER_1
 	var/c_tag = null
 	var/c_tag_order = 999
-	var/camera_status = 1.0
-	anchored = 1.0
+	var/camera_status = 1
+	anchored = 1
 	var/invuln = null
 	var/last_paper = 0
 	///Cameras only the AI can see through

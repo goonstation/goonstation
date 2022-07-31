@@ -2,7 +2,7 @@
 	name = "Proximity Sensor"
 	icon_state = "motion0"
 	var/armed = FALSE
-	var/timing = 0.0
+	var/timing = FALSE
 	var/time = 0
 	var/last_tick = null
 	var/const/max_time = 600 SECONDS

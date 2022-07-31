@@ -891,7 +891,7 @@
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE

@@ -640,6 +640,9 @@
 			if (!(O.type in mining_controls.magnet_do_not_erase))
 				qdel(O)
 		for (var/turf/simulated/T in mining_controls.magnet_area.contents)
+			var/datum/client_image_group/cig = get_image_group(T) //clear out scan results
+			for(var/image/i in cig.images)
+				cig.remove_image(i)
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
 				T.ReplaceWithSpace()
 				//qdel(T)
@@ -876,6 +879,7 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
+	default_material = "rock"
 	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall, /obj/machinery/door/poddoor/blast/asteroid)
 
 #ifdef UNDERWATER_MAP
@@ -1052,11 +1056,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_asteroid(7)
-			if(2.0)
+			if(2)
 				src.damage_asteroid(5)
-			if(3.0)
+			if(3)
 				src.damage_asteroid(3)
 		return
 
@@ -2062,6 +2066,10 @@ obj/item/clothing/gloves/concussive
 	var/datum/ore/O
 	var/datum/ore/event/E
 	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
+		//clear out any scanning images if there are any
+		var/datum/client_image_group/cig = get_image_group(T)
+		for(var/image/i in cig.images)
+			cig.remove_image(i)
 		stone++
 		O = AST.ore
 		E = AST.event
@@ -2094,13 +2102,12 @@ obj/item/clothing/gloves/concussive
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	user << O
+	var/datum/client_image_group/cig = get_image_group(T)
+	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
+	cig.add_image(O)
+
 	SPAWN(2 MINUTES)
-		if (user?.client)
-			user.client.images -= O
-			user.client.screen -= O
-		qdel (O)
-		O = null
+		cig.remove_mob(user)
 
 ///// MINER TRAITOR ITEM /////
 

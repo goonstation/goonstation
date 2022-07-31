@@ -61,14 +61,14 @@
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
-	throwforce = 4.0
+	throwforce = 4
 	throw_range = 4
 	stamina_crit_chance = 2
 
 	//these combat variables will change depending on the guard
-	force = 6.0
+	force = 6
 	stamina_damage = 10
-	stamina_cost = 5.0
+	stamina_cost = 5
 
 	hit_type = DAMAGE_BLUNT
 	flags = FPRINT | TABLEPASS | USEDELAY

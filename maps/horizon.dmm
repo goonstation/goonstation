@@ -19088,6 +19088,9 @@
 	pixel_x = -10
 	},
 /obj/storage/secure/closet/medical/medkit,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -20596,9 +20599,6 @@
 "baE" = (
 /obj/stool/chair/comfy/wheelchair{
 	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_x = -32
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -35997,6 +35997,9 @@
 /area/station/security/equipment)
 "bNP" = (
 /obj/machinery/vending/medical_public,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bNR" = (
@@ -38165,9 +38168,6 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -39254,7 +39254,6 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -53938,7 +53937,6 @@
 /area/station/hallway/primary/central)
 "gYJ" = (
 /obj/disposalpipe/junction/right/east,
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "gZC" = (
@@ -60333,6 +60331,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "veP" = (
@@ -61833,7 +61832,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -6;
 	pixel_y = 8
 	},

@@ -946,7 +946,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "Spookier!"
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 	item_state = "pumpkin"
 
 	attackby(obj/item/W, mob/user)

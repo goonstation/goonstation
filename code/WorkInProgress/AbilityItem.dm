@@ -794,6 +794,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 	flags = NOSPLASH
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0

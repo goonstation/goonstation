@@ -24,16 +24,23 @@
 
 	on_reagent_change()
 		..()
-		if (!(src.icon_state in list("bottle1", "bottle2", "bottle3", "bottle4")))
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
 			return
 		src.underlays = null
-		icon_state = "bottle[bottle_style]"
-		if (reagents.total_volume >= 0)
+		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
+			var/fluid_state = round(clamp((((src.reagents.total_volume / src.reagents.maximum_volume) * 4) + 1), 1, 4))
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-fluid", -1)
+				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
+			src.icon_state = "bottle[bottle_style]-[fluid_state]"
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = "bottle[bottle_style]"
 		signal_event("icon_updated")
 
 /* =================================================== */

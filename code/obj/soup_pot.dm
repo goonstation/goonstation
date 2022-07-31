@@ -82,7 +82,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))

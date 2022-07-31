@@ -1,7 +1,7 @@
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
 	icon_state = "shuttle"
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized = list(  )
 	desc = "A computer that controls the movement of the nearby shuttle."
 
