@@ -1,6 +1,10 @@
 
 (t)sun jul 31 22
 (u)Amylizzle
+(p)9986
+(e)🐛⚖📄|bug, balance, tgui
+(+)Genetics reclaimer can now only reclaim active genes.
+(u)Amylizzle
 (p)9976
 (e)🐛|bug
 (+)Eyespider mark ability is now more accurate, and points at the marked target.
