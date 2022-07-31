@@ -242,10 +242,10 @@
 		materiel_stock += new/datum/materiel/ammo/shotgun
 		materiel_stock += new/datum/materiel/ammo/energy
 
-		/*materiel_stock += new/datum/materiel/utility/belt
-		materiel_stock += new/datum/materiel/utility/knife
-		materiel_stock += new/datum/materiel/utility/rpg_ammo
-		materiel_stock += new/datum/materiel/utility/donk
+		materiel_stock += new/datum/materiel/utility/grenade
+		materiel_stock += new/datum/materiel/utility/healing
+		materiel_stock += new/datum/materiel/utility/stealth
+		/*materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
@@ -253,11 +253,14 @@
 		materiel_stock += new/datum/materiel/utility/miscpouch
 		materiel_stock += new/datum/materiel/utility/sawflies*/
 
-	accepted_token()
-		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]+=2
-		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=10
-		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
-		src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
+	accepted_token(var/token)
+
+		if (istype(token, /obj/item/requisition_token/syndicate/surplusutility))
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
+		else
+			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=20
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
+			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
 		..()
 
 	disposing()
@@ -271,13 +274,13 @@
 
 /datum/materiel/loadout/shortgun
 	name = "Short gun"
-	path = /obj/loadout_shortgun_spawner
-	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and grenade."
+	path = /obj/surplusopspawner/loadout_shortgun_spawner
+	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and change."
 
 /datum/materiel/loadout/melee
 	name = "Attack item"
-	path = /obj/random_item_spawner/surplus/melee
-	description = "Item of attack is proximity to man. With hand in hand combat."
+	path = /obj/surplusopspawner/loadout_melee_spawner
+	description = "Item of attack is with hand in hand combat. For those whom are not wishing of allow gun to be in hand of pig-dogs. Bonus deal of many partial refund."
 
 /datum/materiel/ammo/plinking
 	name = ".22 bullets"
@@ -314,8 +317,13 @@
 /datum/materiel/utility/grenade
 	name = "greande"
 	path = /obj/random_item_spawner/surplus/grenades
-	description = "thrown explosives of the grenides"
+	description = "thrown explosives of the grenides! Good deal of many!"
+	vr_allowed = TRUE
 
+/datum/materiel/utility/stealth
+	name = "Sneaking materials"
+	path = /obj/random_item_spawner/surplus/stealth
+	description = "Sometimes it is of an important nature to stealting."
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -334,6 +342,7 @@
 
 /datum/materiel/utility
 	category = WEAPON_VENDOR_CATEGORY_UTILITY
+	vr_allowed = TRUE
 
 /datum/materiel/assistant
 	category = WEAPON_VENDOR_CATEGORY_ASSISTANT

@@ -1,6 +1,12 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
 	rare_chance = 5
+/*
+	amt2spawn =
+		items2spawn = list(
+
+			)
+			*/
 ///obj/surplus_spawner
 
 //ammo!
@@ -43,9 +49,10 @@
 	/obj/item/ammo/bullets/pipeshot/scrap,
 	/obj/item/ammo/bullets/abg,
 	/obj/item/ammo/bullets/flare,
-	/obj/item/ammo/bullets/a12/weak)
+	/obj/item/ammo/bullets/a12/weak,
+	/obj/item/ammo/bullets/a12)
 	rare_items2spawn = list(/obj/item/ammo/bullets/pipeshot/scrap,
-		/obj/item/ammo/bullets/a12)
+		/obj/item/ammo/bullets/aex)
 
 /obj/random_item_spawner/surplus/energycells
 	amt2spawn = 2
@@ -94,7 +101,7 @@
 	/obj/item/gun/kinetic/revolver)
 
 /obj/random_item_spawner/surplus/melee //if anything's going to break convention the most it's gonna be this one
-	amt2spawn = 1
+	amt2spawn = 2
 	items2spawn = list(/obj/item/ratstick,
 		/obj/item/bat,
 		/obj/item/katana_sheath/reverse,
@@ -109,18 +116,20 @@
 		/obj/item/mining_tool/powerhammer,
 		/obj/item/brick,
 		/obj/item/rods/steel,
-		/obj/item/quarterstaff
-	)
+		/obj/item/quarterstaff)
+
 
 //utility
 /obj/random_item_spawner/surplus/grenades
-	min_amt2spawn = 2
-	max_amt2spawn = 3
+	min_amt2spawn = 3
+	max_amt2spawn = 4
 	items2spawn = list(/obj/item/chem_grenade/incendiary,
+		/obj/item/chem_grenade/very_incendiary,
 		/obj/item/chem_grenade/flashbang,
 		/obj/item/chem_grenade/napalm, //I am very much so aware that this does nothing without a light
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/old_grenade/stinger,
+		/obj/item/old_grenade/high_explosive,
 		/obj/item/old_grenade/high_explosive,
 		/obj/item/old_grenade/stinger/frag,
 		/obj/item/chem_grenade/shock,
@@ -135,9 +144,21 @@
 
 
 
-/*/obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
-
-/obj/random_item_spawner/surplus/backup
+/obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
+		amt2spawn = 1
+		items2spawn = list(
+			/obj/item/device/chameleon,
+			/obj/item/storage/backpack/chameleon,
+			/obj/item/radiojammer,
+			/obj/item/clothing/suit/armor/sneaking_suit,
+			/obj/item/pen/sleepypen,
+			/datum/syndicate_buylist/generic/trickcigs,
+			/obj/item/voice_changer,
+			/obj/item/clothing/suit/cardboard_box
+			)
+		rare_items2spawn = list(/obj/item/device/powersink,
+			)
+/*/obj/random_item_spawner/surplus/backup
 
 /obj/random_item_spawner/surplus/entry emag, can of explosive, knocker rounds, breaching charges, one mprt
 
@@ -153,6 +174,7 @@
 	/obj/item/storage/firstaid/regular/emergency,
 	/obj/item/canned_laughter, //you know what they say about laughter and medicine
 	/obj/item/canned_laughter,
+	/obj/item/storage/firstaid/old,
 	/obj/item/item_box/medical_patches/mini_synthflesh,
 	/obj/item/item_box/medical_patches/mini_styptic,
 	/obj/item/item_box/medical_patches/mini_silver_sulf,
