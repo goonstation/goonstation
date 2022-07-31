@@ -495,7 +495,7 @@
 
 	possible_rose_names()
 		var/list/possible_names = list()
-		for(var/mob/M in mobs)
+		for(var/mob/living/silicon/M in mobs)
 			if(isAI(M) || isrobot(M))
 				possible_names += M
 		return possible_names
