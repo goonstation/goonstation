@@ -45,7 +45,7 @@ var/global/area/current_battle_spawn = null
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
-	boutput(world, "<span class='notice'>Preparing the [station_or_ship()]. Please be patient!</span>")
+	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
 	// Stolen from /datum/terrainify/void
 	var/datum/station_zlevel_repair/station_repair = new
 	station_repair.ambient_light = new /image/ambient
@@ -58,6 +58,7 @@ var/global/area/current_battle_spawn = null
 	for (var/turf/S in space)
 		S.UpdateOverlays(station_repair.ambient_light, "ambient")
 	station_repair.clean_up_station_level()
+	map_settings.space_turf_replacement = /turf/simulated/floor/void
 
 	// Dense borders to prevent leaving the station Z
 	for(var/x in 1 to world.maxx)

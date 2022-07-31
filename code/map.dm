@@ -103,6 +103,7 @@ var/global/list/mapNames = list(
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space
+	var/space_turf_replacement = null
 
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
