@@ -8,7 +8,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 225000
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
@@ -1606,14 +1606,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.ReplaceWithSpace()
-#ifdef UNDERWATER_MAP
-			//if (prob(10))
-			//	src.ex_act(severity+1)
-#endif
-
-		if(2.0)
+		if(2)
 			switch(pick(1,2;75,3))
 				if (1)
 					if(prob(33))
@@ -1641,7 +1636,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					else
 						src.break_tile()
 					src.hotspot_expose(1000,CELL_VOLUME)
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.break_tile()
 				src.hotspot_expose(1000,CELL_VOLUME)

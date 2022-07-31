@@ -115,29 +115,31 @@
 				S.UpdateIcon()
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/action
-			if (istype(I, /obj/item/storage/mechanics/housing_handheld))
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Never Mind")
-			else
-				action = input(user, "What do you want to do with [I]?") as null|anything in list("Place it in the Chute","Empty it into the chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
-				return
-			if (action == "Empty it into the chute")
-				var/obj/item/storage/S = I
-				if(istype(S, /obj/item/storage/secure))
-					var/obj/item/storage/secure/secS = S
-					if(secS.locked)
-						boutput("<span class='alert'>You need to unlock the container first.</span>")
-						return
-				for(var/obj/item/O in S)
-					O.set_loc(src)
-					S.hud.remove_object(O)
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				return
+		//first time they click with a storage, it gets dumped. second time container itself is added
+		if ((istype(I,/obj/item/storage/) && I.contents.len) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+			var/obj/item/storage/S = I
+
+			if(istype(S, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = S
+				if(secS.locked)
+					boutput("<span class='alert'> Unable to open it, you place the whole [secS] into the container.</span>")
+					I.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					return
+			for(var/obj/item/O in S)
+				O.set_loc(src)
+				S.hud.remove_object(O)
+			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
+		if (istype(I, /obj/item/storage/mechanics/housing_handheld)) //override to normal activity
+			I.set_loc(src)
+			user.visible_message("[user.name] places \the [I] into \the [src].",\
+			"You place \the [I] into \the [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			return
+
 		var/obj/item/magtractor/mag
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc

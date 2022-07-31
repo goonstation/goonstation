@@ -576,8 +576,8 @@
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5

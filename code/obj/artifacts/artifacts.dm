@@ -55,13 +55,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -169,13 +169,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return

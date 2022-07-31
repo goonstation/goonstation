@@ -8,8 +8,8 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6.0
-	throwforce = 10.0
+	force = 6
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY

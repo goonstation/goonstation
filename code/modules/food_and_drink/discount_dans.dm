@@ -310,7 +310,7 @@
 			playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 			var/obj/decal/cleanable/vomit/filling = make_cleanable( /obj/decal/cleanable/vomit,src)
 			var/icon/fillicon = icon(filling.icon, filling.icon_state)
-			fillicon.MapColors(0.50, 0.25, 0)
+			fillicon.MapColors(0.5, 0.25, 0)
 			filling.icon = fillicon
 
 			filling.name = "burrito filling"

@@ -2,7 +2,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "extinguish"
-	var/life = 15.0
+	var/life = 15
 	var/mob/owner
 	flags = TABLEPASS
 	mouse_opacity = 0

@@ -11,7 +11,7 @@ var/list/genetek_hair_styles = list()
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null

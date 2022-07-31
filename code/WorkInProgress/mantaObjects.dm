@@ -259,10 +259,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -510,10 +510,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -555,10 +555,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -707,8 +707,8 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "construction cone"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "cone"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -1504,7 +1504,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
 	item_state = "energy"
-	force = 5.0
+	force = 5
 
 /obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
@@ -1513,7 +1513,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "blackbox"
 	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
-	force = 5.0
+	force = 5
 
 /turf/unsimulated/floor/polarispit
 	name = "deep abyss"

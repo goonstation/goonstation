@@ -8,7 +8,7 @@
 	cost = 30
 	dissipation_rate = 1
 	dissipation_delay = 20
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "claw"
 	shot_sound = 'sound/items/wirecutter.ogg'
 	shot_number = 1

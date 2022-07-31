@@ -202,7 +202,11 @@
 		else
 			if(hasvar(target, "health"))
 				var/absorption = min(absorb_per_process_tick, target:health)
-				target:health -= absorption
+				if (ismob(target))
+					var/mob/M = target
+					M.TakeDamage(brute = absorption)
+				else
+					target:health -= absorption
 				reagents.add_reagent(target_fluid, absorption * 2)
 				if(target:health <= 0)
 					if(isliving(target))
