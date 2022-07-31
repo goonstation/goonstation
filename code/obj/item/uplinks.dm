@@ -815,15 +815,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						var/mob/living/carbon/human/H = M
 						var/obj/item/parts/HP = delivery
 					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
-						if(HP == B.item) //Uhh idk if this will work
+						if(HP == B.item && HP.holder == M) //Is this the right limb and is it attached?
 							HP.remove()
 							take_bleeding_damage(H, null, 10)
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
 							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
-						else
+						else if(HP != B.item)
 							user.show_text("That isn't the right limb!", "red")
+							return 0
 					else
 						M.drop_from_slot(delivery,get_turf(M))
 				if (!istype(delivery,/obj/item/parts))
