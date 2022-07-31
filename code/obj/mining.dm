@@ -2103,9 +2103,7 @@ obj/item/clothing/gloves/concussive
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
 	var/datum/client_image_group/cig = get_image_group(T)
-	if(!cig.subscribed_mobs_with_subcount[user])
-		cig.add_mob(user)
-
+	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
 	cig.add_image(O)
 
 	SPAWN(2 MINUTES)
