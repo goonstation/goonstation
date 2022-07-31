@@ -154,9 +154,10 @@
 		/obj/item/pen/sleepypen,
 		/datum/syndicate_buylist/generic/trickcigs,
 		/obj/item/voice_changer,
-		/obj/item/clothing/suit/cardboard_box)
+		/obj/item/clothing/suit/cardboard_box,
+		/obj/item/device/powersink)
 
-	rare_items2spawn = list(/obj/item/device/powersink)
+	rare_items2spawn = list()
 /*/obj/random_item_spawner/surplus/backup
 
 /obj/random_item_spawner/surplus/entry emag, can of explosive, knocker rounds, breaching charges, one mprt

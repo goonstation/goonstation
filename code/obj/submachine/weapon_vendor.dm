@@ -245,6 +245,7 @@
 		materiel_stock += new/datum/materiel/utility/grenade
 		materiel_stock += new/datum/materiel/utility/healing
 		materiel_stock += new/datum/materiel/utility/stealth
+		materiel_stock += new/datum/materiel/utility/melee
 		/*materiel_stock += new/datum/materiel/utility/donk
 		materiel_stock += new/datum/materiel/utility/sarin_grenade
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
@@ -324,6 +325,11 @@
 	name = "Sneaking materials"
 	path = /obj/random_item_spawner/surplus/stealth
 	description = "Sometimes it is of an important nature to stealting."
+
+/datum/materiel/utility/melee
+	name = "Additional item of hand in hand combat"
+	path = /obj/surplusopspawner/melee_item_spawner
+	description = "For if you do not have or want more."
 // Materiel avaliable for purchase:
 
 /datum/materiel
