@@ -468,7 +468,7 @@
 /obj/trait/missing_right_eye
 	name = "Missing Right Eye (0) \[Vision\]"
 	cleanName = "Missing Right Eye"
-	desc = "Kept you waiting, huh?"
+	desc = "You do not actually do an extra 4 (1d8) bonus damage."
 	id = "missingeyeR"
 	icon_state = "missingeyeR"
 	category = list("vision")
