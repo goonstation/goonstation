@@ -12,8 +12,8 @@
 	health = 5
 	w_class = W_CLASS_SMALL
 
-	force = 7.0
-	throwforce = 7.0
+	force = 7
+	throwforce = 7
 	stamina_damage = 35
 	stamina_cost = 12
 	stamina_crit_chance = 10

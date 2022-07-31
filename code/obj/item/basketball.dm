@@ -15,6 +15,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	custom_suicide = 1
+	contraband = 2 // Due to the illegalization of basketball in 2041
 
 /obj/item/basketball/attack_hand(mob/user)
 	..()

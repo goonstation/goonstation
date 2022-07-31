@@ -3,7 +3,7 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "empty"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
@@ -73,12 +73,12 @@
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
-	filled = 2.0
+	filled = 2
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
-	filled = 5.0
+	filled = 5
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"

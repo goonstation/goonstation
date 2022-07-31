@@ -4252,7 +4252,6 @@
 "are" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/detective_scanner,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
@@ -5147,9 +5146,6 @@
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -6860,9 +6856,6 @@
 	color = "#485e81";
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/stool/bench/blue/auto,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -8440,11 +8433,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/glass/reinforced/auto,
-/obj/towelbin{
-	pixel_y = 2
-	},
-/obj/item/storage/firstaid/oxygen,
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
@@ -18233,10 +18221,8 @@
 /obj/machinery/light/incandescent/harsh{
 	nostick = 1
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small/floor,
+/obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "csb" = (
@@ -19628,7 +19614,6 @@
 	},
 /obj/item/device/radio/headset/security,
 /obj/item/device/prisoner_scanner,
-/obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -24142,7 +24127,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 6;
 	pixel_y = 9
 	},
@@ -30637,11 +30622,9 @@
 	color = "#485e81";
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/small/floor,
+/obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
 "igG" = (
@@ -33492,9 +33475,6 @@
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
 	icon_state = "line1"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
@@ -43480,6 +43460,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"oZS" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/glass/reinforced/auto,
+/obj/towelbin{
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/oxygen,
+/obj/item/storage/toolbox/emergency,
+/turf/simulated/floor/darkblue,
+/area/station/crew_quarters/pool)
 "oZZ" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
@@ -45536,9 +45529,6 @@
 	icon_state = "line1"
 	},
 /obj/stool/bench/blue/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -55381,12 +55371,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/table/glass/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/water,
-/obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/bluewhite,
 /area/station/crew_quarters/pool)
 "vkA" = (
@@ -60807,7 +60791,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xZr" = (
@@ -61116,7 +61099,6 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -106476,7 +106458,7 @@ mnh
 xeb
 eec
 wdH
-wdH
+oZS
 eTU
 agO
 xzB

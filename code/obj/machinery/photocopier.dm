@@ -143,7 +143,7 @@
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
 				src.paper_amount += w.amount
-				P.amount = 0.0
+				P.amount = 0
 				P.update()
 				return
 

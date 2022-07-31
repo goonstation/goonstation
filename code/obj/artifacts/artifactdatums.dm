@@ -216,11 +216,12 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
 	var/obj/machinery/artifact/turret/turretArt = null

@@ -21,9 +21,9 @@ var/global/list/mapNames = list(
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
-	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = FALSE),
+	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 40),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = TRUE),
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = FALSE),
 	"Crash" = 			list("id" = "CRASH", 		"settings" = "horizon/crash", 		"playerPickable" = FALSE),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = FALSE),
@@ -103,6 +103,7 @@ var/global/list/mapNames = list(
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space
+	var/space_turf_replacement = null
 
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
@@ -208,6 +209,15 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the public market" = list(/area/station/crew_quarters/market),
+		"the stock exchange" = list(/area/station/crew_quarters/stockex),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the main brig area" = list(/area/station/security/brig),
+		"the main station pod bay" = list(/area/station/hangar/main))
 
 /datum/map_settings/donut3
 	name = "DONUT3"

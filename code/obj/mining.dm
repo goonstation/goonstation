@@ -876,6 +876,7 @@
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_overlay = 0
 	connect_diagonal = 1
+	default_material = "rock"
 	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall, /obj/machinery/door/poddoor/blast/asteroid)
 
 #ifdef UNDERWATER_MAP
@@ -1052,11 +1053,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_asteroid(7)
-			if(2.0)
+			if(2)
 				src.damage_asteroid(5)
-			if(3.0)
+			if(3)
 				src.damage_asteroid(3)
 		return
 

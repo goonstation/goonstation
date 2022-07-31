@@ -247,12 +247,50 @@
 	initial_reagents = list("chickensoup"=30)
 
 /obj/item/reagent_containers/food/drinks/fruitmilk
-	name = "Creaca's Fruit Milk"
-	desc = "Milk and fruit of undetermined origin; finally, together at last."
+	name = "Creaca's Fruit Milk "
+	desc = "Milk and 'fruit' of undetermined origin; finally, together at last."
 	icon_state = "fruitmilk"
 	initial_volume = 50
 	can_recycle = FALSE
-	initial_reagents = list("milk"=30,"juice_pineapple"=20)
+	initial_reagents = list("milk"=20)
+
+	New()
+		switch(rand(1,10))
+			if (1)
+				src.name += "Synthetic Tropical Dawn flavor"
+				src.initial_reagents["juice_pineapple"] = 30
+			if (2)
+				src.name += "Changing Cherry Red flavor"
+				src.initial_reagents["juice_cherry"] = 30
+			if (3)
+				src.name += "Curdled Lemon Twist flavor"
+				src.initial_reagents["juice_lemon"] = 30
+			if (4)
+				src.name += "Earth Dreamer Lime flavor"
+				src.initial_reagents["juice_lime"] = 30
+			if (5)
+				src.name += "Odyssey Orange flavor"
+				src.initial_reagents["juice_orange"] = 30
+			if (6)
+				src.name += "Strawberry and Cream flavor"
+				src.initial_reagents["juice_strawberry"] = 30
+			if (7)
+				src.name += "Seasonal Peach Blossom flavor"
+				src.initial_reagents["juice_peach"] = 30
+			if (8)
+				src.name += "Surprise Mystery flavor"
+				src.initial_reagents["juice_pickle"] = 20
+				src.initial_reagents["neurodepressant"] = 5
+				src.initial_reagents["msg"] = 5
+			if (9)
+				src.name += "Little Soups flavor"
+				src.initial_reagents["juice_tomato"] = 30
+			if (10)
+				src.name += "Artifical Autumn flavor"
+				src.initial_reagents["juice_pumpkin"] = 30
+
+		..()
+
 
 /obj/item/reagent_containers/food/drinks/weightloss_shake
 	name = "Weight-Loss Shake"
@@ -320,6 +358,7 @@
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
 	icon = 'icons/obj/foodNdrink/can.dmi'
+	w_class = W_CLASS_TINY
 
 	proc/crush_can(var/name, var/icon_state)
 		src.name = "crushed [name]"

@@ -726,6 +726,7 @@ var/global/list/soundCache = list(
  	"sound/machines/twobeep2.ogg" = 'sound/machines/twobeep2.ogg',\
  	"sound/machines/typewriter.ogg" = 'sound/machines/typewriter.ogg',\
  	"sound/machines/ufo_move.ogg" = 'sound/machines/ufo_move.ogg',\
+ 	"sound/machines/vending_crash.ogg" = 'sound/machines/vending_crash.ogg',\
  	"sound/machines/vending_dispense.ogg" = 'sound/machines/vending_dispense.ogg',\
  	"sound/machines/vending_dispense_small.ogg" = 'sound/machines/vending_dispense_small.ogg',\
  	"sound/machines/warning-buzzer.ogg" = 'sound/machines/warning-buzzer.ogg',\

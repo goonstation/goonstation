@@ -128,7 +128,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>You finish chewing on [HH], but what a feast it was!</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
@@ -163,7 +163,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>Your feast was interrupted, but it satisfied your hunger for the time being.</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = TRUE
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
 	var/on = FALSE //! Whether the cell is turned on or not
@@ -231,6 +231,9 @@
 			if (src.defib)
 				boutput(user, "<span class='alert'>[src] already has a Defibrillator installed.</span>")
 			else
+				if (I.cant_drop)
+					boutput(user, "<span class='alert'>You can't put that in [src] while it's attached to you!")
+					return
 				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)

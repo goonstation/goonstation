@@ -479,7 +479,7 @@
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1.0
+	anchored = 1
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))

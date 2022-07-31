@@ -964,7 +964,7 @@
 					can_see.Add(I)
 			for (var/datum/mind/M in spies)
 				if (M.current)
-					var/I = image(antag_spyslave, loc = M.current)
+					var/I = image(antag_spyminion, loc = M.current)
 					can_see.Add(I)
 
 		else if (src.mind in spies)

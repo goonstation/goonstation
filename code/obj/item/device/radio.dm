@@ -13,13 +13,14 @@
 	var/list/secure_colors = list()
 	var/list/secure_classes = list(RADIOCL_STANDARD) // respects dark mode, gets overriden by secure_colors
 	var/protected_radio = 0 // Cannot be picked up by radio_brain bioeffect.
-	var/traitor_frequency = 0.0
+	var/traitor_frequency = 0
 	var/obj/item/device/radio/patch_link = null
 	var/obj/item/uplink/integrated/radio/traitorradio = null
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
 	var/b_stat = 0
 	var/broadcasting = FALSE
 	var/listening = TRUE
+	var/has_microphone = TRUE
 	var/list/datum/component/packet_connected/radio/secure_connections = null
 	var/speaker_range = 2
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble //typing_indicator.dm
@@ -147,6 +148,7 @@ var/list/headset_channel_lookup
 		"secureFrequencies" = frequencies,
 		"wires" = src.wires,
 		"modifiable" = src.b_stat,
+		"hasMicrophone" = src.has_microphone,
 	)
 
 /obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -730,9 +732,9 @@ var/list/headset_channel_lookup
 	name = "\improper Electropack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
-	var/code = 2.0
-	var/on = 0.0
-//	var/e_pads = 0.0
+	var/code = 2
+	var/on = 0
+//	var/e_pads = 0
 	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
@@ -880,56 +882,20 @@ Code:
 	name = "\improper Remote Signaling Device"
 	icon_state = "signaller"
 	item_state = "signaler"
-	var/code = 30.0
+	var/code = 30
 	w_class = W_CLASS_TINY
 	frequency = FREQ_SIGNALER
+	has_microphone = FALSE
 	var/delay = 0
 	var/airlock_wire = null
 	desc = "A device used to send a coded signal over a specified frequency, with the effect depending on the device that receives the signal."
 
-/*
-/obj/item/device/radio/signaler/examine()
-	set src in view()
-	set category = "Local"
-	..()
-	if ((in_interact_range(src, usr) || src.loc == usr))
-		if (src.b_stat)
-			usr.show_message("<span class='notice'>The signaler can be attached and modified!</span>")
-		else
-			usr.show_message("<span class='notice'>The signaler can not be modified or attached!</span>")
-	return
-*/
-
-/obj/item/device/radio/signaler/attack_self(mob/user as mob, flag1)
-	src.add_dialog(user)
-	var/t1
-	if ((src.b_stat && !( flag1 )))
-		t1 = text("-------<br><br>Green Wire: []<br><br>Red Wire:   []<br><br>Blue Wire:  []<br><br>", (src.wires & WIRE_TRANSMIT ? text("<a href='?src=\ref[];wires=[WIRE_TRANSMIT]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_TRANSMIT]'>Mend Wire</a>", src)), (src.wires & WIRE_RECEIVE ? text("<a href='?src=\ref[];wires=[WIRE_RECEIVE]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_RECEIVE]'>Mend Wire</a>", src)), (src.wires & WIRE_SIGNAL ? text("<a href='?src=\ref[];wires=[WIRE_SIGNAL]'>Cut Wire</a>", src) : text("<a href='?src=\ref[];wires=[WIRE_SIGNAL]'>Mend Wire</a>", src)))
-	else
-		t1 = "-------"
-	var/dat = {"
-<TT>
-Speaker: [src.listening ? "<a href='?src=\ref[src];listen=0'>Engaged</a>" : "<a href='?src=\ref[src];listen=1'>Disengaged</a>"]<br>
-<a href='?src=\ref[src];send=1'>Send Signal</a><br>
-<B>Frequency/Code</B> for signaler:<br>
-Frequency:
-<a href='?src=\ref[src];freq=-10'>-</a>
-<a href='?src=\ref[src];freq=-2'>-</a>
-[format_frequency(src.frequency)]
-<a href='?src=\ref[src];freq=2'>+</a>
-<a href='?src=\ref[src];freq=10'>+</a><br>
-
-Code:
-<a href='?src=\ref[src];code=-5'>-</a>
-<a href='?src=\ref[src];code=-1'>-</a>
-[src.code]
-<a href='?src=\ref[src];code=1'>+</a>
-<a href='?src=\ref[src];code=5'>+</a><br>
-[t1]
-</TT>"}
-	user.Browse(dat, WINDOW_OPTIONS)
-	onclose(user, "radio")
-	return
+/obj/item/device/radio/signaler/ui_data(mob/user)
+	. = ..()
+	. += list(
+		"code" = src.code,
+		"sendButton" = TRUE,
+		)
 
 obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/instrument/bikehorn))
@@ -1026,86 +992,24 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 	return
 
-/obj/item/device/radio/signaler/Topic(href, href_list)
-	//..()
-	if (usr.stat)
-		return
-	var/is_detonator_trigger = 0
-	if (src.master)
-		if (istype(src.master, /obj/item/assembly/detonator/) && src.master.master)
-			if (istype(src.master.master, /obj/machinery/portable_atmospherics/canister/) && in_interact_range(src.master.master, usr))
-				is_detonator_trigger = 1
-	if (is_detonator_trigger || (src in usr) || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
-		if (href_list["freq"])
-			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))
-			set_frequency(new_frequency)
-		else if (href_list["code"])
-			src.code += text2num_safe(href_list["code"])
-			src.code = round(src.code)
-			src.code = min(100, src.code)
-			src.code = max(1, src.code)
-		else if (href_list["send"])
+/obj/item/device/radio/signaler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	switch (action)
+		if ("set-code")
+			var/newcode = text2num_safe(params["value"])
+			newcode = round(newcode)
+			newcode = min(100, newcode)
+			src.code = max(1, newcode)
+			. = TRUE
+		if ("send")
 			src.send_signal("ACTIVATE")
-			return
-		else if (href_list["listen"])
-			src.listening = text2num_safe(href_list["listen"])
-		else if (href_list["wires"])
-			//var/t1 = text2num_safe(href_list["wires"])
-			if (!(usr.find_tool_in_hand(TOOL_SNIPPING)))
-				return
-			if ((!( src.b_stat ) && !( src.master )))
-				return
-
-			..()
-			// bet this breaks everything oops oh well
-			/*
-			if (t1 & 1)
-				if (src.wires & 1)
-					src.wires &= 65534
-				else
-					src.wires |= 1
-			else
-				if (t1 & 2)
-					if (src.wires & 2)
-						src.wires &= 65533
-					else
-						src.wires |= 2
-				else
-					if (t1 & 4)
-						if (src.wires & 4)
-							src.wires &= 65531
-						else
-							src.wires |= 4
-			*/
-		src.add_fingerprint(usr)
-		if (!src.master)
-			if (ismob(src.loc))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client)
-						src.attack_self(M)
-		else
-			if (is_detonator_trigger)
-				src.attack_self(usr)
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				for(var/mob/M in viewers(1, src.master))
-					if (M.client)
-						src.attack_self(M)
-	else
-		usr.Browse(null, WINDOW_OPTIONS)
-		return
-	return
 
 //////////////////////////////////////////////////
 /obj/item/device/radio/intercom/loudspeaker
 	name = "Loudspeaker Transmitter"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "transmitter"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 0
 	mats = 0
 	chat_class = RADIOCL_INTERCOM
@@ -1148,7 +1052,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
 	icon_state = "loudspeaker"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 7
 	mats = 0
 	broadcasting = 1

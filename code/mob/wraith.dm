@@ -262,7 +262,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)

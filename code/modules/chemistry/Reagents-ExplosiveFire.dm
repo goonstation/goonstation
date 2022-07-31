@@ -624,7 +624,7 @@ datum
 
 
 			var/caused_fireflash = 0
-			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
+			var/min_req_fluid = 0.1 //at least 10% of the fluid needs to be oil for it to ignite
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)

@@ -840,26 +840,22 @@
 		picker = rand(1,6)
 		switch(picker)
 			if (1 to 3)
-				I = new /obj/item/raw_material/scrap_metal
-				I.set_loc(pick(turfs_near_center))
-				I.setMaterial(scrap_material)
+				new /obj/storage/crate/loot(pick(turfs_near_center))
 			if (4)
 				I = new /obj/item/sheet(pick(turfs_near_center))
 				I.amount = rand(1,5)
 				I.setMaterial(scrap_material)
 			if (5)
-				if (prob(15))
+				if (prob(25))
 					Artifact_Spawn(pick(turfs_near_center))
 				else
 					I = new /obj/item/rods(pick(turfs_near_center))
 					I.amount = rand(2,10)
 					I.setMaterial(scrap_material)
 			if (6)
-				if (prob(15))
-					new /obj/storage/crate/loot(pick(turfs_near_center))
-				else
-					new /obj/item/cable_coil/cut(pick(turfs_near_center))
-
+				I = new /obj/item/raw_material/scrap_metal
+				I.set_loc(pick(turfs_near_center))
+				I.setMaterial(scrap_material)
 
 	return generated_turfs
 

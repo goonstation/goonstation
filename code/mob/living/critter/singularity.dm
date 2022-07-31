@@ -116,7 +116,7 @@
 			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			M.gib()
 	else if(isobj(A) && A.anchored != 2)
-		A.ex_act(1.0)
+		A.ex_act(1)
 		if(A)
 			qdel(A)
 

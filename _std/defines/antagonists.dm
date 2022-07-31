@@ -3,4 +3,4 @@
 #define ANTAGONIST_SOURCE_ROUND_START null
 #define ANTAGONIST_SOURCE_LATE_JOIN "late-joining "
 #define ANTAGONIST_SOURCE_RANDOM_EVENT "random event "
-#define ANTAGONIST_SOURCE_ADMIN null
+#define ANTAGONIST_SOURCE_ADMIN "admin-created "
