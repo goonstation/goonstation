@@ -346,7 +346,7 @@
 
 
 	proc/remove_thrall(var/mob/victim)
-		remove_mindslave_status(victim)
+		remove_mindhack_status(victim)
 		thralls -= victim
 
 	proc/make_thrall(var/mob/victim)
@@ -409,7 +409,7 @@
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindslave")
+			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 

@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1

@@ -44143,10 +44143,6 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 10;
-	pixel_y = 10
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dxC" = (
@@ -47188,9 +47184,6 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 12
-	},
 /obj/disposalpipe/segment/food,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47655,10 +47648,6 @@
 	dir = 2
 	},
 /obj/item/paper_bin,
-/obj/item/device/detective_scanner{
-	pixel_x = -10;
-	pixel_y = 9
-	},
 /obj/item/pen,
 /obj/item/storage/box/evidence{
 	pixel_x = 5;

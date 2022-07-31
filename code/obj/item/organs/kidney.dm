@@ -3,7 +3,7 @@
 	organ_name = "kidney_t"
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 7.0
+	organ_holder_required_op_stage = 7
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
@@ -76,7 +76,7 @@
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_kidney", 2.0)
+				H.organHolder.receive_organ(src, "right_kidney", 2)
 				H.update_body()
 			else if (target_organ_location == "left" && !H.organHolder.left_kidney)
 				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left kidney socket!</span>",\
@@ -85,7 +85,7 @@
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_kidney", 2.0)
+				H.organHolder.receive_organ(src, "left_kidney", 2)
 				H.update_body()
 			else
 				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right kidney socket!<br>But there's something already there!</span>",\

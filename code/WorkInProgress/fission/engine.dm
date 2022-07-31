@@ -19,7 +19,7 @@ ENGINE
 	directwired = 1
 
 	// To connect it to the computer
-	var/id = 0.0
+	var/id = 0
 
 	var/lastpower = 0
 	var/active = 0
@@ -137,14 +137,14 @@ REACTOR
 	// Meltdown is 0 when no meltdown is occuring
 	// Meltdown is 1 when a meltdown is occuring
 	// Meltdown is 2 when a meltdown has occured
-	var/meltdown = 0.0
+	var/meltdown = 0
 	// It is active when there is a fission reaction going down
 	// I.e. we're not turning it off or on
 	var/active = 0
 	// Use this so as to not loose energy in our calculations
 	var/setEnergyZero = 0
 	// To connect it to the engine
-	var/id = 0.0
+	var/id = 0
 	// Energy generated
 	var/energy = 0
 	// Temperature of the reactor
@@ -267,12 +267,12 @@ REACTOR
 					icon_state = "norm0"
 
 	proc/meltdown()
-		meltdown = 1.0
+		meltdown = 1
 
 		// used to be rad particle code here creating it
 
 		SPAWN(0.8 SECONDS)
-			meltdown = 2.0
+			meltdown = 2
 
 
 	proc/checkChainReaction()
@@ -335,14 +335,14 @@ REACTOR
 		// Called when an object is in an explosion
 		// Higher "severity" means the object was further from the centre of the explosion
 		switch(severity)
-			if(1.0)
+			if(1)
 				status |= BROKEN
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					status |= BROKEN
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					status |= BROKEN
 					return

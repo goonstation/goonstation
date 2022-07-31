@@ -86,13 +86,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(3.0)
+			if(3)
 				src.icon_state = "placeholder-ex1"
 				return
-			if(2.0)
+			if(2)
 				src.icon_state = "placeholder-ex2"
 				return
-			if(1.0)
+			if(1)
 				src.icon_state = "placeholder-ex3"
 				return
 		return
@@ -298,7 +298,7 @@
 	icon_state = "mars"
 	item_state = "mars"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 
 
 /obj/critter/marsrobot

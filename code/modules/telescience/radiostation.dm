@@ -128,7 +128,7 @@
 	desc = "A large and complicated audio mixing desk. Complete with fancy displays, dials, knobs and automated faders."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-2"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	flags = TGUI_INTERACTIVE
 	var/static/list/accents
@@ -239,7 +239,7 @@
 	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-3"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/has_record = 0
 	var/is_playing = 0
@@ -310,7 +310,7 @@
 	var/record_name = ""
 	var/add_overlay = 1
 	w_class = W_CLASS_NORMAL
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 8
 	force = 2
@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	desc = "A large standalone reel-to-reel tape deck."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tapedeck"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/has_tape = 0
 	var/is_playing = 0

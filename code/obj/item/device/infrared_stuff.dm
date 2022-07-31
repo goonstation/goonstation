@@ -13,8 +13,8 @@ Contains:
 	desc = "Emits a visible or invisible beam and is triggered when the beam is interrupted."
 	icon_state = "infrared0"
 	var/obj/beam/i_beam/first = null
-	var/state = 0.0
-	var/visible = 0.0
+	var/state = 0
+	var/visible = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -27,7 +27,7 @@ Contains:
 	name = "Infrared Sensor"
 	desc = "Scans for infrared beams in the vicinity."
 	icon_state = "infra_sensor"
-	var/passive = 1.0
+	var/passive = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
 	m_amt = 150

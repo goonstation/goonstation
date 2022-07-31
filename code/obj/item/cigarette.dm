@@ -1301,7 +1301,7 @@
 /obj/item/device/light/zippo/brighter
 	name = "\improper Zippo brighter"
 	desc = "Are you feeling blinded by the light?"
-	brightness = 4.0
+	brightness = 4
 	col_r = 0.69
 	col_g = 0.27
 	col_b = 1

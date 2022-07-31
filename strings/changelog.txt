@@ -1,5 +1,49 @@
 
+(t)sun jul 31 22
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
+(t)fri jul 29 22
+(u)DisturbHerb
+(p)9770
+(e)🎨|sprites
+(+)Chemical bottles have been resprited.
+(u)NightmareChamillian
+(p)9350
+(e)🐛|bug
+(+)Sawflies have had their targeting AI reworked, and should be much more responsive now! Ping me if this breaks anything.
+(u)Blackrep
+(p)9776
+(e)📄|tgui
+(+)Safes have a fancy new UI
+(t)thu jul 28 22
+(u)Flourish
+(p)9868
+(e)🆕⚖|feature, balance
+(*)"Mindslave" implants and cloning modules have now been renamed to "mindhack". Additionally, when you are mindhacked, you now receive a special status effect that tells you your mindhacker's name and how long you are mindhacked for.
+(u)Roddy
+(p)9727
+(e)🆕|feature
+(*)Added in five new drink recipes for the bartender; Iced Coconut Milk Espresso, Iced Pineapple Matcha, Thai Iced Coffee, Peppermint Hot Chocolate, and Mexican Hot Chocolate!
+(u)Garash
+(p)9875
+(e)🆕🗺🎨📄|feature, mapping, sprites, tgui
+(+)Vapo-Matics and Injector belts have a new UI menu, go ask the HoP to transfer tens of thousands of credit into your account to buy one and check them out!
 (t)wed jul 27 22
+(u)TemThrush
+(p)9834
+(e)🆕|feature
+(*)Added three hairstyles, Combed Front, Combed Front Short, and Longfront.
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
 (u)Ikea
 (p)9833
 (e)|

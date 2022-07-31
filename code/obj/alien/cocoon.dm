@@ -10,8 +10,8 @@ they're trapped
 /obj/alien/cocoon
 	name = "cocoon"
 	desc = "a strange... something..."
-	density = 1.0
-	anchored = 1.0
+	density = 1
+	anchored = 1
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 
