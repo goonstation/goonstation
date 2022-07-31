@@ -1,4 +1,9 @@
 
+(t)sun jul 31 22
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
 (t)sat jul 30 22
 (u)Luxizzle
 (p)9571
