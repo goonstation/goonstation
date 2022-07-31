@@ -10,9 +10,9 @@
 /obj/item/roboupgrade/physshield/upgrade_activate(var/mob/living/silicon/robot/user)
 	if (..())
 		return
-	APPLY_ATOM_PROPERTY(user,PROP_MOB_EXPLOPROT,src,30)
+	APPLY_ATOM_PROPERTY(user,PROP_MOB_EXPLOPROT,"cyborg_shield",50)
 
 /obj/item/roboupgrade/physshield/upgrade_deactivate(var/mob/living/silicon/robot/user)
 	if (..())
 		return
-	REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXPLOPROT,src)
+	REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXPLOPROT,"cyborg_shield")
