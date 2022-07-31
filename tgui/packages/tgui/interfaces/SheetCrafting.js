@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Section, Image } from "../components";
+import { Button, Image, Section, Stack } from "../components";
 import { Window } from '../layouts';
 
 export const SheetCrafting = (_props, context) => {
@@ -16,17 +16,22 @@ export const SheetCrafting = (_props, context) => {
   return (
     <Window
       width={360}
-      height={690}>
+      height={760}>
       <Window.Content>
-        <Section title={"Recipes"}>
-          {itemList.map(item => {
-            return <Recipe key={item.recipeID} item={item} disabled={availableAmount < item.sheetCost} />;
-          })}
-        </Section>
-
-        <Section title={"Amount Left"}>
-          {labeledAvailableAmount}
-        </Section>
+        <Stack vertical fill>
+          <Stack.Item grow={1}>
+            <Section title={"Recipes"} fill scrollable>
+              {itemList.map(item => {
+                return <Recipe key={item.recipeID} item={item} disabled={availableAmount < item.sheetCost} />;
+              })}
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section title={"Amount Left"}>
+              {labeledAvailableAmount}
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
