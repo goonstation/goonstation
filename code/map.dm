@@ -209,6 +209,15 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
 
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the public market" = list(/area/station/crew_quarters/market),
+		"the stock exchange" = list(/area/station/crew_quarters/stockex),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the main brig area" = list(/area/station/security/brig),
+		"the main station pod bay" = list(/area/station/hangar/main))
+
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "http://goonhub.com/maps/donut3"
