@@ -100,6 +100,8 @@ var/global/area/current_battle_spawn = null
 		switch (mac_type)
 			if (/obj/machinery/clone_scanner)
 				qdel(MAC)
+			if (/obj/machinery/the_singularitygen/)
+				qdel(MAC)
 			if (/obj/machinery/vending/monkey)
 				qdel(MAC)
 			if (/obj/machinery/vending/monkey/kitchen)
