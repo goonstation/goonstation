@@ -102,6 +102,9 @@
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
+	track_blood()
+		return
+
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
 		if (!src.canmove)
