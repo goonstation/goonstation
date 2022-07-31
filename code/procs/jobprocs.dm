@@ -682,6 +682,18 @@
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
+	if (src.traitHolder && src.traitHolder.hasTrait("missingeyeL"))
+		if (src.organHolder.left_eye)
+			SPAWN(6 SECONDS)
+				qdel(src.get_organ("left_eye"))
+				boutput(src, "<b>You feel the world around you lose its depth.</b>")
+
+	if (src.traitHolder && src.traitHolder.hasTrait("missingeyeR"))
+		if (src.organHolder.right_eye)
+			SPAWN(6 SECONDS)
+				qdel(src.get_organ("right_eye"))
+				boutput(src, "<b>You feel the world around you lose its depth.</b>")
+
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
 		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
