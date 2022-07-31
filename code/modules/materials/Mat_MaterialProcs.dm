@@ -525,7 +525,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/slippery_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if (isliving(entering) && isturf(owner) && prob(75))
+		if (isliving(entering) && isturf(owner) && prob(75) && !isintangible(entering))
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
