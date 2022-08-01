@@ -22939,10 +22939,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
-"jDQ" = (
-/obj/wingrille_spawn/auto,
-/turf/space,
-/area/station/ranch)
 "jEh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -119978,8 +119974,8 @@ dni
 deT
 alp
 bDp
-tGj
-jDQ
+pqN
+pMs
 tGj
 vnX
 vnX
@@ -120280,8 +120276,8 @@ sUb
 eHb
 sqI
 bDp
-hGG
-hGG
+pMs
+pMs
 mma
 vnX
 vnX
@@ -120582,9 +120578,9 @@ wuS
 bEQ
 bsk
 iOW
-vnX
-vnX
-say
+hGG
+hGG
+mma
 vnX
 vnX
 vnX
