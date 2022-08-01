@@ -395,7 +395,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P?.operating)
+			if(P)
 				P.attack_ai(src)
 				return
 
