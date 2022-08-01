@@ -86,7 +86,7 @@
 
 #define ITEMSPECIAL_PIXELDIST_SQUARED  (70 * 70) //lol i'm putting the define RIGHT HERE.
 // These two numbers will be compared later (pixeldist squared AND the result of this function). We don't need to do unnessecary sqrt cause this is just a simple < > comparison!
-/proc/GET_DIST_pixel_squared(var/atom/source, var/atom/target, params)
+/proc/get_dist_pixel_squared(var/atom/source, var/atom/target, params)
 	var/dx = (target.x - source.x) * 32
 	var/dy = (target.y - source.y) * 32
 
