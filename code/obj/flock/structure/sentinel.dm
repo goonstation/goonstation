@@ -119,7 +119,7 @@
 			src.charge_status = CHARGING
 	else
 		if(src.charge > 0)
-			src.charge(-5)
+			src.charge(-5 * mult)
 			src.charge_status = LOSING_CHARGE
 		if (src.charge == 0)
 			if(icon_state != "sentinel")
