@@ -507,7 +507,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	hat.setProperty("heatprot", 5)
 	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
 	battler.equip_if_possible(hat, battler.slot_head)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat(battler), battler.slot_shoes)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
 	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
