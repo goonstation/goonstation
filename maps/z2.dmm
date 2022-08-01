@@ -71708,8 +71708,8 @@
 	name = "Kyle's Office";
 	pixel_x = -32
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
+/turf/unsimulated/floor/grey/side{
+	dir = 8
 	},
 /area/centcom/offices{
 	icon_state = "blue"
@@ -154141,8 +154141,8 @@ wmb
 wmb
 wmb
 mbb
-dvy
-dvy
+wmb
+wmb
 wmb
 wmb
 wmb
