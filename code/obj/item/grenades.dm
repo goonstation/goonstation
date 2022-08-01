@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "person grenade"
 	icon_state = "smoke"
 	icon_state_armed = "smoke"
-	payload = /mob/carbon/human/npc/assistant
+	payload = /mob/living/carbon/human/npc/assistant
 
 /obj/item/old_grenade/spawner/cheese_sandwich
 	name = "cheese sandwich grenade"
