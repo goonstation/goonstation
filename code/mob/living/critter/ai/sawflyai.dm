@@ -86,8 +86,12 @@
 
 	var/mob/living/critter/robotic/sawfly/owncritter = holder.owner
 	for (var/mob/living/C in viewers(max_dist, owncritter))
-		if (C.health < -50 || !isalive(C)) continue
-		if(istype(C, /mob/living/critter/robotic/sawfly)) continue
+		if (C.health < -50 || !isalive(C))
+			continue
+		if(istype(C, /mob/living/critter/robotic/sawfly))
+			continue
+		if (isintangible(C))
+			continue
 		if(C.mind?.special_role)
 			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
 				if (!(C.weakref in owncritter.friends))
