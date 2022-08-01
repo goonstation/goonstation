@@ -785,7 +785,7 @@ proc/Create_Tommyname()
 	//Look, I'm Swedish, I don't know your goddamn mathwords
 	return d
 
-/obj/solar_control/proc/GET_DIST_from_centreline(var/atom/A) //Finds the distance from the closest point on the extension line
+/obj/solar_control/proc/get_dist_from_centreline(var/atom/A) //Finds the distance from the closest point on the extension line
 	if(extension_dir & (NORTH|SOUTH) )
 		.= abs(A.x - src.x)
 	else if ( extension_dir & (EAST|WEST) )
