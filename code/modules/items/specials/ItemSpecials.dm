@@ -1608,7 +1608,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
 
-		if(params["left"] && params["ai"] || GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && params["ai"] || get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			if (reversed)
