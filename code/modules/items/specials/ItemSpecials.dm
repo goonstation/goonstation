@@ -295,7 +295,7 @@
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable()) return
 		var/list/parameters = params2list(params)
-		if(parameters["left"] && master && GET_DIST_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(parameters["left"] && master && get_dist_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			action = new(src, usr, target)
 			action.params = params
 			actions.start(action, usr)
