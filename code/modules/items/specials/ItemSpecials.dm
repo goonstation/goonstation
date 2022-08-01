@@ -408,7 +408,7 @@
 		if(!usable()) return
 		if(!isturf(target.loc) && !isturf(target)) return
 		var/list/parameters = params2list(params)
-		if(parameters["left"] && master && GET_DIST_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(parameters["left"] && master && get_dist_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			var/obj/item/copy = master.split_stack(1)
 			if(copy)
 				preUse(usr)
@@ -438,7 +438,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
@@ -496,7 +496,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/list/attacked = list()
@@ -593,7 +593,7 @@
 	pixelaction(atom/target, list/params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -696,7 +696,7 @@
 		var/turf/T = get_turf(target)
 		if(!T) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/pox = text2num(params["icon-x"]) - 16
 			var/poy = text2num(params["icon-y"]) - 16
@@ -756,7 +756,7 @@
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
 
-		if(params["left"] && (master || user) && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && (master || user) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -804,7 +804,7 @@
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
 
-		if(params["left"] && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -859,7 +859,7 @@
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable()) return
 		var/list/parameters = params2list(params)
-		if(parameters["left"] && master && GET_DIST_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(parameters["left"] && master && get_dist_pixel_squared(usr, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(usr)
 			var/list/attacked = list()
 
@@ -906,7 +906,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(user, direction)
@@ -954,7 +954,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(user, direction)
@@ -993,7 +993,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
@@ -1043,7 +1043,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
 
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/list/attacked = list()
@@ -1094,7 +1094,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(!istype(master, /obj/item/baton) || GET_DIST_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
 		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 			return
@@ -1106,7 +1106,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/gloves
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-		if(!istype(master, /obj/item/clothing/gloves) || GET_DIST_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!istype(master, /obj/item/clothing/gloves) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
 		if(master:uses)
 			var/obj/item/clothing/gloves/G = master
 			G.uses = max(0, G.uses - 1)
@@ -1143,7 +1143,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
@@ -1200,7 +1200,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
@@ -1264,7 +1264,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 
@@ -1346,7 +1346,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && GET_DIST_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
