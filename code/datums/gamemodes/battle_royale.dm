@@ -339,7 +339,6 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	// Feel free to add more!
 	armor_supplies.Add(/obj/item/clothing/shoes/rocket)
 	armor_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
-	armor_supplies.Add(/obj/item/clothing/shoes/galoshes)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/vest)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
