@@ -528,7 +528,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/clown20
 	name = "Bananna"
-	desc = "Banana, but misspelled!"
+	desc = "Bananna, but misspelled!"
 	required_levels = list("Clown"=20)
 	icon_state = "?"
 	claimable = 1
