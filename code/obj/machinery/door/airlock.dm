@@ -619,7 +619,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 					UNCROSS_BUMP_CHECK(mover)
 					return
 				animate_door_squeeze(mover)
-				. = 1 // they can pass through a closed door
+				return 1 // they can pass through a closed door
 			. = !density
 		else
 			. = 1

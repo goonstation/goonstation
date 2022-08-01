@@ -138,7 +138,7 @@
 					UNCROSS_BUMP_CHECK(mover)
 					return
 				animate_door_squeeze(mover)
-				. = 1 // they can pass through a closed door
+				return 1 // they can pass through a closed door
 			. = !density
 		else
 			. = 1
