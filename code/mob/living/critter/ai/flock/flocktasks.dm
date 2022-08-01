@@ -825,17 +825,17 @@ stare
 	if(!F?.flock)
 		return
 
-	var/list/O = view(holder.owner, target_range)
+	var/list/surroundings = view(holder.owner, target_range)
 
 	for(var/atom/A as anything in F.flock.enemies)
 		if(istype(A.loc, /obj/flock_structure/cage))
 			continue
 		if (isvehicle(A.loc))
-			if(A.loc in O)
+			if(A.loc in surroundings)
 				F.flock.updateEnemy(A)
 				F.flock.updateEnemy(A.loc)
 				. += A.loc
-		else if(A in O)
+		else if(A in surroundings)
 			F.flock.updateEnemy(A)
 			if(isliving(A))
 				var/mob/living/M = A
