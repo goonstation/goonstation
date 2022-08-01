@@ -1039,7 +1039,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!

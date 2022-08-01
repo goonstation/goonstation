@@ -1067,7 +1067,7 @@
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
 						for (var/datum/mind/M in R.get_living_heads())
 							if (M.current)
-								if (get_dist(owner,M.current) <= 7)
+								if (GET_DIST(owner,M.current) <= 7)
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 

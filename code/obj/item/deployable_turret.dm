@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				src.target_list[C] = distance
 
 			else
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0

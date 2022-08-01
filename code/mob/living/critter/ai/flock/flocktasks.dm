@@ -82,7 +82,7 @@ stare
 //this whole AI thing was built for flock, and even so, flock just has to be special
 /datum/aiTask/succeedable/move/flock/succeeded()
 	if(move_target)
-		. = (get_dist(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) == 0)
 		if(.)
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(istype(F) && F.floorrunning)
@@ -798,7 +798,7 @@ stare
 			holder.interrupt()
 			return
 
-		var/dist = get_dist(owncritter, holder.target)
+		var/dist = GET_DIST(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
@@ -1030,7 +1030,7 @@ stare
 		return TRUE
 	if(!F.can_afford(FLOCK_BARRICADE_COST))
 		return TRUE
-	if(get_dist(F, holder.target) > 1) // drone moved away
+	if(GET_DIST(F, holder.target) > 1) // drone moved away
 		return TRUE
 
 /datum/aiTask/succeedable/barricade/succeeded()
@@ -1041,7 +1041,7 @@ stare
 		var/mob/living/critter/flock/drone/drone = holder.owner
 		if(drone.floorrunning)
 			drone.end_floorrunning(TRUE)
-		var/dist = get_dist(drone, holder.target)
+		var/dist = GET_DIST(drone, holder.target)
 		if(dist > 1)
 			holder.interrupt() //this should basically never happen, but sanity check just in case
 			return

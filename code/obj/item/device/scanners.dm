@@ -221,7 +221,7 @@ that cannot be itched
 			active = 0
 			return
 		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
+		switch(GET_DIST(src,target))
 			if(0)
 				icon_state = "fs_pindirect"
 			if(1 to 8)

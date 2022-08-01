@@ -460,24 +460,24 @@ obj/critter/bear/care
 				return 0
 
 			if ("chasing blood")
-				if (!drink_target || !isobj(drink_target) || get_dist(src, src.drink_target) > 3)
+				if (!drink_target || !isobj(drink_target) || GET_DIST(src, src.drink_target) > 3)
 					src.task = "thinking"
 					drink_target = null
-				else if (get_dist(src, src.drink_target) <= 0)
+				else if (GET_DIST(src, src.drink_target) <= 0)
 					src.task = "drink obj"
 				else
 					walk_to(src, src.drink_target,0,4)
 				return 0
 
 			if ("drink obj")
-				if (!drink_target || get_dist(src, src.drink_target) > 0)
+				if (!drink_target || GET_DIST(src, src.drink_target) > 0)
 					src.task = "thinking"
 				else
 					drink_blood(drink_target)
 				return 0
 
 			if ("drink mob")
-				if (!src.drink_target || get_dist(src, src.drink_target) > src.attack_range)
+				if (!src.drink_target || GET_DIST(src, src.drink_target) > src.attack_range)
 					src.task = "thinking"
 				else
 					drink_blood(drink_target)

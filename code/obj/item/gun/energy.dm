@@ -1574,7 +1574,7 @@
 			break
 		if (F == get_turf(user))
 			continue
-		if (get_dist(user,F) > range)
+		if (GET_DIST(user,F) > range)
 			continue
 		tfireflash(F,0.5,2400)
 

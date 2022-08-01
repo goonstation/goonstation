@@ -412,7 +412,7 @@
 
 	proc/get_tile_heat(var/turf/T)
 
-		d = get_dist(T, center.turf())
+		d = GET_DIST(T, center.turf())
 		if (d > radius)
 			.= 0
 			if (d <= radius + cool_cushion)
@@ -534,12 +534,12 @@
 					if (src.loc == center)
 						true_center += 1
 
-					var/d = get_dist(src.loc,center)
+					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
 						closest_hotspot = H
-						dist_last = get_dist(src.loc,center)
+						dist_last = GET_DIST(src.loc,center)
 
-					val += get_dist(src.loc,center)
+					val += GET_DIST(src.loc,center)
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 

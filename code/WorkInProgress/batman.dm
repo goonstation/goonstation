@@ -108,7 +108,7 @@
 	var/i
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
-		if (get_dist(A,T) < 1)
+		if (GET_DIST(A,T) < 1)
 			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)

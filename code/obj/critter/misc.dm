@@ -1505,7 +1505,7 @@
 			if (isintangible(C)) continue
 
 			if(!src.attack)
-				switch(get_dist(src, C))
+				switch(GET_DIST(src, C))
 					if (0 to 1)
 						src.mobile = 1
 						icon_state = "rattlesnake"

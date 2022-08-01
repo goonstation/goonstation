@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
-				var/loud = 16 / (get_dist(M, T) + 1)
+				var/loud = 16 / (GET_DIST(M, T) + 1)
 				if (src.loc == M.loc || src.loc == M)
 					loud = 16
 
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
-					if (get_dist(N, user) <= 6)
+					if (GET_DIST(N, user) <= 6)
 						N.flash(3 SECONDS)
 				sleep(0.2 SECONDS)
 				if (old_light_grenade)
@@ -1350,7 +1350,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					O.set_density(0)
 
-				var/distance = get_dist(T, location)
+				var/distance = GET_DIST(T, location)
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
@@ -1395,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
-				var/damage = 30 / (get_dist(M, src) + 1)
+				var/damage = 30 / (GET_DIST(M, src) + 1)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 

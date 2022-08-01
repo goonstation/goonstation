@@ -85,7 +85,7 @@
 		return
 
 	var/t = null
-	if (get_dist(usr, src) <= 3 || isAI(usr))
+	if (GET_DIST(usr, src) <= 3 || isAI(usr))
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)

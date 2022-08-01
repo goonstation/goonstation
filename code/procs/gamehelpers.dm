@@ -92,7 +92,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if (C.bioHolder.HasEffect("telekinesis") && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
@@ -359,7 +359,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	var/turf/target_turf = get_turf(target)
 	if(current == target_turf)
 		return TRUE
-	if(get_dist(current, target_turf) > length)
+	if(GET_DIST(current, target_turf) > length)
 		return FALSE
 	current = get_step_towards(source, target_turf)
 	while((current != target_turf))

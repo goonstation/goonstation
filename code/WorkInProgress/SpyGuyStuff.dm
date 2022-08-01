@@ -677,7 +677,7 @@ proc/Create_Tommyname()
 	for(var/i = created_atoms.len; i > 0; i--)
 		var/atom/A = created_atoms[i]
 		if(istype(A, /obj/machinery/power/solar) || istype(A, /turf/simulated/floor/airless/solar))
-			var/dist = get_dist_from_centreline(A)
+			var/dist = GET_DIST_from_centreline(A)
 			temp = out[dist]
 			if(!temp)
 				temp = list()
@@ -785,13 +785,13 @@ proc/Create_Tommyname()
 	//Look, I'm Swedish, I don't know your goddamn mathwords
 	return d
 
-/obj/solar_control/proc/get_dist_from_centreline(var/atom/A) //Finds the distance from the closest point on the extension line
+/obj/solar_control/proc/GET_DIST_from_centreline(var/atom/A) //Finds the distance from the closest point on the extension line
 	if(extension_dir & (NORTH|SOUTH) )
 		.= abs(A.x - src.x)
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
+	DEBUG_MESSAGE("GET_DIST from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf

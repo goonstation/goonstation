@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
