@@ -2700,6 +2700,12 @@
 	dir = 1
 	},
 /area/station/crew_quarters/fitness)
+"ber" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/ranch)
 "beu" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -14020,6 +14026,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"fMm" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "fMv" = (
 /obj/machinery/atmospherics/valve/horizontal,
 /obj/decal/tile_edge/line/red{
@@ -36627,6 +36641,11 @@
 	},
 /obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "pGP" = (
@@ -36928,6 +36947,9 @@
 /area/station/security/processing)
 "pPh" = (
 /obj/submachine/seed_vendor,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "pPJ" = (
@@ -40444,6 +40466,9 @@
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife,
 /obj/item/sponge,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "rkB" = (
@@ -45352,6 +45377,9 @@
 	pixel_y = 9
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "tnF" = (
@@ -49592,6 +49620,7 @@
 /area/station/security/processing)
 "vhh" = (
 /obj/chicken_nesting_box,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/random,
 /area/station/ranch)
 "vht" = (
@@ -50837,6 +50866,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -54631,6 +54665,10 @@
 	dir = 9
 	},
 /area/station/com_dish/auxdish)
+"xlt" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "xlB" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Air Reserve (Central Hallway)"
@@ -116915,7 +116953,7 @@ ocG
 txE
 vJi
 pGL
-oKi
+fMm
 nUu
 cIb
 jfM
@@ -117822,10 +117860,10 @@ vwy
 exA
 bDp
 cNT
+xlt
 oKi
 oKi
-oKi
-oKi
+xlt
 eVA
 pMs
 hGG
@@ -119332,9 +119370,9 @@ lYL
 wDe
 sRr
 ayE
-oKi
+xlt
 nUu
-pqN
+ber
 tzb
 pqN
 tGj
