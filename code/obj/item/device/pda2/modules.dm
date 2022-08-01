@@ -313,12 +313,12 @@
 		src.host.post_signal(signal)
 
 		if(isliving(user))
-			playsound(src, "sound/items/security_alert.ogg", 60)
+			playsound(src, 'sound/items/security_alert.ogg', 60)
 			var/map_text = null
 			map_text = make_chat_maptext(usr, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
-			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>", "<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>", "<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
+			usr.audible_message("<span class='alert'>[usr] presses a red button on the side of their [src.host].</span>", "<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>", "<span class='alert'>You see [usr] press a button on the side of their [src.host].</span>")
 
 
 /obj/ability_button/pda_security_alert
