@@ -1,5 +1,9 @@
 
 (t)sun jul 31 22
+(u)Roddy
+(p)9982
+(e)🗺|mapping
+(*)Updates Donut2 civilian sector (bar, kitchen, botany) to modern standards.
 (u)LeahTheTech
 (p)9790
 (e)🐛📄|bug, tgui
