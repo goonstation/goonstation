@@ -261,3 +261,4 @@ ouija_board_words@=maybe
 	wait
 	forever
 	death
+	fuck
