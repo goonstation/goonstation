@@ -28642,6 +28642,12 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"maF" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "maN" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -118420,7 +118426,7 @@ rPr
 sOJ
 rDn
 oKi
-oKi
+maF
 vmq
 nGh
 nGh
