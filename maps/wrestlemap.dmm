@@ -2700,12 +2700,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/fitness)
-"ber" = (
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
-/turf/simulated/floor/grass/random,
-/area/station/ranch)
 "beu" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -12812,6 +12806,16 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/grime,
 /area/station/crewquarters/cryotron)
+"fls" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/machinery/camera/ranch,
+/turf/simulated/floor/grass/random,
+/area/station/ranch)
 "flv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22935,6 +22939,10 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
+"jDQ" = (
+/obj/wingrille_spawn/auto,
+/turf/space,
+/area/station/ranch)
 "jEh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45865,12 +45873,6 @@
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/security/checkpoint/arrivals)
-"tzb" = (
-/obj/machinery/camera/ranch{
-	dir = 8
-	},
-/turf/simulated/floor/grass/random,
-/area/station/ranch)
 "tzf" = (
 /obj/lattice,
 /obj/decal/glow{
@@ -116353,8 +116355,8 @@ sqN
 ctj
 ctj
 hGG
-vnX
-say
+hGG
+mma
 vnX
 vnX
 vnX
@@ -116654,10 +116656,10 @@ vPJ
 ctj
 ctj
 tGj
+pMs
+pMs
 tGj
-tGj
-tGj
-tGj
+vnX
 vnX
 vnX
 vnX
@@ -116957,8 +116959,8 @@ fMm
 nUu
 cIb
 jfM
-pqN
 mnm
+tGj
 tGj
 vnX
 vnX
@@ -119372,9 +119374,9 @@ sRr
 ayE
 xlt
 nUu
-ber
-tzb
 pqN
+pqN
+tGj
 tGj
 vnX
 vnX
@@ -119674,10 +119676,10 @@ kzx
 bDp
 bDp
 bDp
+fls
+pqN
 tGj
-tGj
-tGj
-tGj
+vnX
 vnX
 vnX
 vnX
@@ -119976,9 +119978,9 @@ dni
 deT
 alp
 bDp
-vnX
-vnX
-say
+tGj
+jDQ
+tGj
 vnX
 vnX
 vnX
@@ -120278,9 +120280,9 @@ sUb
 eHb
 sqI
 bDp
-vnX
-vnX
-say
+hGG
+hGG
+mma
 vnX
 vnX
 vnX
