@@ -677,7 +677,7 @@ proc/Create_Tommyname()
 	for(var/i = created_atoms.len; i > 0; i--)
 		var/atom/A = created_atoms[i]
 		if(istype(A, /obj/machinery/power/solar) || istype(A, /turf/simulated/floor/airless/solar))
-			var/dist = GET_DIST_from_centreline(A)
+			var/dist = get_dist_from_centreline(A)
 			temp = out[dist]
 			if(!temp)
 				temp = list()
