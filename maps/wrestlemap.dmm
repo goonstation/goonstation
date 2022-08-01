@@ -11515,6 +11515,10 @@
 	dir = 4
 	},
 /area/station/engine/storage)
+"eHy" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass/random,
+/area/station/ranch)
 "eHB" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass{
@@ -12811,12 +12815,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crewquarters/cryotron)
 "fls" = (
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
 /obj/machinery/camera/ranch,
 /turf/simulated/floor/grass/random,
 /area/station/ranch)
@@ -30476,6 +30474,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"mTC" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/ranch)
 "mTD" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -36958,9 +36962,6 @@
 /area/station/security/processing)
 "pPh" = (
 /obj/submachine/seed_vendor,
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "pPJ" = (
@@ -49998,6 +49999,9 @@
 /area/station/ai_monitored/storage/eva)
 "vnR" = (
 /obj/reagent_dispensers/watertank/big,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "vnX" = (
@@ -50667,6 +50671,12 @@
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
 	})
+"vCv" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/grass/random,
+/area/station/ranch)
 "vCA" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -116659,7 +116669,7 @@ vPJ
 ctj
 ctj
 tGj
-pqN
+vCv
 pqN
 tGj
 hGG
@@ -119378,7 +119388,7 @@ ayE
 xlt
 nUu
 pqN
-pqN
+eHy
 tGj
 tGj
 vnX
@@ -119981,7 +119991,7 @@ dni
 deT
 alp
 bDp
-pqN
+mTC
 pMs
 tGj
 vnX
