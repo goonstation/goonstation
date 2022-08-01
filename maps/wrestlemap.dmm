@@ -4762,6 +4762,10 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"bXb" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/space)
 "bXm" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail/vertical,
@@ -13114,6 +13118,9 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
+"fsC" = (
+/turf/simulated/floor/grass/random,
+/area/space)
 "fsQ" = (
 /turf/space/asteroid,
 /area/mining/magnet)
@@ -115446,7 +115453,7 @@ kEk
 sqN
 ctj
 hGG
-say
+mma
 vnX
 aHg
 vnX
@@ -115747,8 +115754,8 @@ eSP
 sqN
 ctj
 ctj
-hGG
-say
+bXb
+mma
 vnX
 vnX
 vnX
@@ -116048,10 +116055,10 @@ kEk
 kEk
 sqN
 ctj
-eil
-eil
-rET
-vnX
+fsC
+bXb
+eoq
+hGG
 vnX
 vnX
 vnX
@@ -116350,10 +116357,10 @@ lxV
 sqN
 ctj
 ctj
+fsC
+bXb
+bXb
 hGG
-hGG
-mma
-vnX
 vnX
 vnX
 vnX
@@ -116652,10 +116659,10 @@ vPJ
 ctj
 ctj
 tGj
-pMs
-pMs
+pqN
+pqN
 tGj
-vnX
+hGG
 vnX
 vnX
 vnX
