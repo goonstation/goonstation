@@ -61575,9 +61575,9 @@
 "dAL" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/tree1/snow_random{
-	dir = 4;
 	pixel_x = -52;
-	pixel_y = 4
+	pixel_y = 4;
+	dir = 3
 	},
 /obj/decoration/syndcorpse10{
 	desc = "... but where is the rest?";
