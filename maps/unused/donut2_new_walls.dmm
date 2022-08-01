@@ -33505,18 +33505,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/bar)
-"cQC" = (
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4
-	},
-/obj/access_spawn/kitchen,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/catering)
 "cQD" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -37042,6 +37030,17 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/refinery)
+"gVB" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/access_spawn/rancher,
+/obj/firedoor_spawn,
+/turf/simulated/floor/grasstodirt{
+	dir = 5
+	},
+/area/station/ranch)
 "gVE" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 4
@@ -38415,11 +38414,6 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/medbay/treatment1)
 "iRh" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -40392,7 +40386,7 @@
 	dir = 4
 	},
 /obj/access_spawn/kitchen,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "llu" = (
 /obj/submachine/chem_extractor{
@@ -41543,7 +41537,6 @@
 /area/station/engine/substation/north)
 "mGn" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "mGp" = (
@@ -42159,15 +42152,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
-"niL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "njK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -42745,18 +42729,6 @@
 	dir = 2
 	},
 /area/station/hallway/primary/south)
-"nVb" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 1
-	},
-/area/station/ranch)
 "nVj" = (
 /obj/cable{
 	d1 = 4;
@@ -44724,6 +44696,10 @@
 "qrl" = (
 /obj/machinery/camera/ranch{
 	dir = 5
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -65926,7 +65902,7 @@ blZ
 blZ
 blZ
 bun
-niL
+bun
 blZ
 blZ
 blZ
@@ -66228,7 +66204,7 @@ kwi
 bis
 bis
 bis
-lNM
+bis
 bis
 kmE
 bis
@@ -66530,7 +66506,7 @@ tSw
 bis
 bis
 bis
-lNM
+bis
 bis
 nkB
 tSw
@@ -66832,7 +66808,7 @@ tSw
 gmL
 gmL
 lki
-cQC
+gmL
 gmL
 gmL
 sto
@@ -68349,7 +68325,7 @@ gmL
 bGd
 bGd
 bGd
-bGd
+gVB
 bGd
 bGd
 bGd
@@ -68651,7 +68627,7 @@ gQw
 bGd
 xmu
 qrl
-nVb
+pRA
 mzn
 dRt
 owD
