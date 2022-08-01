@@ -27,6 +27,9 @@
 # Mordent (mordent-goonstation)
 /code/modules/robotics/ @mordent-goonstation
 
+# Sord
+/maps/unused/donut2.dmm @Sord213
+
 # Sovexe
 /code/modules/antagonists/arcfiend/ @Sovexe
 
