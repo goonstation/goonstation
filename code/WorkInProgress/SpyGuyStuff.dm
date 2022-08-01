@@ -791,7 +791,7 @@ proc/Create_Tommyname()
 	else if ( extension_dir & (EAST|WEST) )
 		.= abs(A.y - src.y)
 
-	DEBUG_MESSAGE("GET_DIST from [log_loc(A)] returned: [.]")
+	DEBUG_MESSAGE("get_dist from [log_loc(A)] returned: [.]")
 
 
 //The dummy object that imitates a turf
