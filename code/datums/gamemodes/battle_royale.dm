@@ -333,7 +333,6 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/high_explosive)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
-	weapon_supplies.Add(/obj/item/storage/banana_grenade_pouch)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
 
 	var/list/armor_supplies = list()
