@@ -64,14 +64,16 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONEY)
-						M.HealDamage("All", 1 * mult, 1 * mult)
-						if(probmult(15))
-							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				..()
+				if(M.mob_flags & IS_BONEY)
+					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
+					if(prob(15))
+						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -698,7 +700,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (probmult(15))
-					if (isrestrictedz(M.z))
+					var/turf/mob_turf = get_turf(M)
+					if (isrestrictedz(mob_turf?.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
@@ -3042,7 +3045,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
 					if (prob(10))
-						M.take_toxin_damage(rand(2.4) * mult)
+						M.take_toxin_damage(rand(2,4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatusMin("stunned", 4 SECONDS * mult)
@@ -3069,11 +3072,11 @@ datum
 				if(prob(3))
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
-				
+
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if(probmult(16))
 					M.emote("fart")
-						
+
 		fooddrink/beff
 			name = "beff"
 			id = "beff"

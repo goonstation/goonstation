@@ -1,4 +1,26 @@
 
+(t)sun jul 31 22
+(u)Roddy
+(p)9982
+(e)🗺|mapping
+(*)Updates Donut2 civilian sector (bar, kitchen, botany) to modern standards.
+(u)LeahTheTech
+(p)9790
+(e)🐛📄|bug, tgui
+(+)Timers and proximity sensors now use TGUI
+(u)Amylizzle
+(p)9986
+(e)🐛⚖📄|bug, balance, tgui
+(+)Genetics reclaimer can now only reclaim active genes.
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
 (t)fri jul 29 22
 (u)DisturbHerb
 (p)9770

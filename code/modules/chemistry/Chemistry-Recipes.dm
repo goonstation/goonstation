@@ -2699,11 +2699,6 @@ datum
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
 
-
-
-
-// Don't forget to update Reagents-ExplosiveFire.dm too, we have duplicate code for sonic and flash powder there (Convair880).
-
 		sonic_powder
 			name = "Hootingium"
 			id = "sonicpowder"

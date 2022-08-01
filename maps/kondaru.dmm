@@ -8681,7 +8681,7 @@
 /obj/item/crowbar,
 /obj/item/device/multitool{
 	pixel_x = 9;
-	pixel_y = -1
+	pixel_y = -6
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)

@@ -1525,7 +1525,7 @@ datum
 
 				if (!M) M = holder.my_atom
 				if (prob(10))
-					M.take_toxin_damage(rand(2.4) * mult)
+					M.take_toxin_damage(rand(2,4) * mult)
 				if (prob(7))
 					boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 					M.setStatusMin("stunned", 3 SECONDS * mult)

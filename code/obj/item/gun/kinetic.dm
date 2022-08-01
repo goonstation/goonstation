@@ -1177,6 +1177,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 1
 	auto_eject = 0
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	spread_angle = 10 // sorry, no sniping with slamguns
 
 	can_dual_wield = 0
