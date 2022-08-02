@@ -1074,10 +1074,16 @@
 				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 					else
 						if (R.remove_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 		clear(null)
