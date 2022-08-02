@@ -1,5 +1,9 @@
 
 (t)tue aug 02 22
+(u)Hans
+(p)9856
+(e)⚖|balance
+(+)You can now shoot Rattlesnakes, scorpions have a longer special ability delay and , and viper venom's bleeding isn't as RNG dependant and can't hit as hard as fast now.
 (u)Ilysen
 (p)9966
 (e)|
