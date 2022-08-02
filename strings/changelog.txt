@@ -1,5 +1,9 @@
 
 (t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
 (u)Wisemonster
 (p)9958
 (e)⚖|balance
