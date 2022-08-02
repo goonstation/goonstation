@@ -357,6 +357,7 @@
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
+		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
