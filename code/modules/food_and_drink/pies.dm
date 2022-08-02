@@ -130,11 +130,6 @@
 				else
 					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 
-	Exited(atom/movable/Obj, newloc)
-		. = ..()
-		if(!QDELETED(Obj))
-			qdel(Obj)
-
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"
 	desc = "Though dangerous to eat raw, the slurrypod produces a fine, tart pie noted for its curative properties."
