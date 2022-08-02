@@ -25099,7 +25099,7 @@
 "kzx" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northeast)
+/area/station/ranch)
 "kzH" = (
 /obj/shrub{
 	dir = 8;
@@ -36735,7 +36735,7 @@
 	},
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/grass,
-/area/station/hydroponics/bay)
+/area/station/ranch)
 "pGP" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -41467,7 +41467,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/ranch)
 "rDw" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -117381,7 +117381,7 @@ ylI
 ylI
 oSr
 xkf
-bDp
+tGj
 tnp
 iIA
 pqN
@@ -117683,7 +117683,7 @@ lBI
 ylI
 coD
 mMA
-bDp
+tGj
 rks
 mCJ
 hxb
@@ -117985,7 +117985,7 @@ bSt
 mUN
 vwy
 exA
-bDp
+tGj
 cNT
 qaR
 oKi
@@ -118287,7 +118287,7 @@ vRb
 ylI
 pul
 wWZ
-bDp
+tGj
 pPh
 aqN
 oKi
@@ -118891,7 +118891,7 @@ dMK
 ylI
 eoQ
 wWZ
-sRr
+pMs
 vnR
 isp
 nUu
@@ -119193,7 +119193,7 @@ nzw
 hVH
 gjy
 xfn
-sRr
+pMs
 rzv
 isp
 nUu
@@ -119495,7 +119495,7 @@ idf
 mUN
 lYL
 wDe
-sRr
+pMs
 ayE
 bAh
 nUu
@@ -119798,9 +119798,9 @@ ylI
 bzV
 pJm
 kzx
-bDp
-bDp
-bDp
+tGj
+tGj
+tGj
 fls
 pqN
 tGj
