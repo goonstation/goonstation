@@ -22,7 +22,7 @@
 			continue	//	different viewing plane
 		if(!C.camera_status)
 			continue	//	ignore disabled cameras
-		var/dist = get_dist(src, C)
+		var/dist = GET_DIST(src, C)
 		if(dist < best_dist)
 			best_dist = dist
 			best_cam = C

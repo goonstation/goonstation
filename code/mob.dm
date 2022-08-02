@@ -721,7 +721,7 @@
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				pulling += G.affecting
 			for (var/atom/movable/pulled in pulling)
-				if (get_dist(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+				if (GET_DIST(src, pulled) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 					continue
 				if (pulled == src || pulled == AM)
 					continue

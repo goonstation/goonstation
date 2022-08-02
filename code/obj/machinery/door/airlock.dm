@@ -1958,7 +1958,7 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_data(mob/user)
 	. = list(
 		"userStates" = list(
-			"distance" = get_dist(src, user),
+			"distance" = GET_DIST(src, user),
 			"isBorg" = ishivebot(user) || isrobot(user),
 			"isAi" = isAI(user),
 			"isCarbon" = iscarbon(user),

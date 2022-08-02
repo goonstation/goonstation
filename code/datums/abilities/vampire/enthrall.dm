@@ -26,7 +26,7 @@
 			boutput(M, "<span class='alert'>Why would you want to enthrall yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -94,7 +94,7 @@
 
 		var/mob/living/M = owner
 
-		if (!enthrall || get_dist(M, target) > enthrall.max_range || target == null || M == null)
+		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || target == null || M == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -113,7 +113,7 @@
 
 		var/mob/living/M = owner
 
-		if (!enthrall || get_dist(M, target) > enthrall.max_range || target == null || M == null)
+		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || target == null || M == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

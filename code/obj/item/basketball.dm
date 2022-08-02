@@ -137,7 +137,7 @@
 			return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!mounted && get_dist(src, target) == 1)
+		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)

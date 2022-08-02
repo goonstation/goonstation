@@ -537,7 +537,7 @@
 					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
 					RH.channeling = 0
 					break
-				if (get_dist(holder.owner, H) > 7)
+				if (GET_DIST(holder.owner, H) > 7)
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break

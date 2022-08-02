@@ -61,7 +61,7 @@
 			holder.interrupt()
 			return
 
-		var/dist = get_dist(owncritter, holder.target)
+		var/dist = GET_DIST(owncritter, holder.target)
 		if(dist > target_range)
 			if(!src.found_path)
 				src.found_path = get_path_to(holder.owner, holder.target, 18, 0)
@@ -101,7 +101,7 @@
 		if(C.job in list( "Head of Security", "Security Officer", "Nanotrasen Security Consultant")) //hopefully this is cheaper than the OR chain I had before
 			. = list(C) //go get em, tiger
 			return
-		if(get_dist(C, owncritter) <2) //go after those standing right next to you. <2 is slightly
+		if(GET_DIST(C, owncritter) <2) //go after those standing right next to you. <2 is slightly
 			. = list(C)
 			return
 		. += C //you passed all the checks it, now you get added to the list for consideration

@@ -159,7 +159,7 @@
 	if(AM in bumped_queue)
 		give_points = 0
 	if(last_bumped_atom)
-		if(get_dist(last_bumped_atom, AM) <= 3)
+		if(GET_DIST(last_bumped_atom, AM) <= 3)
 			give_points = 0
 
 	last_bumped_atom = AM

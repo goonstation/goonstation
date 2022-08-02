@@ -300,7 +300,7 @@
 				var/T = get_turf(src)
 
 				for(var/obj/window/W in range(4, T)) // smash shit
-					if(prob( get_dist(W,T)*6 ))
+					if(prob( GET_DIST(W,T)*6 ))
 						continue
 					W.health = 0
 					W.smash()
@@ -382,7 +382,7 @@
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 

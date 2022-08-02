@@ -126,7 +126,7 @@
 		for (var/mob/living/C in range(src.range,src.loc))
 			if (!isnull(C) && src.target_valid(C))
 				target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				target_list[C] = distance
 
 		if (length(target_list)>0)
@@ -142,7 +142,7 @@
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return FALSE

@@ -87,7 +87,7 @@
 				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
 				playsound(W.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for(var/mob/M in AIviewers(W, null))
-					if(get_dist(M, W) <= 6)
+					if(GET_DIST(M, W) <= 6)
 						if(M != W)
 							if (targetSpellImmunity(M, FALSE, 0))
 								continue
