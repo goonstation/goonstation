@@ -11,15 +11,20 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES) && src.client)
+	if (changed & KEY_EXAMINE && src.client)
 		if (keys & KEY_EXAMINE)
-			for (var/mob/M as anything in mobs)
-				M.name_tag?.show_images(src.client, TRUE, FALSE)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				for (var/mob/M as anything in mobs)
+					M.name_tag?.show_images(src.client, TRUE, FALSE)
 			if (src.mob_hovered_over)
 				var/mob/M = src.mob_hovered_over
 				M.name_tag?.show_images(src.client, FALSE, TRUE)
 		else
-			for (var/mob/M as anything in mobs)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				for (var/mob/M as anything in mobs)
+					M.name_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.mob_hovered_over)
+				var/mob/M = src.mob_hovered_over
 				M.name_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
