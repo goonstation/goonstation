@@ -21,6 +21,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 	move_triggered = 1
+	var/initial_volume = 100
 
 /obj/item/spraybottle/move_trigger(var/mob/M, kindof)
 	if (..() && reagents)
@@ -32,7 +33,7 @@ WET FLOOR SIGN
 
 /obj/item/spraybottle/New()
 	..()
-	create_reagents(100)
+	create_reagents(initial_volume)
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
@@ -40,11 +41,11 @@ WET FLOOR SIGN
 
 	New()
 		..()
-		reagents.add_reagent("luminol", 100)
+		reagents.add_reagent("luminol", initial_volume)
 
 	examine()
 		. = ..()
-		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
+		. += "[src.reagents.total_volume] units left!"
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner spray bottle"
@@ -52,29 +53,26 @@ WET FLOOR SIGN
 
 	New()
 		..()
-		reagents.add_reagent("cleaner", 100)
+		reagents.add_reagent("cleaner", initial_volume)
 
-/obj/item/spraybottle/cleaner/robot/New()
-	..()
-	create_reagents(25)// no more 100 units on spawn for you, mister!
 /obj/item/spraybottle/cleaner/robot
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
-
+	var/refill_speed = 5
 	disposing()
 		..()
 		processing_items.Remove(src)
 
-	afterattack(atom/A, mob/user)
-		. = ..()
-		if (src.reagents.total_volume < 25)
+	on_reagent_change()
+		..()
+		if (src.reagents.total_volume < reagents.maximum_volume)
 			processing_items |= src
 
 	process()
 		..()
-		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 1)
+		if (src.reagents.total_volume < reagents.maximum_volume)
+			src.reagents.add_reagent("cleaner", refill_speed)
 		else
 			processing_items.Remove(src)
 		return 0
@@ -83,16 +81,12 @@ WET FLOOR SIGN
 	name = "cybernetic cleaning spray bottle"
 	desc = "A small spray bottle that slowly synthesises space cleaner."
 	icon_state = "cleaner_robot"
+	initial_volume = 25
+	refill_speed = 0.75
 
-	process()
+	New()
 		..()
-		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 0.75)
-		else
-			processing_items.Remove(src)
-		return 0
-
-
+		reagents.add_reagent("cleaner", initial_volume)
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
