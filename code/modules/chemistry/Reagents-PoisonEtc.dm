@@ -854,16 +854,16 @@ datum
 				..()
 				return
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					. = 0
-				if (method == TOUCH && volume >= 10)
+				if (method == TOUCH && raw_volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/blocked = 0
 						if (!H.wear_mask && !H.head)
-							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
+							H.TakeDamage("head", 0, clamp((raw_volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
 							if(!H.disfigured)
 								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
@@ -874,7 +874,7 @@ datum
 						else
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") * 2 < raw_volume)
 									if(!D.hasStatus("acid"))
 										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
 										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -884,7 +884,7 @@ datum
 							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") * 3 < raw_volume)
 										if(!K.hasStatus("acid"))
 											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
 											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -896,37 +896,9 @@ datum
 								return
 					else
 						random_brute_damage(M, min(15,volume))
-				else if (method == TOUCH && volume <= 10 && prob(20))
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/blocked = 0
-						if (H.wear_mask || H.head)
-							if (H.head)
-								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									if(!D.hasStatus("acid"))
-										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
-								else
-									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-								blocked = 1
-							if (!(H.head?.c_flags & SPACEWEAR))
-								if (H.wear_mask)
-									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										if(!K.hasStatus("acid"))
-											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
-									else
-										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-									blocked = 1
-
-							if (blocked)
-								return
-						M.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 				else if (volume >= 5)
 					M.emote("scream")
-					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp((volume - 5) * 2, 8, 75), 0, DAMAGE_BURN)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (!H.vdisfigured)
