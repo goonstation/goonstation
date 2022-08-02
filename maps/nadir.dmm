@@ -4760,6 +4760,7 @@
 	dir = 8
 	},
 /obj/machinery/cashreg,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Overwatch"
@@ -19783,6 +19784,7 @@
 	},
 /obj/machinery/phone,
 /obj/machinery/light/small,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint{
 	name = "Security Overwatch"
