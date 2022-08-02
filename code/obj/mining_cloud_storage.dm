@@ -96,7 +96,7 @@
 
 		else if (istype(dropped, /obj/storage/crate/)  || istype(dropped, /obj/storage/cart/))
 			var/obj/storage/store = dropped
-			if(istype(C) && (C.welded || C.locked))
+			if(istype(store) && (store.welded || store.locked))
 				boutput(user, "<span class='alert'>You cannot load from a [store] that cannot open!</span>")
 				return
 
@@ -238,7 +238,7 @@
 		OCD.amount = round(max(OCD.amount,0)) //floor values to avoid float imprecision
 		ores[material_name] = OCD
 
-	proc/human_readable_ore_properties(var/datume/material/mat)
+	proc/human_readable_ore_properties(var/datum/material/mat)
 		if (!mat)
 			return "no properties"
 		if (istype(mat, /datum/material/crystal/gemstone)) return "varied levels of hardness and density"
@@ -276,7 +276,7 @@
 			for(var/i in 1 to amount_ejected)
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
-				ore.setMaterial(OCD.stats[length(OCD.stats)]) //for the most part, this will only affect gemstones by preserving their type, but also quality
+				ore.setMaterial(OCD.stats[length(OCD.stats)], (ore.initial_material_name == ore.name), (ore.initial_material_name == ore.name), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
 				ore.initial_material_name = ore.material.name
 				OCD.stats.Cut(length(OCD.stats))
 				ore.set_loc(eject_location)
@@ -337,7 +337,7 @@
 				"amount" = OCD.amount,
 				"price" = OCD.price,
 				"forSale" = OCD.for_sale,
-				"stats" = src.human_readable_ore_properties(OCD.stats[length(OCD.stats)])
+				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : ""
 			))
 
 		. = list(
