@@ -762,3 +762,9 @@
 	dont_rename_crop = true
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
+
+/datum/plantmutation/rose/holorose
+	name = "Holo Rose"
+	iconmod = "HoloRose"
+	dont_rename_crop = true
+	crop = /obj/item/plant/flower/rose/holorose
