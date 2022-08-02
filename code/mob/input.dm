@@ -15,6 +15,9 @@
 		if (keys & KEY_EXAMINE)
 			for (var/mob/M as anything in mobs)
 				M.name_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.mob_hovered_over)
+				var/mob/M = src.mob_hovered_over
+				M.name_tag?.show_images(src.client, FALSE, TRUE)
 		else
 			for (var/mob/M as anything in mobs)
 				M.name_tag?.show_images(src.client, FALSE, FALSE)

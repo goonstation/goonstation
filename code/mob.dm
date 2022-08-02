@@ -36,6 +36,7 @@
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
+	var/mob_hovered_over = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -3095,11 +3096,15 @@
 
 
 /mob/MouseEntered(location, control, params)
-	if(usr.client.check_key(KEY_EXAMINE))
-		src.name_tag?.show_images(usr.client, FALSE, TRUE)
+	var/mob/M = usr
+	M.mob_hovered_over = src
+	if(M.client.check_key(KEY_EXAMINE))
+		src.name_tag?.show_images(M.client, FALSE, TRUE)
 
 /mob/MouseExited(location, control, params)
-	src.name_tag?.show_images(usr.client, usr.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(usr, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
+	var/mob/M = usr
+	M.mob_hovered_over = null
+	src.name_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)
