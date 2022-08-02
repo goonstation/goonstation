@@ -524,10 +524,6 @@
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
-		if (istraitor(src) && src.mind.late_special_role == 1)
-			//put this here because otherwise it's called before they have a PDA
-			equip_traitor(src)
-
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
