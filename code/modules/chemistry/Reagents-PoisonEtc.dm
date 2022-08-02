@@ -984,12 +984,18 @@ datum
 					. = 0
 				var/datum/reagents/fluid_group/wildwetride = src.holder
 				if(istype(wildwetride)) //applied by a fluid body, so we can keep it simpleish
+
+					//INTERIM FUNCTIONALITY SECTION
+					//REMOVE THIS IF/WHEN PR 9904 IS MERGED AND INTEGRATED - failure to do so will cause
+					var/chem_adjust = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+					chem_adjust = clamp(1 - (chem_adjust / 100), 0, 2) //floats.
+					volume *= chem_adjust
+					//END INTERIM FUNCTIONALITY SECTION
+
 					var/do_an_ouch = TRUE
 					if(ON_COOLDOWN(M, "corroded_message_cd", 1.1 SECONDS))
 						do_an_ouch = FALSE
 					var/damage2deal = clamp(volume / 6, 0, 10)
-					if(damage2deal)
-						random_burn_damage(M, damage2deal)
 					if(damage2deal >= 5) //scream and face melty
 						if(ishuman(M))
 							var/mob/living/carbon/human/H = M
@@ -1006,8 +1012,10 @@ datum
 							var/mob/living/carbon/human/H = M
 							if(do_an_ouch)
 								H.emote("gasp")
-					if(do_an_ouch)
-						boutput(M, "<span class='alert'>The blueish acidic substance burns[damage2deal ? null : " you, but isn't concentrated enough to harm you"]!</span>")
+					if(damage2deal)
+						random_burn_damage(M, damage2deal)
+						if(do_an_ouch)
+							boutput(M, "<span class='alert'>The blueish acidic substance burns!</span>")
 				else //applied by a beaker splash
 					if (method == TOUCH && volume >= 30)
 						if (ishuman(M))
