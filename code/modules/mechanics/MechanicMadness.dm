@@ -977,7 +977,7 @@
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
-		thr?.user = (owner || usr)
+		thr?.user = (owner)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
