@@ -129,7 +129,7 @@
 		..()
 		return
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		set_dir(get_dir(src, target))
 
 	if (abilityHolder.click(target, params)) //check the abilityholder

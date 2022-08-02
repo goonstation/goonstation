@@ -1052,7 +1052,7 @@ datum/pump_ui/circulator_ui
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
 						if (W.health_max >= 80) // plasma glass or better, no break please and thank you
 							continue
-						if (prob(get_dist(W,src.loc)*6))
+						if (prob(GET_DIST(W,src.loc)*6))
 							continue
 						W.health = 0
 						W.smash()
@@ -1067,7 +1067,7 @@ datum/pump_ui/circulator_ui
 
 					if(src.lastgen >= 10000000)
 						for (var/turf/T in range(6, src))
-							var/T_dist = get_dist(T, src)
+							var/T_dist = GET_DIST(T, src)
 							var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / 5))
 
 							for (var/obj/item/I in T)

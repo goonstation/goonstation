@@ -759,7 +759,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
 					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -1151,11 +1151,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(src,signal.source.loc)
+			var/dist = GET_DIST(src,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(src,nearest_beacon_loc))
 					nearest_beacon = signal_beacon
 					nearest_beacon_loc = signal.source.loc
 					return

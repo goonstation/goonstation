@@ -274,8 +274,8 @@
 	lowerfluc = -2500
 
 /datum/commodity/goldbar
-	comname = "Gold Bullion"
-	comtype = /obj/item/material_piece/gold
+	comname = "Stamped Gold Bullion"
+	comtype = /obj/item/stamped_bullion
 	onmarket = 1
 	price = 35000
 	baseprice = 35000

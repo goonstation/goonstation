@@ -1923,6 +1923,14 @@
 /obj/table,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
+"afR" = (
+/obj/storage/crate/medical,
+/obj/item/organ/liver/cyber,
+/obj/item/organ/lung/cyber/right,
+/obj/item/organ/pancreas/cyber,
+/obj/item/baton/ntso,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "afS" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -40148,7 +40156,7 @@
 "cst" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40168,7 +40176,7 @@
 "csw" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40187,7 +40195,7 @@
 "csy" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 8
@@ -40199,7 +40207,7 @@
 "csA" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -40270,7 +40278,7 @@
 "csL" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40319,7 +40327,7 @@
 "csT" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 10
@@ -47421,8 +47429,8 @@
 	},
 /area/owlery/gangzone)
 "cKP" = (
-/obj/item/material_piece/gold,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
 /obj/storage/crate{
 	desc = "It's all scratched up with talon marks.";
 	name = "Grungy Crate";
@@ -58733,6 +58741,12 @@
 	dir = 6
 	},
 /area/centcom)
+"dnK" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "dnP" = (
 /turf/unsimulated/floor/caution/corner/misc{
 	dir = 10
@@ -61561,15 +61575,15 @@
 "dAL" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/tree1/snow_random{
-	pixel_y = 4;
 	pixel_x = -52;
-	dir = 4
+	pixel_y = 4;
+	dir = 3
 	},
 /obj/decoration/syndcorpse10{
-	pixel_y = 6;
-	pixel_x = 6;
+	desc = "... but where is the rest?";
 	name = "pair of legs";
-	desc = "... but where is the rest?"
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/unsimulated/floor/snowcalm,
 /area/centcom/offices{
@@ -68775,6 +68789,22 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
+"fDe" = (
+/obj/table/wood/round/auto,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/device/light/lava_lamp{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/sticker/ribbon/participant{
+	desc = "Dr. Acula won this last year at the annual station beauty pageant.";
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "fDK" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/doors/shuttle.dmi';
@@ -71217,6 +71247,9 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"liR" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "lkL" = (
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/owlcommand,
@@ -71365,8 +71398,8 @@
 	pixel_y = 8
 	},
 /obj/item/paper/book/from_file/guardbot_guide{
-	pixel_y = -2;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -2
 	},
 /obj/item/kitchen/utensil/spoon{
 	dir = 4;
@@ -71670,6 +71703,17 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"mbb" = (
+/obj/admin_plaque{
+	name = "Kyle's Office";
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mbi" = (
 /obj/securearea{
 	desc = "Blue, blue.";
@@ -71786,6 +71830,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mwd" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 4;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/offices/kyle)
 "mwF" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 8;
@@ -72113,6 +72165,10 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"niJ" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "niP" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -72307,6 +72363,16 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"nwN" = (
+/obj/stool{
+	desc = "A soft little bed the general size and shape of a space bee.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "beebed";
+	name = "batbed"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/bat,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "nxw" = (
 /obj/table/reinforced/bar/auto,
 /obj/deskclutter{
@@ -73610,8 +73676,8 @@
 /area/diner/tug)
 "pZA" = (
 /obj/shrub/snow/random{
-	pixel_y = 10;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/snowcalm,
 /area/centcom/offices{
@@ -75106,6 +75172,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
+"ttl" = (
+/obj/surgery_tray,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_y = 7
+	},
+/obj/item/suture,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "ttO" = (
 /obj/critter/zombie/meatmonaut{
 	desc = "That suit is decidedly not Juicer, but then again who knows what you can salvage in the fleshier parts of the frontier.";
@@ -75296,6 +75371,10 @@
 "tUJ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tVG" = (
+/obj/decal/cleanable/saltpile,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "tXu" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
@@ -75347,6 +75426,20 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/varshie)
+"uaJ" = (
+/obj/table/wood/round/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Actually a pretty okay guy, despite everything. Huh.";
+	name = "paper-'Trent'"
+	},
+/obj/item/plant/herb/mint{
+	name = "pretend that this is a tin of altoids lol";
+	pixel_x = 4;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "uaQ" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
@@ -76296,6 +76389,18 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"wmi" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/toy/plush{
+	desc = "Awh, what a cutie.";
+	icon = 'icons/misc/critter.dmi';
+	icon_state = "lion";
+	name = "Leo the looks-like-a-lion-but-is-actually-a-dog"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/kyle)
 "wmm" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -152525,9 +152630,9 @@ goR
 sPY
 tma
 wel
-dvW
-dvW
-dvW
+nwN
+dnK
+niJ
 wel
 dvW
 dvW
@@ -152827,9 +152932,9 @@ plh
 uvs
 nWE
 wel
-lRO
-dvW
-dvW
+fDe
+uaJ
+liR
 wel
 lRO
 dvW
@@ -153129,9 +153234,9 @@ wPn
 uvs
 vnh
 wel
-dvW
-dvW
-dvW
+wmi
+liR
+liR
 wel
 dvW
 dvW
@@ -153431,9 +153536,9 @@ eOA
 uvs
 iQw
 wel
-dvW
-dvW
-dvW
+ttl
+tVG
+afR
 wel
 dvW
 dvW
@@ -153734,7 +153839,7 @@ dqa
 wel
 wel
 wel
-hgn
+mwd
 wel
 wel
 wel
@@ -154035,9 +154140,9 @@ vsg
 wmb
 wmb
 wmb
+mbb
 wmb
 wmb
-dxa
 wmb
 wmb
 wmb
@@ -158341,29 +158446,29 @@ aaa
 aaa
 aaa
 dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
 dkY
 aaa
 kmt
@@ -158643,6 +158748,7 @@ dkG
 xYc
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -158664,8 +158770,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -158945,6 +159050,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -158966,8 +159072,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -159247,6 +159352,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -159268,8 +159374,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -159549,6 +159654,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -159570,8 +159676,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -159851,7 +159956,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -159873,7 +159978,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -160153,7 +160258,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -160175,7 +160280,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -160455,7 +160560,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -160477,7 +160582,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -160757,7 +160862,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -160779,7 +160884,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -161059,7 +161164,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -161081,7 +161186,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -161361,7 +161466,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -161383,7 +161488,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -161663,7 +161768,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -161685,7 +161790,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -161965,7 +162070,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -161987,7 +162092,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -162267,7 +162372,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -162289,7 +162394,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -162569,7 +162674,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -162591,7 +162696,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -162871,7 +162976,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -162893,7 +162998,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -163173,7 +163278,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -163195,7 +163300,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -163475,7 +163580,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -163497,7 +163602,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -163777,7 +163882,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -163799,7 +163904,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -164079,7 +164184,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -164101,7 +164206,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -164381,7 +164486,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -164403,7 +164508,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -164683,7 +164788,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -164705,7 +164810,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -164985,7 +165090,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -165007,7 +165112,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -165287,7 +165392,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -165309,7 +165414,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -165589,7 +165694,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -165611,7 +165716,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -165891,7 +165996,7 @@ dkQ
 dkG
 aaa
 dkY
-xWi
+dkY
 xWi
 xWi
 xWi
@@ -165913,7 +166018,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -166193,6 +166298,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -166214,8 +166320,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -166495,6 +166600,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -166516,8 +166622,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -166797,6 +166902,7 @@ dkQ
 dkG
 aaa
 dkY
+dkY
 xWi
 xWi
 xWi
@@ -166818,8 +166924,7 @@ xWi
 xWi
 xWi
 xWi
-xWi
-xWi
+dkY
 dkY
 aaa
 kmt
@@ -167099,29 +167204,29 @@ dkQ
 dkG
 aaa
 dkY
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
-xWi
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
+dkY
 dkY
 aaa
 kmt

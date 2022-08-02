@@ -359,3 +359,15 @@
 	thousand
 		amount = 1000
 
+//not a good spot for this but idc
+/obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
+	name = "stamped bullion"
+	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "stamped_gold"
+	force = 4
+	throwforce = 6
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

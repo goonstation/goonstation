@@ -236,10 +236,10 @@
 								else
 									WT.ReplaceWithSpace()
 
-							var/turf/olddist = get_dist(src, src.target)
+							var/turf/olddist = GET_DIST(src, src.target)
 							walk_to(src, src.target,1,5)
 							SPAWN(5 DECI SECOND)
-								if ((get_dist(src, src.target)) >= (olddist))
+								if ((GET_DIST(src, src.target)) >= (olddist))
 									src.frustration++
 									if(src.z == get_step(src.target, 0).z)
 										step_towards(src, src.target)

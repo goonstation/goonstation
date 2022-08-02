@@ -131,7 +131,7 @@
 
 
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 

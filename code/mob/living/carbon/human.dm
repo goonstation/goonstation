@@ -899,9 +899,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if (src.client)
-			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
-
 		stat(null, " ")
 		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
@@ -1039,7 +1036,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!

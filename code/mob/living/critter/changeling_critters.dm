@@ -387,6 +387,21 @@
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
 
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if(src.marked_target && src.client)
+			var/image/arrow = image(icon = 'icons/mob/screen1.dmi', icon_state = "arrow", loc = src, layer = HUD_LAYER)
+			arrow.color = "#ff0000ff"
+			arrow.transform = matrix(arrow.transform, -2, -2, MATRIX_SCALE)
+			var/angle = get_angle(src, src.marked_target)
+			arrow.transform = matrix(arrow.transform, angle, MATRIX_ROTATE)
+			arrow.transform = matrix(arrow.transform, sin(angle)*40, cos(angle)*40, MATRIX_TRANSLATE)
+			src.client.images += arrow
+			animate(arrow, time = 3 SECONDS, alpha = 0)
+			SPAWN(3 SECONDS)
+				src.client?.images -= arrow
+				qdel(arrow)
+
 ///////////////////////////
 // LEGWORM
 ///////////////////////////

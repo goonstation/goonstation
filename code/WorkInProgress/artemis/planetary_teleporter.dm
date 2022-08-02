@@ -137,7 +137,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) != 0) return
+		if(GET_DIST(usr, src) != 0) return
 
 		if(href_list["recieve"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["recieve"])

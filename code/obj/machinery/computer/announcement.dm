@@ -175,7 +175,7 @@
 			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 	proc/get_time(mob/user)
-		return GET_COOLDOWN(user,"announcement_computer")
+		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
 
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)

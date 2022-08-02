@@ -567,7 +567,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			for (var/atom in P.targets)
 				var/atom/A = atom
 				if (A == P.shooter) continue
-				if (get_dist(P,A) < get_dist(P,closest))
+				if (GET_DIST(P,A) < GET_DIST(P,closest))
 					closest = A
 
 			desired_x = closest.x - P.x
