@@ -57,6 +57,7 @@ WET FLOOR SIGN
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
 	var/refill_speed = 5
+	
 	disposing()
 		..()
 		processing_items.Remove(src)
