@@ -38,14 +38,10 @@ WET FLOOR SIGN
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
-
+	rc_flags = RC_VISIBLE | RC_SPECTRO | RC_SCALE
 	New()
 		..()
 		reagents.add_reagent("luminol", initial_volume)
-
-	examine()
-		. = ..()
-		. += "[src.reagents.total_volume] units left!"
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner spray bottle"
