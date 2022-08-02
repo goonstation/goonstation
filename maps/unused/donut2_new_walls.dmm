@@ -24707,9 +24707,8 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter"
+/obj/submachine/foodprocessor{
+	dir = 4
 	},
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
