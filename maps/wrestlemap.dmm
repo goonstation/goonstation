@@ -37035,6 +37035,11 @@
 /area/station/security/processing)
 "pPh" = (
 /obj/submachine/seed_vendor,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "pPJ" = (
