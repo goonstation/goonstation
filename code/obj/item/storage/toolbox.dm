@@ -386,7 +386,7 @@
 			progenitor.hunger += clamp((progenitor.force / 10), 1, 10) * mult
 
 		else if(D.stage == 4)
-			if(get_dist(get_turf(progenitor),src) <= 7)
+			if(GET_DIST(get_turf(progenitor),src) <= 7)
 				D.stage = 1
 				return
 			if(probmult(4))

@@ -92,7 +92,7 @@
 						shake_camera(M, 5, 8)
 						M.changeStatus("weakened", 3 SECONDS)
 					for (var/turf/TF in range(min(5,gen_level),T))
-						animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+						animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 					if (gen_level >= 5)
 						for (var/obj/window/W in range(min(5,gen_level), T))
 							W.health = 0

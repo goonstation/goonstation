@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							new_turf.alpha = 0
 							arenaropes += new_turf
 					*/
-					if(get_dist(Aloc,T) == ring_radius) // boundaries
+					if(GET_DIST(Aloc,T) == ring_radius) // boundaries
 						if(abs(Aloc.x - T.x) == ring_radius && abs(Aloc.y - T.y) == ring_radius) // arena corners
 							var/obj/stool/chair/boxingrope_corner/FF = new/obj/stool/chair/boxingrope_corner(T)
 							FF.alpha = 0

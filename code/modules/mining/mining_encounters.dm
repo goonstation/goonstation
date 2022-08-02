@@ -707,7 +707,7 @@
 		current_range++
 		current_chance -= degradation
 		for (var/turf/space/S in range(current_range,A))
-			if (get_dist(S,A) == current_range)
+			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue
 				if (!Turfspawn_CheckForNearbyTurfsOfType(S,base_rock,1))
@@ -751,7 +751,7 @@
 		current_range++
 		total_distance = 0
 		for (var/turf/space/S in range(current_range,A))
-			if (get_dist(S,A) == current_range)
+			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue
 				total_distance = abs(A.x - S.x) + abs(A.y - S.y) + (current_range / 2)
@@ -794,7 +794,7 @@
 		current_range++
 		current_chance = clamp(current_chance - 25, 2, 100)
 		for (var/turf/space/S in range(current_range,A))
-			if (get_dist(S,A) == current_range)
+			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue
 				if (!Turfspawn_CheckForNearbyTurfsOfType(S,/turf/simulated/floor/plating/airless,1))

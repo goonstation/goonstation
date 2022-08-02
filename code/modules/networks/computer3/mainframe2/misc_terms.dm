@@ -77,7 +77,7 @@
 		if (..())
 			return 1
 
-		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
+		if (href_list["dipsw"] && src.panel_open && GET_DIST(usr, src) < 2)
 			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1

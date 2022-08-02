@@ -1118,6 +1118,6 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			break
 		if (F == get_turf(M))
 			continue
-		if (get_dist(M,F) > range)
+		if (GET_DIST(M,F) > range)
 			continue
 		tfireflash(F,1,temp)

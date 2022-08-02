@@ -348,7 +348,7 @@
 	proc/cast()
 		var/turf/T = get_step(owner,owner.dir)
 		var/range_breath = 1
-		while((get_dist(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
+		while((GET_DIST(owner,T) < range) && (range_breath < 20))// range is used for the range the fireburp can reach from the caster.
 			T = get_step(T,owner.dir)
 			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
@@ -367,7 +367,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			tfireflash(F,0.5,temp)
 
