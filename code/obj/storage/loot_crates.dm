@@ -33,7 +33,7 @@
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
-		/obj/item/material_piece/gold = 20,\
+		/obj/item/stamped_bullion = 20,\
 		/obj/item/plant/herb/cannabis/omega/spawnable = 20,\
 		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper) = 20,
 	)
