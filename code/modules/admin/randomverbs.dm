@@ -1723,7 +1723,7 @@
 			E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
 
 	switch (former_role)
-		if (ROLE_MINDHACK) return
+		if (ROLE_MINDHACK) M.delStatus("mindhack")
 		if (ROLE_VAMPTHRALL) return
 		if ("spyminion") return
 		if (ROLE_BLOB) M.humanize(1)
