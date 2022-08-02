@@ -56,8 +56,8 @@ WET FLOOR SIGN
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
-	var/refill_speed = 5
-	
+	var/refill_speed = 2.5
+	initial_volume = 50
 	disposing()
 		..()
 		processing_items.Remove(src)
@@ -81,10 +81,6 @@ WET FLOOR SIGN
 	icon_state = "cleaner_robot"
 	initial_volume = 25
 	refill_speed = 0.75
-
-	New()
-		..()
-		reagents.add_reagent("cleaner", initial_volume)
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
