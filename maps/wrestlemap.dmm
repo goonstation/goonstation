@@ -9223,7 +9223,8 @@
 "dLB" = (
 /obj/railing/reinforced{
 	icon = 'icons/obj/decoration.dmi';
-	icon_state = "ringrope"
+	icon_state = "ringrope";
+	invisibility = 1
 	},
 /obj/disposalpipe/segment/produce{
 	dir = 1;
@@ -20847,7 +20848,8 @@
 "iIA" = (
 /obj/railing/reinforced{
 	icon = 'icons/obj/decoration.dmi';
-	icon_state = "ringrope"
+	icon_state = "ringrope";
+	invisibility = 1
 	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -29888,13 +29890,18 @@
 	name = "Research Locker Room"
 	})
 "mCJ" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/railing/reinforced{
+	invisibility = 1
+	},
 /obj/railing/reinforced{
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "ringrope";
-	dir = 5
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
+	dir = 5;
+	bound_height = 0;
+	bound_width = 0
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -32924,7 +32931,8 @@
 "nUu" = (
 /obj/railing/reinforced{
 	icon = 'icons/obj/decoration.dmi';
-	icon_state = "ringrope"
+	icon_state = "ringrope";
+	invisibility = 1
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -49997,9 +50005,14 @@
 /area/station/ai_monitored/storage/eva)
 "vmq" = (
 /obj/railing/reinforced{
+	invisibility = 1
+	},
+/obj/railing/reinforced{
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "ringrope";
-	dir = 9
+	dir = 9;
+	bound_width = 0;
+	bound_height = 0
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
