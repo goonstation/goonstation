@@ -68,7 +68,7 @@ WET FLOOR SIGN
 
 	process()
 		..()
-		if (src.reagents.total_volume < reagents.maximum_volume)
+		if (src.reagents.total_volume < src.reagents.maximum_volume)
 			src.reagents.add_reagent("cleaner", refill_speed)
 		else
 			processing_items.Remove(src)
