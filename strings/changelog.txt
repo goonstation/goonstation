@@ -1,5 +1,8 @@
 
-(t)mon aug 1 22
+(t)mon aug 01 22
+(u)Flourish
+(e)🔄|rework
+(*)The "time until payday" countdown has been removed from the status panel. Now, every payday you get a PDA message informing you how much has been deposited into your account and how many credits you have total. (You may block PAYROLL-MAILBOT if you wish.)
 (u)Flourish
 (e)🆕|feature
 (+)Clowns can now stow a single tiny item in their clown towel. This is compatible with eating and vomiting back out the towel.

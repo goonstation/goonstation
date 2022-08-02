@@ -376,6 +376,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		spooktober_GH.update()
 #endif
 
+		wagesystem.process()
+
 		emergency_shuttle.process()
 
 		#if DM_VERSION >= 514
