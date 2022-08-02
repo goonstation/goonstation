@@ -6,14 +6,14 @@
 	return
 
 /obj/proc/user_can_suicide(var/mob/user as mob)
-	if (!istype(user) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 
 /obj/item/var/suicide_in_hand = TRUE // does it have to be held to be used for suicide?
 /obj/item/user_can_suicide(var/mob/user as mob)
 
-	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || get_dist(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
+	if (!istype(user) || (src.suicide_in_hand && !user.find_in_hand(src)) || GET_DIST(user, src) > src.suicide_distance || user.stat || user.restrained() || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned"))
 		return FALSE
 	return TRUE
 

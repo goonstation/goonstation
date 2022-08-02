@@ -28,7 +28,7 @@
 	if (targeting_ability)
 		..()
 	else
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 

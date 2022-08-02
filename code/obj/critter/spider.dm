@@ -493,7 +493,7 @@
 				return
 			if (!src.scavenger || src.corpse_target == null)
 				src.task = "thinking"
-			if (get_dist(src, src.corpse_target) > src.attack_range)
+			if (GET_DIST(src, src.corpse_target) > src.attack_range)
 				src.task = "chasing corpse"
 			src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [C]!</span>")
 			src.set_loc(C.loc)

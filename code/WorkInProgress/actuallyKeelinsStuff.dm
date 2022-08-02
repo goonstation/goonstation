@@ -810,9 +810,9 @@ Returns:
 
 	handleCast(var/atom/selected)
 		var/mob/M = usr
-		var/dur = (get_dist(selected, M)*5)
+		var/dur = (GET_DIST(selected, M)*5)
 		var/ease = pick(LINEAR_EASING,SINE_EASING,CIRCULAR_EASING,QUAD_EASING,CUBIC_EASING,BOUNCE_EASING,ELASTIC_EASING,BACK_EASING)
-		boutput(world, "dur [dur] , ease : [ease] , dist : [get_dist(selected, M)] , selected : [selected]")
+		boutput(world, "dur [dur] , ease : [ease] , dist : [GET_DIST(selected, M)] , selected : [selected]")
 		cinLookAt(M, selected, dur, ease, 1, 1, 1)
 		sleep(dur+3)
 		cinShake(M,20,0.5,0,32,ease,1,1,1)
@@ -1055,7 +1055,7 @@ Returns:
 					last = get_turf(over_object)
 					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
-					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
+					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-GET_DIST(get_turf(src),get_turf(over_object)), 2))
 		return
 
 	onMouseDown(atom/target,location,control,params)
@@ -1189,7 +1189,7 @@ Returns:
 		for(var/mob/O in AIviewers(owner))
 			if(!seen.Find(O))
 				var/canSee = 0
-				switch(get_dist(O, user))
+				switch(GET_DIST(O, user))
 					if(0 to 1)
 						if(O.dir == turn(user.dir, 180)) //Only visible if looking directly at them in close range.
 							canSee = 1
@@ -1255,7 +1255,7 @@ Returns:
 			if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
 				force = stabbyness
 
-				if(ismob(A) && get_dist(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
+				if(ismob(A) && GET_DIST(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
 					force = round(stabbyness * 2)
 					bloody = 1
 

@@ -40156,7 +40156,7 @@
 "cst" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40176,7 +40176,7 @@
 "csw" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40195,7 +40195,7 @@
 "csy" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 8
@@ -40207,7 +40207,7 @@
 "csA" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -40278,7 +40278,7 @@
 "csL" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /obj/item/spacecash/bag,
 /turf/unsimulated/floor/black/side{
@@ -40327,7 +40327,7 @@
 "csT" = (
 /obj/table/reinforced/auto,
 /obj/item/spacecash/million,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/item/raw_material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 10
@@ -47429,8 +47429,8 @@
 	},
 /area/owlery/gangzone)
 "cKP" = (
-/obj/item/material_piece/gold,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
 /obj/storage/crate{
 	desc = "It's all scratched up with talon marks.";
 	name = "Grungy Crate";

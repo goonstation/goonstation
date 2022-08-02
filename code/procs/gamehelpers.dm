@@ -92,7 +92,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if (C.bioHolder.HasEffect("telekinesis") && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
@@ -232,6 +232,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	for(var/mob/living/intangible/aieye/eye in .)
+		. -= eye
+
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
@@ -359,7 +362,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	var/turf/target_turf = get_turf(target)
 	if(current == target_turf)
 		return TRUE
-	if(get_dist(current, target_turf) > length)
+	if(GET_DIST(current, target_turf) > length)
 		return FALSE
 	current = get_step_towards(source, target_turf)
 	while((current != target_turf))

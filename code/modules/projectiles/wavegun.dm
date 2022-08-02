@@ -31,7 +31,7 @@
 	color_blue = 0
 
 	get_power(obj/projectile/P, atom/A)
-		return 12.5 + 2.5 * clamp(get_dist(A, P.orig_turf) - 4, 0, 7)
+		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)
 
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/

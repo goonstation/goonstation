@@ -26,7 +26,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
-	
+
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -180,7 +180,7 @@
 			if( isturf(target) && findtext(control, "map_viewport") )
 				set_loc(src, target)
 
-			if (get_dist(src, target) > 0)
+			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
 
@@ -273,10 +273,10 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
-		
+
 	vomit()
 		return 0 //can't puke
-		
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
