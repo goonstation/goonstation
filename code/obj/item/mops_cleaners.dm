@@ -63,7 +63,7 @@ WET FLOOR SIGN
 
 	on_reagent_change()
 		..()
-		if (src.reagents.total_volume < reagents.maximum_volume)
+		if (src.reagents.total_volume < src.reagents.maximum_volume)
 			processing_items |= src
 
 	process()
