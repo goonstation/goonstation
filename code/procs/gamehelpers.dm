@@ -232,6 +232,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	for(var/mob/living/intangible/aieye/eye in .)
+		. -= eye
+
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
