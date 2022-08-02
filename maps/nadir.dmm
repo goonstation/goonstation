@@ -40450,11 +40450,15 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = 9
+/obj/item/reagent_containers/patch/burn{
+	pixel_x = 1;
+	pixel_y = 2
 	},
-/obj/item/device/analyzer/healthanalyzer,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/emergency_injector/saline,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
