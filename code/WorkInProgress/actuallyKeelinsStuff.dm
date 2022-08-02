@@ -1520,7 +1520,7 @@ Returns:
 		var/partgreen = GetGreenPart(src.color) / 255
 		var/partblue  = GetBluePart(src.color) / 255
 
-		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
+		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
 		var/obj/meleeeffect/M
 		switch(direction)
@@ -2215,7 +2215,7 @@ Returns:
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
@@ -2847,13 +2847,13 @@ var/list/lag_list = new/list()
 	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
-		if(0 to 0.100)
+		if(0 to 0.1)
 			lag_string = "Minimal"
-		if(0.101 to 0.180)
+		if(0.101 to 0.18)
 			lag_string = "Normal"
-		if(0.181 to 0.350)
+		if(0.181 to 0.35)
 			lag_string = "High"
-		if(0.351 to 0.500)
+		if(0.351 to 0.5)
 			lag_string = "Very High"
 		if(0.501 to INFINITY)
 			lag_string = "Oh Sh*t"

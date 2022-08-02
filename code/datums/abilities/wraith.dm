@@ -157,7 +157,7 @@
 		M.set_body_icon_dirty()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
 
-		holder.regenRate *= 2.0
+		holder.regenRate *= 2
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")

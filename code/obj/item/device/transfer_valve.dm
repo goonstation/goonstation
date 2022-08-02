@@ -313,9 +313,9 @@
 				var/power = min(MIXTURE_PRESSURE(T.air_contents) / TANK_RUPTURE_PRESSURE, 2)
 				DEBUG_MESSAGE("Power: [power]")
 
-				if(power < 0.30) //Really weak
+				if(power < 0.3) //Really weak
 					return
-				else if (power < 0.50)
+				else if (power < 0.5)
 					visible_message("<span class='combat'>\The [src] farts [pick_string("descriptors.txt", "mopey")]</span>")
 					playsound(src, 'sound/voice/farts/poo2.ogg', 30, 2, channel=VOLUME_CHANNEL_EMOTE)
 					return

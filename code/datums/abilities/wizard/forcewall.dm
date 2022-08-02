@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 20 SECONDS
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	voice_grim = "sound/voice/wizard/ForcewallGrim.ogg"
 	voice_fem = "sound/voice/wizard/ForcewallFem.ogg"
 	voice_other = "sound/voice/wizard/ForcewallLoud.ogg"
@@ -54,7 +55,7 @@
 	desc = "An impenetrable magic barrier. Its only flaw is that it cannot last long."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "forcewall"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 	luminosity = 3

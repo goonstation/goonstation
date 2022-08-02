@@ -676,7 +676,7 @@
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 

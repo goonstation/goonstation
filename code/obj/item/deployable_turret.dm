@@ -7,8 +7,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/syndieturret.dmi'
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL

@@ -98,7 +98,7 @@
 	var/pay = 0 // Does this vending machine require money?
 	var/acceptcard = 1 // does the machine accept ID swiping?
 	var/credit = 0 //How much money is currently in the machine?
-	var/profit = 0.90 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
+	var/profit = 0.9 // cogwerks: how much of a cut should the QMs get from the sale, expressed as a percent
 
 	var/HTML = null // guh
 	var/vending_HTML = null // buh
@@ -234,14 +234,14 @@
 
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				SPAWN(0)
 					src.malfunction()

@@ -123,11 +123,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				SPAWN(0)
 					src.take_damage(400)
 				return
-			if(2.0)
+			if(2)
 				SPAWN(0)
 					src.take_damage(150)
 				return

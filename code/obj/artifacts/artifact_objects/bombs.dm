@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, "sound/machines/satcrash.ogg", 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		new /obj/bhole(T,rand(100,300))
 
 		if (O)

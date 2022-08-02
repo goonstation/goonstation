@@ -6,6 +6,7 @@
 	target_anything = 1
 	cooldown = 250 //10 seconds shorter than the cooldown for fireball in modern code
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	/*
@@ -85,9 +86,9 @@
 	random = 1
 
 /datum/targetable/spell/prismatic_spray/admin/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120
 
 /datum/targetable/spell/prismatic_spray/bullet_hell
-	spread = 180.0
+	spread = 180
 	num_projectiles = 120

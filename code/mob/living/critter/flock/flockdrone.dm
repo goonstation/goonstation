@@ -314,6 +314,8 @@
 	flock_speak(src, "No tasks in queue. Allocating higher functions to compute generation.", src.flock)
 	src.is_npc = FALSE
 	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
+	src.flock.total_compute += src.compute - FLOCK_DRONE_COMPUTE
+	src.flock.update_computes()
 	src.flock.hideAnnotations(src)
 	src.visible_message("<span class='notice'><b>[src]</b> goes dim and settles on the floor.</span>")
 
@@ -321,6 +323,8 @@
 	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
+	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
+	src.flock.update_computes()
 	src.ai_paused = FALSE
 	src.anchored = FALSE
 	src.wander_count = 0
@@ -782,6 +786,7 @@
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
+	var/datum/flock/F = src.flock
 	src.flock?.removeDrone(src)
 
 	var/turf/T = get_turf(src)
@@ -797,8 +802,7 @@
 
 	var/mob/living/critter/flock/bit/B
 	for(var/i=1 to num_bits)
-		B = new(T, src.flock)
-		src.flock?.registerUnit(B)
+		B = new(T, F)
 		SPAWN(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
 

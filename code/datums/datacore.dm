@@ -8,7 +8,7 @@
 	var/list/datum/ticket/tickets = list()
 	var/obj/machinery/networked/mainframe/mainframe = null
 
-/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
+/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "", var/pda_net_id = null)
 	if (!H || !H.mind)
 		return
 
@@ -203,7 +203,8 @@
 
 
 	B["job"] = H.job
-	B["current_money"] = 100.0
+	B["current_money"] = 100
+	B["pda_net_id"] = pda_net_id
 	B["notes"] = "No notes."
 
 	// If it exists for a job give them the correct wage

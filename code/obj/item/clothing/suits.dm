@@ -1283,29 +1283,27 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
-	var/datum/material/renf=null
 
-	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
-		renf = R
-		if (src.material && renf)
-
+	onMaterialChanged()
+		. = ..()
+		if (istype(src.material))
 			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
 			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
+		return
 
-			prot = max(0, renf.getProperty("density") - 3) / 2
-			setProperty("meleeprot", 3 + prot)
-			setProperty("rangedprot", 0.3 + prot / 5)
-			setProperty("space_movespeed", 0.15 + prot / 5)
 
-	UpdateName()
-		if (src.material && renf)
-			name = "[renf]-reinforced [src.material] bespoke space suit"
-		else if (src.material)
-			name = " [src.material] bespoke space suit"
+	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
+		src.setMaterial(fabrMat)
+		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot", 3 + prot)
+		setProperty("rangedprot", 0.3 + prot / 5)
+		setProperty("space_movespeed", 0.15 + prot / 5)
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

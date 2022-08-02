@@ -61,7 +61,7 @@
 		sleep(lifespan)
 		if (!stable)
 			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
 			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")

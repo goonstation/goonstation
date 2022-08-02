@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)

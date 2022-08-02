@@ -461,7 +461,8 @@
 		if(src.client && src.client.preferences)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
-		data_core.addManifest(src, sec_note, med_note)
+		var/obj/item/device/pda2/pda = locate() in src
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -524,10 +525,6 @@
 				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
-
-		if (istraitor(src) && src.mind.late_special_role == 1)
-			//put this here because otherwise it's called before they have a PDA
-			equip_traitor(src)
 
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
@@ -746,7 +743,7 @@
 	src.mind?.remembered_pin = C.pin
 
 	if (wagesystem.jobs[JOB.name])
-		var/cashModifier = 1.0
+		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 

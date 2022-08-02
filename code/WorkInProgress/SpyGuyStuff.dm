@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDSLAVE)
+				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDHACK)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -183,7 +183,7 @@ proc/Create_Tommyname()
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Tommify"
 //file location for the sound you want it to play
@@ -213,7 +213,7 @@ proc/Create_Tommyname()
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
-	force = 0.0
+	force = 0
 	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It smells of cheap cologne and..."
 

@@ -769,6 +769,8 @@
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
 
+	message = say_decorate(message)
+
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
@@ -1204,6 +1206,9 @@
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+/mob/living/proc/say_decorate(message)
+	return message
 
 // helper proooocs
 
