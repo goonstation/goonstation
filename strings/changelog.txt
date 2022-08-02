@@ -1,5 +1,9 @@
 
 (t)tue aug 02 22
+(u)Ikea
+(p)9835
+(e)⚖|balance
+(*)Upon being converted through counterrev implants or beatings, you now gain 5 seconds of additional melee protection.
 (u)Munien & Avimour
 (p)9892
 (e)🆕🎨|feature, sprites
