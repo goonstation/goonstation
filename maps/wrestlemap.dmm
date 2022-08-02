@@ -1000,6 +1000,9 @@
 /area/shuttle/arrival/station)
 "aqN" = (
 /obj/machinery/navbeacon/mule/ranch_north,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aqP" = (
@@ -1414,7 +1417,10 @@
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "ayE" = (
-/obj/item/fish_portal,
+/obj/disposalpipe/trunk/produce,
+/obj/machinery/disposal/transport{
+	name = "Produce Chute - Kitchen"
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "ayL" = (
@@ -3701,6 +3707,15 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"bAh" = (
+/obj/machinery/light/small/floor,
+/obj/item/fish_portal,
+/obj/disposalpipe/segment/produce{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "bAs" = (
 /obj/machinery/atmospherics/portables_connector/south{
 	dir = 8;
@@ -9205,6 +9220,17 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
+"dLB" = (
+/obj/railing/reinforced{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "ringrope"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "dLC" = (
 /obj/table/glass/auto,
 /obj/item/clothing/mask/wrestling/black,
@@ -13727,6 +13753,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "fGF" = (
@@ -14034,6 +14063,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "fMv" = (
@@ -14056,6 +14086,15 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"fMM" = (
+/obj/landmark{
+	name = "kudzustart"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "fMT" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/small{
@@ -15890,6 +15929,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -19908,6 +19950,12 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/atmos/hookups/central)
+"isp" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "isv" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -20796,6 +20844,16 @@
 	dir = 4
 	},
 /area/station/security/main)
+"iIA" = (
+/obj/railing/reinforced{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "ringrope"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "iIO" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -21833,6 +21891,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -28662,6 +28723,9 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "maN" = (
@@ -29627,6 +29691,13 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/north)
+"mxJ" = (
+/obj/disposalpipe/segment/produce{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "myp" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/specialroom/gym/alt,
@@ -29821,6 +29892,9 @@
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "ringrope";
 	dir = 5
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -32871,6 +32945,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/lobby)
 "nVn" = (
@@ -34677,7 +34754,9 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/obj/disposalpipe/segment/produce,
+/obj/disposalpipe/switch_junction/right/south{
+	name = "Ranch Produce Router"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oLW" = (
@@ -36654,6 +36733,7 @@
 	d2 = 8;
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "pGP" = (
@@ -37444,6 +37524,13 @@
 "qaP" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
+"qaR" = (
+/obj/machinery/light/small/floor,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "qba" = (
 /obj/cable{
 	d2 = 2;
@@ -38048,6 +38135,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "qls" = (
@@ -38601,6 +38691,10 @@
 "qww" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
+"qwJ" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "qwN" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
@@ -38719,6 +38813,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/lobby)
@@ -39300,6 +39397,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -40846,6 +40947,9 @@
 	d1 = 2;
 	d2 = 4;
 	icon_state = "5-8"
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -46996,6 +47100,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/caution,
 /area/station/hydroponics/lobby)
 "ubr" = (
@@ -50880,6 +50987,10 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 5;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "vJD" = (
@@ -53326,6 +53437,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /turf/simulated/floor/grass,
@@ -115753,7 +115867,7 @@ kEk
 cws
 sLN
 moA
-eSP
+fMM
 sqN
 ctj
 ctj
@@ -116054,8 +116168,8 @@ wzo
 kEk
 kEk
 qJA
-kEk
-kEk
+qwJ
+mxJ
 sqN
 ctj
 pqN
@@ -116962,7 +117076,7 @@ txE
 vJi
 pGL
 fMm
-nUu
+dLB
 cIb
 jfM
 mnm
@@ -117264,7 +117378,7 @@ oSr
 xkf
 bDp
 tnp
-nUu
+iIA
 pqN
 xFb
 pqN
@@ -117868,7 +117982,7 @@ vwy
 exA
 bDp
 cNT
-xlt
+qaR
 oKi
 oKi
 xlt
@@ -118774,7 +118888,7 @@ eoQ
 wWZ
 sRr
 vnR
-oKi
+isp
 nUu
 pqN
 pqN
@@ -119076,7 +119190,7 @@ gjy
 xfn
 sRr
 rzv
-oKi
+isp
 nUu
 pqN
 pqN
@@ -119378,7 +119492,7 @@ lYL
 wDe
 sRr
 ayE
-xlt
+bAh
 nUu
 pqN
 eHy
