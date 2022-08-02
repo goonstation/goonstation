@@ -1406,6 +1406,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 
 	proc/implant(mob/M as mob, mob/user as mob)
+		if(!in_interact_range(M, user))
+			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
+				return
+
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else
