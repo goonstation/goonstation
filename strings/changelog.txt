@@ -1,4 +1,9 @@
 
+(t)tue aug 02 22
+(u)Ilysen
+(p)9966
+(e)|
+(*)Arcfiends and mid-round/mixed gamemode traitors have been moved onto the new system. Please keep an eye out for bugs and report them on GitHub if something comes up!
 (t)mon aug 01 22
 (u)Flourish
 (e)🔄|rework
