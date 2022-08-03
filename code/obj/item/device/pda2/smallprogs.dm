@@ -814,7 +814,9 @@ Code:
 			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
-			usr.audible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>", "<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>", "<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
