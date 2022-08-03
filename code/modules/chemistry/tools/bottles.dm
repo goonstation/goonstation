@@ -15,6 +15,7 @@
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = NO_GHOSTCRITTER
 
 	New()
 		if (!src.bottle_style)
@@ -23,16 +24,23 @@
 
 	on_reagent_change()
 		..()
-		if (!(src.icon_state in list("bottle1", "bottle2", "bottle3", "bottle4")))
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
 			return
 		src.underlays = null
-		icon_state = "bottle[bottle_style]"
-		if (reagents.total_volume >= 0)
+		if (reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
+			var/fluid_state = round(clamp((((src.reagents.total_volume / src.reagents.maximum_volume) * 4) + 1), 1, 4))
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "bottle[bottle_style]-fluid", -1)
+				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
+			src.icon_state = "bottle[bottle_style]-[fluid_state]"
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
+		else
+			src.icon_state = "bottle[bottle_style]"
 		signal_event("icon_updated")
 
 /* =================================================== */
@@ -132,6 +140,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "morphine"
 
+/obj/item/reagent_containers/glass/bottle/coldmedicine
+	name = "bottle (robustissin)"
+	desc = "A small bottle containing robustissin, for treating common ailments.  It has a warning label on it about dizziness and minor toxicity."
+	bottle_style = "2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cold_medicine"
+
 /// cogwerks - adding some new bottles for traitor medics
 // haine - I added beedril/royal beedril to these, and my heart-related disease reagents. yolo (remove these if they're a dumb idea, idk)
 /obj/item/reagent_containers/glass/bottle/poison
@@ -164,7 +179,7 @@
 
 /obj/item/reagent_containers/glass/bottle/pfd
 	name = "perfluorodecalin bottle"
-	desc = "A small bottle of an experimental liquid-breathing medicine."
+	desc = "A small bottle of perfluorodecalin, an experimental liquid-breathing medicine."
 	bottle_style = "4"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "perfluorodecalin"
@@ -220,14 +235,14 @@
 
 /obj/item/reagent_containers/glass/bottle/antitoxin
 	name = "bottle (charcoal)"
-	desc = "A small bottle of charcoal, a general antitoxin."
+	desc = "A small bottle of charcoal, a general purpose antitoxin."
 	bottle_style = "3"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "charcoal"
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
-	name = "bottle (antihistamine)"
-	desc = "A small bottle of antihistamine, useful for reducing the severity of allergic reactions."
+	name = "bottle (diphenhydramine)"
+	desc = "A small bottle of dyphenhidramine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"

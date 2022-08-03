@@ -24,7 +24,7 @@
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
 /datum/movement_modifier/mech_boots
-	multiplicative_slowdown = 0.50
+	multiplicative_slowdown = 0.5
 
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0

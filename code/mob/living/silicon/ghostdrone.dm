@@ -102,6 +102,9 @@
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
+	track_blood()
+		return
+
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
 		if (!src.canmove)
@@ -149,6 +152,9 @@
 				ghost.verbs -= /mob/dead/observer/proc/reenter_corpse
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
+
+		//Don't be on the list of available drones
+		available_ghostdrones -= src
 
 		//So the drone cant pick up an item and then die, sending the item ~to the void~
 		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.tools
@@ -429,7 +435,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.90
+		hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -1126,16 +1132,16 @@
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
-			if (1.0)
+			if (1)
 				SPAWN(0)
 					src.gib(1)
 
-			if (2.0)
+			if (2)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
-			if (3.0)
+			if (3)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
@@ -1271,7 +1277,7 @@
 	var/mob/living/silicon/ghostdrone/G
 	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
-			if (T.newDrone)
+			if (T.newDrone && !isdead(T))
 				G = T
 				break
 			else // why are you in this list

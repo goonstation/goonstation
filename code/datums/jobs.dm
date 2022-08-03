@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	receives_implant = /obj/item/implant/health/security/anti_mindslave
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	items_in_backpack = list(/obj/item/device/flash)
 
 
@@ -781,8 +781,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("training_miner")
-		if(prob(20))
-			M.bioHolder.AddEffect("dwarf", magical=1)
 
 /datum/job/engineering/mechanic
 	name = "Mechanic"
@@ -796,7 +794,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/electrical/mechanic_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_poc1 = list(/obj/item/device/pda2/mechanic)
-	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	slot_ears = list(/obj/item/device/radio/headset/mechanic)
 
 	New()
 		..()
@@ -889,7 +887,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/cloth/towel/bar)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
-	items_in_backpack = list(/obj/item/gun/kinetic/riotgun, /obj/item/paper/book/from_file/pocketguide/bartending)
+	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg, /obj/item/paper/book/from_file/pocketguide/bartending)
 
 	New()
 		..()
@@ -1416,7 +1414,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Medical Specialist"
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/research
 	slot_belt = list(/obj/item/device/pda2/medical_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -2613,6 +2611,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		M.bioHolder.AddEffect("mute", magical=1)
+		M.bioHolder.AddEffect("blankman", magical=1)
 
 /datum/job/daily/tuesday
 	name = "Barber"

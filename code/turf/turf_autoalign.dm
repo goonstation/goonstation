@@ -175,18 +175,6 @@
 			else
 				return
 
-		if (src.material)
-			var/fail = 0
-			if (src.material.getProperty("stability") <= 2)
-				fail = 1
-			if (src.material.quality < 0) if(prob(abs(src.material.quality)))
-				fail = 1
-			if (fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 
 /turf/simulated/wall/auto/jen
@@ -408,6 +396,7 @@
 
 /turf/simulated/wall/auto/reinforced/paper
 	icon = 'icons/turf/walls_paper.dmi'
+	default_material = "bamboo"
 	connects_to = list(/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/wingrille_spawn)
 	connects_with_overlay = list(/obj/table/reinforced/bar/auto)
 
@@ -419,6 +408,7 @@
 	icon = 'icons/turf/walls_wood.dmi'
 	connect_diagonal = 0
 	mod = ""
+	default_material = "wood"
 	connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen)
@@ -498,6 +488,7 @@ ABSTRACT_TYPE(turf/simulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	connect_diagonal = 1
+	default_material = "wood"
 	connects_to = list(/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 	/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 	/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,

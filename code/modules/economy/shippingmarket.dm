@@ -16,8 +16,8 @@
 /datum/shipping_market
 
 	var/list/commodities = list()
-	var/time_between_shifts = 0.0
-	var/time_until_shift = 0.0
+	var/time_between_shifts = 0
+	var/time_until_shift = 0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
@@ -83,17 +83,23 @@
 		if(length(req_contracts) >= max_req_contracts)
 			return
 		var/contract2make //picking path from which to generate the newly-added contract
-		if(src.civ_contracts_active == 0)
+		if(src.civ_contracts_active == 0) //guarantee presence of at least one contract of each type
 			contract2make = pick_req_contract(/datum/req_contract/civilian)
 		else if(src.aid_contracts_active == 0)
 			contract2make = pick_req_contract(/datum/req_contract/aid)
 		else if(src.sci_contracts_active == 0)
 			contract2make = pick_req_contract(/datum/req_contract/scientific)
-		else
-			switch(rand(1,10)) //civ weighted slightly higher
-				if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
-				if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
-				if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
+		else //do random gen, slightly higher weighting to civilian; don't make too many aid contracts
+			if(src.aid_contracts_active > 1)
+				if(prob(55))
+					contract2make = pick_req_contract(/datum/req_contract/civilian)
+				else
+					contract2make = pick_req_contract(/datum/req_contract/scientific)
+			else
+				switch(rand(1,10))
+					if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
+					if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
+					if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
 			if(CIV_CONTRACT) src.civ_contracts_active++
@@ -206,16 +212,29 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
-		// Thin out and re-generate unpinned contracts
+		// Thin out and time out contracts by variant...
 		for(var/datum/req_contract/RC in src.req_contracts)
-			if(!RC.pinned && prob(80))
-				switch(RC.req_class)
-					if(CIV_CONTRACT) src.civ_contracts_active--
-					if(AID_CONTRACT) src.aid_contracts_active--
-					if(SCI_CONTRACT) src.sci_contracts_active--
-				src.req_contracts -= RC
-				qdel(RC)
+			switch(RC.req_class)
+				if(CIV_CONTRACT)
+					if(!RC.pinned && prob(80))
+						src.civ_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
+				if(SCI_CONTRACT)
+					if(!RC.pinned && prob(70))
+						src.sci_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
+				if(AID_CONTRACT)
+					var/datum/req_contract/aid/RCAID = RC
+					if(RCAID.cycles_remaining > 0)
+						RCAID.cycles_remaining--
+					else
+						src.aid_contracts_active--
+						src.req_contracts -= RC
+						qdel(RC)
 
+		//... and repopulate afterwards.
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
@@ -348,8 +367,11 @@
 
 		return duckets
 
-	proc/handle_returns(obj/storage/crate/sold_crate)
-		sold_crate.name = "Returned Requisitions Crate"
+	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
+		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return
+			sold_crate.name = "Returned Requisitions Crate"
+		else
+			sold_crate.name = "Reimbursed Requisitions Crate"
 		SPAWN(rand(18,24) SECONDS)
 			shippingmarket.receive_crate(sold_crate)
 
@@ -411,7 +433,7 @@
 				qdel(sell_crate)
 				if(return_handling == RET_VOID) return
 			else
-				handle_returns(sell_crate)
+				handle_returns(sell_crate, return_handling)
 				if(return_handling == RET_INSUFFICIENT)
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "Notification: No contract fulfilled by Requisition crate. Returning as sent."

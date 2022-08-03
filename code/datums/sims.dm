@@ -234,10 +234,6 @@
 
 		onDeplete()
 			holder.owner.contract_disease(/datum/ailment/disease/space_madness, null, null, 1)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (!H.pathogens.len)
-					holder.owner.infected(ez_pathogen(/datum/pathogeneffects/malevolent/serious_paranoia))
 
 		onLife()
 			if (value < 10 && prob((10 - value) * 10))
@@ -497,7 +493,7 @@
 		name = "Sanity"
 		icon_state = "sanity"
 		desc = "Your sanity slowly increases by itself, but you can speed that up with certain substances or by making sure that your mind won't be further afflicted."
-		depletion_rate = 0.0
+		depletion_rate = 0
 
 		gain_rate = 0.1
 
@@ -765,7 +761,7 @@ var/global/datum/simsControl/simsController = new()
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "plum-desat"
 	mouse_opacity = 0
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 32
 	var/mob/living/owner
 

@@ -21,7 +21,7 @@
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = "sound/misc/announcement_1.ogg"
 	req_access = list(access_heads)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	light_r =0.6
 	light_g = 1
@@ -175,7 +175,7 @@
 			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 	proc/get_time(mob/user)
-		return GET_COOLDOWN(user,"announcement_computer")
+		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
 
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)

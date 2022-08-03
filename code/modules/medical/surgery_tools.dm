@@ -25,12 +25,13 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 5
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -96,12 +97,13 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw1"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
 	force = 8
 	w_class = W_CLASS_TINY
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 20000
@@ -165,11 +167,12 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -227,11 +230,12 @@ CONTAINS:
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	throw_speed = 4
 	throw_range = 20
 	force = 5
 	flags = ONBELT
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
@@ -321,9 +325,9 @@ CONTAINS:
 				user.show_text("You combine [F] and [src]. This looks pretty unsafe!")
 				user.u_equip(F)
 				user.u_equip(src)
-				var/turf/T = get_turf(src)
-				playsound(T, "sound/items/Deconstruct.ogg", 50, 1)
-				new/obj/item/gun/kinetic/zipgun(T)
+				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				var/obj/item/gun/kinetic/zipgun/Z = new/obj/item/gun/kinetic/zipgun
+				user.put_in_hand_or_drop(Z)
 				qdel(F)
 				qdel(src)
 
@@ -727,10 +731,10 @@ CONTAINS:
 	item_state = "suture"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	force = 1
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 5000
@@ -754,7 +758,7 @@ CONTAINS:
 					src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
-					H.organHolder.chest.op_stage = 0.0
+					H.organHolder.chest.op_stage = 0
 					src.in_use = 0
 					return
 		else
@@ -790,7 +794,7 @@ CONTAINS:
 	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	stamina_damage = 0
@@ -928,19 +932,19 @@ CONTAINS:
 				if (target.organHolder)
 					if (zone == "chest")
 						if (target.organHolder.heart)
-							target.organHolder.heart.op_stage = 0.0
+							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
-							target.organHolder.chest.op_stage = 0.0
+							target.organHolder.chest.op_stage = 0
 						if (target.butt_op_stage)
-							target.butt_op_stage = 0.0
+							target.butt_op_stage = 0
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
-							target.organHolder.head.op_stage = 0.0
+							target.organHolder.head.op_stage = 0
 						if (target.organHolder.skull)
-							target.organHolder.skull.op_stage = 0.0
+							target.organHolder.skull.op_stage = 0
 						if (target.organHolder.brain)
-							target.organHolder.brain.op_stage = 0.0
+							target.organHolder.brain.op_stage = 0
 				if (target.bleeding)
 					repair_bleeding_damage(target, 100, repair_amount)
 			else
@@ -982,9 +986,10 @@ CONTAINS:
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	force = 0
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	stamina_damage = 0
@@ -1108,11 +1113,12 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 1.5
 	w_class = W_CLASS_TINY
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 7000
@@ -1547,8 +1553,9 @@ keeping this here because I want to make something else with it eventually
 	item_state = "surgical_scissors"
 
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
-	force = 8.0
+	force = 8
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -1556,7 +1563,7 @@ keeping this here because I want to make something else with it eventually
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	var/mob/Poisoner = null

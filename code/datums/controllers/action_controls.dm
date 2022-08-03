@@ -983,6 +983,8 @@ var/datum/action_controller/actions
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
+					if(QDELETED(item))
+						return
 					target.force_equip(item, slot)
 					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().

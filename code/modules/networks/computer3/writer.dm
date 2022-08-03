@@ -464,7 +464,12 @@
 
 		local_print(var/print_title = "Printout")
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
-			if(!printcard || !src.notelist || !length(src.notelist))
+			if(!printcard)
+				printcard = find_peripheral("NET_ADAPTER") // terminal card
+				if (!istype(printcard, /obj/item/peripheral/network/powernet_card/terminal))
+					return 1
+
+			if(!src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/signal/signal = get_free_signal()

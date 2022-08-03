@@ -1,5 +1,6 @@
 var/datum/explosion_controller/explosions
 #define RSS_SCALE 2
+//#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()
@@ -244,6 +245,8 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
+				if(((get_dir(T, epicenter) in ordinal) && (dir & ~get_dir(epicenter, T)))	|| ((get_dir(T, epicenter) in cardinal) && !(dir & get_dir(epicenter, T))))
+					new_value = new_value / 3 - 1
 				if(width < 360)
 					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
 					if(diff > width)

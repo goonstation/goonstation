@@ -61,7 +61,7 @@
 	var/lube_cycle_duration = BASE_LUBE_CHECK_RATE //rate at which reagents are adjusted for leaks/consumption in atmos machinery processes
 	var/reagents_consumed = 0 //amount of reagents consumed by active leak or variant
 	var/variant_description
-	var/lube_boost = 1.0
+	var/lube_boost = 1
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
@@ -73,7 +73,7 @@
 	var/variant_b_active = FALSE
 	var/warning_active = FALSE
 
-	anchored = 1.0
+	anchored = 1
 	density = 1
 
 	var/datum/pump_ui/ui
@@ -84,9 +84,9 @@
 
 	New()
 		. = ..()
-		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12)
+		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12,"spaceglue"=0.7)
 		create_reagents(400)
-		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
+		reagents.add_reagent("oil", reagents.maximum_volume*0.5)
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
 
@@ -285,6 +285,20 @@
 			src.generator.grump -= 100
 			src.audible_message("<span class='alert'>A oddly distinctive sound of contentment can be heard from [src]. How wonderful!</span>")
 
+		if( src.reagents.has_reagent("spaceglue"))
+			src.reagents.remove_reagent("spaceglue", 1)
+			src.generator.grump += 25
+			src.visible_message("<span class='alert'><b>[src] [pick("shakes", "vibrates")] [pick("dangerously", "strangely", "grumpily")]!</b></span>")
+			animate_shake(src, rand(5,7), rand(3,8), rand(3,8) )
+			violent_twitch(src)
+
+		if( src.reagents.has_reagent("graphene_compound"))
+			src.reagents.remove_reagent("graphene_compound", 1)
+			src.generator.grump += 10
+			src.explosion_resistance += 0.5
+			src.generator?.explosion_resistance += 0.2
+			violent_twitch(src)
+
 		// Interactions with transferred gas
 		if(gas_passed)
 			if(src.reagents.has_active_reaction("cryostylane_cold"))
@@ -357,7 +371,7 @@
 	// Viscosity value is inconsistant in some cases so a white list is used to ensure high performance of specific reagents.
 	on_reagent_change(add)
 		. = ..()
-		var/lube_efficiency = 0.0
+		var/lube_efficiency = 0
 
 		if(src.reagents?.total_volume)
 			for(var/reagent_id as anything in src.reagents.reagent_list)
@@ -369,7 +383,7 @@
 					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.4 * R.viscosity + 0.7 ) // -30% to +10% through linear transform
 				else
 					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.2 * R.viscosity + 0.9 ) // -10% to +10% through linear transform
-		else lube_efficiency = 0.60
+		else lube_efficiency = 0.6
 
 		src.lube_boost = lube_efficiency
 
@@ -1351,7 +1365,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
 	name = "Prototype Semiconductor"
-	desc = "A large rectangulr plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
 

@@ -7,8 +7,8 @@
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	stamina_damage = 20
@@ -194,12 +194,22 @@
 
 		if(!hit.density)
 			var/obj/item/I = hit
+
 			if(istype(I))
-				if(prob(I.w_class * 10))
+				if(istype(I,/obj/item/storage/golf_goal))
+					. = FALSE
+				else if(prob((W_CLASS_BUBSIAN - I.w_class) * 10))
+					if(O.special_data["debug"])
+						boutput(O.mob_shooter, "[O] misses [hit].")
 					. = TRUE
 				else
 					O.visible_message("[O] bounces off of [hit].")
 					hit_twitch(hit)
+			else
+				if(hit.pixel_x >= 10 || hit.pixel_x <= -10 || hit.pixel_y >= 10 || hit.pixel_y <= -10)
+					if(O.special_data["debug"])
+						boutput(O.mob_shooter, "[O] ignored [hit].")
+						. = TRUE
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
 		. = ..()
@@ -309,7 +319,7 @@
 		if(istype(P.proj_data,/datum/projectile/special/golfball))
 			var/obj/item/golf_ball/ball = P.special_data["ball"]
 			if(istype(ball))
-				if( ((P.max_range * 32) - P.travelled) < 64) // 32?
+				if( ((P.max_range * 32) - P.travelled) <= 48) // 32?
 					if(length(contents))
 						visible_message("[P] knocks into [src]. There must already be a ball in there!")
 					else
@@ -319,6 +329,9 @@
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
 						hit_twitch(src)
+				else
+					src.visible_message("[P] bounces off of [src].")
+					hit_twitch(src)
 
 	automatic_return
 		var/return_range = 5
@@ -345,7 +358,7 @@
 						Q.targets = list(target)
 						Q.mob_shooter = null
 						Q.shooter = src
-						Q.color = ball
+						Q.color = ball.color
 						ball.set_loc(Q)
 						Q.special_data["ball"] = ball
 

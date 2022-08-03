@@ -1,16 +1,3 @@
-
-/*
-    replacetext(haystack, needle, replace)
-
-        Replaces all occurrences of needle in haystack (case-insensitive)
-        with replace value.
-
-    replaceText(haystack, needle, replace)
-
-        Replaces all occurrences of needle in haystack (case-sensitive)
-        with replace value.
-*/
-
 var/list/vowels_lower = list("a","e","i","o","u")
 var/list/vowels_upper = list("A","E","I","O","U")
 var/list/consonants_lower = list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")
@@ -25,7 +12,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
+var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -79,7 +66,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	return null
 
 /proc/get_area_name(N) //get area by it's name
-
 	for(var/area/A in world)
 		if(A.name == N)
 			return A

@@ -14,6 +14,8 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
 	var/list/proj_impacts = list()
 	var/list/forensic_impacts = list()
@@ -36,6 +38,10 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
@@ -281,17 +287,6 @@
 				boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 				return
 
-	if(src.material)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-		if(fail)
-			user.visible_message("<span class='alert'>You punch the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] punches the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			dismantle_wall(1)
-			return
-
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
 	playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 	interact_particle(user,src)
@@ -344,16 +339,6 @@
 	else
 		if(src.material)
 			src.material.triggerOnHit(src, W, user, 1)
-			var/fail = 0
-			if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
-			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-			if(fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
 
@@ -538,15 +523,6 @@
 
 	if(src.material)
 		src.material.triggerOnHit(src, W, user, 1)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") <= 2) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-		if(fail)
-			user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			del(src)
-			return
 
 	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)

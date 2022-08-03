@@ -1375,10 +1375,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.explode(0)
 				return
-			if(2.0)
+			if(2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode(0)
@@ -4811,7 +4811,7 @@
 /obj/machinery/computer/tour_console
 	name = "Tour Console"
 	desc = "A computer console, presumably one relating to tours."
-	icon_state = "old2"
+	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
 

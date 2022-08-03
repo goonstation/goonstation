@@ -945,7 +945,7 @@
  * blind_message (optional) is what blind people will hear, e.g. "You hear something!"
  * Observers in range of either target will see the message, so the proc can be called on either target
  */
-/atom/proc/tri_message(mob/second_target, viewer_message, first_message, second_message, blind_message)
+/atom/proc/tri_message(atom/second_target, viewer_message, first_message, second_message, blind_message)
 	var/list/source_viewers = AIviewers(Center = src)
 	var/list/target_viewers = AIviewers(Center = second_target)
 	// get a list of all viewers within range of either target, discarding duplicates

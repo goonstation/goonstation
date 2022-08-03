@@ -71,7 +71,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "right_eye", 2.0)
+			H.organHolder.receive_organ(src, "right_eye", 2)
 			H.update_body()
 		else if (target_organ_location == "left" && !H.organHolder.left_eye)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!</span>",\
@@ -80,7 +80,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "left_eye", 2.0)
+			H.organHolder.receive_organ(src, "left_eye", 2)
 			H.update_body()
 		else
 			user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\

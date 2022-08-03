@@ -115,12 +115,18 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	azrun
 		ckey = "azrun"
 		name = "Office of Azrun"
+	beejail
+		ckey = ""
+		name = "Bee Jail"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
 	burntcornmuffin
 		ckey = ""
 		name = "Office of BurntCornMuffin"
+	cal
+		ckey = "mexicat"
+		name = "Office of Cal"
 	cogwerks
 		ckey = "drcogwerks"
 		name = "Office of Cogwerks"

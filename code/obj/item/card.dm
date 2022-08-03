@@ -12,6 +12,7 @@ GAUNTLET CARDS
 	icon_state = "id"
 	wear_image_icon = 'icons/mob/clothing/card.dmi'
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	burn_type = 1
 	stamina_damage = 0
 	stamina_cost = 0
@@ -86,7 +87,7 @@ GAUNTLET CARDS
 
 	// YOU START WITH  NO  CREDITS
 	// WOW
-	var/money = 0.0
+	var/money = 0
 	var/pin = 0000
 
 	//It's a..smart card.  Sure.

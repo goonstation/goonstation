@@ -33,6 +33,10 @@
 			boutput(M, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
 			return 1
 
+		if (isnpc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
+			boutput(M, "<span class='alert'>Something about [target]'s smell puts you off feasting on them.</span>")
+			return 1
+
 		if (!target.lying)
 			boutput(M, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
 			return 1
@@ -124,7 +128,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>You finish chewing on [HH], but what a feast it was!</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
@@ -159,7 +163,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>Your feast was interrupted, but it satisfied your hunger for the time being.</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")

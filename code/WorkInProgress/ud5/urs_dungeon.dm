@@ -535,9 +535,9 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/ursium = 0
-	var/s_time = 1.0
+	var/s_time = 1
 	var/content = null
 
 /obj/item/ursium/proc/convert2energy(var/M)
@@ -628,7 +628,7 @@
 		src.injest(M)
 */
 
-var/johnbill_ursdungeon_code = 0420
+var/johnbill_ursdungeon_code = "0420"
 
 /area/diner/arcade/New()
 		..()

@@ -18,7 +18,7 @@
 	var/list/datum/mind/traitors = list() // enemies assigned at round start
 	var/list/datum/mind/token_players = list() //players redeeming an antag token
 	var/list/datum/mind/Agimmicks = list() // admin assigned and certain gimmick enemies
-	var/list/datum/mind/former_antagonists = list() // For mindslaves and rogue cyborgs we'd want to show in the game over stats (Convair880).
+	var/list/datum/mind/former_antagonists = list() // For mindhacks and rogue cyborgs we'd want to show in the game over stats (Convair880).
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
@@ -81,14 +81,19 @@
 			var/obj_count = 0
 			var/traitor_name
 
+			// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
+			// Once antagonist datums are completed, this check should be removed entirely.
+			if (traitor.get_antagonist(traitor.special_role))
+				continue
+
 			if (traitor.current)
 				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 			else
 				traitor_name = "[traitor.displayed_key] (character destroyed)"
 
-			if (traitor.special_role == ROLE_MINDSLAVE)
-				stuff_to_output += "<B>[traitor_name]</B> was a mindslave!"
-				continue // Objectives are irrelevant for mindslaves and thralls.
+			if (traitor.special_role == ROLE_MINDHACK)
+				stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
+				continue // Objectives are irrelevant for mindhacks and thralls.
 			else if (traitor.special_role == ROLE_VAMPTHRALL)
 				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
 				continue // Ditto.
@@ -160,22 +165,6 @@
 							else
 								absorbed_announce += "<span class='success'>[AV:real_name]([AV:last_client:key])</span>, "
 						stuff_to_output += absorbed_announce
-
-				if (traitor.special_role == ROLE_TRAITOR)
-					var/purchases = length(traitor.purchased_traitor_items)
-					var/surplus = length(traitor.traitor_crate_items)
-					stuff_to_output += "They purchased [purchases <= 0 ? "nothing" : "[purchases] item[s_es(purchases)]"] with their [syndicate_currency]![purchases <= 0 ? " [pick("Wow", "Dang", "Gosh", "Good work", "Good job")]!" : null]"
-					if (purchases)
-						var/item_detail = "They purchased: "
-						for (var/i in traitor.purchased_traitor_items)
-							item_detail += "[bicon(i:item)] [i:name], "
-						item_detail = copytext(item_detail, 1, -2)
-						if (surplus)
-							item_detail += "<br>Their surplus crate contained: "
-							for (var/i in traitor.traitor_crate_items)
-								item_detail += "[bicon(i:item)] [i:name], "
-							item_detail = copytext(item_detail, 1, -2)
-						stuff_to_output += item_detail
 
 				if (traitor.special_role == ROLE_SPY_THIEF)
 					var/purchases = length(traitor.purchased_traitor_items)
@@ -254,14 +243,25 @@
 
 			if (traitor.former_antagonist_roles.len)
 				for (var/string in traitor.former_antagonist_roles)
-					if (string == ROLE_MINDSLAVE)
-						stuff_to_output += "<B>[traitor_name] was a mindslave!</B>"
+					if (string == ROLE_MINDHACK)
+						stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
 					else if (string == ROLE_VAMPTHRALL)
 						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
 					else
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
 			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+
+	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
+	for (var/V in concrete_typesof(/datum/antagonist))
+		var/datum/antagonist/dummy = V
+		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
+			#ifdef DATA_LOGGER
+			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
+			#endif
+			var/antag_dat = A.handle_round_end(TRUE)
+			if (A.display_at_round_end && length(antag_dat))
+				stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -312,8 +312,11 @@
 		return candidates
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
-/datum/game_mode/proc/equip_antag(var/datum/mind/antag)
+/datum/game_mode/proc/equip_antag(datum/mind/antag)
 	var/objective_set_path = null
+	// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
+	// It should be removed when all antagonists are on the new system.
+	var/do_objectives = TRUE
 
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
@@ -324,12 +327,8 @@
 
 	switch (antag.special_role)
 		if (ROLE_TRAITOR)
-		#ifdef RP_MODE
-			objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-		#else
-			objective_set_path = pick(typesof(/datum/objective_set/traitor))
-		#endif
-			equip_traitor(antag.current)
+			antag.add_antagonist(ROLE_TRAITOR)
+			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
 			objective_set_path = /datum/objective_set/changeling
@@ -410,15 +409,16 @@
 			antag.current.make_werewolf()
 
 		if (ROLE_ARCFIEND)
-			objective_set_path = /datum/objective_set/arcfiend
-			antag.current.make_arcfiend()
+			antag.add_antagonist(ROLE_ARCFIEND)
+			do_objectives = FALSE
 
-	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
-		new objective_set_path(antag)
-	var/obj_count = 1
-	for (var/datum/objective/objective in antag.objectives)
-		boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
+	if (do_objectives)
+		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
+			new objective_set_path(antag)
+		var/obj_count = 1
+		for (var/datum/objective/objective in antag.objectives)
+			boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			obj_count++
 
 /datum/game_mode/proc/check_win()
 

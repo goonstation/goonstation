@@ -23,6 +23,8 @@
 
 	var/obj/item/cell/cell = null
 
+	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
+
 	can_bleed = 0
 	blood_id = "oil"
 	use_stamina = 0
@@ -165,7 +167,7 @@
 	if (src.equipped() && istype(src.equipped(), /obj/item/magtractor))
 		var/obj/item/magtractor/M = src.equipped()
 		if (M.pickupItem(I, src))
-			actions.start(new/datum/action/magPickerHold(M), src)
+			actions.start(new/datum/action/magPickerHold(M, M.highpower), src)
 			return 1
 	return 0 // we have no hands doofus
 
@@ -211,7 +213,6 @@
 			src.set_cursor('icons/cursors/shock.dmi')
 			return
 	return ..()
-
 /mob/living/silicon/say(var/message)
 	if (!message)
 		return
@@ -237,6 +238,9 @@
 			return ..(message)
 	else
 		return ..(message)
+
+/mob/living/silicon/say_decorate(message)
+	. = monospace_say_regex.Replace(message, "<span class='monospace'>$1</span>")
 
 /mob/living/proc/process_killswitch()
 	return

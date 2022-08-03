@@ -18,8 +18,8 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/cloth/handkerchief))
-			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [src].</span>")
+		if (istype(W, /obj/item/cloth))
+			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()
 
@@ -434,7 +434,9 @@
 				if (O.linked_hat != null)
 					O.linked_hat.set_loc(get_turf(O))
 				else
-					new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
+					if (O.is_inspector)
+						gadgethat.make_inspector()
 				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 				qdel(O)
 				qdel(src)
@@ -668,7 +670,7 @@
 	icon_state = "glasses"
 	color = "#a0ffa0"
 	color_r = 0.9
-	color_g = 1.0
+	color_g = 1
 	color_b = 0.9
 
 	equipped(var/mob/user, var/slot)

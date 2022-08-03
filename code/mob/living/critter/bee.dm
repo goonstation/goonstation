@@ -423,7 +423,7 @@
 	bite_adjectives = list("rather large","big","expansive","proportionally small but still sizable")
 
 /datum/limb/small_critter/bee // can hold slightly larger things
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	actions = list("pokes")
 	sound_attack = null
 
@@ -1067,7 +1067,7 @@ obj/effects/bees
 particles/swarm/bees
 	icon = 'icons/misc/bee.dmi'
 	icon_state = list("mini-bee"=1, "mini-bee2"=1)
-	friction = 0.10
+	friction = 0.1
 	count = 10
 	spawning = 0.35
 	fade = 5

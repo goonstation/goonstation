@@ -372,7 +372,7 @@
 	dissipation_delay = 7
 	power = 1
 	hit_ground_chance = 10
-	ks_ratio = 1.0
+	ks_ratio = 1
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15

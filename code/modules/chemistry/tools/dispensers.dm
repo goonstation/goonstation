@@ -11,6 +11,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE
+	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
@@ -36,14 +37,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				smash()
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					smash()
 					return
-			if (3.0)
+			if (3)
 				if (prob(5))
 					smash()
 					return
@@ -469,31 +470,29 @@
 	amount_per_transfer_from_this = 25
 	event_handler_flags = NO_MOUSEDROP_QOL
 
+	// returns whether the inserted item was brewed
 	proc/brew(var/obj/item/W as obj)
-		var/brewable
 		var/list/brew_result
 
 		if(istype(W,/obj/item/reagent_containers/food))
 			var/obj/item/reagent_containers/food/F = W
-			brewable = F.brewable
 			brew_result = F.brew_result
 
 		else if(istype(W, /obj/item/plant))
 			var/obj/item/plant/P = W
-			brewable = P.brewable
 			brew_result = P.brew_result
 
-		if (!brewable || !brew_result)
-			return 0
+		if (!brew_result)
+			return FALSE
 
-		if (islist(brew_result) && length(brew_result))
+		if (islist(brew_result))
 			for (var/i in brew_result)
 				src.reagents.add_reagent(i, 10)
 		else
 			src.reagents.add_reagent(brew_result, 20)
 
 		src.visible_message("<span class='notice'>[src] brews up [W]!</span>")
-		return 1
+		return TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))

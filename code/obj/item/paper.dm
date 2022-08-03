@@ -538,7 +538,7 @@ ASC: Aux. Solar Control<BR>
 	icon_state = "flag_neutral"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
@@ -1058,7 +1058,7 @@ as it may become compromised.
 /obj/item/paper/photograph
 	name = "photo"
 	icon_state = "photo"
-	var/photo_id = 0.0
+	var/photo_id = 0
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -1151,7 +1151,7 @@ as it may become compromised.
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
 	uses_multiple_icon_states = 1
-	amount = 10.0
+	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -1163,10 +1163,23 @@ as it may become compromised.
 	burn_output = 800
 	burn_possible = 1
 
+	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
+	var/bin_type = /obj/item/paper
+
+/obj/item/paper_bin/artifact_paper
+	name = "artifact analysis form tray"
+	desc = "A tray full of forms for classifying alien artifacts."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form_tray"
+	amount = INFINITY
+	bin_type = /obj/item/sticker/postit/artifact_paper
+
+	update()
+		tooltip_rebuild = 1
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -1176,17 +1189,18 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	var/obj/item/paper = locate(/obj/item/paper) in src
+	var/obj/item/paper = locate(bin_type) in src
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = new /obj/item/paper
+			var/obj/item/P = new bin_type
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13)
-				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+				var/obj/item/paper/PA = P
+				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
 
@@ -1194,8 +1208,8 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
-	if (istype(P))
+/obj/item/paper_bin/attackby(obj/item/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+	if (istype(P, bin_type))
 		user.drop_item()
 		P.set_loc(src)
 		boutput(user, "You place [P] into [src].")
@@ -1213,7 +1227,7 @@ as it may become compromised.
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+		if (src.amount < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < ticker.round_elapsed_ticks)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
 				src.amount++
@@ -1753,4 +1767,182 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 
 	Ovidius Gotdam<br>
 	NT Marching Band Director
+	"}
+
+
+/obj/item/paper/businesscard
+	name = "business card"
+	icon_state = "businesscard"
+	desc = "A generic looking business card, offering printing services for more business cards."
+
+	sizex = 640
+	sizey = 400
+
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/banjo
+	name = "business card - Tum Tum Phillips"
+	icon_state = "businesscard"
+	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/biteylou
+	name = "business card - Bitey Lou's Bodyshop"
+	icon_state = "businesscard"
+	desc = "A business card for some sorta mechanic's shop."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/bonktek
+	name = "business card - Bonktek Shopping Pyramid"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+
+/obj/item/paper/businesscard/clowntown
+	name = "business card - Clown Town"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	color = "blue"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+
+/obj/item/paper/businesscard/cosmicacres
+	name = "business card - Cosmic Acres"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a retirement community on Earth's moon."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+
+/obj/item/paper/businesscard/ezekian
+	name = "business card - Ezekian Veterinary Clinic"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier veterinarian's office."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg1
+	name = "business card - Amantes Mini Golf"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a mini golf course."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg2
+	name = "business card - Amantes Rock Shop"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a rock collector's shop."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+
+/obj/item/paper/businesscard/josh
+	name = "business card - Josh"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "green"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+
+/obj/item/paper/businesscard/lawyers
+	name = "business card - Hogge & Wylde"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+
+/obj/item/paper/businesscard/hemera_rcd
+	name = "info card - Rapid Construction Device"
+	icon_state = "businesscard-alt"
+	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/skulls
+	name = "business card - Skulls for Cash"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+
+/obj/item/paper/businesscard/taxi
+	name = "business card - Old Fortuna Taxi Company"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier space-taxi and shuttle company."
+	color = "yellow"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+
+/obj/item/paper/businesscard/vurdulak
+	name = "business card - Emporium Vurdulak"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "purple"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+
+obj/item/paper/donut2smesinstructions
+	name = "Donut 2 SMES Units and YOU"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	Donut 2 SMES Units and YOU<br><br>
+
+	A full guide to ensuring the station is powered up properly<br>
+	----------------------------------------<br><br>
+	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
+
+	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
+	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
+
+	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
+	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
+	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
+
+	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
+
+	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
+	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
+	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
+
+	Keep that power flowing,<br>
+	S.L.
 	"}

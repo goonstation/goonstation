@@ -1,6 +1,7 @@
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3

@@ -404,14 +404,14 @@
 	ex_act(severity)
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				broken(0)
 				return
-			if(2.0)
+			if(2)
 				health -= rand(5,15)
 				healthcheck()
 				return
-			if(3.0)
+			if(3)
 				health -= rand(0,15)
 				healthcheck()
 				return
@@ -992,6 +992,7 @@
 	desc = "A hypothetical feature of loaf-spacetime. Maybe this could be used as a material?"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eloaf"
+	object_flags = NO_GHOSTCRITTER
 	force = 0
 	throwforce = 0
 	initial_volume = 400
@@ -1006,6 +1007,7 @@
 	desc = "A rather slapdash loaf designed to feed prisoners.  Technically nutritionally complete and edible in the same sense that potted meat product is edible."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ploaf0"
+	object_flags = NO_GHOSTCRITTER
 	force = 0
 	throwforce = 0
 	initial_volume = 400
@@ -1030,7 +1032,7 @@
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
-		src.w_class = min(orderOfLoafitude+1, 4)
+		src.w_class = min(round(orderOfLoafitude/2)+1, W_CLASS_GIGANTIC)
 
 		switch ( orderOfLoafitude )
 

@@ -10,7 +10,7 @@ var/global/list/bible_contents = list()
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -64,7 +64,7 @@ var/global/list/bible_contents = list()
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot.</span>")
 			random_brute_damage(user, 10)
 			user.changeStatus("stunned", 3 SECONDS)
 			JOB_XP(user, "Clown", 1)

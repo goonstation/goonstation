@@ -781,7 +781,7 @@ var/list/rollList = list()
 	name = "dice pouch"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)

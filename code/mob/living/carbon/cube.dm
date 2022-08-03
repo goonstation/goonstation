@@ -42,10 +42,10 @@
 	ex_act(severity)
 		..() // Logs.
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.gib(1)
 				return
-			if(2.0)
+			if(2)
 				if (prob(25))
 					src.gib(1)
 			else

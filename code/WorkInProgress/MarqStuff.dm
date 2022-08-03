@@ -455,15 +455,6 @@
 					I.reagents.trans_to(src, amt)
 					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 
-/obj/item/arrowhead
-	name = "arrowhead"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "arrowhead"
-
-	examine()
-		. = ..()
-		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
-
 /obj/item/implant/projectile/body_visible/arrow
 	name = "arrow"
 	pull_out_name = "arrow"
@@ -582,7 +573,7 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole"
 	icon_state = "arrow"
 
