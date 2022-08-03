@@ -1789,7 +1789,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					if (tile)
 						hit = 1
 						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-						logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
+						logTheThing("combat", user, null, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
