@@ -77,3 +77,4 @@
 /obj/item/nature/flower/lavender
 /obj/item/nature/flower/rose
 /obj/item/nature/flower/daisy
+/obj/item/nature/crystal
