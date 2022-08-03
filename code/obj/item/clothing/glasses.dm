@@ -494,7 +494,7 @@
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 			if (src.health_scan)
-				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src,NORMAL_HEALTH_VISION)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
@@ -512,7 +512,7 @@
 				src.health_scan = 1
 				var/mob/living/carbon/human/human_user = user
 				if (istype(human_user) && human_user.glasses == src)
-					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src,NORMAL_HEALTH_VISION)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)

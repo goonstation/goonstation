@@ -283,7 +283,7 @@
 		if (src.broken)
 			return
 		processing_items |= src
-		APPLY_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src,NORMAL_HEALTH_VISION)
+		APPLY_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
