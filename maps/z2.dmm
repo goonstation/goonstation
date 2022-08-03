@@ -60195,6 +60195,9 @@
 	pixel_y = 4;
 	switchon = 1
 	},
+/obj/machinery/shipalert/bill{
+	pixel_y = 3
+	},
 /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
 	pixel_x = 5;
 	pixel_y = 13
