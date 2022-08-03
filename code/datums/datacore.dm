@@ -272,8 +272,8 @@
 			return
 		return
 
-///Returns the crew manifest, but sorted according to the individual's rank.
-/proc/get_manifest()
+///Returns the crew manifest, but sorted according to the individual's rank. include_cryo includes a list of individuals in cryogenic storage
+/proc/get_manifest(include_cryo = TRUE)
 	var/list/sorted_manifest
 	var/list/Command = list()
 	var/list/Security = list()
@@ -283,6 +283,8 @@
 	var/list/Unassigned = list()
 	var/medsci_integer = 0 // Used to check if one of medsci's two heads has already been added to the manifest
 	for(var/datum/db_record/staff_record as anything in data_core.general.records)
+		if (staff_record["p_stat"] == "In Cryogenic Storage")
+			continue
 		var/rank = staff_record["rank"]
 		if(rank in command_jobs)
 			if(rank == "Captain")
@@ -353,6 +355,14 @@
 	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
 	for(var/crew in Unassigned)
 		sorted_manifest += crew
+
+	if (include_cryo)
+		var/stored = ""
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		sorted_manifest += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 
 	return sorted_manifest
 

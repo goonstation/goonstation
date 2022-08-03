@@ -148,14 +148,7 @@
 	if (!( ticker ))
 		return
 	if (src.mode) // accessing crew manifest
-
-		var/stored = ""
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
-
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[get_manifest()]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
 
@@ -445,13 +438,7 @@
 			P.set_loc(src.loc)
 
 			var/t1 = "<B>Crew Manifest:</B><hr>"
-			var/stored = ""
-			if(length(by_type[/obj/cryotron]))
-				var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-				for(var/L as anything in cryo_unit.stored_crew_names)
-					stored += "<i>- [L]<i><br>"
 			t1 += get_manifest()
-			t1 += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null
