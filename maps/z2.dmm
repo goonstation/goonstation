@@ -77160,20 +77160,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
-"xyI" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -155608,7 +155594,7 @@ dvW
 dvW
 dvW
 dvW
-xyI
+rUz
 sJH
 vij
 wel
