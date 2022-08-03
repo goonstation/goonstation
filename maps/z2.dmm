@@ -60188,19 +60188,6 @@
 /mob/living/silicon/robot/spawnable/heavy,
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/mordent)
-"dwl" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/light/lamp/green{
-	pixel_x = -6;
-	pixel_y = 4;
-	switchon = 1
-	},
-/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
-	pixel_x = 5;
-	pixel_y = 13
-	},
-/turf/unsimulated/floor/wood/three,
-/area/centcom/offices/shotgunbill)
 "dwm" = (
 /obj/table/wood/auto,
 /obj/item/paper{
@@ -60728,6 +60715,22 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/wire)
+"dxR" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/lamp/green{
+	pixel_x = -6;
+	pixel_y = 4;
+	switchon = 1
+	},
+/obj/machinery/shipalert/bill{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/turf/unsimulated/floor/wood/three,
+/area/centcom/offices/shotgunbill)
 "dxT" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -68112,6 +68115,17 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"ebm" = (
+/obj/item/nature/flower/daisy{
+	pixel_x = 7;
+	pixel_y = 11;
+	anchored = 1
+	},
+/obj/decoration/pottedfern,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices/walpvrgis)
 "ebC" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -68127,6 +68141,23 @@
 	icon_state = "shore-44"
 	},
 /area/titlescreen)
+"eev" = (
+/obj/table/endtable_gothic,
+/obj/item/decoration/incenseholder{
+	pixel_y = 10;
+	anchored = 1
+	},
+/obj/map/light/dimred{
+	brightness = 5
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_y = -2;
+	pixel_x = -9
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/walpvrgis)
 "eeF" = (
 /obj/decal/poster/wallsign/cdnp,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -68195,23 +68226,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"elE" = (
-/obj/table/endtable_gothic,
-/obj/item/decoration/incenseholder{
-	pixel_y = 10;
-	anchored = 1
-	},
-/obj/map/light/dimred{
-	brightness = 5
-	},
-/obj/item/clothing/mask/cigarette/dryjoint{
-	pixel_y = -2;
-	pixel_x = -9
-	},
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 10
-	},
-/area/centcom/offices/walpvrgis)
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
@@ -68515,6 +68529,29 @@
 /obj/item/clothing/head/headband/nyan/red,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/zamujasa)
+"eTO" = (
+/obj/table/regal/auto,
+/obj/item/luggable_computer/personal{
+	pixel_y = 10;
+	pixel_x = -1;
+	name = "Gaming Laptop";
+	desc = "It makes a sword noise when you power it up and there appears to be no way to disable this."
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = -6;
+	pixel_y = -2;
+	initial_reagents = list("matchatea"=30,"honey_tea"=20);
+	name = "mug with a printed illustration of an elf man on it";
+	desc = "Woah, this mug is beautiful."
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/walpvrgis)
 "eTR" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
@@ -68861,17 +68898,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
-"fHI" = (
-/obj/item/nature/flower/daisy{
-	pixel_x = 7;
-	pixel_y = 11;
-	anchored = 1
-	},
-/obj/decoration/pottedfern,
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 6
-	},
-/area/centcom/offices/walpvrgis)
 "fIi" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-11"
@@ -69190,23 +69216,6 @@
 /obj/item/paper/book/from_file/pharmacopia,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
-"gpK" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/head/walphat,
-/obj/item/clothing/under/misc/walpoutfit1,
-/obj/item/clothing/suit/walpcardigan,
-/obj/item/clothing/under/misc/mimefancy,
-/obj/item/clothing/head/witchhat_purple,
-/obj/item/clothing/shoes/witchboots,
-/obj/item/clothing/suit/witchcape_purple,
-/obj/item/clothing/mask/mime{
-	name = "bedazzled mime mask";
-	desc = "Someone has hand-painted and hot-glued rhinestones to this particular mime mask."
-	},
-/obj/item/plant/herb/cannabis/white/spawnable,
-/obj/item/clothing/under/misc/walpoutfit2,
-/turf/unsimulated/floor/terrazzo/black,
-/area/centcom/offices/walpvrgis)
 "gta" = (
 /obj/map/light/lava,
 /obj/grille/catwalk{
@@ -69317,21 +69326,6 @@
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor,
 /area/meat_derelict/guts)
-"gEc" = (
-/obj/item/sticker/gold_star{
-	pixel_y = 9;
-	pixel_x = 11;
-	anchored = 1
-	},
-/obj/item/sticker/heart{
-	pixel_x = -3;
-	pixel_y = -8;
-	anchored = 1
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "gGf" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -69431,6 +69425,9 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"gRn" = (
+/turf/unsimulated/floor/carpet/darkcarpet,
+/area/centcom/offices/walpvrgis)
 "gUy" = (
 /obj/lattice{
 	dir = 4;
@@ -69611,9 +69608,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"hon" = (
-/turf/unsimulated/floor/carpet/darkcarpet,
-/area/centcom/offices/walpvrgis)
 "hpv" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/orangeblack/side{
@@ -69636,6 +69630,16 @@
 	dir = 4
 	},
 /area/centcom)
+"hrQ" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/stool/bee_bed,
+/obj/item/nature/flower/lavender{
+	pixel_x = -11;
+	pixel_y = 13;
+	anchored = 1
+	},
+/turf/unsimulated/floor/terrazzo/black,
+/area/centcom/offices/walpvrgis)
 "huE" = (
 /obj/cable{
 	d1 = 1;
@@ -69644,6 +69648,23 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
+"hwh" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/head/walphat,
+/obj/item/clothing/under/misc/walpoutfit1,
+/obj/item/clothing/suit/walpcardigan,
+/obj/item/clothing/under/misc/mimefancy,
+/obj/item/clothing/head/witchhat_purple,
+/obj/item/clothing/shoes/witchboots,
+/obj/item/clothing/suit/witchcape_purple,
+/obj/item/clothing/mask/mime{
+	name = "bedazzled mime mask";
+	desc = "Someone has hand-painted and hot-glued rhinestones to this particular mime mask."
+	},
+/obj/item/plant/herb/cannabis/white/spawnable,
+/obj/item/clothing/under/misc/walpoutfit2,
+/turf/unsimulated/floor/terrazzo/black,
+/area/centcom/offices/walpvrgis)
 "hwn" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -69996,19 +70017,6 @@
 	},
 /turf/unsimulated/floor/caution/corner/ne,
 /area/centcom/offices/azrun)
-"ikL" = (
-/obj/decal/poster/cygportrait{
-	pixel_y = -3
-	},
-/obj/item/sticker/moon{
-	pixel_y = -7;
-	pixel_x = -11;
-	anchored = 1
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "ilJ" = (
 /obj/grille/catwalk,
 /obj/railing/orange/reinforced{
@@ -70070,16 +70078,6 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
-"ioz" = (
-/obj/stool/chair/comfy/purple{
-	dir = 4;
-	tag = "icon-chair_comfy-purple (EAST)";
-	pixel_y = 4
-	},
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 1
-	},
-/area/centcom/offices/walpvrgis)
 "iqu" = (
 /turf/unsimulated/floor/grass/leafy,
 /area/centcom/offices/azrun)
@@ -70120,16 +70118,6 @@
 	},
 /turf/unsimulated/floor/carpet/office/other,
 /area/centcom/offices/adhara)
-"iso" = (
-/obj/decal/cleanable/glitter/harmless,
-/obj/stool/bee_bed,
-/obj/item/nature/flower/lavender{
-	pixel_x = -11;
-	pixel_y = 13;
-	anchored = 1
-	},
-/turf/unsimulated/floor/terrazzo/black,
-/area/centcom/offices/walpvrgis)
 "isE" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-29"
@@ -70263,6 +70251,21 @@
 	},
 /turf/unsimulated/floor/caution/corner/nw,
 /area/iomoon/base/underground)
+"iFm" = (
+/obj/item/sticker/gold_star{
+	pixel_x = 11;
+	anchored = 1
+	},
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "iGD" = (
 /obj/cable{
 	d1 = 4;
@@ -71109,10 +71112,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
-"kAj" = (
-/obj/decal/cleanable/glitter/harmless,
-/turf/unsimulated/floor/carpet/darkcarpet/border,
-/area/centcom/offices/walpvrgis)
 "kAr" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 4
@@ -71870,18 +71869,6 @@
 /obj/storage/closet/office,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"mjo" = (
-/obj/admin_plaque{
-	name = "Cyg Gwyllion's Office";
-	pixel_y = 32;
-	desc = "A nameplate signifying who this office belongs to. It's been decorated with stickers, how cute."
-	},
-/turf/unsimulated/floor/grey/side{
-	dir = 1
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "mkm" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
@@ -71902,29 +71889,6 @@
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"mqO" = (
-/obj/table/regal/auto,
-/obj/item/luggable_computer/personal{
-	pixel_y = 10;
-	pixel_x = -1;
-	name = "Gaming Laptop";
-	desc = "It makes a sword noise when you power it up and there appears to be no way to disable this."
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -6;
-	pixel_y = -2;
-	initial_reagents = list("matchatea"=30,"honey_tea"=20);
-	name = "mug with a printed illustration of an elf man on it";
-	desc = "Woah, this mug is beautiful."
-	},
-/obj/item/reagent_containers/food/snacks/danish_weed{
-	pixel_y = -3;
-	pixel_x = 9
-	},
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 5
-	},
-/area/centcom/offices/walpvrgis)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-23"
@@ -72082,6 +72046,25 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim)
+"mIX" = (
+/obj/item/nature/resin/dragonsblood{
+	pixel_x = -9;
+	pixel_y = -1;
+	name = "Dragonsblood Resin"
+	},
+/obj/item/nature/resin/frankincense{
+	pixel_x = -3;
+	pixel_y = -5;
+	name = "Frankincense"
+	},
+/obj/item/nature/crystal{
+	pixel_x = -7;
+	pixel_y = -12
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 8
+	},
+/area/centcom/offices/walpvrgis)
 "mJF" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
@@ -72252,6 +72235,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"ndM" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/terrazzo/black,
+/area/centcom/offices/walpvrgis)
 "ney" = (
 /turf/unsimulated/floor/arrival/corner,
 /area/centcom)
@@ -72877,6 +72868,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"odb" = (
+/obj/stool/chair/comfy/purple{
+	dir = 4;
+	tag = "icon-chair_comfy-purple (EAST)";
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices/walpvrgis)
 "ogV" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -72974,21 +72975,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"oqQ" = (
-/obj/item/sticker/gold_star{
-	pixel_x = 11;
-	anchored = 1
-	},
-/turf/unsimulated/wall{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadwindow_1";
-	name = "window";
-	opacity = 0
-	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "orM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -73440,14 +73426,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
-"ppc" = (
-/obj/item/decoration/walpfeathers,
-/obj/decal/cleanable/glitter/harmless,
-/obj/map/light/purple{
-	brightness = 5
-	},
-/turf/unsimulated/outdoors/grass,
-/area/centcom/outside)
 "psc" = (
 /obj/stool/chair/comfy/shuttle/red,
 /obj/machinery/light{
@@ -73747,6 +73725,22 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"pQr" = (
+/obj/decoration/regallamp/walp{
+	pixel_y = 19;
+	pixel_x = 6;
+	anchored = 1;
+	lit = 1
+	},
+/obj/item/nature/flower/rose{
+	anchored = 1
+	},
+/obj/item/nature/crystal{
+	pixel_x = 7;
+	pixel_y = -11
+	},
+/turf/unsimulated/floor/terrazzo/black,
+/area/centcom/offices/walpvrgis)
 "pQy" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-49"
@@ -74348,6 +74342,13 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"rkU" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/critter/domestic_bee/walp_bee,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices/walpvrgis)
 "rlN" = (
 /obj/submachine/claw_machine,
 /turf/unsimulated/floor/wood/two,
@@ -74452,6 +74453,32 @@
 	dir = 4
 	},
 /area/centcom)
+"ruS" = (
+/obj/table/regal/auto,
+/obj/item/paper/book/custom{
+	pixel_y = 3;
+	pixel_x = 7;
+	name = "Spriting To-Do List";
+	desc = "Hmm... Looks like a lot of unfinished entries here."
+	},
+/obj/item/device/light/zippo/gold{
+	pixel_y = 15;
+	pixel_x = -5;
+	name = "weathered lighter";
+	desc = "The shine has dulled a little, it looks well-loved."
+	},
+/obj/item/cigpacket/random{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/decoration/ashtray{
+	pixel_y = 19;
+	pixel_x = 7
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 4
+	},
+/area/centcom/offices/walpvrgis)
 "ruY" = (
 /obj/shrub,
 /turf/unsimulated/outdoors/grass,
@@ -74949,6 +74976,18 @@
 	dir = 8
 	},
 /area/diner/cow)
+"spQ" = (
+/obj/admin_plaque{
+	name = "Cyg Gwyllion's Office";
+	pixel_y = 32;
+	desc = "A nameplate signifying who this office belongs to. It's been decorated with stickers, how cute."
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "sqg" = (
 /obj/machinery/bot/medbot/hippocrates,
 /turf/unsimulated/floor/shuttle{
@@ -75635,13 +75674,6 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
-"ucX" = (
-/obj/decal/cleanable/glitter/harmless,
-/obj/critter/domestic_bee/walp_bee,
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 9
-	},
-/area/centcom/offices/walpvrgis)
 "udv" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/ne,
 /area/centcom/offices{
@@ -75723,20 +75755,6 @@
 	},
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
-"urC" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -75748,25 +75766,6 @@
 	icon_state = "shore-38"
 	},
 /area/titlescreen)
-"utY" = (
-/obj/item/nature/resin/dragonsblood{
-	pixel_x = -9;
-	pixel_y = -1;
-	name = "Dragonsblood Resin"
-	},
-/obj/item/nature/resin/frankincense{
-	pixel_x = -3;
-	pixel_y = -5;
-	name = "Frankincense"
-	},
-/obj/item/nature/crystal{
-	pixel_x = -7;
-	pixel_y = -12
-	},
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 8
-	},
-/area/centcom/offices/walpvrgis)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -75895,22 +75894,6 @@
 	icon_state = "shore-17"
 	},
 /area/titlescreen)
-"uLF" = (
-/obj/decoration/regallamp/walp{
-	pixel_y = 19;
-	pixel_x = 6;
-	anchored = 1;
-	lit = 1
-	},
-/obj/item/nature/flower/rose{
-	anchored = 1
-	},
-/obj/item/nature/crystal{
-	pixel_x = 7;
-	pixel_y = -11
-	},
-/turf/unsimulated/floor/terrazzo/black,
-/area/centcom/offices/walpvrgis)
 "uMs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -75932,6 +75915,21 @@
 /mob/living/critter/small_animal/cockroach/weak,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uNO" = (
+/obj/item/sticker/gold_star{
+	pixel_y = 9;
+	pixel_x = 11;
+	anchored = 1
+	},
+/obj/item/sticker/heart{
+	pixel_x = -3;
+	pixel_y = -8;
+	anchored = 1
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uOm" = (
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/centcom/offices{
@@ -76097,14 +76095,6 @@
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
-"vjf" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 1;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/terrazzo/black,
-/area/centcom/offices/walpvrgis)
 "vji" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
 /area/centcom/offices{
@@ -76504,6 +76494,10 @@
 	icon_state = "shore-35"
 	},
 /area/titlescreen)
+"vXm" = (
+/obj/decal/cleanable/glitter/harmless,
+/turf/unsimulated/floor/carpet/darkcarpet/border,
+/area/centcom/offices/walpvrgis)
 "vYK" = (
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor{
@@ -76525,6 +76519,14 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
+"wdR" = (
+/obj/item/decoration/walpfeathers,
+/obj/decal/cleanable/glitter/harmless,
+/obj/map/light/purple{
+	brightness = 5
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "wel" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -77141,6 +77143,20 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
+"xyI" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -77280,6 +77296,19 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"xLp" = (
+/obj/decal/poster/cygportrait{
+	pixel_y = -3
+	},
+/obj/item/sticker/moon{
+	pixel_y = -7;
+	pixel_x = -11;
+	anchored = 1
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -77524,32 +77553,6 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"ygs" = (
-/obj/table/regal/auto,
-/obj/item/paper/book/custom{
-	pixel_y = 3;
-	pixel_x = 7;
-	name = "Spriting To-Do List";
-	desc = "Hmm... Looks like a lot of unfinished entries here."
-	},
-/obj/item/device/light/zippo/gold{
-	pixel_y = 15;
-	pixel_x = -5;
-	name = "weathered lighter";
-	desc = "The shine has dulled a little, it looks well-loved."
-	},
-/obj/item/cigpacket/random{
-	pixel_y = 3;
-	pixel_x = -6
-	},
-/obj/item/decoration/ashtray{
-	pixel_y = 19;
-	pixel_x = 7
-	},
-/turf/unsimulated/floor/carpet/darkcarpet/border{
-	dir = 4
-	},
-/area/centcom/offices/walpvrgis)
 "yiB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -152865,13 +152868,13 @@ dFl
 uoE
 aES
 aES
-ikL
-gpK
-ucX
-utY
-elE
-gEc
-mjo
+xLp
+hwh
+rkU
+mIX
+eev
+uNO
+spQ
 vij
 wel
 goR
@@ -153166,13 +153169,13 @@ aES
 aES
 aES
 aES
-ppc
-oqQ
-iso
-ioz
-hon
-kAj
-vjf
+wdR
+iFm
+hrQ
+odb
+gRn
+vXm
+ndM
 sJH
 vij
 wel
@@ -153470,10 +153473,10 @@ aES
 dFl
 aES
 wel
-uLF
-mqO
-ygs
-fHI
+pQr
+eTO
+ruS
+ebm
 wel
 sJH
 vij
@@ -155588,7 +155591,7 @@ dvW
 dvW
 dvW
 dvW
-urC
+xyI
 sJH
 vij
 wel
@@ -157102,7 +157105,7 @@ wel
 sJH
 vij
 wel
-dwl
+dxR
 dCj
 dCj
 wel

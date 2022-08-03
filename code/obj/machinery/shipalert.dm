@@ -63,9 +63,9 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
 
-/obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
+/obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
