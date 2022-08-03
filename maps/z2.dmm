@@ -69632,7 +69632,10 @@
 /area/centcom)
 "hrQ" = (
 /obj/decal/cleanable/glitter/harmless,
-/obj/stool/bee_bed,
+/obj/stool/bee_bed{
+	pixel_y = 3;
+	pixel_x = 1
+	},
 /obj/item/nature/flower/lavender{
 	pixel_x = -11;
 	pixel_y = 13;
@@ -70889,6 +70892,13 @@
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
+"kbf" = (
+/obj/tree1{
+	pixel_x = -37;
+	pixel_y = 26
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "kbk" = (
 /obj/decal/aliencomputer{
 	desc = "This appears to be some sort of martian computer. A broken one, at that.";
@@ -73849,6 +73859,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qbd" = (
+/obj/tree1{
+	pixel_x = -10;
+	pixel_y = 20
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "qbv" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -74463,17 +74480,17 @@
 	},
 /obj/item/device/light/zippo/gold{
 	pixel_y = 15;
-	pixel_x = -5;
+	pixel_x = -7;
 	name = "weathered lighter";
 	desc = "The shine has dulled a little, it looks well-loved."
 	},
 /obj/item/cigpacket/random{
 	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -5
 	},
 /obj/item/decoration/ashtray{
 	pixel_y = 19;
-	pixel_x = 7
+	pixel_x = 5
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
@@ -152258,7 +152275,7 @@ dFl
 aES
 aES
 aES
-dFl
+kbf
 aES
 wel
 hYY
@@ -152864,7 +152881,7 @@ aES
 aES
 aES
 aES
-dFl
+qbd
 uoE
 aES
 aES
