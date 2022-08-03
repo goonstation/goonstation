@@ -62,14 +62,6 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/list/stored = list()
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		if(length(stored))
-			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
-
 		return dat
 
 //Status Display
