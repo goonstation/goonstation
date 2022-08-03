@@ -5,9 +5,10 @@
 	density = 1
 	layer = STORAGE_LAYER
 	flags = FPRINT | NOSPLASH
-	anchored = 1.0
+	anchored = 1
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 	proc/rackbreak()
 		icon_state += "-broken"
@@ -29,15 +30,15 @@
 
 /obj/rack/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//src.deconstruct()
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				src.deconstruct()
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				rackbreak()
 		else

@@ -351,7 +351,7 @@
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
-				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
+				mindist = min(mindist, GET_DIST(T, get_turf(nucleus)))
 
 		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
 
@@ -426,8 +426,8 @@
 	name = "Consume"
 	icon_state = "blob-consume"
 	desc = "This ability can be used to remove an existing blob tile for biopoints. Any blob tile you own can be consumed."
-	bio_point_cost = 10
-	cooldown_time = 20
+	bio_point_cost = 0
+	cooldown_time = 50
 
 	onUse(var/turf/T)
 		if (..())
@@ -579,7 +579,7 @@
 
 
 //The owner is the blob tile object...
-/datum/action/bar/blob_absorb //This is used when you try to set someones internals
+/datum/action/bar/blob_absorb
 	bar_icon_state = "bar-blob"
 	border_icon_state = "border-blob"
 	color_active = "#d73715"
@@ -587,11 +587,8 @@
 	color_failure = "#8d1422"
 	duration = 10 SECONDS
 
-	// interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	interrupt_flags = 0
-	id = "internalsother"
-	// icon = 'icons/obj/clothing/item_masks.dmi'
-	// icon_state = "breath"
+	id = "blobabsorb"
 	var/mob/living/target
 	var/mob/living/intangible/blob_overmind/blob_o
 
@@ -604,11 +601,16 @@
 			return
 		src.blob_o = blob_o
 
-	onInterrupt(var/flag)
+	onStart()
 		..()
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		actions.interrupt(target, INTERRUPT_ATTACKED)
+
 	onUpdate()
 		..()
-		if(!target || !owner || get_dist(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ishuman(target) && target:decomp_stage == 4)
@@ -621,7 +623,7 @@
 	onEnd()
 		..()
 		//owner type actually matters here. But it should never not be this anyway...
-		if(!target || !owner || get_dist(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle

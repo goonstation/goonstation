@@ -312,6 +312,13 @@
 		src.set_loc(get_turf(src.loc))
 		pz.remove_simple_light("zoldorf")
 
+	stopObserving()
+		if(src.homebooth)
+			src.set_loc(homebooth)
+		else
+			src.ghostize()
+		src.observing = null
+
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
 		var/mob/zoldorf/Z = new/mob/zoldorf(get_turf(src))

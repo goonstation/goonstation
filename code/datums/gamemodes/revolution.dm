@@ -543,7 +543,7 @@
 					var/found = 0
 					for (var/datum/mind/M in R.head_revolutionaries)
 						if (M.current && ishuman(M.current))
-							if (get_dist(owner,M.current) <= 5)
+							if (GET_DIST(owner,M.current) <= 5)
 								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
 									found = 1
 									break

@@ -431,9 +431,9 @@
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
 	var/thorned = 1
+	var/backup_name_txt = "names/first.txt"
 
-	New()
-		..()
+	proc/possible_rose_names()
 		var/list/possible_names = list()
 		for(var/mob/M in mobs)
 			if(!M.mind)
@@ -444,11 +444,14 @@
 				if(isnukeop(M))
 					continue
 				possible_names += M
-			else if(isAI(M) || isrobot(M))
-				possible_names += M
+		return possible_names
+
+	New()
+		..()
+		var/list/possible_names = possible_rose_names()
 		var/rose_name
 		if(!length(possible_names))
-			rose_name = pick_string_autokey("names/first.txt")
+			rose_name = pick_string_autokey(backup_name_txt)
 		else
 			var/mob/chosen_mob = pick(possible_names)
 			rose_name = chosen_mob.real_name
@@ -483,6 +486,18 @@
 			return
 		..()
 		return
+
+/obj/item/plant/flower/rose/holorose
+	name = "holo rose"
+	desc = "A holographic display of a Rose. This one likes to be called "
+	icon_state = "holorose"
+	backup_name_txt = "names/ai.txt"
+
+	possible_rose_names()
+		var/list/possible_names = list()
+		for(var/mob/living/silicon/M in mobs)
+			possible_names += M
+		return possible_names
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

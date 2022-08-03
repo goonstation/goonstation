@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -21,7 +22,7 @@ Contains:
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
-	var/status = 0.0
+	var/status = 0
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
@@ -708,7 +709,7 @@ Contains:
 	icon_state = "radio-horn"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
@@ -874,3 +875,29 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+
+/obj/item/assembly/makeshiftshell
+
+	name = "filled pipe hulls"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
+	icon_state = "Pipeshotrow"
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/raw_material/shard))
+			var/obj/item/ammo/bullets/pipeshot/glass/shot = new /obj/item/ammo/bullets/pipeshot/glass/(get_turf(src))
+			qdel(W)
+			qdel(src)
+			user.put_in_hand_or_drop(shot)
+
+		if(istype(W, /obj/item/raw_material/scrap_metal))
+			var/obj/item/ammo/bullets/pipeshot/scrap/shot = new /obj/item/ammo/bullets/pipeshot/scrap/(get_turf(src))
+			qdel(W)
+			qdel(src)
+			user.put_in_hand_or_drop(shot)
+		..()
+
+
+

@@ -241,7 +241,7 @@ WET FLOOR SIGN
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
 	var/log_reagents = log_reagents(src)
-	var/travel_distance = clamp(get_dist(get_turf(src), A), 1, 3)
+	var/travel_distance = clamp(GET_DIST(get_turf(src), A), 1, 3)
 	SPAWN(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
@@ -282,8 +282,8 @@ WET FLOOR SIGN
 	icon_state = "mop"
 	var/mopping = 0
 	var/mopcount = 0
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
@@ -693,8 +693,8 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "caution"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -758,8 +758,8 @@ WET FLOOR SIGN
 	desc = "A compact holo emitter pre-loaded with various holographic signs. Fits into pockets and boxes."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-off"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -840,7 +840,7 @@ WET FLOOR SIGN
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 

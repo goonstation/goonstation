@@ -32,12 +32,12 @@ Broken RCD + Effects
 	item_state = "rcd" //oops
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/matter = 0
 	var/max_matter = 50
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	health = 7
@@ -931,7 +931,7 @@ Broken RCD + Effects
 	item_state = "rcdammo"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	m_amt = 30000
 	g_amt = 15000
 	health = 6
@@ -969,10 +969,10 @@ Broken RCD + Effects
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -986,8 +986,8 @@ Broken RCD + Effects
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -1097,7 +1097,7 @@ Broken RCD + Effects
 
 			else if (istype(A, /obj) && (A != src))
 
-				if ((get_dist(src, A) <= 2) || prob(10))
+				if ((GET_DIST(src, A) <= 2) || prob(10))
 					A.ex_act(1)
 				else if (prob(5))
 					A.ex_act(3)

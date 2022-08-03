@@ -723,7 +723,7 @@ a.latejoin-card:hover {
 		// by "near" it means anywhere on the goddamn map where Move will return 1, this meant that anyone logging in would cause the server to
 		// grind itself to a slow death in a caciphony of endless Move calls
 
-	proc/makebad(var/mob/living/carbon/human/traitormob, type)
+	proc/makebad(mob/living/carbon/human/traitormob, type)
 		if (!traitormob || !ismob(traitormob) || !traitormob.mind)
 			return
 
@@ -732,14 +732,14 @@ a.latejoin-card:hover {
 
 		var/objective_set_path = null
 		switch (type)
-
 			if (ROLE_TRAITOR)
-				traitor.special_role = ROLE_TRAITOR
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
+				var/datum/antagonist/A = traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				SPAWN (1 SECOND) // Give the mob some time to be equipped with their job gear, as otherwise the uplink will fail to add properly
+					if (A)
+						A.give_equipment()
+
+			if (ROLE_ARCFIEND)
+				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 
 			if (ROLE_CHANGELING)
 				traitor.special_role = ROLE_CHANGELING
@@ -775,16 +775,6 @@ a.latejoin-card:hover {
 				traitor.special_role = ROLE_WRAITH
 				traitormob.make_wraith()
 				generate_wraith_objectives(traitor)
-
-			if (ROLE_ARCFIEND)
-				traitor.special_role = ROLE_ARCFIEND
-				objective_set_path = /datum/objective_set/arcfiend
-				traitormob.make_arcfiend()
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR

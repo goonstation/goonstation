@@ -59,14 +59,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					railing_deconstruct(src)
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					railing_break(src)
 					return
@@ -245,7 +245,7 @@
 			jump_target = getLandingLoc()
 
 	proc/getLandingLoc()
-		if (get_dist(ownerMob, the_railing) == 0)
+		if (GET_DIST(ownerMob, the_railing) == 0)
 			if (use_owner_dir)
 				// for handling the multiple ways top hop a corner railing
 				return get_step(the_railing, owner.dir)

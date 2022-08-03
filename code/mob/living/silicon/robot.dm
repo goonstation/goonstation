@@ -737,7 +737,7 @@
 			if(force_instead)
 				newname = default_name
 			else
-				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
 				if(newname && newname != default_name)
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
@@ -849,12 +849,12 @@
 
 		var/damage = 0
 		switch(severity)
-			if(1.0)
+			if(1)
 				SPAWN(1 DECI SECOND)
 					src.gib(1)
 				return
-			if(2.0) damage = 40
-			if(3.0) damage = 20
+			if(2) damage = 40
+			if(3) damage = 20
 
 		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -1553,7 +1553,7 @@
 					var/obj/item/roboupgrade/UPGR = input("Which upgrade do you want to remove?", "Cyborg Maintenance") in src.upgrades
 
 					if (!UPGR) return
-					if (get_dist(src.loc,user.loc) > 2 && (!src.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
+					if (GET_DIST(src.loc,user.loc) > 2 && (!src.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 						boutput(user, "<span class='alert'>You need to move closer!</span>")
 						return
 
@@ -2253,7 +2253,7 @@
 			if("Low")
 				vocal_pitch = 0.9
 			if("Medium")
-				vocal_pitch = 1.0
+				vocal_pitch = 1
 			if("High")
 				vocal_pitch = 1.25
 
@@ -2407,7 +2407,7 @@
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
 		src.lying = 0
 		src.set_density(1)
-		if(src.stat) src.camera.camera_status = 0.0
+		if(src.stat) src.camera.camera_status = 0
 
 	use_power()
 		..()

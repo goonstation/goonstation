@@ -233,7 +233,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Strelka-"
 	icon_state = "soviputt"
 	desc = "A little solo vehicle for scouting and exploration work. Seems to be a Russian model."
-	armor_score_multiplier = 1.0
+	armor_score_multiplier = 1
 	health = 225
 	maxhealth = 225
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate

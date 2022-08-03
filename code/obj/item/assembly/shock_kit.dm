@@ -3,7 +3,7 @@
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/radio/electropack/part2 = null
-	status = 0.0
+	status = 0
 	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS| CONDUCT
 

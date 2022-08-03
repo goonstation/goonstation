@@ -961,7 +961,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				walk_to(src, 0)
 				return
 			else if (src.new_treasure.loc == src.treasure_loc)
-				if (get_dist(src, src.treasure_loc) > 4 || src.impatience > 8)
+				if (GET_DIST(src, src.treasure_loc) > 4 || src.impatience > 8)
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -972,7 +972,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					src.impatience ++
 
 			else if (src.new_treasure.loc != src.treasure_loc)
-				if (get_dist(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
+				if (GET_DIST(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -1126,7 +1126,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("weakened", 2 SECONDS)
 
 	attack_ai(mob/user as mob)
-		if (get_dist(user, src) < 2)
+		if (GET_DIST(user, src) < 2)
 			return attack_hand(user)
 		else
 			return ..()
@@ -1319,7 +1319,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						src.wanderer = initial(src.wanderer)
 						src.being_offered_treasure = 0
 						if (src.alive && !src.sleeping && user && W && user.find_in_hand(W)) // we have to do so many checks for such a short wait
-							if (get_dist(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
+							if (GET_DIST(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
 								src.visible_message("<span class='combat'>[src] doesn't take [W] from [user]!</span>")
 								return
 							else

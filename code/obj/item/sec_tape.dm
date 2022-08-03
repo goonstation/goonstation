@@ -55,7 +55,7 @@
 			qdel(src)
 		else
 			//Else we'll choke ourselves out
-			user.visible_message("<span class='alert'><b>[user] wraps some tape around \his neck and tightens it.</b></span>")
+			user.visible_message("<span class='alert'><b>[user] wraps some tape around [his_or_her(user)] neck and tightens it.</b></span>")
 			user.take_oxygen_deprivation(160)
 			SPAWN(50 SECONDS)
 				if (user && !isdead(user))

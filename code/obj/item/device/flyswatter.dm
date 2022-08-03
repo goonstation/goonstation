@@ -3,7 +3,7 @@
 	desc = "It's one of those fancy electric types, so you can hear that satisfying zap, zap, <i>zap</i>!"
 	icon_state = "flyswatter"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
+	force = 10
 	hit_type = DAMAGE_BURN
 	w_class = W_CLASS_BULKY
 	throwforce = 12

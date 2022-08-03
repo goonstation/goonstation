@@ -53,6 +53,7 @@ var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_banlogin_announcements,\
 /client/proc/toggle_literal_disarm,\
 /client/proc/toggle_spooky_light_plane,\
+/client/proc/toggle_cloning_with_records,\
 /datum/admins/proc/toggleooc,\
 /datum/admins/proc/togglelooc,\
 /datum/admins/proc/toggleoocdead,\
@@ -1058,3 +1059,15 @@ client/proc/toggle_ghost_respawns()
 	logTheThing("admin", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 	logTheThing("diary", usr, null, "toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
 	message_admins("[key_name(usr)] toggled Spooky Light Mode [spooky_light_mode ? "on at threshold [inp]" : "off"]")
+
+/client/proc/toggle_cloning_with_records()
+	set name = "Toggle Cloning With Records"
+	set desc = "toggles the cloning method between record and non-record"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+
+	cloning_with_records = !cloning_with_records
+
+	logTheThing("admin", usr, null, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+	logTheThing("diary", usr, null, "toggled the cloning with records [cloning_with_records ? "on" : "off"]")
+	message_admins("[key_name(usr)] toggled the cloning with records [cloning_with_records ? "on" : "off"]")

@@ -1387,14 +1387,14 @@ var/zapLimiter = 0
 			qdel(src)
 	else
 		switch(severity)
-			if(1.0)
+			if(1)
 				set_broken()
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else return

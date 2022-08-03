@@ -7,7 +7,7 @@
 	var/obj/item/device/triggering_device = null
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/chem_grenade/payload = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/mob/attacher = "Unknown"

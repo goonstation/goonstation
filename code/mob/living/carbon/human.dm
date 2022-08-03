@@ -60,7 +60,7 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 
-	var/last_b_state = 1.0
+	var/last_b_state = 1
 
 	var/chest_cavity_open = 0
 	var/obj/item/chest_item = null	// Item stored in chest cavity
@@ -734,12 +734,12 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDSLAVE)
-			remove_mindslave_status(src, "mslave", "death")
+		if (src.mind.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(src, "mindhack", "death")
 		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindslave_status(src, "vthrall", "death")
+			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
-			remove_mindslave_status(src, "otherslave", "death")
+			remove_mindhack_status(src, "otherhack", "death")
 #ifdef DATALOGGER
 		if (src.mind.ckey)
 			// game_stats.Increment("playerdeaths")
@@ -899,9 +899,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if (src.client)
-			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
-
 		stat(null, " ")
 		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
@@ -1039,7 +1036,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
@@ -1397,7 +1394,7 @@
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1453,7 +1450,7 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 
