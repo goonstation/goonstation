@@ -154,7 +154,7 @@
 			continue
 		if (prob(30)) //give it a slight cascading effect
 			sleep(0.1 SECONDS)
-		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1, pitch = 0.4)
+		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1, pitch = 0.4)
 		var/mob/wearer = radio.loc
 		if (istype(wearer))
 			wearer.show_text("A final scream of horrific static bursts from your radio, destroying it!", "red")

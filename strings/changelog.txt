@@ -1,5 +1,23 @@
 
+(t)wed aug 03 22
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
 (t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
+(u)Wisemonster
+(p)9958
+(e)⚖|balance
+(+)The fire orb no longer gives fire damage immunity.
+(+)The fire jewel's heat protection has been reduced to 50%, down from 100%.
 (u)Ikea
 (p)9835
 (e)⚖|balance

@@ -390,7 +390,7 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
-	power = 15
+	power = 18
 	cost = 40
 	max_range = 12
 	ks_ratio = 0
@@ -408,7 +408,7 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
-	power = 10
+	power = 12
 	cost = 8
 	max_range = 8
 	ks_ratio = 0
