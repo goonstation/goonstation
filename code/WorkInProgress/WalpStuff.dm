@@ -64,3 +64,16 @@
 		src.venom2 = "hugs"
 		src.amt1 = rand(1, 10)
 		src.amt2 = rand(1, 10)
+
+//Placeholder Items
+
+/obj/item/clothing/under/misc/walpoutfit1
+/obj/item/clothing/under/misc/walpoutfit2
+/obj/item/clothing/head/walphat
+/obj/item/clothing/suit/walpcardigan
+/obj/item/nature/resin/frankincense
+/obj/item/nature/resin/dragonsblood
+/obj/item/nature/mushroom
+/obj/item/nature/flower/lavender
+/obj/item/nature/flower/rose
+/obj/item/nature/flower/daisy
