@@ -427,7 +427,7 @@
 	frequency = 1485;
 	name = "Security Intercom"
 	},
-/obj/machinery/bot/medbot,
+/obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abm" = (
@@ -5019,7 +5019,13 @@
 /turf/space,
 /area/shuttle/research/station)
 "aqJ" = (
-/obj/machinery/vending/paint/broken,
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	tag = "icon-plant (NORTH)"
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 9
 	},
@@ -5219,6 +5225,7 @@
 /area/station/hangar/arrivals)
 "arq" = (
 /obj/critter/domestic_bee/bubs,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -5230,9 +5237,6 @@
 	},
 /area/station/hangar/arrivals)
 "ars" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/storage/secure/closet/security/equipment,
 /obj/item/crowbar,
 /obj/machinery/phone/wall{
@@ -5399,7 +5403,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "arL" = (
-/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/vending/paint/broken,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "arM" = (
@@ -17188,7 +17192,6 @@
 	},
 /area/station/medical/head)
 "aVo" = (
-/obj/machinery/light/incandescent,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -24265,11 +24268,11 @@
 /area/station/security/main)
 "bpA" = (
 /obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "bpB" = (
 /obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
 "bpC" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
@@ -26485,6 +26488,7 @@
 	name = "A tasteful shrub";
 	tag = "null"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bwC" = (
@@ -33399,7 +33403,6 @@
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "etA" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;
 	level = 2
@@ -36048,6 +36051,7 @@
 	pixel_y = 6
 	},
 /obj/table/reinforced/auto,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -78001,7 +78005,7 @@ aaa
 akk
 anl
 aoW
-aow
+aoL
 aoj
 aow
 aoj
@@ -88641,7 +88645,7 @@ bcv
 mmb
 aCy
 aGx
-drn
+aPv
 aCy
 aCy
 azP
@@ -91073,13 +91077,13 @@ bmB
 bnr
 bok
 jql
-ldr
+moJ
 moJ
 moJ
 gZt
-ldr
-ldr
-beT
+moJ
+moJ
+beO
 bwm
 bGu
 tpm
