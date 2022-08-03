@@ -1,4 +1,9 @@
 
+(t)wed aug 03 22
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
 (t)tue aug 02 22
 (u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
 (p)9915
