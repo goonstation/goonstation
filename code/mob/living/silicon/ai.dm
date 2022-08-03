@@ -1546,7 +1546,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
