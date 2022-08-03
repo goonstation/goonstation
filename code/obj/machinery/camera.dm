@@ -16,6 +16,7 @@
 	var/last_paper = 0
 	///Cameras only the AI can see through
 	var/ai_only = FALSE
+	///Cant be snipped by wirecutters
 	var/reinforced = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
