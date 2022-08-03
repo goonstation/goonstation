@@ -69,7 +69,7 @@
 		if (!mainaccount)
 			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 			return
-		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No") == "Yes"))
+		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No")) == "Yes")
 			boutput(user, "<span class='alert'>Reader reset.</span>")
 			user.visible_message("<span class='alert'><B>[user]</B> resets [src].</span>")
 			mainaccount = null
