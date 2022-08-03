@@ -19868,7 +19868,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "bridge mail router"
+	mail_tag = "bridge";
+	name = "bridge mail router"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
