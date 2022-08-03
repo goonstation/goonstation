@@ -658,7 +658,7 @@ var/flock_signal_unleashed = FALSE
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
 /var/list/flock_conversion_paths = list(
-	/obj/grille/steel = /obj/grille/flock,
+	/obj/grille = /obj/grille/flock,
 	/obj/window = /obj/window/auto/feather,
 	/obj/machinery/door = /obj/machinery/door/feather,
 	/obj/stool = /obj/stool/chair/comfy/flock,
