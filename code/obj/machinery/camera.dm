@@ -16,6 +16,8 @@
 	var/last_paper = 0
 	///Cameras only the AI can see through
 	var/ai_only = FALSE
+	///Cant be snipped by wirecutters
+	var/reinforced = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -62,6 +64,7 @@
 	icon_state = "television"
 	anchored = 1
 	density = 1
+	reinforced = TRUE
 	var/securedstate = 2
 
 /obj/machinery/camera/television/attackby(obj/item/W, mob/user)
@@ -285,7 +288,7 @@
 		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
 		return
 
-	if (issnippingtool(W))
+	if (issnippingtool(W) && !src.reinforced)
 		if (src.camera_status)
 			src.break_camera(user)
 		else

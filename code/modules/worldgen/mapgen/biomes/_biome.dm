@@ -30,6 +30,9 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 			if(istype(gen_turf.loc, bad_area))
 				return
 
+	if( flags & MAPGEN_ALLOW_VEHICLES )
+		gen_turf.allows_vehicles = TRUE
+
 	if((flags & MAPGEN_IGNORE_FLORA) == 0)
 		if(length(flora_types) && prob(flora_density))
 			var/obj/structure/flora = weighted_pick(flora_types)

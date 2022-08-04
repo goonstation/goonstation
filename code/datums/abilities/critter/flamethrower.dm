@@ -21,12 +21,12 @@
 		var/turf/OT = get_turf(holder.owner)
 		var/turf/original_target = get_turf(target)
 		var/it = 7
-		while (get_dist(OT, target) > 3)
+		while (GET_DIST(OT, target) > 3)
 			target = get_step(target, get_dir(target, OT))
 			it--
 			if (it <= 0)
 				return 1
-		while (get_dist(OT, target) < 3)
+		while (GET_DIST(OT, target) < 3)
 			target = get_step(target, get_dir(OT, target))
 			it--
 			if (it <= 0)

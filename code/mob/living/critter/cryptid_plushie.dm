@@ -216,7 +216,7 @@
 			set_dormant_status(FALSE)
 			return
 		if (last_witness && last_witness.client) // optimization attempt
-			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
+			if(GET_DIST(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
 		last_witness = null
 

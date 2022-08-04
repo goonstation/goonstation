@@ -56,7 +56,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 			var/datum/dialogueNode/N = locate(href_list["link"])
 			var/client/C = locate(href_list["client"])
 			if(maxDistance >= 0)
-				if(get_dist(C.mob, master) > maxDistance)
+				if(GET_DIST(C.mob, master) > maxDistance)
 					boutput(C.mob, "You are too far away for that.")
 					return
 			if(N != null && N.canShow(C)) //The order of the stuff below is very important. You might break things if you change it.

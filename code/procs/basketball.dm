@@ -87,7 +87,7 @@
 	SPAWN(3.5 SECONDS) qdel(O)
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
@@ -137,7 +137,7 @@
 		B.item_state = "bball"
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, M) <= 6)
+		if(GET_DIST(N, M) <= 6)
 			if(N != M)
 				N.apply_flash(30, 5)
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
@@ -220,7 +220,7 @@
 	M.layer = MOB_LAYER
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
@@ -401,7 +401,7 @@
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
 			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
-		if(get_dist(N, M) <= 2)
+		if(GET_DIST(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)
 

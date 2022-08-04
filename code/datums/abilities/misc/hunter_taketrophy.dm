@@ -25,7 +25,7 @@
 			boutput(M, "<span class='alert'>Why would you want to take your own skull?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -80,12 +80,12 @@
 
 		if (ismob(target))
 			var/mob/living/HH = target
-			if (!trophy || get_dist(M, HH) > trophy.max_range || HH == null || M == null || !ishuman(HH) || !isdead(HH))
+			if (!trophy || GET_DIST(M, HH) > trophy.max_range || HH == null || M == null || !ishuman(HH) || !isdead(HH))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		else
 			var/obj/item/organ/head/SH = target
-			if (!trophy || get_dist(M, SH) > trophy.max_range || SH == null || M == null || !istype(SH) || !(SH.skull && istype(SH.skull, /obj/item/skull/)))
+			if (!trophy || GET_DIST(M, SH) > trophy.max_range || SH == null || M == null || !istype(SH) || !(SH.skull && istype(SH.skull, /obj/item/skull/)))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
@@ -99,12 +99,12 @@
 
 		if (ismob(target))
 			var/mob/living/HH = target
-			if (!trophy || get_dist(M, HH) > trophy.max_range || HH == null || M == null || !ishuman(HH) || !isdead(HH))
+			if (!trophy || GET_DIST(M, HH) > trophy.max_range || HH == null || M == null || !ishuman(HH) || !isdead(HH))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		else
 			var/obj/item/organ/head/SH = target
-			if (!trophy || get_dist(M, SH) > trophy.max_range || SH == null || M == null || !istype(SH) || !(SH.skull && istype(SH.skull, /obj/item/skull/)))
+			if (!trophy || GET_DIST(M, SH) > trophy.max_range || SH == null || M == null || !istype(SH) || !(SH.skull && istype(SH.skull, /obj/item/skull/)))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 

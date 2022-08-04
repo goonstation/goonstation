@@ -228,7 +228,7 @@
 
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
-		if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
+		if (GET_DIST(usr, src) <= 1 && !is_incapacitated(usr))
 			if (src.reagents.total_volume)
 				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
 				if (ishuman(usr))

@@ -107,7 +107,7 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
-	if (check_target_immunity(src))
+	if (isintangible(src) || check_target_immunity(src))
 		return
 	if (power > 1) // pretty light damage and stam damage :)
 		if (src.bioHolder.HasEffect("resist_electric"))

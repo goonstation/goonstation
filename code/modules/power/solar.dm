@@ -386,11 +386,11 @@
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && get_dist(src, S) >= closest_solar_distance)
+		if (closest_solar_distance != null && GET_DIST(src, S) >= closest_solar_distance)
 			continue
 
 		closest_solar_id = S.id
-		closest_solar_distance = get_dist(src, S)
+		closest_solar_distance = GET_DIST(src, S)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)

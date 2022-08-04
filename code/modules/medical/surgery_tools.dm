@@ -1053,7 +1053,7 @@ CONTAINS:
 		if (prob(75))
 			user.show_text("You fuss with [src], trying to find the zipper, but it's no use!", "red")
 			for (var/mob/M in hearers(src, null))
-				M.show_text("<FONT size=[max(0, 5 - get_dist(src, M))]>...rustle...</FONT>")
+				M.show_text("<FONT size=[max(0, 5 - GET_DIST(src, M))]>...rustle...</FONT>")
 			return
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")

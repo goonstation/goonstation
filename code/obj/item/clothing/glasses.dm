@@ -18,7 +18,7 @@
 	compatible_species = list("human", "cow", "werewolf", "flubber")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/cloth/handkerchief))
+		if (istype(W, /obj/item/cloth))
 			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
 			return
 		return ..()

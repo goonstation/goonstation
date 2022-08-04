@@ -124,7 +124,7 @@
 			continue
 		if (!iscarbon(C) && !ismobcritter(C))
 			continue
-		if (isdead(C))
+		if (isdead(C) || isghostcritter(C))
 			continue
 		if (!istype(C.loc,/turf))
 			continue

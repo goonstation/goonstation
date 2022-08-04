@@ -292,7 +292,7 @@
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
 				if(newName && newName != I.name)
 					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
-				if (newName && I && get_dist(src, usr) < 2)
+				if (newName && I && GET_DIST(src, usr) < 2)
 					I.name = newName
 			src.updateUsrDialog()
 

@@ -402,7 +402,7 @@
 		SPAWN(2 SECONDS)
 			if (user)
 				user.suiciding = 0
-				if(isalive(user) && src && get_dist(user,src) <= 7)
+				if(isalive(user) && src && GET_DIST(user,src) <= 7)
 					user.visible_message("<span class='alert'>[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.</span>") //It didn't blow up!
 		return 1
 
