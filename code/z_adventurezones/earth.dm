@@ -283,6 +283,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		sound_loop = 'sound/ambience/music/officebeats.ogg'
 		sound_loop_vol = 80
 		sound_group = "virva_office"
+	walpvrgis
+		ckey = "walpvrgis"
+		name = "Office of Walpvrgis"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"

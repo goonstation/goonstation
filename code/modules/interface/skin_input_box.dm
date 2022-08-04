@@ -69,7 +69,7 @@
 			window_height = 106
 			font_size = 8
 		if(37 to 42)
-			scaling = 1.50
+			scaling = 1.5
 			window_width  = 503
 			window_height = 133
 			font_size = 8

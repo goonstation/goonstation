@@ -23,6 +23,8 @@
 
 	var/obj/item/cell/cell = null
 
+	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
+
 	can_bleed = 0
 	blood_id = "oil"
 	use_stamina = 0
@@ -182,7 +184,7 @@
 	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
-		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
+		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
 		target.attack_ai(src, params, location, control)
@@ -211,7 +213,6 @@
 			src.set_cursor('icons/cursors/shock.dmi')
 			return
 	return ..()
-
 /mob/living/silicon/say(var/message)
 	if (!message)
 		return
@@ -237,6 +238,9 @@
 			return ..(message)
 	else
 		return ..(message)
+
+/mob/living/silicon/say_decorate(message)
+	. = monospace_say_regex.Replace(message, "<span class='monospace'>$1</span>")
 
 /mob/living/proc/process_killswitch()
 	return

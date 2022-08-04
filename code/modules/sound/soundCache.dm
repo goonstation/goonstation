@@ -708,6 +708,7 @@ var/global/list/soundCache = list(
  	"sound/machines/shieldoverload.ogg" = 'sound/machines/shieldoverload.ogg',\
  	"sound/machines/shieldup.ogg" = 'sound/machines/shieldup.ogg',\
  	"sound/machines/signal.ogg" = 'sound/machines/signal.ogg',\
+ 	"sound/machines/singulo_start.ogg" = 'sound/machines/singulo_start.ogg',\
  	"sound/machines/siren_generalquarters.ogg" = 'sound/machines/siren_generalquarters.ogg',\
  	"sound/machines/siren_generalquarters_quiet.ogg" = 'sound/machines/siren_generalquarters_quiet.ogg',\
  	"sound/machines/siren_police.ogg" = 'sound/machines/siren_police.ogg',\

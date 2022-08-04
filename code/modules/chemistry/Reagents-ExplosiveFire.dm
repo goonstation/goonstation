@@ -322,8 +322,6 @@ datum
 			id = "sonicpowder_nofluff"
 			no_fluff = 1
 
-// Don't forget to update Reagents-Recipes.dm too, we have duplicate code for sonic and flash powder there (Convair880).
-
 		combustible/flashpowder
 			name = "flash powder"
 			id = "flashpowder"
@@ -626,7 +624,7 @@ datum
 
 
 			var/caused_fireflash = 0
-			var/min_req_fluid = 0.10 //at least 10% of the fluid needs to be oil for it to ignite
+			var/min_req_fluid = 0.1 //at least 10% of the fluid needs to be oil for it to ignite
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(volume < 1)

@@ -114,7 +114,7 @@
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
-	force = 1.0
+	force = 1
 	desc = "The XIANG|GIESEL model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
 	charge_up = 15
 	can_dual_wield = 0
@@ -139,7 +139,7 @@
 	name = "taser gun"
 	icon_state = "taser"
 	item_state = "taser"
-	force = 1.0
+	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
 	muzzle_flash = "muzzle_flash_elec"
@@ -189,7 +189,7 @@
 	item_state = "laser"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	force = 7.0
+	force = 7
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 
@@ -249,7 +249,7 @@
 	icon_state = "phaser-new"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 7.0
+	force = 7
 	desc = "An energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -274,7 +274,7 @@
 	icon_state = "phaser-tiny"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 4.0
+	force = 4
 	desc = "A diminutive sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -300,7 +300,7 @@
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 10.0
+	force = 10
 	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
@@ -335,7 +335,7 @@
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
 	item_state = "crossbow"
-	force = 4.0
+	force = 4
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
@@ -343,6 +343,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = 1
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -374,7 +375,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	desc = "Its a gun that has two modes, stun and kill"
 	item_state = "egun"
-	force = 5.0
+	force = 5
 	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
@@ -382,6 +383,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
+		RegisterSignal(src, COMSIG_ATOM_ANALYZE, .proc/noreward)
 		..()
 	update_icon()
 		..()
@@ -406,10 +408,8 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/electronics/scanner))
-			nojobreward = 1
-		..()
+	proc/noreward()
+		src.nojobreward = 1
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -418,7 +418,7 @@
 	icon_state = "ntneutral100"
 	desc = "Rather futuristic assault rifle with two firing modes."
 	item_state = "ntgun"
-	force = 10.0
+	force = 10
 	contraband = 8
 	two_handed = 1
 	spread_angle = 6
@@ -454,7 +454,7 @@
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	force = 8.0
+	force = 8
 	two_handed = 1
 	can_dual_wield = 0
 	shoot_delay = 6
@@ -491,6 +491,7 @@
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt_v)
@@ -513,7 +514,7 @@
 	item_state = "crabgun-world"
 	inhand_image_icon = 'icons/obj/crabgun.dmi'
 	w_class = W_CLASS_BULKY
-	force = 12.0
+	force = 12
 	throw_speed = 8
 	throw_range = 12
 	rechargeable = 0
@@ -550,7 +551,7 @@
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
 	m_amt = 4000
-	force = 6.0
+	force = 6
 	muzzle_flash = "muzzle_flash_wavep"
 
 	New()
@@ -591,7 +592,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "bfg"
 	m_amt = 4000
-	force = 6.0
+	force = 6
 	desc = "I think it stands for Banned For Griefing?"
 	cell_type = /obj/item/ammo/power_cell/high_power
 
@@ -621,7 +622,7 @@
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_NORMAL
 	item_state = "gun"
-	force = 10.0
+	force = 10
 	throw_speed = 2
 	throw_range = 10
 	mats = 0
@@ -760,7 +761,7 @@
 	icon_state = "ghost"
 	w_class = W_CLASS_NORMAL
 	item_state = "gun"
-	force = 10.0
+	force = 10
 	throw_speed = 2
 	throw_range = 10
 	mats = 0
@@ -779,7 +780,7 @@
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
-	force = 5.0
+	force = 5
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -852,7 +853,7 @@
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = W_CLASS_NORMAL
-	force = 7.0
+	force = 7
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 
@@ -965,7 +966,7 @@
 	name = "owl gun"
 	desc = "Its a gun that has two modes, Owl and Owler"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -987,7 +988,7 @@
 	name = "owl gun"
 	desc = "Hoot!"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "ghost"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1010,7 +1011,7 @@
 	name = "frog gun"
 	item_state = "gun"
 	m_amt = 1000
-	force = 0.0
+	force = 0
 	icon_state = "frog"
 	cell_type = /obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
 	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
@@ -1025,7 +1026,7 @@
 /obj/item/gun/energy/shrinkray
 	name = "shrink ray"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
@@ -1053,7 +1054,7 @@
 /obj/item/gun/energy/stinkray
 	name = "stink ray"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_multiple_icon_states = 1
@@ -1077,7 +1078,7 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "airzooka"
 	m_amt = 4000
-	force = 0.0
+	force = 0
 	cell_type = /obj/item/ammo/power_cell/high_power
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 
@@ -1100,7 +1101,7 @@
 	item_state = "bullpup"
 	var/base_item_state = "bullpup"
 	uses_multiple_icon_states = 1
-	force = 5.0
+	force = 5
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
 	mats = list("MET-3"=7, "CRY-1"=13, "POW-2"=10)
@@ -1159,7 +1160,7 @@
 	icon_state = "pickpocket"
 	w_class = W_CLASS_SMALL
 	item_state = "pickpocket"
-	force = 4.0
+	force = 4
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
@@ -1167,6 +1168,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	hide_attack = 1
 	mats = 100 //yeah no, you can do it if you REALLY want to
@@ -1264,13 +1266,14 @@
 	item_state = "alastor"
 	icon = 'icons/obj/large/38x38.dmi'
 	uses_multiple_icon_states = 1
-	force = 7.0
+	force = 7
 	can_dual_wield = 0
 	two_handed = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
 	is_syndicate = 1
+	mats = list("MET-2"=15, "CON-2"=10, "POW-2"=10)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1562,7 +1565,7 @@
 			break
 		if (F == get_turf(user))
 			continue
-		if (get_dist(user,F) > range)
+		if (GET_DIST(user,F) > range)
 			continue
 		tfireflash(F,0.5,2400)
 
@@ -1603,7 +1606,7 @@
 	icon_state = "crossbow" //placeholder, would prefer a custom wasp themed icon
 	w_class = W_CLASS_SMALL
 	item_state = "crossbow" //ditto
-	force = 4.0
+	force = 4
 	throw_speed = 3
 	throw_range = 10
 	rechargeable = 0 // Cannot be recharged manually.
@@ -1611,6 +1614,7 @@
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
 	is_syndicate = 1
+	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -1747,7 +1751,7 @@
 	icon_state = "tsmg_burst100"
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
 	item_state = "tsmg"
-	force = 5.0
+	force = 5
 	two_handed = 1
 	can_dual_wield = 0
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1786,7 +1790,7 @@
 	icon_state = "raygun"
 	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
 	item_state = "raygun"
-	force = 5.0
+	force = 5
 	can_dual_wield = 0
 	muzzle_flash = "muzzle_flash_laser"
 

@@ -55,8 +55,10 @@
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
-
-		set_loc(get_turf(src.possessed_thing))
+		if(loc)
+			set_loc(loc)
+		else
+			set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
 
 		//Appearance Stuff
@@ -172,7 +174,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)

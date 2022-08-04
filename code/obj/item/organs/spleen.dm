@@ -3,7 +3,7 @@
 	organ_name = "spleen"
 	organ_holder_name = "spleen"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "spleen"
 	body_side = L_ORGAN
 

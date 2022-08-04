@@ -38,7 +38,7 @@
 				if (0 to 4)
 					delay = 3
 			if (M && HH)
-				if (get_dist(M, HH) > max_range)
+				if (GET_DIST(M, HH) > max_range)
 					boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 					return 0
 				if (!isturf(M.loc) || !isturf(HH.loc))
@@ -54,7 +54,7 @@
 				return 0
 			sleep (delay)
 		if (M && HH)
-			if (get_dist(M, HH) > max_range)
+			if (GET_DIST(M, HH) > max_range)
 				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 				return 0
 			if (!isturf(M.loc) || !isturf(HH.loc))

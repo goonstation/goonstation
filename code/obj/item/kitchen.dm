@@ -13,8 +13,8 @@ TRAYS
 	name = "rolling pin"
 	icon_state = "rolling_pin"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	force = 8.0
-	throwforce = 10.0
+	force = 8
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 7
 	w_class = W_CLASS_NORMAL
@@ -30,17 +30,17 @@ TRAYS
 
 /obj/item/kitchen/rollingpin/light
 	name = "light rolling pin"
-	force = 4.0
-	throwforce = 5.0
+	force = 4
+	throwforce = 5
 	desc = "A hollowed out tube, to save on weight, used to roll dough flat in order to make various edible objects."
 	stamina_damage = 10
 	stamina_cost = 10
 
 /obj/item/kitchen/utensil
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
@@ -157,7 +157,7 @@ TRAYS
 	special_grab = /obj/item/grab
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 7.0
+	force = 7
 	throwforce = 10
 	w_class = W_CLASS_SMALL
 	desc = "A long bit of metal that is sharpened on one side, used for cutting foods. Also useful for butchering dead animals. And live ones."
@@ -188,8 +188,8 @@ TRAYS
 	name = "plastic spoon"
 	icon_state = "spoon_plastic"
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
-	force = 1.0
-	throwforce = 1.0
+	force = 1
+	throwforce = 1
 
 	New()
 		..()
@@ -206,7 +206,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through \his eye and into \his brain!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -217,8 +217,8 @@ TRAYS
 	name = "plastic fork"
 	icon_state = "fork_plastic_pink"
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
-	force = 1.0
-	throwforce = 1.0
+	force = 1
+	throwforce = 1
 
 	New()
 		..()
@@ -235,7 +235,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into \his heart!</b></span>")
+		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -245,8 +245,8 @@ TRAYS
 /obj/item/kitchen/utensil/knife/plastic
 	name = "plastic knife"
 	icon_state = "knife_plastic"
-	force = 1.0
-	throwforce = 1.0
+	force = 1
+	throwforce = 1
 	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 
 	New()
@@ -265,7 +265,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span class='alert'><b>[user] tries to slash  \his own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to slash [his_or_her(user)] own throat with [src]!</b></span>")
 		src.break_utensil(user)
 		SPAWN(10 SECONDS)
 			if(user)
@@ -360,7 +360,7 @@ TRAYS
 	icon_state = "cleaver"
 	item_state = "cleaver"
 	desc = "An extremely sharp cleaver in a rectangular shape. Only for the professionals."
-	force = 12.0
+	force = 12
 	throwforce = 12
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
@@ -381,8 +381,8 @@ TRAYS
 	icon_state = "knife-bread"
 	item_state = "knife"
 	desc = "A rather blunt knife; it still cuts things, but not very effectively."
-	force = 3.0
-	throwforce = 3.0
+	force = 3
+	throwforce = 3
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] drags [src] over [his_or_her(user)] own throat!</b></span>")
@@ -394,7 +394,7 @@ TRAYS
 	name = "pizza cutter"
 	icon_state = "pizzacutter"
 	force = 3.0 // it's a bladed instrument, sure, but you're not going to do much damage with it
-	throwforce = 3.0
+	throwforce = 3
 	desc = "A cutting tool with a rotary circular blade, designed to cut pizza. You can probably use it as a knife with enough patience."
 	tool_flags = TOOL_SAWING
 
@@ -541,7 +541,7 @@ TRAYS
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "plate"
 	item_state = "zippo"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 8
 	force = 2
@@ -736,7 +736,7 @@ TRAYS
 	icon_state = "tray"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "tray"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
 	force = 10

@@ -43,7 +43,7 @@
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
 
-			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling"))
+			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
@@ -314,13 +314,7 @@
 			if ("Arcfiend")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
-					L.make_arcfiend()
-					role = ROLE_ARCFIEND
-#ifdef RP_MODE
-					objective_path = /datum/objective_set/traitor/rp_friendly
-#else
-					objective_path = /datum/objective_set/traitor
-#endif
+					L.mind?.add_antagonist(ROLE_ARCFIEND)
 				else
 					failed = 1
 			else

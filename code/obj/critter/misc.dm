@@ -468,7 +468,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if(!ON_COOLDOWN(src, "scorpion_ability", 10 SECONDS))
+		if(!ON_COOLDOWN(src, "scorpion_ability", 15 SECONDS))
 			if(prob(50))
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents?.add_reagent("neurotoxin", 15)
@@ -484,9 +484,23 @@
 
 
 	CritterAttack(mob/M)
-		take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
-		M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
-		playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+		if(!ON_COOLDOWN(src, "scorpion_ability", 15 SECONDS))
+			if(prob(50))
+				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
+				M.reagents?.add_reagent("neurotoxin", 15)
+				M.reagents?.add_reagent("toxin", 6)
+				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				M.emote("scream")
+			else
+				random_brute_damage(M, rand(5,10),1)
+				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
+				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				M.changeStatus("weakened", 4 SECONDS)
+				M.force_laydown_standup()
+		else
+			take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
+			M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
+			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
 
 
 
@@ -1474,7 +1488,7 @@
 	desc = "A rattlesnake in space."
 	icon_state = "rattlesnake"
 	dead_state = "rattlesnake_dead"
-	density = 0
+	density = 1
 	health = 20
 	aggressive = 1
 	defensive = 1
@@ -1505,7 +1519,7 @@
 			if (isintangible(C)) continue
 
 			if(!src.attack)
-				switch(get_dist(src, C))
+				switch(GET_DIST(src, C))
 					if (0 to 1)
 						src.mobile = 1
 						icon_state = "rattlesnake"
@@ -1513,7 +1527,7 @@
 						if (issilicon(C) && src.atksilicon) src.attack = 1
 						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
-							C.reagents?.add_reagent("viper_venom", rand(15,25))
+							C.reagents?.add_reagent("viper_venom", rand(25,35))
 							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 							C.emote("scream")
 					if (1 to 2)
@@ -1544,7 +1558,7 @@
 		..()
 		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-			M.reagents?.add_reagent("viper_venom", rand(10,15))
+			M.reagents?.add_reagent("viper_venom", rand(15,30))
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 			M.emote("scream")
 		src.task = "chasing"
