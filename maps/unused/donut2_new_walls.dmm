@@ -33819,9 +33819,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "eOn" = (
-/obj/stool/bed/moveable/hospital,
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/machinery/light/small/floor,
+/obj/stool/bed/moveable,
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/medbay/treatment2)
 "eOq" = (
@@ -37153,9 +37153,9 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "iRc" = (
-/obj/stool/bed/moveable/hospital,
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/machinery/light/small/floor,
+/obj/stool/bed/moveable,
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/medbay/treatment1)
 "iRh" = (
