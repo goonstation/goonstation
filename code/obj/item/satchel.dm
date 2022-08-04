@@ -57,7 +57,7 @@
 		// This is probably easily fixable by just running the check again
 		// but to be honest this is one of those funny bugs that can be fixed later
 
-		if (get_dist(user, src) <= 0 && length(src.contents))
+		if (GET_DIST(user, src) <= 0 && length(src.contents))
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
@@ -253,7 +253,7 @@
 			src.open_it_up(0)
 
 		attack_hand(mob/user)
-			if (get_dist(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
+			if (GET_DIST(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
 				src.open_it_up(1)
 			..()
 			src.open_it_up(0)

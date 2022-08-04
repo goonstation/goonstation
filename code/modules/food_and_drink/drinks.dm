@@ -358,6 +358,7 @@
 	name = "crushed can"
 	desc = "This can's been totally crushed!"
 	icon = 'icons/obj/foodNdrink/can.dmi'
+	w_class = W_CLASS_TINY
 
 	proc/crush_can(var/name, var/icon_state)
 		src.name = "crushed [name]"

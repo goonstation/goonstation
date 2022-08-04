@@ -918,7 +918,7 @@
 
 /mob/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
 	for (var/mob/M in AIviewers(src))
-		if (!M.client)
+		if (!M.client && !isAI(M))
 			continue
 		var/msg = message
 		if (self_message && M == src)

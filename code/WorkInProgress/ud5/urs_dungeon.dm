@@ -213,7 +213,7 @@
 			H.emote("scream")
 			playsound(H.loc, "sound/weapons/flashbang.ogg", 25, 1)
 			for (var/mob/N in viewers(src, null))
-				if (get_dist(N, src) <= 6)
+				if (GET_DIST(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
 					shake_camera(N, 6, 32)
@@ -281,7 +281,7 @@
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 		for (var/mob/N in viewers(H, null))
-			if (get_dist(N, src) <= 6)
+			if (GET_DIST(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
 				shake_camera(N, 6, 32)

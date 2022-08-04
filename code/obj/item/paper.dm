@@ -125,7 +125,7 @@
 		user = E.mainframe
 	else
 		user = AI
-	if (!isAI(user) || (user.current && get_dist(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
+	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
 		var/font_junk = ""
 		for (var/i in src.fonts)
 			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"

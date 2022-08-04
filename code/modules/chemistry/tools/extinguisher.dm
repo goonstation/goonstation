@@ -153,7 +153,7 @@
 		var/list/the_targets = list(T,T1,T2)
 
 		var/datum/reagents/R = new
-		var/distance = clamp(get_dist(get_turf(src), get_turf(target)), min_distance, max_distance)
+		var/distance = clamp(GET_DIST(get_turf(src), get_turf(target)), min_distance, max_distance)
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 

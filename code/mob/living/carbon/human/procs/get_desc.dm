@@ -3,7 +3,7 @@
 
 	var/ignore_checks = isobserver(usr)
 	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
-	if (!ignore_checks && examine_stopper && get_dist(usr.client.eye, src) > 3 - 2 * examine_stopper)
+	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br><span class='alert'>You can't seem to make yourself look at [src.name] long enough to observe anything!</span>"
 
 	if (src.simple_examine || isghostdrone(usr))
@@ -15,12 +15,12 @@
 	. = list()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
-		sleep(get_dist(usr.client.eye, src) + 1)
+		sleep(GET_DIST(usr.client.eye, src) + 1)
 		if (!usr.client.eye)
 			return // heh heh
 
 	if (!istype(usr, /mob/dead/target_observer))
-		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
+		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
 	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
@@ -380,7 +380,7 @@
 
 	. += "<br><span class='notice'>*---------*</span>"
 
-	if (get_dist(usr, src) < 4 && ishuman(usr))
+	if (GET_DIST(usr, src) < 4 && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if (istype(H.glasses, /obj/item/clothing/glasses/healthgoggles))
 			var/obj/item/clothing/glasses/healthgoggles/G = H.glasses

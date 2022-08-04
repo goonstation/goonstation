@@ -987,7 +987,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			walk_towards(src,null)
 			return 1
 
-		else if (get_dist(src, M) >= 5)
+		else if (GET_DIST(src, M) >= 5)
 			var/insult = pick("fucker", "fuckhead", "shithead", "shitface", "shitass", "asshole")
 			var/targ = pick("", ", [target_name]", ", [insult]", ", you [insult]")
 

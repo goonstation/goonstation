@@ -374,7 +374,7 @@
 			if (b == member)
 				continue
 
-			var/dist = get_dist(b, member)
+			var/dist = GET_DIST(b, member)
 			if (minDist == null || dist < minDist)
 				minDist = dist
 */
