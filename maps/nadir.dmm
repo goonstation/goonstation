@@ -25232,7 +25232,7 @@
 /area/station/medical/medbay)
 "mTN" = (
 /obj/landmark/gps_waypoint{
-	name = "North Escape Wing"
+	name = "Escape Wing - North"
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/hallway/secondary/exit)
@@ -37529,7 +37529,7 @@
 /area/station/maintenance/north)
 "tOm" = (
 /obj/landmark/gps_waypoint{
-	name = "South Escape Wing"
+	name = "Escape Wing - South"
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
