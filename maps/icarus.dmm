@@ -5517,7 +5517,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/pool)
 "amA" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "amB" = (
 /obj/pool/perspective{
@@ -26481,7 +26481,7 @@
 /area/space)
 "fbX" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "fmZ" = (
 /obj/landmark/spawner{
@@ -26762,7 +26762,7 @@
 	amount = 2100
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "jrh" = (
 /obj/machinery/plantpot{

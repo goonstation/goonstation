@@ -20575,7 +20575,7 @@
 /area/station/hangar/engine)
 "bjC" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjE" = (
 /obj/machinery/camera{
@@ -21526,7 +21526,7 @@
 /area/station/crew_quarters/catering)
 "bmW" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bmX" = (
 /obj/table/auto,
@@ -24098,7 +24098,7 @@
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "bvT" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bvV" = (
 /obj/machinery/light/small{
@@ -49738,7 +49738,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVm" = (
 /obj/machinery/atmospherics/pipe/vent{

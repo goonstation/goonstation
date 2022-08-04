@@ -16665,7 +16665,7 @@
 	},
 /area/station/quartermaster/refinery)
 "eBr" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "eBt" = (
 /obj/decal/tile_edge/line/green{
@@ -42253,7 +42253,7 @@
 /area/station/security/brig/south_side)
 "lXJ" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "lXN" = (
 /obj/cable{
@@ -61675,7 +61675,7 @@
 	amount = 3600
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "rxE" = (
 /obj/decal/mule/dropoff,
@@ -67392,7 +67392,7 @@
 /area/station/medical/robotics)
 "tii" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "tiv" = (
 /obj/disposalpipe/junction/left/south,
@@ -75408,21 +75408,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
-"vwG" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
 "vwH" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
@@ -85288,7 +85273,7 @@
 /obj/item/beach_ball{
 	pixel_y = 7
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "yhb" = (
 /obj/decal/cleanable/dirt/jen,
@@ -116310,7 +116295,7 @@ vyE
 abv
 fwb
 svq
-vwG
+pVh
 rdj
 dVe
 dVe

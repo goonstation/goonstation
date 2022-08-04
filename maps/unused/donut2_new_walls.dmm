@@ -12182,7 +12182,7 @@
 	},
 /area/station/crew_quarters/pool)
 "aIb" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aIc" = (
 /obj/pool/perspective{
@@ -12543,7 +12543,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aIR" = (
 /obj/pool/perspective{

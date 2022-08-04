@@ -45531,11 +45531,11 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/russian/radiation)
 "hke" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
-/turf/simulated/pool/no_animate{
+/turf/simulated/floor/pool/no_animate{
 	dir = 1
 	},
 /area/russian/radiation)
@@ -45543,7 +45543,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/turf/simulated/pool/no_animate{
+/turf/simulated/floor/pool/no_animate{
 	dir = 1
 	},
 /area/russian/radiation)
@@ -46822,24 +46822,24 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/russian/radiation)
 "hWx" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate{
+/turf/simulated/floor/pool/no_animate{
 	dir = 1
 	},
 /area/russian/radiation)
 "hWQ" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/russian/radiation)
 "hWT" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/russian/radiation)
 "hWY" = (
 /obj/pool/perspective{

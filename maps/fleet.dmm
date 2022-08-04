@@ -21148,7 +21148,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21246,7 +21246,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pn" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21264,7 +21264,7 @@
 	})
 "Pp" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21272,13 +21272,13 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
 "Pr" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21849,7 +21849,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})

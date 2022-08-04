@@ -40039,14 +40039,14 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bLx" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bLy" = (
 /obj/disposalpipe/segment/brig{
@@ -40055,7 +40055,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bLz" = (
 /obj/disposalpipe/segment/brig{
@@ -41280,7 +41280,7 @@
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 1
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bOm" = (
 /obj/disposalpipe/segment/brig{
@@ -41289,13 +41289,13 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bOn" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bOo" = (
 /obj/disposalpipe/segment/brig{
@@ -49626,7 +49626,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "cfS" = (
 /obj/machinery/shower{

@@ -53746,7 +53746,7 @@
 	icon_state = "body3";
 	name = "decomposed corpse"
 	},
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYr" = (
 /obj/critter/zombie/security{
@@ -53784,14 +53784,14 @@
 /obj/decal/cleanable/slime,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/fluid_spawner/polluted_filth/crank,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYx" = (
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYy" = (
 /obj/fluid_spawner/polluted_filth/ecoli,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYz" = (
 /obj/decal/fakeobjects/pipe{
@@ -54047,7 +54047,7 @@
 "cYW" = (
 /obj/decal/cleanable/slime,
 /obj/fluid_spawner/polluted_filth/black_goop,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYY" = (
 /obj/decal/cleanable/dirt,
@@ -54076,13 +54076,13 @@
 /obj/decal/cleanable/dirt/dirt3,
 /obj/fluid_spawner/polluted_filth/green_goop,
 /obj/decal/cleanable/oil,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZa" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/fluid_spawner/polluted_filth/bathsalts,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZb" = (
 /obj/machinery/light_switch/north,
@@ -54173,13 +54173,13 @@
 /obj/decal/cleanable/slime,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/fluid_spawner/polluted_filth/salmonella,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZi" = (
 /obj/item/raw_material/shard/glass,
 /obj/decal/cleanable/slime,
 /obj/fluid_spawner/polluted_filth/yuck,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZj" = (
 /obj/grille/catwalk{
@@ -54438,7 +54438,7 @@
 "cZG" = (
 /obj/decal/cleanable/molten_item,
 /obj/fluid_spawner/polluted_filth,
-/turf/unsimulated/pool/no_animate,
+/turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZH" = (
 /obj/river{

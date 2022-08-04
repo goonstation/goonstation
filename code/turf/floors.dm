@@ -2468,3 +2468,39 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+/turf/unsimulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/unsimulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))

@@ -3119,7 +3119,7 @@ var/global/noir = 0
 								else if (P.icon_state == "pool")
 									P.icon_state = "ballpit"
 								LAGCHECK(LAG_LOW)
-							for (var/turf/simulated/pool/P in world)
+							for (var/turf/simulated/floor/pool/P in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
 									return

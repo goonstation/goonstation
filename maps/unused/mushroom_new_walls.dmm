@@ -16378,7 +16378,7 @@
 	},
 /area/station/security/brig)
 "bjM" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjO" = (
 /obj/landmark{
@@ -16395,7 +16395,7 @@
 	name = "ladder";
 	pixel_y = -9
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjS" = (
 /obj/wingrille_spawn/auto,
@@ -30939,7 +30939,7 @@
 /area/station/hydroponics/bay)
 "pYc" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "pYE" = (
 /obj/cable{
@@ -31814,7 +31814,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "qUD" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{

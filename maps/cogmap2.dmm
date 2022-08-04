@@ -18239,7 +18239,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aRo" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aRp" = (
 /obj/pool_springboard,
@@ -18700,19 +18700,19 @@
 /area/station/crew_quarters/pool)
 "aSv" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSw" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSx" = (
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSy" = (
 /obj/disposalpipe/segment/food,
@@ -19255,13 +19255,13 @@
 /area/station/crew_quarters/pool)
 "aTL" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTM" = (
 /obj/fluid_spawner{
 	amount = 2550
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTN" = (
 /obj/critter/seagull,

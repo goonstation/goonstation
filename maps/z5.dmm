@@ -3765,7 +3765,7 @@
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
 "kr" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "ks" = (
 /obj/pool/perspective{
@@ -4053,7 +4053,7 @@
 /area/diner/motel/chemstorage)
 "lf" = (
 /obj/decal/cleanable/urine,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "lg" = (
 /obj/pool/perspective{

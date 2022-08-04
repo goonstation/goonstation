@@ -17415,10 +17415,10 @@
 /area/station/hydroponics/bay)
 "aLf" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aLg" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aLh" = (
 /obj/pool/perspective{
@@ -17948,7 +17948,7 @@
 	name = "ladder";
 	pixel_y = -9
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aMl" = (
 /obj/table/reinforced{
@@ -18310,7 +18310,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aMW" = (
 /obj/pool/perspective{
