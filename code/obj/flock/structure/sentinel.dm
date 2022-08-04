@@ -122,8 +122,8 @@
 			src.charge(-5 * mult)
 			src.charge_status = LOSING_CHARGE
 		if (src.charge <= 0)
-			if(icon_state != "sentinel")
-				icon_state = "sentinel"
+			if(src.icon_state != "sentinel")
+				src.icon_state = "sentinel"
 			src.charge_status = NOT_CHARGED
 
 	src.updatefilter()
