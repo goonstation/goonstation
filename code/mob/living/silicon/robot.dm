@@ -837,7 +837,6 @@
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
 				playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
-				severity++
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
 				var/obj/item/roboupgrade/fireshield/S = R
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
@@ -854,6 +853,10 @@
 				if(3)
 					power = 3
 		power *= clamp(1-src.get_explosion_resistance(), 0, 1)
+		if (power >= 6)
+			SPAWN(1 DECI SECOND)
+				src.gib(1)
+			return
 		var/brute_damage = power*7.5
 		var/burn_damage = max((power-2.5)*5,0)
 		/*switch(severity)
