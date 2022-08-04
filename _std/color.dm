@@ -274,10 +274,11 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
-/client/proc/set_color(matrix)
+/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY)
 	src.color_matrix = matrix
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
-/client/proc/calc_color(matrix)
+/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
 	src.color_matrix = matrix
-	return mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	matrix = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	animate(src, color=matrix, time=time, easing=easing)

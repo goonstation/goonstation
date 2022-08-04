@@ -22,11 +22,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_grayscale(var/atom/A, var/time=5)
 	var/start = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
@@ -34,11 +33,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
 	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
@@ -46,11 +44,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
 	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -58,11 +55,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
 	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
@@ -70,11 +66,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
 	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
@@ -82,11 +77,10 @@
 	if (isclient(A))
 		var/client/C = A
 		C.set_color(start)
-		end = C.calc_color(end)
+		C.animate_color(end, time=time, easing=SINE_EASING)
 	else
 		A.color = start
-	animate(A, color=end, time=time, easing=SINE_EASING)
-	return
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
