@@ -579,7 +579,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(spooky_light_mode)
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
-		src.color = "#AAAAAA"
+		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
 	if (!src.chatOutput.loaded)
 		//Load custom chat
