@@ -73,8 +73,7 @@
 
 	if(src.powered)
 		if (src.charge_status != CHARGED)
-			if(src.icon_state != "sentinelon")
-				src.icon_state = "sentinelon"
+			src.icon_state = "sentinelon"
 			src.charge(src.charge_per_tick * mult)
 			src.charge_status = CHARGING
 		if (src.charge == 100)
@@ -122,8 +121,7 @@
 			src.charge(-5 * mult)
 			src.charge_status = LOSING_CHARGE
 		if (src.charge <= 0)
-			if(src.icon_state != "sentinel")
-				src.icon_state = "sentinel"
+			src.icon_state = "sentinel"
 			src.charge_status = NOT_CHARGED
 
 	src.updatefilter()
