@@ -34,7 +34,7 @@
 /obj/flock_structure/sentinel/New(atom/location, datum/flock/F = null)
 	..(location, F)
 	src.rays = new /obj/effect/flock_sentinelrays
-	src.vis_contents += rays
+	src.vis_contents += src.rays
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
@@ -52,7 +52,7 @@
 		if (CHARGED)
 			charge_message = "Charged"
 	return {"<span class='bold'>Status:</span> [charge_message].
-		<br><span class='bold'>Charge Percentage:</span> [charge]%."}
+		<br><span class='bold'>Charge Percentage:</span> [src.charge]%."}
 
 /obj/flock_structure/sentinel/process(mult)
 	if(!src.flock)
@@ -129,7 +129,7 @@
 	src.updatefilter()
 
 /obj/flock_structure/sentinel/proc/charge(chargeamount)
-	src.charge = clamp(chargeamount + charge, 0, 100)
+	src.charge = clamp(src.charge + chargeamount, 0, 100)
 
 /obj/flock_structure/sentinel/proc/updatefilter()
 	var/filter = src.rays.get_filter("flock_sentinel_rays")
