@@ -21,7 +21,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
 	var/pseudo = FALSE
 	
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 				ticker.mode.Agimmicks |= new_owner
 			else
 				ticker.mode.traitors |= new_owner // same with this variable in particular, but it's necessary for antag HUDs
-		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
+		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
 
 	Del()
 		if (owner && !src.pseudo)
@@ -63,10 +63,25 @@ ABSTRACT_TYPE(/datum/antagonist)
 		return TRUE
 
 	/// Base proc to set up the antagonist. Depending on arguments, it can spawn equipment, assign objectives, move the player (if applicable), and announce itself.
-	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
+	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
+		set waitfor = FALSE
 		SHOULD_NOT_OVERRIDE(TRUE)
 
 		src.assigned_by = source
+
+		// Late setup has special logic, and is used for jobs like latejoining traitors that lack uplinks if given their equipment before their job.
+		// It will pause the setup proc for up to 60 seconds by sleeping every second, then checking if the owner's assigned role exists.
+		// If it does, then the setup will continue. If late setup is still failing after a minute, we message admins to let them know.
+		if (late_setup)
+			for (var/i in 1 to 60)
+				if (QDELETED(src) || !src.owner)
+					qdel(src)
+					return
+				if (src.owner.assigned_role)
+					break
+				sleep(1 SECOND)
+			if (!src.owner.assigned_role)
+				message_admins("Antagonist datum of type [src.type] failed to properly late setup after 60 seconds. Report this to a coder.")
 
 		if (do_equip)
 			src.give_equipment()
