@@ -17,7 +17,7 @@
 	var/icon_filled = "dropper1"
 	var/image/fluid_image
 	var/customizable_settings_available = 0
-	var/transfer_amount = 5.0
+	var/transfer_amount = 5
 	var/transfer_mode = TO_SELF
 
 	on_reagent_change()

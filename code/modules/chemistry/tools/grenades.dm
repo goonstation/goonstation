@@ -10,7 +10,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
 	w_class = W_CLASS_SMALL
-	force = 2.0
+	force = 2
 	var/stage = 0
 	var/state = 0
 	var/icon_state_armed = "grenade-chem-armed"

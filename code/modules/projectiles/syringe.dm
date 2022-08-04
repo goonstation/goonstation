@@ -7,7 +7,7 @@
 	dissipation_rate = 1
 	dissipation_delay = 7
 	power = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	hit_ground_chance = 10
 	implanted = /obj/item/implant/projectile/body_visible/syringe
 	shot_sound = 'sound/effects/syringeproj.ogg'

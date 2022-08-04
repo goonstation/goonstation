@@ -15,6 +15,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	custom_suicide = 1
+	contraband = 2 // Due to the illegalization of basketball in 2041
 
 /obj/item/basketball/attack_hand(mob/user)
 	..()
@@ -136,7 +137,7 @@
 			return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!mounted && get_dist(src, target) == 1)
+		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)

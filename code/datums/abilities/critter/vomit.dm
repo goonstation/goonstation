@@ -32,7 +32,7 @@
 				break
 			if (F == get_turf(holder.owner))
 				continue
-			if (get_dist(holder.owner,F) > range)
+			if (GET_DIST(holder.owner,F) > range)
 				continue
 			holder.owner.reagents.reaction(F,TOUCH)
 			for(var/mob/living/L in F.contents)

@@ -31,7 +31,7 @@ CONTAINS:
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 5
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -103,7 +103,7 @@ CONTAINS:
 	hitsound = 'sound/impact_sounds/circsaw.ogg'
 	force = 8
 	w_class = W_CLASS_TINY
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 20000
@@ -170,9 +170,9 @@ CONTAINS:
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -734,7 +734,7 @@ CONTAINS:
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	force = 1
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 5000
@@ -758,7 +758,7 @@ CONTAINS:
 					src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
-					H.organHolder.chest.op_stage = 0.0
+					H.organHolder.chest.op_stage = 0
 					src.in_use = 0
 					return
 		else
@@ -794,7 +794,7 @@ CONTAINS:
 	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	stamina_damage = 0
@@ -932,19 +932,19 @@ CONTAINS:
 				if (target.organHolder)
 					if (zone == "chest")
 						if (target.organHolder.heart)
-							target.organHolder.heart.op_stage = 0.0
+							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
-							target.organHolder.chest.op_stage = 0.0
+							target.organHolder.chest.op_stage = 0
 						if (target.butt_op_stage)
-							target.butt_op_stage = 0.0
+							target.butt_op_stage = 0
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
-							target.organHolder.head.op_stage = 0.0
+							target.organHolder.head.op_stage = 0
 						if (target.organHolder.skull)
-							target.organHolder.skull.op_stage = 0.0
+							target.organHolder.skull.op_stage = 0
 						if (target.organHolder.brain)
-							target.organHolder.brain.op_stage = 0.0
+							target.organHolder.brain.op_stage = 0
 				if (target.bleeding)
 					repair_bleeding_damage(target, 100, repair_amount)
 			else
@@ -989,7 +989,7 @@ CONTAINS:
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	force = 0
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 4
 	throw_range = 20
 	stamina_damage = 0
@@ -1053,7 +1053,7 @@ CONTAINS:
 		if (prob(75))
 			user.show_text("You fuss with [src], trying to find the zipper, but it's no use!", "red")
 			for (var/mob/M in hearers(src, null))
-				M.show_text("<FONT size=[max(0, 5 - get_dist(src, M))]>...rustle...</FONT>")
+				M.show_text("<FONT size=[max(0, 5 - GET_DIST(src, M))]>...rustle...</FONT>")
 			return
 		src.open()
 		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
@@ -1118,7 +1118,7 @@ CONTAINS:
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 1.5
 	w_class = W_CLASS_TINY
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 6
 	m_amt = 7000
@@ -1555,7 +1555,7 @@ keeping this here because I want to make something else with it eventually
 	flags = FPRINT | TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
-	force = 8.0
+	force = 8
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -1563,7 +1563,7 @@ keeping this here because I want to make something else with it eventually
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	var/mob/Poisoner = null

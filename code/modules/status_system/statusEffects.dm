@@ -1265,7 +1265,7 @@
 				on_turf = 1
 
 				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
 				if (buff_mult <=0)
 					buff_mult = 0.1
 
@@ -1430,6 +1430,27 @@
 
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
+
+	newcause
+		id = "newcause"
+		name = "Newfound cause"
+		desc = "Your newfound purpose in life has encouraged you to toughen up a little!"
+		icon_state = "revspirit"
+		unique = 1
+		maxDuration = 5 SECONDS
+		onAdd(optional = 8)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 	patho_oxy_speed
 		id = "patho_oxy_speed"
@@ -1684,17 +1705,17 @@
 				tox = 0.05
 			if(3)
 				puke_prob = 0.5
-				tox = 0.20
+				tox = 0.2
 			if(4)
 				puke_prob = 1
 				tox = 0.45
 			if(5)
 				puke_prob = 2
-				tox = 0.70
+				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
 			if(critter.ghost_spawned)
-				tox = 0.00
+				tox = 0
 				weighted_average = 0
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
@@ -2206,3 +2227,35 @@
 	maxDuration = 3 MINUTES
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/spry
+
+/datum/statusEffect/mindhack
+	id = "mindhack"
+	name = "Mindhack"
+	desc = "You've been mindhacked."
+	icon_state = "mindhack"
+	unique = TRUE
+
+	onAdd(mob/hacker, custom_orders)
+		. = ..()
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
+		var/mob/M = owner
+		if (M.mind && ticker.mode)
+			if (!M.mind.special_role)
+				M.mind.special_role = ROLE_MINDHACK
+			if (!(M.mind in ticker.mode.Agimmicks))
+				ticker.mode.Agimmicks += M.mind
+			M.mind.master = hacker.ckey
+
+		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
+		M.show_antag_popup("mindhack")
+
+		if (custom_orders)
+			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (M.mind?.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(M, "mindhack", "expired")
+		else if (M.mind?.master)
+			remove_mindhack_status(M, "otherhack", "expired")

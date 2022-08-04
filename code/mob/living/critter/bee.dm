@@ -598,7 +598,7 @@
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN(2.5 SECONDS)
-			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
+			if ((GET_DIST(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
 				MT.setStatusMin("paralysis", 20 SECONDS)
@@ -933,7 +933,7 @@
 		//src.dance()
 
 		sleep(17 SECONDS)
-		if (get_dist(src, user) <= 7)
+		if (GET_DIST(src, user) <= 7)
 			src.visible_message("<b>[src]</b> buzzes in a clueless manner as to why [user] looks so dejected.[prob(5)?" You can tell because you studied bee linguistics, ok?": null]")
 
 			//Is this a bad idea? It probably is a bad idea.
@@ -1067,7 +1067,7 @@ obj/effects/bees
 particles/swarm/bees
 	icon = 'icons/misc/bee.dmi'
 	icon_state = list("mini-bee"=1, "mini-bee2"=1)
-	friction = 0.10
+	friction = 0.1
 	count = 10
 	spawning = 0.35
 	fade = 5

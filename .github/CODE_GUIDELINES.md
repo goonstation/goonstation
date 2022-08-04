@@ -10,6 +10,7 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 * Don't use `del`, it's horrendously slow. Use `qdel()`.
+* Don't use `<>`, it's completely unused in the land of SS13. Use `!=` instead, as it's infinitely more sane.
 
 ## Stuff To Use
 

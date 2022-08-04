@@ -248,7 +248,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
 				return
 
-	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
+	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 

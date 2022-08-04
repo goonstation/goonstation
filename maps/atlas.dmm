@@ -4394,6 +4394,10 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 15
+	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "lq" = (
@@ -4412,10 +4416,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lr" = (
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -18540,7 +18540,7 @@
 /obj/item/disk/data/tape{
 	pixel_y = -5
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 10
 	},
 /turf/simulated/floor/purple,

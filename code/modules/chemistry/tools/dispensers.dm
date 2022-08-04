@@ -37,14 +37,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				smash()
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					smash()
 					return
-			if (3.0)
+			if (3)
 				if (prob(5))
 					smash()
 					return

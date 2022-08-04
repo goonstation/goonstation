@@ -21,7 +21,7 @@ var/maniac_previous_victim = "Unknown"
 			if (BOUNDS_DIST(src, src.target) == 0)
 				proximity_act()
 
-			var/dist = get_dist(src, src.target)
+			var/dist = GET_DIST(src, src.target)
 			if(dist > world.view * 2)
 				walk_towards(src, src.target, 3)
 			else

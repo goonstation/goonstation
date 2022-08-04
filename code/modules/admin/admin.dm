@@ -111,7 +111,7 @@ var/global/noir = 0
 				href_list["target"] = "\ref[M]"
 				targetClient = M.client
 				break
-	else if (href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
+	if (isnull(href_list["target"]) && href_list["targetmob"])// they're logged out or an npc, but we still want to mess with their mob
 		href_list["target"] = href_list["targetmob"]
 
 	var/originWindow
@@ -1805,8 +1805,8 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				var/obj/trait/trait = locate(href_list["trait"])
 				if (!M || !trait) return
-				message_admins("[key_name(usr)] removed trait [trait.cleanName] from [key_name(M)].")
-				logTheThing("admin", usr, M, "removed trait [trait.cleanName] from [constructTarget(M,"admin")].")
+				message_admins("[key_name(usr)] removed trait [trait.name] from [key_name(M)].")
+				logTheThing("admin", usr, M, "removed trait [trait.name] from [constructTarget(M,"admin")].")
 				M.traitHolder.removeTrait(trait.id)
 				usr.client.cmd_admin_managetraits(M)
 			else
@@ -1830,8 +1830,8 @@ var/global/noir = 0
 				var/list/obj/trait/all_traits = list()
 				var/list/traits_by_name = list()
 				for(var/obj/trait/trait as anything in traitList)
-					all_traits[traitList[trait].cleanName] = traitList[trait].id
-					traits_by_name.Add(traitList[trait].cleanName)
+					all_traits[traitList[trait].name] = traitList[trait].id
+					traits_by_name.Add(traitList[trait].name)
 
 				traits_by_name = sortList(traits_by_name)
 
@@ -1859,7 +1859,7 @@ var/global/noir = 0
 
 				for(var/trait in M.traitHolder.traits)
 					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
-					traits.Add(trait_obj.cleanName)
+					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any traits!</span></b>")
@@ -1872,7 +1872,7 @@ var/global/noir = 0
 				// get the id of the selected trait
 				for(var/trait in M.traitHolder.traits)
 					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
-					if(trait_obj.cleanName == trait_to_remove_name)
+					if(trait_obj.name == trait_to_remove_name)
 						M.traitHolder.removeTrait(trait_obj.id)
 						message_admins("[key_name(usr)] removed the trait [trait_to_remove_name] from [key_name(M)].")
 						logTheThing("admin", usr, M, "removed the trait [trait_to_remove_name] from [constructTarget(M,"admin")].")
@@ -2217,6 +2217,78 @@ var/global/noir = 0
 			//they're a ghost/hivebotthing/etc
 			else
 				tgui_alert(usr,"Cannot make this mob a traitor")
+
+		if ("add_antagonist")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr, "You must be at least a Primary Administrator to change someone's antagonist status.")
+				return
+			var/mob/M = locate(href_list["targetmob"])
+			if (!M?.mind)
+				return
+			var/list/antag_options = list()
+			for (var/V as anything in concrete_typesof(/datum/antagonist))
+				var/datum/antagonist/A = V
+				if (!M.mind.get_antagonist(initial(A.id)))
+					antag_options[initial(A.display_name)] = initial(A.id)
+			if (!length(antag_options))
+				boutput(usr, "<span class='alert'>Antagonist assignment failed - no valid antagonist roles exist.</span>")
+				return
+			for (var/V as anything in M.mind.antagonists)
+				var/datum/antagonist/A = V
+				if (A.mutually_exclusive)
+					if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) has an antagonist role that will not naturally occur with others. Proceed anyway? This might cause !!FUN!! interactions.", "Force Antagonist", list("Yes", "Cancel")) != "Yes")
+						return
+				break
+			var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign.", "Add Antagonist", antag_options)
+			if (!selected_keyvalue)
+				return
+			var/do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Antagonist", list("Yes", "No", "Cancel"))
+			if (do_equipment == "Cancel")
+				return
+			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Cancel"))
+			if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
+				return
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+				return
+			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
+			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+			if (success)
+				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
+			else
+				boutput(usr, "<span class='alert'>Addition failed with return code [success]. The mob may be incompatible. Report this to a coder.</span>")
+
+		if ("remove_antagonist")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr, "You must be at least a Primary Administrator to change someone's antagonist status.")
+				return
+			var/datum/antagonist/antag = locate(href_list["target_antagonist"])
+			var/mob/M = locate(href_list["targetmob"])
+			if (!antag || !M?.mind)
+				return
+			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
+				return
+			boutput(usr, "<span class='notice'>Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])...</span>")
+			var/success = M.mind.remove_antagonist(antag.id)
+			if (success)
+				boutput(usr, "<span class='notice'>Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]</span>")
+			else
+				boutput(usr, "<span class='alert'>Removal failed with return code [success]; report this to a coder.</span>")
+
+		if ("wipe_antagonists")
+			if (src.level < LEVEL_PA)
+				tgui_alert(usr, "You must be at least a Primary Administrator to change someone's antagonist status.")
+				return
+			var/mob/M = locate(href_list["targetmob"])
+			if (!M?.mind)
+				return
+			if (tgui_alert(usr, "Really remove all antagonists from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
+				return
+			boutput(usr, "<span class='notice'>Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])...</span>")
+			var/success = M.mind.wipe_antagonists()
+			if (success)
+				boutput(usr, "<span class='notice'>Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist.")
+			else
+				boutput(usr, "<span class='alert'>Removal failed with return code [success]; report this to a coder.</span>")
 
 		if ("create_object")
 			if (src.level >= LEVEL_SA)
@@ -2637,6 +2709,35 @@ var/global/noir = 0
 								//teleport security person
 								H.set_loc(pick_landmark(LANDMARK_PRISONSECURITYWARP))
 							prisonwarped += H
+					if("critterize_all")
+						if (src.level >= LEVEL_PA)
+							if(!ticker)
+								tgui_alert(usr,"The game hasn't started yet!")
+								return
+
+							var/CT = input("Enter a /mob/living/critter path or partial name.", "Make Critter", null) as null|text
+
+							var/list/matches = get_matches(CT, "/mob/living/critter")
+
+							if (!length(matches))
+								return
+							if (length(matches) == 1)
+								CT = matches[1]
+							else
+								CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
+
+							if (!CT)
+								return
+
+							for(var/mob/living/carbon/human/H in mobs)
+								if(isdead(H) || !(H.client)) continue
+								H.make_critter(CT, get_turf(H))
+
+							message_admins("<span class='internal'>[key_name(usr)] critterized everyone into [CT].</span>")
+							logTheThing("admin", usr, null, "critterized everyone into [CT]")
+							logTheThing("diary", usr, null, "critterized everyone into a critter [CT]", "admin")
+						else
+							tgui_alert(usr,"You're not of a high enough rank to do this")
 					if("traitor_all")
 						if (src.level >= LEVEL_SA)
 							if(!ticker)
@@ -4299,6 +4400,7 @@ var/global/noir = 0
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_reagent_all'>All</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=traitor_all'>Make everyone an Antagonist</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=critterize_all'>Critterize everyone</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=stupify'>Give everyone severe brain damage</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=flipstation'>Set station direction</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=yeolde'>Replace all airlocks with doors</A><BR>
@@ -4622,9 +4724,8 @@ var/global/noir = 0
 				M.show_antag_popup("traitorhard")
 				M.show_text("<h2><font color=red><B>You have become a floor goblin!</B></font></h2>", "red")
 			if(ROLE_ARCFIEND)
-				M.mind.special_role = ROLE_ARCFIEND
-				M.make_arcfiend()
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
+				M.mind.add_antagonist(ROLE_ARCFIEND)
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
@@ -5190,7 +5291,7 @@ var/global/noir = 0
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=managetraits_remove;target=\ref[M];trait=\ref[trait];origin=managetraits'>remove</a></td>
-				<td><a href='?src=\ref[src.holder];action=managetraits_debug_vars;trait=\ref[trait];origin=managetraits'>[trait.cleanName]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managetraits_debug_vars;trait=\ref[trait];origin=managetraits'>[trait.name]</a></td>
 				<td>[trait.type]
 			</tr>"}
 	dat += "</table></body></html>"

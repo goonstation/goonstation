@@ -128,20 +128,20 @@
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (get_dir(loc, mover.movement_newloc) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
 					// just let the door open instead.
-					. = 0
+					. = FALSE
 					UNCROSS_BUMP_CHECK(mover)
 					return
 				animate_door_squeeze(mover)
-				. = 1 // they can pass through a closed door
+				return TRUE // they can pass through a closed door
 			. = !density
 		else
-			. = 1
+			. = TRUE
 		UNCROSS_BUMP_CHECK(mover)
 
 	update_nearby_tiles(need_rebuild)
@@ -266,7 +266,7 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	var/id = 1.0
+	var/id = 1
 	req_access_txt = "2"
 	autoclose = 0 //brig doors close only when the cell timer starts
 

@@ -8,16 +8,16 @@
 	desc = "What does this thing even do? Is it something you need?"
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 0.0
+	var/organ_holder_required_op_stage = 0
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
 	flags = TABLEPASS
-	force = 1.0
+	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
@@ -46,7 +46,7 @@
 	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
 	var/transplanted = FALSE
 
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -255,6 +255,7 @@
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
 		src.donor = null
+		src.in_body = FALSE
 
 		return
 

@@ -61,7 +61,7 @@
 	var/lube_cycle_duration = BASE_LUBE_CHECK_RATE //rate at which reagents are adjusted for leaks/consumption in atmos machinery processes
 	var/reagents_consumed = 0 //amount of reagents consumed by active leak or variant
 	var/variant_description
-	var/lube_boost = 1.0
+	var/lube_boost = 1
 	var/circulator_flags = BACKFLOW_PROTECTION
 	var/fan_efficiency = 0.9 // 0.9 ideal
 	var/min_circ_pressure = 75
@@ -73,7 +73,7 @@
 	var/variant_b_active = FALSE
 	var/warning_active = FALSE
 
-	anchored = 1.0
+	anchored = 1
 	density = 1
 
 	var/datum/pump_ui/ui
@@ -86,7 +86,7 @@
 		. = ..()
 		circulator_preferred_reagents = list("oil"=1.0,"lube"=1.1,"superlube"=1.12,"spaceglue"=0.7)
 		create_reagents(400)
-		reagents.add_reagent("oil", reagents.maximum_volume*0.50)
+		reagents.add_reagent("oil", reagents.maximum_volume*0.5)
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
 
@@ -371,7 +371,7 @@
 	// Viscosity value is inconsistant in some cases so a white list is used to ensure high performance of specific reagents.
 	on_reagent_change(add)
 		. = ..()
-		var/lube_efficiency = 0.0
+		var/lube_efficiency = 0
 
 		if(src.reagents?.total_volume)
 			for(var/reagent_id as anything in src.reagents.reagent_list)
@@ -383,7 +383,7 @@
 					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.4 * R.viscosity + 0.7 ) // -30% to +10% through linear transform
 				else
 					lube_efficiency += (R.volume/src.reagents.total_volume) * (0.2 * R.viscosity + 0.9 ) // -10% to +10% through linear transform
-		else lube_efficiency = 0.60
+		else lube_efficiency = 0.6
 
 		src.lube_boost = lube_efficiency
 
@@ -1052,7 +1052,7 @@ datum/pump_ui/circulator_ui
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
 						if (W.health_max >= 80) // plasma glass or better, no break please and thank you
 							continue
-						if (prob(get_dist(W,src.loc)*6))
+						if (prob(GET_DIST(W,src.loc)*6))
 							continue
 						W.health = 0
 						W.smash()
@@ -1067,7 +1067,7 @@ datum/pump_ui/circulator_ui
 
 					if(src.lastgen >= 10000000)
 						for (var/turf/T in range(6, src))
-							var/T_dist = get_dist(T, src)
+							var/T_dist = GET_DIST(T, src)
 							var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / 5))
 
 							for (var/obj/item/I in T)

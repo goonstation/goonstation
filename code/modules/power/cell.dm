@@ -6,8 +6,8 @@
 	icon_state = "cell"
 	item_state = "cell"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	health = 8
@@ -304,8 +304,8 @@
 	unusualCell = 1
 	m_amt = 20000
 	g_amt = 20000
-	max_charge = 10.0
-	recharge_rate = 0.0
+	max_charge = 10
+	recharge_rate = 0
 
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()

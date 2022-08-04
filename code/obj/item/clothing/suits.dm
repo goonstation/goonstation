@@ -20,6 +20,8 @@
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
+	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
+	var/coat_style = null
 
 
 	setupProperties()
@@ -400,39 +402,17 @@
 	icon_state = "hopjacket"
 	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
-	var/coat_style = "hopjacket"
-	var/buttoned = TRUE
+	coat_style = "hopjacket"
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
 		setProperty("rangedprot", 0.5)
 
 
-	attack_self()
+	New()
 		..()
-		if (buttoned)
-			src.unbutton()
-		else
-			src.button()
-
-	proc/button()
-		if (src.coat_style)
-			src.icon_state = src.coat_style
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
-		src.buttoned = TRUE
-
-	proc/unbutton()
-		if (src.coat_style)
-			src.icon_state = "[initial(src.icon_state)]_o"
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
-		src.buttoned = FALSE
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -522,12 +502,9 @@
 	icon_state = "labcoat"
 	uses_multiple_icon_states = 1
 	item_state = "labcoat"
-	var/coat_style = "labcoat"
+	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
-	var/buttoned = TRUE
 	bloodoverlayimage = SUITBLOOD_COAT
-
-	abilities = list(/obj/ability_button/labcoat_toggle)
 
 	setupProperties()
 		..()
@@ -537,29 +514,7 @@
 
 	New()
 		..()
-
-	attack_self()
-		..()
-		if (buttoned)
-			src.unbutton()
-		else
-			src.button()
-
-	proc/button()
-		if (src.coat_style)
-			src.icon_state = src.coat_style
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] buttons [his_or_her(usr)] [src.name].",\
-		"You button your [src.name].")
-		src.buttoned = TRUE
-
-	proc/unbutton()
-		if (src.coat_style)
-			src.icon_state = "[src.coat_style]_o"
-			usr.set_clothing_icon_dirty()
-		usr.visible_message("[usr] unbuttons [his_or_her(usr)] [src.name].",\
-		"You unbutton your [src.name].")
-		src.buttoned = FALSE
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 
 /obj/item/clothing/suit/labcoat/genetics
@@ -1328,29 +1283,27 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
-	var/datum/material/renf=null
 
-	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
-		renf = R
-		if (src.material && renf)
-
+	onMaterialChanged()
+		. = ..()
+		if (istype(src.material))
 			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
 			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
+		return
 
-			prot = max(0, renf.getProperty("density") - 3) / 2
-			setProperty("meleeprot", 3 + prot)
-			setProperty("rangedprot", 0.3 + prot / 5)
-			setProperty("space_movespeed", 0.15 + prot / 5)
 
-	UpdateName()
-		if (src.material && renf)
-			name = "[renf]-reinforced [src.material] bespoke space suit"
-		else if (src.material)
-			name = " [src.material] bespoke space suit"
+	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
+		src.setMaterial(fabrMat)
+		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot", 3 + prot)
+		setProperty("rangedprot", 0.3 + prot / 5)
+		setProperty("space_movespeed", 0.15 + prot / 5)
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

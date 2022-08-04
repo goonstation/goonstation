@@ -11,7 +11,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/living_state = null
 	var/dead_state = null
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
@@ -459,12 +459,12 @@
 		on_damaged()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -648,7 +648,7 @@
 					current_target = src.food_target
 
 				if (current_target)
-					if (get_dist(src, current_target) <= src.attack_range)
+					if (GET_DIST(src, current_target) <= src.attack_range)
 						if (current_target == src.corpse_target)
 							src.task = "scavenging"
 						else if (current_target == src.food_target)
@@ -661,15 +661,15 @@
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
-							var/turf/olddist = get_dist(src, current_target)
+							var/turf/olddist = GET_DIST(src, current_target)
 							walk_to(src, current_target,1,4)
-							if ((get_dist(src, current_target)) >= (olddist))
+							if ((GET_DIST(src, current_target)) >= (olddist))
 								src.frustration++
 								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
-							if (get_dist(src, current_target) > attack_range)
+							if (GET_DIST(src, current_target) > attack_range)
 								src.frustration++
 							else
 								src.frustration = 0
@@ -680,21 +680,21 @@
 
 				if (!src.chases_food || src.food_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.food_target) <= src.attack_range)
+				else if (GET_DIST(src, src.food_target) <= src.attack_range)
 					src.task = "eating"
 				else if (src.mobile)
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.task = "eating2"
 
 			if ("eating2")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
@@ -715,7 +715,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.corpse_target) <= src.attack_range)
+				else if (GET_DIST(src, src.corpse_target) <= src.attack_range)
 					src.task = "scavenging"
 				else if (src.mobile)
 					walk_to(src, src.corpse_target,1,4)
@@ -724,7 +724,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				if (get_dist(src, src.corpse_target) > src.attack_range)
+				if (GET_DIST(src, src.corpse_target) > src.attack_range)
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
@@ -747,11 +747,11 @@
 			if ("attacking")
 
 				// see if he got away
-				if ((get_dist(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
+				if ((GET_DIST(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = initial(src.anchored)
 					src.task = "chasing"
 				else
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
 							if(ATTACK_CHECK(src.target))

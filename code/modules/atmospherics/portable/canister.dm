@@ -3,7 +3,7 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "empty"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
@@ -73,12 +73,12 @@
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
-	filled = 2.0
+	filled = 2
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
-	filled = 5.0
+	filled = 5
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
@@ -300,7 +300,7 @@
 				var/T = get_turf(src)
 
 				for(var/obj/window/W in range(4, T)) // smash shit
-					if(prob( get_dist(W,T)*6 ))
+					if(prob( GET_DIST(W,T)*6 ))
 						continue
 					W.health = 0
 					W.smash()
@@ -382,7 +382,7 @@
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 

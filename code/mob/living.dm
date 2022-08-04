@@ -682,7 +682,7 @@
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
-/mob/living/say(var/message, ignore_stamina_winded)
+/mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
 	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -768,6 +768,8 @@
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
+
+	message = say_decorate(message)
 
 	var/italics = 0
 	var/forced_language = null
@@ -953,10 +955,7 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN(1.5 SECONDS)
-		if (has_typing_indicator == FALSE)
-			UpdateOverlays(null, "speech_bubble")
+	show_speech_bubble(speech_bubble)
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1125,7 +1124,15 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(unique_maptext_style)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
+		else
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(maptext_animation_colors)
+			oscillate_colors(chat_text, maptext_animation_colors)
+
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1179,23 +1186,26 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,say_location) <= viewrange)
+					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,say_location) <= viewrange)
+				if (GET_DIST(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+/mob/living/proc/say_decorate(message)
+	return message
 
 // helper proooocs
 
@@ -1673,7 +1683,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
 				// hi grayshift sorry grayshift
-				if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+				if (GET_DIST(src,A) > 0 && GET_DIST(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 					if(pull_slowing)
 						. *= max(A.p_class, 1)
 					else
@@ -1704,7 +1714,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 
 			if (G.state == GRAB_PASSIVE)
-				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
@@ -1864,39 +1874,41 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 	var/armor_msg = ""
-	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
+	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
+		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
+
+		if (rangedprot_mod > 1)
+			armor_msg = ", but your armor softens the hit!"
+		else if(rangedprot_base > 1)
+			armor_msg = ", but [P] pierces through your armor!"
+
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
+				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, P.proj_data.hit_type)
+				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if (rangedprot > 1)
-					armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (rangedprot > 1)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					armor_msg = ", but your armor softens the hit!"
+				if (rangedprot_mod > 1)
+					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1909,27 +1921,23 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.stuttering < stun)
 					src.stuttering = stun
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
+				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
 					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
 					return 0
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
-				src.update_burning(damage/rangedprot)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
+				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
+				src.update_burning(damage/rangedprot_mod)
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.changeStatus("radiation", damage SECONDS)
@@ -1938,18 +1946,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")

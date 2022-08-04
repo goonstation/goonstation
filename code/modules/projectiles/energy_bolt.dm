@@ -12,7 +12,7 @@
 	dissipation_delay = 2
 	max_range = 12 //how many ticks the projectile can go regardless of falloff
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "stun"
 //file location for the sound you want it to play
@@ -148,7 +148,7 @@ toxic - poisons
 //How many tiles till it starts to lose power
 	dissipation_delay = 1
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "sonic wave"
 //file location for the sound you want it to play
@@ -202,7 +202,7 @@ toxic - poisons
 //How many tiles till it starts to lose power
 	dissipation_delay = 4
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "deghostify"
 //file location for the sound you want it to play
@@ -390,10 +390,10 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
-	power = 15
+	power = 18
 	cost = 40
 	max_range = 12
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
@@ -408,10 +408,10 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
-	power = 10
+	power = 12
 	cost = 8
 	max_range = 8
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "full-auto"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	shot_sound_extrarange = 5
@@ -430,7 +430,7 @@ toxic - poisons
 	power = 5
 	cost = 25
 	max_range = 6
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 3

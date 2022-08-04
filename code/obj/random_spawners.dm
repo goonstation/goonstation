@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -920,7 +920,7 @@
 		/obj/item/material_piece/plasmastone,
 		/obj/item/material_piece/uqill,
 		/obj/item/material_piece/koshmarite,
-		/obj/item/material_piece/gold,
+		/obj/item/stamped_bullion,
 		/obj/item/raw_material/cotton,
 		/obj/item/raw_material/miracle,
 		/obj/item/raw_material/uqill,
@@ -935,7 +935,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null

@@ -3,7 +3,7 @@
 
 	var/ignore_checks = isobserver(usr)
 	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
-	if (!ignore_checks && examine_stopper && get_dist(usr.client.eye, src) > 3 - 2 * examine_stopper)
+	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br><span class='alert'>You can't seem to make yourself look at [src.name] long enough to observe anything!</span>"
 
 	if (src.simple_examine || isghostdrone(usr))
@@ -15,12 +15,12 @@
 	. = list()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
-		sleep(get_dist(usr.client.eye, src) + 1)
+		sleep(GET_DIST(usr.client.eye, src) + 1)
 		if (!usr.client.eye)
 			return // heh heh
 
 	if (!istype(usr, /mob/dead/target_observer))
-		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
+		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
 	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
@@ -320,7 +320,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else
@@ -362,7 +362,7 @@
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
 			for(var/id in src.traitHolder.traits)
 				var/obj/trait/T = src.traitHolder.traits[id]
-				. += "<br><span class='notice'>[T.cleanName]</span>"
+				. += "<br><span class='notice'>[T.name]</span>"
 		else
 			. += "<br><span class='notice'>[src] does not appear to possess any special traits.</span>"
 
@@ -380,7 +380,7 @@
 
 	. += "<br><span class='notice'>*---------*</span>"
 
-	if (get_dist(usr, src) < 4 && ishuman(usr))
+	if (GET_DIST(usr, src) < 4 && ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if (istype(H.glasses, /obj/item/clothing/glasses/healthgoggles))
 			var/obj/item/clothing/glasses/healthgoggles/G = H.glasses

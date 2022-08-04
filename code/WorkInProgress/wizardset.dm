@@ -556,7 +556,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (!reagent)
 			boutput(user, "<span class='alert'>The potion flask is empty.</span>")
 		if (user == target)
-			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down \his throat.</span>")
+			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down [his_or_her(user)] throat.</span>")
 			logTheThing("combat", user, null, "drinks [src] ([potion_name] -- [reagent])")
 			drink(user)
 		else if (ishuman(target))

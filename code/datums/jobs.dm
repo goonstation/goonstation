@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	receives_implant = /obj/item/implant/health/security/anti_mindslave
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	items_in_backpack = list(/obj/item/device/flash)
 
 
@@ -1461,9 +1461,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return
@@ -1596,9 +1596,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return

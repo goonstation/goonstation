@@ -231,7 +231,7 @@ obj/item/chesspiece/king
 		icon_state = (chess_color ? "king_black" : "king_white")
 
 	validmove(turf/start_pos, turf/end_pos)
-		if(get_dist(start_pos,end_pos) == 1)
+		if(GET_DIST(start_pos,end_pos) == 1)
 			return 1
 		else if (!opened)
 			for(var/obj/item/chesspiece/rook/C in end_pos)

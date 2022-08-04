@@ -81,7 +81,7 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl_mask"
-	see_face = 0.0
+	see_face = 0
 
 	equipped(var/mob/user)
 		..()
@@ -147,7 +147,7 @@
 	name = "Smiling Face"
 	desc = ":)"
 	icon_state = "smiles"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/waldo
 	name = "striped shirt and jeans"
@@ -333,7 +333,7 @@
 	icon_state = "batman"
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/head/helmet/batman
 	name = "batcowl"
@@ -376,7 +376,7 @@
 	if (user.wear_mask == src)
 		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
 
-	if (!user || get_dist(user, src) > 0)
+	if (!user || GET_DIST(user, src) > 0)
 		return 0
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)
@@ -571,7 +571,7 @@
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
-	throwforce = 7.0
+	throwforce = 7
 	w_class = W_CLASS_NORMAL
 
 	turn_off()
@@ -654,21 +654,21 @@
 	desc = "WARNING: Provides no protection from falling bricks."
 	icon_state = "spiderman"
 	item_state = "bogloves"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
 	desc = "FAPPO!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/horse_mask
 	name = "horse mask"
 	desc = "Neigh."
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 	cursed
 		cant_drop = 1
@@ -848,7 +848,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
 	item_state = "death"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
@@ -889,21 +889,21 @@
 	desc = "An eerily realistic mask of 20th century film actor Nicolas Cage."
 	icon_state = "niccage"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/waltwhite
 	name = "meth scientist mask"
 	desc = "A crappy looking mask that you swear you've seen a million times before. 'Spook*Corp Costumes' is embedded on the side of it."
 	icon_state = "waltwhite"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS //| SPACEWEAR Walter White is like Batman in many ways. Breathing in space is not one of them.
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/mmyers
 	name = "murderer mask"
 	desc = "This looks strangely like another mask you've seen somewhere else, but painted white. Huh."
 	icon_state = "mmyers"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 
 /obj/item/clothing/suit/gimmick
@@ -918,7 +918,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
 	over_hair = TRUE
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
 	name = "revolutionary suit"
@@ -1041,7 +1041,7 @@
 	name = "mime mask"
 	desc = "The charming mask of the mime. Very emotive! Wait, isn't this usually face-paint?"
 	icon_state = "mime"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"

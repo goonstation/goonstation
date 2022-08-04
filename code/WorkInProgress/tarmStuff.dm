@@ -128,7 +128,7 @@
 	var/shotcount = 0
 	var/last_shot_time = 0
 	uses_multiple_icon_states = 1
-	force = 15.0
+	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
 	max_ammo_capacity = 45
@@ -163,8 +163,8 @@
 	desc = "The side of the magazine is stamped with \"Anderson Para-Munitions\""
 	ammo_type = new/datum/projectile/bullet/g11
 	icon_state = "caseless"
-	amount_left = 45.0
-	max_amount = 45.0
+	amount_left = 45
+	max_amount = 45
 	ammo_cat = AMMO_CASELESS_G11
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	icon_empty = "caseless-empty"
@@ -181,7 +181,7 @@
 	name = "\improper Manticore round"
 	cost = 3
 	power = 60
-	ks_ratio = 1.0
+	ks_ratio = 1
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -290,8 +290,8 @@
 	sname = "13mm Gyrojet"
 	name = "gyrojet magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 6.0
-	max_amount = 6.0
+	amount_left = 6
+	max_amount = 6
 	ammo_type = new/datum/projectile/bullet/gyrojet
 	ammo_cat = AMMO_GYROJET
 
@@ -352,8 +352,8 @@
 	sname = "0.50 AE"
 	name = "\improper Simurgh magazine"
 	icon_state = "pistol_magazine"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/deagle50cal
 	ammo_cat = AMMO_DEAGLE
 
@@ -366,7 +366,7 @@
 	power = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
-	ks_ratio = 1.0
+	ks_ratio = 1
 	implanted = /obj/item/implant/projectile/bullet_50
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle
@@ -448,7 +448,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1.0
+	anchored = 1
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null

@@ -34,6 +34,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_armed = null
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
+	var/issawfly = FALSE //for sawfly remote
 
 	attack_self(mob/user as mob)
 		if (!src.state)
@@ -506,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
-				var/loud = 16 / (get_dist(M, T) + 1)
+				var/loud = 16 / (GET_DIST(M, T) + 1)
 				if (src.loc == M.loc || src.loc == M)
 					loud = 16
 
@@ -608,8 +609,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					else
 						T.assume_air(GM)
 
-			for (var/mob/living/HH in range(8, src))
-				var/checkdist = get_dist(HH.loc, T)
+			for (var/mob/living/HH in hearers(8, T))
+				var/checkdist = GET_DIST(HH.loc, T)
 				var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)
 				var/ear_damage = max(0, 5 * 0.2 * (3 - checkdist))
 				var/ear_tempdeaf = max(0, 5 * 0.2 * (5 - checkdist))
@@ -747,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
-					if (get_dist(N, user) <= 6)
+					if (GET_DIST(N, user) <= 6)
 						N.flash(3 SECONDS)
 				sleep(0.2 SECONDS)
 				if (old_light_grenade)
@@ -979,9 +980,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -1149,7 +1150,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
 	var/state = null
-	var/det_time = 50.0
+	var/det_time = 50
 	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
@@ -1349,7 +1350,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					O.set_density(0)
 
-				var/distance = get_dist(T, location)
+				var/distance = GET_DIST(T, location)
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
@@ -1394,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
-				var/damage = 30 / (get_dist(M, src) + 1)
+				var/damage = 30 / (GET_DIST(M, src) + 1)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 
@@ -1468,6 +1469,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				name = "hollow pipe frame"
 			src.flags |= NOSPLASH
 
+		if(issnippingtool(W) && state == 2) //pipeshot crafting
+			name = "hollow pipe hulls"
+			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+			src.state = 5
+			icon_state = "Pipeshot"
+			desc = "Four open pipe shells. They're currently empty."
+
 		if (allowed_items.len && item_mods.len < 3 && state == 2)
 			var/ok = 0
 			for (var/A in allowed_items)
@@ -1512,6 +1520,27 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					name = "filled pipe frame"
 
+		if(istype(W, /obj/item/reagent_containers/) && state == 5) //pipeshot crafting cont'd
+			var/amount = 20
+			var/avg_volatility = 0
+
+			for (var/id in W.reagents.reagent_list)
+				var/datum/reagent/R = W.reagents.reagent_list[id]
+				avg_volatility += R.volatility
+			avg_volatility /= W.reagents.reagent_list.len
+
+			if (avg_volatility < 1) // invalid ingredients/concentration
+				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
+			else
+				//consume the reagents
+				src.reagents = new /datum/reagents(amount)
+				src.reagents.my_atom = src
+				W.reagents.trans_to(src, amount)
+				qdel(src.reagents)
+				//make the hulls
+				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
+				new /obj/item/assembly/makeshiftshell(get_turf(src))
+				qdel(src)
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)
 			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")

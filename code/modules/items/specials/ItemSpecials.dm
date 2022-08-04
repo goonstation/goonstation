@@ -1126,8 +1126,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	staminaCost = 0
 	moveDelay = 5
 	moveDelayDuration = 5
-	damageMult = 0.80
-
+	damageMult = 0.8
 	image = "dagger"
 	name = "Slice"
 	desc = "Attack twice in rapid succession."
@@ -1186,7 +1185,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelayDuration = 6
 	damageMult = 1
 	restrainDuration = 3
-
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
@@ -1244,10 +1242,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "flame"
 	name = "Flame"
 	desc = "Pop out a flame 1 tile away from you in a direction."
@@ -1329,10 +1324,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "pulse"
 	name = "Pulse"
 	desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
@@ -1350,7 +1342,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
-
 
 			var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 			C.setup(turf)
@@ -1798,7 +1789,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					if (tile)
 						hit = 1
 						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-						logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
+						logTheThing("combat", user, null, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
