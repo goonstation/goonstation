@@ -676,9 +676,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
 
-	var/saturation_check = cloud_get("saturation")
-	if (saturation_check)
-		src.set_saturation(saturation_check)
+	src.set_saturation(cloud_get("saturation"))
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
