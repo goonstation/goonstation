@@ -121,7 +121,7 @@
 		if(src.charge > 0)
 			src.charge(-5 * mult)
 			src.charge_status = LOSING_CHARGE
-		if (src.charge == 0)
+		if (src.charge <= 0)
 			if(icon_state != "sentinel")
 				icon_state = "sentinel"
 			src.charge_status = NOT_CHARGED
@@ -133,6 +133,7 @@
 
 /obj/flock_structure/sentinel/proc/updatefilter()
 	var/filter = src.rays.get_filter("flock_sentinel_rays")
+	// for non-linear scaling of size, using an oscillating value from 0 to 1 * 32
 	animate(filter, size = ((-(cos(180 * (charge / 100)) - 1) / 2) * 32), flags = ANIMATION_PARALLEL)
 
 /obj/effect/flock_sentinelrays
