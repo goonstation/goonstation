@@ -1400,7 +1400,7 @@ as it may become compromised.
 		assignment = "stamp-chap"
 	qm
 		name = "\improper quartermaster's rubber stamp"
-		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Chesapeake' model in varnished oak."
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
 		special_mode = "Quartermaster"
 		is_reassignable = 0

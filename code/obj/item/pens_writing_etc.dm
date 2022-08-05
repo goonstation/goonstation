@@ -193,7 +193,7 @@
 
 /obj/item/pen/marker
 	name = "felt marker"
-	desc = "It's the National Notary 'Eastport' waterproof marker. Try not to sniff it too much. Weirdo."
+	desc = "It's the National Notary 'Edgewater' waterproof marker. Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
 	font = "'Permanent Marker', cursive"
