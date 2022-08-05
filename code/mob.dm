@@ -214,6 +214,8 @@
 
 	var/last_move_dir = null
 
+	/// Type path for the ai holder. Set to have the aiHolder instantiated on New()
+	var/ai_type = null
 	var/datum/aiHolder/ai = null
 	/// used for load balancing mob_ai ticks
 	var/ai_tick_schedule = null
@@ -244,6 +246,9 @@
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
 	attach_hud(render_special)
+
+	if(src.ai_type)
+		src.ai = new src.ai_type(src)
 
 	var/turf/T = get_turf(src)
 	var/area/AR = get_area(src)

@@ -1214,6 +1214,41 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/on_wake()
 		return
 
+	//the following procs are used to make transitioning from /obj/critter to /mob/living/critter easier. If you don't have to use them, you probably shouldn't.
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_target(var/range = 5)
+		. = list()
+		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			. += C
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavanged. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_scavenge_target(var/range = 5)
+		. = list()
+		for (var/mob/living/carbon/human/H in view(range, src))
+			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				. += H
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+			. += S
+
+	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+
+	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_scavenge(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
 	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)

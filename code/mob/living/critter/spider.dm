@@ -42,6 +42,8 @@
 
 	var/bite_transfer_amt = 1
 
+	ai_type = /datum/aiHolder/spider
+
 	New()
 		..()
 		if (src.icon_state == "big_spide")
@@ -131,6 +133,34 @@
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
 			src.make_critter(src.adultpath)
+
+	seek_target(range)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue //maybe dont attack blob overminds
+			if (isdead(C)) continue
+			if (C.bioHolder.HasEffect("husk")) continue
+			if (istype(C, /mob/living/critter/spider)) continue
+			. += C
+		if(length(.))
+			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+			if (flail.cooldowncheck() && prob(20))
+				flail.cast(target)
+			else if(bite.cooldowncheck())
+				bite.cast(target)
+			else
+				..()
+
+	critter_scavenge(target)
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		if(drain.cooldowncheck())
+			drain.cast(target)
 
 /mob/living/critter/spider/nice
 	name = "bumblespider"
