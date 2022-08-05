@@ -1630,7 +1630,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "adu" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -1639,7 +1639,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "adv" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	name = "EVA"
@@ -1661,7 +1661,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "adw" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/securearea,
@@ -1670,7 +1670,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "adx" = (
 /obj/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -17603,7 +17603,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aQC" = (
 /obj/cable{
 	d1 = 4;
@@ -28841,7 +28841,7 @@
 	name = "armory turret"
 	},
 /turf/simulated/floor/delivery/caution,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bwF" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/yellow/corner{
@@ -29354,7 +29354,7 @@
 /area/station/maintenance/inner/central)
 "bxK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bxL" = (
 /obj/table/wood/round/auto,
 /obj/item/card/id/captains_spare,
@@ -30050,7 +30050,7 @@
 /obj/item/sheet/glass/fullstack,
 /obj/item/trench_map,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bzA" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -30060,7 +30060,7 @@
 /obj/item/cable_coil,
 /obj/item/device/multitool,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bzB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
@@ -30646,10 +30646,10 @@
 	pixel_y = -12
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bAU" = (
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bAV" = (
 /obj/cable{
 	d1 = 2;
@@ -30657,7 +30657,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bAX" = (
 /obj/cable{
 	d1 = 1;
@@ -31171,12 +31171,12 @@
 	pixel_y = -12
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bCe" = (
 /obj/rack,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bCf" = (
 /obj/cable{
 	d1 = 1;
@@ -31185,7 +31185,7 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bCh" = (
 /obj/item/football,
 /turf/space/fluid,
@@ -31651,7 +31651,7 @@
 	pixel_y = -12
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bDt" = (
 /obj/cable{
 	d1 = 2;
@@ -31662,7 +31662,7 @@
 /obj/item/tank/jetpack,
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bDu" = (
 /obj/cable{
 	d1 = 4;
@@ -31677,7 +31677,7 @@
 /obj/storage/crate/rcd,
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bDv" = (
 /obj/cable{
 	d1 = 4;
@@ -31685,7 +31685,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bDw" = (
 /obj/cable{
 	d1 = 1;
@@ -32202,7 +32202,7 @@
 	pixel_y = -12
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bEF" = (
 /obj/cable{
 	d1 = 1;
@@ -32212,7 +32212,7 @@
 /obj/rack,
 /obj/item/tank/jetpack,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bEH" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -32560,7 +32560,7 @@
 	pltanks = 0
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bFz" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/black,
@@ -38223,7 +38223,7 @@
 /area/station/security/processing)
 "bTR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bTS" = (
 /turf/simulated/wall/r_wall{
 	icon = 'icons/misc/evilreaverstation.dmi';
@@ -38677,7 +38677,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bUZ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -38693,7 +38693,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bVc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -39004,7 +39004,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bVW" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/machinery/computer/riotgear{
@@ -39015,7 +39015,7 @@
 /area/station/security/main)
 "bVX" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bVY" = (
 /obj/cable{
 	d1 = 4;
@@ -39284,7 +39284,7 @@
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	name = "Armory";
@@ -39296,7 +39296,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bWH" = (
 /obj/cable{
 	d1 = 4;
@@ -39304,7 +39304,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bWI" = (
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
@@ -39321,7 +39321,7 @@
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bWK" = (
 /obj/cable{
 	d1 = 4;
@@ -39623,13 +39623,13 @@
 /area/station/security/brig)
 "bXu" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bXv" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bXw" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/communications{
@@ -39642,7 +39642,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/redblack,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bXx" = (
 /obj/cable{
 	d1 = 4;
@@ -39653,7 +39653,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bXy" = (
 /obj/storage/closet/emergency,
 /obj/item/clothing/mask/gas/emergency,
@@ -39673,7 +39673,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/machinery/turretid{
 	pixel_x = -24;
-	turretArea = /area/station/ai_monitored/armory
+	turretArea = /area/station/armory
 	},
 /obj/access_spawn/hos,
 /turf/simulated/floor/black,
@@ -39922,12 +39922,12 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bYp" = (
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bYq" = (
 /obj/rack,
 /obj/item/storage/box/stinger_kit{
@@ -39941,7 +39941,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bYr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39960,7 +39960,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bYu" = (
 /obj/cable{
 	d1 = 2;
@@ -44281,7 +44281,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "clY" = (
 /obj/machinery/light_switch/west,
 /obj/disposalpipe/segment,
@@ -45325,7 +45325,7 @@
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "gKC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -45452,7 +45452,7 @@
 "hFC" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/bot/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "hGt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45652,7 +45652,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "iPV" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/west,
@@ -46325,7 +46325,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "mEu" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46353,7 +46353,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "mLJ" = (
 /obj/rack,
 /obj/item/device/radio/electropack,
@@ -46386,7 +46386,7 @@
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "mQf" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 1
@@ -46557,12 +46557,12 @@
 "nBZ" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "nDd" = (
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "nDS" = (
 /obj/table/auto,
 /obj/item/coin{
@@ -46855,7 +46855,7 @@
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "pnu" = (
 /obj/cable{
 	d1 = 4;
@@ -47158,7 +47158,7 @@
 	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "qOV" = (
 /obj/table/reinforced,
 /turf/simulated/floor/circuit/green,
@@ -47814,7 +47814,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/redblack,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "vfw" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -48154,7 +48154,7 @@
 "xkZ" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "xlB" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -48183,7 +48183,7 @@
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /turf/simulated/floor/darkpurple,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "xxK" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -48259,7 +48259,7 @@
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "xXw" = (
 /obj/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,

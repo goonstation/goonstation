@@ -85,7 +85,7 @@
 			"the refinery (arc smelter)" = list(/area/station/mining/refinery),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 			"the bar" = list(/area/station/crew_quarters/bar),
-			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the EVA storage" = list(/area/station/storage/eva),
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
 
@@ -108,7 +108,7 @@
 			"the central warehouse" = list(/area/station/storage/warehouse),
 			"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
-			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the EVA storage" = list(/area/station/storage/eva),
 			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.

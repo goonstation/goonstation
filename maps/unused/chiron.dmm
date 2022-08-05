@@ -18764,7 +18764,7 @@
 	},
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aLL" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -26664,7 +26664,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "baI" = (
 /obj/stool/chair{
 	dir = 4
@@ -27072,7 +27072,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bbA" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -27091,7 +27091,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bbB" = (
 /obj/table/auto,
 /obj/item/device/radio/electropack,
@@ -27109,7 +27109,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bbC" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -27548,7 +27548,7 @@
 /area/station/security/brig)
 "bcp" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bcq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light_switch{
@@ -27567,10 +27567,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bcs" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bct" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Outpost Airlock";
@@ -28472,7 +28472,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "ben" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -29818,7 +29818,7 @@
 	name = "brig pipe"
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bgR" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -29834,13 +29834,13 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bgT" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bgU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -30588,7 +30588,7 @@
 "bis" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bit" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/cable{
@@ -33837,7 +33837,7 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bpB" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/south)
@@ -33913,7 +33913,7 @@
 /obj/item/ammo/bullets/flare,
 /obj/item/gun/kinetic/flaregun,
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bpO" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,

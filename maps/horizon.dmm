@@ -11272,7 +11272,7 @@
 	pixel_x = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aEw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hor)
@@ -11323,7 +11323,7 @@
 	pixel_y = 11
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aEE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tools)
@@ -22241,7 +22241,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "beu" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor,
@@ -27069,7 +27069,7 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bqd" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -32666,7 +32666,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bES" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /obj/machinery/light/emergency{
@@ -32674,7 +32674,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bET" = (
 /obj/machinery/vending/security_ammo,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/vertical,
@@ -32691,7 +32691,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bEX" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/item_dispenser/handcuffs{
@@ -34679,7 +34679,7 @@
 	name = "Riot Control - Main Hall"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bKu" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/northwest,
 /obj/storage/secure/closet/security/armory,
@@ -34688,7 +34688,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bKv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34699,7 +34699,7 @@
 	},
 /obj/access_spawn/hos,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bKy" = (
 /obj/cable{
 	d1 = 2;
@@ -35941,18 +35941,18 @@
 "bNE" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/horizontal,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bNF" = (
 /obj/machinery/atmospherics/valve/notify_admins/horizontal{
 	name = "Riot Control - Maintenance"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bNG" = (
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southwest,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bNH" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -36939,7 +36939,7 @@
 	pixel_y = -8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bQw" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/disposalpipe/segment/food{
@@ -38141,7 +38141,7 @@
 "bTw" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bTx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -38180,7 +38180,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bTC" = (
 /obj/item/storage/box/biohazard_bags,
 /obj/machinery/disposal/small/north{
@@ -52224,7 +52224,7 @@
 /area/station/security/main)
 "cKw" = (
 /turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "cLc" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
@@ -52278,7 +52278,7 @@
 "cQU" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "cRB" = (
 /obj/barber_pole,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -52979,7 +52979,7 @@
 	pixel_x = 5
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "eoj" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -53324,7 +53324,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "flX" = (
 /obj/table/wood/auto,
 /obj/item/dice/coin,
@@ -57448,7 +57448,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "owV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -58434,7 +58434,7 @@
 /area/station/hallway/secondary/east)
 "qNy" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "qOH" = (
 /obj/decal/poster/wallsign/stencil/right/e,
 /obj/decal/poster/wallsign/stencil/left/r{
@@ -58553,7 +58553,7 @@
 /obj/item/old_grenade/spawner/banana,
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "rhI" = (
 /obj/lattice{
 	dir = 4;
@@ -60494,7 +60494,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "vtN" = (
 /obj/cable{
 	d1 = 4;

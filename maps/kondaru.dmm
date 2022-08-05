@@ -33679,7 +33679,7 @@
 /area/station/maintenance/south)
 "cba" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "cbd" = (
 /obj/disposalpipe/segment/transport{
 	dir = 8;
@@ -40775,7 +40775,7 @@
 /obj/storage/secure/crate/gear/armory/grenades,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "dTh" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -41640,7 +41640,7 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "eIB" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/alarm{
@@ -42736,7 +42736,7 @@
 	},
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "fIF" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Shower Room"
@@ -43319,7 +43319,7 @@
 	pixel_y = 24
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "gkQ" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -44189,7 +44189,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "gZm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
@@ -44784,7 +44784,7 @@
 /obj/machinery/light_switch/east,
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "hFc" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/toolbox{
@@ -48284,7 +48284,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "lui" = (
 /obj/table/auto,
 /obj/machinery/light,
@@ -49320,7 +49320,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "mEh" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black/grime,
@@ -49639,7 +49639,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "mQI" = (
 /obj/cable{
 	d1 = 2;
@@ -49723,7 +49723,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "mTQ" = (
 /obj/table/reinforced/auto,
 /obj/item/wrench,
@@ -52495,7 +52495,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "pGQ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -53061,7 +53061,7 @@
 "qha" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "qhy" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
@@ -53512,7 +53512,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "qzi" = (
 /obj/stool/chair,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
@@ -53848,7 +53848,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "qUu" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/plates,
@@ -54403,7 +54403,7 @@
 /obj/item/ammo/bullets/smoke,
 /obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "rAg" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/supernorn,
@@ -54515,7 +54515,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "rHq" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
@@ -55693,7 +55693,7 @@
 	turretArea = /area/station/turret_protected/armory_outside
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "sSL" = (
 /obj/table/reinforced/auto,
 /obj/cable{
@@ -55789,7 +55789,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "sUD" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/microwave,
@@ -55848,7 +55848,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "sWf" = (
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
@@ -56070,7 +56070,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "thw" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -56565,7 +56565,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "tEh" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -58414,7 +58414,7 @@
 "vvg" = (
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "vvG" = (
 /obj/machinery/conveyor{
 	id = "qmsend"
@@ -58927,7 +58927,7 @@
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "vYc" = (
 /obj/machinery/light,
 /obj/landmark/start{
@@ -59748,7 +59748,7 @@
 /area/station/chapel/sanctuary)
 "wMA" = (
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "wMB" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -59877,7 +59877,7 @@
 /obj/item/clothing/glasses/thermal,
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "wRj" = (
 /obj/storage/secure/closet/fridge{
 	desc = "A staff fridge."
@@ -60503,7 +60503,7 @@
 /obj/item/clothing/glasses/nightvision,
 /obj/item/clothing/glasses/nightvision,
 /turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "xuy" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4

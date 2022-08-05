@@ -19,7 +19,7 @@
 	var/area/armory_area
 
 	initialize()
-		armory_area = get_area_by_type(/area/station/ai_monitored/armory)
+		armory_area = get_area_by_type(/area/station/armory)
 
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, control_frequency)

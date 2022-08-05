@@ -609,7 +609,7 @@
 /area/station/maintenance/inner/the_cage)
 "agq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "agA" = (
 /obj/table/glass/auto,
 /obj/item/storage/pill_bottle/catdrugs,
@@ -891,7 +891,7 @@
 /area/station/medical/medbay/pharmacy)
 "anp" = (
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "anK" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/morgue,
@@ -2181,7 +2181,7 @@
 "aRm" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aRr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3606,7 +3606,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bxz" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "West Solar Panels"
@@ -4165,7 +4165,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "bLb" = (
 /obj/stool/bed/moveable/hospital,
 /obj/machinery/power/apc/autoname_north,
@@ -4185,7 +4185,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bLh" = (
 /obj/decal/fakeobjects/lighttube_broken,
 /obj/critter/mouse,
@@ -6072,7 +6072,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "czt" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4;
@@ -6763,7 +6763,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "cPj" = (
 /obj/dialogueobj/engineerscorpse,
 /obj/storage/closet/wrestling,
@@ -8030,7 +8030,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "doM" = (
 /obj/cable{
 	d1 = 4;
@@ -8162,7 +8162,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "drg" = (
 /obj/cable{
 	d1 = 1;
@@ -9490,7 +9490,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "dQN" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/shuttlebay,
@@ -10304,7 +10304,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "efE" = (
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -13538,7 +13538,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "fBZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14017,7 +14017,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "fLY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15300,7 +15300,7 @@
 "gnY" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "gof" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -15471,7 +15471,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/emergency_storage,
 /turf/simulated/floor/delivery,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "gtu" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4;
@@ -16517,7 +16517,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "gRT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19532,7 +19532,7 @@
 "iiG" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "iiS" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -20444,7 +20444,7 @@
 "iBR" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "iCi" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -20559,7 +20559,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "iEu" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -20673,7 +20673,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "iFW" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -23896,7 +23896,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/delivery,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "jVw" = (
 /obj/disposalpipe/segment/food{
 	dir = 8;
@@ -24162,7 +24162,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "kbF" = (
 /obj/machinery/atmospherics/unary/outlet_injector,
 /turf/simulated/floor,
@@ -24536,7 +24536,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "kkP" = (
 /obj/stool/chair{
 	dir = 1
@@ -24871,7 +24871,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "ktd" = (
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/caution,
@@ -25550,7 +25550,7 @@
 /area/station/crew_quarters/courtroom)
 "kIR" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "kJa" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -25574,7 +25574,7 @@
 /obj/machinery/light/emergency,
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "kJM" = (
 /obj/machinery/optable,
 /obj/landmark/gps_waypoint,
@@ -25672,7 +25672,7 @@
 	},
 /obj/item/breaching_hammer,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "kMt" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
@@ -26366,7 +26366,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "lcN" = (
 /obj/machinery/light{
 	dir = 8;
@@ -27085,7 +27085,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ltS" = (
 /obj/storage/closet/syndicate/personal,
 /obj/item/clothing/under/misc/clown,
@@ -27930,7 +27930,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "lKH" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	autoclose = 1;
@@ -28609,11 +28609,11 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "lYJ" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "lYL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple{
@@ -28832,7 +28832,7 @@
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/white,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "mcR" = (
 /obj/cable{
 	d1 = 1;
@@ -29015,7 +29015,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "mgS" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/disposalpipe/segment/mail/vertical,
@@ -30267,7 +30267,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "mMj" = (
 /obj/health_scanner/floor{
 	find_in_range = 0;
@@ -30698,7 +30698,7 @@
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "mXZ" = (
 /obj/pool/perspective{
 	dir = 1;
@@ -30782,7 +30782,7 @@
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "nac" = (
 /obj/cable{
 	d1 = 2;
@@ -31268,7 +31268,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "nmd" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -32192,7 +32192,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "nFV" = (
 /obj/stool/bench/auto,
 /obj/machinery/light_switch{
@@ -32706,7 +32706,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "nQT" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -33612,7 +33612,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "oiP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -34256,7 +34256,7 @@
 /area/station/crew_quarters/data)
 "owR" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "oxB" = (
 /obj/machinery/atmospherics/pipe/simple/southwest,
 /turf/simulated/floor,
@@ -35552,7 +35552,7 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "pdF" = (
 /obj/machinery/light{
 	dir = 1;
@@ -36363,7 +36363,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "pyM" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -36636,7 +36636,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "pEt" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/disposalpipe/segment/horizontal,
@@ -38852,7 +38852,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "qAw" = (
 /obj/machinery/atmospherics/pipe/simple/horizontal,
 /obj/landmark/spawner{
@@ -39464,7 +39464,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "qKv" = (
 /obj/table/glass/auto,
 /obj/item/storage/box/costume/roller_disco,
@@ -39825,7 +39825,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "qRu" = (
 /obj/rack,
 /obj/item/device/light/flashlight,
@@ -40819,7 +40819,7 @@
 /area/ghostdrone_factory)
 "rpC" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "rpF" = (
 /turf/simulated/floor/wood/two,
 /area/research_outpost/protest)
@@ -41036,7 +41036,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "rvr" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -41882,7 +41882,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "rLZ" = (
 /obj/decal/boxingropeenter,
 /obj/disposalpipe/segment/brig,
@@ -43288,7 +43288,7 @@
 /obj/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "sor" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/wall/auto/supernorn,
@@ -44453,7 +44453,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "sQw" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced{
@@ -45440,7 +45440,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "tmu" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -46144,7 +46144,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "tDj" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple{
@@ -47051,7 +47051,7 @@
 "tZJ" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "tZL" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/disposal_pipedispenser,
@@ -48839,7 +48839,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "uOj" = (
 /obj/disposalpipe/segment/food,
 /turf/simulated/wall/auto/supernorn,
@@ -49146,7 +49146,7 @@
 "uSK" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "uSW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49469,7 +49469,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "var" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/door/firedoor/pyro,
@@ -50002,7 +50002,7 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "vmq" = (
 /obj/railing/reinforced{
 	invisibility = 1
@@ -50115,7 +50115,7 @@
 "vnN" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "vnR" = (
 /obj/reagent_dispensers/watertank/big,
 /obj/machinery/light/incandescent{
@@ -50357,7 +50357,7 @@
 	req_access = null
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "vsW" = (
 /turf/simulated/floor/neutral/side{
 	dir = 1
@@ -51509,7 +51509,7 @@
 /area/station/hangar/main)
 "vTG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "vTN" = (
 /obj/disposalpipe/junction/left/east,
 /obj/decal/fakeobjects{
@@ -51695,7 +51695,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "vYo" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -51851,7 +51851,7 @@
 "wce" = (
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "wcf" = (
 /obj/stool/bench/auto,
 /obj/landmark/start{
@@ -52499,7 +52499,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "wrJ" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -53731,7 +53731,7 @@
 	icon_state = "delivery2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "wOu" = (
 /obj/machinery/light,
 /obj/cable{
@@ -53814,7 +53814,7 @@
 	pixel_x = 24
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "wPw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54068,7 +54068,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "wUV" = (
 /obj/stool/bench/auto,
 /obj/machinery/light/incandescent/cool,

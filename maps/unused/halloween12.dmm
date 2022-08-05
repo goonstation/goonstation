@@ -10970,7 +10970,7 @@
 /area/station/crew_quarters/locker)
 "avJ" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "avK" = (
 /obj/machinery/computer/power_monitor,
 /obj/cable{
@@ -11268,7 +11268,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awq" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11294,7 +11294,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/device/gps,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awr" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11305,7 +11305,7 @@
 /obj/item/device/radio,
 /obj/item/device/t_scanner,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aws" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -11323,7 +11323,7 @@
 	},
 /obj/item/storage/pill_bottle/silver_sulfadiazine,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awt" = (
 /obj/table{
 	tag = "icon-tabledir (SOUTHEAST)";
@@ -11348,7 +11348,7 @@
 	},
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -11703,7 +11703,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axe" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11718,7 +11718,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axf" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -11738,23 +11738,23 @@
 	name = "caution sign"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axg" = (
 /obj/item/sheet/glass/crystal{
 	amount = 20
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axh" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axi" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
 	req_access_txt = "18"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axj" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance";
@@ -12063,14 +12063,14 @@
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axN" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axO" = (
 /obj/item/sheet/steel{
 	amount = 50
@@ -12088,7 +12088,7 @@
 	amount = 50
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12097,7 +12097,7 @@
 	},
 /obj/crate/rcd,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axQ" = (
 /obj/machinery/dispenser{
 	pltanks = 0
@@ -12108,7 +12108,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "axR" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -12319,7 +12319,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayr" = (
 /obj/cable{
 	d1 = 1;
@@ -12334,7 +12334,7 @@
 /obj/item/storage/lightbox/tubes,
 /obj/item/storage/lightbox/tubes,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ays" = (
 /obj/cable{
 	d2 = 8;
@@ -12360,7 +12360,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayt" = (
 /obj/cable{
 	d1 = 1;
@@ -12584,7 +12584,7 @@
 	req_access_txt = "18"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayU" = (
 /obj/cable{
 	d1 = 1;
@@ -12593,7 +12593,7 @@
 	},
 /obj/item/storage/mousetraps,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayV" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -12610,7 +12610,7 @@
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayW" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -12618,7 +12618,7 @@
 	d2 = 8
 	},
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "ayX" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -12886,14 +12886,14 @@
 "azA" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "azB" = (
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/device/light/flashlight,
 /obj/item/screwdriver,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "azC" = (
 /obj/rack,
 /obj/item/tank/jetpack,
@@ -12901,7 +12901,7 @@
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "azD" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance";
@@ -13145,7 +13145,7 @@
 	pixel_x = 29
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aAc" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -21134,7 +21134,7 @@
 /area/station/security/hos)
 "aPj" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aPk" = (
 /obj/closet/l3closet,
 /turf/simulated/floor/white,
@@ -21447,14 +21447,14 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aPX" = (
 /obj/machinery/camera/motion{
 	c_tag = "Armory";
 	dir = 2
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aPY" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21470,7 +21470,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aPZ" = (
 /obj/secure_closet/animal,
 /turf/simulated/floor/white,
@@ -21667,7 +21667,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aQw" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -21675,10 +21675,10 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aQx" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aQy" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21689,7 +21689,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aQz" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -21949,7 +21949,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aRf" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
@@ -21965,7 +21965,7 @@
 	dir = 2
 	},
 /turf/simulated/floor/caution/west,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aRg" = (
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";

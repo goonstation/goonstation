@@ -81,13 +81,13 @@
 			return "#1ba7e9"
 		else if (istype(turf.loc, /area/station/science) || istype(turf.loc, /area/research_outpost))
 			return "#8e0bc2"
-		else if (istype(turf.loc, /area/station/security) || istype(turf.loc, /area/station/hos) || istype(turf.loc, /area/station/ai_monitored/armory))
+		else if (istype(turf.loc, /area/station/security) || istype(turf.loc, /area/station/hos) || istype(turf.loc, /area/station/armory))
 			return "#b10202"
 		else if (istype(turf.loc, /area/station/engine) || istype(turf.loc, /area/station/quartermaster) || istype(turf.loc, /area/station/mining) || istype(turf.loc, /area/station/construction))
 			return "#e4d835"
 		else if (istype(turf.loc, /area/station/chapel))
 			return "#75602d"
-		else if (istype(turf.loc, /area/station/bridge) || istype(turf.loc, /area/station/turret_protected) || istype(turf.loc, /area/station/teleporter) || istype(turf.loc, /area/station/ai_monitored))
+		else if (istype(turf.loc, /area/station/bridge) || istype(turf.loc, /area/station/turret_protected) || istype(turf.loc, /area/station/teleporter) || istype(turf.loc, /area/station/storage/eva))
 			return "#1e2861"
 		else if (istype(turf.loc, /area/station/maintenance))
 			return "#474747"

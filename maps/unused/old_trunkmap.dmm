@@ -7500,10 +7500,10 @@
 /area/station/maintenance/north)
 "aqH" = (
 /turf/simulated/wall/false_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aqI" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aqJ" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
@@ -7515,7 +7515,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "aqK" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -7864,17 +7864,17 @@
 /obj/item/extinguisher,
 /obj/item/pen,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arD" = (
 /obj/table/auto,
 /obj/item/sheet/glass/fullstack,
 /obj/item/storage/belt/utility,
 /obj/item/cargotele,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arE" = (
 /turf/simulated/wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arF" = (
 /obj/storage/crate/rcd,
 /obj/machinery/light{
@@ -7882,7 +7882,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arG" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -7890,13 +7890,13 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arH" = (
 /obj/machinery/dispenser{
 	pltanks = 0
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "arI" = (
 /obj/rack{
 	dir = 1
@@ -8270,19 +8270,19 @@
 /obj/item/device/gps,
 /obj/item/device/gps,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asF" = (
 /obj/item/furniture_parts/rack,
 /obj/item/furniture_parts/table,
 /obj/item/screwdriver,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asG" = (
 /obj/item/sheet/glass/fullstack,
 /obj/item/weldingtool,
 /obj/item/wrench,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asH" = (
 /obj/machinery/door_control{
 	id = "eva";
@@ -8293,22 +8293,22 @@
 	c_tag = "EVA Storage"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asI" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asJ" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asK" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asL" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -8320,7 +8320,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asM" = (
 /obj/rack{
 	dir = 1
@@ -8334,7 +8334,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "asN" = (
 /obj/stool/bed,
 /obj/machinery/flasher{
@@ -8638,20 +8638,20 @@
 /obj/item/device/multitool,
 /obj/item/cable_coil,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atD" = (
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/box/mousetraps,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atE" = (
 /obj/stool,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atF" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atG" = (
 /obj/rack{
 	dir = 1
@@ -8661,7 +8661,7 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atH" = (
 /obj/rack{
 	dir = 1
@@ -8672,7 +8672,7 @@
 /obj/item/clothing/head/helmet/space,
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "atI" = (
 /obj/stool,
 /turf/simulated/floor/plating,
@@ -9178,11 +9178,11 @@
 /obj/item/cable_coil,
 /obj/item/storage/toolbox/electrical,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "auK" = (
 /obj/item/storage/box/lightbox/bulbs,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "auL" = (
 /obj/disposaloutlet/east,
 /obj/disposalpipe/trunk{
@@ -9497,12 +9497,12 @@
 	maxcharge = 15000
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "avw" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "avx" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -9513,11 +9513,11 @@
 	},
 /obj/item/storage/firstaid/oxygen,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "avy" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "avz" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -9789,18 +9789,18 @@
 "awl" = (
 /obj/noticeboard,
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awm" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A.";
 	req_access_txt = "18"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awn" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awo" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -9815,7 +9815,7 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awp" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/poddoor{
@@ -9830,7 +9830,7 @@
 /obj/window/reinforced/north,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awq" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -9845,7 +9845,7 @@
 /obj/window/reinforced/east,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/storage/eva)
+/area/station/storage/eva)
 "awr" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor,
@@ -31640,25 +31640,25 @@
 /area/station/engine/engineering)
 "btT" = (
 /turf/simulated/wall/r_wall,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "btU" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "btV" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "btW" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "btX" = (
 /obj/machinery/light{
 	dir = 1;
 	name = "light fixture"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "btY" = (
 /turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
@@ -31671,7 +31671,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bua" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/prison)
@@ -31731,19 +31731,19 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bui" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buj" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buk" = (
 /turf/simulated/wall,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bul" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
@@ -31854,7 +31854,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buu" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -31867,7 +31867,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buv" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31875,7 +31875,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buw" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31887,7 +31887,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bux" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -31895,7 +31895,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buy" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31912,7 +31912,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buz" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -31923,7 +31923,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buA" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -31945,7 +31945,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buB" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -32097,18 +32097,18 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buR" = (
 /obj/table/auto,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buS" = (
 /obj/table/auto,
 /obj/machinery/recharger,
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buT" = (
 /obj/cable{
 	d1 = 1;
@@ -32120,7 +32120,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32132,7 +32132,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/caution/east,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buV" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32153,7 +32153,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buW" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -32165,7 +32165,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buX" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -32191,7 +32191,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "buY" = (
 /obj/cable{
 	icon_state = "1-2";

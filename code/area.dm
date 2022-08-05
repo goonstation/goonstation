@@ -3309,53 +3309,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 			return 0
 		return 1
 
-ABSTRACT_TYPE(/area/station/ai_monitored)
-/area/station/ai_monitored
-	name = "AI Monitored Area"
-	var/obj/machinery/camera/motion/motioncamera = null
-	workplace = 1
-
-/area/station/ai_monitored/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
-
-/area/station/ai_monitored/Entered(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.newTarget(O)
-//
-/area/station/ai_monitored/Exited(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.lostTarget(O)
-
-ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
-/area/station/ai_monitored/storage
-	name = "Storage"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/station/ai_monitored/storage/eva
-	name = "EVA Storage"
-	icon_state = "eva"
-	sound_environment = 12
-
-/area/station/ai_monitored/storage/secure
-	name = "Secure Storage"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/station/ai_monitored/storage/emergency
-	name = "Emergency Storage"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/station/ai_monitored/armory
+// // // // // //
+/area/station/armory
 	name = "Armory"
 	icon_state = "armory"
 	sound_environment = 2
@@ -5199,53 +5154,6 @@ area/station/security/visitation
 		return 1
 
 	//sanctuary = 1
-
-// // // // // // // // // // // // // // // //
-
-/area/station2/ai_monitored
-	name = "AI Monitored Area"
-	var/obj/machinery/camera/motion/motioncamera = null
-	workplace = 1
-
-/area/station2/ai_monitored/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
-
-/area/station2/ai_monitored/Entered(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.newTarget(O)
-//
-/area/station2/ai_monitored/Exited(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.lostTarget(O)
-
-/area/station2/ai_monitored/storage/eva
-	name = "EVA Storage"
-	icon_state = "eva"
-	sound_environment = 12
-
-/area/station2/ai_monitored/storage/secure
-	name = "Secure Storage"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/station2/ai_monitored/storage/emergency
-	name = "Emergency Storage"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/station2/ai_monitored/armory
-	name = "Armory"
-	icon_state = "armory"
-	sound_environment = 2
-	teleport_blocked = 1
 
 // // // // // // // // // // // // // //
 

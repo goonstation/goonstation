@@ -144,7 +144,7 @@
 /area/station/security/main)
 "as" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "at" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -280,7 +280,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aG" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/communications,
@@ -289,7 +289,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aH" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc{
@@ -331,7 +331,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aM" = (
 /obj/machinery/light{
 	dir = 4;
@@ -340,7 +340,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aN" = (
 /obj/vehicle/segway{
 	name = "Beepsky's Segway"
@@ -406,21 +406,21 @@
 "aV" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aW" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aX" = (
 /obj/storage/secure/closet/command/hos,
 /obj/item/item_box/gold_star{
 	item_amount = 20
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aY" = (
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "aZ" = (
 /obj/machinery/door_control{
 	id = "brig_divide";
@@ -444,7 +444,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bb" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/cable{
@@ -453,7 +453,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bc" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/cable{
@@ -462,7 +462,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bd" = (
 /obj/cable{
 	d1 = 2;
@@ -470,7 +470,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "be" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -514,13 +514,13 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bj" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bk" = (
 /obj/machinery/light{
 	dir = 8;
@@ -623,7 +623,7 @@
 	},
 /obj/access_spawn/hos,
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bs" = (
 /obj/cable{
 	d1 = 4;
@@ -631,7 +631,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bt" = (
 /obj/cable{
 	d1 = 1;
@@ -639,7 +639,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "bu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4181,7 +4181,7 @@
 "iX" = (
 /obj/machinery/computer/riotgear,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/area/station/armory)
 "iY" = (
 /obj/machinery/atmospherics/valve,
 /turf/simulated/floor/white,
