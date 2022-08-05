@@ -608,6 +608,13 @@
 	ai_type = /datum/aiHolder/spider
 	is_npc = TRUE
 
+/mob/living/critter/spider/baby/nice/ai
+	adultpath = /mob/living/critter/spider/nice/ai
+	ai_type = /datum/aiHolder/spider_peaceful
+	is_npc = TRUE
+	name = "bumblespider"
+	real_name = "bumblespider"
+	desc = "It seems pretty friendly. D'aww."
 /mob/living/critter/spider/med/ai
 	adultpath = /mob/living/critter/spider/ai
 	ai_type = /datum/aiHolder/spider
