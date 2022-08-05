@@ -17,38 +17,65 @@
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1.5 SECONDS
 	throwforce = 7
+	icon = 'icons/obj/items/sawfly.dmi'
 	icon_state = "sawfly"
-	icon_state_armed = "sawfly1"
+	icon_state_armed = "sawflyunfolding"
 	sound_armed = 'sound/machines/sawflyrev.ogg'
-	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
+	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
 	is_syndicate = TRUE
-	issawfly = TRUE
+	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
+
+	//used in dictating behavior when deployed from grenade
+	//var/fresh = TRUE
+	var/mob/living/critter/robotic/sawfly/heldfly = null
+	var/mob/currentuser = null
+
+	attack_self(mob/user)
+		..()
+		user = currentuser
 
 	prime()
 		var/turf/T =  get_turf(src)
 		if (T)
-			new /mob/living/critter/robotic/sawfly/ai_controlled(T)
-		qdel(src)
-		return
+			heldfly.set_loc(T)
+			heldfly.is_npc = TRUE
+			heldfly.isdisabled = FALSE
+		if(issawfly)//(istraitor(currentuser) || isnukeop(currentuser) || isspythief(currentuser) || isnukeopgunbot(currentuser)))
+			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
+		else
+			heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //give them pet AI
 
-/obj/item/old_grenade/sawfly/withremote // for traitor menu
+		qdel(src)
+	/*New()
+		if(fresh)
+			heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+			heldfly.set_loc(src)
+		..()*/
+
+/obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
-/obj/item/old_grenade/sawflyreused
+/obj/item/old_grenade/sawfly/firsttime
+	New()
+		//if(fresh)
+		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+		heldfly.set_loc(src)
+		..()
+/*/obj/item/old_grenade/sawfly/reused //unused as all grenades now contain a sawfly
 	name = "Compact sawfly"
-	var/tempname = "Uh oh! Call 1-800-imcoder!"
+	//var/tempname = "Uh oh! Call 1-800-imcoder!"
 	desc = "A self-deploying antipersonnel robot. This one has seen some use."
 
 	//copy paste hours
 	det_time = 1.5 SECONDS
 	throwforce = 7
 	icon_state = "sawfly"
-	icon_state_armed = "sawfly1"
+	icon_state_armed = "sawflyunfolding"
 	sound_armed = 'sound/machines/sawflyrev.ogg'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
@@ -56,8 +83,7 @@
 	mechanics_type_override = /obj/item/old_grenade/sawfly
 	issawfly = TRUE
 	contraband = 2
-	//var/tempdam = 0
-	var/mob/living/critter/robotic/sawfly/heldfly = null
+	heldfly = null
 
 	prime()
 		var/turf/T =  get_turf(src)
@@ -68,7 +94,7 @@
 			qdel(src)
 
 
-		return
+		return*/
 
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
@@ -116,9 +142,9 @@
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
 			if (S.issawfly == TRUE)
-				if ((istype(S, /obj/item/old_grenade/sawflyreused)) || (istype(S, /obj/item/old_grenade/sawfly)))
+				if (istype(S, /obj/item/old_grenade/sawfly))
 					S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
-					S.icon_state = "sawfly1"
+					S.icon_state = "sawflyunfolding"
 					SPAWN(S.det_time)
 						if(S)
 							S.prime()
@@ -134,10 +160,6 @@
 							S.prime()
 			else
 				continue
-
-
-
-
 
 
 // ---------------limb---------------

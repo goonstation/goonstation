@@ -9,16 +9,20 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	name = "Ranodyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone, made by Ranodyne LLC. It'd be pretty cute if it wasn't trying to kill people."
-	icon = 'icons/obj/ship.dmi'//remnants of it originally being a drone
+	icon = 'icons/obj/items/sawfly.dmi'
 	death_text = "%src% jutters and falls from the air, whirring to a stop."
-	icon_state = "sawfly"
+	icon_state = "sawflydeploy"
 	flags = TABLEPASS
 
 	var/beeptext = " "
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	var/isdisabled = FALSE //only used in reusable grenade- stops life() from doing anything
+
+	var/isdisabled = TRUE // these two will be enabled and disabled at the grenade's leisure.
+	is_npc = FALSE
+	var/isplayercontrolled = FALSE //don't mess with this unless you know what you're doing
+
 	speechverb_say = "whirrs"
 	speechverb_exclaim = "buzzes"
 	speechverb_ask = "hums"
@@ -79,16 +83,16 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	proc/foldself()
 		if(!isalive(src))
-			return 0
+			return
 		else
-			var/obj/item/old_grenade/sawflyreused/N = new /obj/item/old_grenade/sawflyreused(get_turf(src))
+			var/obj/item/old_grenade/sawfly/N = new /obj/item/old_grenade/sawfly(get_turf(src))
 			// pass our name and health
 			N.name = "Compact [name]"
-			N.tempname = src.name
+			N.desc = "A self-deploying antipersonnel robot. This one has seen some use."
+			//N.tempname = src.name
 			src.is_npc = FALSE
 			src.isdisabled = TRUE
 			N.heldfly = src
-
 			src.set_loc(N)
 
 
@@ -105,7 +109,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
 
 
-	emp_act() // allows armory's pulse rifles to fuck their shit
+	emp_act() // allows armory's pulse rifles to wreck their shit
 		if(prob(80))
 			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to spiral out of control!</span>")
 			SPAWN(2 SECONDS)
@@ -138,8 +142,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 							playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
 							take_bleeding_damage(user, null, 17, DAMAGE_STAB)
 							random_brute_damage(user, 14, FALSE)
-
-
 		..()
 
 	death(var/gibbed)
@@ -186,10 +188,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
-		if(isalive(src)) // if they get EMP'd, they don't die, we we'll want to fix that
+		if(isalive(src)) // if they get EMP'd, they don't *actually* die, we we'll want to fix that
 			qdel(src)
-
-
 
 	attack_hand(var/mob/user as mob)
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
@@ -212,16 +212,12 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			return
 		..()
 		if(prob(8)) communalbeep()
-		if(!isalive(src)) src.set_density(FALSE) //according to lizzle something in the mob life resets density so this has to be below parent-
+		if(!isalive(src)) src.set_density(FALSE) //something in the mob life resets density so it has to be below parent
 
-
-/mob/living/critter/robotic/sawfly/ai_controlled
-
+/mob/living/critter/robotic/sawfly/ai_controlled //don't use this normally- sawflies' AIs will be determined by the grenade
 	New()
 		..()
-		// gottaa get the AI chuggin' along
+		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
-		src.ai = new /datum/aiHolder/sawfly(src)
 		src.is_npc = TRUE
-		START_TRACKING
-
+		src.ai = new /datum/aiHolder/sawfly(src)

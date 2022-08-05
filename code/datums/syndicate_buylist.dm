@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
-	item = /obj/item/old_grenade/sawfly/withremote
+	item = /obj/item/old_grenade/sawfly/firsttime/withremote
 	cost = 2
 	vr_allowed = FALSE
 	br_allowed = TRUE
