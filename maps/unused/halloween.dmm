@@ -23957,7 +23957,7 @@
 	req_access_txt = "18"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aTD" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor,
@@ -24350,7 +24350,7 @@
 	amount = 20
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUo" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24371,14 +24371,14 @@
 	name = "Station Intercom (EVA Storage)"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUp" = (
 /obj/item/cable_coil,
 /obj/item/cable_coil,
 /obj/item/cable_coil,
 /obj/item/cable_coil,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUq" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -24393,7 +24393,7 @@
 	c_tag = "EVA Storage"
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUr" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -24402,11 +24402,11 @@
 	},
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUs" = (
 /obj/item/crowbar,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUt" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24414,27 +24414,27 @@
 	},
 /obj/item/crowbar,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUu" = (
 /obj/machinery/dispenser{
 	pltanks = 0
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUv" = (
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aUx" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -24781,10 +24781,10 @@
 	amount = 50
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVk" = (
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVl" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -24792,7 +24792,7 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVm" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
@@ -24800,7 +24800,7 @@
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVn" = (
 /obj/table{
 	icon_state = "tabledir";
@@ -25194,25 +25194,25 @@
 	d2 = 2
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVY" = (
 /obj/machinery/atmospherics/pipe/vent,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aVZ" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWb" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/cable{
@@ -25412,7 +25412,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWz" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -25420,11 +25420,11 @@
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/suit/space,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWA" = (
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWB" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple{
@@ -25437,7 +25437,7 @@
 /obj/item/rcd_ammo,
 /obj/item/rcd,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWC" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -25446,11 +25446,11 @@
 	},
 /obj/item/tank/jetpack,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWD" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aWE" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -25866,7 +25866,7 @@
 /area/station/hallway/primary/central)
 "aXq" = (
 /turf/simulated/wall/r_wall,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aXr" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -25874,7 +25874,7 @@
 	d2 = 2
 	},
 /turf/simulated/wall/r_wall,
-/area/station/storage/eva)
+/area/station/ai_monitored/storage/eva)
 "aXs" = (
 /obj/cable{
 	icon_state = "2-4";
