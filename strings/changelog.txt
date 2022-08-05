@@ -1,5 +1,8 @@
 
 (t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
 (u)NightmarechaMillian
 (p)9794
 (e)🎨⚖|sprites, balance
