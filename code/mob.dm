@@ -1811,6 +1811,89 @@
 		animation.delaydispose()
 	qdel(src)
 
+/mob/proc/biblegib() //effects of elecgib, but messy like normal gib
+	var/col_r = 0.4
+	var/col_g = 0.8
+	var/col_b = 1
+	var/brightness = 0.7
+	var/height = 1
+	var/datum/light/light
+	var/light_type = /datum/light/point
+	var/atom/movable/overlay/gibs/animation = null
+	var/bdna = null // For forensics (Convair880).
+	var/btype = null
+
+	if (ishuman(src))
+		animation = new(src.loc)
+		animation.master = src
+		flick("gibbed", animation)
+		if(ispath(light_type)) //keep light
+			light = new light_type
+			light.set_brightness(brightness)
+			light.set_color(col_r, col_g, col_b)
+			light.set_height(height)
+			light.attach(animation)
+			light.enable()
+			SPAWN(1 SECOND)
+				qdel(light)
+
+	var/list/viral_list = list()
+	for (var/datum/ailment_data/AD in src.ailments)
+		viral_list += AD
+	var/list/ejectables = list_ejectables()
+	for(var/obj/item/organ/organ in ejectables)
+		if(organ.donor == src)
+			organ.on_removal()
+	if (!custom_gib_handler)
+		if (iscarbon(src) || (ismobcritter(src) & !isrobocritter(src)))
+			if (bdna && btype)
+				. = gibs(src.loc, viral_list, ejectables, bdna, btype, source=src) // For forensics (Convair880).
+			else
+				. = gibs(src.loc, viral_list, ejectables, source=src)
+		else
+			. = robogibs(src.loc, viral_list)
+	else
+		. = call(custom_gib_handler)(src.loc, viral_list, ejectables, bdna, btype)
+
+	// splash our fluids around
+	if(src.reagents && src.reagents.total_volume)
+		var/list/obj/get_our_fluids_here = list()
+		for(var/obj/O in (. + ejectables))
+			if(istype(O, /obj/decal/cleanable))
+				var/obj/decal/cleanable/decal = O
+				if(!decal.can_fluid_absorb)
+					continue
+			else if(istype(O, /obj/item/organ/heart))
+				// heart can have a little reagents, as a treat
+			else if(istype(O, /obj/item/reagent_containers))
+				// some of our fluids got into a beaker, oh no!
+			else
+				continue
+			get_our_fluids_here += O
+		get_our_fluids_here += get_turf(src)
+
+		var/transfer_amount = src.reagents.total_volume / length(get_our_fluids_here)
+		for(var/atom/A in get_our_fluids_here)
+			if(isturf(A))
+				var/turf/T = A
+				T.fluid_react(src.reagents, src.reagents.total_volume, airborne=prob(10))
+				continue
+			if(istype(A, /obj/decal/cleanable)) // expand reagents
+				if(isnull(A.reagents))
+					A.create_reagents(transfer_amount)
+				else if(A.reagents.maximum_volume - A.reagents.total_volume < transfer_amount)
+					A.reagents.maximum_volume = A.reagents.total_volume + transfer_amount
+			if(A.reagents)
+				src.reagents.trans_to(A, transfer_amount)
+
+	for(var/obj/item/implant/I in src) qdel(I)
+
+	if (animation)
+		animation.delaydispose()
+	qdel(src)
+
+	. += ejectables
+
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
 #ifdef DATALOGGER
