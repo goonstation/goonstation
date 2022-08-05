@@ -1,5 +1,5 @@
 // Added an option to send them to the arrival shuttle. Also runtime checks (Convair880).
-/mob/proc/humanize(var/tele_to_arrival_shuttle = 0, var/equip_rank = 1)
+/mob/proc/humanize(var/tele_to_arrival_shuttle = FALSE, var/equip_rank = TRUE, var/random_human = TRUE)
 	if (src.transforming)
 		return
 
@@ -13,7 +13,11 @@
 		else
 			tele_to_arrival_shuttle = 1
 
-	var/mob/living/carbon/human/normal/character = new /mob/living/carbon/human/normal(currentLoc)
+	var/mob/living/carbon/human/character
+	if (random_human)
+		character = new /mob/living/carbon/human(currentLoc)
+	else
+		character = new /mob/living/carbon/human(currentLoc, src.client.preferences.AH, src.client.preferences)
 
 	if (character && istype(character))
 
