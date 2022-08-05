@@ -252,7 +252,7 @@
 		for(var/turf/T in oview(3, src))
 			if((T.x != src.x && T.y != src.y) || T.density)
 				continue
-			var/dist = get_dist(src.loc, T)
+			var/dist = GET_DIST(src.loc, T)
 			var/rel_dir = get_dir(src.loc, T)
 			if(dist <= 3)
 				for(var/atom/A in T)

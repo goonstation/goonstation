@@ -250,7 +250,7 @@
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
 				for (var/mob/M in mobs)
-					if (M.job == "Clown" && get_dist(src, M) < 7)
+					if (M.job == "Clown" && GET_DIST(src, M) < 7)
 						target = M
 						attack = 1
 						task = "chasing"

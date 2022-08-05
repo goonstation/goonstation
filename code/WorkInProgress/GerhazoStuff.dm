@@ -339,14 +339,14 @@
 
 		var/mob/living/M = holder.owner
 
-		if (get_dist(holder.owner,target_turf) < radius + 1)
-			var/distance = get_dist(M,target_turf)
+		if (GET_DIST(holder.owner,target_turf) < radius + 1)
+			var/distance = GET_DIST(M,target_turf)
 			var/difference = (radius + 1) - distance
 			var/i
 			for(i = 0; i < difference; i++)
 				target_turf = get_step_away(target_turf, M)
 
-			if(get_dist(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
+			if(GET_DIST(holder.owner, target_turf) < (radius + 1)) // we could have hit the edge of the map or otherwise couldn't maneuver into a proper distance
 				boutput(M, "<span class='alert'>That's too close, you could end up frying yourself.</span>")
 				return 1
 
@@ -750,8 +750,7 @@
 
 	New()
 		. = ..()
-		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "fire_resist", magical = 1),
-		new /datum/mutation_orb_mutdata(id = "aura_fire", magical = 1),
+		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "aura_fire", magical = 1),
 		new /datum/mutation_orb_mutdata(id = "fire_breath", stabilized = 1)
 		//new /datum/mutation_orb_mutdata(id = "immolate", stabilized = 1, powerboosted = 1)
 		)
@@ -902,7 +901,7 @@
 
 	New()
 		. = ..()
-		properties_to_set = list(new /datum/property_setter_property(incrementative = 0, cap = 100, property_name = "heatprot", property_value = 100))
+		properties_to_set = list(new /datum/property_setter_property(incrementative = 0, cap = 100, property_name = "heatprot", property_value = 50))
 
 
 /obj/item/property_setter/reinforce

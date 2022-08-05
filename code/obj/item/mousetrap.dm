@@ -379,7 +379,7 @@
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
 			var/datum/thrown_thing/thr = new
-			thr.user = (armer || usr) // ew gross
+			thr.user = armer
 			thr.thing = src.pie
 			src.pie.throw_impact(target, thr)
 			src.pie = null

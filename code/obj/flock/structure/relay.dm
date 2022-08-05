@@ -32,14 +32,20 @@
 	var/col_b = 0.6
 	var/datum/light/light
 	var/brightness = 0.5
+	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
 	..()
 	// no shuttle for you, either destroy the relay or flee when it unleashes
-	if (emergency_shuttle.online && emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
-		emergency_shuttle.recall()
-		command_alert("Emergency shuttle approach aborted due to anomalous radio signal interference. The shuttle has been returned to base as a precaution.")
-	emergency_shuttle.disabled = TRUE
+	if (emergency_shuttle.online)
+		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
+			emergency_shuttle.recall()
+			command_alert("Emergency shuttle approach aborted due to anomalous radio signal interference. The shuttle has been returned to base as a precaution.")
+			emergency_shuttle.disabled = TRUE
+		else if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+			emergency_shuttle.settimeleft(src.charge_time_length + SHUTTLELEAVETIME)
+			src.shuttle_departure_delayed = TRUE
+			command_alert("Emergency shuttle departure delayed due to anomalous radio signal interference.")
 
 	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
@@ -54,7 +60,8 @@
 	..()
 	if (!src.finished)
 		F?.death(relay_destroyed = TRUE)
-	emergency_shuttle.disabled = FALSE
+	if (!src.shuttle_departure_delayed)
+		emergency_shuttle.disabled = FALSE
 
 /obj/flock_structure/relay/get_desc()
 	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
@@ -118,14 +125,15 @@
 	for(var/mob/M in mobs)
 		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)
 		M.flash(3 SECONDS)
-	SPAWN(1 SECOND)
-		emergency_shuttle.disabled = FALSE
-		emergency_shuttle.incall()
-		emergency_shuttle.can_recall = FALSE
-		emergency_shuttle.settimeleft(180) // cut the time down to keep some sense of urgency
-		boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-		boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
-		boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+	if (!src.shuttle_departure_delayed)
+		SPAWN(1 SECOND)
+			emergency_shuttle.disabled = FALSE
+			emergency_shuttle.incall()
+			emergency_shuttle.can_recall = FALSE
+			emergency_shuttle.settimeleft(180) // cut the time down to keep some sense of urgency
+			boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+			boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
+			boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	sleep(2 SECONDS)
 	for(var/x = -2 to 2)
 		for(var/y = -2 to 2)
@@ -146,7 +154,7 @@
 			continue
 		if (prob(30)) //give it a slight cascading effect
 			sleep(0.1 SECONDS)
-		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1, pitch = 0.4)
+		playsound(radio, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1, pitch = 0.4)
 		var/mob/wearer = radio.loc
 		if (istype(wearer))
 			wearer.show_text("A final scream of horrific static bursts from your radio, destroying it!", "red")

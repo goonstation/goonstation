@@ -142,6 +142,9 @@
 			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
 			return 1
 
+	incapacitationCheck()
+		return FALSE
+
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"
 	desc = "Use your robotic vision to gather forensics"

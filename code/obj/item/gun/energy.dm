@@ -391,6 +391,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
+		RegisterSignal(src, COMSIG_ATOM_ANALYZE, .proc/noreward)
 		..()
 	update_icon()
 		..()
@@ -415,10 +416,8 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/electronics/scanner))
-			nojobreward = 1
-		..()
+	proc/noreward()
+		src.nojobreward = 1
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -1574,7 +1573,7 @@
 			break
 		if (F == get_turf(user))
 			continue
-		if (get_dist(user,F) > range)
+		if (GET_DIST(user,F) > range)
 			continue
 		tfireflash(F,0.5,2400)
 
