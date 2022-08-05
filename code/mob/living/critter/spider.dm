@@ -150,17 +150,26 @@
 		if(ismob(target))
 			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
 			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
-			if (flail.cooldowncheck() && prob(20))
-				flail.cast(target)
-			else if(bite.cooldowncheck())
-				bite.cast(target)
+			if (!flail.disabled && flail.cooldowncheck() && prob(20))
+				flail.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
 			else
-				..()
+				return ..()
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		if(drain.cooldowncheck())
-			drain.cast(target)
+		if(!drain.disabled && drain.cooldowncheck())
+			return !drain.handleCast(target)
+
+	can_critter_scavenge()
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		return (!drain.disabled && drain.cooldowncheck())
+
+	can_critter_attack()
+		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
+		return !flail.disabled
 
 /mob/living/critter/spider/nice
 	name = "bumblespider"

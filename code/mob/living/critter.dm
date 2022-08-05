@@ -1243,11 +1243,25 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/critter_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
+		return TRUE
 
 	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_scavenge(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
+	proc/can_critter_attack()
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
+	proc/can_critter_scavenge()
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to eat. For handling cooldowns, or other eat blocking conditions.
+	proc/can_critter_eat()
+		return TRUE
 
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A

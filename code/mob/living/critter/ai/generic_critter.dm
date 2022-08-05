@@ -45,6 +45,10 @@
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/attack, list(holder)))
 
+/datum/aiTask/sequence/goalbased/critter/attack/precondition()
+	var/mob/living/critter/C = holder.owner
+	return C.can_critter_attack()
+
 /datum/aiTask/sequence/goalbased/critter/attack/on_reset()
 	..()
 	var/mob/living/critter/C = holder.owner
@@ -65,14 +69,18 @@
 /datum/aiTask/succeedable/critter/attack/failed()
 	var/mob/living/critter/C = holder.owner
 	var/mob/T = holder.target
+	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't attack, task fail.
+		return TRUE
 	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/attack/succeeded()
-	return has_started //if we've started an attack, then hooray, we have completed this task
+	var/mob/living/critter/C = holder.owner
+	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
 	if(!has_started)
+		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
@@ -96,8 +104,9 @@
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/scavenge, list(holder)))
 
-/datum/aiTask/sequence/goalbased/critter/scavenge/on_reset()
-	..()
+/datum/aiTask/sequence/goalbased/critter/scavenge/precondition()
+	var/mob/living/critter/C = holder.owner
+	return C.can_critter_scavenge()
 
 /datum/aiTask/sequence/goalbased/critter/scavenge/get_targets()
 	var/mob/living/critter/C = holder.owner
@@ -113,14 +122,18 @@
 /datum/aiTask/succeedable/critter/scavenge/failed()
 	var/mob/living/critter/C = holder.owner
 	var/mob/T = holder.target
+	if(!has_started && !C.can_critter_attack()) //if we haven't started and can't scavenge, task fail.
+		return TRUE
 	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/scavenge/succeeded()
-	return has_started //if we've started an attack, then hooray, we have completed this task
+	var/mob/living/critter/C = holder.owner
+	return has_started && C.can_critter_scavenge() //if we've started, and can scavenge again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/scavenge/on_tick()
 	if(!has_started)
+		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
@@ -144,8 +157,9 @@
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/eat, list(holder)))
 
-/datum/aiTask/sequence/goalbased/critter/eat/on_reset()
-	..()
+/datum/aiTask/sequence/goalbased/critter/eat/precondition()
+	var/mob/living/critter/C = holder.owner
+	return C.can_critter_eat()
 
 /datum/aiTask/sequence/goalbased/critter/eat/get_targets()
 	var/mob/living/critter/C = holder.owner
@@ -161,14 +175,18 @@
 /datum/aiTask/succeedable/critter/eat/failed()
 	var/mob/living/critter/C = holder.owner
 	var/obj/item/reagent_containers/food/snacks/T = holder.target
+	if(!has_started && !C.can_critter_eat()) //if we haven't started and can't eat, task fail.
+		return TRUE
 	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/eat/succeeded()
-	return has_started //if we've started an attack, then hooray, we have completed this task
+	var/mob/living/critter/C = holder.owner
+	return has_started && C.can_critter_eat() //if we've started, and can eat again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/eat/on_tick()
 	if(!has_started)
+		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
