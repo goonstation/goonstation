@@ -129,7 +129,7 @@
 	text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 	message_admins("Sending Flocktrace offer to eligible ghosts. They have [ghost_confirmation_delay / 10] seconds to respond.")
-	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages)
+	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages, TRUE)
 
 	if (src.disposed)
 		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
