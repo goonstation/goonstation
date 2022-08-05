@@ -810,9 +810,9 @@ Returns:
 
 	handleCast(var/atom/selected)
 		var/mob/M = usr
-		var/dur = (get_dist(selected, M)*5)
+		var/dur = (GET_DIST(selected, M)*5)
 		var/ease = pick(LINEAR_EASING,SINE_EASING,CIRCULAR_EASING,QUAD_EASING,CUBIC_EASING,BOUNCE_EASING,ELASTIC_EASING,BACK_EASING)
-		boutput(world, "dur [dur] , ease : [ease] , dist : [get_dist(selected, M)] , selected : [selected]")
+		boutput(world, "dur [dur] , ease : [ease] , dist : [GET_DIST(selected, M)] , selected : [selected]")
 		cinLookAt(M, selected, dur, ease, 1, 1, 1)
 		sleep(dur+3)
 		cinShake(M,20,0.5,0,32,ease,1,1,1)
@@ -1055,7 +1055,7 @@ Returns:
 					last = get_turf(over_object)
 					beam.set_loc(get_turf(src))
 					animate(beam, transform=beam.transform, time=1)//, flags=ANIMATION_LINEAR_TRANSFORM)
-					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-get_dist(get_turf(src),get_turf(over_object)), 2))
+					animate(transform=getLineMatrix(get_turf(src),get_turf(over_object)), time= max(7-GET_DIST(get_turf(src),get_turf(over_object)), 2))
 		return
 
 	onMouseDown(atom/target,location,control,params)
@@ -1189,7 +1189,7 @@ Returns:
 		for(var/mob/O in AIviewers(owner))
 			if(!seen.Find(O))
 				var/canSee = 0
-				switch(get_dist(O, user))
+				switch(GET_DIST(O, user))
 					if(0 to 1)
 						if(O.dir == turn(user.dir, 180)) //Only visible if looking directly at them in close range.
 							canSee = 1
@@ -1255,7 +1255,7 @@ Returns:
 			if((ismob(A) || A.density || istype(A, /obj/critter)) && !istype(A, /obj/table))
 				force = stabbyness
 
-				if(ismob(A) && get_dist(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
+				if(ismob(A) && GET_DIST(A, user) == 1 && (A.dir == user.dir || A:lying)) //It's a person and they are facing away from us. Bonus damage.
 					force = round(stabbyness * 2)
 					bloody = 1
 
@@ -1520,7 +1520,7 @@ Returns:
 		var/partgreen = GetGreenPart(src.color) / 255
 		var/partblue  = GetBluePart(src.color) / 255
 
-		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
+		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
 		var/obj/meleeeffect/M
 		switch(direction)
@@ -2215,7 +2215,7 @@ Returns:
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 5.0
+	force = 5
 	flags = FPRINT | TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
@@ -2847,13 +2847,13 @@ var/list/lag_list = new/list()
 	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
-		if(0 to 0.100)
+		if(0 to 0.1)
 			lag_string = "Minimal"
-		if(0.101 to 0.180)
+		if(0.101 to 0.18)
 			lag_string = "Normal"
-		if(0.181 to 0.350)
+		if(0.181 to 0.35)
 			lag_string = "High"
-		if(0.351 to 0.500)
+		if(0.351 to 0.5)
 			lag_string = "Very High"
 		if(0.501 to INFINITY)
 			lag_string = "Oh Sh*t"

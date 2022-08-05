@@ -796,7 +796,7 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> screams with \his mind! Guh, that's creepy!"
+				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindslave_status(src.mob)
+				remove_mindhack_status(src.mob)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1140,6 +1140,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
+		// if the head was previous linked to someone else
 		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
@@ -1147,6 +1148,12 @@ TYPEINFO(/datum/mutantrace)
 				H.set_eye(null)
 			S.head_tracker = null
 			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		// if we were previously linked to another head
+		if (src.head_tracker)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
+			src.head_tracker.linked_human = null
 		head_tracker = head
 		head_tracker.linked_human = src.mob
 
@@ -1530,10 +1537,10 @@ TYPEINFO(/datum/mutantrace)
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> roars."
 			if("tail")
-				. = "<B>[src.mob.name]</B> waves \his tail."
+				. = "<B>[src.mob.name]</B> waves [his_or_her(src.mob)] tail."
 			if("paw")
 				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> flails \his paw."
+					. = "<B>[src.mob.name]</B> flails [his_or_her(src.mob)] paw."
 			if("scretch")
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> scretches."
@@ -1544,7 +1551,7 @@ TYPEINFO(/datum/mutantrace)
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src.mob]</B> gnarls and shows \his teeth.."
+					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
@@ -2110,7 +2117,7 @@ TYPEINFO(/datum/mutantrace)
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
 				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
-				T.clogged += 0.10
+				T.clogged += 0.1
 				break
 		else if (beaker)
 			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")
@@ -2118,7 +2125,7 @@ TYPEINFO(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B> dispenses milk into [milk_target].</B></span>")
+				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return

@@ -3,7 +3,7 @@
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized
 	var/list/authorized_registered = null
 	var/net_id = null

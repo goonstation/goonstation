@@ -362,7 +362,7 @@ END GUIDE
 	name = "infernal contract"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	var/uses = 4.0
+	var/uses = 4
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -581,7 +581,6 @@ obj/item/contract/wrestle
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
 			user.changeStatus("stunned", 100 SECONDS)
-			ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -621,7 +620,6 @@ obj/item/contract/genetic
 					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
 						user.mind.special_role = "Genetic Demigod"
-						ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -665,7 +663,6 @@ obj/item/contract/horse
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
 			user.mind.special_role = "Faustian Horse"
-			ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -707,7 +704,6 @@ obj/item/contract/vampire
 		SPAWN(1 DECI SECOND)
 			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
-			ticker.mode.Agimmicks.Add(user)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
 		return 1

@@ -41,7 +41,7 @@ Contains:
 	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
+		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
 				smallestdimension = min(smallestdimension, gen.shortestlink)
@@ -57,7 +57,7 @@ Contains:
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -138,7 +138,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.Dtime = Ti
 
 	var/offset = rand(1000)
-	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 	..()
@@ -313,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
-			O.ex_act(1.0)
+			O.ex_act(1)
 			if (O)
 				qdel(O)
 			gain = 2
@@ -1554,7 +1554,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	var/state = UNWRENCHED
-	var/timing = 0.0
+	var/timing = 0
 	var/time = 30
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
@@ -1739,7 +1739,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
-		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
 	SPAWN(3 SECONDS)
@@ -1751,7 +1751,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 5, 0.5)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

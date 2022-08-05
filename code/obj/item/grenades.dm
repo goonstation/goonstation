@@ -34,6 +34,7 @@ PIPE BOMBS + CONSTRUCTION
 	var/sound_armed = null
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
+	var/issawfly = FALSE //for sawfly remote
 
 	attack_self(mob/user as mob)
 		if (!src.state)
@@ -506,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
-				var/loud = 16 / (get_dist(M, T) + 1)
+				var/loud = 16 / (GET_DIST(M, T) + 1)
 				if (src.loc == M.loc || src.loc == M)
 					loud = 16
 
@@ -747,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					user.unequip_all()
 
 				for (var/mob/N in viewers(user, null))
-					if (get_dist(N, user) <= 6)
+					if (GET_DIST(N, user) <= 6)
 						N.flash(3 SECONDS)
 				sleep(0.2 SECONDS)
 				if (old_light_grenade)
@@ -979,9 +980,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -1149,7 +1150,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
 	var/state = null
-	var/det_time = 50.0
+	var/det_time = 50
 	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
@@ -1349,7 +1350,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					O.set_density(0)
 
-				var/distance = get_dist(T, location)
+				var/distance = GET_DIST(T, location)
 				if (distance < 2)
 					var/turf/simulated/floor/F = null
 
@@ -1394,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
-				var/damage = 30 / (get_dist(M, src) + 1)
+				var/damage = 30 / (GET_DIST(M, src) + 1)
 				M.TakeDamage("chest", 0, damage)
 				M.update_burning(damage)
 

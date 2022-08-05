@@ -23,7 +23,7 @@
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
-	var/active = 0.0
+	var/active = 0
 	var/open = 0
 	var/use_glowstick = 1
 	var/obj/item/device/light/glowstick/loaded_glowstick = null
@@ -32,7 +32,7 @@
 	var/list/valid_colors = list("R","O","Y","G","C","B","P","Pi","W")
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 7
@@ -40,7 +40,7 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = 18
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
 	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -468,8 +468,8 @@
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 5.0
-	throwforce = 15.0
+	force = 5
+	throwforce = 15
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
@@ -486,29 +486,35 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
+/obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = ..()
+	if(ismob(hit_atom))
+		. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
+
+
 /obj/item/dagger/throw_impact(atom/A, datum/thrown_thing/thr)
-	if(iscarbon(A))
+	if (..())
+		return
+	if(ismob(A))
+		var/mob/M = A
 		if (ismob(usr))
-			A:lastattacker = usr
-			A:lastattackertime = world.time
-		A.changeStatus("weakened", 6 SECONDS)
-		A:force_laydown_standup()
-		take_bleeding_damage(A, null, 5, DAMAGE_CUT)
-		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			M.lastattacker = usr
+			M.lastattackertime = world.time
+		M.changeStatus("weakened", 6 SECONDS)
+		M.force_laydown_standup()
+		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(!isdead(C))
-			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+	if(ismob(target))
+		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
 
 /obj/item/dagger/smile
 	name = "switchblade"
-	force = 10.0
+	force = 10
 	throw_range = 10
-	throwforce = 10.0
+	throwforce = 10
 
 /obj/item/dagger/smile/attack(mob/living/target, mob/user)
 	if(prob(10))
@@ -539,8 +545,8 @@
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
-	force = 8.0
-	throwforce = 11.0
+	force = 8
+	throwforce = 11
 	throw_range = 10
 	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
@@ -604,8 +610,8 @@
 	icon_state = "nunchucks"
 	item_state = "nunchucks"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	force = 8.0
-	throwforce = 6.0
+	force = 8
+	throwforce = 6
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_SMALL
@@ -629,8 +635,8 @@
 	item_state = "quarterstaff"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	uses_multiple_icon_states = 1
-	force = 13.0
-	throwforce = 6.0
+	force = 13
+	throwforce = 6
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
@@ -694,8 +700,8 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "knife_b"
 	item_state = "knife_b"
-	force = 5.0
-	throwforce = 15.0
+	force = 5
+	throwforce = 15
 	throw_speed = 4
 	throw_range = 8
 	w_class = W_CLASS_NORMAL
@@ -770,8 +776,8 @@
 	icon_state = "hunter_spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "hunter_spear"
-	force = 8.0
-	throwforce = 35.0
+	force = 8
+	throwforce = 35
 	throw_speed = 6
 	throw_range = 10
 	makemeat = 0
@@ -800,10 +806,10 @@
 	icon_state = "axe0"
 	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	var/active = 0.0
+	var/active = 0
 	hit_type = DAMAGE_CUT
-	force = 40.0
-	throwforce = 25.0
+	force = 40
+	throwforce = 25
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -1014,10 +1020,11 @@
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	is_syndicate = TRUE
+	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	w_class = W_CLASS_BULKY
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
@@ -1147,7 +1154,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_BLUNT
 	force = 18
-	throwforce = 5.0
+	throwforce = 5
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	delimb_prob = 1
@@ -1160,10 +1167,10 @@
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-
+	mats = list("MET-2"=15)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
-	throwforce = 5.0
+	throwforce = 5
 	delimb_prob = 1
 	contraband = 4
 	tooltip_flags = REBUILD_USER
@@ -1205,7 +1212,7 @@
 
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 20
-	throwforce = 5.0
+	throwforce = 5
 	delimb_prob = 20
 	contraband = 4
 
@@ -1232,7 +1239,7 @@
 	item_state = "sheathedhand"
 	hit_type = DAMAGE_BLUNT
 	force = 1
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -1461,6 +1468,7 @@ obj/item/fragile_sword
 			if(!isdead(C))
 				if(force >= minimum_force)
 					force -= 5
+					throwforce = force
 					boutput(user, "<span class='alert'>The [src]'s edge dulls slightly on impact!</span>")
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
@@ -1469,6 +1477,7 @@ obj/item/fragile_sword
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
+				throwforce = force
 				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
 				playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 		..()

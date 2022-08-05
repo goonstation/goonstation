@@ -108,11 +108,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/ex_act(severity)
 	var/chance //This switch was just the same loop with different probabilities 3 times and fuck that
 	switch(severity)
-		if(1.0)
+		if(1)
 			chance = 100
-		if(2.0)
+		if(2)
 			chance = 50
-		if(3.0)
+		if(3)
 			chance = 5
 	if (prob(chance))
 		for(var/atom/movable/A in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded

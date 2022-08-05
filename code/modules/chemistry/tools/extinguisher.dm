@@ -16,7 +16,7 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 10.0
+	force = 10
 	item_state = "fireextinguisher0"
 	m_amt = 90
 	desc = "A portable container with a spray nozzle that contains specially mixed fire-fighting foam. The safety is removed, the nozzle pointed at the base of the fire, and the trigger squeezed to extinguish fire."
@@ -153,7 +153,7 @@
 		var/list/the_targets = list(T,T1,T2)
 
 		var/datum/reagents/R = new
-		var/distance = clamp(get_dist(get_turf(src), get_turf(target)), min_distance, max_distance)
+		var/distance = clamp(GET_DIST(get_turf(src), get_turf(target)), min_distance, max_distance)
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 

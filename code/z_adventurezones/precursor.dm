@@ -1191,7 +1191,7 @@
 
 		var/temp_effect_limiter = 10
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 0
 			if(T_dist == 2)
 				T_effect_prob = 100

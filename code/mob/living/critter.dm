@@ -388,24 +388,25 @@ ABSTRACT_TYPE(/mob/living/critter)
 		//actually throw it!
 		if (I)
 			I.layer = initial(I.layer)
+			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = get_dir(target, src)
+				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
-				M.inertia_dir = get_dir(src,target)
+				M.inertia_dir = throw_dir
 			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
@@ -1160,7 +1161,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		var/ex_res = get_explosion_resistance()
 		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 0.80 && prob(ex_res * 75))
+		if (ex_res >= 0.8 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)

@@ -20,8 +20,8 @@
 	name = "beepsky box"
 	desc = "A box of large Beepsky-shaped bullets"
 	icon_state = "lmg_ammo"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/special/spawner/beepsky
 
 	ammo_cat = AMMO_BEEPSKY

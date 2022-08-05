@@ -701,15 +701,15 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (!isdead(src))
 				b_loss += rand(90,120)
 				f_loss += rand(90,120)
-		if(2.0)
+		if(2)
 			if (!isdead(src))
 				b_loss += rand(60,90)
 				f_loss += rand(60,90)
-		if(3.0)
+		if(3)
 			if (!isdead(src))
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss
@@ -1546,13 +1546,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/stored = ""
-	if(length(by_type[/obj/cryotron]))
-		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-		for(var/L as anything in cryo_unit.stored_crew_names)
-			stored += "<i>- [L]<i><br>"
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()

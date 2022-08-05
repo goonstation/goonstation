@@ -231,7 +231,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			src.icon_state = "[initial(src.icon_state)]-attack"
 			src.opacity = 0
 			if (target)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -239,7 +239,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0
@@ -309,7 +309,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -317,7 +317,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0

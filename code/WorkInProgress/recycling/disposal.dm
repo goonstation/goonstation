@@ -131,7 +131,7 @@
 			return
 
 		for (var/mob/M in hearers(src.loc.loc))
-			boutput(M, "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>")
+			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
 		if(last_sound + 6 < world.time)
 			playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 0, 0)
@@ -404,14 +404,14 @@
 	ex_act(severity)
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				broken(0)
 				return
-			if(2.0)
+			if(2)
 				health -= rand(5,15)
 				healthcheck()
 				return
-			if(3.0)
+			if(3)
 				health -= rand(0,15)
 				healthcheck()
 				return
@@ -1453,7 +1453,7 @@
 
 					if ("A mail tag")
 						. = copytext(ckeyEx(input(user, "What should the tag be?", "What?")), 1, 33)
-						if (. && get_dist(user, src) < 2 && !user.stat)
+						if (. && GET_DIST(user, src) < 2 && !user.stat)
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 

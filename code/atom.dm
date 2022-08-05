@@ -613,10 +613,10 @@
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
 
-	var/dist = get_dist(src, user)
+	var/dist = GET_DIST(src, user)
 	if (istype(user, /mob/dead/target_observer))
 		var/mob/dead/target_observer/target_observer_user = user
-		dist = get_dist(src, target_observer_user.target)
+		dist = GET_DIST(src, target_observer_user.target)
 
 	// added for custom examine behaviour override - cirr
 	var/special_description = src.special_desc(dist, user)

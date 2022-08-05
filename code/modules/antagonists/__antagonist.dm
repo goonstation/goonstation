@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
 	var/success_medal = null
+	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
+	var/pseudo = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -19,18 +21,23 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
 			qdel(src)
 			return FALSE
-		owner = new_owner
-		new_owner.special_role = id
+		if (!src.is_compatible_with(new_owner))
+			qdel(src)
+			return FALSE
+		src.owner = new_owner
+		src.pseudo = do_pseudo
+		if (!do_pseudo) // there is a special place in code hell for mind.special_role
+			new_owner.special_role = id
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear, silent)
+	proc/remove_self(take_gear = TRUE, silent)
 		if (take_gear)
 			src.remove_equipment()
 		
@@ -41,7 +48,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null
 
-	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
+	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
 	proc/is_compatible_with(datum/mind/mind)
 		return TRUE
 
@@ -51,11 +58,15 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		src.assigned_by = source
 
-		if (!silent)
-			src.announce()
-
 		if (do_equip)
 			src.give_equipment()
+		
+		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
+			return
+
+		if (!silent)
+			src.announce()
+			src.do_popup()
 
 		if (do_objectives)
 			src.assign_objectives()
@@ -64,9 +75,6 @@ ABSTRACT_TYPE(/datum/antagonist)
 		
 		if (do_relocate)
 			src.relocate()
-		
-		if (!silent)
-			src.do_popup()
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()

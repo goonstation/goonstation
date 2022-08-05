@@ -1067,17 +1067,23 @@
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
 						for (var/datum/mind/M in R.get_living_heads())
 							if (M.current)
-								if (get_dist(owner,M.current) <= 7)
+								if (GET_DIST(owner,M.current) <= 7)
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
 				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 					else
 						if (R.remove_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 		clear(null)

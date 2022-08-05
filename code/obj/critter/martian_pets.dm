@@ -91,7 +91,7 @@
         src.task = "thinking"
         walk_to(src,0)
       if (target)
-        if (get_dist(src, src.target) <= 7)
+        if (GET_DIST(src, src.target) <= 7)
           var/mob/living/carbon/M = src.target
           if (M)
             if(!src.attacking) ChaseAttack(M)
@@ -99,11 +99,11 @@
             src.anchored = 1
             src.target_lastloc = M.loc
         else
-          var/turf/olddist = get_dist(src, src.target)
+          var/turf/olddist = GET_DIST(src, src.target)
 
           else walk_to(src, src.target,1,4)
 
-          if ((get_dist(src, src.target)) >= (olddist))
+          if ((GET_DIST(src, src.target)) >= (olddist))
             src.frustration++
 
           else

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/reactorstats_meter.dmi'
 	icon_state = "meter_anim"
 	var/obj/machinery/atmospherics/pipe/target = null
-	anchored = 1.0
+	anchored = 1
 
 /obj/machinery/power/stats_meter/New()
 	..()

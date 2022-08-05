@@ -88,10 +88,12 @@
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
 
-/mob/living/intangible/flock/flockmind/death(gibbed, suicide = FALSE)
+/mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)
 	. = ..()
 	if(src.client)
-		if (!suicide)
+		if (relay_destroyed)
+			boutput(src, "<span class='alert'>With the destruction of the Relay, the Flock loses its strength, and you fade away.</span>")
+		else if (!suicide)
 			boutput(src, "<span class='alert'>With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
 		else
 			boutput(src, "<span class='alert'>You deactivate your Flock and abruptly cease to exist.</span>")

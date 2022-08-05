@@ -3,7 +3,7 @@
 	name = "artifact energy gun"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "laser"
-	force = 5.0
+	force = 5
 	artifact = 1
 	is_syndicate = 1
 	mat_changename = 0

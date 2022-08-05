@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 25
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "laser"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -219,6 +219,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "glass"
 	cost = 1
 	pellets_to_fire = 6
+	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
 	speed_min = 28
@@ -226,17 +227,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_variance = 40
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
+	spread_projectile_type = /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
 	pellets_to_fire = 3
-	spread_projectile_type = /datum/projectile/bullet/improvscrap
+	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40
 	speed_min = 34
 	spread_angle_variance = 10
 	dissipation_variance = 10
-
 
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
@@ -567,7 +568,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			for (var/atom in P.targets)
 				var/atom/A = atom
 				if (A == P.shooter) continue
-				if (get_dist(P,A) < get_dist(P,closest))
+				if (GET_DIST(P,A) < GET_DIST(P,closest))
 					closest = A
 
 			desired_x = closest.x - P.x
@@ -884,7 +885,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	power = 60
 	cost = 40
-	ks_ratio = 1.0
+	ks_ratio = 1
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0
@@ -926,7 +927,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn)
-			hasspawned = 1
+			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		return
 
@@ -934,7 +935,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/O)
 		if(!hasspawned && typetospawn)
 			. = new typetospawn(get_turf(O))
-		hasspawned = null
+			hasspawned = TRUE
+		else
+			hasspawned = null
 		return
 
 /datum/projectile/special/spawner/gun //shoot guns
@@ -964,7 +967,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	power = 15
 	dissipation_delay = 30
 	dissipation_rate = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	cost = 10
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
@@ -990,7 +993,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "secbot1-wild"
 	implanted = null
 	typetospawn = /obj/machinery/bot/secbot

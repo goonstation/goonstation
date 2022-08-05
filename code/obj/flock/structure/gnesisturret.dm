@@ -28,6 +28,7 @@
 	// flockdrones can pass through this
 	passthrough = TRUE
 
+	var/making_projectiles = FALSE
 	var/fluid_gen_cost = 30 //generating gnesis consumes compute
 	var/base_compute = 20
 	compute = 0
@@ -50,7 +51,7 @@
 		if(!powered)
 			status = "offline"
 		else if (src.reagents.total_volume < fluid_level_max)
-			if (src.flock.can_afford_compute(base_compute+fluid_gen_cost))
+			if (src.making_projectiles)
 				status =  "replicating"
 			else
 				status =  "insufficient compute for replication"
@@ -62,26 +63,48 @@
 
 	process(mult)
 		if(!src.flock)//if it dont exist it off
-			powered = FALSE
+			if (powered)
+				src.making_projectiles = FALSE
+				src.update_flock_compute("remove")
 			src.compute = 0
+			powered = FALSE
 			src.icon_state = "teleblocker-off"
 			return
 
 		if(src.flock.can_afford_compute(base_compute))
-			powered = TRUE
-			src.compute = -base_compute
+			src.compute = !src.making_projectiles ? -base_compute : -(base_compute + fluid_gen_cost)
+			if (!powered)
+				src.update_flock_compute("apply")
+				powered = TRUE
 			src.icon_state = "teleblocker-on"
-		else//if there isnt enough juice
-			powered = FALSE
-			src.compute = 0
-			src.icon_state = "teleblocker-off"
-			return
+		else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
+			if (src.making_projectiles)
+				src.making_projectiles = FALSE
+				src.update_flock_compute("remove", FALSE)
+				src.compute = -base_compute
+				src.update_flock_compute("apply")
+			if (src.flock.used_compute > src.flock.total_compute() || !src.powered)
+				if (powered)
+					src.update_flock_compute("remove")
+				src.compute = 0
+				powered = FALSE
+				src.icon_state = "teleblocker-off"
+				return
 
 		//if we need to generate more juice, do so and up the compute cost appropriately
 		if(src.reagents.total_volume < src.reagents.maximum_volume)
-			if(src.flock.can_afford_compute(base_compute+fluid_gen_cost))
+			if(src.flock.can_afford_compute(fluid_gen_cost) && !src.making_projectiles)
+				src.making_projectiles = TRUE
+				src.update_flock_compute("remove", FALSE)
 				src.compute = -(base_compute + fluid_gen_cost)
+				src.update_flock_compute("apply")
+			if (src.making_projectiles)
 				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
+		else if (src.making_projectiles)
+			src.making_projectiles = FALSE
+			src.update_flock_compute("remove", FALSE)
+			src.compute = -base_compute
+			src.update_flock_compute("apply")
 
 		if(src.reagents.total_volume >= fluid_shot_amt)
 			//shamelessly stolen from deployable_turret.dm
@@ -103,7 +126,7 @@
 		for (var/mob/living/C in range(src.range,src.loc))
 			if (!isnull(C) && src.target_valid(C))
 				target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				target_list[C] = distance
 
 		if (length(target_list)>0)
@@ -119,7 +142,7 @@
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return FALSE

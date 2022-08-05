@@ -8955,10 +8955,6 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = -6;
-	pixel_y = 4
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "azM" = (
@@ -13764,10 +13760,6 @@
 /area/station/security/main)
 "aLw" = (
 /obj/table/auto,
-/obj/item/device/detective_scanner{
-	pixel_x = -9;
-	pixel_y = 2
-	},
 /obj/item/hand_labeler{
 	pixel_x = 7;
 	pixel_y = 10
@@ -65025,7 +65017,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 6;
 	pixel_y = 9
 	},

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot0"
 	var/const/base_sprite_pixels_from_floor = 5
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	on = 0

@@ -327,7 +327,7 @@
 		if (ishuman(user) && !user.stat)
 			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
 			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
 			if(M.mind)

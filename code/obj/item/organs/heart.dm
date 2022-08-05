@@ -10,7 +10,7 @@
 	desc = "Offal, just offal."
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 9.0
+	organ_holder_required_op_stage = 9
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?

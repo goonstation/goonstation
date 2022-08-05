@@ -23,6 +23,9 @@
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_bleed = FALSE
+	metabolizes = FALSE
+	blood_id = null
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -177,7 +180,7 @@
 			if( isturf(target) && findtext(control, "map_viewport") )
 				set_loc(src, target)
 
-			if (get_dist(src, target) > 0)
+			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
 
@@ -270,6 +273,9 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
+
+	vomit()
+		return 0 //can't puke
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
@@ -389,7 +395,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P?.operating)
+			if(P)
 				P.attack_ai(src)
 				return
 
@@ -484,6 +490,10 @@
 		set name = "Change Designation"
 		set desc = "Change your name."
 		mainframe?.rename_self()
+
+	stopObserving()
+		src.set_loc(get_turf(src))
+		src.observing = null
 
 //---TURF---//
 /turf/var/image/aiImage

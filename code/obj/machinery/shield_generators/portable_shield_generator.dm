@@ -68,11 +68,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				shield_off(1) //1 for failed
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if(PCEL && !connected && active)
 					src.PCEL.use(120 * src.range * (src.power_level * src.power_level))
 				else if(connected && active)
@@ -80,7 +80,7 @@
 				if(prob(50))
 					shield_off(1)
 				return
-			if(3.0)
+			if(3)
 				if(PCEL && !connected && active)
 					src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
 					return
@@ -400,19 +400,19 @@
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					MS.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(120 * MS.range)
 					else if(MS.connected && MS.active)
 						MS.use_power(MS.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(60 * MS.range)
 					else if(MS.connected && MS.active)
@@ -576,19 +576,19 @@
 			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					ES.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(60 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(30 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)
