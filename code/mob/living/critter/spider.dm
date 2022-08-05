@@ -42,8 +42,6 @@
 
 	var/bite_transfer_amt = 1
 
-	ai_type = /datum/aiHolder/spider
-
 	New()
 		..()
 		if (src.icon_state == "big_spide")
@@ -142,7 +140,7 @@
 			if (C.bioHolder.HasEffect("husk")) continue
 			if (istype(C, /mob/living/critter/spider)) continue
 			. += C
-		if(length(.))
+		if(length(.) && prob(30))
 			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 
@@ -345,6 +343,20 @@
 			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
 
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick)
+			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+			if (!flail.disabled && flail.cooldowncheck() && prob(20))
+				flail.handleCast(target)
+			else if (!kick.disabled && kick.cooldowncheck() && prob(20))
+				kick.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+			else
+				return ..()
+
 	cluwne
 		name = "cluwnespider"
 		desc = "Uhhh. That's not normal. Like, even for clownspiders."
@@ -358,6 +370,30 @@
 							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
+
+		critter_attack(target)
+			if(ismob(target))
+				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+				var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick/cluwne)
+				if (!kick.disabled && kick.cooldowncheck() && prob(20))
+					kick.handleCast(target)
+				else if(!bite.disabled && bite.cooldowncheck())
+					bite.handleCast(target)
+				else
+					return ..()
+
+		critter_scavenge(target)
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			if(!drain.disabled && drain.cooldowncheck())
+				return !drain.handleCast(target)
+
+		can_critter_scavenge()
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			return (!drain.disabled && drain.cooldowncheck())
+
+		can_critter_attack()
+			return TRUE
+
 
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"
@@ -398,6 +434,29 @@
 		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 		max_defensive_babies = 150
 
+		critter_attack(target)
+			if(ismob(target))
+				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+				var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
+				if (!trample.disabled && trample.cooldowncheck() && prob(20))
+					trample.handleCast(target)
+				else if(!bite.disabled && bite.cooldowncheck())
+					bite.handleCast(target)
+				else
+					return ..()
+
+		critter_scavenge(target)
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			if(!drain.disabled && drain.cooldowncheck())
+				return !drain.handleCast(target)
+
+		can_critter_scavenge()
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			return (!drain.disabled && drain.cooldowncheck())
+
+		can_critter_attack()
+			return TRUE
+
 	New()
 		..()
 		babies = list()
@@ -434,7 +493,7 @@
 			return
 		var/defenders = 0		//this is the amount of babies that will defend you
 		var/count = 0
-		for (var/obj/critter/spider/clown/CS in babies)
+		for (var/mob/living/critter/spider/clown/CS in babies)
 			count++
 			if (count > max_defensive_babies)
 				break
@@ -444,10 +503,41 @@
 				return
 			if (prob(70))
 				continue
-			CS.target = T
-			CS.attack = 1
-			CS.task = "chasing"
+			// IMMEDIATE INTERRUPT
+			var/datum/aiTask/task = CS.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(CS.ai, CS.ai.default_task))
+			task.target = T
+			CS.ai.priority_tasks += task
+			CS.ai.interrupt()
 			defenders++
+
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
+			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+			if (!flail.disabled && flail.cooldowncheck() && prob(20))
+				flail.handleCast(target)
+			else if (!trample.disabled && trample.cooldowncheck() && prob(20))
+				trample.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+			else
+				return ..()
+
+	critter_scavenge(target)
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		if(!drain.disabled && drain.cooldowncheck())
+			return !drain.handleCast(target)
+
+	can_critter_scavenge()
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		return (!drain.disabled && drain.cooldowncheck())
+
+	can_critter_attack()
+		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
+		return !flail.disabled
+
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN(0)
@@ -498,3 +588,71 @@
 				I.throw_at(target, 12, 3)
 
 	return bloods
+
+/* ====================================================== */
+/* --------------------- AI Spiders --------------------- */
+/* ====================================================== */
+
+/mob/living/critter/spider/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/nice/ai
+	ai_type = /datum/aiHolder/spider_peaceful
+	is_npc = TRUE
+
+/mob/living/critter/spider/baby/ai
+	adultpath = /mob/living/critter/spider/med/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/med/ai
+	adultpath = /mob/living/critter/spider/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/ice/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/ice/baby/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+	New()
+		..()
+		if(adultpath == /mob/living/critter/spider/ice/queen)
+			adultpath = /mob/living/critter/spider/ice/queen/ai
+		else
+			adultpath = /mob/living/critter/spider/ice/ai
+
+/mob/living/critter/spider/ice/baby/queen/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+	adultpath = /mob/living/critter/spider/ice/queen/ai
+
+/mob/living/critter/spider/ice/queen/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/spacerachnid/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/clown/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+	adultpath = /mob/living/critter/spider/clownqueen/ai
+
+/mob/living/critter/spider/clown/cluwne/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+	adultpath = /mob/living/critter/spider/clownqueen/cluwne/ai
+
+/mob/living/critter/spider/clownqueen/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
+/mob/living/critter/spider/clownqueen/cluwne/ai
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
