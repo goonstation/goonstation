@@ -86,8 +86,6 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	var/datum/abilityHolder/flockmind/aH = src.abilityHolder
-	aH?.updateCompute()
 	if (src.flock && src.compute != 0 && src.flock.total_compute() < src.flock.used_compute)
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
 		src.death()
