@@ -143,6 +143,28 @@
 		/obj/item/gimmickbomb/butt)
 
 
+/*/obj/random_item_spawner/surplus/backup
+		items2spawn = list(
+			/obj/item/remote/reinforcement_beacon,
+			/obj/item/old_grenade/spawner/sawflycluster,
+			/obj/item/old_grenade/sawfly/withremote,
+			/obj/item/storage/box/wasp_grenade_kit,
+			/obj/item/spongecaps/syndicate,
+			/obj/item/pipebomb/bomb/miniature_syndicate,
+			/obj/item/gun/energy/wasp,
+			/obj/item/implanter/mindhack,
+			/obj/machinery/recharge_station/syndicate
+		)
+
+	/obj/random_item_spawner/surplus/expensive
+		items2spawn = list(/obj/item/card/emag,
+			/obj/item/storage/belt/wrestling,
+			/obj/item/clothing/head/bighat/syndicate,
+			/obj/item/implanter/super_mindhack,
+			/obj/item/katana_sheath,
+			/obj/item/sword,
+			/obj/item/storage/box/mindhack_module_kit
+			)*/
 
 /obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
 	amt2spawn = 1
@@ -156,6 +178,9 @@
 		/obj/item/voice_changer,
 		/obj/item/clothing/suit/cardboard_box,
 		/obj/item/device/powersink)
+		//cham projector
+		//emagged hypospray
+		//just go through buylist
 
 	rare_items2spawn = list()
 /*/obj/random_item_spawner/surplus/backup
