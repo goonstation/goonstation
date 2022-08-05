@@ -597,7 +597,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	name = "clown egg"
 	desc = "Um."
-	critter_type = /mob/living/critter/spider/clown
+	critter_type = /mob/living/critter/spider/clown/ai
 	warm_count = 20
 	critter_reagent = "rainbow fluid"
 
@@ -605,6 +605,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 	name = "cluwne egg"
 	desc = "Um???"
-	critter_type = /mob/living/critter/spider/clown/cluwne
+	critter_type = /mob/living/critter/spider/clown/cluwne/ai
 	warm_count = 20
 	critter_reagent = "painbow fluid"
