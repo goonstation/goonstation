@@ -1,0 +1,1229 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ar" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = s;
+	name = "Botany Satellite"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"aJ" = (
+/turf/unsimulated/floor/stairs/wide/other,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"by" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"bW" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"cE" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"eO" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"fm" = (
+/obj/grille/catwalk/cross{
+	dir = 6
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"hd" = (
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"hW" = (
+/obj/rack,
+/obj/item/satchel/hydro,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"iX" = (
+/turf/unsimulated/floor/stairs/wide/middle,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"jx" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jU" = (
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"kM" = (
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"kU" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"lq" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"mi" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"nD" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"ot" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"oE" = (
+/obj/storage/crate/bin,
+/obj/item/paper/randomencounter,
+/obj/random_item_spawner/desk_stuff/few,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"pq" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"qu" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"qy" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"rh" = (
+/obj/wingrille_spawn/reinforced,
+/turf/unsimulated/floor,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"rv" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"sB" = (
+/obj/machinery/light/incandescent/broken,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"ua" = (
+/obj/cable{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"ui" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"uY" = (
+/obj/storage/crate,
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"vs" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"wc" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"yz" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"yM" = (
+/turf/unsimulated/floor/stairs/wide{
+	dir = 1
+	},
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"zk" = (
+/obj/machinery/r_door_control{
+	id = "hangar_botany_satellite"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"zn" = (
+/turf/unsimulated/floor/airless/solar,
+/area/noGenerate)
+"zo" = (
+/obj/storage/secure/closet/fridge,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"zA" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"zX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"zY" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"BH" = (
+/obj/machinery/power/solar,
+/turf/unsimulated/floor/airless/solar,
+/area/noGenerate)
+"Fa" = (
+/obj/submachine/chef_oven,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"FC" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Gk" = (
+/obj/machinery/vending/hydroponics,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"GF" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"GV" = (
+/obj/machinery/hydro_mister,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"HB" = (
+/turf/unsimulated/floor/stairs/wide,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Ig" = (
+/obj/machinery/plantpot,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Il" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"Kf" = (
+/turf/unsimulated/floor/stairs/wide/middle{
+	dir = 1
+	},
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"KF" = (
+/obj/wingrille_spawn/reinforced,
+/obj/wingrille_spawn/reinforced,
+/turf/unsimulated/floor,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Nb" = (
+/obj/table,
+/obj/machinery/microwave,
+/turf/unsimulated/floor/blackwhite/whitegrime,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"NM" = (
+/obj/storage/secure/closet/civilian/hydro,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"NR" = (
+/turf/unsimulated/floor/stairs/wide/other{
+	dir = 1
+	},
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Of" = (
+/obj/machinery/vehicle/miniputt,
+/turf/unsimulated/floor/shuttlebay,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"OO" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Rh" = (
+/obj/grille/catwalk/cross{
+	dir = 5;
+	tag = "icon-catwalk_cross (NORTHEAST)"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Rk" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/shower{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"RF" = (
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"RT" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Sj" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"St" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"SZ" = (
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Tu" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"VG" = (
+/obj/decal/fakeobjects/sink{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"WB" = (
+/obj/storage/crate,
+/turf/unsimulated/floor/grass/random,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Xl" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"XM" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"Ym" = (
+/obj/grille/catwalk,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+"ZX" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/turf/unsimulated/floor/neutral,
+/area/prefab{
+	icon_state = "blue";
+	name = "Botany Satellite"
+	})
+
+(1,1,1) = {"
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+Il
+Il
+Il
+Il
+Il
+"}
+(2,1,1) = {"
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+mi
+rv
+SZ
+SZ
+Rk
+pq
+SZ
+mi
+Il
+Il
+Il
+Il
+Il
+"}
+(3,1,1) = {"
+Il
+Il
+Il
+Il
+KF
+rh
+rh
+rh
+KF
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+mi
+ZO
+VG
+SZ
+SZ
+SZ
+sB
+mi
+Il
+Il
+Il
+Il
+Il
+"}
+(4,1,1) = {"
+Il
+Il
+rh
+rh
+KF
+RF
+RF
+RF
+rh
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+zA
+mi
+mi
+SZ
+mi
+SZ
+mi
+Il
+Il
+Il
+Il
+Il
+"}
+(5,1,1) = {"
+Il
+KF
+KF
+RF
+RF
+RF
+RF
+RF
+RF
+mi
+NM
+SZ
+mi
+zo
+kM
+rv
+yz
+oE
+ZO
+SZ
+mi
+ZX
+mi
+ZX
+mi
+Xl
+Xl
+Xl
+Xl
+Xl
+"}
+(6,1,1) = {"
+KF
+KF
+RF
+RF
+RF
+RF
+RF
+RF
+hW
+mi
+SZ
+SZ
+mi
+Fa
+kM
+zY
+St
+St
+FC
+SZ
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+Xl
+Xl
+"}
+(7,1,1) = {"
+rh
+RF
+RF
+Ig
+Ig
+RF
+RF
+RF
+nD
+mi
+SZ
+SZ
+mi
+Nb
+kM
+ui
+SZ
+SZ
+SZ
+SZ
+mi
+SZ
+rv
+HB
+by
+by
+by
+mi
+Xl
+Xl
+"}
+(8,1,1) = {"
+rh
+RF
+Ig
+jU
+RF
+RF
+RF
+RF
+RF
+mi
+mi
+eO
+mi
+mi
+mi
+GF
+mi
+mi
+mi
+mi
+mi
+SZ
+ui
+iX
+by
+Of
+by
+ar
+Xl
+Xl
+"}
+(9,1,1) = {"
+rh
+RF
+Ig
+Ig
+Ig
+RF
+RF
+RF
+RF
+NR
+SZ
+SZ
+SZ
+SZ
+SZ
+ui
+SZ
+SZ
+SZ
+SZ
+mi
+SZ
+ui
+iX
+by
+by
+by
+ar
+Xl
+Xl
+"}
+(10,1,1) = {"
+rh
+RF
+RF
+RF
+RF
+RF
+RF
+RF
+RF
+Kf
+SZ
+SZ
+SZ
+SZ
+SZ
+bW
+qy
+qy
+qu
+qy
+zX
+XM
+FC
+iX
+by
+by
+by
+ar
+Xl
+Xl
+"}
+(11,1,1) = {"
+rh
+RF
+Ig
+Ig
+Ig
+RF
+RF
+RF
+RF
+yM
+SZ
+SZ
+SZ
+SZ
+SZ
+SZ
+SZ
+SZ
+ui
+SZ
+mi
+ui
+SZ
+iX
+by
+by
+by
+ar
+Xl
+Xl
+"}
+(12,1,1) = {"
+rh
+RF
+Ig
+RF
+Ig
+RF
+RF
+RF
+WB
+mi
+mi
+RT
+mi
+mi
+RT
+mi
+kU
+SZ
+ui
+OO
+mi
+ui
+SZ
+iX
+by
+Of
+by
+ar
+Xl
+Xl
+"}
+(13,1,1) = {"
+rh
+RF
+RF
+Ig
+Ig
+RF
+RF
+RF
+uY
+mi
+SZ
+SZ
+mi
+SZ
+SZ
+mi
+SZ
+SZ
+ui
+SZ
+mi
+ui
+SZ
+aJ
+by
+by
+by
+zk
+Xl
+Xl
+"}
+(14,1,1) = {"
+KF
+KF
+RF
+RF
+RF
+RF
+RF
+RF
+RF
+mi
+SZ
+SZ
+mi
+SZ
+SZ
+mi
+ua
+qy
+FC
+SZ
+mi
+Sj
+mi
+mi
+mi
+mi
+mi
+mi
+Xl
+Xl
+"}
+(15,1,1) = {"
+Il
+KF
+KF
+RF
+RF
+RF
+RF
+RF
+GV
+mi
+NM
+SZ
+mi
+NM
+SZ
+mi
+Gk
+SZ
+SZ
+hd
+mi
+jx
+Xl
+Xl
+Xl
+Xl
+vs
+Xl
+Xl
+Xl
+"}
+(16,1,1) = {"
+Il
+Il
+KF
+rh
+KF
+RF
+RF
+RF
+rh
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+mi
+ot
+lq
+lq
+lq
+wc
+cE
+Il
+Il
+Il
+"}
+(17,1,1) = {"
+Il
+Il
+Il
+Il
+KF
+rh
+rh
+rh
+KF
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+jx
+BH
+BH
+zn
+BH
+vs
+Il
+Il
+Il
+"}
+(18,1,1) = {"
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+jx
+BH
+BH
+BH
+zn
+vs
+Il
+Il
+Il
+"}
+(19,1,1) = {"
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Rh
+Ym
+Ym
+Ym
+Tu
+fm
+Il
+Il
+Il
+"}
+(20,1,1) = {"
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+Il
+"}
