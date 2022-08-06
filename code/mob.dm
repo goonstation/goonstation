@@ -492,7 +492,7 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
@@ -1636,7 +1636,7 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(src.active_color_matrix)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
