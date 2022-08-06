@@ -212,6 +212,12 @@
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)
 
-/obj/item/extinguisher/large //for borgs. feel free to use elsewhere if applicable
+/obj/item/extinguisher/large
 	name = "fire extinguisher XL"
 	initial_volume = 300
+
+/obj/item/extinguisher/large/cyborg // because borgs can't replace their extinguishers
+	New()
+		..()
+		src.banned_reagents += src.melting_reagents
+		src.melting_reagents = list()
