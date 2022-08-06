@@ -1,4 +1,9 @@
 
+(t)sat aug 06 22
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
 (t)wed aug 03 22
 (u)TTerc
 (e)🆕|feature
