@@ -1121,5 +1121,5 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	chat_class = RADIOCL_COMMAND
 	locked_frequency = TRUE
 	icon_tooltip = "Commentator"
-	secure_frequencies = list("z" = 1401)
+	secure_frequencies = list("z" = 555)
 	secure_classes = list("z" = RADIOCL_SYNDICATE)
