@@ -651,7 +651,7 @@
 	// can_disarm = 1
 	two_handed = 0
 	var/use_two_handed = 1
-	var/status = 0
+	var/status = FALSE
 	var/one_handed_force = 7
 	var/two_handed_force = 13
 
@@ -688,9 +688,9 @@
 		..()
 
 	dropped(mob/user)
-		if (status)
-			setTwoHanded(0)
-			status = 0
+		if (src.status)
+			setTwoHanded(FALSE)
+			src.status = FALSE
 		..()
 
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
