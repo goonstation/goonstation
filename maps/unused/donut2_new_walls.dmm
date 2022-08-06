@@ -1818,41 +1818,31 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afW" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 0
 	},
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
 /area/shuttle/research/outpost)
 "afX" = (
-/obj/grille/steel,
-/obj/window/reinforced{
-	dir = 1;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 2;
-	icon_state = "rwindow"
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/window/reinforced{
-	dir = 4;
-	icon_state = "rwindow"
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor6"
-	},
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8;
 	icon_state = "shuttlecock"
 	},
 /area/shuttle/research/outpost)
 "afY" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 1
 	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
 /area/shuttle/research/outpost)
 "afZ" = (
 /obj/machinery/chem_dispenser,
@@ -2017,7 +2007,10 @@
 	},
 /area/shuttle/research/outpost)
 "agD" = (
-/turf/simulated/shuttle/wall,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3";
+	opacity = 1
+	},
 /area/shuttle/research/outpost)
 "agE" = (
 /obj/machinery/light_switch{
@@ -3139,7 +3132,10 @@
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater"
 	},
-/turf/simulated/shuttle/wall,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3";
+	opacity = 1
+	},
 /area/shuttle/research/outpost)
 "ajs" = (
 /obj/cable{
@@ -3542,9 +3538,14 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "akt" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 4
 	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
 /area/shuttle/research/outpost)
 "aku" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -3583,10 +3584,14 @@
 	},
 /area/shuttle/research/outpost)
 "akx" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	dir = 8
 	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
 /area/shuttle/research/outpost)
 "akH" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -27496,7 +27501,8 @@
 /area/station/solar/east)
 "bzG" = (
 /obj/item/storage/toilet/random{
-	dir = 8
+	dir = 8;
+	pixel_x = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
