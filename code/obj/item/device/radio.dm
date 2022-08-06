@@ -1105,3 +1105,21 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user)
 	return
+
+// Lol better dont use these while conspiracy is active. Has an extra frequency for commentators to cooperate over.
+/obj/item/device/radio/commentator
+	name = "commentator radio"
+	icon_state = "radio"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator Radio"
+
+/obj/item/device/radio/headset/commentator
+	name = "commentator headset"
+	icon_state = "command headset"
+	icon_override = "commentator"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator"
+	secure_frequencies = list("z" = 1401)
+	secure_classes = list("z" = RADIOCL_SYNDICATE)
