@@ -44050,6 +44050,12 @@
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
+"qSQ" = (
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/processing)
 "qTH" = (
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
@@ -94098,7 +94104,7 @@ bhG
 bih
 biP
 bgN
-wFJ
+qSQ
 bqu
 bmK
 bsl
