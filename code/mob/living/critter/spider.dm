@@ -615,6 +615,7 @@
 	name = "bumblespider"
 	real_name = "bumblespider"
 	desc = "It seems pretty friendly. D'aww."
+	
 /mob/living/critter/spider/med/ai
 	adultpath = /mob/living/critter/spider/ai
 	ai_type = /datum/aiHolder/spider
