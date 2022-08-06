@@ -1,5 +1,9 @@
 
 (t)sat aug 06 22
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
 (u)DisturbHerb
 (p)10103
 (e)🐛|bug
