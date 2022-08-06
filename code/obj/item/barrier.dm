@@ -1,6 +1,6 @@
 /obj/item/barrier
 	name = "barrier"
-	desc = "A personal barrier. Activate this item with both hands free to use it."
+	desc = "A personal barrier. Activate this item inhand to deploy it."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -19,7 +19,7 @@
 
 	can_disarm = 1
 	two_handed = 0
-	var/use_two_handed = 0
+	var/use_two_handed = 0 // Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = 0
