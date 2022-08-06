@@ -63,8 +63,6 @@ Materials Science is infinitely useful.
 This section shows the different properties or materials that are of interest to us and how they affect our materials, and some primary materials for each property. Please see the footnote for an appendix on how these properties are rated.
 <p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b> - higher radiation output means a higher recharge rate, but also higher radiation damage to those handling or around these materials.
 </p><ul><li>(ex.: Cerenkite, Erebite, Koshmarite)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Neutron Radioactivity</b> - a sub-type of radioactivity from incredibly dense materials that also recharges cells faster but also outputs higher radiation damage
-</p><ul><li>(ex.: Neutronium)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it; <b>more conductive materials make for better reservoirs for energy storage in batteries</b>.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
@@ -76,10 +74,8 @@ This section shows the different properties or materials that are of interest to
 <ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - how combustible a material is.</p>
 <ul><li>(ex.: Char, Plasmastone)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b> - how well a material resists acids.</p>
-<ul><li>(ex.: Viscerite, Dyneema)</ul></li>
-<p style="margin-right:10%; margin-left:1%"><b>Permeability</b> - the porousness of the material and how well viruses pass through it.</p>
-<ul><li>(ex.: Viscerite [high protection], Carbon Nanofiber [high protection])</ul></li>
+<p style="margin-right:10%; margin-left:1%"><b>Chemical resistance</b> - how well a material resists acids and how well it resists viruses pass through it.</p>
+<ul><li>(ex.: Uqill, Iridium, Dyneema)</ul></li>
 <p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
 <ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
