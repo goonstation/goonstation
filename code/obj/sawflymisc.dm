@@ -27,11 +27,13 @@
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
+	overlays = null
 
 	//used in dictating behavior when deployed from grenade
 	//var/fresh = TRUE
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 	var/mob/currentuser = null
+	var/isopen = FALSE
 
 	attack_self(mob/user)
 		..()
@@ -47,13 +49,20 @@
 			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 		else
 			heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //give them pet AI
-
 		qdel(src)
-	/*New()
-		if(fresh)
-			heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
-			heldfly.set_loc(src)
-		..()*/
+
+	attackby(obj/item/W, mob/user)
+
+		if (isscrewingtool(W))
+			if(isopen) //already open, close
+				isopen = FALSE
+				overlays -= "open-overlay"
+			else //open it up
+				isopen = TRUE
+				overlays += "open-overlay"
+		..()
+
+
 
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
@@ -167,7 +176,7 @@
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
-		if(!ON_COOLDOWN(user, "sawfly_attackCD", 1 SECONDS))
+		if(!ON_COOLDOWN(user, "sawfly_attackCD", 0.8 SECONDS))
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
 			if(prob(3))
