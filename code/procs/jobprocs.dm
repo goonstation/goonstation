@@ -547,13 +547,19 @@
 
 	return
 
-/mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
+/// Equip items from sensory traits
+/mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
+		src.drop_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
 	if (src.traitHolder.hasTrait("shortsighted"))
+		src.drop_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
 	if (src.traitHolder.hasTrait("deaf"))
+		src.drop_from_slot(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
+
+/mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
 		if (istype(src.back, /obj/item/storage))
@@ -691,7 +697,8 @@
 		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 		src.put_in_hand_or_drop(new /obj/item/joint_wax)
-	return
+
+	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/card/id/C = null
