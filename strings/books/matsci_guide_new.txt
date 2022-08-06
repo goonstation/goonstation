@@ -165,8 +165,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
-	<td align="right" class="unavaib">n/a</td>
 	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Ice</td>
 	<td align="right">6</td>
