@@ -158,16 +158,16 @@
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
 		if(!drain.disabled && drain.cooldowncheck())
-			return !drain.handleCast(target)
+			return can_act(src,TRUE) && !drain.handleCast(target)
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
 		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
-		return !flail.disabled
+		return can_act(src,TRUE) && !flail.disabled
 
 /mob/living/critter/spider/nice
 	name = "bumblespider"
@@ -356,7 +356,7 @@
 				src.hand_attack(target)
 
 	can_critter_attack()
-		return TRUE
+		return can_act(src,TRUE)
 
 	cluwne
 		name = "cluwnespider"
@@ -387,14 +387,14 @@
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			if(!drain.disabled && drain.cooldowncheck())
-				return !drain.handleCast(target)
+				return can_act(src,TRUE) && !drain.handleCast(target)
 
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			return (!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
 		can_critter_attack()
-			return TRUE
+			return can_act(src,TRUE)
 
 
 /mob/living/critter/spider/clownqueen
@@ -451,15 +451,15 @@
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			if(!drain.disabled && drain.cooldowncheck())
-				return !drain.handleCast(target)
+				return can_act(src,TRUE) && !drain.handleCast(target)
 
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			return (!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
 		can_critter_attack()
 			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
-			return !trample.disabled
+			return can_act(src,TRUE) && !trample.disabled
 
 	New()
 		..()
@@ -530,15 +530,15 @@
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
 		if(!drain.disabled && drain.cooldowncheck())
-			return !drain.handleCast(target)
+			return can_act(src,TRUE) && !drain.handleCast(target)
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
-		return !trample.disabled
+		return can_act(src,TRUE) && !trample.disabled
 
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
@@ -612,10 +612,10 @@
 	adultpath = /mob/living/critter/spider/nice/ai
 	ai_type = /datum/aiHolder/spider_peaceful
 	is_npc = TRUE
-	name = "bumblespider"
-	real_name = "bumblespider"
+	name = "baby bumblespider"
+	real_name = "baby bumblespider"
 	desc = "It seems pretty friendly. D'aww."
-	
+
 /mob/living/critter/spider/med/ai
 	adultpath = /mob/living/critter/spider/ai
 	ai_type = /datum/aiHolder/spider

@@ -15,7 +15,7 @@
 /datum/aiHolder/spider_peaceful
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/spider, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/spider_peaceful, list(src))
 
 /datum/aiTask/prioritizer/critter/spider_peaceful/New()
 	..()

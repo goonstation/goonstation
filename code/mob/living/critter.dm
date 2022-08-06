@@ -1226,7 +1226,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (istype(C, src.type)) continue
 			. += C
 
-	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavanged. Return a list of potential targets, one will be picked based on distance.
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
 		. = list()
 		for (var/mob/living/carbon/human/H in view(range, src))
@@ -1253,15 +1253,15 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()
-		return TRUE
+		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
 	proc/can_critter_scavenge()
-		return TRUE
+		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to eat. For handling cooldowns, or other eat blocking conditions.
 	proc/can_critter_eat()
-		return TRUE
+		return can_act(src,TRUE)
 
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A
