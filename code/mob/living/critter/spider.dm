@@ -153,7 +153,7 @@
 			else if(!bite.disabled && bite.cooldowncheck())
 				bite.handleCast(target)
 			else
-				return ..()
+				..()
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
