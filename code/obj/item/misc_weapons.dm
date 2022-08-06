@@ -688,8 +688,9 @@
 		..()
 
 	dropped(mob/user)
-		setTwoHanded(0)
-		status = 0
+		if (status)
+			setTwoHanded(0)
+			status = 0
 		..()
 
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
