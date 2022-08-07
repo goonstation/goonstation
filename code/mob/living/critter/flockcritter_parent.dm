@@ -434,7 +434,7 @@
 
 	var/atom/target
 
-	New(var/mob/living/critter/flock/drone/ntarg, var/duration_i)
+	New(var/atom/ntarg, var/duration_i)
 		..()
 		if (ntarg)
 			target = ntarg
