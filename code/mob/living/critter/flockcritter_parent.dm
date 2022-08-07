@@ -300,7 +300,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
-		var/mob/living/critter/flock/drone/F = owner
+		var/mob/living/critter/flock/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
 			return
 
@@ -336,7 +336,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || !F?.can_afford(FLOCK_BARRICADE_COST) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -443,7 +443,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		var/mob/living/critter/flock/C = target
 		if (!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
 			interrupt(INTERRUPT_ALWAYS)
@@ -451,7 +451,7 @@
 
 	onStart()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		var/mob/living/critter/flock/C = target
 		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
 			interrupt(INTERRUPT_ALWAYS)
@@ -542,7 +542,7 @@
 
 	onStart()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -566,7 +566,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
 			return
 
@@ -594,7 +594,7 @@
 
 	onUpdate()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -612,7 +612,7 @@
 
 	onEnd()
 		..()
-		var/mob/living/critter/flock/F = owner
+		var/mob/living/critter/flock/drone/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			return
 
