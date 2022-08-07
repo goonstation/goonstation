@@ -34,10 +34,15 @@
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 	var/mob/currentuser = null
 	var/isopen = FALSE
+	var/playercontrolled = FALSE
 
 	attack_self(mob/user)
-		..()
-		user = currentuser
+		if(playercontrolled)
+			if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
+			//ejectbrain
+		else
+			user = currentuser
+			..()
 
 	prime()
 		var/turf/T =  get_turf(src)
@@ -45,24 +50,27 @@
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
 			heldfly.isdisabled = FALSE
-		if(issawfly)//(istraitor(currentuser) || isnukeop(currentuser) || isspythief(currentuser) || isnukeopgunbot(currentuser)))
-			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
-		else
-			heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //give them pet AI
+		if(!playercontrolled)
+			if(istraitor(currentuser) || isnukeop(currentuser) || isspythief(currentuser) || isnukeopgunbot(currentuser))
+				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
+			else
+				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //give them pet AI
 		qdel(src)
 
 	attackby(obj/item/W, mob/user)
 
-		if (isscrewingtool(W))
-			if(isopen) //already open, close
+		if (isscrewingtool(W)) //basic open/close actions
+			if(isopen)
 				isopen = FALSE
 				overlays -= "open-overlay"
-			else //open it up
+			else
 				isopen = TRUE
 				overlays += "open-overlay"
-		..()
+		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
 
 
+	proc/insertbrain()
+		//grungle bungle bongle
 
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
