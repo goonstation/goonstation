@@ -544,6 +544,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				// Show login notice, if one exists
 				src.show_login_notice()
 
+				// Set screen saturation
+				src.set_saturation(cloud_get("saturation"))
+
 		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
@@ -675,8 +678,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	// Set view tint
 	view_tint = winget( src, "menu.set_tint", "is-checked" ) == "true"
-
-	src.set_saturation(cloud_get("saturation"))
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
