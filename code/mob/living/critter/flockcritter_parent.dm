@@ -251,40 +251,43 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target) || isfeathertile(target) || !F?.can_afford(FLOCK_CONVERT_COST))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if(F && isalive(F) && target)
-			boutput(F, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
-			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
-			var/flick_anim = "spawn-floor"
-			if(istype(target, /turf/space))
-				var/make_floor = FALSE
-				for (var/obj/O in target)
-					if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
-						make_floor = TRUE
-						src.decal = new /obj/decal/flock_build_floor
-						flick_anim = "spawn-floor"
-						break
-				if (!make_floor)
-					src.decal = new /obj/decal/flock_build_fibrenet
-					flick_anim = "spawn-fibrenet"
-			else if(istype(target, /turf/simulated/floor))
-				src.decal = new /obj/decal/flock_build_floor
-				flick_anim = "spawn-floor"
-			else if(istype(target, /turf/simulated/wall))
-				src.decal = new /obj/decal/flock_build_wall
-				flick_anim = "spawn-wall"
-			if(src.decal)
-				src.decal.set_loc(target)
-				flick(flick_anim, src.decal)
+		boutput(F, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
+		playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
 
-			F.flock?.reserveTurf(target, F.real_name)
+		var/flick_anim = "spawn-floor"
+		if(istype(target, /turf/space))
+			var/make_floor = FALSE
+			for (var/obj/O in target)
+				if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
+					make_floor = TRUE
+					src.decal = new /obj/decal/flock_build_floor
+					flick_anim = "spawn-floor"
+					break
+			if (!make_floor)
+				src.decal = new /obj/decal/flock_build_fibrenet
+				flick_anim = "spawn-fibrenet"
+		else if(istype(target, /turf/simulated/floor))
+			src.decal = new /obj/decal/flock_build_floor
+			flick_anim = "spawn-floor"
+		else if(istype(target, /turf/simulated/wall))
+			src.decal = new /obj/decal/flock_build_wall
+			flick_anim = "spawn-wall"
+		if(src.decal)
+			src.decal.set_loc(target)
+			flick(flick_anim, src.decal)
+
+		F.flock?.reserveTurf(target, F.real_name)
 
 	onInterrupt(var/flag)
 		..()
@@ -298,12 +301,14 @@
 		if(src.decal)
 			qdel(src.decal)
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && isalive(F) && !isfeathertile(target))
-			if(F.flock)
-				F.flock.convert_turf(target, F.real_name)
-			else
-				flock_convert_turf(target)
-			F.pay_resources(FLOCK_CONVERT_COST)
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
+			return
+
+		if(F.flock)
+			F.flock.convert_turf(target, F.real_name)
+		else
+			flock_convert_turf(target)
+		F.pay_resources(FLOCK_CONVERT_COST)
 
 /////////////////////////////////////////////////////////////////////////////////
 // CONSTRUCT ACTION
@@ -332,25 +337,28 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target) || !F?.can_afford(FLOCK_BARRICADE_COST) || locate(structurepath) in target)
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || !F?.can_afford(FLOCK_BARRICADE_COST) || locate(structurepath) in target)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && isalive(F) && target)
-			boutput(F, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
-			if(duration <= 30)
-				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 40, 1)
-			else
-				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !F?.can_afford(FLOCK_BARRICADE_COST) || locate(structurepath) in target)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 
-			var/flick_anim = "spawn-barricade"
-			src.decal = new /obj/decal/flock_build_barricade
-			if(src.decal)
-				src.decal.set_loc(target)
-				flick(flick_anim, src.decal)
+		boutput(F, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
+		if(duration <= 30)
+			playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 40, 1)
+		else
+			playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
+
+		var/flick_anim = "spawn-barricade"
+		src.decal = new /obj/decal/flock_build_barricade
+		if(src.decal)
+			src.decal.set_loc(target)
+			flick(flick_anim, src.decal)
 
 	onInterrupt(var/flag)
 		..()
@@ -362,12 +370,14 @@
 		if(src.decal)
 			qdel(src.decal)
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && isalive(F))
-			F.pay_resources(FLOCK_BARRICADE_COST)
-			var/obj/O = new structurepath(target)
-			animate_flock_convert_complete(O)
-			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
-			O.AddComponent(/datum/component/flock_interest, F?.flock)
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || locate(structurepath) in target)
+			return
+
+		F.pay_resources(FLOCK_BARRICADE_COST)
+		var/obj/O = new structurepath(target)
+		animate_flock_convert_complete(O)
+		playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
+		O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
 /////////////////////////////////////////////////////////////////////////////////
@@ -386,7 +396,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
@@ -395,16 +405,22 @@
 
 	onStart()
 		..()
-		boutput(owner, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
+		var/mob/living/critter/flock/drone/F = owner
+		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		boutput(F, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
 
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if(F && isalive(F) && F.flock)
-			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
-			new /obj/flock_structure/egg(get_turf(F), F.flock)
-			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
-			F.pay_resources(FLOCK_LAY_EGG_COST)
+		if (!F || isdead(F) || !F.flock)
+			return
+
+		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
+		new /obj/flock_structure/egg(get_turf(F), F.flock)
+		playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
+		F.pay_resources(FLOCK_LAY_EGG_COST)
 
 /////////////////////////////////////////////////////////////////////////////////
 // REPAIR ACTION
@@ -428,7 +444,8 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
+		var/mob/living/critter/flock/C = target
+		if (!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -436,8 +453,10 @@
 		..()
 		var/mob/living/critter/flock/F = owner
 		var/mob/living/critter/flock/C = target
-		if(!F || isdead(F) || !C || (istype(C) && isdead(C)))
+		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
+			interrupt(INTERRUPT_ALWAYS)
 			return
+
 		if(istype(C))
 			F.tri_message(C, "<span class='notice'>[F] begins spraying glowing fibers onto [C].</span>",
 				"<span class='notice'>You begin repairing [C.real_name]. You will both need to stay still for this to work.</span>",
@@ -454,8 +473,11 @@
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F))
+		var/mob/living/critter/flock/C = target
+		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target))
+			interrupt(INTERRUPT_ALWAYS)
 			return
+
 		if (istype(target, /mob/living/critter/flock))
 			var/mob/living/critter/flock/flockcritter = target
 			flockcritter.HealDamage("All", flockcritter.health_brute / 3, flockcritter.health_burn / 3)
@@ -514,15 +536,17 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target) || !istype(target.loc, /turf))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if(!F || isdead(F) || !target)
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
+			interrupt(INTERRUPT_ALWAYS)
 			return
+
 		F.tri_message(target, "<span class='notice'>[F] begins forming a cuboid structure around [target].</span>",
 			"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
 			"<span class='alert'>[F] is forming a structure around you!</span>",
@@ -543,10 +567,12 @@
 		if(src.decal)
 			qdel(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && isalive(F) && target && in_interact_range(F, target) && istype(target.loc, /turf))
-			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
-			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
-			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
+			return
+
+		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
+		playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
 ///
 //decon action
@@ -569,13 +595,17 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		owner?.visible_message("<span class='alert'>[owner] begins deconstructing [target].</span>")
+		var/mob/living/critter/flock/drone/F = owner
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		F.visible_message("<span class='alert'>[F] begins deconstructing [target].</span>")
 
 	onInterrupt()
 		..()
@@ -583,8 +613,9 @@
 	onEnd()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!F || isdead(F))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			return
+
 		if(istype(target, /obj/storage/closet/flock))
 			var/obj/storage/closet/flock/closet = target
 			closet.deconstruct()
@@ -646,19 +677,24 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!target || !F || isdead(F) || !in_interact_range(F, target))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
+		var/mob/living/critter/flock/drone/F = owner
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target))
 			return
+
 		F.visible_message("<span class='alert'>[F] deposits materials to the [target]!</span>", "<span class='notice'>You deposit materials to the tealprint</span>")
 		var/amounttopay = 0
 		var/difference = target.goal - target.currentmats
