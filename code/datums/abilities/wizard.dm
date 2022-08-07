@@ -58,10 +58,11 @@
 
 	wizard_mob.set_clothing_icon_dirty()
 
+	wizard_mob.equip_sensory_items()
+
 	boutput(wizard_mob, "You're a wizard now. You have a few starting spells; use the [SB] to choose the rest!")
 	if (!vr)
 		wizard_mob.show_antag_popup("wizard")
-	return
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
 

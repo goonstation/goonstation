@@ -204,7 +204,7 @@
 			src.icon = null
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-			if (client) client.color = null
+			if (client) client.set_color()
 
 			animation = new(src.loc)
 			animation.icon_state = "blank"

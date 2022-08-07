@@ -98,7 +98,7 @@
 // for gimmicks
 /mob/living/critter/flock/bit/Login()
 	..()
-	src.client?.color = null
+	src.client?.set_color()
 	src.ai?.stop_move()
 	src.is_npc = FALSE
 
