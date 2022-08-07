@@ -69,6 +69,20 @@
 	},
 /area/station/security/main)
 "abk" = (
+/obj/machinery/power/apc{
+	cell_type = 7500;
+	dir = 1;
+	name = "Transception Antenna APC";
+	pixel_y = 24;
+	req_access = list(43,31)
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
@@ -24901,6 +24915,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
@@ -34646,6 +34664,10 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
@@ -34739,6 +34761,9 @@
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 6
@@ -36541,6 +36566,12 @@
 	},
 /area/station/security/main)
 "sTW" = (
+/obj/item/paper{
+	info = "got cargo hooked into the array apc, cards should work";
+	name = "crinkled paper";
+	pixel_x = -8;
+	pixel_y = -6
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -37101,9 +37132,6 @@
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 10
@@ -43427,16 +43455,6 @@
 /turf/simulated/floor/black,
 /area/station/storage/eva)
 "wMe" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc{
-	cell_type = 7500;
-	dir = 1;
-	name = "Transception Antenna APC";
-	pixel_y = 24;
-	req_access = list(43,31)
-	},
 /turf/simulated/floor/blackwhite{
 	dir = 9
 	},
