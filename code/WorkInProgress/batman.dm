@@ -108,7 +108,7 @@
 	var/i
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
-		if (get_dist(A,T) < 1)
+		if (GET_DIST(A,T) < 1)
 			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
@@ -336,7 +336,7 @@
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
+			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming [him_or_her(T)] in the head</B>!</span>")
 			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			random_brute_damage(T, 25)
 			usr.delStatus("weakened")

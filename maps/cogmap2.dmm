@@ -29892,18 +29892,6 @@
 	name = "Robust Donuts";
 	pixel_y = 10
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = -5;
-	pixel_y = -5
-	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -67998,8 +67986,15 @@
 "cXA" = (
 /obj/table/reinforced/auto,
 /obj/deskclutter,
-/obj/item/storage/toolbox/emergency,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = -2
+	},
 /obj/machinery/light_switch/north,
+/obj/item/disk/data/tape{
+	pixel_x = 5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -69487,7 +69482,7 @@
 /obj/item/device/matanalyzer,
 /obj/item/device/matanalyzer,
 /obj/machinery/light,
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -6;
 	pixel_y = 10
 	},
@@ -71027,8 +71022,7 @@
 /area/station/maintenance/solar/south)
 "del" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "EMERGENCY DISPOSAL";
-	
+	name = "EMERGENCY DISPOSAL"
 	},
 /turf/simulated/floor/airless/engine/caution/westeast,
 /area/station/hangar/science)
@@ -76185,8 +76179,7 @@
 /area/station/hallway/secondary/exit)
 "ewr" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Outpost Shuttle Dock";
-	
+	name = "Outpost Shuttle Dock"
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,
@@ -76335,8 +76328,7 @@
 /area/station/security/checkpoint/podbay)
 "fwk" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Outpost Shuttle Dock";
-	
+	name = "Outpost Shuttle Dock"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
@@ -77248,8 +77240,7 @@
 /area/station/maintenance/central)
 "jNM" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Research Outpost Shuttle";
-	
+	name = "Research Outpost Shuttle"
 	},
 /obj/access_spawn/research,
 /turf/unsimulated/floor/shuttle,
@@ -77327,8 +77318,7 @@
 /area/station/hangar/science)
 "kcO" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Outpost Shuttle Dock";
-	
+	name = "Outpost Shuttle Dock"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/research,
@@ -79621,8 +79611,7 @@
 /area/shuttle/research/outpost)
 "vuO" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Outpost Shuttle Dock";
-	
+	name = "Outpost Shuttle Dock"
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/airless/caution/northsouth,

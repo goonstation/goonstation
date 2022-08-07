@@ -165,7 +165,7 @@
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby
 	#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
-	/// Sent when a mob sets their a_intent var (mob, intent)
+	/// Sent when a mob sets their a_intent var, returning anything will cancel the intent change (mob, intent)
 	#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 	/// Sent when radiation status ticks on mob (stage)
 	#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
@@ -182,6 +182,15 @@
 
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
+
+	// ---- typing indicator signals ----
+
+	/// Create typing indicator
+	#define COMSIG_CREATE_TYPING "create_typing"
+	/// Remove typing indicator
+	#define COMSIG_REMOVE_TYPING "remove_typing"
+	/// Speech bubble
+	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
 
 	// ---- disguiser device signal ----
 

@@ -576,8 +576,8 @@
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -746,11 +746,6 @@
 	desc = "A cut block of Erebite."
 	default_material = "erebite"
 	icon_state = "martian-bar"
-
-/obj/item/material_piece/gold
-	name = "stamped bullion"
-	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	default_material = "gold"
 
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"

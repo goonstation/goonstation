@@ -21,6 +21,7 @@ WET FLOOR SIGN
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST | REBUILD_SPECTRO
 	move_triggered = 1
+	var/initial_volume = 100
 
 /obj/item/spraybottle/move_trigger(var/mob/M, kindof)
 	if (..() && reagents)
@@ -32,19 +33,16 @@ WET FLOOR SIGN
 
 /obj/item/spraybottle/New()
 	..()
-	create_reagents(100)
+	create_reagents(initial_volume)
 
 /obj/item/spraybottle/detective
 	name = "luminol bottle"
 	desc = "A spray bottle labeled 'Luminol - Blood Detection Agent'. That's what those fancy detectives use to see blood!"
+	rc_flags = RC_VISIBLE | RC_SPECTRO | RC_SCALE
 
 	New()
 		..()
-		reagents.add_reagent("luminol", 100)
-
-	examine()
-		. = ..()
-		. += "[bicon(src)] [src.reagents.total_volume] units of luminol left!"
+		reagents.add_reagent("luminol", initial_volume)
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner spray bottle"
@@ -52,29 +50,27 @@ WET FLOOR SIGN
 
 	New()
 		..()
-		reagents.add_reagent("cleaner", 100)
+		reagents.add_reagent("cleaner", initial_volume)
 
-/obj/item/spraybottle/cleaner/robot/New()
-	..()
-	create_reagents(25)// no more 100 units on spawn for you, mister!
 /obj/item/spraybottle/cleaner/robot
 	name = "cybernetic cleaner spray bottle"
 	desc = "A cleaner spray bottle jury-rigged to synthesize space cleaner."
 	icon_state = "cleaner_robot"
-
+	var/refill_speed = 2.5
+	initial_volume = 50
 	disposing()
 		..()
 		processing_items.Remove(src)
 
-	afterattack(atom/A, mob/user)
-		. = ..()
-		if (src.reagents.total_volume < 25)
+	on_reagent_change()
+		..()
+		if (src.reagents.total_volume < src.reagents.maximum_volume)
 			processing_items |= src
 
 	process()
 		..()
-		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 1)
+		if (src.reagents.total_volume < src.reagents.maximum_volume)
+			src.reagents.add_reagent("cleaner", refill_speed)
 		else
 			processing_items.Remove(src)
 		return 0
@@ -83,16 +79,8 @@ WET FLOOR SIGN
 	name = "cybernetic cleaning spray bottle"
 	desc = "A small spray bottle that slowly synthesises space cleaner."
 	icon_state = "cleaner_robot"
-
-	process()
-		..()
-		if (src.reagents.total_volume < 25)
-			src.reagents.add_reagent("cleaner", 0.75)
-		else
-			processing_items.Remove(src)
-		return 0
-
-
+	initial_volume = 25
+	refill_speed = 0.75
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -241,7 +229,7 @@ WET FLOOR SIGN
 	D.create_reagents(5) // cogwerks: lowered from 10 to 5
 	src.reagents.trans_to(D, 5)
 	var/log_reagents = log_reagents(src)
-	var/travel_distance = clamp(get_dist(get_turf(src), A), 1, 3)
+	var/travel_distance = clamp(GET_DIST(get_turf(src), A), 1, 3)
 	SPAWN(0)
 		for (var/i=0, i<travel_distance, i++)
 			step_towards(D,A)
@@ -282,8 +270,8 @@ WET FLOOR SIGN
 	icon_state = "mop"
 	var/mopping = 0
 	var/mopcount = 0
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
@@ -693,8 +681,8 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "caution"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -758,8 +746,8 @@ WET FLOOR SIGN
 	desc = "A compact holo emitter pre-loaded with various holographic signs. Fits into pockets and boxes."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-off"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
@@ -840,7 +828,7 @@ WET FLOOR SIGN
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 

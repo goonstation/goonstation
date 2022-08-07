@@ -3,7 +3,7 @@
 	organ_name = "pancreas"
 	organ_holder_name = "pancreas"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6.0
+	organ_holder_required_op_stage = 6
 	icon_state = "pancreas"
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/pancreatitis

@@ -184,7 +184,7 @@
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)

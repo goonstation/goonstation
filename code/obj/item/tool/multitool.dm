@@ -9,8 +9,8 @@
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL
 
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
 

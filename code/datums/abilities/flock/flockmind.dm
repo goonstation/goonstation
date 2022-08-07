@@ -17,12 +17,12 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute()
-	var/mob/living/intangible/flock/flockmind/F = owner
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
-		return //someone made a flockmind without a flock, or gave this ability holder to something else.
-	src.totalCompute = F.flock.total_compute()
-	src.points = src.totalCompute - F.flock.used_compute()
+		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
+	src.points = totalCompute - usedCompute
+	src.totalCompute = totalCompute
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
@@ -299,7 +299,7 @@
 		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
-			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
+			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
@@ -467,4 +467,6 @@
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task
+	if(drone.ai_paused)
+		drone.wake_from_ai_pause()
 	drone.ai.interrupt()

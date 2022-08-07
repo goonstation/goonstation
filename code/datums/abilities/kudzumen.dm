@@ -676,8 +676,8 @@
 	icon_state = "vine-item"
 	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	// item_state = "knife"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	burn_type = 1

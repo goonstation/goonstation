@@ -11,7 +11,7 @@ HAND_TELE
 	var/temp = null
 	var/frequency = FREQ_TRACKING_IMPLANT
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"

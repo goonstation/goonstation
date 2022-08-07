@@ -206,6 +206,7 @@
 /datum/ore/miracle
 	name = "miraclium"
 	output = /obj/item/raw_material/miracle
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
 	hardness_mod = 2
@@ -244,6 +245,7 @@
 /datum/ore/nanite
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15
 	hardness_mod = 2

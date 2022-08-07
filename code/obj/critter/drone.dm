@@ -127,7 +127,7 @@
 
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
-			if (A && src.z == A.z && get_dist(src,A) <= src.seekrange)
+			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0) continue
@@ -363,7 +363,7 @@
 					src.task = "thinking"
 					walk_to(src,0)
 				if (target)
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
@@ -373,7 +373,7 @@
 							if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 
 					else
-						var/turf/olddist = get_dist(src, src.target)
+						var/turf/olddist = GET_DIST(src, src.target)
 
 						if(smashes_shit) //Break another thing near the drone
 							//There be shit near us what can block our way.
@@ -391,7 +391,7 @@
 							walk_towards(src, src.target, 1, 4)*/
 						else walk_to(src, src.target,1,4)
 
-						if ((get_dist(src, src.target)) >= (olddist))
+						if ((GET_DIST(src, src.target)) >= (olddist))
 							src.frustration++
 
 						else

@@ -769,6 +769,8 @@
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
 
+	message = say_decorate(message)
+
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
@@ -953,10 +955,7 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN(1.5 SECONDS)
-		if (has_typing_indicator == FALSE)
-			UpdateOverlays(null, "speech_bubble")
+	show_speech_bubble(speech_bubble)
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1187,23 +1186,26 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,say_location) <= viewrange)
+					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,say_location) <= viewrange)
+				if (GET_DIST(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+/mob/living/proc/say_decorate(message)
+	return message
 
 // helper proooocs
 
@@ -1681,7 +1683,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
 				// hi grayshift sorry grayshift
-				if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+				if (GET_DIST(src,A) > 0 && GET_DIST(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 					if(pull_slowing)
 						. *= max(A.p_class, 1)
 					else
@@ -1712,7 +1714,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 
 			if (G.state == GRAB_PASSIVE)
-				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else

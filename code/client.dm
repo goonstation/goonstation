@@ -75,6 +75,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	var/view_tint
 
+	/// saturation_matrix: the client's game saturation
+	/// color_matrix: the client's game color (tint)
+	var/saturation_matrix = COLOR_MATRIX_IDENTITY
+	var/color_matrix = COLOR_MATRIX_IDENTITY
+
 	perspective = EYE_PERSPECTIVE
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
@@ -539,6 +544,9 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				// Show login notice, if one exists
 				src.show_login_notice()
 
+				// Set screen saturation
+				src.set_saturation(cloud_get("saturation"))
+
 		src.mob.reset_keymap()
 
 		if(current_state <= GAME_STATE_PREGAME && src.antag_tokens)
@@ -574,7 +582,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if(spooky_light_mode)
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
-		src.color = "#AAAAAA"
+		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
 	if (!src.chatOutput.loaded)
 		//Load custom chat
@@ -1085,7 +1093,7 @@ var/global/curr_day = null
 /client/Stat()
 	. = ..()
 	if(src.stathover)
-		if(get_turf(mob) != stathover_start || get_dist( stathover, get_turf(mob) ) >= 5)
+		if(get_turf(mob) != stathover_start || GET_DIST( stathover, get_turf(mob) ) >= 5)
 			stathover = null
 			return
 		stat( stathover )//tg makes a new panel, thats ugly tho
@@ -1362,6 +1370,16 @@ var/global/curr_day = null
 	set name ="apply-view-tint"
 
 	view_tint = !view_tint
+
+/client/verb/adjust_saturation()
+	set hidden = TRUE
+	set name = "adjust-saturation"
+
+	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
+	s = clamp(s, 50, 150) / 100
+	src.set_saturation(s)
+	src.cloud_put("saturation", s)
+	boutput(usr, "<span class='notice'>You have changed your game saturation to [s * 100]%.</span>")
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.

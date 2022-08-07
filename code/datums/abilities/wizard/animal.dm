@@ -40,6 +40,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/FurryGrim.ogg"
@@ -87,13 +88,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onStart()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()

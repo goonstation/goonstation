@@ -109,7 +109,6 @@
 
 	src.update_health_icon()
 	src.flock.removeDrone(src)
-	src.flock = null
 
 /mob/living/critter/flock/projCanHit(datum/projectile/P)
 	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
@@ -197,6 +196,11 @@
 
 // all flock bots should have the ability to rally somewhere (it's applicable to anything with flock AI)
 /mob/living/critter/flock/proc/rally(atom/movable/target)
+	if(istype(src,/mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/D = src
+		if(D.ai_paused)
+			D.wake_from_ai_pause()
+
 	if(src.is_npc)
 		// tell the npc AI to go after the target
 		if(src.ai)
@@ -517,7 +521,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_interact_range(owner, target))
+		if (target == null || owner == null || !in_interact_range(owner, target) || !istype(target.loc, /turf))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -550,7 +554,7 @@
 		if(src.decal)
 			qdel(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && target && in_interact_range(owner, target))
+		if(F && target && in_interact_range(owner, target) && istype(target.loc, /turf))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)

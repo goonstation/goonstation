@@ -1285,6 +1285,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			custom_pie.w_class = max(custom_pie.w_class, T.w_class) //Well, that huge thing you put into it isn't going to shrink, you know
 			custom_pie.throw_range = min(custom_pie.throw_range, T.throw_range)
 			custom_pie.throw_speed = min(custom_pie.throw_speed, T.throw_speed)
+			custom_pie.contraband = max(custom_pie.contraband, T.contraband - 1)
 
 			count++
 

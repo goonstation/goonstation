@@ -215,7 +215,7 @@
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+		if (GET_DIST(src, O) > src.range)
 			continue
 
 		// Heavy-duty flashers should be capable of disrupting cloaks in a reliable fashion, hence the 100% at the end.

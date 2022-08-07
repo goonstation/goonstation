@@ -44,7 +44,7 @@ proc/check_compid_list(var/client/C)
 		if(CI.compid == C.computer_id) //Seen this computer ID before
 			append_CID = 0
 			/* This will never happen what the fuck is wrong with me?
-			if (CI.last_ckey <> C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
+			if (CI.last_ckey != C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
 				message_admins("[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				logTheThing("admin", C, null, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				CI.last_ckey = C.ckey

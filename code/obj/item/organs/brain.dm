@@ -77,7 +77,7 @@
 			if (user.find_in_hand(src))
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "brain", 3.0)
-			H.organHolder.head.scalp_op_stage = 3.0
+			H.organHolder.head.scalp_op_stage = 3
 			return 1
 
 		return 0
@@ -151,7 +151,7 @@
 		if(!M || !ishuman(M)) // flockdrones shouldn't have these problems
 			return
 		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF"))
-			animate(M.client, color=COLOR_MATRIX_FLOCKMANGLED, time=900, easing=SINE_EASING) // ~ 1.5 minutes to complete
+			M.client.animate_color(COLOR_MATRIX_FLOCKMANGLED, time=900, easing=SINE_EASING) // ~ 1.5 minutes to complete
 		if(prob(3))
 			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
 				"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",

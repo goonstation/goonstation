@@ -4,7 +4,7 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 1.0
+	anchored = 1
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
@@ -85,7 +85,7 @@
 		return
 
 	var/t = null
-	if (get_dist(usr, src) <= 3 || isAI(usr))
+	if (GET_DIST(usr, src) <= 3 || isAI(usr))
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)

@@ -491,10 +491,10 @@
 	//Generally we want to explode() instead of just deleting the securitron.
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.explode()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode()
@@ -759,7 +759,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
 					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -1151,11 +1151,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(src,signal.source.loc)
+			var/dist = GET_DIST(src,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(src,nearest_beacon_loc))
 					nearest_beacon = signal_beacon
 					nearest_beacon_loc = signal.source.loc
 					return
@@ -1378,7 +1378,7 @@
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
 			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
-			duration = round(duration * 0.60)
+			duration = round(duration * 0.6)
 		else
 			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
 

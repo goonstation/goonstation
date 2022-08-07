@@ -33,7 +33,7 @@
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
-		/obj/item/material_piece/gold = 20,\
+		/obj/item/stamped_bullion = 20,\
 		/obj/item/plant/herb/cannabis/omega/spawnable = 20,\
 		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper) = 20,
 	)
@@ -210,7 +210,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			return
 
 	proc/inputter_check(var/mob/living/opener)
-		if (get_dist(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
+		if (GET_DIST(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
 			boutput(opener, "You try really hard to press the button all the way over there. Using your mind. Way to go, champ!")
 			return 0
 
@@ -440,7 +440,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			boutput(user, "<span class='alert'>You're going to have to use a heftier object if you want to break the crate's anti-tampering system.</span>")
 			return
 		add_fingerprint(user)
-		detach_from(attached)
+		detach_from()
 
 	proc/attach_to(var/obj/storage/crate/C, var/mob/user)
 		if (!C || !istype(C))
@@ -456,17 +456,18 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		icon_state = "antitamper-on"
 		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
 
-	proc/detach_from(var/obj/storage/crate/C)
-		if (!C)
+	proc/detach_from()
+		if (!attached)
 			return
 		icon_state = ""
 		flick("antitamper-break", src)
+		var/obj/storage/crate/C = attached
+		attached = null
 		SPAWN(1 SECOND)
-			attached.vis_contents -= src
-			attached.locked = FALSE
-			attached.anchored = FALSE
-			attached.update_icon()
-			attached = null
+			C.vis_contents -= src
+			C.locked = FALSE
+			C.anchored = FALSE
+			C.update_icon()
 			qdel(src)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)
 

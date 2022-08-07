@@ -6,7 +6,7 @@
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
-	force = 8.0
+	force = 8
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
@@ -98,8 +98,8 @@
 	icon_state = "power_cell"
 	m_amt = 20000
 	g_amt = 45000
-	charge = 500.0
-	max_charge = 500.0
+	charge = 500
+	max_charge = 500
 
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_basic
@@ -137,8 +137,8 @@
 	icon_state = "surv_machete_nt"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "surv_machete"
-	force = 10.0
-	throwforce = 15.0
+	force = 10
+	throwforce = 15
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
@@ -162,7 +162,7 @@
 	name = "blast grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "energy_stinger"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
@@ -206,7 +206,7 @@
 	name = "concussion grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "concussion"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
@@ -242,7 +242,7 @@
 						var/mob/living/M = A
 						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
-						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
+						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
 			SPAWN(0.1 SECONDS)
 				qdel(O)

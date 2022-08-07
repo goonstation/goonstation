@@ -82322,7 +82322,7 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -85887,7 +85887,7 @@
 /obj/item/clipboard{
 	pixel_x = -4
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 13
 	},
 /turf/simulated/floor/engine/caution/west,

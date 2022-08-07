@@ -477,7 +477,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	cost = 1
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "red"
 	shot_sound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	shot_number = 1
@@ -489,8 +489,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	sname = "paintball"
 	name = "paintball jug"
 	icon_state = "357-2"
-	amount_left = 4.0
-	max_amount = 4.0
+	amount_left = 4
+	max_amount = 4
 	ammo_type = new/datum/projectile/special/paintball
 	caliber = 42069
 	icon_dynamic = 1
@@ -526,8 +526,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/pip_color = "#FFFFFF" // only set to other colors by white 50c chips atm but may as well make it a var because ~variety~
 	var/image/image_pip = null
 	var/value = 1
-	force = 2.0
-	throwforce = 2.0
+	force = 2
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -987,7 +987,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			walk_towards(src,null)
 			return 1
 
-		else if (get_dist(src, M) >= 5)
+		else if (GET_DIST(src, M) >= 5)
 			var/insult = pick("fucker", "fuckhead", "shithead", "shitface", "shitass", "asshole")
 			var/targ = pick("", ", [target_name]", ", [insult]", ", you [insult]")
 
@@ -1169,9 +1169,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
-	force = 2.0
+	force = 2
 	w_class = W_CLASS_SMALL
-	throwforce = 2.0
+	throwforce = 2
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 15
@@ -1259,9 +1259,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
@@ -1806,7 +1806,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							src.visible_message("<span class='alert'><B>[src] shoves \his hand into [H]'s chest!</B></span>")
 							src.say("Kali ma, shakthi deh!")
 							if(HU.heart_op_stage <= 3.0)
-								HU:heart_op_stage = 4.0
+								HU:heart_op_stage = 4
 								HU.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 								var/obj/item/organ/heart/heart = new /obj/item/organ/heart(src.loc)
 								heart.donor = HU

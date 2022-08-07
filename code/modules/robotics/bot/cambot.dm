@@ -75,10 +75,10 @@
 
 /obj/machinery/bot/cambot/ex_act(severity)
 	switch (severity)
-		if (1.0)
+		if (1)
 			src.explode()
 			return
-		if (2.0)
+		if (2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 

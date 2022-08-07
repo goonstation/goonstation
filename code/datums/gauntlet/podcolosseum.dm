@@ -855,7 +855,7 @@ var/global/datum/arena/colosseumController/colosseum_controller = new()
 				var/forcewall_time = rand(50, 100)
 				var/list/affected = list()
 				for (var/turf/T in orange(2, C))
-					if (get_dist(T, Q) == 2)
+					if (GET_DIST(T, Q) == 2)
 						var/obj/overlay/Wall = new(T)
 						Wall.anchored = 1
 						Wall.set_density(1)

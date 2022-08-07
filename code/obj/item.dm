@@ -38,7 +38,7 @@
 	var/force = 0
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1
-	var/r_speed = 1.0
+	var/r_speed = 1
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
@@ -141,7 +141,7 @@
 		. = list()
 		if(showTooltipDesc)
 			. += capitalize(src.desc)
-			var/extra = src.get_desc(get_dist(src, usr), usr)
+			var/extra = src.get_desc(GET_DIST(src, usr), usr)
 			if(extra)
 				. += "<br>" + extra
 
@@ -212,7 +212,7 @@
 			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
 			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
 			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
-			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+			 || (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
 				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
@@ -718,16 +718,16 @@
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
 				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
-				logTheThing("combat", usr, null, "moves [src] with wtk.")
+				logTheThing("combat", usr, null, "moves [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 				return
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with wtk.")
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 		else if (ismegakrampus(usr))
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with k_tk.")
-		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && get_dist(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with k_tk.")
+		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && GET_DIST(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with tk.")
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with tk.")
 
 #ifdef HALLOWEEN
 		else if (istype(usr, /mob/dead/observer))	//ghost
@@ -985,7 +985,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (2.0)
+		if (2)
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -994,7 +994,7 @@
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-		if (3.0)
+		if (3)
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -1419,9 +1419,9 @@
 		if (O == (attacher || attachee))
 			continue
 		if (attacher == attachee)
-			O.show_message("<span class='alert'>[attacher] attaches [src] to \his own stump!</span>", 1)
+			O.show_message("<span class='alert'>[attacher] attaches [src] to [his_or_her(attacher)] own stump!</span>", 1)
 		else
-			O.show_message("<span class='alert'>[attachee] has [src] attached to \his stump by [attacher].</span>", 1)
+			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
 	if (attachee != attacher)
 		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")

@@ -84,7 +84,7 @@
 						var/D = range + 1
 						var/mob/living/M = null
 						for (var/mob/living/C in view(src.range))
-							var/dist = get_dist(src, C)
+							var/dist = GET_DIST(src, C)
 							if (dist < D)
 								M = C
 								D = dist
