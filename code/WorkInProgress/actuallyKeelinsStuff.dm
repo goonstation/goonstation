@@ -2606,7 +2606,9 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/living/carbon/human/user = thr.user
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+		else break
 		if(hit_atom == user)
 			if(prob(prob_clonk))
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
