@@ -323,7 +323,7 @@
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
-
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
 	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -375,6 +375,7 @@
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")
 	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
