@@ -9,6 +9,11 @@
 
 	var/has_wizards = TRUE
 	var/has_werewolves = TRUE
+#if defined(MAP_OVERRIDE_NADIR)
+	var/has_blobs = 0
+#else
+	var/has_blobs = 1
+#endif
 
 	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 #if defined(MAP_OVERRIDE_NADIR)

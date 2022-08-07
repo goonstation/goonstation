@@ -2403,7 +2403,9 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "bnE" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/bar,
@@ -2439,7 +2441,9 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/green/fancy/junction/sw_e,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "boA" = (
 /obj/machinery/rkit,
 /obj/machinery/light{
@@ -5350,7 +5354,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "cQI" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -6708,6 +6714,14 @@
 	icon_state = "15"
 	},
 /area/shuttle/arrival/station)
+"dEe" = (
+/obj/decal/tile_edge/floorguide/hop{
+	dir = 4
+	},
+/turf/simulated/floor/blueblack/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/southwest)
 "dEn" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -7443,7 +7457,9 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "ebr" = (
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
@@ -9698,7 +9714,9 @@
 	pixel_x = -2
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "fpC" = (
 /obj/rack,
 /obj/item/storage/belt/utility,
@@ -11368,6 +11386,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -14957,6 +14976,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "hQo" = (
@@ -17430,7 +17450,9 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "jcG" = (
 /obj/storage/closet/office,
 /obj/item/camera,
@@ -17905,7 +17927,9 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "jpE" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/paper/book/from_file/pharmacopia,
@@ -19336,7 +19360,9 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "kbv" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/stairs{
@@ -21265,7 +21291,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 8
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "laH" = (
 /obj/machinery/conveyor/west{
 	id = "ghostdrone"
@@ -23209,7 +23237,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/green/fancy/junction/ne_w,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "lWq" = (
 /obj/landmark/halloween,
 /turf/simulated/floor/black,
@@ -23586,7 +23616,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw_triple,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "mdI" = (
 /obj/pool/perspective{
 	dir = 5;
@@ -23766,6 +23798,7 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "mhF" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -23862,6 +23895,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
+"mkc" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "mkh" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -24068,7 +24106,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "mrH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25142,6 +25182,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "mSv" = (
@@ -25191,7 +25232,7 @@
 /area/station/medical/medbay)
 "mTN" = (
 /obj/landmark/gps_waypoint{
-	name = "North Escape Wing"
+	name = "Escape Wing - North"
 	},
 /turf/simulated/floor/redblack/corner,
 /area/station/hallway/secondary/exit)
@@ -28867,7 +28908,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "pfn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29316,6 +29359,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -30189,7 +30233,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 6
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "pSD" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -32187,7 +32233,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 9
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "rcw" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -32930,7 +32978,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "rzN" = (
 /obj/table/reinforced/industrial/auto,
 /obj/decal/tile_edge/line/blue{
@@ -33538,8 +33588,11 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "rTj" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/green/fancy/innercorner/se_triple,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "rTk" = (
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay)
@@ -34096,7 +34149,9 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "shc" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -36335,7 +36390,9 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/phone,
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "tkA" = (
 /obj/storage/cart/trash,
 /obj/machinery/light/small{
@@ -36567,7 +36624,9 @@
 /area/station/hallway/primary/southeast)
 "tqL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "tqM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37470,7 +37529,7 @@
 /area/station/maintenance/north)
 "tOm" = (
 /obj/landmark/gps_waypoint{
-	name = "South Escape Wing"
+	name = "Escape Wing - South"
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
@@ -39551,7 +39610,9 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "uWN" = (
 /obj/stool/chair{
 	dir = 8
@@ -39665,7 +39726,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 10
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "uYF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -40778,7 +40841,9 @@
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
 	},
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "vGS" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -41168,7 +41233,9 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "vUB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -41875,7 +41942,9 @@
 	dir = 1
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "wwo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42559,7 +42628,9 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "wRi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
@@ -43498,7 +43569,9 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "xrx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43531,7 +43604,9 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
-/area/station/bridge/hos)
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "xsz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -82697,7 +82772,7 @@ fer
 tLV
 hrm
 cBv
-cBv
+mkc
 fNx
 nNI
 xYZ
@@ -89984,7 +90059,7 @@ ivn
 nKe
 lIG
 qog
-jhv
+dEe
 uqF
 uqF
 gvH

@@ -1805,8 +1805,8 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				var/obj/trait/trait = locate(href_list["trait"])
 				if (!M || !trait) return
-				message_admins("[key_name(usr)] removed trait [trait.cleanName] from [key_name(M)].")
-				logTheThing("admin", usr, M, "removed trait [trait.cleanName] from [constructTarget(M,"admin")].")
+				message_admins("[key_name(usr)] removed trait [trait.name] from [key_name(M)].")
+				logTheThing("admin", usr, M, "removed trait [trait.name] from [constructTarget(M,"admin")].")
 				M.traitHolder.removeTrait(trait.id)
 				usr.client.cmd_admin_managetraits(M)
 			else
@@ -1830,8 +1830,8 @@ var/global/noir = 0
 				var/list/obj/trait/all_traits = list()
 				var/list/traits_by_name = list()
 				for(var/obj/trait/trait as anything in traitList)
-					all_traits[traitList[trait].cleanName] = traitList[trait].id
-					traits_by_name.Add(traitList[trait].cleanName)
+					all_traits[traitList[trait].name] = traitList[trait].id
+					traits_by_name.Add(traitList[trait].name)
 
 				traits_by_name = sortList(traits_by_name)
 
@@ -1859,7 +1859,7 @@ var/global/noir = 0
 
 				for(var/trait in M.traitHolder.traits)
 					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
-					traits.Add(trait_obj.cleanName)
+					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any traits!</span></b>")
@@ -1872,7 +1872,7 @@ var/global/noir = 0
 				// get the id of the selected trait
 				for(var/trait in M.traitHolder.traits)
 					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
-					if(trait_obj.cleanName == trait_to_remove_name)
+					if(trait_obj.name == trait_to_remove_name)
 						M.traitHolder.removeTrait(trait_obj.id)
 						message_admins("[key_name(usr)] removed the trait [trait_to_remove_name] from [key_name(M)].")
 						logTheThing("admin", usr, M, "removed the trait [trait_to_remove_name] from [constructTarget(M,"admin")].")
@@ -5291,7 +5291,7 @@ var/global/noir = 0
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=managetraits_remove;target=\ref[M];trait=\ref[trait];origin=managetraits'>remove</a></td>
-				<td><a href='?src=\ref[src.holder];action=managetraits_debug_vars;trait=\ref[trait];origin=managetraits'>[trait.cleanName]</a></td>
+				<td><a href='?src=\ref[src.holder];action=managetraits_debug_vars;trait=\ref[trait];origin=managetraits'>[trait.name]</a></td>
 				<td>[trait.type]
 			</tr>"}
 	dat += "</table></body></html>"

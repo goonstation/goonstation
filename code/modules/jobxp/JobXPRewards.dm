@@ -528,7 +528,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/clown20
 	name = "Bananna"
-	desc = "Banana, but misspelled!"
+	desc = "Bananna, but misspelled!"
 	required_levels = list("Clown"=20)
 	icon_state = "?"
 	claimable = 1
@@ -543,7 +543,6 @@ mob/verb/checkrewards()
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
-		return
 
 /////////////Bartender////////////////
 
