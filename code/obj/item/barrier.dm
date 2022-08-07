@@ -19,7 +19,9 @@
 
 	can_disarm = 1
 	two_handed = 0
-	var/use_two_handed = 0 // Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
+
+	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
+	var/use_two_handed = 0
 
 	var/status = 0
 	var/obj/itemspecialeffect/barrier/E = 0
