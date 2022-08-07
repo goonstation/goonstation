@@ -6148,6 +6148,11 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "atD" = (
@@ -6417,7 +6422,6 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "auk" = (
@@ -8117,6 +8121,13 @@
 /area/station/crew_quarters/locker)
 "ayN" = (
 /obj/submachine/laundry_machine,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 3;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
 "ayO" = (
@@ -8124,6 +8135,10 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/item/clothing/under/rank{
+	pixel_y = -1;
+	pixel_x = -2
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
@@ -8527,6 +8542,7 @@
 /area/station/solar/west)
 "azJ" = (
 /obj/table/auto,
+/obj/random_item_spawner/hat/one,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
 "azK" = (
@@ -11366,6 +11382,13 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "aGo" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 3;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "aGp" = (
@@ -11679,6 +11702,7 @@
 	pixel_y = 7;
 	pixel_x = -7
 	},
+/obj/random_item_spawner/desk_stuff/few,
 /turf/simulated/floor/black/corner{
 	dir = 1
 	},
@@ -11697,6 +11721,11 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-s"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -11984,15 +12013,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"aHR" = (
-/obj/machinery/light/incandescent,
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/neutral/side{
-	dir = 8
-	},
-/area/station/hallway/primary/north)
 "aHS" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
@@ -26668,6 +26688,10 @@
 /obj/item/device/light/glowstick,
 /obj/item/device/light/glowstick,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "bxE" = (
@@ -27490,6 +27514,7 @@
 	dir = 4;
 	pixel_y = 0
 	},
+/obj/machinery/light,
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/south)
 "bAh" = (
@@ -29437,6 +29462,11 @@
 /obj/item/wirecutters,
 /obj/item/device/light/flashlight,
 /obj/item/device/gps,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "bFV" = (
@@ -34494,6 +34524,10 @@
 	dir = 1
 	},
 /area/station/crew_quarters/locker)
+"fEu" = (
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
 "fEU" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/stage_edge{
@@ -34832,6 +34866,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "fXy" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -35343,7 +35382,7 @@
 "gzD" = (
 /obj/decal/cleanable/rust/jen,
 /obj/disposalpipe/segment,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "gAx" = (
 /obj/machinery/phone/wall,
@@ -36835,6 +36874,10 @@
 /area/station/science/lobby)
 "irB" = (
 /obj/storage/secure/closet/personal,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -38996,6 +39039,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
+/obj/item/item_box/assorted/stickers/stickers_limited,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "kOB" = (
@@ -40727,12 +40771,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"mPr" = (
-/obj/decal/cleanable/fungus{
-	pixel_y = 32
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/quarters)
 "mPI" = (
 /obj/machinery/networked/test_apparatus/electrobox,
 /obj/machinery/power/data_terminal,
@@ -41602,6 +41640,13 @@
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 3;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -42790,6 +42835,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "pgJ" = (
@@ -42833,6 +42879,7 @@
 	pixel_x = -7;
 	pixel_y = 3
 	},
+/obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "piD" = (
@@ -43274,6 +43321,11 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/shrub{
+	dir = 8;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
@@ -44090,7 +44142,6 @@
 /area/station/science/lobby)
 "qHs" = (
 /obj/machinery/door/airlock/pyro/classic,
-/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "qIb" = (
@@ -46084,6 +46135,12 @@
 /obj/access_spawn/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"sJj" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/locker)
 "sJv" = (
 /obj/disposalpipe/junction{
 	dir = 4;
@@ -47704,7 +47761,7 @@
 	pixel_y = 28
 	},
 /obj/disposalpipe/trunk,
-/turf/simulated/floor/plating,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "uyl" = (
 /obj/random_item_spawner/tools/one_or_zero,
@@ -47732,6 +47789,7 @@
 /area/station/engine/ptl)
 "uzJ" = (
 /obj/item/bananapeel,
+/obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "uAu" = (
@@ -50355,13 +50413,16 @@
 "xFX" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
-/obj/item/device/radio/intercom,
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
 	pixel_y = -2
 	},
 /obj/item/device/light/glowstick,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/device/radio/intercom{
+	dir = 1;
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "xHg" = (
@@ -69245,7 +69306,7 @@ aDc
 efb
 aEz
 avq
-mPr
+azA
 suy
 azA
 qVQ
@@ -71058,7 +71119,7 @@ aDO
 ovp
 aFx
 aGo
-aFB
+fEu
 azA
 gKv
 arN
@@ -74079,7 +74140,7 @@ aDT
 aDT
 aDT
 aHk
-aHR
+aDT
 aIK
 aBH
 aKk
@@ -75881,7 +75942,7 @@ asV
 awX
 avu
 ayN
-asZ
+sJj
 aAP
 aBF
 aKr
