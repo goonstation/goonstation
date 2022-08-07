@@ -36,6 +36,8 @@
 	var/ai_paused = FALSE
 	var/wander_count = 0
 
+	var/atom_hovered_over = null
+
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
@@ -51,6 +53,9 @@
 	src.name = "[pick_string("flockmind.txt", "flockdrone_name_adj")] [pick_string("flockmind.txt", "flockdrone_name_noun")]"
 	src.real_name = src.flock ? src.flock.pick_name("flockdrone") : src.name
 	src.update_name_tag()
+	src.flock_name_tag = new
+	src.flock_name_tag.set_name_tag(src.real_name)
+	src.vis_contents += src.flock_name_tag
 
 	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
@@ -70,6 +75,7 @@
 		if (type == /datum/contextAction/flockdrone/control)
 			continue
 		src.contexts += new type
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
@@ -142,6 +148,8 @@
 	src.is_npc = FALSE
 	src.dormant = FALSE
 	src.anchored = FALSE
+	pilot.mob_hovered_over = null
+	pilot.atom_hovered_over = null
 
 	var/datum/mind/mind = pilot.mind
 	if (mind)
@@ -158,6 +166,7 @@
 
 	pilot.set_loc(src)
 	controller = pilot
+	src.flock_name_tag.set_info_tag(src.controller.real_name)
 	src.client?.color = null
 	//hack to make night vision apply instantly
 	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
@@ -212,6 +221,7 @@
 
 		controller = null
 		src.update_health_icon()
+		src.flock_name_tag.set_info_tag(src.ai.current_task.name)
 
 /mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
@@ -245,6 +255,7 @@
 		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 	controller = null
 	src.update_health_icon()
+	src.flock_name_tag.set_info_tag(src.ai.current_task.name)
 
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
@@ -311,6 +322,7 @@
 	src.ai_paused = TRUE
 	src.icon_state = "drone-dormant"
 	src.remove_simple_light("drone_light")
+	src.flock_name_tag.set_info_tag("Hibernating")
 	flock_speak(src, "No tasks in queue. Allocating higher functions to compute generation.", src.flock)
 	src.is_npc = FALSE
 	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
@@ -334,9 +346,11 @@
 	src.add_simple_light("drone_light", rgb2num(glow_color))
 	if(src.client && !src.controller)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		src.flock_name_tag.set_info_tag(src.controller.real_name)
 		src.is_npc = FALSE
 	else if (!src.controller)
 		src.is_npc = TRUE
+		src.flock_name_tag.set_info_tag(src.ai.current_task.name)
 		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
@@ -417,6 +431,30 @@
 			src.equip_click(absorber)
 		else
 			return ..()
+
+/mob/living/critter/flock/drone/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			for (var/path in src.flock.units)
+				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
+					F.name_tag.show_images(src.client, FALSE, FALSE)
+					F.flock_name_tag.show_tags(src.client, TRUE, FALSE)
+			for (var/obj/flock_structure/S as anything in src.flock.structures)
+				S.info_tag.show_tags(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				if (istype(src.atom_hovered_over, /mob/living/critter/flock))
+					var/mob/living/critter/flock/F = src.atom_hovered_over
+					F.flock_name_tag.show_tags(src.client, FALSE, TRUE)
+				else
+					var/obj/flock_structure/S = src.atom_hovered_over
+					S.info_tag.show_tags(src.client, FALSE, TRUE)
+		else
+			for (var/path in src.flock.units)
+				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
+					F.flock_name_tag.show_tags(src.client, FALSE, FALSE)
+			for (var/obj/flock_structure/S as anything in src.flock.structures)
+				S.info_tag.show_tags(src.client, FALSE, FALSE)
 
 /mob/living/critter/flock/drone/setup_equipment_slots()
 	absorber = new /datum/equipmentHolder/flockAbsorption(src)

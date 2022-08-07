@@ -36,6 +36,8 @@
 
 /obj/flock_structure/relay/New()
 	..()
+	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
+	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
 	// no shuttle for you, either destroy the relay or flee when it unleashes
 	if (emergency_shuttle.online)
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
@@ -81,6 +83,7 @@
 		src.conversion_radius++
 
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
+	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - elapsed)] seconds")
 	if(elapsed >= last_time_sound_played_in_seconds + sound_length_in_seconds)
 		play_sound()
 	if(elapsed >= charge_time_length/2) // halfway point, start doing more

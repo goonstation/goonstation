@@ -30,6 +30,9 @@
 	var/datum/flock/flock
 
 	var/mob/living/intangible/flock/controller = null
+
+	var/atom/movable/flock_examine_tag/flock_name_tag
+
 	// do i pay for building?
 	var/pays_to_construct = TRUE
 
@@ -88,6 +91,59 @@
 		state["area"] = "???"
 	return state
 
+/mob/living/critter/flock/MouseEntered(location, control, params)
+	if (isdead(src))
+		..()
+		return
+	if (!src.flock)
+		..()
+		return
+	if (!istype(usr, /mob/living/intangible/flock) && !istype(usr, /mob/living/critter/flock/drone))
+		..()
+		return
+
+	var/mob/M
+	if (istype(usr, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/F = usr
+		if (src.flock != F.flock)
+			..()
+			return
+		F.atom_hovered_over = src
+		M = F
+	else
+		var/mob/living/critter/flock/drone/F = usr
+		if (src.flock != F.flock)
+			..()
+			return
+		F.atom_hovered_over = src
+		M = F
+
+	if (M.client.check_key(KEY_EXAMINE))
+		src.flock_name_tag.show_tags(M.client, FALSE, TRUE)
+
+/mob/living/critter/flock/MouseExited(location, control, params)
+	if (istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone))
+		var/mob/M
+		if (istype(usr, /mob/living/intangible/flock))
+			var/mob/living/intangible/flock/F = usr
+			F.atom_hovered_over = null
+			M = F
+			if ((!src.flock || src.flock != F.flock))
+				src.flock_name_tag?.show_tags(M.client, FALSE, FALSE)
+				..()
+				return
+		else
+			var/mob/living/critter/flock/drone/F = usr
+			F.atom_hovered_over = null
+			M = F
+			if ((!src.flock || src.flock != F.flock))
+				src.flock_name_tag?.show_tags(M.client, FALSE, FALSE)
+				..()
+				return
+		src.flock_name_tag?.show_tags(M.client, M.client.check_key(KEY_EXAMINE) ? TRUE : FALSE, FALSE)
+		return
+	..()
+
 /mob/living/critter/flock/hand_attack(atom/target, params)
 	var/datum/handHolder/HH = get_active_hand()
 	if (HH.can_attack && !HH.can_hold_items && ismob(target) && src.a_intent == INTENT_GRAB)
@@ -104,6 +160,8 @@
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
+	src.flock_name_tag.set_name_tag(src.name)
+	src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
 
@@ -214,6 +272,8 @@
 	src.ai.die()
 	walk(src, 0)
 	src.update_health_icon()
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
 	src.flock?.removeDrone(src)
 	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
 
@@ -221,6 +281,8 @@
 	if (src.flock)
 		src.update_health_icon()
 		src.flock.removeDrone(src)
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
 	..()
 
 //////////////////////////////////////////////////////

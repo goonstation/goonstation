@@ -16,11 +16,13 @@
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
+	var/atom_hovered_over = null // flock unit or building, for examine purposes
 
 /mob/living/intangible/flock/New()
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -59,6 +61,30 @@
 		if (plane)
 			plane.alpha = 0
 	..()
+
+/mob/living/intangible/flock/keys_changed(keys, changed)
+	..()
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			for (var/path in src.flock.units)
+				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
+					F.name_tag.show_images(src.client, FALSE, FALSE)
+					F.flock_name_tag.show_tags(src.client, TRUE, FALSE)
+			for (var/obj/flock_structure/S as anything in src.flock.structures)
+				S.info_tag.show_tags(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				if (istype(src.atom_hovered_over, /mob/living/critter/flock))
+					var/mob/living/critter/flock/F = src.atom_hovered_over
+					F.flock_name_tag.show_tags(src.client, FALSE, TRUE)
+				else
+					var/obj/flock_structure/S = src.atom_hovered_over
+					S.info_tag.show_tags(src.client, FALSE, TRUE)
+		else
+			for (var/path in src.flock.units)
+				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
+					F.flock_name_tag.show_tags(src.client, FALSE, FALSE)
+			for (var/obj/flock_structure/S as anything in src.flock.structures)
+				S.info_tag.show_tags(src.client, FALSE, FALSE)
 
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

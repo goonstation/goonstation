@@ -930,6 +930,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\hydroponics\plants_veg.dm"
 #include "code\modules\hydroponics\plants_weed.dm"
 #include "code\modules\interface\action_associations.dm"
+#include "code\modules\interface\flock_examine_tag.dm"
 #include "code\modules\interface\input.dm"
 #include "code\modules\interface\keybind_menu_chui.dm"
 #include "code\modules\interface\keybind_style.dm"
