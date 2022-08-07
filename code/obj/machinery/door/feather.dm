@@ -57,12 +57,6 @@
 	make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 	qdel(src)
 
-/obj/machinery/door/feather/open()
-	if(broken)
-		return TRUE
-	else
-		return ..()
-
 /obj/machinery/door/feather/heal_damage()
 	src.icon_state = "door1"
 	src.broken = FALSE
@@ -128,7 +122,9 @@
 	return FALSE
 
 /obj/machinery/door/feather/open()
-	if(..())
+	if (src.broken)
+		return FALSE
+	if (..())
 		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 50, 1)
 
 /obj/machinery/door/feather/close()
