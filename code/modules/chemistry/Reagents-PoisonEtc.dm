@@ -996,7 +996,7 @@ datum
 					//setup human, break out immediately if acid-immune
 					var/mob/living/carbon/human/H
 					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
+						H = M
 						if(H.head?.item_function_flags & IMMUNE_TO_ACID && H.wear_suit?.item_function_flags & IMMUNE_TO_ACID)
 							return
 
@@ -1006,7 +1006,6 @@ datum
 					var/damage2deal = round(clamp(volume / 6, 0, 10))
 					if(damage2deal >= 5) //scream and face melty
 						if(H)
-							var/mob/living/carbon/human/H = M
 							if(do_an_ouch)
 								H.emote("scream")
 							if (!H.wear_mask && !H.head)
