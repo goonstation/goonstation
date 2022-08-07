@@ -545,7 +545,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				src.show_login_notice()
 
 				// Set screen saturation
-				src.set_saturation(cloud_get("saturation"))
+				src.set_saturation(text2num(cloud_get("saturation")))
 
 		src.mob.reset_keymap()
 
