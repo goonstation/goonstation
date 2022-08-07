@@ -278,7 +278,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 			var/list/grills = list()
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
-			if (murray && get_dist(src,murray) > 7)
+			if (murray && GET_DIST(src,murray) > 7)
 				murray = null
 			if (istype(murray))
 				if (!findtext(murray.name, "murraycompliment"))
@@ -494,7 +494,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
 			var/mob/living/carbon/human/biker/S = SB
-			if (get_dist(S,src) <= 7)
+			if (GET_DIST(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [JOHN_PICK("insults")]!")
 					M.add_karma(-1)

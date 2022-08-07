@@ -116,7 +116,7 @@
 
 /mob/living/critter/flock/drone/Login()
 	..()
-	src.client?.color = null
+	src.client?.set_color()
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
@@ -158,7 +158,7 @@
 
 	pilot.set_loc(src)
 	controller = pilot
-	src.client?.color = null
+	src.client?.set_color()
 	//hack to make night vision apply instantly
 	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
 	sight_process?.Process()

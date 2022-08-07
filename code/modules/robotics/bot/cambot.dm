@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 

@@ -166,6 +166,9 @@
 	/obj/item/reagent_containers/food/snacks/donut,\
 	/obj/item/instrument/whistle)
 
+	empty
+		spawn_contents = list()
+
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\

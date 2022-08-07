@@ -67,7 +67,7 @@
 
 		var/mob/M = holder.owner
 		check_mutantrace(M)
-		if (get_dist(M,target) > dist)
+		if (GET_DIST(M,target) > dist)
 			var/steps = 0
 			var/turf/T = get_turf(M)
 			while (steps < dist)
@@ -112,7 +112,7 @@
 
 	if (src.throwing & THROW_CHAIRFLIP)
 		var/turf/T = locate(src.last_throw_x, src.last_throw_y, src.z)
-		var/dist_traveled = get_dist(hit_atom,T)
+		var/dist_traveled = GET_DIST(hit_atom,T)
 		var/effect_mult = 1
 		if (dist_traveled <=1)
 			effect_mult = 0.6

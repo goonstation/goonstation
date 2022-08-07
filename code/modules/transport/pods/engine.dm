@@ -131,7 +131,7 @@
 	for(var/i=0, i<max_steps, i++)
 		step(P, warp_dir)
 
-	var/dist = get_dist(src, P)
+	var/dist = GET_DIST(src, P)
 	portal_px_offset(P, warp_dir, dist)
 	animate(P, transform = matrix(1, MATRIX_SCALE), pixel_x = 0, pixel_y = 0, time = 30, easing = ELASTIC_EASING )
 

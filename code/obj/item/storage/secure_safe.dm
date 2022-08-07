@@ -297,13 +297,13 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		var/loot = rand(1,9)
 		switch (loot)
 			if (1)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
 				for (var/i=6, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
 			if (2)
 				for (var/i=2, i>0, i--)
-					new /obj/item/material_piece/gold(src)
+					new /obj/item/stamped_bullion(src)
 				for (var/i=4, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 					S.setup(src)
@@ -339,7 +339,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				for (var/i=7, i>0, i--)
 					new /obj/item/raw_material/telecrystal(src)
 			if (9)
-				var/list/treasures = list(/obj/item/material_piece/gold,\
+				var/list/treasures = list(/obj/item/stamped_bullion,\
 				/obj/item/raw_material/telecrystal,\
 				/obj/item/skull,\
 				/obj/item/football,\
@@ -500,7 +500,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				new /obj/item/reagent_containers/food/drinks/moonshine(src)
 				new /obj/item/skull(src)
 			if (2)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
 				var/obj/item/spacecash/random/tourist/S = new /obj/item/spacecash/random/tourist
 				S.setup(src)
 			if (3)
@@ -525,7 +525,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	random_code = TRUE
 	spawn_contents = list(/obj/item/device/key/lead,\
 	/obj/item/paper/intelligence_report,\
-	/obj/item/material_piece/gold = 2)
+	/obj/item/stamped_bullion = 2)
 
 /obj/item/storage/secure/ssafe/icemoon
 	configure_mode = FALSE
@@ -561,11 +561,11 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		var/loot = rand(1,5)
 		switch (loot)
 			if (1)
-				new /obj/item/material_piece/gold(src)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
+				new /obj/item/stamped_bullion(src)
 				new /obj/item/scrap(src)
 			if (2)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
 				new /obj/item/skull(src)
 				new /obj/item/parts/human_parts/arm/left(src)
 				new /obj/item/parts/human_parts/leg/right(src)
@@ -575,8 +575,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				S.setup(src)
 
 			if (3)
-				new /obj/item/material_piece/gold(src)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
+				new /obj/item/stamped_bullion(src)
 				new /obj/item/football(src)
 				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
@@ -584,8 +584,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				S.setup(src)
 
 			if (4)
-				new /obj/item/material_piece/gold(src)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
+				new /obj/item/stamped_bullion(src)
 				new	/obj/item/instrument/saxophone(src)
 				var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
 				S.setup(src)
@@ -593,8 +593,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				S.setup(src)
 
 			if (5)
-				new /obj/item/material_piece/gold(src)
-				new /obj/item/material_piece/gold(src)
+				new /obj/item/stamped_bullion(src)
+				new /obj/item/stamped_bullion(src)
 				new /obj/item/skull(src)
 				new /obj/item/skull(src)
 				new /obj/item/skull(src)

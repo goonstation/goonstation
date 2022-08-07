@@ -393,6 +393,9 @@
 					antag.current.real_name = newname
 					antag.current.name = newname
 
+		if (ROLE_FLOCKMIND)
+			bestow_objective(antag, /datum/objective/specialist/flock)
+			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
 			objective_set_path = /datum/objective_set/spy_theft
 			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs

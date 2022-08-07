@@ -6,10 +6,10 @@
 	New()
 		..()
 		if (prob(50))
-			desc = "It's a normal black ink pen with a sharp point."
+			desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen. With a sharp point."
 		else
 			name = "fancy pen"
-			desc = "A pretty swag pen with a sharp point."
+			desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the marblewood handle. And a sharp point."
 			icon_state = "pen_fancy"
 			item_state = "pen_fancy"
 			font_color = "blue"

@@ -652,11 +652,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(master,signal.source.loc)
+			var/dist = GET_DIST(master,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 					nearest_beacon = recv
 					nearest_beacon_loc = signal.source.loc
 					next_destination = signal.data["next_patrol"]

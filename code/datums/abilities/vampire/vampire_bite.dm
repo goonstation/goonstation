@@ -17,56 +17,60 @@
 			.= src.blood_tally[target] < max_take_per_mob
 
 
-/datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = 1)
+/datum/abilityHolder/vampire/proc/can_bite(var/mob/living/carbon/human/target, is_pointblank = TRUE)
 	var/datum/abilityHolder/vampire/holder = src
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampire/H = holder
 
 	if (!M || !target)
-		return 0
+		return FALSE
 
 	if (!ishuman(target)) // Only humans use the blood system.
 		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
-		return 0
+		return FALSE
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, "<span class='alert'>You cannot drink the blood of a thrall.</span>")
-			return 0
+			return FALSE
 
 	if (M == target)
 		boutput(M, "<span class='alert'>Why would you want to bite yourself?</span>")
-		return 0
+		return FALSE
 
 	if (ismobcritter(M) && !istype(H))
 		boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
-		return 0
+		return FALSE
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
 			boutput(M, "<span class='alert'>You are already draining someone's blood!</span>")
-			return 0
+			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
-		return 0
+		return FALSE
 
 	if (check_target_immunity(target) == 1)
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
-		return 0
+		return FALSE
 
 	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(M))
 		boutput(M, "<span class='alert'>You can't drink the blood of your own thralls!</span>")
-		return 0
+		return FALSE
 
 	if (isnpcmonkey(target))
 		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
-		return 0
+		return FALSE
 
 	if (!holder.can_take_blood_from(target))
-		return 0
+		return FALSE
 
-	return 1
+	if (isnpc(target))
+		boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+		return FALSE
+
+	return TRUE
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
 	.= 1
@@ -337,7 +341,7 @@
 		if (!M || !target || !ismob(target))
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 

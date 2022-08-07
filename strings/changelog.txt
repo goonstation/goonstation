@@ -1,5 +1,56 @@
 
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
+(t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
+(u)NightmarechaMillian
+(p)9794
+(e)🎨⚖|sprites, balance
+(+)Glass pipeshot now requires 2 shards instead of 1.
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
 (t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
+(u)Wisemonster
+(p)9958
+(e)⚖|balance
+(+)The fire orb no longer gives fire damage immunity.
+(+)The fire jewel's heat protection has been reduced to 50%, down from 100%.
+(u)Ikea
+(p)9835
+(e)⚖|balance
+(*)Upon being converted through counterrev implants or beatings, you now gain 5 seconds of additional melee protection.
+(u)Munien & Avimour
+(p)9892
+(e)🆕🎨|feature, sprites
+(*)Added a new Rose mutation: Holo-Roses. Give one to your favourite silicons today!
+(u)Hans
+(p)9856
+(e)⚖|balance
+(+)You can now shoot rattlesnakes, scorpions have a longer special ability delay, and viper venom's bleeding isn't as RNG dependant and can't hit as hard as fast now.
 (u)Ilysen
 (p)9966
 (e)|
