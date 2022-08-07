@@ -970,6 +970,7 @@ datum
 			fluid_b = 255
 			dispersal = 1
 			blob_damage = 4
+			viscosity = 0.25
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -986,18 +987,25 @@ datum
 				if(istype(wildwetride)) //applied by a fluid body, so we can keep it simpleish
 
 					//INTERIM FUNCTIONALITY SECTION
-					//REMOVE THIS IF/WHEN PR 9904 IS MERGED AND INTEGRATED - failure to do so will cause
+					//if chemprot becomes globally applied, this section should be removed in its entirety
 					var/chem_adjust = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
 					chem_adjust = clamp(1 - (chem_adjust / 100), 0, 2) //floats.
 					volume *= chem_adjust
 					//END INTERIM FUNCTIONALITY SECTION
 
+					//setup human, break out immediately if acid-immune
+					var/mob/living/carbon/human/H
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.head?.item_function_flags & IMMUNE_TO_ACID && H.wear_suit?.item_function_flags & IMMUNE_TO_ACID)
+							return
+
 					var/do_an_ouch = TRUE
 					if(ON_COOLDOWN(M, "corroded_message_cd", 1.1 SECONDS))
 						do_an_ouch = FALSE
-					var/damage2deal = clamp(volume / 6, 0, 10)
+					var/damage2deal = round(clamp(volume / 6, 0, 10))
 					if(damage2deal >= 5) //scream and face melty
-						if(ishuman(M))
+						if(H)
 							var/mob/living/carbon/human/H = M
 							if(do_an_ouch)
 								H.emote("scream")
@@ -1008,10 +1016,8 @@ datum
 									H.UpdateName()
 									H.unlock_medal("Red Hood", 1)
 					else //just a gasp of pain
-						if(ishuman(M))
-							var/mob/living/carbon/human/H = M
-							if(do_an_ouch)
-								H.emote("gasp")
+						if(H && do_an_ouch)
+							H.emote("gasp")
 					if(damage2deal)
 						random_burn_damage(M, damage2deal)
 						if(do_an_ouch)
