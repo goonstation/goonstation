@@ -126,13 +126,22 @@ toxic - poisons
 			L.emote("twitch_v")
 		return
 
-/datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+/datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	power = 17.5
-	dissipation_delay = 1
+	power = 18
+	dissipation_delay = 2
 	dissipation_rate = 2
 	max_range = 6
 	icon_state = "spark"
+
+/datum/projectile/energy_bolt/tasershotgunslug
+	name = "heavy energy bolt"
+	sname = "energy slug"
+	cost = 33
+	power = 30
+	dissipation_rate = 2
+	dissipation_delay = 4
+	icon_state = "taser_projectile-big"
 
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v

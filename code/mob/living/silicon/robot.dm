@@ -3323,8 +3323,7 @@
 
 
 /client/proc/set_screen_color_to_red()
-	src.color = "#ff0000"
-
+	src.set_color(normalize_color_to_matrix("#ff0000"))
 
 #define can_step_sfx(H) (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
