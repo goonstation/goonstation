@@ -2131,7 +2131,6 @@
 	})
 "bbm" = (
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "bbu" = (
@@ -2389,7 +2388,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/computer/transception,
+/obj/disposalpipe/trunk/mail/south,
+/obj/machinery/disposal/mail/autoname/qm,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -4656,11 +4656,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/cargooffice)
-"cqL" = (
-/obj/machinery/disposal/mail/autoname/qm,
-/obj/disposalpipe/trunk/mail/north,
-/turf/simulated/floor/orangeblack/side,
-/area/station/quartermaster/cargobay)
 "cqP" = (
 /obj/stool/chair{
 	dir = 4
@@ -7738,6 +7733,11 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
+"edv" = (
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/engine/storage)
 "edJ" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -8740,18 +8740,16 @@
 /area/station/hallway/primary/southwest)
 "eGD" = (
 /obj/table/reinforced/auto,
-/obj/item/rods/steel{
+/obj/item/sheet/steel/reinforced{
 	amount = 50
 	},
-/obj/item/rods/steel{
+/obj/item/sheet/steel/reinforced{
 	amount = 50
 	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/chem_grenade/metalfoam,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/storage)
 "eGM" = (
@@ -12422,7 +12420,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "gxC" = (
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
 "gyD" = (
@@ -13147,9 +13144,16 @@
 /area/station/science/research_director)
 "gQh" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 8
+	},
 /obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
+/obj/item/device/multitool{
+	pixel_x = -5
+	},
+/obj/item/clothing/suit/hi_vis{
+	pixel_x = 5
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -16013,10 +16017,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
-"igA" = (
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "igL" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/medical/alt2{
@@ -24008,6 +24008,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "mae" = (
@@ -27730,6 +27731,10 @@
 /area/station/science/artifact)
 "nWU" = (
 /obj/disposalpipe/segment/transport,
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = 9
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -29321,12 +29326,6 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"oVd" = (
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
-	},
-/area/station/quartermaster/cargobay)
 "oVo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -29681,7 +29680,6 @@
 /obj/machinery/door/airlock/pyro/mining,
 /obj/access_spawn/cargo,
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "pjd" = (
@@ -29838,13 +29836,10 @@
 	},
 /area/shuttle/arrival/station)
 "pmb" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/manufacturer/mining,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -31979,7 +31974,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "qwN" = (
@@ -36454,12 +36449,11 @@
 	},
 /area/station/science/teleporter)
 "sQv" = (
-/obj/machinery/transception_pad,
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
 	},
 /area/station/quartermaster/cargooffice)
 "sQw" = (
@@ -38718,11 +38712,6 @@
 "tXW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/northeast)
-"tYe" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor,
-/area/station/quartermaster/cargobay)
 "tYh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40480,6 +40469,10 @@
 	pixel_x = 10
 	},
 /obj/disposalpipe/segment/transport,
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = 9
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -40642,7 +40635,6 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "uYC" = (
@@ -41263,16 +41255,16 @@
 /area/station/security/main)
 "vss" = (
 /obj/table/reinforced/auto,
-/obj/item/sheet/steel/reinforced{
-	amount = 50
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 8
 	},
-/obj/item/sheet/steel/reinforced{
-	amount = 50
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool{
+	pixel_x = -5
 	},
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/chem_grenade/metalfoam,
+/obj/item/clothing/suit/hi_vis{
+	pixel_x = 5
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -43257,6 +43249,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "wGg" = (
@@ -93807,9 +93800,9 @@ jsJ
 bbm
 gxC
 pia
-oVd
+jkd
 uXY
-igA
+mMa
 pAd
 gAM
 ykm
@@ -94111,9 +94104,9 @@ hOL
 rTn
 nMF
 ktm
-iqA
-tYe
-cqL
+mMa
+pAd
+rTk
 kCG
 jkd
 pAd
@@ -103761,7 +103754,7 @@ rZb
 vXS
 syh
 gQh
-ciw
+edv
 ciw
 ciw
 gGE
