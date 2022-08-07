@@ -1246,7 +1246,9 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "aCH" = (
 /obj/stool/chair,
 /obj/cable{
@@ -1661,7 +1663,9 @@
 "aPf" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "aPr" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -2113,6 +2117,7 @@
 	})
 "bbm" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "bbu" = (
@@ -2249,7 +2254,9 @@
 /area/station/storage/tools)
 "bgw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "bgB" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
@@ -2364,14 +2371,13 @@
 	name = "Genetic Research"
 	})
 "bjU" = (
-/obj/machinery/disposal/mail/autoname/qm,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/disposalpipe/trunk/mail/south,
+/obj/machinery/computer/transception,
 /turf/simulated/floor/orangeblack/side{
-	dir = 9
+	dir = 1
 	},
 /area/station/quartermaster/cargooffice)
 "bjY" = (
@@ -2854,7 +2860,9 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "buF" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/black/side{
@@ -3126,7 +3134,9 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "bBd" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/corner{
@@ -4632,6 +4642,11 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/cargooffice)
+"cqL" = (
+/obj/machinery/disposal/mail/autoname/qm,
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/orangeblack/side,
+/area/station/quartermaster/cargobay)
 "cqP" = (
 /obj/stool/chair{
 	dir = 4
@@ -5444,7 +5459,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "cQD" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
 	dir = 4
@@ -5844,7 +5861,9 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "cZD" = (
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -8667,7 +8686,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "eFj" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/omni,
@@ -9105,7 +9126,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "eQn" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -9662,7 +9685,9 @@
 "fip" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "fir" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -10624,7 +10649,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "fGD" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -10716,7 +10743,9 @@
 /area/station/maintenance/south)
 "fJg" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "fJt" = (
 /obj/machinery/door/airlock/pyro/security/alt,
 /obj/disposalpipe/segment/ejection{
@@ -10799,7 +10828,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "fLE" = (
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass,
@@ -11170,7 +11201,9 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "fTZ" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -12375,6 +12408,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "gxC" = (
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargooffice)
 "gyD" = (
@@ -12801,7 +12835,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "gIb" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -12824,7 +12860,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "gIl" = (
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
@@ -13604,7 +13642,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "hbI" = (
 /obj/machinery/light/emergency,
 /obj/decal/tile_edge/line/black{
@@ -14803,6 +14843,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner)
+"hCT" = (
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/tools,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/quartermaster/cargobay)
 "hDb" = (
 /obj/machinery/computer/announcement{
 	dir = 4;
@@ -16544,7 +16591,9 @@
 "ivn" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "ivv" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black,
@@ -17906,7 +17955,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "jej" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/corner{
@@ -17929,6 +17980,7 @@
 /obj/stool/chair/office/yellow{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
 	},
@@ -19299,7 +19351,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "jRu" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -19811,7 +19865,9 @@
 	})
 "kda" = (
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "kdb" = (
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/black,
@@ -21922,7 +21978,9 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "lep" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility{
@@ -22401,7 +22459,9 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "lsa" = (
 /obj/stool/chair{
 	dir = 4
@@ -22639,14 +22699,6 @@
 /obj/item/storage/toilet/goldentoilet,
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
-"lxo" = (
-/obj/machinery/computer/supplycomp{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/quartermaster/cargobay)
 "lxp" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -22865,7 +22917,9 @@
 /area/station/medical/medbay/treatment)
 "lEn" = (
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "lEo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23940,7 +23994,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "mae" = (
@@ -26590,7 +26643,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "nue" = (
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/grey,
@@ -26769,8 +26824,9 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/tools,
+/obj/machinery/computer/supplycomp{
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -27218,7 +27274,9 @@
 "nKe" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "nKf" = (
 /obj/cable{
 	d1 = 2;
@@ -28947,7 +29005,9 @@
 "oNO" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "oNU" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/black,
@@ -29243,13 +29303,21 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"oVd" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/station/quartermaster/cargobay)
 "oVo" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "oVv" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -29595,6 +29663,7 @@
 /obj/machinery/door/airlock/pyro/mining,
 /obj/access_spawn/cargo,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "pjd" = (
@@ -29640,7 +29709,9 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "pkc" = (
 /obj/machinery/chem_heater,
 /turf/simulated/floor/engine,
@@ -29739,7 +29810,9 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "plY" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
@@ -31888,7 +31961,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/mail/bent/north,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "qwN" = (
@@ -32330,7 +32403,9 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "qKq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33650,7 +33725,9 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "ryi" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -36352,8 +36429,12 @@
 	},
 /area/station/science/teleporter)
 "sQv" = (
-/turf/simulated/floor/orangeblack/side{
-	dir = 5
+/obj/machinery/transception_pad,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
 	},
 /area/station/quartermaster/cargooffice)
 "sQw" = (
@@ -36822,7 +36903,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "tda" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37858,7 +37941,9 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "tEn" = (
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/entry{
@@ -38031,7 +38116,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "tJc" = (
@@ -38198,9 +38283,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
-	},
+/turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "tMp" = (
 /obj/disposalpipe/segment/transport{
@@ -38560,7 +38643,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "tVT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -38605,6 +38690,11 @@
 "tXW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/northeast)
+"tYe" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "tYh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38910,7 +39000,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "uiA" = (
 /obj/stool/wooden,
 /obj/machinery/light_switch/west,
@@ -40055,7 +40147,9 @@
 /obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/purple,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "uLT" = (
 /obj/table/wood/auto,
 /obj/item/camera{
@@ -40125,7 +40219,9 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "uNH" = (
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
@@ -40517,8 +40613,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/mail/bent/south,
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "uYC" = (
@@ -43133,7 +43229,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "wGg" = (
@@ -43650,7 +43745,9 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "wVT" = (
 /turf/simulated/floor/greenblack{
 	dir = 9
@@ -44138,13 +44235,14 @@
 	name = "Security Overwatch"
 	})
 "xio" = (
-/obj/cable,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/machinery/transception_pad,
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
 	},
 /area/station/quartermaster/cargooffice)
 "xiE" = (
@@ -44918,7 +45016,9 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "xCT" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -45074,7 +45174,9 @@
 	},
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "xIV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45087,7 +45189,9 @@
 "xJp" = (
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "xJE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45117,7 +45221,9 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/purple,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "xJY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -45619,7 +45725,9 @@
 /area/station/security/detectives_office)
 "xWO" = (
 /turf/simulated/floor/carpet/purple/fancy/innercorner/ne_sw,
-/area/station/science/lobby)
+/area/station/science/lobby{
+	name = "Science Lounge"
+	})
 "xXw" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -46006,16 +46114,6 @@
 /obj/access_spawn/hos,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
-"yjM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/cargooffice)
 "yka" = (
 /obj/wingrille_spawn/auto,
 /obj/forcefield/energyshield/perma{
@@ -93391,7 +93489,7 @@ tpq
 ykm
 aDI
 tIW
-mMa
+sSN
 jeT
 sLC
 baj
@@ -93691,10 +93789,10 @@ jsJ
 bbm
 gxC
 pia
-jkd
+oVd
 uXY
-sSN
 igA
+pAd
 gAM
 ykm
 arM
@@ -93986,7 +94084,7 @@ fdg
 dqX
 whK
 bjU
-yjM
+wFM
 lZY
 lZY
 wFM
@@ -93995,9 +94093,9 @@ hOL
 rTn
 nMF
 ktm
-mMa
-pAd
-rTk
+iqA
+tYe
+cqL
 kCG
 jkd
 pAd
@@ -95203,8 +95301,8 @@ tly
 ykm
 aQs
 ahR
-lxo
-bLx
+hCT
+hCT
 qMM
 ykm
 hJD

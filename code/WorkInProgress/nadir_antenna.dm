@@ -2,9 +2,16 @@
 var/global/obj/machinery/communications_dish/transception/transception_array
 
 //Cost to "kick-start" a transception, charged against area APC in cell units of power
-#define ARRAY_STARTCOST 150
+#define ARRAY_STARTCOST 80
 //Cost to follow through on the transception, charged against grid in grid units of power
 #define ARRAY_TELECOST 2500
+
+//Alert codes
+#define TRANSCEIVE_BUSY 0
+#define TRANSCEIVE_NOPOWER 1
+#define TRANSCEIVE_POWERWARN 2
+#define TRANSCEIVE_NOWIRE 3
+#define TRANSCEIVE_OK 4
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
@@ -47,18 +54,18 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
-		. = FALSE
+		. = TRANSCEIVE_BUSY
 		if(src.is_transceiving)
 			return
 		if(!powered() || !src.primed)
-			return
+			return TRANSCEIVE_NOPOWER
 		if(src.failsafe_prompt())
-			return
+			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
 		if(netnum != pad_netnum)
-			return
-		return TRUE
+			return TRANSCEIVE_NOWIRE
+		return TRANSCEIVE_OK
 
 	///Respond to a pad's request to do a transception
 	proc/transceive(var/pad_netnum)
@@ -132,6 +139,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	ex_act(severity) //tbi: damage and repair
 		return
 
+#undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
 
 /obj/machinery/communications_dish/transception/update_icon()
@@ -228,18 +236,29 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
 
-	///Polls to see if transception connection is online
+	///Polls to see if pad's transception connection is operable
 	proc/check_transceive()
-		. = FALSE
+		. = "ERR_NO_ARRAY"
 		if(!transception_array)
 			return
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		if(!powernet)
-			return
+			return "NO_WIRE_ENDPOINT"
 		var/netnum = powernet.number
-		if(transception_array.can_transceive(netnum) == FALSE)
-			return
-		return TRUE
+		var/error_code = transception_array.can_transceive(netnum)
+		switch(error_code)
+			if(TRANSCEIVE_BUSY) //connection's fine it's just busy at this particular time
+				return "OK"
+			if(TRANSCEIVE_NOPOWER)
+				return "ERR_ARRAY_APC"
+			if(TRANSCEIVE_POWERWARN)
+				return "ARRAY_POWER_LOW"
+			if(TRANSCEIVE_NOWIRE)
+				return "ERR_WIRE"
+			if(TRANSCEIVE_OK)
+				return "OK"
+			else
+				return "ERR_OTHER" //what
 
 	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo, send otherwise
 	proc/attempt_transceive(var/cargo_index = null)
@@ -251,7 +270,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if(!powernet)
 			return
 		var/netnum = powernet.number
-		if(transception_array.can_transceive(netnum) == FALSE)
+		if(transception_array.can_transceive(netnum) != TRANSCEIVE_OK)
 			return
 		if(cargo_index != null)
 			if(shippingmarket.pending_crates[cargo_index])
@@ -394,7 +413,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					manifest["Identifier"] = signal.data["padid"]
 					manifest["INT_TARGETID"] = signal.data["netid"]
 					manifest["Location"] = signal.data["data"]
-					manifest["Array Connection"] = signal.data["opstat"] ? "OK" : "ERR"
+					manifest["Array Link"] = signal.data["opstat"]
 					src.known_pads[device_netid] = manifest
 					src.queue_dialog_update = TRUE
 		return
@@ -570,3 +589,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	src.add_fingerprint(usr)
 	return
+
+#undef TRANSCEIVE_BUSY
+#undef TRANSCEIVE_NOPOWER
+#undef TRANSCEIVE_POWERWARN
+#undef TRANSCEIVE_NOWIRE
+#undef TRANSCEIVE_OK
