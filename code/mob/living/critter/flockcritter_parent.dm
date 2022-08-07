@@ -257,7 +257,7 @@
 
 	onStart()
 		..()
-		var/mob/living/critter/flock/drone/F = owner
+		var/mob/living/critter/flock/F = owner
 		if(F && isalive(F) && target)
 			boutput(F, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
 			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
@@ -284,8 +284,7 @@
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
 
-			if(F.flock)
-				F.flock.reserveTurf(target, F.real_name)
+			F.flock?.reserveTurf(target, F.real_name)
 
 	onInterrupt(var/flag)
 		..()
