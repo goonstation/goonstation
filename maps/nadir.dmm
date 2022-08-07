@@ -505,10 +505,13 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "alf" = (
+/obj/machinery/transception_pad,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -2368,7 +2371,7 @@
 /obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/orangeblack/side{
-	dir = 1
+	dir = 9
 	},
 /area/station/quartermaster/cargooffice)
 "bjY" = (
@@ -9970,6 +9973,14 @@
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/chemistry)
+"fqP" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "frb" = (
 /obj/decal/fakeobjects/catalytic_doodad{
 	dir = 4
@@ -10128,8 +10139,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "ftR" = (
-/obj/wingrille_spawn/auto/crystal,
-/turf/simulated/floor/plating,
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	name = "Transception Bay Door"
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -13814,13 +13830,14 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "hgN" = (
+/obj/machinery/transception_pad,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "0-8"
 	},
-/obj/cable{
-	icon_state = "1-4"
+/obj/cable,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
 	},
-/turf/simulated/floor/engine,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -13828,8 +13845,10 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "hhk" = (
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/engine/caution/north,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -18138,17 +18157,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "jlW" = (
-/obj/machinery/transception_pad,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
-	},
+/turf/simulated/floor/engine/caution/east,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -20085,13 +20094,9 @@
 	},
 /area/station/medical/medbay/cloner)
 "kkS" = (
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_east,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/magnet{
@@ -23553,11 +23558,10 @@
 	})
 "lSo" = (
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/landmark/gps_waypoint,
-/obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/magnet{
@@ -25558,6 +25562,11 @@
 "mPK" = (
 /obj/storage/cart,
 /obj/item/clothing/head/merchant_hat,
+/obj/machinery/door_control{
+	id = "cargogaming";
+	name = "Transception Bay Door";
+	pixel_y = -20
+	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay)
 "mPS" = (
@@ -29099,10 +29108,14 @@
 /turf/simulated/floor/industrial,
 /area/abandonedmedicalship/robot_trader)
 "oSF" = (
-/obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/cargo,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	name = "Transception Bay Door"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/magnet{
@@ -31565,6 +31578,12 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"qoO" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay)
 "qoR" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -31653,10 +31672,11 @@
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "qrT" = (
-/obj/stool/chair/office/yellow{
-	dir = 4
+/obj/machinery/light_switch/west,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
 	},
-/turf/simulated/floor/engine/caution/north,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -36333,7 +36353,7 @@
 /area/station/science/teleporter)
 "sQv" = (
 /turf/simulated/floor/orangeblack/side{
-	dir = 1
+	dir = 5
 	},
 /area/station/quartermaster/cargooffice)
 "sQw" = (
@@ -36440,17 +36460,7 @@
 	},
 /area/station/security/main)
 "sTW" = (
-/obj/machinery/transception_pad,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
-	},
+/turf/simulated/floor/engine/caution/west,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
 	})
@@ -38188,7 +38198,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
 /area/station/quartermaster/cargooffice)
 "tMp" = (
 /obj/disposalpipe/segment/transport{
@@ -39546,7 +39558,12 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/computer/transception,
+/obj/machinery/door_control{
+	id = "cargogaming";
+	name = "Transception Bay Door";
+	pixel_x = -22;
+	pixel_y = -4
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/magnet{
 	name = "Cargo Transception"
@@ -42407,13 +42424,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/equipment)
-"wij" = (
-/obj/machinery/door/airlock/pyro/glass/mining,
-/obj/access_spawn/cargo,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/magnet{
-	name = "Cargo Transception"
-	})
 "wio" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44128,11 +44138,13 @@
 	name = "Security Overwatch"
 	})
 "xio" = (
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
+/obj/machinery/transception_pad,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
 	},
 /area/station/quartermaster/cargooffice)
 "xiE" = (
@@ -44883,6 +44895,12 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"xCD" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/engine/caution/corner,
+/area/station/quartermaster/magnet{
+	name = "Cargo Transception"
+	})
 "xCI" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -93690,7 +93708,7 @@ ftR
 uyk
 qrT
 sTW
-uQh
+xCD
 mPw
 nsy
 mgm
@@ -93988,7 +94006,7 @@ mMa
 mMa
 mMa
 kpS
-wij
+ftR
 mWa
 kOm
 alf
@@ -94596,7 +94614,7 @@ ftR
 kkS
 hhk
 jlW
-uQh
+fqP
 mPw
 ihh
 cXD
@@ -94892,7 +94910,7 @@ mMa
 mMa
 mMa
 mMa
-mMa
+qoO
 mPK
 mPw
 mPw
