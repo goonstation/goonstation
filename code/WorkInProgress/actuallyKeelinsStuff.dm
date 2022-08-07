@@ -2634,8 +2634,6 @@ Returns:
 						prob_clonk = max(prob_clonk - 5, 0)
 
 			return ..(hit_atom)
-		else
-			return
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
