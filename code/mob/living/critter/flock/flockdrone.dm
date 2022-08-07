@@ -221,7 +221,7 @@
 
 		controller = null
 		src.update_health_icon()
-		src.flock_name_tag.set_info_tag(src.ai.current_task.name)
+		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
 
 /mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
@@ -255,7 +255,7 @@
 		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 	controller = null
 	src.update_health_icon()
-	src.flock_name_tag.set_info_tag(src.ai.current_task.name)
+	src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
 
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
@@ -350,7 +350,7 @@
 		src.is_npc = FALSE
 	else if (!src.controller)
 		src.is_npc = TRUE
-		src.flock_name_tag.set_info_tag(src.ai.current_task.name)
+		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
 		flock_speak(src, "Awoken. Resuming task queue.", src.flock)
 
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
