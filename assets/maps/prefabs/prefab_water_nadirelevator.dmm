@@ -288,7 +288,7 @@
 	name = "Space Diner Backhall"
 	})
 "ii" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
@@ -600,7 +600,7 @@
 /area/skeleton_trader)
 "uy" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/raw_material/shard/glass{
 	pixel_x = -5;
 	pixel_y = 9
