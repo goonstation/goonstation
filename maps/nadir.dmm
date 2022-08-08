@@ -3344,6 +3344,7 @@
 	dir = 4;
 	id = "nadir_bhull_se"
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -9070,6 +9071,7 @@
 	dir = 4;
 	id = "nadir_bhull_nw"
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -25541,6 +25543,7 @@
 	dir = 4;
 	id = "nadir_bhull_sw"
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -33063,6 +33066,7 @@
 	dir = 4;
 	id = "nadir_bhull_ne"
 	},
+/obj/access_spawn/engineering,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
