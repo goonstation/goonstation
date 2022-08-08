@@ -13,6 +13,8 @@
 	health = 200
 	uses_health_icon = FALSE
 	var/list/eject = list()
+	///For checking if the rift has been destroyed before it opens
+	var/spawned = FALSE
 
 /obj/flock_structure/rift/building_specific_info()
 	var/time_remaining = round(src.build_time - getTimeInSecondsSinceTime(src.time_started))
@@ -52,7 +54,12 @@
 					break
 		flockdronegibs(src.loc, null, eject) //ejectables ejected here
 		src.flock.flockmind.started = TRUE
+		src.spawned = TRUE
 		qdel(src)
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
+
+/obj/flock_structure/rift/disposing()
+	if (!src.spawned)
+		src?.flock.flockmind?.death()
