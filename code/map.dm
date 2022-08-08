@@ -923,6 +923,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/nadir
 	name = "NADIR"
+	display_name = "Nadir Extraction Site"
 	goonhub_map = "https://goonhub.com/maps/nadir"
 
 	walls = /turf/simulated/wall/auto/supernorn
