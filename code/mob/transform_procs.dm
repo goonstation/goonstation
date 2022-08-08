@@ -15,7 +15,7 @@
 
 	var/mob/living/carbon/human/character
 	if (random_human)
-		character = new /mob/living/carbon/human(currentLoc)
+		character = new /mob/living/carbon/human/normal(currentLoc)
 	else
 		character = new /mob/living/carbon/human(currentLoc, src.client.preferences.AH, src.client.preferences)
 
