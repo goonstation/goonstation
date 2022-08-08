@@ -353,10 +353,9 @@
 			new /obj/item/tank/emergency_oxygen(src)
 		if (ticker?.round_elapsed_ticks > 20 MINUTES)
 			new /obj/item/crowbar/red(src)
-#ifdef MAP_OVERRIDE_NADIR //full chemical readiness equipment
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
 		new /obj/item/clothing/suit/space/emerg(src)
 		new /obj/item/clothing/head/emerg(src)
-		new /obj/item/clothing/gloves/latex(src)
 #else
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
