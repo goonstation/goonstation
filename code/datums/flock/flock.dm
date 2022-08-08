@@ -12,6 +12,7 @@ var/flock_signal_unleashed = FALSE
 	var/name
 	var/used_compute = 0
 	var/total_compute = 0
+	var/peak_compute = 0
 	var/list/all_owned_tiles = list()
 	var/list/busy_tiles = list()
 	var/list/priority_tiles = list()
@@ -529,17 +530,28 @@ var/flock_signal_unleashed = FALSE
 	return (enemy_name in src.enemies)
 
 // DEATH
-
-/datum/flock/proc/perish()
+///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
+/datum/flock/proc/perish(real = TRUE)
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
-	if (src.flockmind)
-		hideAnnotations(src.flockmind)
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
+	for(var/turf/T in src.priority_tiles)
+		src.togglePriorityTurf(T)
+	for (var/name in src.busy_tiles)
+		src.unreserveTurf(src.busy_tiles[name])
+	src.unlockableStructures = list()
+	src.achievements = list()
+	src.total_compute = 0
+	src.used_compute = 0
+	src.peak_compute = 0
+	if (!real)
+		return
+	if (src.flockmind)
+		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))
 	annotations = null
 	all_owned_tiles = null

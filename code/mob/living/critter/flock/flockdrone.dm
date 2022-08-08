@@ -322,6 +322,8 @@
 /mob/living/critter/flock/drone/proc/wake_from_ai_pause()
 	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
 		return
+	if (isdead(src) || isnull(src.flock)) //also can't wake up if you're dead
+		return
 	src.compute = FLOCK_DRONE_COMPUTE
 	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
 	src.flock.update_computes()
