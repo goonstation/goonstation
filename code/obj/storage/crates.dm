@@ -587,7 +587,6 @@
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 
