@@ -986,13 +986,6 @@ datum
 				var/datum/reagents/fluid_group/wildwetride = src.holder
 				if(istype(wildwetride)) //applied by a fluid body, so we can keep it simpleish
 
-					//INTERIM FUNCTIONALITY SECTION
-					//if chemprot becomes globally applied, this section should be removed in its entirety
-					var/chem_adjust = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
-					chem_adjust = clamp(1 - (chem_adjust / 100), 0, 2) //floats.
-					volume *= chem_adjust
-					//END INTERIM FUNCTIONALITY SECTION
-
 					//setup human, break out immediately if acid-immune
 					var/mob/living/carbon/human/H
 					if(ishuman(M))
@@ -1003,7 +996,16 @@ datum
 					var/do_an_ouch = TRUE
 					if(ON_COOLDOWN(M, "corroded_message_cd", 1.1 SECONDS))
 						do_an_ouch = FALSE
-					var/damage2deal = round(clamp(volume / 6, 0, 10))
+					var/damage2deal = clamp(volume / 6, 0, 10)
+
+					//INTERIM FUNCTIONALITY SECTION
+					//if chemprot becomes globally applied, this section should be removed in its entirety
+					var/chem_adjust = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+					chem_adjust = clamp(1 - (chem_adjust / 100), 0, 2) //floats.
+					damage2deal *= chem_adjust
+					//END INTERIM FUNCTIONALITY SECTION
+
+					damage2deal = round(damage2deal)
 					if(damage2deal >= 5) //scream and face melty
 						if(H)
 							if(do_an_ouch)
