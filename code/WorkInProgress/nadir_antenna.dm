@@ -305,8 +305,12 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				if(thing2send && transception_array.transceive(netnumber))
 					thing2send.loc = src
 					SPAWN(1 SECOND)
-						shippingmarket.sell_crate(thing2send)
-
+						if(istype(thing2send,/obj/storage/crate))
+							shippingmarket.sell_crate(thing2send)
+						else if(istype(thing2send,/obj/artifact))
+							shippingmarket.sell_artifact(thing2send)
+						else //how even
+							logTheThing("debug", null, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
 				showswirl(src.loc)
 				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
