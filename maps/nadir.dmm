@@ -986,6 +986,14 @@
 	dir = 1
 	},
 /area/station/storage/tools)
+"avt" = (
+/obj/machinery/door_control{
+	id = "nadir_bhull_ne";
+	name = "Emergency Re-Entry";
+	pixel_x = -24
+	},
+/turf/space/fluid/acid,
+/area/space)
 "avC" = (
 /obj/machinery/turret,
 /turf/simulated/floor/engine,
@@ -3345,6 +3353,15 @@
 "bFl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner)
+"bFm" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	id = "nadir_bhull_se"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "bFz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7242,6 +7259,14 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
+"dOb" = (
+/obj/machinery/door_control{
+	id = "nadir_bhull_nw";
+	name = "Emergency Re-Entry";
+	pixel_x = 24
+	},
+/turf/space/fluid/acid,
+/area/space)
 "dOr" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/yellowblack,
@@ -9051,6 +9076,15 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
+"eNH" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	id = "nadir_bhull_nw"
+	},
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
@@ -13295,6 +13329,16 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"gTR" = (
+/obj/machinery/drainage,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "gUd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13447,6 +13491,14 @@
 "gVW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/baroffice)
+"gVZ" = (
+/obj/machinery/door_control{
+	id = "nadir_bhull_sw";
+	name = "Emergency Re-Entry";
+	pixel_x = 24
+	},
+/turf/space/fluid/acid,
+/area/space)
 "gWc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16025,6 +16077,16 @@
 	dir = 10
 	},
 /area/station/medical/medbay/treatment)
+"ifl" = (
+/obj/machinery/drainage,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/nw{
+	name = "Northwest Breach Hull"
+	})
 "ifZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18680,9 +18742,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/floorpillstatue,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -19548,6 +19608,16 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
+"jTP" = (
+/obj/machinery/drainage,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/se{
+	name = "Southeast Breach Hull"
+	})
 "jUf" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -25480,6 +25550,15 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
+"mLt" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	id = "nadir_bhull_sw"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "mLB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32992,6 +33071,15 @@
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
+	})
+"rbr" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	id = "nadir_bhull_ne"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
 	})
 "rbE" = (
 /obj/shrub{
@@ -41703,6 +41791,16 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"vDv" = (
+/obj/machinery/drainage,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/ne{
+	name = "Northeast Breach Hull"
+	})
 "vEc" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4;
@@ -44145,6 +44243,14 @@
 "xes" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northeast)
+"xeB" = (
+/obj/machinery/door_control{
+	id = "nadir_bhull_se";
+	name = "Emergency Re-Entry";
+	pixel_x = -24
+	},
+/turf/space/fluid/acid,
+/area/space)
 "xfb" = (
 /obj/stool/chair{
 	dir = 4
@@ -75321,7 +75427,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+dOb
 bzS
 bzS
 bzS
@@ -75387,7 +75493,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+gVZ
 bzS
 bzS
 bzS
@@ -75621,8 +75727,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
+xQv
+eNH
 xQv
 inI
 xQv
@@ -75690,8 +75796,8 @@ jjE
 jjE
 kSY
 jjE
-bzS
-bzS
+mLt
+jjE
 bzS
 bzS
 bzS
@@ -75923,8 +76029,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
 xQv
+ifl
 xQv
 bRa
 fEU
@@ -75992,8 +76098,8 @@ dif
 wuT
 uqC
 jjE
+gTR
 jjE
-bzS
 bzS
 bzS
 bzS
@@ -76226,7 +76332,7 @@ bzS
 bzS
 aWz
 xQv
-xQv
+kAj
 xQv
 kAj
 xQv
@@ -76294,7 +76400,7 @@ ewN
 ewN
 eqq
 jjE
-jjE
+eqq
 jjE
 fWG
 bzS
@@ -107634,7 +107740,7 @@ bzS
 bzS
 gGw
 rne
-rne
+wjl
 rne
 wjl
 rne
@@ -107702,7 +107808,7 @@ dAB
 dAB
 fxH
 dAB
-dAB
+fxH
 dAB
 tpk
 bzS
@@ -107935,8 +108041,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
 rne
+vDv
 rne
 uNU
 aGv
@@ -108004,8 +108110,8 @@ neB
 hOA
 neB
 dAB
+jTP
 dAB
-bzS
 bzS
 bzS
 bzS
@@ -108237,8 +108343,8 @@ bzS
 bzS
 bzS
 bzS
-bzS
-bzS
+rne
+rbr
 rne
 nHe
 rne
@@ -108306,8 +108412,8 @@ dAB
 dAB
 rEP
 dAB
-bzS
-bzS
+bFm
+dAB
 bzS
 bzS
 bzS
@@ -108541,7 +108647,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+avt
 bzS
 bzS
 bzS
@@ -108607,7 +108713,7 @@ bzS
 bzS
 bzS
 bzS
-bzS
+xeB
 bzS
 bzS
 bzS
