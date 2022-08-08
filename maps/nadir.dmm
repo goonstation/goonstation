@@ -817,10 +817,7 @@
 	})
 "arE" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -1986,18 +1983,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"aXC" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/hallway/primary/northwest)
 "aXK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2850,6 +2835,10 @@
 	},
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"bul" = (
+/obj/decal/poster/wallsign/escape_right,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/medical/robotics)
 "bun" = (
 /obj/storage/crate/bin/lostandfound,
 /obj/machinery/light/emergency{
@@ -7266,7 +7255,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/shuttle/arrival/station)
 "dOM" = (
 /obj/storage/closet/wardrobe/orange,
@@ -13077,8 +13066,7 @@
 	name = "emergency chamber airlock"
 	},
 /turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor2"
+	dir = 8
 	},
 /area/shuttle/arrival/station)
 "gMN" = (
@@ -19056,6 +19044,10 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"jHl" = (
+/obj/decal/poster/wallsign/escape_right,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/exit)
 "jHD" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/grime,
@@ -20149,8 +20141,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor3"
+	dir = 8
 	},
 /area/shuttle/arrival/station)
 "kiY" = (
@@ -22547,6 +22538,12 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"lrG" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/arrival/station)
 "lrN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27992,6 +27989,10 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"oet" = (
+/obj/decal/poster/wallsign/escape_right,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/southwest)
 "oeA" = (
 /turf/unsimulated/wall/trench,
 /area/space)
@@ -32961,6 +32962,12 @@
 	mail_tag = "robotics";
 	name = "robotics mail junction"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "qXF" = (
@@ -34692,7 +34699,7 @@
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/shuttle/arrival/station)
 "rXz" = (
 /obj/cable{
@@ -36427,10 +36434,7 @@
 /area/station/crew_quarters/kitchen)
 "sOF" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp{
-	pixel_x = 1;
-	pixel_y = 10
-	},
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_east)
 "sOI" = (
@@ -37509,7 +37513,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/shuttle/arrival/station)
 "tpk" = (
 /obj/machinery/camera{
@@ -38066,6 +38070,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
+	})
+"tEC" = (
+/obj/decal/poster/wallsign/escape_right,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
 	})
 "tFt" = (
 /obj/machinery/light/small/floor/netural,
@@ -42016,6 +42026,23 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
+"vLf" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = -11
+	},
+/obj/decal/poster/wallsign/stencil/left/v{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_x = 5
+	},
+/obj/decal/poster/wallsign/stencil/right/l{
+	pixel_x = 16
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/arrival/station)
 "vMt" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/access_spawn/bar,
@@ -43697,6 +43724,20 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"wQv" = (
+/obj/decal/poster/wallsign/stencil/left/a{
+	pixel_x = -9
+	},
+/obj/decal/poster/wallsign/stencil/right/r{
+	pixel_x = 2
+	},
+/obj/decal/poster/wallsign/stencil/right/r{
+	pixel_x = 13
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/arrival/station)
 "wQG" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -71531,7 +71572,7 @@ rJg
 rJg
 rJg
 rJg
-cVU
+wQv
 feM
 tJl
 jML
@@ -71545,7 +71586,7 @@ wPO
 aDq
 wPO
 nBu
-cVU
+wQv
 rJg
 rJg
 rJg
@@ -71833,7 +71874,7 @@ rJg
 rJg
 rJg
 rJg
-cVU
+vLf
 guf
 xwU
 xwU
@@ -71847,7 +71888,7 @@ wPO
 wPO
 wPO
 nBu
-cVU
+vLf
 rJg
 rJg
 rJg
@@ -72137,17 +72178,17 @@ rJg
 rJg
 bJL
 gey
-yka
-yka
+lrG
+lrG
 kiO
-yka
+lrG
 isK
 pjd
 isK
-yka
+lrG
 gMC
-yka
-yka
+lrG
+lrG
 gey
 cMR
 rJg
@@ -73938,7 +73979,7 @@ xgs
 xgs
 dqY
 gbL
-dqY
+tEC
 tNU
 diT
 mSi
@@ -73966,7 +74007,7 @@ bQV
 pDy
 dqY
 gbL
-dqY
+tEC
 ncz
 diT
 mSi
@@ -87523,8 +87564,8 @@ tYl
 tYl
 sbb
 doa
-tYl
-aXC
+bul
+anw
 lWq
 tIi
 ngq
@@ -87562,7 +87603,7 @@ pqn
 mHK
 pqn
 pqn
-idy
+oet
 rhJ
 sZk
 bhj
@@ -106862,7 +106903,7 @@ nOs
 mbi
 hJZ
 fiR
-uSe
+jHl
 ecA
 qLL
 hfn
@@ -106882,7 +106923,7 @@ eDQ
 rsn
 ajr
 iwj
-uSe
+jHl
 fiR
 cEv
 mtw
