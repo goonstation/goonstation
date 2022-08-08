@@ -63,3 +63,4 @@
 /obj/flock_structure/rift/disposing()
 	if (!src.spawned)
 		src?.flock.flockmind?.death()
+	..()
