@@ -1825,7 +1825,7 @@
 	item_state = "shako"
 
 // yume nikki reference
-/obj/item/clothing/suit/gimmick/madotsuki
+/obj/item/clothing/under/gimmick/madotsuki
 	name = "Faded window shirt and skirt"
 	desc = "It's never been washed, and never seen the light of day, just like you!"
 	icon_state = "madotsuki"
