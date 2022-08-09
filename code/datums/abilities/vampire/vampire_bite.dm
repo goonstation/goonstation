@@ -414,6 +414,10 @@
 		if (istype(H))
 			H.vamp_isbiting = HH
 
+		HH.client?.images += bar.img
+		HH.client?.images += border.img
+		HH.client?.images += icon_image
+
 		src.loopStart()
 
 	loopStart()
@@ -448,6 +452,12 @@
 		src.end()
 
 		..()
+
+	onDelete()
+		. = ..()
+		HH.client?.images -= bar.img
+		HH.client?.images -= border.img
+		HH.client?.images -= icon_image
 
 	proc/end()
 		if (istype(H))
