@@ -216,6 +216,7 @@
 
 	/// Type path for the ai holder. Set to have the aiHolder instantiated on New()
 	var/ai_type = null
+	/// AI controller for this mob - only active if is_npc is TRUE, in which case it's called by the mobAI loop at a frequency depending on mob flags
 	var/datum/aiHolder/ai = null
 	/// used for load balancing mob_ai ticks
 	var/ai_tick_schedule = null
