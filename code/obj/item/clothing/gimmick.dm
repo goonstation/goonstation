@@ -1823,3 +1823,10 @@
 	desc = "It's hard to resist playing with the plume on this thing."
 	icon_state = "shako"
 	item_state = "shako"
+
+// yume nikki reference
+/obj/item/clothing/suit/gimmick/madotsuki
+	name = "Faded window shirt and skirt"
+	desc = "It's never been washed, and never seen the light of day, just like you!"
+	icon_state = "madotsuki"
+	item_state = "madotsuki"
