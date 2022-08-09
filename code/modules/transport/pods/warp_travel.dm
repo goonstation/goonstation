@@ -71,14 +71,14 @@
 		packable = 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/wrench))
+		if (iswrenchingtool(W))
 			if (!packable)
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
 			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			src.startpack()
-		else if (istype(W, /obj/item/device/multitool))
+		else if (ispulsingtool(W))
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
@@ -193,7 +193,7 @@
 		..()
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/wrench) && !src.deploying)
+		if (iswrenchingtool(W) && !src.deploying)
 			for (var/turf/T in range(src.tile_range,src))
 				if (!T.allows_vehicles)
 					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
@@ -206,7 +206,7 @@
 			src.deploying = 1
 			src.deploybeacon()
 
-		else if (istype(W, /obj/item/device/multitool/) && !src.deploying)
+		else if (ispulsingtool(W) && !src.deploying)
 			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")

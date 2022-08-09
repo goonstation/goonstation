@@ -404,7 +404,7 @@
 		if (issilicon(user))
 			return
 
-		if (istype(W, /obj/item/wrench))
+		if (iswrenchingtool(W))
 
 			add_fingerprint(user)
 			src.anchored = !src.anchored

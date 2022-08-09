@@ -96,7 +96,7 @@
 		user.lastattacked = src
 		if (!src.alive)
 			// TODO: tie this into surgery()
-			if (istype(W, /obj/item/scalpel))
+			if (iscuttingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 0)
 						user.visible_message("<span class='alert'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
@@ -139,7 +139,7 @@
 							src.right_arm = null
 						src.update_dead_icon()
 
-			else if (istype(W, /obj/item/circular_saw))
+			else if (issawingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 1)
 						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")

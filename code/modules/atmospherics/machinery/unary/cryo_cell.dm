@@ -240,7 +240,7 @@
 				user.u_equip(I)
 				I.set_loc(src)
 				src.UpdateIcon()
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else

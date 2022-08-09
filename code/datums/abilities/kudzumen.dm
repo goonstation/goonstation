@@ -784,14 +784,4 @@
 //O is obj to be destroyed, W is obj used to destroy.
 //This is total shit too, but I'm in a hurry again. I'll be back, -Kyle
 /proc/destroys_kudzu_object(var/obj/O, var/obj/item/W as obj, var/mob/user)
-		var/destroyed = 0
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) destroyed = 1
-		else if (istype(W, /obj/item/axe)) destroyed = 1
-		else if (istype(W, /obj/item/circular_saw)) destroyed = 1
-		else if (istype(W, /obj/item/kitchen/utensil/knife)) destroyed = 1
-		else if (istype(W, /obj/item/scalpel)) destroyed = 1
-		else if (istype(W, /obj/item/sword)) destroyed = 1
-		else if (istype(W, /obj/item/saw)) destroyed = 1
-
-		return destroyed
-
+	return istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)
