@@ -58,6 +58,6 @@
 		animate_shake(src, severity, severity)
 
 /obj/flock_structure/rift/disposing()
-	..()
 	if (!src.flock?.flockmind?.started)
 		src.flock?.flockmind?.death()
+	..()
