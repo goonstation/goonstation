@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		if (src.canshoot())
+		if (src.canshoot() && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)
@@ -337,6 +337,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		gray
 			icon_state = "shotgun_gray"
 			desc = "An gray shotgun shell."
+
+		pipe
+			icon_state = "shotgun_pipe"
+			desc = "A slightly scorched length of pipe with an open end."
 		New()
 			..()
 			SPAWN(rand(4, 7))

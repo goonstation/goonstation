@@ -1243,7 +1243,7 @@ as it may become compromised.
 
 /obj/item/stamp
 	name = "rubber stamp"
-	desc = "A rubber stamp for stamping important documents."
+	desc = "A no-nonsense National Notary rubber stamp for stamping important documents. It has a simple acrylic handle."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
@@ -1330,91 +1330,91 @@ as it may become compromised.
 /obj/item/stamp // static staff stamps
 	cap
 		name = "\improper captain's rubber stamp"
-		desc = "The Captain's rubber stamp for stamping important documents."
+		desc = "The Captain's rubber stamp for stamping important documents. Ooh, it's the really fancy National Notary 'Congressional' model with the fine ebony handle."
 		icon_state = "stamp-cap"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
 	hop
 		name = "\improper head of personnel's rubber stamp"
-		desc = "The Head of Personnel's rubber stamp for stamping important documents."
+		desc = "The Head of Personnel's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
 		icon_state = "stamp-hop"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
 	hos
 		name = "\improper head of security's rubber stamp"
-		desc = "The Head of Security's rubber stamp for stamping important documents."
+		desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 		icon_state = "stamp-hos"
 		special_mode = "Head of Security"
 		is_reassignable = 0
 		assignment = "stamp-hos"
 	ce
 		name = "\improper chief engineer's rubber stamp"
-		desc = "The Chief Engineer's rubber stamp for stamping important documents."
+		desc = "The Chief Engineer's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Mary' models with the ironwood handle."
 		icon_state = "stamp-ce"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
 	md
 		name = "\improper medical director's rubber stamp"
-		desc = "The Medical Director's rubber stamp for stamping important documents."
+		desc = "The Medical Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 		icon_state = "stamp-md"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
 	rd
 		name = "\improper research director's rubber stamp"
-		desc = "The Research Director's rubber stamp for stamping important documents."
+		desc = "The Research Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. John' models with the purpleheart handle."
 		icon_state = "stamp-rd"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
 	clown
 		name = "\improper clown's rubber stamp"
-		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-honk"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
 	centcom
-		name = "\improper centcom rubber stamp"
-		desc = "Some bureaucrat from Centcom probably lost this."
+		name = "\improper centcom executive rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 		icon_state = "stamp-centcom"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
 	mime
 		name = "\improper mime's rubber stamp"
-		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-mime"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
 	chap
 		name = "\improper chaplain's rubber stamp"
-		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the National Notary 'Chesapeake' model in varnished oak."
 		icon_state = "stamp-chap"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
 	qm
 		name = "\improper quartermaster's rubber stamp"
-		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
 	syndicate
 		name = "\improper syndicate rubber stamp"
-		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on. Surprisingly, it's also a National Notary 'Continental'. Not many choices out here."
 		icon_state = "stamp-syndicate"
 		special_mode = "Syndicate"
 		is_reassignable = 0
 		assignment = "stamp-syndicate"
 	law
 		name = "\improper security's rubber stamp"
-		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the rugged National Notary 'Severn' model with the rock maple handle."
 		icon_state = "stamp-syndicate"
 		special_mode = "Security"
 		is_reassignable = 0

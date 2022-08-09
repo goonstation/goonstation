@@ -12,16 +12,16 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
 	var/success_medal = null
-	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
-	var/pseudo = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
 	/// How this antagonist was created. Displayed at the end of the round.
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
+	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
+	var/pseudo = FALSE
 	
-	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo)
+	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
 		. = ..()
 		if (!istype(new_owner))
 			message_admins("Antagonist datum of type [src.type] and usr [usr] attempted to spawn without a mind. This should never happen!!")
@@ -34,7 +34,21 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		if (!do_pseudo) // there is a special place in code hell for mind.special_role
 			new_owner.special_role = id
-		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
+			if (source == ANTAGONIST_SOURCE_ADMIN)
+				ticker.mode.Agimmicks |= new_owner
+			else
+				ticker.mode.traitors |= new_owner // same with this variable in particular, but it's necessary for antag HUDs
+		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
+
+	Del()
+		if (owner && !src.pseudo)
+			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
+			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
+				ticker.mode.Agimmicks.Remove(src.owner)
+			else
+				ticker.mode.traitors.Remove(src.owner)
+		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
 	proc/remove_self(take_gear = TRUE, silent)
@@ -43,20 +57,31 @@ ABSTRACT_TYPE(/datum/antagonist)
 		
 		if (!silent)
 			src.announce_removal()
-		
-		if (owner.special_role == id)
-			owner.former_antagonist_roles.Add(owner.special_role)
-			owner.special_role = null
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
 	proc/is_compatible_with(datum/mind/mind)
 		return TRUE
 
 	/// Base proc to set up the antagonist. Depending on arguments, it can spawn equipment, assign objectives, move the player (if applicable), and announce itself.
-	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source)
+	proc/setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
+		set waitfor = FALSE
 		SHOULD_NOT_OVERRIDE(TRUE)
 
 		src.assigned_by = source
+
+		// Late setup has special logic, and is used for jobs like latejoining traitors that lack uplinks if given their equipment before their job.
+		// It will pause the setup proc for up to 60 seconds by sleeping every second, then checking if the owner's assigned role exists.
+		// If it does, then the setup will continue. If late setup is still failing after a minute, we message admins to let them know.
+		if (late_setup)
+			for (var/i in 1 to 60)
+				if (QDELETED(src) || !src.owner)
+					qdel(src)
+					return
+				if (src.owner.assigned_role)
+					break
+				sleep(1 SECOND)
+			if (!src.owner.assigned_role)
+				message_admins("Antagonist datum of type [src.type] failed to properly late setup after 60 seconds. Report this to a coder.")
 
 		if (do_equip)
 			src.give_equipment()

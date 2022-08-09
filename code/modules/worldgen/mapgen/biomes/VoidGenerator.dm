@@ -17,7 +17,7 @@
 
 	generate_turf(gen_turf, flags)
 		. = ..()
-		if(!flags && prob(corridor_density))
+		if((flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA) == 0) && prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
 			SPAWN(5 SECONDS)
 				void_corridor(get_step(gen_turf, pick(cardinal)), rand(6,10), start=TRUE)
