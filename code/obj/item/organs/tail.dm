@@ -20,6 +20,7 @@
 	var/failure_ability = "clumsy"	// The organ failure ability associated with this organ.
 	var/human_getting_monkeytail = 0	// If a human's getting a monkey tail
 	var/monkey_getting_humantail = 0	// If a monkey's getting a human tail
+	var/clothing_image_icon = null // if the tail has clothing sprites, set this to the appropriate icon
 	// vv these get sent to update_body(). no sense having it calculate all this shit multiple times
 	var/image/tail_image_1
 	var/image/tail_image_2
@@ -185,6 +186,7 @@
 	desc = "A long, slender tail."
 	icon_state = "tail-monkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
+	clothing_image_icon = 'icons/mob/monkey/tail.dmi'
 	tail_num = TAIL_MONKEY
 	organ_image_under_suit_1 = "monkey_under_suit"
 	organ_image_under_suit_2 = null
@@ -266,3 +268,4 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
 	colorful = 1
+

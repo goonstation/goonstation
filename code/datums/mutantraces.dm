@@ -110,7 +110,6 @@ TYPEINFO(/datum/mutantrace)
 	var/clothing_icon_mask = null
 	var/clothing_icon_head = null
 	var/clothing_icon_belt = null
-	var/clothing_icon_tail = null
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -1520,7 +1519,6 @@ TYPEINFO(/datum/mutantrace)
 	clothing_icon_mask = icon('icons/mob/monkey/mask.dmi')
 	clothing_icon_head = icon('icons/mob/monkey/head.dmi')
 	clothing_icon_belt = icon('icons/mob/monkey/belt.dmi')
-	clothing_icon_tail = icon('icons/mob/monkey/tail.dmi')
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
