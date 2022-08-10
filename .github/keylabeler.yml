@@ -28,7 +28,7 @@ labelMappings:
     "[ENHANCEMENT]": c-feature
     "[FEATURE]": c-feature
     "[FEAT]": c-feature
-    "[BALANCE]": a-balance
+    "[BALANCE]": c-balance
     "[CLEANLINESS]": c-code-quality
     "[CODE QUALITY]": c-code-quality
     "[CLEAN]": c-code-quality
