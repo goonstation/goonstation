@@ -9,18 +9,18 @@ caseSensitive: false
 
 # Explicit keyword mappings to labels. Form of match:label. Required.
 labelMappings:
-    "[BUG - CRITICAL]": c-bug-critical
-    "[CRITICAL]": c-bug-critical
-    "[BUG - MAJOR]": c-bug-major
-    "[MAJOR]": c-bug-major
+    "[BUG - CRITICAL]": p-critical
+    "[CRITICAL]": p-critical
+    "[BUG - MAJOR]": p-major
+    "[MAJOR]": p-major
+    "[BUG - MINOR]": p-minor
+    "[MINOR]": p--minor
+    "[BUG - TRIVIAL]": p-trivial
+    "[TRIVIAL]": p-trivial
     "[BUG]": c-bug
     "[FIX]": c-bug
     "[BUGFIX]": c-bug
     "fixes #": c-bug
-    "[BUG - MINOR]": c-bug-minor
-    "[MINOR]": c-bug-minor
-    "[BUG - TRIVIAL]": c-bug-trivial
-    "[TRIVIAL]": c-bug-trivial
     "[RUNTIME]": c-runtime
     "[INPUT WANTED]": e-input-wanted
     "[INPUT]": e-input-wanted
