@@ -32730,7 +32730,7 @@
 /area/station/quartermaster/office)
 "bFX" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/storage/secure/closet/brig,
 /obj/item/storage/box/prosthesis_kit/eye_laser,
 /turf/simulated/floor/delivery,
 /area/station/security/main)

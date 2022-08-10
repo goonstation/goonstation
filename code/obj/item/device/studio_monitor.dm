@@ -217,7 +217,7 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			if(is_syndicate)
+			if(the_item.is_syndicate)
 				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
 			else
 				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes

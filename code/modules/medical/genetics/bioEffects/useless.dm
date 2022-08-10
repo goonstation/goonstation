@@ -498,3 +498,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "hell_fire"
+
+	New()
+		..()
+		color_hex = "#680000"
