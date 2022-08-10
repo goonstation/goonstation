@@ -238,9 +238,6 @@
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output WATTS
 
-		// debug
-		// src.visible_message("<span class='notice'>[src.last_output] WATTS</span>")
-
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
@@ -344,10 +341,6 @@
 		if (!T.air || T.air.oxygen <= 0)
 			return 0
 
-		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air.oxygen]</span>")
-		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air)]</span>")
-		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air.oxygen / TOTAL_MOLES(T.air)]</span>") */
-
 		return T.air.oxygen / TOTAL_MOLES(T.air)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
@@ -356,10 +349,6 @@
 
 		if (T.air_contents.oxygen <= 0)
 			return 0
-
-		/* src.visible_message("<span class='notice'>Oxygen Moles: [T.air_contents.oxygen]</span>")
-		src.visible_message("<span class='notice'>Total Moles: [TOTAL_MOLES(T.air_contents)]</span>")
-		src.visible_message("<span class='notice'>Oxygen Concentration: [T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)]</span>") */
 
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
@@ -404,32 +393,3 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-
-
-
-/*	smelly verbs
-	verb/start_stop()
-		set name = "Start/Stop Generator"
-		set src in oview(1)
-		set category = "Local"
-
-		if (!src.active)
-			src.start_engine(usr)
-			return
-
-		src.stop_engine()
-
-	verb/eject_fuel()
-		set name = "Eject Fuel Tank"
-		set src in oview(1)
-		set category = "Local"
-
-		src.eject_fuel_tank(usr)
-
-	verb/eject_inlet()
-		set name = "Eject Oxygen Tank"
-		set src in oview(1)
-		set category = "Local"
-
-		src.eject_inlet_tank(usr) */
-
