@@ -74,7 +74,7 @@ labelMappings:
     "[SPECIES]": a-mutantraces
     "[PLAYER ACTIONS]": a-player-actions
     "[ACTIONS]": a-player-actions
-    "[SCIENCE]": a-sceince
+    "[SCIENCE]": a-science
     "[SILICONS]": a-silicons
     "[BORGS]": a-silicons
     "[STATION SYSTEMS]": a-station-systems
