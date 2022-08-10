@@ -184,12 +184,14 @@
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor && length(flock.trace_minds))
-							stuff_to_output += "Flocktraces:"
-							for (var/trace_name in flock.trace_minds)
-								var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-								//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-								stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
+						if (flock.flockmind_mind == traitor)
+							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							if(length(flock.trace_minds))
+								stuff_to_output += "Flocktraces:"
+								for (var/trace_name in flock.trace_minds)
+									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
+									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
+									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
