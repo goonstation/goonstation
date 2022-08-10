@@ -786,6 +786,10 @@ var/f_color_selector_handler/F_Color_Selector
 	if(fexists("update/[config.dmb_filename].dmb"))
 		logTheThing("diary", null, null, "Updated [config.dmb_filename].dmb found. Updating...", "admin")
 		for(var/f in flist("update/"))
+			if (IS_DIR_FNAME("update/[f]"))
+				logTheThing("diary", null, null, "\tClearing [f]...", "admin")
+				fdel(f)
+
 			logTheThing("diary", null, null, "\tMoving [f]...", "admin")
 			fcopy("update/[f]", "[f]")
 			fdel("update/[f]")
