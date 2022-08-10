@@ -284,7 +284,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	proc/send_a_thing(var/netnumber)
 		src.is_transceiving = TRUE
-		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
+		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //outgoing cargo warning (stand clear)
 		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN(0.3 SECONDS)
@@ -305,34 +305,58 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				if(thing2send && transception_array.transceive(netnumber))
 					thing2send.loc = src
 					SPAWN(1 SECOND)
-						if(istype(thing2send,/obj/storage/crate))
-							shippingmarket.sell_crate(thing2send)
+
+						if (istype(thing2send, /obj/storage/crate/biohazard/cdc))
+							QM_CDC.receive_pathogen_samples(thing2send)
+
+						else if(istype(thing2send,/obj/storage/crate) || istype(thing2send,/obj/storage/secure/crate))
+							var/sold_to_trader = FALSE
+							for (var/datum/trader/T in shippingmarket.active_traders)
+								if (T.crate_tag == thing2send.delivery_destination)
+									shippingmarket.sell_crate(thing2send, T.goods_buy)
+									sold_to_trader = TRUE
+									break
+							if(!sold_to_trader)
+								shippingmarket.sell_crate(thing2send)
+
 						else if(istype(thing2send,/obj/artifact))
 							shippingmarket.sell_artifact(thing2send)
+
 						else //how even
 							logTheThing("debug", null, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
+
 				showswirl(src.loc)
 				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
-
 		return
 
 	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get)
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
-			shippingmarket.pending_crates.Remove(thing2get)
+			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
 		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
 		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
-				for(var/atom/movable/O as mob in src.loc)
-					if(istype(O,/mob/living/carbon/human) && prob(25))
-						telefrag(O) //get out the way
-				if(transception_array.transceive(netnumber))
+				var/tele_obstructed = FALSE
+				var/turf/receive_turf = get_turf(src)
+				if(length(receive_turf.contents) < 10) //fail if there is excessive clutter or dense object
+					for(var/atom/movable/O in receive_turf)
+						if(istype(O,/obj))
+							if(O.density)
+								tele_obstructed = TRUE
+						if(istype(O,/mob/living/carbon/human) && prob(25))
+							telefrag(O) //get out the way
+				else
+					tele_obstructed = TRUE
+				if(!tele_obstructed && transception_array.transceive(netnumber))
 					thing2get.loc = src.loc
-
-				showswirl(src.loc)
-				use_power(200) //most cost is at the array
+					showswirl(src.loc)
+					use_power(200) //most cost is at the array
+				else
+					shippingmarket.pending_crates.Add(thing2get)
+					playsound(src.loc, "sound/machines/pod_alarm.ogg", 30, 0)
+					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
 				src.is_transceiving = FALSE
 
 		return
