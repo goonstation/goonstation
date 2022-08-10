@@ -23989,7 +23989,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bov" = (
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "box" = (
 /obj/disposalpipe/segment/mail,
@@ -23998,7 +23998,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "boz" = (
 /obj/machinery/power/apc{
@@ -24349,7 +24349,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bpN" = (
 /obj/disposalpipe/segment/mail{
@@ -24361,7 +24361,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bpP" = (
 /obj/grille/catwalk{
@@ -24590,7 +24590,7 @@
 /obj/submachine/foodprocessor{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bqI" = (
 /obj/disposalpipe/segment/mail,
@@ -24741,7 +24741,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "brh" = (
 /turf/simulated/floor/wood{
@@ -24875,7 +24875,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "brA" = (
 /obj/lattice{
@@ -25196,7 +25196,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bsC" = (
 /obj/machinery/camera{
@@ -25381,7 +25381,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bte" = (
 /obj/cable{
@@ -26382,7 +26382,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bwu" = (
 /obj/cable{
@@ -27120,7 +27120,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bys" = (
 /obj/cable{
@@ -28347,7 +28347,7 @@
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bCk" = (
 /obj/machinery/light/incandescent,
@@ -28482,7 +28482,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bCK" = (
 /obj/cable,
@@ -28673,7 +28673,7 @@
 	c_tag = "Kitchen South";
 	dir = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bDB" = (
 /obj/machinery/light/incandescent,
@@ -33075,7 +33075,7 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ebS" = (
 /obj/machinery/launcher_loader/east,
@@ -34138,7 +34138,7 @@
 	icon_state = "4-8"
 	},
 /obj/submachine/chef_oven,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "fiX" = (
 /obj/drink_rack/mug{
@@ -34621,7 +34621,7 @@
 /area/station/science/lobby)
 "fKh" = (
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "fKn" = (
 /obj/cable{
@@ -34869,7 +34869,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gbs" = (
 /obj/landmark/gps_waypoint,
@@ -35297,7 +35297,7 @@
 	pixel_x = 9;
 	pixel_y = 32
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gyt" = (
 /obj/cable{
@@ -38316,7 +38316,7 @@
 "kjk" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "kjv" = (
 /obj/cable{
@@ -39869,7 +39869,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lYf" = (
 /obj/disposalpipe/segment{
@@ -40261,7 +40261,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "myA" = (
 /obj/decal/cleanable/dirt,
@@ -40788,7 +40788,7 @@
 	name = "kitchen counter"
 	},
 /obj/submachine/mixer,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mZy" = (
 /obj/storage/secure/closet{
@@ -40910,7 +40910,7 @@
 	tag = ""
 	},
 /obj/random_item_spawner/snacks/one,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ngz" = (
 /obj/table/auto,
@@ -41241,7 +41241,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "nAg" = (
 /obj/landmark/start{
@@ -41529,7 +41529,7 @@
 /obj/landmark{
 	name = "shitty_bill_respawn"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "nUH" = (
 /turf/simulated/floor/engine,
@@ -41648,7 +41648,7 @@
 "obs" = (
 /obj/surgery_tray/kitchen_island,
 /obj/machinery/light_switch/north,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "obE" = (
 /obj/cable{
@@ -41689,7 +41689,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "odr" = (
 /obj/cable,
@@ -42268,7 +42268,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "oNj" = (
 /obj/machinery/plantpot{
@@ -44328,7 +44328,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rjh" = (
 /obj/table/auto,
@@ -44471,7 +44471,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "rwt" = (
 /obj/machinery/plantpot{
@@ -45185,7 +45185,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "skk" = (
 /turf/simulated/floor,
@@ -45754,7 +45754,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sJD" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -45856,7 +45856,7 @@
 	pixel_x = 24;
 	pixel_y = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sOA" = (
 /obj/cable{
@@ -46478,7 +46478,7 @@
 	dir = 1;
 	icon_state = "pipe-j2"
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tzt" = (
 /turf/simulated/floor/dojo/sand/circle,
@@ -46677,7 +46677,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tLe" = (
 /obj/disposalpipe/segment/mail{
@@ -47569,7 +47569,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uPW" = (
 /obj/cable{
@@ -48135,7 +48135,7 @@
 	pixel_y = 4
 	},
 /obj/machinery/light/incandescent,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vzb" = (
 /obj/lattice,
@@ -48411,7 +48411,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vRm" = (
 /obj/item/device/radio/intercom,
@@ -48944,7 +48944,7 @@
 /obj/access_spawn/kitchen,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "wCY" = (
 /obj/disposalpipe/segment/bent/west,
@@ -49814,7 +49814,7 @@
 	opacity = 0;
 	p_open = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "xzf" = (
 /obj/grille/catwalk{
@@ -49972,7 +49972,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "xJv" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -50090,7 +50090,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/turf/unsimulated/floor/specialroom/cafeteria,
+/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "xRe" = (
 /obj/cable{
