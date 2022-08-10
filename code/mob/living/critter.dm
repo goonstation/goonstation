@@ -781,10 +781,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brute")
 		if (Br)
-			Br.TakeDamage(brute)
+			Br.TakeDamage(brute, brute < 0)
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
-			Bu.TakeDamage(burn)
+			Bu.TakeDamage(burn, burn < 0)
 		take_toxin_damage(tox)
 
 	take_brain_damage(var/amount)
@@ -794,7 +794,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brain")
 		if (Br)
-			Br.TakeDamage(amount)
+			Br.TakeDamage(amount, amount < 0)
 		return 0
 
 	take_toxin_damage(var/amount)
@@ -804,7 +804,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		var/datum/healthHolder/Tx = get_health_holder("toxin")
 		if (Tx)
-			Tx.TakeDamage(amount)
+			Tx.TakeDamage(amount, amount < 0)
 		return 0
 
 	take_oxygen_deprivation(var/amount)
@@ -814,7 +814,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		var/datum/healthHolder/Ox = get_health_holder("oxy")
 		if (Ox)
-			Ox.TakeDamage(amount)
+			Ox.TakeDamage(amount, amount < 0)
 		return 0
 
 	get_brute_damage()
