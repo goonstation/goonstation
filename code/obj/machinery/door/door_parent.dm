@@ -259,7 +259,7 @@
 			if (SD.cant_emag != 0 || SD.isblocked() != 0)
 				boutput(user, "<span class='alert'>It's shut tight!</span>")
 			else
-				SD.open(1)
+				SD.open()
 				success = 1
 
 		if (istype(src, /obj/machinery/door/airlock))
