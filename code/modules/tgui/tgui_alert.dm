@@ -133,6 +133,7 @@
 			if (!(params["choice"] in buttons))
 				logTheThing("debug", src, null, "<b>TGUI/ZeWaka</b>: [usr] entered a non-existent button choice: [params["choice"]]")
 				return
+			set_choice(params["choice"])
 			closed = TRUE
 			tgui_process.close_uis(src)
 			return TRUE
@@ -141,6 +142,9 @@
 			choice = params["choice"]
 			tgui_process.close_uis(src)
 			. = TRUE
+
+/datum/tgui_modal/proc/set_choice(choice)
+	src.choice = choice
 
 /**
  * # async tgui_modal

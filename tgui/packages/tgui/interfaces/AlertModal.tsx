@@ -33,11 +33,11 @@ export const AlertModal = (_, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const { autofocus, buttons = [], message, timeout, title } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
-  // Dynamically sets window height
+  // Dynamically sets window dimensions
   const windowHeight
-     = 100
-     + Math.ceil(message.length / 3)
-     + (buttons.length > 2 ? buttons.length * 12 : 0);
+    = 115
+    + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+  const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -49,7 +49,7 @@ export const AlertModal = (_, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={title} width={325}>
+    <Window height={windowHeight} title={title} width={windowWidth}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
@@ -106,7 +106,7 @@ const ButtonDisplay = (props, context) => {
       wrap>
       {buttons?.map((button, index) =>
         (
-          <Flex.Item grow key={index}>
+          <Flex.Item key={index}>
             <AlertButton
               button={button}
               id={index.toString()}
@@ -125,10 +125,10 @@ const ButtonDisplay = (props, context) => {
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const { button, selected } = props;
+  const buttonWidth = button.length > 7 ? button.length : 7;
 
   return (
     <Button
-      height={2}
       onClick={() => act('choose', { choice: button })}
       m={0.5}
       pl={2}
@@ -136,7 +136,7 @@ const AlertButton = (props, context) => {
       pt={0}
       selected={selected}
       textAlign="center"
-      width={6}>
+      width={buttonWidth}>
       {button}
     </Button>
   );
