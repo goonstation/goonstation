@@ -3543,7 +3543,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/research_director)
 "bLx" = (
-/obj/machinery/computer/transception{
+/obj/machinery/computer/supplycomp{
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -26931,7 +26931,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/computer/supplycomp{
+/obj/machinery/computer/transception{
 	dir = 8
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -95470,7 +95470,7 @@ tly
 ykm
 aQs
 ahR
-hCT
+bLx
 hCT
 qMM
 ykm
