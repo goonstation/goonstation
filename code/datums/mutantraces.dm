@@ -1,3 +1,5 @@
+//TODO: refactor this
+
 #define OVERRIDE_ARM_L 1
 #define OVERRIDE_ARM_R 2
 #define OVERRIDE_LEG_R 4
