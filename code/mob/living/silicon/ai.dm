@@ -144,6 +144,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
+	var/obj/map_icon/map_icon
+
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
 			src.hat.wear_image.pixel_y = 0
@@ -205,7 +207,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
 	..(loc)
 	START_TRACKING
-
+	src.map_icon = new(src, ai_station_map)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point
@@ -1978,6 +1980,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			ai_station_map.screen_loc = "ai_map;1,1"
 			handler.vis_contents += ai_station_map
 			message_mob.client.screen += ai_station_map
+			handler.vis_contents += src.map_icon
+			message_mob.client.screen += src.map_icon
 		map_ui = new(usr, message_mob, "AIMap")
 		map_ui.open()
 

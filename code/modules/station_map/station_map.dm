@@ -1,6 +1,20 @@
 ///This is exclusively for the AI map right now
+
+/obj/map_icon
+	New(var/atom/movable/target, var/obj/station_map/map)
+		..(null)
+		target.render_target = ref(target)
+		src.render_source = target.render_target
+		src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/handle_move)
+		src.handle_move(target)
+
+	proc/handle_move(var/atom/movable/target)
+		var/turf/T = get_turf(target)
+		src.pixel_x = T.x
+		src.pixel_y = T.y
+
 /obj/station_map
-	name = "AI station map"
+	name = "Station map"
 	var/static/icon/map_icon
 
 	var/x_max = 1
@@ -21,26 +35,7 @@
 			#endif
 			render_map()
 			zoom_map()
-			pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
-			pixel_x += 8
 		icon = map_icon
-
-	Click(location, control, params)
-		if (!isAI(usr)) //only for AI use
-			return
-		var/list/param_list = params2list(params)
-		if ("left" in param_list)
-			var/x = text2num(param_list["icon-x"])
-			var/y = text2num(param_list["icon-y"])
-			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
-			if (isAIeye(usr))
-				usr.loc = clicked
-			else
-				var/mob/living/silicon/ai/mainframe = usr
-				mainframe.eye_view() //pop out to eye first
-				mainframe.eyecam.loc = clicked //then tele it, not our core
-		if ("right" in param_list)
-			return TRUE
 
 	//generates the map from the current station layout
 	proc/render_map()
@@ -95,3 +90,27 @@
 			return "#ffffff"
 		else
 			return "#808080"
+
+/obj/station_map/ai
+	name = "AI station map"
+	New()
+		..()
+		pixel_y += 20 //magic numbers because ByondUI mis-aligns by a few pixels
+		pixel_x += 8
+
+	Click(location, control, params)
+		if (!isAI(usr)) //only for AI use
+			return
+		var/list/param_list = params2list(params)
+		if ("left" in param_list)
+			var/x = text2num(param_list["icon-x"])
+			var/y = text2num(param_list["icon-y"])
+			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
+			if (isAIeye(usr))
+				usr.loc = clicked
+			else
+				var/mob/living/silicon/ai/mainframe = usr
+				mainframe.eye_view() //pop out to eye first
+				mainframe.eyecam.loc = clicked //then tele it, not our core
+		if ("right" in param_list)
+			return TRUE
