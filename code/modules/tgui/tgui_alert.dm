@@ -15,7 +15,7 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0 SECONDS, autofocus = TRUE)
+/proc/tgui_alert(mob/user, message = "", title = "", list/buttons = list("Ok"), timeout = 0 SECONDS, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -44,7 +44,7 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0 SECONDS, autofocus = TRUE)
+/proc/tgui_alert_async(mob/user, message = "", title = "", list/buttons = list("Ok"), datum/callback/callback, timeout = 0 SECONDS, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -113,8 +113,8 @@
 	. = tgui_always_state
 
 /datum/tgui_modal/ui_data(mob/user)
+	. = list()
 	if(timeout)
-		. = list()
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_static_data(mob/user)
@@ -132,7 +132,13 @@
 	switch(action)
 		if("choose")
 			if (!(params["choice"] in buttons))
+				logTheThing("debug", src, null, "<b>TGUI/ZeWaka</b>: [usr] entered a non-existent button choice: [params["choice"]]")
 				return
+			closed = TRUE
+			tgui_process.close_uis(src)
+			return TRUE
+		if("cancel")
+			closed = TRUE
 			choice = params["choice"]
 			tgui_process.close_uis(src)
 			. = TRUE

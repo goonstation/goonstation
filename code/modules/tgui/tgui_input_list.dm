@@ -103,11 +103,12 @@
 			if (!(params["choice"] in buttons))
 				return
 			choice = buttons_map[params["choice"]]
+			closed = TRUE
 			tgui_process.close_uis(src)
 			. = TRUE
 		if("cancel")
-			tgui_process.close_uis(src)
 			closed = TRUE
+			tgui_process.close_uis(src)
 			. = TRUE
 
 /**
