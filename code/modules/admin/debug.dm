@@ -1277,7 +1277,7 @@ var/datum/flock/testflock
 		comps = list(comps)
 
 	var/datum/component/selection
-	selection = tgui_input_list(usr, "Select a component to remove", "Matches for pattern", comps)
+	selection = text2path(tgui_input_list(usr, "Select a component to remove", "Matches for pattern", comps))
 	if (!selection)
 		return // user cancelled
 

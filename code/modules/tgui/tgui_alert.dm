@@ -80,11 +80,10 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, copyButtons = TRUE, autofocus)
+/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout, autofocus = TRUE)
 	src.title = title
 	src.message = message
-	if (copyButtons)
-		src.buttons = buttons.Copy()
+	src.buttons = buttons.Copy()
 	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
@@ -152,7 +151,7 @@
 	/// The callback to be invoked by the tgui_modal upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout, autofocus)
+/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout = 0, autofocus = TRUE)
 	..(user, title, message, buttons, timeout, autofocus)
 	src.callback = callback
 
