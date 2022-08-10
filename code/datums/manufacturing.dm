@@ -1656,6 +1656,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /******************** Science **************************/
 
+/datum/manufacture/jumpsuit_scientist
+	name = "Scientist's Jumpsuit"
+	item_paths = list("FAB-1")
+	item_amounts = list(4)
+	item_outputs = list(/obj/item/clothing/under/rank/scientist)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/biosuit
 	name = "Biosuit Set"
 	item_paths = list("FAB-1","CRY-1")
