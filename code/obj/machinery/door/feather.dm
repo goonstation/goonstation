@@ -11,6 +11,7 @@
 	var/broken = FALSE
 	health = 200
 	health_max = 200
+	var/repair_per_resource = 2
 
 /obj/machinery/door/feather/New()
 	..()
@@ -71,13 +72,16 @@
 	src.name = initial(name)
 	src.desc = initial(desc)
 
-/obj/machinery/door/feather/proc/repair()
-	src.health = min(20, src.health_max - src.health) + src.health
+/obj/machinery/door/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+
 	if (src.broken && src.health_max / 2 < src.health)
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.icon_state = initial(src.icon_state)
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/machinery/door/feather/proc/deconstruct()
 	var/turf/T = get_turf(src)

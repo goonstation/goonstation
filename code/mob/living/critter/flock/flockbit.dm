@@ -7,6 +7,7 @@
 	pays_to_construct = FALSE
 	health_brute = 5
 	health_burn = 5
+	repair_per_resource = 1
 	fits_under_table = TRUE
 	flags = TABLEPASS
 
