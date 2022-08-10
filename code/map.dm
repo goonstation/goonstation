@@ -955,8 +955,7 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"the main security room" = list(/area/station/security/main),
-		"the central research hall" = list(/area/station/science),
+		"security's central staff room" = list(/area/station/security/main),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
 		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
