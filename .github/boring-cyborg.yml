@@ -2,6 +2,11 @@
 # Enable "labeler" for your PR that would add labels to PRs based on the paths that are modified in the PR.
 labelPRBasedOnFilePath:
 
+  # Add 'mapping' label to any changes within 'maps' folder or any subfolders
+  A-Mapping:
+    - maps/**/*
+    - '**/*.dmm'
+
   # Add 'tooling' label to any changes to the .github folder or any subfolders
   A-Tooling:
     - .github/**/*
@@ -13,11 +18,6 @@ labelPRBasedOnFilePath:
   # Add 'documentation' label to any changes to a .md file
   C-Documentation:
     - '**/*.md'
-
-  # Add 'mapping' label to any changes within 'maps' folder or any subfolders
-  C-Mapping:
-    - maps/**/*
-    - '**/*.dmm'
 
   # Add 'sound' label to any changes within 'sound' folder or any subfolders
   C-Sound:
