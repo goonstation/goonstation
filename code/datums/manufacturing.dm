@@ -1665,6 +1665,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/research_backpack
+	name = "Research Backpack"
+	item_paths = list("FAB-1")
+	item_amounts = list(8)
+	item_outputs = list(/obj/item/storage/backpack/research)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/biosuit
 	name = "Biosuit Set"
 	item_paths = list("FAB-1","CRY-1")

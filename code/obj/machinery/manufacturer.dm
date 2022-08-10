@@ -2216,6 +2216,7 @@
 		/datum/manufacture/mechdropper,
 		/datum/manufacture/biosuit,
 		/datum/manufacture/labcoat,
+		/datum/manufacture/research_backpack,
 		/datum/manufacture/jumpsuit_scientist,
 		/datum/manufacture/jumpsuit_white,
 		/datum/manufacture/patient_gown,
