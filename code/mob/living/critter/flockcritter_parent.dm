@@ -477,7 +477,7 @@
 			var/burn_weight = 1 - brute_weight
 
 			flockcritter.HealDamage("All", health_given * brute_weight, health_given * burn_weight)
-			F.pay_resources(ceil(health_given / F.repair_per_resource))
+			F.pay_resources(ceil(health_given / flockcritter.repair_per_resource))
 			keep_repairing = flockcritter.get_health_percentage() < 1
 			if (flockcritter.is_npc)
 				flockcritter.ai.interrupt()
