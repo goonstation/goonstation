@@ -721,6 +721,13 @@
 	assoc_reagents = list("safrole")
 	crop = /obj/item/plant/herb/sassafras
 
+/datum/plantmutation/tree/glowstick
+	name = "Glowstick Tree"
+	dont_rename_crop = true
+	name_prefix = "Glowstick "
+	iconmod = "TreeGlow"
+	crop = /obj/item/device/light/glowstick
+
 //peanuuts
 
 /datum/plantmutation/peanut/sandwich
