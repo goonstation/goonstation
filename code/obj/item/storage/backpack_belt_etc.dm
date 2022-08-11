@@ -846,7 +846,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher)
+	/obj/item/extinguisher/large)
 
 
 /* -------------------- Wrestling Belt -------------------- */
