@@ -1511,7 +1511,7 @@
 						icon_state = "rattlesnake"
 						if (iscarbon(C) && src.atkcarbon) src.attack = 1
 						if (issilicon(C) && src.atksilicon) src.attack = 1
-						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
+						if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
 							C.reagents?.add_reagent("viper_venom", rand(15,25))
 							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
