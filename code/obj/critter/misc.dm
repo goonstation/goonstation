@@ -1542,7 +1542,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
+		if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 			M.reagents?.add_reagent("viper_venom", rand(10,15))
 			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
