@@ -1848,20 +1848,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
-			if (C:amount >= 2)
+			if (C.amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 3 SECONDS))
-					ReplaceWithEngineFloor()
 
-					if (C)
-						C.change_stack_amount(-2)
-						if (C:amount <= 0)
-							qdel(C) //wtf
-
-						if (C.material)
-							src.setMaterial(C.material)
-
-					playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
+				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			else
 				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else
@@ -2022,6 +2012,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
+
+/turf/simulated/floor/proc/reinforce(obj/item/rods/I)
+	src.ReplaceWithEngineFloor()
+	if (I.material)
+		src.setMaterial(I.material)
+	I.change_stack_amount(-2)
+	playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
