@@ -71,7 +71,7 @@
 			continue
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
