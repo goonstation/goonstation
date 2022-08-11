@@ -56,3 +56,9 @@
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
+
+/obj/flock_structure/rift/disposing()
+	var/mob/living/intangible/flock/flockmind/flockmind = src.flock?.flockmind
+	if (flockmind && !flockmind.started)
+		..()
+		flockmind.death()
