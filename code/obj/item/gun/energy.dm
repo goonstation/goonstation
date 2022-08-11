@@ -1724,8 +1724,9 @@
 	var/extended = FALSE
 
 	New()
-		set_current_projectile(new/datum/projectile/special/spreader/plasma_spreader)
+		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
 		..()
 
 	update_icon()
@@ -1733,11 +1734,13 @@
 		if(!src.extended)
 			src.icon_state = "cornicen_close"
 			src.item_state = "cornicen"
-			w_class = W_CLASS_NORMAL
+			src.w_class = W_CLASS_NORMAL
+			src.spread_angle = initial(src.spread_angle)
 		else
 			src.icon_state = "cornicen_ext"
 			src.item_state = "cornicen_ext"
-			w_class = W_CLASS_BULKY
+			src.w_class = W_CLASS_BULKY
+			src.spread_angle = 0
 
 	attack_self(var/mob/M)
 		..()
