@@ -40,6 +40,98 @@
 				flick("lasercannon-fire", src)
 			. = ..()
 
+/datum/projectile/energy_bolt/taser_beam
+	cost = 0
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	shot_volume = 10
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/bullet/optio
+	name = "hardlight beam"
+	sname = "pencil beam"
+	cost = 20
+	power = 40
+	dissipation_delay = 6
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_BURN
+	icon_state = "laser_white"
+	projectile_speed = 56
+	shot_sound = 'sound/weapons/optio.ogg'
+	armor_ignored = 0.66
+	impact_image_state = "bhole"
+	shot_volume = 66
+
+/datum/projectile/bullet/optio_hitscan
+	name = "hardlight beam"
+	sname = "pencil beam"
+	cost = 20
+	power = 40
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_BURN
+	icon_state = "laser_white"
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	shot_sound = 'sound/weapons/optio.ogg'
+	armor_ignored = 0.66
+	impact_image_state = "bhole"
+	shot_volume = 66
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
