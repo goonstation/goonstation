@@ -58,7 +58,6 @@
 		animate_shake(src, severity, severity)
 
 /obj/flock_structure/rift/disposing()
-	var/mob/living/intangible/flock/flockmind/flockmind = src.flock?.flockmind
-	if (flockmind && !flockmind.started)
-		..()
-		flockmind.death()
+	if (!src.flock?.flockmind?.started)
+		src.flock?.flockmind?.death()
+	..()
