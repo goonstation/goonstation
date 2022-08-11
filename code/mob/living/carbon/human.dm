@@ -3162,6 +3162,7 @@
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if (isintangible(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY
