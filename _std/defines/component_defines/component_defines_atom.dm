@@ -99,13 +99,13 @@
 	#define COMSIG_ITEM_DROPPED "itm_drop"
 	/// When an item is used to attack a mob
 	#define COMSIG_ITEM_ATTACK_POST "itm_atk_post"
-	/// Just before an item is eaten
+	/// Just before an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PRE "itm_atk_consumed_pre"
-	/// When an item is eaten
+	/// When an item is eaten (eater,item)
 	#define COMSIG_ITEM_CONSUMED "itm_atk_consumed"
-	/// After an item's been eaten, but there's still some left
+	/// After an item's been eaten, but there's still some left (eater,item)
 	#define COMSIG_ITEM_CONSUMED_PARTIAL "itm_atk_consumed_partial"
-	/// After we've consumed an item
+	/// After we've consumed an item (eater,item)
 	#define COMSIG_ITEM_CONSUMED_ALL "itm_atk_consumed_all"
 	/// Called before an attackby that uses this item (target, user)
 	#define COMSIG_ITEM_ATTACKBY_PRE "itm_atkby_pre"
@@ -157,11 +157,15 @@
 	#define COMSIG_MOB_PICKUP "mob_pickup"
 	/// When a mob drops an item
 	#define COMSIG_MOB_DROPPED "mob_drop"
+	/// Just before an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED_PRE "mob_itm_atk_consumed_pre"
+	/// When an item is eaten (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED "mob_itm_atk_consumed"
 	/// Sent when a mob throws something (target, params)
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby
 	#define COMSIG_MOB_THROW_ITEM_NEARBY "throw_item_nearby"
-	/// Sent when a mob sets their a_intent var (mob, intent)
+	/// Sent when a mob sets their a_intent var, returning anything will cancel the intent change (mob, intent)
 	#define COMSIG_MOB_SET_A_INTENT "mob_set_a_intent"
 	/// Sent when radiation status ticks on mob (stage)
 	#define COMSIG_MOB_GEIGER_TICK "mob_geiger"
@@ -178,6 +182,15 @@
 
 	/// Make cloaking devices turn off - sent to the mob
 	#define COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE "cloak_deactivate"
+
+	// ---- typing indicator signals ----
+
+	/// Create typing indicator
+	#define COMSIG_CREATE_TYPING "create_typing"
+	/// Remove typing indicator
+	#define COMSIG_REMOVE_TYPING "remove_typing"
+	/// Speech bubble
+	#define COMSIG_SPEECH_BUBBLE "speech_bubble"
 
 	// ---- disguiser device signal ----
 

@@ -128,6 +128,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
 		/client/proc/cmd_admin_managebioeffect,
+		/client/proc/toggle_cloning_with_records,
 
 		/client/proc/debug_deletions,
 
@@ -1134,10 +1135,10 @@ var/list/fun_images = list()
 
 	if (send_to_arrival_shuttle == 1)
 		M.show_text("<h2><font color=red><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		return M.humanize(1)
+		return M.humanize(TRUE, FALSE, FALSE)
 	else
 		M.show_text("<h2><font color=red><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		return M.humanize(0)
+		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

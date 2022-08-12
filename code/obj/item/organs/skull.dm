@@ -17,7 +17,7 @@
 	var/datum/organHolder/holder = null
 	//var/owner_job = null
 	var/value = 1
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	var/made_from = "bone"

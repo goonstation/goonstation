@@ -846,7 +846,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher)
+	/obj/item/extinguisher/large)
 
 
 /* -------------------- Wrestling Belt -------------------- */
@@ -859,7 +859,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	contraband = 8
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
-	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
 	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)

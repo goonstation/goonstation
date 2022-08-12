@@ -506,6 +506,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
 			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
 
+		if(!in_interact_range(src, C))
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+
+		if(C.restrained()) // Can't chug if your arms are not available
+			if(prob(1)) // Actually you can if you're really lucky
+				C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+			else
+				boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+				return
+
 		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
 			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
 			src.set_loc(get_turf(C))
@@ -515,14 +526,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (!C.hasStatus("weakened"))
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
-		else
-			if (C.restrained()) // Can't chug if your arms are not available
-				if (prob(1)) // Actually you can if you're really lucky
-					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
-				else
-					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
-					return
-			actions.start(new /datum/action/bar/icon/chug(C, src), C)
+			return
+
+		actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -922,8 +928,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(target, mob/user)
 		if (src.broken && !src.unbreakable)
-			force = 5.0
-			throwforce = 10.0
+			force = 5
+			throwforce = 10
 			throw_range = 5
 			w_class = W_CLASS_SMALL
 			stamina_damage = 15

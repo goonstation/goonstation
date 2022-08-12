@@ -459,7 +459,8 @@
 		if(src.client && src.client.preferences)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
-		data_core.addManifest(src, sec_note, med_note)
+		var/obj/item/device/pda2/pda = locate() in src
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -478,6 +479,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
+				logTheThing("station", src, null, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null
@@ -522,10 +524,6 @@
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
-		if (istraitor(src) && src.mind.late_special_role == 1)
-			//put this here because otherwise it's called before they have a PDA
-			equip_traitor(src)
-
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
 		update_icons_if_needed()
@@ -548,6 +546,18 @@
 		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
+
+/// Equip items from sensory traits
+/mob/living/carbon/human/proc/equip_sensory_items()
+	if (src.traitHolder.hasTrait("blind"))
+		src.drop_from_slot(src.glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("shortsighted"))
+		src.drop_from_slot(src.glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("deaf"))
+		src.drop_from_slot(src.ears)
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
@@ -687,7 +697,8 @@
 		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 		src.put_in_hand_or_drop(new /obj/item/joint_wax)
-	return
+
+	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/card/id/C = null
@@ -737,7 +748,7 @@
 	src.mind?.remembered_pin = C.pin
 
 	if (wagesystem.jobs[JOB.name])
-		var/cashModifier = 1.0
+		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
@@ -811,7 +822,7 @@ var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikeh
 /obj/item/clothing/suit/sweater, /obj/item/clothing/suit/sweater/red, /obj/item/clothing/suit/sweater/green, /obj/item/clothing/suit/sweater/grandma, /obj/item/clothing/under/shorts,
 /obj/item/clothing/under/suit/pinstripe, /obj/item/cigpacket, /obj/item/coin, /obj/item/crowbar, /obj/item/pen/crayon/lipstick,
 /obj/item/dice, /obj/item/dice/d20, /obj/item/device/light/flashlight, /obj/item/device/key/random, /obj/item/extinguisher, /obj/item/firework,
-/obj/item/football, /obj/item/material_piece/gold, /obj/item/instrument/harmonica, /obj/item/horseshoe,
+/obj/item/football, /obj/item/stamped_bullion, /obj/item/instrument/harmonica, /obj/item/horseshoe,
 /obj/item/kitchen/utensil/knife, /obj/item/raw_material/rock, /obj/item/pen/fancy, /obj/item/pen/odd, /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/razor_blade,/obj/item/rubberduck, /obj/item/instrument/saxophone, /obj/item/scissors, /obj/item/screwdriver, /obj/item/skull, /obj/item/stamp,
 /obj/item/instrument/vuvuzela, /obj/item/wrench, /obj/item/device/light/zippo, /obj/item/reagent_containers/food/drinks/bottle/beer, /obj/item/reagent_containers/food/drinks/bottle/vintage,

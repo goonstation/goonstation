@@ -243,7 +243,7 @@
 		var/datum/organ/lung/status/status_updates = new
 
 		var/datum/gas_mixture/left_breath = breath.remove_ratio(0.5)
-		var/datum/gas_mixture/right_breath = breath.remove_ratio(1.0) // the rest
+		var/datum/gas_mixture/right_breath = breath.remove_ratio(1) // the rest
 		left_breath.volume = breath.volume / 2
 		right_breath.volume = breath.volume / 2
 

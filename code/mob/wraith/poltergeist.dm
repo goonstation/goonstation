@@ -214,9 +214,9 @@
 	//values, TRUE, FALSE. which, if any of these two do we want to update the distances of
 	proc/update_well_dist(var/update_master, var/update_marker)
 		if (update_master)
-			dist_from_master = master ? get_dist(src, master) : 0
+			dist_from_master = master ? GET_DIST(src, master) : 0
 		if (update_marker)
-			dist_from_marker = marker ? get_dist(src, marker) : 0
+			dist_from_marker = marker ? GET_DIST(src, marker) : 0
 
 		//lesser of dist from master and marker
 		power_well_dist = min(dist_from_master, dist_from_marker)

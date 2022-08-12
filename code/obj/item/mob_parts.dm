@@ -179,6 +179,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	proc/sever(var/mob/user)
@@ -255,7 +257,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.remove_object = null
 			holder = null
 			qdel(src)
-
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	//for humans

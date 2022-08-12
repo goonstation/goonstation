@@ -17,10 +17,10 @@
 
 	generate_turf(gen_turf, flags)
 		. = ..()
-		if(prob(corridor_density))
+		if((flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA) == 0) && prob(corridor_density))
 			new/obj/map/light/void(gen_turf)
 			SPAWN(5 SECONDS)
-				void_corridor(get_step(gen_turf,pick(cardinal)), rand(6,10), start=TRUE)
+				void_corridor(get_step(gen_turf, pick(cardinal)), rand(6,10), start=TRUE)
 
 	proc/void_corridor(turf/T, max_size=7, start=FALSE)
 		if(max_size <= 0)
@@ -155,7 +155,7 @@
 		else //Over 0.85; It's MORE VOID HAHAHAHAHA
 			selected_biome = /datum/biome/void
 		selected_biome = biomes[selected_biome]
-		selected_biome.generate_turf(gen_turf)
+		selected_biome.generate_turf(gen_turf, flags)
 
 		if (current_state >= GAME_STATE_PLAYING)
 			LAGCHECK(LAG_LOW)

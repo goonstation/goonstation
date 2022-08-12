@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
@@ -550,7 +550,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -679,7 +679,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1

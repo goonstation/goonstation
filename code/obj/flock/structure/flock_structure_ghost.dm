@@ -48,12 +48,14 @@
 
 	if (src.flock)
 		if(building == /obj/flock_structure/relay)
-			src.flock.relay_in_progress = TRUE
+			src.flock.relay_in_progress_or_finished = TRUE
+			src.uses_health_icon = FALSE
+			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
 
 /obj/flock_structure/ghost/disposing()
 	if (src.flock)
-		if (src.flock.relay_in_progress && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
-			src.flock.relay_in_progress = FALSE
+		if (src.flock.relay_in_progress_or_finished && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
+			src.flock.relay_in_progress_or_finished = FALSE
 	STOP_TRACKING
 	. = ..()
 

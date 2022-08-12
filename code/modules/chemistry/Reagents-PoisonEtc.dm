@@ -1253,21 +1253,24 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult)
-				random_brute_damage(M, 1*mult, FALSE)
+				M.take_toxin_damage(0.5*mult)
+				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
+				if (probmult(6))
+					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
+											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
+											"<span class='alert'><B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!</span>"))
 
-				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+				if (prob(15))
+					M.reagents.add_reagent("histamine", rand(8,10) * mult)
 
 				if (probmult(10))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
+					M.setStatus("staggered", max(M.getStatusDuration("staggered"), 5 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
-					bleed(M, rand(30,60), rand(3,9))
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
 
 				if (probmult(10))
-					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 10 SECONDS))
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
 					M.take_toxin_damage(8)
 					if (!isdead(M))
@@ -1525,7 +1528,7 @@ datum
 
 				if (!M) M = holder.my_atom
 				if (prob(10))
-					M.take_toxin_damage(rand(2.4) * mult)
+					M.take_toxin_damage(rand(2,4) * mult)
 				if (prob(7))
 					boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 					M.setStatusMin("stunned", 3 SECONDS * mult)

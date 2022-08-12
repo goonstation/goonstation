@@ -8681,7 +8681,7 @@
 /obj/item/crowbar,
 /obj/item/device/multitool{
 	pixel_x = 9;
-	pixel_y = -1
+	pixel_y = -6
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
@@ -30693,7 +30693,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = -6;
 	pixel_y = 8
 	},
@@ -46616,17 +46616,11 @@
 /obj/item/hand_labeler{
 	pixel_y = 8
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 7
-	},
 /obj/machinery/recharger/wall/sticky{
 	dir = 1;
 	pixel_y = 26
 	},
 /obj/blind_switch/area/east,
-/obj/item/device/detective_scanner{
-	pixel_x = 7
-	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -47634,9 +47628,6 @@
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/device/detective_scanner{
-	pixel_x = 15
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -48412,14 +48403,12 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
 /obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
 /obj/item/body_bag,
 /obj/item/body_bag,
 /obj/item/body_bag,
 /obj/storage/cart/forensic{
 	req_access_txt = "1"
 	},
-/obj/item/device/detective_scanner,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},

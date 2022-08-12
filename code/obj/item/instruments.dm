@@ -265,7 +265,7 @@
 	icon_state = "guitar"
 	item_state = "guitar"
 	two_handed = 1
-	force = 10.0
+	force = 10
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -461,7 +461,7 @@
 			for (var/mob/M in hearers(user, null))
 				if (M.ears_protected_from_sound())
 					continue
-				var/ED = max(0, rand(0, 2) - get_dist(user, M))
+				var/ED = max(0, rand(0, 2) - GET_DIST(user, M))
 				M.take_ear_damage(ED)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return

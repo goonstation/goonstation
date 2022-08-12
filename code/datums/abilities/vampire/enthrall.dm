@@ -10,7 +10,7 @@
 	when_stunned = 0
 	not_when_handcuffed = 1
 	restricted_area_check = 2
-	unlock_message = "You have gained Enthrall. It allows you to enslave dead humans."
+	unlock_message = "You have gained Enthrall. It allows you to enthrall dead humans."
 
 	cast(mob/target)
 		if (!holder)
@@ -23,10 +23,10 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to enslave yourself?</span>")
+			boutput(M, "<span class='alert'>Why would you want to enthrall yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -82,11 +82,11 @@
 	color_success = "#3fb54f"
 	color_failure = "#8d1422"
 	var/mob/living/carbon/human/target
-	var/datum/targetable/vampire/enthrall/enslave
+	var/datum/targetable/vampire/enthrall/enthrall
 
-	New(Target, Enslave)
+	New(Target, Enthrall)
 		target = Target
-		enslave = Enslave
+		enthrall = Enthrall
 		..()
 
 	onStart()
@@ -94,7 +94,7 @@
 
 		var/mob/living/M = owner
 
-		if (!enslave || get_dist(M, target) > enslave.max_range || target == null || M == null)
+		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || target == null || M == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -113,7 +113,7 @@
 
 		var/mob/living/M = owner
 
-		if (!enslave || get_dist(M, target) > enslave.max_range || target == null || M == null)
+		if (!enthrall || GET_DIST(M, target) > enthrall.max_range || target == null || M == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -122,7 +122,7 @@
 		..()
 
 		var/mob/living/M = owner
-		var/datum/abilityHolder/vampire/H = enslave.holder
+		var/datum/abilityHolder/vampire/H = enthrall.holder
 
 		if (!istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
 			H.make_thrall(target)

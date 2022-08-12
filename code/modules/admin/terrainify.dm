@@ -1,5 +1,6 @@
 #define TERRAINIFY_VEHICLE_FABS (1 << 0)
 #define TERRAINIFY_VEHICLE_CARS (1 << 1)
+#define TERRAINIFY_ALLOW_VEHCILES (1 << 2)
 
 /client/proc/cmd_terrainify_station()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -21,6 +22,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/obj/effects/weather_effect
 	var/overlay_delay
 	var/datum/gas_mixture/default_air
+	var/allows_vehicles = FALSE
 
 	New()
 		..()
@@ -31,7 +33,9 @@ var/datum/station_zlevel_repair/station_repair = new
 
 	proc/repair_turfs(turf/turfs, clear=FALSE)
 		if(src.station_generator)
-			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA)
+			var/gen_flags = MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA
+			gen_flags |= MAPGEN_ALLOW_VEHICLES * src.allows_vehicles
+			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=gen_flags)
 
 			if(clear)
 				clear_out_turfs(turfs)
@@ -54,6 +58,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		shipping_market_fixup()
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
+		clear_around_beacons()
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -75,6 +80,13 @@ var/datum/station_zlevel_repair/station_repair = new
 
 	proc/mass_driver_fixup()
 		var/list/turfs_to_fix = get_mass_driver_turfs()
+		clear_out_turfs(turfs_to_fix)
+
+	proc/clear_around_beacons()
+		var/list/turfs_to_fix = list()
+		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+			for(var/turf/T in range(3,W))
+				turfs_to_fix |= T
 		clear_out_turfs(turfs_to_fix)
 
 	proc/get_mass_driver_turfs()
@@ -108,6 +120,9 @@ var/datum/station_zlevel_repair/station_repair = new
 					continue
 				if(A.density)
 					qdel(A)
+
+			if(station_repair.allows_vehicles)
+				T.allows_vehicles = station_repair.allows_vehicles
 
 			LAGCHECK(LAG_MED)
 
@@ -162,6 +177,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 						boutput(ui.user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
 						return
 
+			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
+
 			message_admins("[key_name(ui.user)] started Terrainify: [name].")
 			terrainify_lock = src
 			tgui_process.close_uis(ui.src_object)
@@ -174,6 +191,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 			boutput(usr, "Key [key] not provided to [name] terrainify! Call 1-800-CODER!")
 		else
 			. = TRUE
+
+	proc/convert_turfs(list/turfs)
+		station_repair.station_generator.generate_terrain(turfs, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 
 /datum/terrainify/desertify
 	name = "Desert Station"
@@ -195,7 +215,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
@@ -223,7 +243,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.ambient_light, "ambient")
 
@@ -277,7 +297,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				if(snow)
 					if(snow == "Yes")
@@ -328,7 +348,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S in space)
 				if(rain)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
@@ -369,7 +389,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.weather_img, "weather")
@@ -507,7 +527,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			station_repair.station_generator.generate_terrain(space)
+			convert_turfs(space)
 			for (var/turf/S as anything in space)
 				if(params["Ambient Light Obj"])
 					S.vis_contents |= station_repair.ambient_obj
@@ -532,6 +552,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/terrain
 	var/fabricator
 	var/cars
+	var/allowVehicles
 	var/terrain_toggles
 	var/terrain_options
 
@@ -575,6 +596,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	data["activeToggles"] = active_toggles
 	data["fabricator"] = fabricator
 	data["cars"] = cars
+	data["allowVehicles"] = allowVehicles
 	return data
 
 /datum/terrainify_editor/ui_act(action, list/params, datum/tgui/ui)
@@ -605,6 +627,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 			cars = !cars
 			. = TRUE
 
+		if("allowVehicles")
+			allowVehicles = !allowVehicles
+			. = TRUE
+
 		if("toggle")
 			if(params["toggle"] in active_terrain.additional_toggles)
 				src.active_toggles[params["toggle"]] = !src.active_toggles[params["toggle"]]
@@ -620,7 +646,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/convert_params = list()
 			convert_params += active_toggles
 			convert_params += active_options
-			convert_params["vehicle"] = (cars * TERRAINIFY_VEHICLE_CARS) + (TERRAINIFY_VEHICLE_FABS * fabricator)
+			convert_params["vehicle"] = (TERRAINIFY_VEHICLE_CARS * cars) + (TERRAINIFY_VEHICLE_FABS * fabricator) + (TERRAINIFY_ALLOW_VEHCILES * allowVehicles)
 			var/datum/terrainify/T = locate(terrain) in terrains
 			if(T)
 				T.convert_station_level(convert_params, ui)

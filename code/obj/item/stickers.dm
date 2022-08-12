@@ -467,7 +467,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
-			src.camera.camera_status = 1.0
+			src.camera.camera_status = 1
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
@@ -599,7 +599,7 @@
 ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow
 	name = "glow sticker"
-	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
+	desc = "A sticker that has been engineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
 	var/datum/component/loctargeting/simple_light/light_c

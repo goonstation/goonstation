@@ -60,7 +60,7 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 
-	var/last_b_state = 1.0
+	var/last_b_state = 1
 
 	var/chest_cavity_open = 0
 	var/obj/item/chest_item = null	// Item stored in chest cavity
@@ -735,12 +735,12 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDSLAVE)
-			remove_mindslave_status(src, "mslave", "death")
+		if (src.mind.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(src, "mindhack", "death")
 		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindslave_status(src, "vthrall", "death")
+			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
-			remove_mindslave_status(src, "otherslave", "death")
+			remove_mindhack_status(src, "otherhack", "death")
 #ifdef DATALOGGER
 		if (src.mind.ckey)
 			// game_stats.Increment("playerdeaths")
@@ -900,9 +900,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if (src.client)
-			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
-
 		stat(null, " ")
 		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
@@ -1022,11 +1019,6 @@
 	if (src.stat)
 		return
 
-
-	//MBC : removing this because it felt bad and it wasn't *too* exploitable. still does click delay on the end of a throw anyway.
-	//if (usr.next_click > world.time)
-	//	return
-
 	var/obj/item/I = src.equipped()
 
 	if (!I || !isitem(I) || I.cant_drop) return
@@ -1040,7 +1032,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
@@ -1048,6 +1040,7 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
+		var/throw_dir = get_dir(target, src)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_chance = 1
@@ -1064,18 +1057,18 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src)
+			src.inertia_dir = throw_dir
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
-			M.inertia_dir = get_dir(src,target)
+			M.inertia_dir = throw_dir
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
@@ -1398,7 +1391,7 @@
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1454,7 +1447,7 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 
@@ -1679,10 +1672,7 @@
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN(1.5 SECONDS)
-		if (has_typing_indicator == FALSE)
-			UpdateOverlays(null, "speech_bubble")
+	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -3173,6 +3163,7 @@
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if (isintangible(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY

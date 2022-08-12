@@ -232,6 +232,7 @@
 		icon = 'icons/obj/power.dmi'
 		icon_state = "apc0"
 
-		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_arcfiend()
-			boutput(M, "<span class='combat'>The simulation grants you a small portion of it's power.</span>")
+		makeAntag(mob/living/carbon/human/M)
+			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
+			// No need to specify other arguments here; pseudo does most of this on its own
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE)
