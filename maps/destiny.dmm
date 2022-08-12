@@ -30563,7 +30563,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -42028,7 +42029,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Psychiatrist's Office"
+	name = "Psychiatrist's Office";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -44030,7 +44032,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -46192,7 +46195,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -53100,7 +53104,8 @@
 "uiW" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
