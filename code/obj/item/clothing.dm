@@ -74,6 +74,18 @@
 			src.stains = list()
 			src.UpdateName()
 
+	// here for consistency; not all clothing can be ripped up
+	proc/try_rip_up(mob/user as mob)
+		boutput(user, "You begin ripping up [src].")
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_rip_up, list(user), null, null, "You rip up [src].", null)
+		return TRUE
+
+	proc/finish_rip_up(mob/user as mob)
+		for (var/i=3, i>0, i--)
+			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			CF.set_loc(get_turf(src))
+		user.u_equip(src)
+		qdel(src)
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
