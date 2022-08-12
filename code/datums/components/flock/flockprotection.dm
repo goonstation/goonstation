@@ -24,7 +24,7 @@
 			boutput(F, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 		return intentional
 
-	if (istype(source, /mob/living/critter/flock))
+	if (istype(source, /mob/living/critter/flock/drone))
 		return
 
 	var/mob/living/critter/flock/drone/snitch
