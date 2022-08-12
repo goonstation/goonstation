@@ -75,35 +75,29 @@
 			qdel(end)
 
 /datum/projectile/bullet/optio
-	name = "hardlight beam"
-	sname = "pencil beam"
+	name = "hardlight bolt"
+	sname = "needle bolt"
 	cost = 20
-	power = 40
+	power = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_BURN
 	icon_state = "laser_white"
-	projectile_speed = 56
 	shot_sound = 'sound/weapons/optio.ogg'
 	armor_ignored = 0.66
 	impact_image_state = "bhole"
 	shot_volume = 66
+	window_pass = 1
 
-/datum/projectile/bullet/optio_hitscan
+/datum/projectile/bullet/optio/hitscan
 	name = "hardlight beam"
 	sname = "pencil beam"
-	cost = 20
-	power = 40
-	damage_type = D_PIERCING
-	hit_type = DAMAGE_BURN
-	icon_state = "laser_white"
+	cost = 40
 	max_range = PROJ_INFINITE_RANGE
 	dissipation_rate = 0
 	projectile_speed = 12800
-	shot_sound = 'sound/weapons/optio.ogg'
-	armor_ignored = 0.66
-	impact_image_state = "bhole"
-	shot_volume = 66
+	armor_ignored = 0.33
+
 
 	on_hit(atom/hit, angle, obj/projectile/P)
 		. = ..()
