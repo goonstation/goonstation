@@ -62,8 +62,8 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to lash at.</span>")
 			return 1
-		var/mob/MT = target
-		if (!is_incapacitated(MT))
+		var/mob/M = target
+		if (!is_incapacitated(M))
 			boutput(holder.owner, "<span class='alert'>That is moving around far too much to immobilize.</span>")
 			return 1
 		playsound(holder.owner, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
@@ -71,34 +71,32 @@
 		SPAWN(0)
 			var/frenz = 5
 			holder.owner.canmove = 0
-			holder.owner.set_loc(MT.loc)
-			while (frenz > 0 && MT && !MT.disposed)
-				MT.setStatus("weakened", 1.5 SECONDS)
-				MT.canmove = 0
-				if (MT.loc && holder.owner.loc != MT.loc)
+			holder.owner.set_loc(M.loc)
+			while (frenz > 0 && M && !M.disposed)
+				M.setStatus("weakened", 1.5 SECONDS)
+				M.canmove = 0
+				if (M.loc && holder.owner.loc != M.loc)
 					break
 				if (is_incapacitated(holder?.owner))
 					break
 				playsound(holder.owner, pick("sound/impact_sounds/Flesh_Tear_3.ogg", "sound/impact_sounds/Flesh_Stab_1.ogg"), 80, 1)
-				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("lashes at", "whips", "slashes", "tears at", "lacerates")] [MT]!</b></span>")
+				holder.owner.visible_message("<span class='alert'><b>[holder.owner] [pick("lashes at", "whips", "slashes", "tears at", "lacerates")] [M]!</b></span>")
 				holder.owner.set_dir((cardinal))
 				holder.owner.pixel_x = rand(-5, 5)
 				holder.owner.pixel_y = rand(-5, 5)
-				random_brute_damage(MT, 5,1)
-				take_bleeding_damage(MT, null, 15, DAMAGE_CUT, 0, get_turf(MT))
+				random_brute_damage(M, 5,1)
+				take_bleeding_damage(M, null, 15, DAMAGE_CUT, 0, get_turf(M))
 				if(prob(33))
-					bleed(MT, 5, 5, get_step(get_turf(MT), pick(alldirs)), 1)
+					bleed(M, 5, 5, get_step(get_turf(M), pick(alldirs)), 1)
 				sleep(0.8 SECONDS)
 				frenz--
-			if (MT)
-				MT.canmove = 1
+			if (M)
+				M.canmove = 1
 			doCooldown()
 			disabled = 0
 			holder.owner.pixel_x = 0
 			holder.owner.pixel_y = 0
 			holder.owner.canmove = 1
-
-		return 0
 
 	onAttach(datum/abilityHolder/holder)
 		..()

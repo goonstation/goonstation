@@ -49,7 +49,6 @@
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, pick('sound/voice/Zgroan1.ogg', 'sound/voice/Zgroan2.ogg', 'sound/voice/Zgroan3.ogg', 'sound/voice/Zgroan4.ogg'), 25, 0)
 					return "<b>[src]</b> screams!"
-		return null
 
 	death(var/gibbed)
 		..(gibbed, 0)

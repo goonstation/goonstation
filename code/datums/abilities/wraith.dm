@@ -168,9 +168,8 @@
 				holder.regenRate += 2.0
 				var/turf/U = get_turf(M)
 				U.fluid_react_single("miasma", 60, airborne = 1)
+				M.visible_message("<span class='alert'><strong>[pick("A mysterious force rips [M]'s body apart!", "[M]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
 				M.gib()
-				for (var/mob/living/V in viewers(7, holder.owner))
-					boutput(V, "<span class='alert'><strong>[pick("A mysterious force rips [M]'s body apart!", "[M]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
 			else
 				boutput(holder.owner, "<span class='alert'>This body is too fresh. It needs to be poisoned or rotten before we consume it.</span>")
 				return 1
@@ -192,7 +191,7 @@
 				for (var/mob/living/carbon/human/target in T.contents)
 					if (isdead(target))
 						error = TRUE
-						if (target:decomp_stage != 4)
+						if (target.decomp_stage != 4)
 							M = target
 							break
 			else if (ishuman(T))
@@ -449,7 +448,7 @@
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
 			for (var/mob/living/carbon/human/target in T)
-				if (isdead(target) && target:decomp_stage == 4)
+				if (isdead(target) && target.decomp_stage == 4)
 					T = target
 					break
 			//Or a locker
@@ -879,7 +878,7 @@
 		if (!object.contextActions)
 			object.contextActions = list()
 
-		for(var/i=1, i<=3, i++)
+		for(var/i in 1 to 3)
 			var/datum/contextAction/wraith_evolve_button/newcontext = new /datum/contextAction/wraith_evolve_button(i)
 			object.contextActions += newcontext
 
@@ -1158,39 +1157,39 @@
 				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
 				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
 				H.make_jittery(300)
-				sleep(4 SECOND)
-				H.changeStatus("stunned", 2 SECONDS)
-				H.emote("scream")
-				boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
-				sleep(3 SECOND)
-				random_brute_damage(H, 10)
-				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-				H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
-				new /obj/decal/cleanable/blood/drip(get_turf(H))
-				sleep(3 SECOND)
-				random_brute_damage(H, 10)
-				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-				new /obj/decal/cleanable/blood/drip(get_turf(H))
-				sleep(1 SECOND)
-				random_brute_damage(H, 20)
-				playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-				new /obj/decal/cleanable/blood/drip(get_turf(H))
-				sleep(2 SECOND)
-				boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
-				H.remove_stamina( rand(100, 120) )
-				H.changeStatus("stunned", 4 SECONDS)
-				sleep(3 SECOND)
-				var/turf/T = get_turf(H)
-				var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
-				if (S)
-					S.set_up(8, 0, T, null, "#000000")
-					S.start()
-				H.gib()
-				boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
-				T.fluid_react_single("miasma", 60, airborne = 1)
-				holder.points += 100
-				holder.regenRate += 2.0
-				W.absorbcount++
+				SPAWN(4 SECOND)
+					H.changeStatus("stunned", 2 SECONDS)
+					H.emote("scream")
+					boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
+					SPAWN(3 SECOND)
+						random_brute_damage(H, 10)
+						playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+						H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
+						new /obj/decal/cleanable/blood/drip(get_turf(H))
+						SPAWN(3 SECOND)
+							random_brute_damage(H, 10)
+							playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+							new /obj/decal/cleanable/blood/drip(get_turf(H))
+							SPAWN(1 SECOND)
+								random_brute_damage(H, 20)
+								playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+								new /obj/decal/cleanable/blood/drip(get_turf(H))
+								SPAWN(2 SECOND)
+									boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+									H.remove_stamina( rand(100, 120) )
+									H.changeStatus("stunned", 4 SECONDS)
+									SPAWN(3 SECOND)
+										var/turf/T = get_turf(H)
+										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+										if (S)
+											S.set_up(8, 0, T, null, "#000000")
+											S.start()
+										H.gib()
+										boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
+										T.fluid_react_single("miasma", 60, airborne = 1)
+										holder.points += 100
+										holder.regenRate += 2.0
+										W.absorbcount++
 			else
 				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
 				return 1
@@ -1279,27 +1278,27 @@
 			boutput(W, "<span class='alert'>Why would you want to poison yourself?</span>")
 			return 1
 
-		var/obj/item/reagent_containers/RC = null
+		var/obj/item/reagent_containers/current_container = null
 		var/attempt_success = 0
 
 		if (istype(target, /obj/item/reagent_containers/food))
-			RC = target
+			current_container = target
 		else
 			boutput(W, "<span class='alert'>You can't poison [target], only food items, drinks and glass containers.</span>")
 			return 1
 
-		var/poison_choice = input("Select the target poison: ", "Target Poison", null) as null|anything in the_poison
+		var/poison_choice = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
 
-		if (RC && istype(RC))
+		if (current_container && istype(current_container))
 			if (length(src.the_poison) > 1)
-				if (!RC.reagents)
-					RC.reagents = new /datum/reagents(src.amount_per_poison)
-					RC.reagents.my_atom = RC
+				if (!current_container.reagents)
+					current_container.reagents = new /datum/reagents(src.amount_per_poison)
+					current_container.reagents.my_atom = current_container
 
-				if (RC.reagents)
-					if (RC.reagents.total_volume + src.amount_per_poison >= RC.reagents.maximum_volume)
-						RC.reagents.remove_any(RC.reagents.total_volume + src.amount_per_poison - RC.reagents.maximum_volume)
-					RC.reagents.add_reagent(poison_choice, src.amount_per_poison)
+				if (current_container.reagents)
+					if (current_container.reagents.total_volume + src.amount_per_poison >= current_container.reagents.maximum_volume)
+						current_container.reagents.remove_any(current_container.reagents.total_volume + src.amount_per_poison - current_container.reagents.maximum_volume)
+					current_container.reagents.add_reagent(poison_choice, src.amount_per_poison)
 
 
 					attempt_success = 1
@@ -1398,50 +1397,50 @@
 					H.emote("scream")
 					boutput(H, "<span class='alert'>You are feeling awfully woozy.</span>")
 					H.change_misstep_chance(20)
-					sleep(10 SECONDS)
-					boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
-					H.emote("faint")
-					H.setStatusMin("weakened", 5 SECONDS)
-					sleep(15 SECONDS)
-					H.change_misstep_chance(-20)
-					H.emote("scream")
-					H.setStatusMin("weakened", 8 SECONDS)
-					H.setStatusMin("paralysis", 8 SECONDS)
-					sleep(8 SECONDS)
-					var/mob/dead/observer/O = H.ghostize()
-					if(W.mind == null)	//Wraith died or was removed in the meantime
-						return 1
-					if (O?.mind)
-						boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-						WG = O.insert_slasher_observer(H)
-						WG.mind.dnr = TRUE
-						WG.verbs -= list(/mob/verb/setdnr)
-						has_mind = true
-					W.mind.transfer_to(H)
-					APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
-					sleep(45 SECONDS)
-					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
-					sleep(20 SECONDS)
-					boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
-					REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
-					if(!H.loc) //H gibbed
-						var/mob/M2 = ckey_to_mob(wraith_key)
-						M2.mind.transfer_to(W)
-					if(!W.loc) //wraith got gibbed
-						return
-					H.mind.transfer_to(W)
-					if (has_mind)
-						WG.mind.dnr = FALSE
-						WG.verbs += list(/mob/verb/setdnr)
-						WG.mind.transfer_to(H)
-						playsound(H, "sound/effects/ghost2.ogg", 50, 0)
-					W.possession_points = 0
-					logTheThing("debug", null, null, "step 5")
-					qdel(WG)
-					H.take_brain_damage(70)
-					H.setStatus("weakened", 5 SECOND)
-					boutput(H, "The presence has left your body and you are thrusted back into it, immediatly assaulted with a winging headacke.")
-					return 0
+					SPAWN(10 SECONDS)
+						boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
+						H.emote("faint")
+						H.setStatusMin("weakened", 5 SECONDS)
+						SPAWN(15 SECONDS)
+							H.change_misstep_chance(-20)
+							H.emote("scream")
+							H.setStatusMin("weakened", 8 SECONDS)
+							H.setStatusMin("paralysis", 8 SECONDS)
+							SPAWN(8 SECONDS)
+								var/mob/dead/observer/O = H.ghostize()
+								if(W.mind == null)	//Wraith died or was removed in the meantime
+									return TRUE
+								if (O?.mind)
+									boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+									WG = O.insert_slasher_observer(H)
+									WG.mind.dnr = TRUE
+									WG.verbs -= list(/mob/verb/setdnr)
+									has_mind = true
+								W.mind.transfer_to(H)
+								APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
+								SPAWN(45 SECONDS)
+									boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
+									SPAWN(20 SECONDS)
+										boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
+										REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+										if(!H.loc) //H gibbed
+											var/mob/M2 = ckey_to_mob(wraith_key)
+											M2.mind.transfer_to(W)
+										if(!W.loc) //wraith got gibbed
+											return
+										H.mind.transfer_to(W)
+										if (has_mind)
+											WG.mind.dnr = FALSE
+											WG.verbs += list(/mob/verb/setdnr)
+											WG.mind.transfer_to(H)
+											playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+										W.possession_points = 0
+										logTheThing("debug", null, null, "step 5")
+										qdel(WG)
+										H.take_brain_damage(70)
+										H.setStatus("weakened", 5 SECOND)
+										boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
+										return FALSE
 			else
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return 1
@@ -1500,7 +1499,7 @@
 
 		var/sound_choice = null
 		if (length(src.sound_list) > 1)
-			sound_choice = input("What sound do you wish to play?", "Chosen sound", null) as null|anything in sound_list
+			sound_choice = tgui_input_list(holder.owner, "What sound do you wish to play?", "Chosen sound", sound_list)
 		switch(sound_choice)
 			if("Death gasp")
 				sound_choice = "sound/voice/death_[rand(1, 2)].ogg"
@@ -1660,7 +1659,7 @@
 						return 1
 				var/mob_choice = null
 				if (length(src.mob_types) > 1)
-					mob_choice = input("What should the portal spawn?", "Target mob type", null) as null|anything in mob_types
+					mob_choice = tgui_input_list(holder.owner, "What should the portal spawn?", "Target Mob Type", mob_types)
 				if (mob_choice == null)
 					return 1
 				switch(mob_choice)
@@ -1840,7 +1839,7 @@
 				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 				return 1
 		else
-			boutput(holder.owner, "<span class='alert'>The station is already a rat den, you cannot summon another rat!</span>")
+			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
 			return 1
 
 	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
@@ -1900,9 +1899,6 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
-	proc/ghostify_message(var/message)
-		return message
-
 
 	cast(mob/target)
 		if (!holder)
@@ -1920,7 +1916,7 @@
 			return 1
 		for(var/mob/living/critter/C in W.summons)
 			logTheThing("say", W, C, "WRAITH WHISPER TO [constructTarget(C,"say")]: [message]")
-			message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
+			message = trim(copytext(sanitize(message), 1, 255))
 			if (!message)
 				return 1
 			boutput(C, "<b>Your master's voice resonates in your head... </b> [message]")

@@ -99,7 +99,6 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
-		return null
 
 	specific_emote_type(var/act)
 		switch (act)
