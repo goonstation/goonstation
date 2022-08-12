@@ -126,8 +126,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	// don't play if over the per-tick sound limit
-	if(server_id == "main1")
-		return
+
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
