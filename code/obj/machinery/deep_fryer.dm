@@ -6,12 +6,13 @@
 	anchored = 1
 	density = 1
 	flags = NOSPLASH
+	status = REQ_PHYSICAL_ACCESS
 	mats = 20
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
-	var/obj/item/fryitem = null
+	var/atom/movable/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -21,7 +22,7 @@
 		reagents.add_reagent("grease", 25)
 		reagents.set_reagent_temp(src.frytemp)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -59,12 +60,8 @@
 			if(ismonkey(G.affecting))
 				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
-				src.icon_state = "fryer1"
-				src.cooktime = 0
-				src.fryitem = G.affecting
-				SubscribeToProcess()
-				G.affecting.set_loc(src)
-				G.affecting.death( 0 )
+				src.start_frying(G.affecting)
+				G.affecting.death(FALSE)
 				qdel(W)
 				return
 
@@ -80,17 +77,13 @@
 
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
-		W.set_loc(src)
-		W.dropped()
-		src.cooktime = 0
-		src.fryitem = W
-		src.icon_state = "fryer1"
+		W.dropped(user)
+		src.start_frying(W)
 		SubscribeToProcess()
-		return
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
-			return src.attackby(W, user)
+			return src.Attackby(W, user)
 		return ..()
 
 	onVarChanged(variable, oldval, newval)
@@ -99,8 +92,15 @@
 				SubscribeToProcess()
 			else if (oldval && !newval)
 				UnsubscribeProcess()
+			src.UpdateIcon()
 
-	attack_hand(mob/user as mob)
+	update_icon()
+		if (src.fryitem)
+			src.icon_state = "fryer1"
+		else
+			src.icon_state = "fryer0"
+
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -164,20 +164,25 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] climbs into the deep fryer! How is that even possible?!</b></span>")
 
-		user.set_loc(src)
-		src.cooktime = 0
-		src.fryitem = user
-		src.icon_state = "fryer1"
+		src.start_frying(user)
 		user.TakeDamage("head", 0, 175)
 		if(user.reagents && user.reagents.has_reagent("dabs"))
 			var/amt = user.reagents.get_reagent_amount("dabs")
 			user.reagents.del_reagent("dabs")
 			user.reagents.add_reagent("deepfrieddabs",amt)
-		SubscribeToProcess()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
+
+	proc/start_frying(atom/movable/frying) //might be an item, might be a mob, might be a fucking singularity
+		if (!istype(frying))
+			return
+		frying.set_loc(src)
+		src.cooktime = 0
+		src.fryitem = frying
+		src.UpdateIcon()
+		SubscribeToProcess()
 
 	proc/fryify(atom/movable/thing, burnt=FALSE)
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(src)
@@ -228,9 +233,12 @@
 		fryholder.overlays = thing.overlays
 		if (isitem(thing))
 			var/obj/item/item = thing
-			fryholder.amount = item.w_class
+			fryholder.bites_left = item.w_class
+			fryholder.w_class = item.w_class
 		else
-			fryholder.amount = 5
+			fryholder.bites_left = 5
+		if (ismob(thing))
+			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)
 			fryholder.reagents.maximum_volume += thing.reagents.total_volume
 			thing.reagents.trans_to(fryholder, thing.reagents.total_volume)
@@ -247,13 +255,15 @@
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
 		fryholder.set_loc(get_turf(src))
 
-		src.fryitem = null
-		src.icon_state = "fryer0"
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.fryitem)
+			src.fryitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			UnsubscribeProcess()
 
-		UnsubscribeProcess()
-		return
 
 	verb/drain()
 		set src in oview(1)

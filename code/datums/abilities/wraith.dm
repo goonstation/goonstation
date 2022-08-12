@@ -3,6 +3,11 @@
 	pointName = "Wraith Points"
 	cast_while_dead = 1
 	var/corpsecount = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Points:"] = round(src.points)
+		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
@@ -57,7 +62,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -75,9 +80,10 @@
 			return 1
 		if (holder.help_mode)
 			holder.help_mode = 0
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
 		else
 			holder.help_mode = 1
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated  To disable it, click on this button again.</strong></span>")
+			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
 			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
 			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
 			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
@@ -151,7 +157,7 @@
 		M.set_body_icon_dirty()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
 
-		holder.regenRate *= 2.0
+		holder.regenRate *= 2
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
@@ -176,7 +182,7 @@
 				W.corpsecount += 1
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 
@@ -189,7 +195,7 @@
 	pointCost = 300
 	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
-	cast(atom/T)
+	cast(var/atom/target)
 		if (..())
 			return 1
 
@@ -198,20 +204,23 @@
 			return 1
 
 		if (!isitem(T) || istype(T, /obj/item/bible))
+			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
+			return 1
+		if (!isitem(target))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 
-		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [target].", "You force [target] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
-		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
-		SPAWN_DBG(45 SECONDS)
+		var/mob/living/object/O = new/mob/living/object(get_turf(target), target, holder.owner)
+		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
-		SPAWN_DBG(60 SECONDS) //time limit on possession: 1 minute
+		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveoject.ogg", 50, 0)
-				O.death(0)
+				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
+				O.death(FALSE)
 		return 0
 
 
@@ -261,7 +270,7 @@
 
 	cast(atom/T)
 		if (..())
-			return 1
+			return TRUE
 
 		//If you targeted a turf for some reason, find a valid target on it
 		var/atom/target = null
@@ -281,7 +290,7 @@
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
-				return 1
+				return TRUE
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
@@ -289,22 +298,22 @@
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
-				return 0
+				return FALSE
 		else if (isobj(T))
 			var/obj/O = T
-			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
-				return 0
+			if(istype(O, /obj/machinery/computer/shuttle))
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
+				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))
 				boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
-				return 0
+				return FALSE
 			else
 				boutput(usr, "<span class='alert'>You fail to alter the energy of the [O].</span>")
-				return 1
+				return TRUE
 		else
 			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
-			return 1
+			return FALSE
 
 /datum/targetable/wraithAbility/command
 	name = "Command"
@@ -337,7 +346,7 @@
 					current_prob *= 0.35 // very steep. probably grabs 3 or 4 objects per cast -- much less effective than revenant command
 					thrown += O
 					animate_float(O)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for (var/obj/O in thrown)
 				O.throw_at(T, 32, 2)
 
@@ -406,22 +415,7 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.set_loc(L)
-			L.name = "Living [O.name]"
-			L.desc = "[O.desc]. It appears to be alive!"
-			L.overlays += O
-			L.health = rand(10, 50)
-			L.atk_brute_amt = rand(5, 20)
-			L.defensive = 1
-			L.aggressive = 1
-			L.atkcarbon = 1
-			L.atksilicon = 1
-			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-			L.stunprob = 15
-			L.original_object = O
-			animate_levitate(L, -1, 30)
+			new/mob/living/object/ai_controlled(O.loc, O)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
@@ -461,7 +455,6 @@
 	special_screen_loc="NORTH,EAST-1"
 	min_req_dist = 10
 
-	var/datum/radio_frequency/pda_connection
 	var/obj/spookMarker/marker = new /obj/spookMarker()		//removed for now
 	var/status = 0
 	var/static/list/effects = list("Flip light switches" = 1, "Burn out lights" = 2, "Create smoke" = 3, "Create ectoplasm" = 4, "Sap APC" = 5, "Haunt PDAs" = 6, "Open doors, lockers, crates" = 7, "Random" = 8)
@@ -470,7 +463,6 @@
 
 	New()
 		..()
-		pda_connection = radio_controller.return_frequency("1149")
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)//, -32, -32)
 		if (!object.contextActions)
 			object.contextActions = list()
@@ -479,25 +471,18 @@
 			var/datum/contextAction/wraith_spook_button/newcontext = new /datum/contextAction/wraith_spook_button(i)
 			object.contextActions += newcontext
 
-	disposing()
-		radio_controller.remove_object(src,"1149")
-		..()
-
 	proc/haunt_pda(var/obj/item/device/pda2/pda)
-		if (!pda_connection)
-			return
 		var/message = pick("boo", "git spooked", "BOOM", "there's a skeleton inside of you", "DEHUMANIZE YOURSELF AND FACE TO BLOODSHED", "ICARUS HAS FOUND YOU!!!!! RUN WHILE YOU CAN!!!!!!!!!!!")
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.holder.owner
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = holder.owner.name
 		signal.data["message"] = "[message]" // (?)
 		signal.data["sender"] = "00000000" // surely this isn't going to be a problem
 		signal.data["address_1"] = pda.net_id
 
-		pda_connection.post_signal(src, signal)
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 	cast()
 		if (..())
@@ -510,7 +495,7 @@
 			if (1)
 				boutput(holder.owner, "<span class='notice'>You flip some light switches near the designated location!!</span>")
 				for (var/obj/machinery/light_switch/L in range(10, holder.owner))
-					L.attack_hand(holder.owner)
+					L.Attackhand(holder.owner)
 				return 0
 			if (2)
 				boutput(holder.owner, "<span class='notice'>You cause a few lights to burn out near the designated location!.</span>")
@@ -564,7 +549,7 @@
 				for(var/obj/machinery/door/G in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (G.density)
 								G.open()
 							else
@@ -573,7 +558,7 @@
 				for(var/obj/storage/F in range(10, holder.owner))
 					if (prob(c_prob))
 						c_prob *= 0.4
-						SPAWN_DBG(1 DECI SECOND)
+						SPAWN(1 DECI SECOND)
 							if (F.open)
 								F.close()
 							else
@@ -718,16 +703,17 @@
 			else
 				boutput(W, "Couldn't set up poltergeist ; no spirits responded. Trying again in 3 minutes.")
 				qdel(marker)
-				SPAWN_DBG(3 MINUTES)
+				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
 		//add poltergeist to master's list is done in /mob/wraith/potergeist/New
 		var/mob/wraith/poltergeist/P = new /mob/wraith/poltergeist(T, W, marker)
-		lucky_dude.special_role = "poltergeist"
+		lucky_dude.special_role = ROLE_POLTERGEIST
 		lucky_dude.dnr = 1
 		lucky_dude.transfer_to(P)
+		ticker.mode.Agimmicks |= lucky_dude
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
@@ -743,8 +729,8 @@
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
-	// invisibility = 101
-	invisibility = 10
+	// invisibility = INVIS_ALWAYS
+	invisibility = INVIS_GHOST
 	anchored = 1
 	density = 0
 	opacity = 0

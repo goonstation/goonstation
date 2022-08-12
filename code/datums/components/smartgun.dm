@@ -1,3 +1,8 @@
+TYPEINFO(/datum/component/holdertargeting/smartgun)
+	initialization_args = list(
+		ARG_INFO("maxlocks", DATA_INPUT_NUM, "Maximum number of lock-ons the gun will get on a given target at once", 3)
+	)
+
 /datum/component/holdertargeting/smartgun
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	mobtype = /mob/living
@@ -119,7 +124,7 @@
 
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-	RegisterSignal(user, COMSIG_MOUSEUP, .proc/shoot_tracked_targets)
+	RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/shoot_tracked_targets)
 
 	for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 		for(var/y in 7 to 9)
@@ -172,7 +177,7 @@
 	if(tracking)
 		stopping = 1
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
-	UnregisterSignal(user, COMSIG_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	tracked_targets = list()
 	mouse_target = null
@@ -189,11 +194,11 @@
 	return M != user && !isdead(M)
 
 /datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+	var/list/ret = list()
 	if(istype(G, /obj/item/gun/kinetic))
 		var/obj/item/gun/kinetic/K = G
 		return round(K.ammo.amount_left * K.current_projectile.cost)
-	else if(istype(G, /obj/item/gun/energy))
-		var/obj/item/gun/energy/E = G
-		return round(E.cell.charge * E.current_projectile.cost)
+	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+		return round(ret["charge"] / G.current_projectile.cost)
 	else return G.canshoot() * INFINITY //idk, just let it happen
 

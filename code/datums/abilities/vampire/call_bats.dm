@@ -3,7 +3,7 @@
 /datum/abilityHolder/vampire/proc/launch_bat_orbiters()
 	if (length(bat_orbiters))
 		for (var/obj/projectile/P in bat_orbiters)
-			if (get_dist(P,src.owner) < 4)
+			if (GET_DIST(P,src.owner) < 4)
 				P.targets = 0
 
 		bat_orbiters.len = 0
@@ -59,7 +59,7 @@
 					i++
 
 		else
-			boutput(M, __red("The bats did not respond to your call!"))
+			boutput(M, "<span class='alert'>The bats did not respond to your call!</span>")
 			return 1 // No cooldown here, though.
 
 		if (src.pointCost && istype(H))
@@ -97,7 +97,7 @@
 			return 1
 
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			boutput(M, __red("How do you expect this to work? You're muzzled!"))
+			boutput(M, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
 			M.visible_message("<span class='alert'><b>[M]</b> makes a loud noise.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
@@ -111,7 +111,7 @@
 			for (var/obj/critter/bat/buff/B in range(M, 1))
 				B.friends += M
 		else
-			boutput(M, __red("The bats did not respond to your call!"))
+			boutput(M, "<span class='alert'>The bats did not respond to your call!</span>")
 			return 1 // No cooldown here, though.
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)

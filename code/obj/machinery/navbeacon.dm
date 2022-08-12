@@ -10,43 +10,45 @@
 	level = 1		// underfloor
 	layer = 2.5 // TODO layer whatever
 	anchored = 1
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
-	var/freq = 1445		// radio frequency
+	var/freq = FREQ_NAVBEACON		// radio frequency
 	var/location = ""	// location response text
 	var/list/codes		// assoc. list of transponder codes
 	var/codes_txt = ""	// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/net_id = ""
+	var/datum/component/packet_connected/radio/code_component
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	mats = 4
+	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
+		START_TRACKING
 		..()
 
 		UnsubscribeProcess()
 
+		var/turf/T = loc
+		// the ruckingenur kit makes a temporary instance of an object when it is uploaded, which would cause issues here
+		// possibly there are also other ways to get a navbeacon that is not on a turf
+		if(isturf(T))
+			hide(T.intact)
+
+		if(!net_id)
+			net_id = generate_net_id(src)
+
 		set_codes()
 
-		var/turf/T = loc
-		hide(T.intact)
-
-		SPAWN_DBG(0.5 SECONDS)	// must wait for map loading to finish
-			radio_controller?.add_object(src, "[freq]")
-
-			if(!net_id)
-				net_id = generate_net_id(src)
-
 	disposing()
-		radio_controller.remove_object(src, "[freq]")
-		..()
+		STOP_TRACKING
+		. = ..()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()
-		if(!codes_txt)
-			return
-
 		codes = new()
 
 		var/list/entries = splittext(codes_txt, ";")	// entries are separated by semicolons
@@ -60,15 +62,36 @@
 			else
 				codes[e] = "1"
 
+		code_component = src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			"navbeacon", \
+			src.freq, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			codes + list(location, "any"), \
+			FALSE \
+		)
+
+	/// adds or edits a code and also makes sure the packet component tag is updated appropriately
+	proc/set_code(var/code_key, var/code_value)
+		//codes.Remove(code_key)
+		codes[code_key] = code_value
+		code_component.add_tag(code_key)
+
+	/// removes a code and also makes sure the packet component tag is updated appropriately
+	proc/remove_code(var/code_key)
+		codes.Remove(code_key)
+		code_component.remove_tag(code_key)
 
 	// called when turf state changes
 	// hide the object if turf is intact
 	hide(var/intact)
-		invisibility = intact ? 101 : 0
-		updateicon()
+		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
+		UpdateIcon()
 
 	// update the icon_state
-	proc/updateicon()
+	update_icon()
 		icon_state="navbeacon[open]"
 		alpha = invisibility ? 128 : 255
 
@@ -80,10 +103,10 @@
 	receive_signal(datum/signal/signal)
 		if (!signal || signal.encryption) return
 
-		var/beaconrequest = signal.data["findbeacon"]
+		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
-			SPAWN_DBG(1 DECI SECOND)
-				post_status()
+			SPAWN(1 DECI SECOND)
+				post_status(signal.data["sender"] || signal.data["netid"])
 			return
 
 		if (!signal.data["address_1"] || !signal.data["sender"])
@@ -120,9 +143,7 @@
 							reply.data["args"] = "code_key,code_value"
 						else
 							reply.data["description"] = "ERROR: UNKNOWN TOPIC"
-				var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-				if(!frequency) return
-				frequency.post_signal(src, reply)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 			if ("status")
 				post_status(signal.data["sender"])
 			if ("set_location")
@@ -134,18 +155,12 @@
 				if (!signal.data["code_key"] || !signal.data["code_value"]) return
 				var/code_key = adminscrub(signal.data["code_key"])
 				var/code_value = adminscrub(signal.data["code_value"])
-				codes.Remove(code_key)
-				codes[code_key] = code_value
+				src.set_code(code_key, code_value)
 				post_status(signal.data["sender"])
 
 
 	// return a signal giving location and transponder codes
 	proc/post_status(var/target)
-
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		if(!frequency) return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.transmission_method = 1
@@ -157,11 +172,10 @@
 		for(var/key in codes)
 			signal.data[key] = codes[key]
 
-		frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/send_ping_response(var/target)
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-		if (!frequency || !target) return
+		if (!target) return
 
 		var/datum/signal/pingsignal = get_free_signal()
 		pingsignal.source = src
@@ -170,9 +184,8 @@
 		pingsignal.data["sender"] = src.net_id
 		pingsignal.data["address_1"] = target
 		pingsignal.data["command"] = "ping_reply"
-		pingsignal.transmission_method = TRANSMISSION_RADIO
 
-		frequency.post_signal(src, pingsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
 
 	attackby(var/obj/item/I, var/mob/user)
 		var/turf/T = loc
@@ -184,7 +197,7 @@
 
 			user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
-			updateicon()
+			UpdateIcon()
 
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
@@ -265,7 +278,7 @@ Transponder Codes:<UL>"}
 				src.add_dialog(usr)
 
 				if (href_list["freq"])
-					freq = sanitize_frequency(freq + text2num(href_list["freq"]))
+					freq = sanitize_frequency(freq + text2num_safe(href_list["freq"]))
 					set_frequency(freq)
 					updateDialog()
 
@@ -291,14 +304,14 @@ Transponder Codes:<UL>"}
 						newval = codekey
 						return
 
-					codes.Remove(codekey)
-					codes[newkey] = newval
+					src.remove_code(codekey)
+					src.set_code(newkey, newval)
 
 					updateDialog()
 
 				else if(href_list["delete"])
 					var/codekey = href_list["code"]
-					codes.Remove(codekey)
+					src.remove_code(codekey)
 					updateDialog()
 
 				else if(href_list["add"])
@@ -317,14 +330,13 @@ Transponder Codes:<UL>"}
 					if(!codes)
 						codes = new()
 
-					codes[newkey] = newval
+					src.set_code(newkey, newval)
 
 					updateDialog()
 
 	proc/set_frequency(var/new_freq)
-		radio_controller.remove_object(src, "[freq]")
 		freq = new_freq
-		radio_controller.add_object(src, "[freq]")
+		get_radio_connection_by_id(src, "navbeacon").update_frequency(freq)
 
 //Wired nav device
 /obj/machinery/wirenav
@@ -340,7 +352,7 @@ Transponder Codes:<UL>"}
 	var/obj/machinery/power/data_terminal/link = null
 
 	hide(var/intact)
-		invisibility = intact ? 101 : 0
+		invisibility = intact ? INVIS_ALWAYS : INVIS_NONE
 		//src.icon_state = "wirednav[invisibility ? "-f" : ""]"
 		alpha = invisibility ? 128 : 255
 
@@ -350,7 +362,7 @@ Transponder Codes:<UL>"}
 		var/turf/T = get_turf(src)
 		hide(T.intact)
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			if(!nav_tag)
 				src.nav_tag = "NOWHERE"
 				var/area/A = get_area(src)
@@ -387,7 +399,7 @@ Transponder Codes:<UL>"}
 			reply.data["netid"] = src.net_id
 			reply.data["data"] = src.nav_tag
 			reply.data["navdat"] = "x=[src.x]&y=[src.y]&z=[src.z]"
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.link.post_signal(src, reply)
 			return
 
@@ -708,10 +720,40 @@ Transponder Codes:<UL>"}
 			codes_txt = "delivery;dir=2"
 		west
 			codes_txt = "delivery;dir=8"
+	ranch_north
+		location = "Ranch"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	pool_north
+		location = "Pool"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
+	news_office
+		location = "News Office"
+		codes_txt = "delivery;dir=1"
+
+		east
+			codes_txt = "delivery;dir=4"
+		south
+			codes_txt = "delivery;dir=2"
+		west
+			codes_txt = "delivery;dir=8"
 
 /obj/machinery/navbeacon/tour
 	name = "tour beacon"
-	freq = 1443
+	freq = FREQ_TOUR_NAVBEACON
 
 /obj/machinery/navbeacon/tour/cog1
 	tour0

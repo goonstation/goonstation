@@ -14,6 +14,7 @@ var/global/list/hydro_controller_queue = list(
 	var/list/plant_species = list()
 	var/list/mutations = list()
 	var/list/strains = list()
+	var/list/vendable_plants = list()
 
 	var/image/pot_death_display = null
 	var/image/pot_health_display = null
@@ -40,7 +41,7 @@ var/global/list/hydro_controller_queue = list(
 		for (var/A in concrete_typesof(/datum/plant))
 			src.plant_species += new A(src)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/datum/plant/P in src.plant_species)
 				for (var/X in P.mutations)
 					if (ispath(X))
@@ -51,6 +52,9 @@ var/global/list/hydro_controller_queue = list(
 					if (ispath(X))
 						P.commuts += HY_get_strain_from_path(X)
 						P.commuts -= X
+
+				if (P.vending)
+					vendable_plants += P
 
 			src.process_queue()
 

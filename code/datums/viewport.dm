@@ -24,7 +24,8 @@
 		handler.screen_loc = "map_[viewport_id]:1,1"
 		winshow( viewer, viewport_id, 1 )
 		viewer.screen += handler
-		for(var/atom/movable/screen/plane_parent/p in viewer.plane_parents)
+		for(var/plane_key in viewer.plane_parents)
+			var/atom/movable/screen/plane_parent/p = viewer.plane_parents[plane_key]
 			var/atom/movable/screen/plane_parent/dupe = new
 			dupe.plane = p.plane
 			dupe.appearance = p.appearance
@@ -44,7 +45,7 @@
 
 	disposing()
 		if(viewer)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				if(viewer)
 					winset( viewer, "[viewport_id].map_[viewport_id]", "parent=none" )
 					winset( viewer, "[viewport_id]", "parent=none" )
@@ -106,7 +107,7 @@
 ///client/verb/dupeVP()
 //	var/datum/viewport/vp = new(src)
 //	vp.SetViewport( get_turf(src.mob), 8, 8 )
-/mob/dead/aieye/verb/create_viewport()
+/mob/living/intangible/aieye/verb/create_viewport()
 	set category = "AI Commands"
 	set name = "EXPERIMENTAL: Create Viewport"
 	set desc = "Expand your powers with Nanotransen's Viewportifier!"

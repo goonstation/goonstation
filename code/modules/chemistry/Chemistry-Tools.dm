@@ -20,6 +20,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/incompatible_with_chem_dispensers = 0
 	var/can_mousedrop = 1
 	move_triggered = 1
+	///Types that should be quickly refilled by mousedrop
+	var/static/list/mousedrop_refill = list(
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/food/drinks,
+		/obj/reagent_dispensers,
+		/obj/item/spraybottle,
+		/obj/machinery/plantpot,
+		/obj/mopbucket,
+		/obj/item/reagent_containers/mender,
+		/obj/item/tank/jetpack/backtank,
+		/obj/item/reagent_containers/syringe/baster,
+		/obj/machinery/bathtub
+	)
 
 	var/last_new_initial_reagents = 0 //fuck
 
@@ -28,22 +41,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		last_new_initial_reagents = new_initial_reagents
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
-
-	proc/setup_reagents(new_initial_reagents) //proccall overhead idk man dont put this in new just copy paste :)
-		ensure_reagent_holder()
-		create_initial_reagents(new_initial_reagents)
-
-	pooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-
-	unpooled()
-		if (src.reagents)
-			src.reagents.clear_reagents()
-		..()
-		setup_reagents(last_new_initial_reagents)
-
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
@@ -76,9 +73,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attack_self(mob/user as mob)
 		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		return
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (reagents)
 			reagents.physical_shock(I.force)
 		return
@@ -93,7 +90,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
 		return
 
-	MouseDrop(atom/over_object as obj)
+	mouse_drop(atom/over_object as obj)
+		if (isintangible(usr))
+			return
 		if (!can_mousedrop)
 			boutput(usr, "<span class='alert'>Nope.</span>")
 			return
@@ -103,25 +102,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			var/atom/target_loc = usr.loc
 			var/ok = 1
 			var/atom/L = src
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
 			L = over_object
-			while(!istype(L, /turf) && L != target_loc)
+			while(!istype(L, /turf) && L != target_loc && L.loc)
 				L = L.loc
 				if(istype(L, /turf))
 					ok = 0
 			if(!ok)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+		// feels like there should be a macro for this or something
+		var/type_found = FALSE
+		for (var/type in mousedrop_refill)
+			if (istype(over_object, type))
+				type_found = TRUE
+				break
+		if (!type_found)
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
 			return ..()
 
-		if (usr.stat || usr.getStatusDuration("weakened") || get_dist(usr, src) > 1 || get_dist(usr, over_object) > 1)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)  //why has this bug been in since i joined goonstation and nobody even looked here yet wtf -ZeWaka
 			boutput(usr, "<span class='alert'>That's too far!</span>")
 			return
 
@@ -186,7 +191,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					src.reagents.reaction(target,TOUCH)
 				else
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if (src.splash_all_contents) src.reagents.clear_reagents()
 					else src.reagents.remove_any(src.amount_per_transfer_from_this)
 					can_mousedrop = 1
@@ -232,7 +237,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -281,13 +286,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
 			else src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this,src.reagents.total_volume))
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (src.splash_all_contents) src.reagents.clear_reagents()
 				else src.reagents.remove_any(src.amount_per_transfer_from_this)
 				can_mousedrop = 1
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		/*if (istype(I, /obj/item/reagent_containers/pill))
 
 			if (!I.reagents || !I.reagents.total_volume)
@@ -322,7 +327,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			boutput(user, "<span class='notice'>You rip up the [I] into tiny pieces and sprinkle it into [src].</span>")
 
 			I.reagents.trans_to(src, I.reagents.total_volume)
-			pool(I)
+			qdel(I)
 
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/breadloaf))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -409,7 +414,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/smash()
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc(src.loc)
 		var/turf/U = src.loc
 		src.reagents.reaction(U)
@@ -418,9 +423,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-			src.reagents.reaction(get_turf(user), TOUCH)
-			src.reagents.clear_reagents()
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
@@ -437,7 +445,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon_state = "bucket"
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
-	initial_volume = 50
+	initial_volume = 120
 	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
@@ -457,7 +465,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		else if (istype(D, /obj/item/mop))
 			if (src.reagents.total_volume >= 2)
 				src.reagents.trans_to(D, 2)
-				user.show_text("You wet the mop", "blue")
+				user.show_text("You wet the mop.", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			else
 				user.show_text("Out of water!", "blue")
@@ -465,6 +473,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if (src.reagents.total_volume)
 				user.show_text("<b>You start cutting [src], causing it to spill!</b>", "red")
 				src.reagents.reaction(get_turf(src))
+				src.reagents.clear_reagents()
 			else
 				user.show_text("You start cutting [src].")
 			if (!do_mob(user, src))
@@ -497,7 +506,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.set_loc(get_turf(user))
 		step_rand(src)
 		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
-		user.death(0)
+		user.death(FALSE)
 
 	red
 		name = "red bucket"

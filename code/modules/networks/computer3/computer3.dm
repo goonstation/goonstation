@@ -2,11 +2,11 @@
 
 /obj/machinery/computer3
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses the bleeding-edge command line OS ThinkDOS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
@@ -86,7 +86,7 @@
 			icon_state = "datasec"
 			base_icon_state = "datasec"
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
 			setup_starting_program = /datum/computer/file/terminal_program/secure_records
 
 			console_upper
@@ -156,7 +156,7 @@
 
 			setup_starting_program = /datum/computer/file/terminal_program/engine_control
 			setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
-			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda
+			setup_starting_peripheral2 = /obj/item/peripheral/network/radio/locked/pda/transmit_only
 			setup_drive_size = 48
 
 			console_upper
@@ -272,7 +272,7 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN_DBG(0.4 SECONDS)
+	SPAWN(0.4 SECONDS)
 
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
@@ -328,16 +328,17 @@
 
 		src.post_system()
 
-		switch(rand(1,3))
-			if(1)
-				setup_font_color = "#E79C01"
-			if(2)
-				setup_font_color = "#A5A5FF"
-				setup_bg_color = "#4242E7"
+		if (prob(60))
+			switch(rand(1,2))
+				if(1)
+					setup_font_color = "#E79C01"
+				if(2)
+					setup_font_color = "#A5A5FF"
+					setup_bg_color = "#4242E7"
 
 	return
 
-/obj/machinery/computer3/attack_hand(mob/user as mob)
+/obj/machinery/computer3/attack_hand(mob/user)
 	if(..() && !istype(user, /mob/dead/target_observer/mentor_mouse_observer))
 		return
 
@@ -587,7 +588,7 @@ function lineEnter (ev)
 	else if(href_list["disk"])
 		if (src.diskette)
 			//Ai/cyborgs cannot press a physical button from a room away.
-			if((issilicon(usr) || isAI(usr)) && get_dist(src, usr) > 1)
+			if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -658,7 +659,7 @@ function lineEnter (ev)
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
-		SPAWN_DBG(rand(0, 15))
+		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state
 			src.icon_state += "0"
 			status |= NOPOWER
@@ -666,7 +667,7 @@ function lineEnter (ev)
 			if(glow_in_dark_screen)
 				src.ClearSpecificOverlays("screen_image")
 
-/obj/machinery/computer3/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer3/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 		if ((!src.diskette) && src.setup_has_internal_disk)
 			user.drop_item()
@@ -684,51 +685,53 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 2 SECONDS))
-			if(!ispath(setup_frame_type, /obj/computer3frame))
-				src.setup_frame_type = /obj/computer3frame
-			var/obj/computer3frame/A = new setup_frame_type( src.loc )
-			if(src.material) A.setMaterial(src.material)
-			A.created_icon_state = src.base_icon_state
-			A.set_dir(src.dir)
-			if (src.status & BROKEN)
-				boutput(user, "<span class='notice'>The broken glass falls out.</span>")
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc( src.loc )
-				A.state = 3
-				A.icon_state = "3"
-			else
-				boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
-				A.state = 4
-				A.icon_state = "4"
-
-			for (var/obj/item/peripheral/C in src.peripherals)
-				C.set_loc(A)
-				A.peripherals.Add(C)
-				C.uninstalled()
-
-			if(src.diskette)
-				src.diskette.set_loc(src.loc)
-				src.diskette = null
-
-			if(src.hd)
-				src.hd.set_loc(A)
-				A.hd = src.hd
-				src.hd = null
-
-			A.mainboard = new /obj/item/motherboard(A)
-			A.mainboard.created_name = src.name
-			A.mainboard.integrated_floppy = src.setup_has_internal_disk
-
-
-			A.anchored = 1
-			//dispose()
-			src.dispose()
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
+		list(W, user), W.icon, W.icon_state, null, null)
 
 	else
-		src.attack_hand(user)
-
+		src.Attackhand(user)
 	return
+
+/obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+	if(!ispath(setup_frame_type, /obj/computer3frame))
+		src.setup_frame_type = /obj/computer3frame
+	var/obj/computer3frame/A = new setup_frame_type( src.loc )
+	if(src.material) A.setMaterial(src.material)
+	A.created_icon_state = src.base_icon_state
+	A.set_dir(src.dir)
+	if (src.status & BROKEN)
+		boutput(user, "<span class='notice'>The broken glass falls out.</span>")
+		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+		G.set_loc( src.loc )
+		A.state = 3
+		A.icon_state = "3"
+	else
+		boutput(user, "<span class='notice'>You disconnect the monitor.</span>")
+		A.state = 4
+		A.icon_state = "4"
+
+	for (var/obj/item/peripheral/C in src.peripherals)
+		C.set_loc(A)
+		A.peripherals.Add(C)
+		C.uninstalled()
+
+	if(src.diskette)
+		src.diskette.set_loc(src.loc)
+		src.diskette = null
+
+	if(src.hd)
+		src.hd.set_loc(A)
+		A.hd = src.hd
+		src.hd = null
+
+	A.mainboard = new /obj/item/motherboard(A)
+	A.mainboard.created_name = src.name
+	A.mainboard.integrated_floppy = src.setup_has_internal_disk
+
+
+	A.anchored = 1
+	//dispose()
+	src.dispose()
 
 /obj/machinery/computer3/meteorhit(var/obj/O as obj)
 	if(status & BROKEN)
@@ -742,14 +745,14 @@ function lineEnter (ev)
 
 /obj/machinery/computer3/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//dispose()
 			src.dispose()
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				set_broken()
 		else
@@ -855,15 +858,9 @@ function lineEnter (ev)
 		var/obj/item/peripheral/P = locate(target_ref) in src.peripherals
 		if(istype(P))
 			. = P.receive_command(src, command, signal)
-		//qdel(signal)
-		if (signal)
 
-			if (reusable_signals && reusable_signals.len < 11)
-				if (!(signal in reusable_signals))
-					reusable_signals += signal
-				signal.wipe()
-			else
-				signal.dispose()
+		if(signal)
+			qdel(signal)
 		return
 
 	receive_command(obj/source, command, datum/signal/signal)
@@ -871,18 +868,8 @@ function lineEnter (ev)
 
 			for(var/datum/computer/file/terminal_program/P in src.processing_programs)
 				P.receive_command(src, command, signal)
-//			if(src.host_program)
-//				src.host_program.receive_command(src, command, signal)
 
-			//qdel(signal)
-
-			if (signal)
-				if (reusable_signals && reusable_signals.len < 11)
-					if (!(signal in reusable_signals))
-						reusable_signals += signal
-					signal.wipe()
-				else
-					signal.dispose()
+			qdel(signal)
 		return
 
 	set_broken()
@@ -903,7 +890,7 @@ function lineEnter (ev)
 		src.temp_add = "Restarting system...<br>"
 		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			src.restarting = 0
 			src.post_system()
 
@@ -993,7 +980,7 @@ function lineEnter (ev)
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
@@ -1002,7 +989,7 @@ function lineEnter (ev)
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!luggable)
 				src.luggable = new luggable_type (src)
 				src.luggable.case = src
@@ -1088,7 +1075,7 @@ function lineEnter (ev)
 		src.deployed = 0
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/disk/data/floppy)) //INSERT SOME DISKETTES
 			if ((!src.diskette) && src.setup_has_internal_disk)
 				user.drop_item()
@@ -1131,7 +1118,7 @@ function lineEnter (ev)
 			return
 
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 
 		return
 

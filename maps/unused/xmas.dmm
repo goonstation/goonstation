@@ -4299,19 +4299,19 @@
 /area/ai_monitored/storage/secure)
 "aib" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/space)
 "aic" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/space)
 "aid" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/space)
@@ -4481,7 +4481,7 @@
 /area/ai_monitored/storage/secure)
 "aiv" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
@@ -4498,7 +4498,7 @@
 /area/space)
 "aiy" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/space)
@@ -4605,7 +4605,7 @@
 /area/space)
 "aiL" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/space)
@@ -4784,7 +4784,7 @@
 	},
 /area/space)
 "aja" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ajb" = (
 /obj/securearea{
@@ -4979,31 +4979,31 @@
 /area/space)
 "ajp" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/space)
 "ajq" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
 "ajr" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
 "ajs" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/space)
 "ajt" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/space)
@@ -5149,7 +5149,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2
@@ -6632,7 +6632,7 @@
 /area/maintenance/north)
 "amu" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "os1"
 	},
 /area/space)
@@ -11384,7 +11384,7 @@
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/eva)
 "avG" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -12956,7 +12956,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/reset,
 /obj/item/disk/data/cartridge/atmos,
 /obj/item/clothing/glasses/meson,
 /obj/machinery/light/small{
@@ -13463,7 +13462,6 @@
 /obj/rack,
 /obj/item/circuitboard/robot_module_rewriter,
 /obj/item/circuitboard/cloning,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/card,
 /turf/simulated/floor/plating,
 /area/storage/tech)
@@ -16465,7 +16463,6 @@
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/conservePower,
-/obj/item/aiModule/rename,
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -16491,7 +16488,6 @@
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/reset,
 /obj/machinery/door/window/northright,
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -18051,7 +18047,7 @@
 /turf/simulated/floor/plating,
 /area/maintenance/inner)
 "aHV" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -19753,7 +19749,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -23268,7 +23264,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -30031,7 +30027,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor{
 	icon_state = "snow"
 	},
@@ -31158,7 +31154,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -32880,7 +32876,7 @@
 /turf/simulated/floor/plating/airless,
 /area/solar/south)
 "bjm" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "solar_aft";
 	name = "South Solar Control"
 	},
@@ -41762,11 +41758,11 @@
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "bEk" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "bEl" = (
-/obj/decal/oven,
+/obj/decal/fakeobjects/oven,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "bEm" = (
@@ -42228,7 +42224,7 @@
 /turf/simulated/floor/airless,
 /area/russian)
 "bFE" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "on1"
 	},
 /area/fuck)
@@ -42295,20 +42291,20 @@
 	name = "Biomedical Laboratory"
 	})
 "bFO" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/fuck)
 "bFP" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck)
 "bFQ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/fuck)
 "bFR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/fuck)
@@ -42542,7 +42538,7 @@
 	name = "Biomedical Laboratory"
 	})
 "bGx" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/fuck)
@@ -42737,7 +42733,7 @@
 /turf/simulated/floor/airless,
 /area/russian)
 "bHb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/fuck)
@@ -43226,7 +43222,7 @@
 /turf/simulated/floor/airless,
 /area/russian)
 "bIp" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/fuck)
@@ -44385,7 +44381,7 @@
 	name = "Biomedical Laboratory"
 	})
 "bLv" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/fuck)
@@ -46557,12 +46553,12 @@
 /turf/simulated/floor/airless/damaged2,
 /area/russian)
 "bQv" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/fuck)
 "bQw" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/space)
@@ -46612,7 +46608,7 @@
 /turf/simulated/floor/airless,
 /area/russian)
 "bQC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "os1"
 	},
 /area/fuck)
@@ -47367,7 +47363,7 @@
 /area/turret_protected/aisat_interior)
 "bSk" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/forest{
@@ -47378,7 +47374,7 @@
 	})
 "bSl" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/forest{
@@ -47389,7 +47385,7 @@
 	})
 "bSm" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/forest{
@@ -47436,7 +47432,7 @@
 /area/turret_protected/AIsatextAS)
 "bSv" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/forest{
@@ -47446,7 +47442,7 @@
 	sd_lighting = 1
 	})
 "bSw" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/forest{
 	icon_state = "yellow";
 	name = "Strange Asteroid";
@@ -47455,7 +47451,7 @@
 	})
 "bSx" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/forest{
@@ -47532,7 +47528,7 @@
 /area/turret_protected/AIsatextAS)
 "bSI" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/forest{
@@ -47745,7 +47741,7 @@
 	})
 "bSX" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/forest{
@@ -48468,7 +48464,7 @@
 	})
 "bUh" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/forest{
@@ -48479,7 +48475,7 @@
 	})
 "bUi" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/forest{
@@ -48557,7 +48553,7 @@
 	sd_lighting = 1
 	})
 "bUm" = (
-/obj/critter/spacebee,
+/obj/critter/wasp,
 /turf/unsimulated/grass,
 /area/forest{
 	icon_state = "yellow";
@@ -48589,7 +48585,7 @@
 	})
 "bUp" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/forest{
@@ -48600,7 +48596,7 @@
 	})
 "bUq" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/forest{
@@ -48854,7 +48850,7 @@
 	})
 "bUJ" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/forest{
@@ -49893,7 +49889,7 @@
 	icon_state = "term";
 	dir = 1
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "tds-solar";
 	name = "Factory Solar Control"
 	},
@@ -50881,12 +50877,10 @@
 /turf/simulated/floor/plating,
 /area/AIsattele)
 "bYP" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bYQ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "on1"
 	},
 /area/space)
@@ -50894,82 +50888,78 @@
 /turf/space,
 /area/fuck/main)
 "bYS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/space)
 "bYT" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/space)
 "bYU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/space)
 "bYV" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/turf/simulated/wall/asteroid{
+/turf/space/asteroid,
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/fuck/main)
 "bYW" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/fuck/main)
 "bYX" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/fuck/main)
 "bYY" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/fuck/main)
 "bYZ" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/turf/simulated/wall/asteroid{
+/turf/space/asteroid,
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/fuck/main)
 "bZa" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/fuck/main)
 "bZb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ow1"
 	},
 /area/space)
 "bZc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
 "bZd" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/space)
 "bZe" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/space)
 "bZf" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/fuck/main)
@@ -50979,20 +50969,20 @@
 	name = "CoCl11";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZh" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZi" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/fuck/main)
 "bZj" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/fuck/main)
@@ -51002,35 +50992,35 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZl" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/space)
 "bZm" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/space)
 "bZn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
 "bZo" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "oe1"
 	},
 /area/space)
 "bZp" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/fuck/main)
 "bZq" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/fuck/main)
@@ -51040,7 +51030,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
@@ -51050,7 +51040,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/fuck/main)
@@ -51059,7 +51049,7 @@
 	name = "CoVe4";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZu" = (
 /obj/landmark/mining{
@@ -51071,14 +51061,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZv" = (
 /obj/landmark/mining{
 	name = "CoVe5";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZw" = (
 /obj/landmark/mining{
@@ -51090,7 +51080,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZx" = (
 /obj/landmark/mining{
@@ -51103,14 +51093,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZy" = (
 /obj/landmark/mining{
 	name = "CoVe8";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZz" = (
 /obj/landmark/mining{
@@ -51118,12 +51108,12 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/space)
 "bZA" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/fuck/main)
@@ -51133,7 +51123,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZC" = (
 /obj/landmark/mining{
@@ -51141,14 +51131,14 @@
 	name = "RaVe2";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZD" = (
 /obj/landmark/mining{
 	name = "CoVe13";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZE" = (
 /obj/landmark/mining{
@@ -51156,10 +51146,10 @@
 	name = "CoCl13";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZF" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/fuck/main)
@@ -51173,10 +51163,10 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZH" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "os1"
 	},
 /area/space)
@@ -51186,7 +51176,7 @@
 	name = "CoCl2";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZJ" = (
 /obj/landmark/mining{
@@ -51199,10 +51189,10 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "bZK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/fuck/main)
@@ -51217,7 +51207,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
@@ -51227,10 +51217,10 @@
 	name = "CoCl17";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZN" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -51240,7 +51230,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/space)
@@ -51249,10 +51239,10 @@
 	name = "CoVe3";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZQ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/fuck/main)
@@ -51267,10 +51257,10 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
@@ -51280,7 +51270,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/space)
@@ -51294,20 +51284,20 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZV" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/fuck/main)
 "bZW" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/fuck/main)
 "bZX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/fuck/main)
@@ -51317,7 +51307,7 @@
 	name = "RaCl3";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bZZ" = (
 /obj/landmark/mining{
@@ -51325,7 +51315,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -51335,23 +51325,23 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/fuck/main)
 "cab" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/fuck/main)
 "cac" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/fuck/main)
 "cad" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/fuck/main)
@@ -51366,10 +51356,10 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "caf" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "oe1"
 	},
 /area/fuck/main)
@@ -51384,7 +51374,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cah" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -51402,7 +51392,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -51415,14 +51405,14 @@
 	name = "RaVe8";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cam" = (
 /obj/landmark/mining{
 	name = "CoVe7";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "can" = (
 /obj/landmark/mining{
@@ -51430,7 +51420,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/space)
@@ -51440,7 +51430,7 @@
 	name = "CoCl3";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cap" = (
 /obj/landmark/mining{
@@ -51448,7 +51438,7 @@
 	name = "RaVe1";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caq" = (
 /turf/simulated/wall,
@@ -51496,7 +51486,7 @@
 	name = "RaCl25";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cav" = (
 /obj/grille,
@@ -51579,23 +51569,23 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caB" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/fuck/main)
 "caC" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/fuck/main)
 "caD" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/fuck/main)
@@ -51669,7 +51659,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caL" = (
 /obj/landmark/mining{
@@ -51681,7 +51671,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caM" = (
 /obj/landmark/mining{
@@ -51689,7 +51679,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/space)
@@ -51699,11 +51689,11 @@
 	name = "CoCl9";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caO" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/fuck/main)
@@ -51737,7 +51727,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caR" = (
 /obj/landmark/mining{
@@ -51750,7 +51740,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "caS" = (
 /obj/grille,
@@ -51808,7 +51798,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/space)
@@ -51931,7 +51921,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -52010,7 +52000,7 @@
 /area/engine/miningoutpost)
 "cbm" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "sw1"
 	},
 /area/fuck/main)
@@ -52110,7 +52100,7 @@
 	name = "RaVe13";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbw" = (
 /obj/landmark/mining{
@@ -52123,11 +52113,11 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbx" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/fuck/main)
@@ -52260,7 +52250,7 @@
 	name = "CoVe6";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbK" = (
 /obj/landmark/mining{
@@ -52268,14 +52258,14 @@
 	name = "CoCl8";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbL" = (
 /obj/landmark/mining{
 	name = "CoVe1";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbM" = (
 /obj/grille,
@@ -52345,7 +52335,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/space)
@@ -52355,13 +52345,11 @@
 	name = "CoCl10";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cbU" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/turf/simulated/wall/asteroid{
+/turf/space/asteroid,
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "west1"
 	},
 /area/fuck/main)
@@ -52421,7 +52409,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cca" = (
 /obj/landmark/mining{
@@ -52429,7 +52417,7 @@
 	name = "RaVe4";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccb" = (
 /obj/landmark/mining{
@@ -52441,7 +52429,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccc" = (
 /obj/landmark/mining{
@@ -52454,7 +52442,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccd" = (
 /obj/machinery/door/airlock/external{
@@ -52501,13 +52489,13 @@
 /area/engine/miningoutpost)
 "cch" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/fuck/main)
 "cci" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "se1"
 	},
 /area/fuck/main)
@@ -52522,7 +52510,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -52537,7 +52525,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccl" = (
 /obj/landmark/mining{
@@ -52545,7 +52533,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
@@ -52555,7 +52543,7 @@
 	name = "CoCl4";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccn" = (
 /obj/landmark/mining{
@@ -52563,7 +52551,7 @@
 	name = "RaVe10";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cco" = (
 /turf/simulated/shuttle/wall{
@@ -52602,7 +52590,7 @@
 	name = "CoCl14";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccu" = (
 /obj/landmark/mining{
@@ -52610,7 +52598,7 @@
 	name = "RaVe5";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccv" = (
 /obj/landmark/mining{
@@ -52623,7 +52611,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccw" = (
 /obj/landmark/mining{
@@ -52636,7 +52624,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccx" = (
 /turf/simulated/shuttle/wall,
@@ -52695,7 +52683,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccD" = (
 /obj/landmark/mining{
@@ -52708,7 +52696,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccE" = (
 /obj/landmark/mining{
@@ -52716,11 +52704,11 @@
 	name = "CoCl18";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccF" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/fuck/main)
@@ -52749,7 +52737,7 @@
 /area/engine/miningoutpost)
 "ccK" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "south1"
 	},
 /area/fuck/main)
@@ -52773,10 +52761,8 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "ccO" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/turf/simulated/wall/asteroid{
+/turf/space/asteroid,
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/fuck/main)
@@ -52791,7 +52777,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccQ" = (
 /turf/simulated/shuttle/wall{
@@ -52813,7 +52799,7 @@
 /area/engine/miningoutpost)
 "ccU" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/fuck/main)
@@ -52828,7 +52814,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "ccW" = (
 /obj/landmark/mining{
@@ -52836,7 +52822,7 @@
 	name = "RaVe12";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccX" = (
 /obj/landmark/mining{
@@ -52844,7 +52830,7 @@
 	name = "CoCl1";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ccY" = (
 /obj/machinery/light/small{
@@ -52858,14 +52844,14 @@
 	name = "CoCl12";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "cda" = (
 /obj/landmark/mining{
 	name = "CoVe2";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdb" = (
 /obj/landmark/mining{
@@ -52878,11 +52864,11 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdc" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "oe1"
 	},
 /area/fuck/main)
@@ -52897,7 +52883,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cde" = (
 /obj/landmark/mining{
@@ -52905,11 +52891,11 @@
 	name = "RaVe14";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdf" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "nw1"
 	},
 /area/fuck/main)
@@ -52923,17 +52909,17 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdh" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/fuck/main)
 "cdi" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/fuck/main)
@@ -52948,7 +52934,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdk" = (
 /obj/landmark/mining{
@@ -52956,7 +52942,7 @@
 	name = "RaCl8";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdl" = (
 /turf/simulated/wall,
@@ -52967,7 +52953,7 @@
 	name = "CoCl19";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdn" = (
 /obj/cable{
@@ -52984,10 +52970,8 @@
 /turf/simulated/floor/plating,
 /area/fuck/main)
 "cdp" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
-/turf/simulated/wall/asteroid{
+/turf/space/asteroid,
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "east1"
 	},
 /area/fuck/main)
@@ -53002,7 +52986,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdr" = (
 /obj/cable{
@@ -53045,7 +53029,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "cdw" = (
 /obj/landmark/mining{
@@ -53053,7 +53037,7 @@
 	name = "RaVe2";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdx" = (
 /obj/landmark/mining{
@@ -53065,7 +53049,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdy" = (
 /obj/landmark/mining{
@@ -53073,7 +53057,7 @@
 	name = "RaVe7";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdz" = (
 /obj/machinery/door/airlock/external{
@@ -53091,7 +53075,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "cdB" = (
 /obj/landmark/mining{
@@ -53104,14 +53088,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdC" = (
 /obj/landmark/mining{
 	name = "CoVe18";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdD" = (
 /obj/landmark/mining{
@@ -53119,7 +53103,7 @@
 	name = "CoCl16";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdE" = (
 /obj/landmark/mining{
@@ -53132,7 +53116,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdF" = (
 /obj/landmark/mining{
@@ -53140,14 +53124,14 @@
 	name = "RaVe9";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "cdG" = (
 /obj/landmark/mining{
 	name = "CoVe20";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdH" = (
 /obj/landmark/mining{
@@ -53155,7 +53139,7 @@
 	name = "RaVe3";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdI" = (
 /obj/machinery/door/airlock/external{
@@ -53174,7 +53158,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/fuck/main)
 "cdK" = (
 /obj/landmark/mining{
@@ -53186,7 +53170,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdL" = (
 /obj/landmark/mining{
@@ -53199,7 +53183,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdM" = (
 /obj/landmark/mining{
@@ -53207,7 +53191,7 @@
 	name = "CoCl31";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdN" = (
 /obj/landmark/mining{
@@ -53220,7 +53204,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdO" = (
 /obj/landmark/mining{
@@ -53228,7 +53212,7 @@
 	name = "RaCl10";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdP" = (
 /obj/landmark/mining{
@@ -53236,7 +53220,7 @@
 	name = "CoCl15";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdQ" = (
 /obj/landmark/mining{
@@ -53249,7 +53233,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdR" = (
 /obj/landmark/mining{
@@ -53257,7 +53241,7 @@
 	name = "RaVe6";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdS" = (
 /obj/landmark/mining{
@@ -53270,7 +53254,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdT" = (
 /obj/landmark/mining{
@@ -53278,7 +53262,7 @@
 	name = "CoCl5";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdU" = (
 /obj/landmark/mining{
@@ -53286,7 +53270,7 @@
 	name = "CoCl6";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdV" = (
 /obj/landmark/mining{
@@ -53294,28 +53278,28 @@
 	name = "RaCl4";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdW" = (
 /obj/landmark/mining{
 	name = "CoVe11";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdX" = (
 /obj/landmark/mining{
 	name = "CoVe38";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdY" = (
 /obj/landmark/mining{
 	name = "CoVe19";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cdZ" = (
 /obj/landmark/mining{
@@ -53328,7 +53312,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cea" = (
 /obj/landmark/mining{
@@ -53340,7 +53324,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceb" = (
 /obj/landmark/mining{
@@ -53348,7 +53332,7 @@
 	name = "RaCl9";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cec" = (
 /obj/landmark/mining{
@@ -53361,7 +53345,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ced" = (
 /obj/landmark/mining{
@@ -53373,7 +53357,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cee" = (
 /obj/landmark/mining{
@@ -53386,7 +53370,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cef" = (
 /obj/landmark/mining{
@@ -53394,14 +53378,14 @@
 	name = "RaVe18";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceg" = (
 /obj/landmark/mining{
 	name = "CoVe15";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceh" = (
 /obj/landmark/mining{
@@ -53409,7 +53393,7 @@
 	name = "CoCl30";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cei" = (
 /obj/landmark/mining{
@@ -53421,14 +53405,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cej" = (
 /obj/landmark/mining{
 	name = "CoVe12";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cek" = (
 /obj/landmark/mining{
@@ -53436,7 +53420,7 @@
 	name = "CoCl32";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -53450,7 +53434,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cem" = (
 /obj/landmark/mining{
@@ -53462,13 +53446,13 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
 "cen" = (
 /obj/lattice,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ne1"
 	},
 /area/space)
@@ -53483,7 +53467,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cep" = (
 /obj/landmark/mining{
@@ -53491,14 +53475,14 @@
 	name = "CoCl32";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceq" = (
 /obj/landmark/mining{
 	name = "CoVe10";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cer" = (
 /obj/landmark/mining{
@@ -53506,7 +53490,7 @@
 	name = "RaVe19";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ces" = (
 /obj/landmark/mining{
@@ -53514,7 +53498,7 @@
 	name = "RaVe17";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cet" = (
 /obj/landmark/mining{
@@ -53527,7 +53511,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceu" = (
 /obj/landmark/mining{
@@ -53539,7 +53523,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cev" = (
 /obj/landmark/mining{
@@ -53547,7 +53531,7 @@
 	name = "CoCl21";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cew" = (
 /obj/landmark/mining{
@@ -53560,7 +53544,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cex" = (
 /obj/landmark/mining{
@@ -53568,7 +53552,7 @@
 	name = "RaCl7";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cey" = (
 /obj/landmark/mining{
@@ -53576,7 +53560,7 @@
 	name = "RaVe20";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cez" = (
 /obj/landmark/mining{
@@ -53589,7 +53573,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceA" = (
 /obj/critter/rockworm,
@@ -53606,7 +53590,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceC" = (
 /obj/landmark/mining{
@@ -53619,14 +53603,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceD" = (
 /obj/landmark/mining{
 	name = "CoVe14";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceE" = (
 /obj/landmark/mining{
@@ -53638,14 +53622,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceF" = (
 /obj/landmark/mining{
 	name = "CoVe16";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceG" = (
 /obj/landmark/mining{
@@ -53653,7 +53637,7 @@
 	name = "RaCl24";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceH" = (
 /obj/landmark/mining{
@@ -53666,7 +53650,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceI" = (
 /obj/landmark/mining{
@@ -53674,7 +53658,7 @@
 	name = "RaVe15";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceJ" = (
 /obj/landmark/mining{
@@ -53687,7 +53671,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceK" = (
 /obj/landmark/mining{
@@ -53700,7 +53684,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -53709,7 +53693,7 @@
 	name = "CoVe9";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceM" = (
 /obj/landmark/mining{
@@ -53722,7 +53706,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceN" = (
 /obj/landmark/mining{
@@ -53730,7 +53714,7 @@
 	name = "CoCl24";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceO" = (
 /obj/landmark/mining{
@@ -53743,7 +53727,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceP" = (
 /obj/landmark/mining{
@@ -53751,7 +53735,7 @@
 	name = "RaVe22";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceQ" = (
 /obj/landmark/mining{
@@ -53759,14 +53743,14 @@
 	name = "RaVe16";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceR" = (
 /obj/landmark/mining{
 	name = "CoVe17";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceS" = (
 /obj/landmark/mining{
@@ -53774,7 +53758,7 @@
 	name = "RaCl17";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceT" = (
 /obj/landmark/mining{
@@ -53786,7 +53770,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceU" = (
 /obj/landmark/mining{
@@ -53798,7 +53782,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceV" = (
 /obj/landmark/mining{
@@ -53811,7 +53795,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceW" = (
 /obj/landmark/mining{
@@ -53819,7 +53803,7 @@
 	name = "CoCl7";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceX" = (
 /obj/landmark/mining{
@@ -53827,7 +53811,7 @@
 	name = "CoCl29";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceY" = (
 /obj/landmark/mining{
@@ -53839,7 +53823,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ceZ" = (
 /obj/landmark/mining{
@@ -53852,7 +53836,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfa" = (
 /obj/landmark/mining{
@@ -53865,7 +53849,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfb" = (
 /obj/landmark/mining{
@@ -53873,7 +53857,7 @@
 	name = "CoCl25";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfc" = (
 /obj/landmark/mining{
@@ -53881,7 +53865,7 @@
 	name = "RaVe21";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfd" = (
 /obj/landmark/mining{
@@ -53889,7 +53873,7 @@
 	name = "RaVe27";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfe" = (
 /obj/landmark/mining{
@@ -53902,7 +53886,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -53917,7 +53901,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfg" = (
 /obj/landmark/mining{
@@ -53925,7 +53909,7 @@
 	name = "CoCl20";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfh" = (
 /obj/landmark/mining{
@@ -53938,7 +53922,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfi" = (
 /obj/landmark/mining{
@@ -53951,7 +53935,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfj" = (
 /obj/landmark/mining{
@@ -53959,7 +53943,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "north1"
 	},
 /area/space)
@@ -53974,7 +53958,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -53989,7 +53973,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfm" = (
 /obj/landmark/mining{
@@ -53997,14 +53981,14 @@
 	name = "CoCl22";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfn" = (
 /obj/landmark/mining{
 	name = "CoVe25";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfo" = (
 /obj/landmark/mining{
@@ -54012,7 +53996,7 @@
 	name = "RaCl5";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfp" = (
 /obj/landmark/mining{
@@ -54024,7 +54008,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfq" = (
 /obj/landmark/mining{
@@ -54037,7 +54021,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfr" = (
 /obj/landmark/mining{
@@ -54049,14 +54033,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfs" = (
 /obj/landmark/mining{
 	name = "CoVe22";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cft" = (
 /obj/landmark/mining{
@@ -54064,7 +54048,7 @@
 	name = "CoCl61";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfu" = (
 /obj/landmark/mining{
@@ -54077,7 +54061,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -54092,7 +54076,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
@@ -54102,7 +54086,7 @@
 	name = "RaCl11";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfx" = (
 /obj/landmark/mining{
@@ -54110,7 +54094,7 @@
 	name = "RaVe25";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfy" = (
 /obj/landmark/mining{
@@ -54123,7 +54107,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -54133,7 +54117,7 @@
 	name = "RaVe23";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfA" = (
 /obj/landmark/mining{
@@ -54146,7 +54130,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
@@ -54161,7 +54145,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfC" = (
 /obj/landmark/mining{
@@ -54174,14 +54158,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfD" = (
 /obj/landmark/mining{
 	name = "CoVe26";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfE" = (
 /obj/landmark/mining{
@@ -54193,7 +54177,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfF" = (
 /obj/landmark/mining{
@@ -54201,7 +54185,7 @@
 	name = "CoCl70";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfG" = (
 /obj/landmark/mining{
@@ -54209,14 +54193,14 @@
 	name = "RaCl16";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfH" = (
 /obj/landmark/mining{
 	name = "CoVe23";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfI" = (
 /obj/landmark/mining{
@@ -54229,21 +54213,21 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfJ" = (
 /obj/landmark/mining{
 	name = "CoVe24";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfK" = (
 /obj/landmark/mining{
 	name = "CoVe21";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfL" = (
 /obj/landmark/mining{
@@ -54251,7 +54235,7 @@
 	name = "CoCl26";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfM" = (
 /obj/landmark/mining{
@@ -54264,7 +54248,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfN" = (
 /obj/landmark/mining{
@@ -54276,7 +54260,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfO" = (
 /obj/landmark/mining{
@@ -54288,7 +54272,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfP" = (
 /obj/landmark/mining{
@@ -54300,7 +54284,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfQ" = (
 /obj/landmark/mining{
@@ -54308,7 +54292,7 @@
 	name = "RaCl6";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfR" = (
 /obj/landmark/mining{
@@ -54316,7 +54300,7 @@
 	name = "CoCl50";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfS" = (
 /obj/landmark/mining{
@@ -54324,7 +54308,7 @@
 	name = "CoCl33";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfT" = (
 /obj/landmark/mining{
@@ -54332,7 +54316,7 @@
 	name = "RaVe26";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfU" = (
 /obj/landmark/mining{
@@ -54345,7 +54329,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfV" = (
 /obj/landmark/mining{
@@ -54358,7 +54342,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfW" = (
 /obj/landmark/mining{
@@ -54371,7 +54355,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfX" = (
 /obj/landmark/mining{
@@ -54379,7 +54363,7 @@
 	name = "CoCl62";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfY" = (
 /obj/landmark/mining{
@@ -54392,7 +54376,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cfZ" = (
 /obj/landmark/mining{
@@ -54405,7 +54389,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cga" = (
 /obj/landmark/mining{
@@ -54413,7 +54397,7 @@
 	name = "RaCl23";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgb" = (
 /obj/landmark/mining{
@@ -54425,7 +54409,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -54434,7 +54418,7 @@
 	name = "CoVe27";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgd" = (
 /obj/landmark/mining{
@@ -54446,7 +54430,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cge" = (
 /obj/landmark/mining{
@@ -54454,7 +54438,7 @@
 	name = "CoCl27";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgf" = (
 /obj/landmark/mining{
@@ -54462,7 +54446,7 @@
 	name = "RaCl22";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgg" = (
 /obj/landmark/mining{
@@ -54470,7 +54454,7 @@
 	name = "RaVe24";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgh" = (
 /obj/landmark/mining{
@@ -54478,7 +54462,7 @@
 	name = "RaVe43";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgi" = (
 /obj/landmark/mining{
@@ -54486,7 +54470,7 @@
 	name = "RaVe42";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgj" = (
 /obj/landmark/mining{
@@ -54499,7 +54483,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgk" = (
 /obj/landmark/mining{
@@ -54507,7 +54491,7 @@
 	name = "RaVe46";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgl" = (
 /obj/landmark/mining{
@@ -54520,7 +54504,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgm" = (
 /obj/landmark/mining{
@@ -54538,14 +54522,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgn" = (
 /obj/landmark/mining{
 	name = "CoVe44";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgo" = (
 /obj/landmark/mining{
@@ -54557,7 +54541,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgp" = (
 /obj/landmark/mining{
@@ -54565,7 +54549,7 @@
 	name = "RaVe44";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgq" = (
 /obj/landmark/mining{
@@ -54573,7 +54557,7 @@
 	name = "CoCl36";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgr" = (
 /obj/landmark/mining{
@@ -54586,14 +54570,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgs" = (
 /obj/landmark/mining{
 	name = "CoVe37";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgt" = (
 /obj/landmark/mining{
@@ -54605,7 +54589,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgu" = (
 /obj/landmark/mining{
@@ -54613,21 +54597,21 @@
 	name = "RaCl15";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgv" = (
 /obj/landmark/mining{
 	name = "CoVe45";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgw" = (
 /obj/landmark/mining{
 	name = "CoVe28";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgx" = (
 /obj/landmark/mining{
@@ -54635,7 +54619,7 @@
 	name = "CoCl23";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgy" = (
 /obj/landmark/mining{
@@ -54643,7 +54627,7 @@
 	name = "CoCl35";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgz" = (
 /obj/landmark/mining{
@@ -54651,7 +54635,7 @@
 	name = "RaCl21";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgA" = (
 /obj/landmark/mining{
@@ -54659,7 +54643,7 @@
 	name = "RaVe41";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgB" = (
 /obj/landmark/mining{
@@ -54672,7 +54656,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgC" = (
 /obj/landmark/mining{
@@ -54684,14 +54668,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgD" = (
 /obj/landmark/mining{
 	name = "CoVe39";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgE" = (
 /obj/landmark/mining{
@@ -54703,7 +54687,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgF" = (
 /obj/landmark/mining{
@@ -54715,7 +54699,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgG" = (
 /obj/landmark/mining{
@@ -54728,7 +54712,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgH" = (
 /obj/landmark/mining{
@@ -54736,7 +54720,7 @@
 	name = "RaVe28";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgI" = (
 /obj/landmark/mining{
@@ -54749,7 +54733,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgJ" = (
 /obj/landmark/mining{
@@ -54757,7 +54741,7 @@
 	name = "CoCl28";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgK" = (
 /obj/landmark/mining{
@@ -54770,7 +54754,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgL" = (
 /obj/landmark/mining{
@@ -54783,7 +54767,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgM" = (
 /obj/landmark/mining{
@@ -54796,7 +54780,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgN" = (
 /obj/landmark/mining{
@@ -54804,14 +54788,14 @@
 	name = "RaVe50";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgO" = (
 /obj/landmark/mining{
 	name = "CoVe42";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgP" = (
 /obj/landmark/mining{
@@ -54819,7 +54803,7 @@
 	name = "CoCl59";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgQ" = (
 /obj/landmark/mining{
@@ -54832,7 +54816,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgR" = (
 /obj/landmark/mining{
@@ -54844,7 +54828,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgS" = (
 /obj/landmark/mining{
@@ -54857,7 +54841,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgT" = (
 /obj/landmark/mining{
@@ -54869,14 +54853,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgU" = (
 /obj/landmark/mining{
 	name = "CoVe40";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgV" = (
 /obj/landmark/mining{
@@ -54884,7 +54868,7 @@
 	name = "CoCl34";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgW" = (
 /obj/landmark/mining{
@@ -54892,7 +54876,7 @@
 	name = "CoCl64";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgX" = (
 /obj/landmark/mining{
@@ -54905,7 +54889,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ine1"
 	},
 /area/space)
@@ -54920,7 +54904,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cgZ" = (
 /obj/landmark/mining{
@@ -54933,7 +54917,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
@@ -54943,7 +54927,7 @@
 	name = "RaVe40";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chb" = (
 /obj/landmark/mining{
@@ -54956,7 +54940,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chc" = (
 /obj/landmark/mining{
@@ -54964,7 +54948,7 @@
 	name = "RaCl18";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chd" = (
 /obj/landmark/mining{
@@ -54972,7 +54956,7 @@
 	name = "RaVe45";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "che" = (
 /obj/landmark/mining{
@@ -54985,7 +54969,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chf" = (
 /obj/landmark/mining{
@@ -54993,14 +54977,14 @@
 	name = "CoCl63";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chg" = (
 /obj/landmark/mining{
 	name = "CoVe43";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chh" = (
 /obj/landmark/mining{
@@ -55013,7 +54997,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chi" = (
 /obj/landmark/mining{
@@ -55025,14 +55009,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chj" = (
 /obj/landmark/mining{
 	name = "CoVe49";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chk" = (
 /obj/landmark/mining{
@@ -55044,7 +55028,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chl" = (
 /obj/landmark/mining{
@@ -55056,7 +55040,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "inw1"
 	},
 /area/space)
@@ -55070,14 +55054,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chn" = (
 /obj/landmark/mining{
 	name = "CoVe29";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cho" = (
 /obj/landmark/mining{
@@ -55085,7 +55069,7 @@
 	name = "RaVe47";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chp" = (
 /obj/landmark/mining{
@@ -55093,7 +55077,7 @@
 	name = "RaVe29";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chq" = (
 /obj/landmark/mining{
@@ -55106,7 +55090,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chr" = (
 /obj/landmark/mining{
@@ -55114,7 +55098,7 @@
 	name = "CoCl65";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chs" = (
 /obj/landmark/mining{
@@ -55127,14 +55111,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cht" = (
 /obj/landmark/mining{
 	name = "CoVe41";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chu" = (
 /obj/landmark/mining{
@@ -55147,7 +55131,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chv" = (
 /obj/landmark/mining{
@@ -55160,7 +55144,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chw" = (
 /obj/landmark/mining{
@@ -55168,7 +55152,7 @@
 	name = "CoCl46";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chx" = (
 /obj/landmark/mining{
@@ -55180,7 +55164,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chy" = (
 /obj/landmark/mining{
@@ -55188,7 +55172,7 @@
 	name = "CoCl67";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chz" = (
 /obj/landmark/mining{
@@ -55201,7 +55185,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chA" = (
 /obj/landmark/mining{
@@ -55209,14 +55193,14 @@
 	name = "CoCl58";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chB" = (
 /obj/landmark/mining{
 	name = "CoVe50";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chC" = (
 /obj/landmark/mining{
@@ -55224,7 +55208,7 @@
 	name = "RaCl19";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chD" = (
 /obj/landmark/mining{
@@ -55237,7 +55221,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chE" = (
 /obj/landmark/mining{
@@ -55250,7 +55234,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chF" = (
 /obj/landmark/mining{
@@ -55263,7 +55247,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chG" = (
 /obj/landmark/mining{
@@ -55271,14 +55255,14 @@
 	name = "RaCl20";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chH" = (
 /obj/landmark/mining{
 	name = "CoVe47";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chI" = (
 /obj/landmark/mining{
@@ -55286,7 +55270,7 @@
 	name = "RaVe39";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chJ" = (
 /obj/landmark/mining{
@@ -55299,7 +55283,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chK" = (
 /obj/landmark/mining{
@@ -55307,7 +55291,7 @@
 	name = "CoCl51";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chL" = (
 /obj/landmark/mining{
@@ -55319,7 +55303,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chM" = (
 /obj/landmark/mining{
@@ -55331,7 +55315,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chN" = (
 /obj/landmark/mining{
@@ -55339,7 +55323,7 @@
 	name = "CoCl57";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chO" = (
 /obj/landmark/mining{
@@ -55347,14 +55331,14 @@
 	name = "RaVe30";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chP" = (
 /obj/landmark/mining{
 	name = "CoVe30";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chQ" = (
 /obj/landmark/mining{
@@ -55362,7 +55346,7 @@
 	name = "CoCl69";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chR" = (
 /obj/landmark/mining{
@@ -55370,7 +55354,7 @@
 	name = "CoCl47";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chS" = (
 /obj/landmark/mining{
@@ -55383,7 +55367,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chT" = (
 /obj/landmark/mining{
@@ -55396,7 +55380,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chU" = (
 /obj/landmark/mining{
@@ -55409,7 +55393,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chV" = (
 /obj/landmark/mining{
@@ -55417,7 +55401,7 @@
 	name = "RaVe48";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chW" = (
 /obj/landmark/mining{
@@ -55430,7 +55414,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chX" = (
 /obj/landmark/mining{
@@ -55443,7 +55427,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chY" = (
 /obj/landmark/mining{
@@ -55451,14 +55435,14 @@
 	name = "CoCl37";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "chZ" = (
 /obj/landmark/mining{
 	name = "CoVe48";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cia" = (
 /obj/landmark/mining{
@@ -55471,7 +55455,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -55485,7 +55469,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cic" = (
 /obj/landmark/mining{
@@ -55493,7 +55477,7 @@
 	name = "CoCl45";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cid" = (
 /obj/landmark/mining{
@@ -55506,7 +55490,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cie" = (
 /obj/landmark/mining{
@@ -55514,7 +55498,7 @@
 	name = "CoCl68";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cif" = (
 /obj/landmark/mining{
@@ -55527,7 +55511,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -55541,21 +55525,21 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cih" = (
 /obj/landmark/mining{
 	name = "CoVe36";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cii" = (
 /obj/landmark/mining{
 	name = "CoVe32";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cij" = (
 /obj/landmark/mining{
@@ -55567,7 +55551,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cik" = (
 /obj/landmark/mining{
@@ -55575,7 +55559,7 @@
 	name = "RaCl1";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cil" = (
 /obj/landmark/mining{
@@ -55583,7 +55567,7 @@
 	name = "RaVe34";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cim" = (
 /obj/landmark/mining{
@@ -55596,7 +55580,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cin" = (
 /obj/landmark/mining{
@@ -55604,7 +55588,7 @@
 	name = "RaCl12";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cio" = (
 /obj/landmark/mining{
@@ -55617,7 +55601,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cip" = (
 /obj/landmark/mining{
@@ -55625,7 +55609,7 @@
 	name = "RaVe33";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciq" = (
 /obj/landmark/mining{
@@ -55638,7 +55622,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cir" = (
 /obj/landmark/mining{
@@ -55646,7 +55630,7 @@
 	name = "RaVe32";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cis" = (
 /obj/landmark/mining{
@@ -55659,14 +55643,14 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cit" = (
 /obj/landmark/mining{
 	name = "CoVe46";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciu" = (
 /obj/landmark/mining{
@@ -55674,7 +55658,7 @@
 	name = "CoCl49";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "civ" = (
 /obj/landmark/mining{
@@ -55687,7 +55671,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciw" = (
 /obj/landmark/mining{
@@ -55699,7 +55683,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cix" = (
 /obj/grille,
@@ -55720,7 +55704,7 @@
 	name = "CoCl54";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciz" = (
 /obj/grille,
@@ -55773,7 +55757,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciE" = (
 /obj/landmark/mining{
@@ -55781,7 +55765,7 @@
 	name = "CoCl56";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciF" = (
 /obj/machinery/door/firedoor/border_only{
@@ -55799,7 +55783,7 @@
 	name = "RaVe49";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciH" = (
 /obj/landmark/mining{
@@ -55811,7 +55795,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ise1"
 	},
 /area/space)
@@ -55826,7 +55810,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciJ" = (
 /obj/landmark/mining{
@@ -55834,7 +55818,7 @@
 	name = "CoCl41";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciK" = (
 /obj/landmark/mining{
@@ -55847,7 +55831,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciL" = (
 /obj/landmark/mining{
@@ -55860,7 +55844,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "isw1"
 	},
 /area/space)
@@ -55870,7 +55854,7 @@
 	name = "CoCl42";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciN" = (
 /obj/landmark/mining{
@@ -55883,7 +55867,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciO" = (
 /obj/landmark/mining{
@@ -55891,7 +55875,7 @@
 	name = "CoCl48";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciP" = (
 /obj/landmark/mining{
@@ -55899,7 +55883,7 @@
 	name = "RaCl14";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciQ" = (
 /obj/landmark/mining{
@@ -55912,7 +55896,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ciR" = (
 /obj/cable{
@@ -56016,7 +56000,7 @@
 	name = "RaVe36";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cja" = (
 /obj/landmark/mining{
@@ -56029,7 +56013,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjb" = (
 /obj/cable,
@@ -56212,7 +56196,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "ntoutpost-solar";
 	name = "Outpost Solar Control";
 	track = 2
@@ -56241,7 +56225,7 @@
 	name = "CoCl53";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjv" = (
 /obj/machinery/shuttle/engine/propulsion,
@@ -56349,7 +56333,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjG" = (
 /obj/machinery/light_switch{
@@ -56393,7 +56377,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/old_outpost/engine)
 "cjL" = (
@@ -56404,7 +56388,7 @@
 	name = "CoVe33";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjN" = (
 /turf/simulated/wall/r_wall,
@@ -56427,7 +56411,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/black,
 /area/old_outpost/control)
 "cjQ" = (
@@ -56459,7 +56443,7 @@
 	name = "CoCl55";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjT" = (
 /obj/landmark/mining{
@@ -56472,7 +56456,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cjU" = (
 /obj/machinery/light/small{
@@ -56598,7 +56582,7 @@
 	name = "CoVe34";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckg" = (
 /obj/landmark/mining{
@@ -56606,7 +56590,7 @@
 	name = "RaVe31";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckh" = (
 /obj/machinery/firealarm{
@@ -56719,7 +56703,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckt" = (
 /turf/simulated/wall/r_wall,
@@ -56815,7 +56799,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckD" = (
 /obj/cable{
@@ -56928,7 +56912,7 @@
 	name = "CoVe31";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckP" = (
 /obj/machinery/door/poddoor{
@@ -57034,7 +57018,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckY" = (
 /obj/landmark/mining{
@@ -57042,7 +57026,7 @@
 	name = "RaVe35";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ckZ" = (
 /obj/landmark/mining{
@@ -57054,7 +57038,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cla" = (
 /obj/machinery/door/poddoor{
@@ -57132,7 +57116,7 @@
 	name = "CoVe35";
 	veintype = 1
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clh" = (
 /obj/landmark/mining{
@@ -57144,7 +57128,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cli" = (
 /obj/landmark/mining{
@@ -57152,7 +57136,7 @@
 	name = "CoCl38";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clj" = (
 /obj/machinery/door/poddoor{
@@ -57484,7 +57468,7 @@
 	name = "CoCl44";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clK" = (
 /obj/landmark/mining{
@@ -57497,7 +57481,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clL" = (
 /obj/landmark/mining{
@@ -57510,7 +57494,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clM" = (
 /turf/simulated/wall/r_wall,
@@ -57545,7 +57529,7 @@
 	name = "RaVe37";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clQ" = (
 /obj/landmark/mining{
@@ -57553,7 +57537,7 @@
 	name = "CoCl40";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clR" = (
 /obj/landmark/mining{
@@ -57561,7 +57545,7 @@
 	name = "CoCl39";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clS" = (
 /obj/landmark/mining{
@@ -57574,7 +57558,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "clT" = (
 /obj/cable{
@@ -57674,7 +57658,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cme" = (
 /obj/cable{
@@ -57986,7 +57970,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmG" = (
 /obj/landmark/mining{
@@ -57994,7 +57978,7 @@
 	name = "RaVe38";
 	veintype = 3
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmH" = (
 /obj/machinery/door/poddoor{
@@ -58067,7 +58051,7 @@
 	name = "CoCl52";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmN" = (
 /obj/landmark/mining{
@@ -58080,7 +58064,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmO" = (
 /obj/landmark/mining{
@@ -58093,7 +58077,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmP" = (
 /obj/landmark/mining{
@@ -58101,7 +58085,7 @@
 	name = "RaCl13";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmQ" = (
 /obj/landmark/mining{
@@ -58109,7 +58093,7 @@
 	name = "RaCl2";
 	veintype = 4
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmR" = (
 /obj/landmark/mining{
@@ -58122,7 +58106,7 @@
 	name = "Event";
 	veintype = 5
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "cmS" = (
 /obj/landmark/mining{
@@ -58130,7 +58114,7 @@
 	name = "CoCl43";
 	veintype = 2
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "eQN" = (
 /obj/table{

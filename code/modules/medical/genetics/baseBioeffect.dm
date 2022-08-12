@@ -35,15 +35,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/list/mob_exclusion = list() // this bio-effect won't occur in the pools of mob types in this list
 	var/mob_exclusive = null // bio-effect will only occur in this mob type
 
-	var/mob/owner = null  //Mob that owns this effect.
-	var/datum/bioHolder/holder = null //Holder that contains this effect.
+	var/tmp/mob/owner = null  //Mob that owns this effect.
+	var/tmp/datum/bioHolder/holder = null //Holder that contains this effect.
 
 	var/msgGain = "" //Message shown when effect is added.
 	var/msgLose = "" //Message shown when effect is removed.
 
 	var/timeLeft = -1//Time left for temporary effects.
 
-	var/variant = 1  //For effects with different variants.
 	var/cooldown = 0 //For effects that come with verbs
 	var/can_reclaim = 1 // Can this gene be turned into mats with the reclaimer?
 	var/can_scramble = 1 // Can this gene be scrambled with the emitter?
@@ -55,11 +54,17 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/reclaim_fail = 5 // Chance % for a reclamation of this gene to fail
 	var/curable_by_mutadone = 1
 	var/stability_loss = 0
-	var/activated_from_pool = 0
+	var/tmp/activated_from_pool = 0
 	var/altered = 0
 	var/add_delay = 0
 	var/wildcard = 0
+	var/power = 1
 	var/degrade_to = null // what this mutation turns into if stability is too low
+	///if this mutation should degrade after timing out
+	var/degrade_after = FALSE
+
+	///groups of mutually exclusive bioeffects
+	var/effect_group = null
 
 	var/datum/dnaBlocks/dnaBlocks = null
 
@@ -132,6 +137,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				return BE
 			else
 				return null
+
+	proc/onPowerChange(oldval, newval)
+		return
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "power")
+			src.onPowerChange(oldval, newval)
 
 /datum/dnaBlocks
 	var/datum/bioEffect/owner = null
@@ -280,6 +293,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			boutput(user, "<span class='alert'>That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds.</span>")
 			return
 
+		if (owner.targeted && user.targeting_ability == owner)
+			user.targeting_ability = null
+			user.update_cursor()
+			return
+
 		if (!owner.targeted)
 			owner.handleCast()
 			return
@@ -328,7 +346,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			var/mob/living/carbon/human/H = owner
 			last_cast = world.time + linked_power.cooldown
 			if (linked_power.cooldown > 0)
-				SPAWN_DBG(linked_power.cooldown)
+				SPAWN(linked_power.cooldown)
 					if (src && H?.hud)
 						H.hud.update_ability_hotbar()
 
@@ -346,7 +364,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				if (H.bioHolder)
 					var/datum/bioHolder/BH = H.bioHolder
 					success_prob = BH.genetic_stability
-					success_prob = max(success_prob_min_cap,min(success_prob,100))
+					success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
 
 			if (prob(success_prob))
 				. = cast(target)

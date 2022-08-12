@@ -4,16 +4,16 @@
 /area/noGenerate)
 "b" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 2
+	dir = 2;
+	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "c" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 6
+	dir = 6;
+	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/variableTurf/clear,
@@ -24,16 +24,16 @@
 /area/noGenerate)
 "e" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 10
+	dir = 10;
+	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "f" = (
 /obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 9
+	dir = 9;
+	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/variableTurf/clear,
@@ -48,33 +48,33 @@
 /area/noGenerate)
 "h" = (
 /obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 5
+	dir = 5;
+	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "i" = (
 /obj/lattice{
-	tag = "icon-lattice-dir-b (NORTHWEST)";
+	dir = 9;
 	icon_state = "lattice-dir-b";
-	dir = 9
+	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "j" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 5
+	dir = 5;
+	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay5,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "k" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 1
+	dir = 1;
+	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/variableTurf/clear,

@@ -6,16 +6,19 @@
 	icon_state = "wall"
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
-	force = 8.0
+	force = 8
 	w_class = W_CLASS_BULKY
-	anchored = 1.0
+	anchored = 1
 	density = 0
 	mats = 8
 	deconstruct_flags = DECON_SIMPLE
+	burn_possible = FALSE
+	max_wclass = W_CLASS_BULKY
+	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
-	attack_hand(mob/user as mob)
-		return MouseDrop(user)
+	attack_hand(mob/user)
+		return mouse_drop(user)
 
 	proc/update_icon()
 		return
@@ -59,6 +62,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
@@ -91,7 +96,8 @@
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
-	/obj/item/stamp)
+	/obj/item/stamp,
+	/obj/item/canvas)
 
 	New()
 		..()
@@ -207,6 +213,13 @@
 		var/list/cont = list()
 		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
 		if (cont.len <= 0)
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
+
+	update_icon()
+
+		var/list/my_contents = src.get_contents()
+		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
@@ -289,6 +302,14 @@ obj/item/storage/wall/clothingrack/hatrack
 		var/list/cont = list()
 		SEND_SIGNAL(src, COMSIG_STORAGE_GET_CONTENTS, cont)
 		if (cont.len <= 0)
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
+
+
+	update_icon()
+
+		var/list/my_contents = src.get_contents()
+		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
 		else
 			src.icon_state = "hatrack"
@@ -328,8 +349,8 @@ obj/item/storage/wall/clothingrack/hatrack
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
 		var/list/cont = list()
@@ -358,3 +379,12 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		..()
 		AddComponent(/datum/component/storage, can_hold = list(/obj/item/raw_material,/obj/item/material_piece), slots = 7)
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
+
+	update_icon()
+		var/list/my_contents = src.get_contents()
+		if (my_contents.len <= 0)
+			src.icon_state = "shelf"
+		else
+			src.icon_state = "mineralshelf"

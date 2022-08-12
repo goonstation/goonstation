@@ -1,7 +1,7 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
@@ -16,7 +16,7 @@
 
 /obj/machinery/computer/operating/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/operating/connection_scan()

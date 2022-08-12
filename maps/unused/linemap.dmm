@@ -953,7 +953,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "acj" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	name = "Engine Output Monitoring"
 	},
 /obj/machinery/camera{
@@ -3237,7 +3237,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom/engineering{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -3851,7 +3851,7 @@
 /area/station/hangar/main)
 "aiG" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 4;
 	name = "Engine Output Monitoring"
 	},
@@ -4051,7 +4051,7 @@
 /turf/space,
 /area/space)
 "aje" = (
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -4190,7 +4190,7 @@
 	icon_state = "camera";
 	name = "autoname - SS13"
 	},
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -4463,7 +4463,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "akc" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	icon_state = "power";
 	dir = 4
 	},
@@ -5402,7 +5402,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/cargo)
 "amv" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /turf/simulated/floor,
 /area/station/security/checkpoint/cargo)
 "amw" = (
@@ -7186,7 +7186,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aqe" = (
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	tag = "icon-solar (WEST)";
 	icon_state = "solar";
 	dir = 8
@@ -7563,9 +7563,7 @@
 /obj/machinery/door/window/southleft{
 	req_access_txt = "19"
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
-/obj/item/aiModule/reset,
 /obj/item/aiModule/protectStation,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
@@ -8729,7 +8727,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aua" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 8
 	},
 /obj/cable{
@@ -10002,7 +10000,6 @@
 /area/space)
 "awQ" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -13872,7 +13869,7 @@
 	explosion_resistance = 20;
 	name = "very reinforced wall"
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGi" = (
 /obj/decal/boxingrope{
 	icon_state = "ringrope";
@@ -14140,16 +14137,16 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGN" = (
 /obj/item/storage/box/patchbox,
 /obj/iv_stand,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGO" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aGP" = (
 /obj/decal/boxingrope{
 	density = 1;
@@ -14506,11 +14503,11 @@
 /area/station/security/hos)
 "aHA" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHB" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aHC" = (
 /obj/item/screwdriver,
 /turf/simulated/floor/plating,
@@ -14731,7 +14728,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIh" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14742,7 +14739,7 @@
 	d2 = 8
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIi" = (
 /obj/machinery/computer3/generic/communications{
 	tag = "icon-comm (WEST)";
@@ -14755,7 +14752,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIj" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood,
@@ -14939,7 +14936,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "aIG" = (
-/obj/storage/secure/closet/brig/automatic/solitary3,
+/obj/storage/secure/closet/brig_automatic/solitary3,
 /turf/simulated/floor,
 /area/station/security/brig)
 "aIH" = (
@@ -14955,13 +14952,13 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIJ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIK" = (
 /obj/rack,
 /obj/item/clothing/mask/gas,
@@ -14974,7 +14971,7 @@
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aIL" = (
 /obj/fitness/speedbag/captain,
 /turf/simulated/floor/wood,
@@ -15227,7 +15224,7 @@
 /obj/item/reagent_containers/syringe/haloperidol,
 /obj/item/reagent_containers/syringe/haloperidol,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -15240,7 +15237,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJt" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light,
@@ -15462,7 +15459,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aJW" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bathroom)
@@ -16408,7 +16405,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMo" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aMp" = (
@@ -17034,7 +17031,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/security/brig)
 "aNS" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor,
 /area/station/security/brig)
 "aNT" = (
@@ -17042,7 +17039,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "aNU" = (
-/obj/storage/secure/closet/brig/automatic/solitary2,
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /turf/simulated/floor,
 /area/station/security/brig)
 "aNV" = (
@@ -17534,7 +17531,7 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -20546,7 +20543,7 @@
 /area/station/chapel/sanctuary)
 "aWa" = (
 /turf/space,
-/area/shuttle/escape/station/donut2)
+/area/shuttle/escape/station)
 "aWb" = (
 /turf/simulated/floor/escape{
 	dir = 10
@@ -24372,7 +24369,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
 "bep" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	tag = "icon-sink (WEST)";
 	icon_state = "sink";
 	dir = 8
@@ -27830,7 +27827,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bmK" = (
-/obj/decal/sink{
+/obj/decal/fakeobjects/sink{
 	dir = 4;
 	icon_state = "sink";
 	pixel_x = -2;
@@ -30065,7 +30062,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "brZ" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "bsa" = (
@@ -32388,8 +32385,6 @@
 /area/station/bridge)
 "bxa" = (
 /obj/table/reinforced/auto,
-/obj/item/circuitboard/aiupload,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/network_progs,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -32457,7 +32452,7 @@
 	},
 /area/station/solar/east)
 "bxj" = (
-/obj/machinery/power/solar_control/east{
+/obj/machinery/computer/solar_control/east{
 	dir = 4
 	},
 /obj/cable,
@@ -34341,9 +34336,7 @@
 /turf/space,
 /area/space)
 "bAT" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "bAU" = (
 /obj/grille/steel,
@@ -34368,14 +34361,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bAX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bAY" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -34391,24 +34384,24 @@
 	},
 /area/listeningpost)
 "bBa" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)
 "bBc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBd" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bBe" = (
 /turf/simulated/shuttle/wall{
@@ -34416,14 +34409,14 @@
 	},
 /area/listeningpost)
 "bBf" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBg" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -34472,7 +34465,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bBm" = (
@@ -34488,7 +34481,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bBn" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -34556,14 +34549,14 @@
 /area/listeningpost)
 "bBu" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBv" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9;
 	icon_state = "ast1"
 	},
@@ -34600,13 +34593,13 @@
 /area/listeningpost)
 "bBB" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
@@ -34649,21 +34642,21 @@
 /area/listeningpost)
 "bBH" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBI" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBJ" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -34718,14 +34711,14 @@
 /area/listeningpost)
 "bBR" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bBS" = (
 /turf/simulated/floor/plating/airless,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -35088,14 +35081,14 @@
 /area/listeningpost)
 "bCK" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6;
 	icon_state = "ast1"
 	},
 /area/space)
 "bCL" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	icon_state = "ast1"
 	},
 /area/space)

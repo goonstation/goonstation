@@ -23,13 +23,13 @@
 			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
 			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
 		else
-			SPAWN_DBG(W.awaken_time)
+			SPAWN(W.awaken_time)
 				handle_natural_werewolf(W)
 
 		src.resistances += /datum/ailment/disease/lycanthropy
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_WEREWOLF_TIPS(src)
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
+			src.show_antag_popup("werewolf")
 
 	else return
 
@@ -40,7 +40,7 @@
 	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
 		src.emote("collapse")
-	SPAWN_DBG(8 SECONDS)
+	SPAWN(8 SECONDS)
 		if (!src.getStatusDuration("weakened"))
 			src.emote("collapse")
 		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
@@ -77,8 +77,7 @@
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
 			M.stuttering = 0
-			M.drowsyness = 0
-			M.add_stun_resist_mod("wolf_stun_resist", 10)
+			M.delStatus("drowsy")
 
 			//wolfing removes all the implants in you
 			for(var/obj/item/implant/I in M)
@@ -91,7 +90,7 @@
 			M.set_mutantrace(/datum/mutantrace/werewolf)
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
@@ -100,10 +99,6 @@
 				boutput(M, "<span class='alert'><h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one.</span>")
 			else
 				boutput(M, "<span class='notice'><h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.</span></h3>")
-
-			if (src.bioHolder)
-				src.bioHolder.AddEffect("regenerator_wolf")
-				boutput(src, "<span class='alert'>You will now heal over time!</span>")
 
 			if (M.hasStatus("handcuffed"))
 				if (M.handcuffs.werewolf_cant_rip())
@@ -116,15 +111,6 @@
 
 		// iswolf?
 		else
-			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy)) // Wolfdisease? Whoops, you're a wolf forever!
-				boutput(src, "<span class='alert'>Your body refuses to change!</span>")
-				return
-
-			M.remove_stun_resist_mod("wolf_stun_resist")
-			if (src.bioHolder)
-				src.bioHolder.RemoveEffect("regenerator")
-				boutput(src, "<span class='alert'>You will no longer heal over time!</span>")
-
 			boutput(M, "<span class='notice'><h3>You transform back into your original form.</span></h3>")
 
 			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
@@ -195,31 +181,31 @@
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
 			if (isnpcmonkey(HH))
-				boutput(M, __red("Monkey flesh just isn't the real deal..."))
+				boutput(M, "<span class='alert'>Monkey flesh just isn't the real deal...</span>")
 				healing /= 2
 			else if (isdead(HH))
-				boutput(M, __red("Fresh meat would be much preferable to this cadaver..."))
+				boutput(M, "<span class='alert'>Fresh meat would be much preferable to this cadaver...</span>")
 				healing /= 2
 			else if (HH.health < -150)
-				boutput(M, __red("[target] is pretty mangled. There's not a lot of flesh left..."))
+				boutput(M, "<span class='alert'>[target] is pretty mangled. There's not a lot of flesh left...</span>")
 				healing /= 1.5
 			else
 				if (iscluwne(HH))
-					boutput(M, __red("That tasted awful!"))
+					boutput(M, "<span class='alert'>That tasted awful!</span>")
 					healing /= 2
 					M.take_toxin_damage(5)
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
-					boutput(M, __blue("That tasted fantastic!"))
+					boutput(M, "<span class='notice'>That tasted fantastic!</span>")
 					healing *= 2
 				else if (HH.nutrition > 100)
-					boutput(M, __blue("That tasted amazing!"))
+					boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
 				else if (HH.mind && HH.mind.assigned_role == "Clown")
-					boutput(M, __blue("That tasted funny, huh."))
+					boutput(M, "<span class='notice'>That tasted funny, huh.</span>")
 					M.unlock_medal("That tasted funny", 1)
 				else
-					boutput(M, __blue("That tasted good!"))
+					boutput(M, "<span class='notice'>That tasted good!</span>")
 					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
@@ -313,12 +299,10 @@
 	if (!src || !ismob(src) || !target || !ismob(target))
 		return
 
-	var/sound_playing = 0
-
 	switch (type)
 		if ("disarm")
 			playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "swing_hit", 50, 1)
 
 		if ("swipe")
@@ -327,23 +311,22 @@
 			else
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
 
 		if ("feast")
-			if (sound_playing == 0) // It's a long audio clip.
-				playsound(src.loc, "sound/voice/animal/wendigo_maul.ogg", 80, 1)
-				sound_playing = 1
-				SPAWN_DBG(6 SECONDS)
-					sound_playing = 0
+			if (prob(60))
+				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
+				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 
-			playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-			playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
 			if (prob(40))
 				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
-			SPAWN_DBG(1 SECOND)
-				if (src && ishuman(src) && prob(50))
+			if (prob(30))
+				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
+
+			SPAWN(1 SECOND)
+				if (src && ishuman(src) && prob(10))
 					src.emote("burp")
 
 	return
@@ -370,7 +353,7 @@
 			usr.targeting_ability = owner
 			usr.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -391,7 +374,7 @@
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
 		.= list()
-		if (src.owner && src.owner.mind && src.owner.mind.special_role == "werewolf")
+		if (src.owner && src.owner.mind && src.owner.mind.special_role == ROLE_WEREWOLF)
 			for (var/datum/objective/specialist/werewolf/feed/O in src.owner.mind.objectives)
 				src.feed_objective = O
 
@@ -400,7 +383,7 @@
 
 		return
 
-//percent, give number 0.0-1.0
+//percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
 		A.cooldown = A.cooldown * (1-percent)
@@ -481,23 +464,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (werewolf_only == 1 && !iswerewolf(M))
-			boutput(M, __red("You must be in your wolf form to use this ability."))
+			boutput(M, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

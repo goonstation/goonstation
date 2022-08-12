@@ -38,7 +38,7 @@
 				continue
 			//if they are within 30 tiles of the capture point computer, it counts as helping!
 			//I do the get_turf on the current mob in case they are in a pod. This is called Pod Wars after all...
-			if (get_dist(get_turf(stat.mind?.current), computer) <= 30)
+			if (GET_DIST(get_turf(stat.mind?.current), computer) <= 30)
 				stat.control_point_capture_count ++
 
 	proc/inc_friendly_fire(var/mob/M)

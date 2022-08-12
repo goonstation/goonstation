@@ -3,12 +3,12 @@
 	icon_state = "autolathe"
 	desc = "A device that can break down various materials and turn them into other objects."
 	density = 1
-	var/m_amount = 0.0
-	var/g_amount = 0.0
-	var/operating = 0.0
-	var/opened = 0.0
+	var/m_amount = 0
+	var/g_amount = 0
+	var/operating = 0
+	var/opened = 0
 	var/temp = null
-	anchored = 1.0
+	anchored = 1
 	var/list/L = list()
 	var/list/LL = list()
 	var/hacked = 0
@@ -21,7 +21,7 @@
 	mats = 20
 
 
-/obj/machinery/autolathe/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/autolathe/attackby(var/obj/item/O, var/mob/user)
 	if (isscrewingtool(O))
 		if (!opened)
 			src.opened = 1
@@ -43,9 +43,9 @@
 */
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.m_amount < 150000.0)
-			SPAWN_DBG(1.6 SECONDS) {
+			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
-				src.m_amount += O:height * O:width * O:length * 100000.0
+				src.m_amount += O:height * O:width * O:length * 100000
 				O:amount--
 				if (O:amount < 1)
 					qdel(O)
@@ -54,9 +54,9 @@
 			boutput(user, "The autolathe is full. Please remove metal from the autolathe in order to insert more.")
 	else if (istype(O, /obj/item/sheet/glass) || istype(O, /obj/item/sheet/glass/reinforced))
 		if (src.g_amount < 75000.0)
-			SPAWN_DBG(1.6 SECONDS) {
+			SPAWN(1.6 SECONDS) {
 				flick("autolathe_c",src)
-				src.g_amount += O:height * O:width * O:length * 100000.0
+				src.g_amount += O:height * O:width * O:length * 100000
 				O:amount--
 				if (O:amount < 1)
 					qdel(O)
@@ -65,7 +65,7 @@
 			boutput(user, "The autolathe is full. Please remove glass from the autolathe in order to insert more.")
 
 	else if (O.g_amt || O.m_amt)
-		SPAWN_DBG(1.6 SECONDS) {
+		SPAWN(1.6 SECONDS) {
 			flick("autolathe_c",src)
 			src.g_amount += O.g_amt
 			src.m_amount += O.m_amt
@@ -74,7 +74,7 @@
 	else
 		boutput(user, "This object does not contain significant amounts of metal or glass, or cannot be accepted by the autolathe due to size or hazardous materials.")
 
-/obj/machinery/autolathe/attack_hand(user as mob)
+/obj/machinery/autolathe/attack_hand(user)
 	var/dat
 	if(..())
 		return
@@ -127,7 +127,7 @@
 				src.m_amount = 0
 			if(src.g_amount < 0)
 				src.g_amount = 0
-			SPAWN_DBG(1.6 SECONDS)
+			SPAWN(1.6 SECONDS)
 				flick("autolathe_c",src)
 				sleep(1.6 SECONDS)
 				flick("autolathe_o",src)
@@ -145,15 +145,15 @@
 				else
 					if(src.hack_wire == href_list["wire"])
 						src.hacked = !src.hacked
-						SPAWN_DBG(10 SECONDS) src.hacked = !src.hacked
+						SPAWN(10 SECONDS) src.hacked = !src.hacked
 					if(src.disable_wire == href_list["wire"])
 						src.disabled = !src.disabled
 						src.shock(usr)
-						SPAWN_DBG(10 SECONDS) src.disabled = !src.disabled
+						SPAWN(10 SECONDS) src.disabled = !src.disabled
 					if(src.shock_wire == href_list["wire"])
 						src.shocked = !src.shocked
 						src.shock(usr)
-						SPAWN_DBG(10 SECONDS) src.shocked = !src.shocked
+						SPAWN(10 SECONDS) src.shocked = !src.shocked
 		if(href_list["act"] == "wire")
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need wirecutters!")
@@ -172,7 +172,7 @@
 
 	for(var/mob/M in viewers(1, src))
 		if ((M.client && M.machine == src))
-			src.attack_hand(M)
+			src.Attackhand(M)
 	return
 
 /obj/machinery/autolathe/New()

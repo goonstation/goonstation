@@ -6,11 +6,11 @@
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1.0
+	anchored = 1
 	var/skipprocess = 0 //Experimenting
-	var/alarm_frequency = "1437"
+	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
-	var/control_frequency = "1439"
+	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	var/id
 	var/locked = 1
 
@@ -20,13 +20,10 @@
 	var/e_gas = 0
 	var/last_safe = 2
 
-	disposing()
-		radio_controller.remove_object(src, alarm_frequency)
-		radio_controller.remove_object(src, control_frequency)
-		..()
-
 /obj/machinery/alarm/New()
 	..()
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
@@ -67,15 +64,15 @@
 
 	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
-	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 		//Pressure sensor
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			safe = 0
 		else safe = 1
 
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10)))
+	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
 		//Oxygen Levels Sensor
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			safe = 0
 		else safe = 1
 
@@ -119,10 +116,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
-
-	if(!frequency) return
-
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
@@ -137,9 +130,9 @@
 		if (2)
 			alert_signal.data["alert"] = "reset"
 
-	frequency.post_signal(src, alert_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
-/obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
+/obj/machinery/alarm/attackby(var/obj/item/W, user)
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
@@ -167,7 +160,7 @@
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (get_dist(src, user) > 1 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!issilicon(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")
@@ -182,9 +175,9 @@
 		var/environment_pressure = MIXTURE_PRESSURE(environment)
 		var/total_moles = TOTAL_MOLES(environment)
 
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			output += "<FONT color = 'red'>"
-		else if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+		else if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -200,9 +193,9 @@
 
 		output += "<B>Composition:</B><BR>"
 
-		if(environment.nitrogen < MOLES_N2STANDARD*0.80)
+		if(environment.nitrogen < MOLES_N2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.nitrogen < MOLES_N2STANDARD*0.90) || (environment.nitrogen > MOLES_N2STANDARD*1.10))
+		else if((environment.nitrogen < MOLES_N2STANDARD*0.9) || (environment.nitrogen > MOLES_N2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -211,9 +204,9 @@
 		else
 			output += "N2: N/A</FONT><BR>"
 
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10))
+		else if((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"

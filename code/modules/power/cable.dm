@@ -28,7 +28,7 @@
 		if(T.intact || !istype(T, /turf/simulated/floor))
 			return
 
-		if(get_dist(src, user) > 1)
+		if(BOUNDS_DIST(src, user) > 0)
 			return
 
 		if(!directwired)		// only for attaching to directwired machines
@@ -47,7 +47,7 @@
 		NC.d2 = dirn
 		NC.iconmod = coil.iconmod
 		NC.add_fingerprint()
-		NC.updateicon()
+		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
 		return
@@ -171,10 +171,10 @@
 /obj/cable/hide(var/i)
 
 	if(level == 1)// && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	updateicon()
+		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+	UpdateIcon()
 
-/obj/cable/proc/updateicon()
+/obj/cable/update_icon()
 	icon_state = "[d1]-[d2][iconmod]"
 	alpha = invisibility ? 128 : 255
 	//if (cableimg)
@@ -186,6 +186,8 @@
 	var/datum/powernet/PN			// find the powernet
 	if(netnum && powernets && powernets.len >= netnum)
 		PN = powernets[netnum]
+	if (isnull(PN) && netnum)
+		CRASH("Attempted to get powernet number [netnum] but it was null.")
 	return PN
 
 /obj/cable/proc/cut(mob/user,turf/T)
@@ -195,14 +197,14 @@
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 	else
 		var/atom/A = new/obj/item/cable_coil(T, 1)
 		applyCableMaterials(A, src.insulator, src.conductor)
 		if (src.iconmod)
 			var/obj/item/cable_coil/C = A
 			C.iconmod = src.iconmod
-			C.updateicon()
+			C.UpdateIcon()
 
 	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
 	src.log_wirelaying(user, 1)
@@ -226,7 +228,7 @@
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = W
-		coil.cable_join(src, user)
+		coil.cable_join(src, get_turf(user), user, TRUE)
 		//note do shock in cable_join
 
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
@@ -234,15 +236,16 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 		var/powernet_id = ""
 
-		if(PN && (PN.avail > 0))		// is it powered?
-			if(ispulsingtool(W))
-				// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
-				powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
+		if(ispulsingtool(W))
+			// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
+			powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
 
-			boutput(user, "<span class='alert'>[PN.avail]W in power network.[powernet_id]</span>")
+		if(PN && (PN.avail > 0))		// is it powered?
+
+			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
 
 		else
-			boutput(user, "<span class='alert'>The cable is not powered.</span>")
+			boutput(user, "<span class='alert'>The cable is not powered. [powernet_id]</span>")
 
 		if(prob(40))
 			shock(user, 10)

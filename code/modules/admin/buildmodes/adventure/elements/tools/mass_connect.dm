@@ -13,7 +13,7 @@
 	var/turf/A
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		boutput(usr, "<span class='notice'>First, left click a triggerer to select it. Then left click an existing triggerable to select its type and trigger actions.</span>")
 		boutput(usr, "<span class='notice'>Finally, use right click to select a rectangular area (as in wide spawn mode) to assign ALL triggerables of that type with the same name to the selected triggerer. Ctrl+click to finish.</span>")
 		boutput(usr, "<span class='notice'>Right clicking a triggerer will clear all of its connections.</span>")
@@ -92,7 +92,7 @@
 
 	disposing()
 		clear_markers()
-		pool(selection)
+		qdel(selection)
 		..()
 
 	proc/clear_markers()

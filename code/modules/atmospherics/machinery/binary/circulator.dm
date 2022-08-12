@@ -12,7 +12,7 @@
 
 	var/last_pressure_delta = 0
 
-	anchored = 1.0
+	anchored = 1
 	density = 1
 
 	proc/return_transfer_air()
@@ -41,7 +41,7 @@
 
 	process()
 		..()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		if(status & (BROKEN|NOPOWER))

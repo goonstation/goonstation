@@ -5,9 +5,10 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
-	w_class = 3.0
-	force = 8.0
+	w_class = W_CLASS_NORMAL
+	force = 8
 	mats = 0
+	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
 	var/display_color =	"#00FF00"
@@ -27,18 +28,18 @@
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(mob/M, mob/user)
+	shoot_point_blank(atom/target, mob/user)
 		if (canshoot())
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
-					return ..(M, user)
+					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
 					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
 
 					return
 			else
-				return ..(M, user)
+				return ..(target, user)
 
 	disposing()
 		indicator_display = null
@@ -46,8 +47,6 @@
 
 
 	New()
-		var/obj/item/ammo/power_cell/self_charging/pod_wars_basic/PC = new/obj/item/ammo/power_cell/self_charging/pod_wars_basic()
-		cell = PC
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
@@ -59,10 +58,9 @@
 	update_icon()
 		..()
 		// src.overlays = null
-
-		if (src.cell)
-			var/maxCharge = (src.cell.max_charge > 0 ? src.cell.max_charge : 0)
-			var/ratio = min(1, src.cell.charge / maxCharge)
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
 			if (ratio == 0)
 				return
@@ -76,9 +74,8 @@
 		T.visible_message("<span class='notice'>[src] lets out a sad [fluff]</span>", "<span class='notice'>You hear a sad [fluff]</span>")
 		src.can_swap_cell = 0
 		src.rechargeable = 0
-		if(istype(src.cell, /obj/item/ammo/power_cell/self_charging))
-			var/obj/item/ammo/power_cell/self_charging/P = src.cell
-			P.recharge_rate = 0
+
+		AddComponent(/datum/component/cell_holder, list(null, null, 0), 0, null, 0)
 
 	nanotrasen
 		muzzle_flash = "muzzle_flash_plaser"
@@ -101,8 +98,8 @@
 	icon_state = "power_cell"
 	m_amt = 20000
 	g_amt = 45000
-	charge = 500.0
-	max_charge = 500.0
+	charge = 500
+	max_charge = 500
 
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_basic
@@ -140,11 +137,11 @@
 	icon_state = "surv_machete_nt"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "surv_machete"
-	force = 10.0
-	throwforce = 15.0
+	force = 10
+	throwforce = 15
 	throw_range = 5
 	hit_type = DAMAGE_STAB
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	burn_type = 1
@@ -165,7 +162,7 @@
 	name = "blast grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "energy_stinger"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
@@ -193,7 +190,7 @@
 				L.emote("twitch_v")
 			else
 				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
 			qdel(src)
@@ -209,7 +206,7 @@
 	name = "concussion grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "concussion"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
@@ -220,7 +217,7 @@
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, "sound/weapons/conc_grenade.ogg", 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"
@@ -245,9 +242,9 @@
 						var/mob/living/M = A
 						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
-						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
+						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
-			SPAWN_DBG(0.1 SECONDS)
+			SPAWN(0.1 SECONDS)
 				qdel(O)
 				qdel(src)
 		else

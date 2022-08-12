@@ -1,0 +1,54 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/fitness/speedbag,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/fitness/speedbag/captain,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/fitness/weightlifter,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/fitness/stacklifter,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+D
+a
+H
+"}
+(2,1,1) = {"
+Y
+W
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+"}
+(4,1,1) = {"
+T
+W
+a
+"}
+(5,1,1) = {"
+a
+a
+L
+"}

@@ -9,7 +9,8 @@
 //Returns the expiry timestamp in a human readable format
 /proc/getExpiry(minutes)
 	var/CMinutes = (world.realtime / 10) / 60
-	minutes = text2num(minutes)
+	if(istext(minutes))
+		minutes = text2num(minutes)
 	var/exp = minutes - CMinutes
 	if (exp <= 0)
 		return 0
@@ -58,6 +59,9 @@ var/global/list/playersSeen = list()
 	query["compID"] = compID
 	query["ip"] = ip
 	query["record"] = record
+	#ifdef RP_MODE
+	query["rp_mode"] = true
+	#endif
 
 	var/list/data
 	try
@@ -78,7 +82,9 @@ var/global/list/playersSeen = list()
 	//We only care about the latest match for this (so far)
 	var/list/row = data[data[1]]
 
-	var/expired = text2num(row["timestamp"]) > 0 && !getExpiry(row["timestamp"])
+	var/timestamp = text2num(row["timestamp"])
+
+	var/expired = timestamp > 0 && !getExpiry(timestamp)
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
@@ -94,7 +100,7 @@ var/global/list/playersSeen = list()
 
 		timeAdded = (row["ckey"] != ckey && newChain > 1 ? 1 : 0) //only add time if a ckey didnt match, and it's a second evasion
 		var/CMinutes = (world.realtime / 10) / 60
-		var/remaining = (text2num(row["timestamp"]) > 0 ? text2num(row["timestamp"]) - CMinutes : 0)
+		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
 		addData["compID"] = compID
@@ -114,7 +120,7 @@ var/global/list/playersSeen = list()
 			logTheThing("diary", null, null, "Bans Error: Add ban in checkBan failed with message [rVal]", "debug")
 
 	var/oakey = (row["oakey"] == "N/A" ? row["akey"] : row["oakey"])
-	if (text2num(row["timestamp"]) > 0) //Temp ban found, determine if it should expire or not
+	if (timestamp > 0) //Temp ban found, determine if it should expire or not
 		if (expired) //It expired! Go you!
 			var/deleteData[] = new()
 			deleteData["id"] = row["id"]
@@ -131,14 +137,17 @@ var/global/list/playersSeen = list()
 			var/details = "[row["reason"]]<br>"
 			details += "Banned By: [oakey]<br>"
 			details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
-			details += "(This ban will be automatically removed in [getExpiry(row["timestamp"])].)"
+			details += "(This ban will be automatically removed in [getExpiry(timestamp)].)"
 			details += "[timeAdded ? "<br>(5 days have been automatically added to your ban for attempted ban evasion)" : ""]"
 			return details
 	else //Permaban found, the player is DENIED
 		var/details = "[row["reason"]]<br>"
 		details += "Banned By: [oakey]<br>"
 		details += "This ban applies to [row["server"] ? "this server only" : "all servers"].<br>"
-		details += "(This is a permanent ban)"
+		if(timestamp == 0)
+			details += "This is a permanent ban, you can't appeal this ban until 30 days have passed."
+		else if(timestamp == -1)
+			details += "Please make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted."
 		return details
 
 /proc/addBan(data)
@@ -157,12 +166,6 @@ var/global/list/playersSeen = list()
 				adminC = C
 			if (C.ckey == row["ckey"])
 				targetC = C
-
-		var/mob/targetM
-		if (!targetC)
-			for (var/mob/M in mobs) //Grab the mob if no target clients were found
-				if (M.ckey == row["ckey"])
-					targetM = M
 
 		row["reason"] = html_decode(row["reason"])
 
@@ -183,13 +186,21 @@ var/global/list/playersSeen = list()
 		var/expiry = getExpiry(row["timestamp"])
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
 
-		if (text2num(row["timestamp"]) == 0)
-			if (targetC) boutput(targetC, "<span class='alert'>This is a permanent ban.</span>")
-			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.")
-			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. Reason: [row["reason"]]. This is a permanent ban.", "admin")
+		var/duration = expiry == 0 ? (data["text_ban_length"] || (text2num(row["timestamp"]) == 0 ? "Permanent" : "Until Appeal")) : expiry
+
+		if (text2num(row["timestamp"]) <= 0)
+			if (targetC)
+				if(duration == "Permanent")
+					boutput(targetC, "<span class='alert'>You have received a permanent ban, you can't appeal this ban until 30 days have passed.</span>")
+				else if(duration == "Until Appeal")
+					boutput(targetC, "<span class='alert'>You have received a ban. Make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted.</span>")
+				else
+					boutput(targetC, "<span class='alert'>You have received a ban. Duration: [duration]</span>")
+			logTheThing("admin", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"admin")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].")
+			logTheThing("diary", adminC, targetC, "has banned [targetC ? "[constructTarget(targetC,"diary")]" : replacement_text] [serverLogSnippet]. duration: [duration] Reason: [row["reason"]].", "admin")
 			var/adminMsg = "<span class='notice'>"
 			adminMsg += (isclient(adminC) ? key_name(adminC) : adminC)
-			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]<br>This is a permanent ban.</span>"
+			adminMsg += " has banned [targetC ? targetC : replacement_text] [serverLogSnippet].<br>Reason: [row["reason"]]</span>"
 			message_admins(adminMsg)
 		else
 			if (targetC) boutput(targetC, "<span class='alert'>This is a temporary ban, it will be removed in [expiry].</span>")
@@ -201,32 +212,32 @@ var/global/list/playersSeen = list()
 			message_admins(adminMsg)
 
 		if (row["ckey"] && row["ckey"] != "N/A")
-			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [(expiry == 0 ? "Permanent": "[expiry]")]")
+			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [duration]")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = row["akey"]
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
-		ircbot.export("ban", ircmsg)
+		ircmsg["timestamp"] = row["timestamp"]
+		ircbot.export_async("ban", ircmsg)
 
+		if(!targetC)
+			targetC = find_player(row["ckey"])?.client
 		if (targetC)
-			if (targetC.mob)
-				if (targetC.mob.contents) //for observers
-					for (var/mob/M in targetC.mob.contents)
-						M.set_loc(get_turf(M))
-				del(targetC.mob)
 			del(targetC)
-		if (targetM)
-			if (targetM.contents) //for observers
-				for (var/mob/M in targetM.contents)
-					M.set_loc(get_turf(M))
-			del(targetM)
+		else
+			logTheThing("debug", null, null, "<b>Bans:</b> Unable to find client with ckey '[row["ckey"]]' during banning.")
+
+		targetC = find_player(row["ckey"])?.client
+		if (targetC)
+			logTheThing("debug", null, null, "<b>Bans:</b> Client with ckey '[row["ckey"]]' somehow survived banning, retrying kick.")
+			del(targetC)
 
 		return 0
 
 	else
-		var/banTimestamp = 0
+		var/banTimestamp = data["mins"]
 		if (data["mins"] > 0) //If a temp ban, calculate expiry
 			var/CMinutes = (world.realtime / 10) / 60
 			banTimestamp = (data["previous"] && data["addTime"] ? CMinutes + data["mins"] + 7200 : CMinutes + data["mins"]) //Add 5 days (7200 mins) onto the ban if it's an evasion attempt
@@ -248,7 +259,7 @@ var/global/list/playersSeen = list()
 
 //Starts the dialog for banning a dude
 /client/proc/genericBanDialog(target)
-	if (src.holder && usr.level >= LEVEL_SA)
+	if (src.holder?.level >= LEVEL_SA)
 		var/mob/M
 		var/mobRef = 0
 		if (target && ismob(target))
@@ -256,27 +267,27 @@ var/global/list/playersSeen = list()
 			M = target
 
 		if (mobRef)
-			if (M.client && M.client.holder && (M.client.holder.level >= usr.level))
+			if (M.client && M.client.holder && (M.client.holder.level >= src.holder.level))
 				alert("You can't ban another admin you huge jerk!!!!!")
 				return null
 
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
+			data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
 			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
 			if (auto == "No")
-				data["compID"] = input(usr, "Computer ID", "Ban") as null|text
-				data["ip"] = input(usr, "IP Address", "Ban") as null|text
+				data["compID"] = input(src, "Computer ID", "Ban") as null|text
+				data["ip"] = input(src, "IP Address", "Ban") as null|text
 			else if (data["ckey"])
 				var/list/response
 				try
 					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
 				catch ()
-					boutput(usr, "<span class='alert'>Failed to query API, try again later.</span>")
+					boutput(src, "<span class='alert'>Failed to query API, try again later.</span>")
 					return
 				if (text2num(response["seen"]) < 1)
-					boutput(usr, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
+					boutput(src, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
 				data["ip"] = response["last_ip"]
 				data["compID"] = response["last_compID"]
 		else
@@ -285,34 +296,27 @@ var/global/list/playersSeen = list()
 			data["ip"] = M.lastKnownIP
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
+			boutput(src, "<span class='alert'>You need to input a ckey or IP or computer ID, all cannot be blank.</span>")
 			return null
 
-		boutput(usr, "<span class='alert'><b>You are currently banning the following player:</b></span>")
-		boutput(usr, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
-		boutput(usr, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")
-		boutput(usr, "<span class='alert'><b>Make sure this is who you want to ban before continuing!</b></span>")
+		boutput(src, "<span class='alert'><b>You are currently banning the following player:</b></span>")
+		boutput(src, "<b>Mob:</b> [mobRef ? M.name : "N/A"]")
+		boutput(src, "<b>Key:</b> [data["ckey"] ? data["ckey"] : "N/A"] (IP: [data["ip"] ? data["ip"] : "N/A"], CompID: [data["compID"] ? data["compID"] : "N/A"])")
+		boutput(src, "<span class='alert'><b>Make sure this is who you want to ban before continuing!</b></span>")
 
-		var/reason = input(usr,"Reason for ban?","Ban") as null|text
+		var/reason = input(src,"Reason for ban?","Ban") as null|text
 		if(!reason)
-			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
+			boutput(src, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
-		var/server = null
-		switch (server_nice)
-			if ("1 Classic: Heisenbee")
-				server = "main1"
-			if ("2 Classic: Bombini")
-				server = "main2"
-			if ("3 Roleplay: Morty")
-				server = "main3"
-			if ("4 Roleplay: Sylvester")
-				server = "main4"
-		data["server"] = server
+		var/datum/game_server/game_server = global.game_servers.input_server(src, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		if(isnull(game_server))
+			return null
+		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be?","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
+		var/ban_time = input(src,"How long will the ban be?","Ban") as null|anything in \
+			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","Two Weeks","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
 			if("Half-hour")
@@ -327,22 +331,27 @@ var/global/list/playersSeen = list()
 				mins = 5040
 			if("One Week")
 				mins = 10080
+			if("Two Weeks")
+				mins = 20160
 			if("One Month")
 				mins = 43200
+			if("Until Appeal")
+				mins = -1
 			if("Permanent")
-				mins = "perma"
+				mins = 0
 			else
-				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
+				var/cust_mins = input(src,"How many minutes? (1440 = one day)","BAN HE",1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
+					boutput(src, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return null
 				if(cust_mins >= 525600)
-					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(src, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins
-		data["mins"] = (mins == "perma" ? 0 : mins)
-		data["akey"] = usr.ckey
+		data["mins"] = mins
+		data["text_ban_length"] = ban_time
+		data["akey"] = src.ckey
 		return data
 	else
 		alert("You need to be at least a Secondary Administrator to ban players.")
@@ -388,20 +397,22 @@ var/global/list/playersSeen = list()
 
 		var/serverLogSnippet = row["server"] ? "Server: [row["server"]]" : "Server: all"
 
-		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]")
-		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]", "admin")
-		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [(expiry == 0 ? "Permanent": "[expiry]")] [serverLogSnippet]</span>")
+		var/duration = expiry == 0 ? data["text_ban_length"] : expiry
+
+		logTheThing("admin", adminC, target, "edited [constructTarget(target,"admin")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]")
+		logTheThing("diary", adminC, target, "edited [constructTarget(target,"diary")]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]", "admin")
+		message_admins("<span class='internal'>[key_name(adminC)] edited [target]'s ban. Reason: [row["reason"]] Duration: [duration] [serverLogSnippet]</span>")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
 		ircmsg["name"] = (isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A")
-		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [(expiry == 0 ? "Permanent": "[expiry]")]. [serverLogSnippet]."
-		ircbot.export("admin", ircmsg)
+		ircmsg["msg"] = "edited [target]'s ban. Reason: [row["reason"]]. Duration: [duration]. [serverLogSnippet]."
+		ircbot.export_async("admin", ircmsg)
 
 		return 0
 
 	else
-		var/banTimestamp = 0
+		var/banTimestamp = data["mins"]
 		if (data["mins"] > 0) //If a temp ban, calculate expiry
 			var/CMinutes = (world.realtime / 10) / 60
 			banTimestamp = (data["previous"] ? CMinutes + data["mins"] + 7200 : CMinutes + data["mins"]) //Add 5 days (7200 mins) onto the ban if it's an evasion attempt
@@ -420,40 +431,33 @@ var/global/list/playersSeen = list()
 
 
 /client/proc/editBanDialog(id, ckey, compID, ip, oreason, otimestamp)
-	if (src.holder && usr.level >= LEVEL_SA)
+	if (src.holder?.level >= LEVEL_SA)
 		var/CMinutes = (world.realtime / 10) / 60
 		var/remaining = (text2num(otimestamp) - CMinutes)
 		if(!remaining || remaining < 0) remaining = 0
 
 		var/data[] = new()
-		data["ckey"] = input(usr, "Ckey (lowercase, only alphanumeric, no spaces)", "Ban", ckey) as null|text
-		data["compID"] = input(usr, "Computer ID (leave blank to skip)", "Ban", compID) as null|text
-		data["ip"] = input(usr, "IP Address", "Ban", ip) as null|text
+		data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces)", "Ban", ckey) as null|text
+		data["compID"] = input(src, "Computer ID (leave blank to skip)", "Ban", compID) as null|text
+		data["ip"] = input(src, "IP Address", "Ban", ip) as null|text
 
 		if (!data["ckey"] && !data["ip"] && !data["compID"])
-			boutput(usr, "<span class='alert'>You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
+			boutput(src, "<span class='alert'>You need to input a ckey or a compID or an IP, all cannot be blank.</span>")
 			return
 
-		var/reason = input(usr,"Reason for ban?","Ban", oreason) as null|text
+		var/reason = input(src,"Reason for ban?","Ban", oreason) as null|text
 		if(!reason)
-			boutput(usr, "<span class='alert'>You need to enter a reason for the ban.</span>")
+			boutput(src, "<span class='alert'>You need to enter a reason for the ban.</span>")
 			return
 		data["reason"] = reason
 
-		var/server_nice = input(usr, "What server does the ban apply to?", "Ban") as null|anything in list("All", "1 Classic: Heisenbee", "2 Classic: Bombini", "3 Roleplay: Morty", "4 Roleplay: Sylvester")
-		var/server = null
-		switch (server_nice)
-			if ("1 Classic: Heisenbee")
-				server = "main1"
-			if ("2 Classic: Bombini")
-				server = "main2"
-			if ("3 Roleplay: Morty")
-				server = "main3"
-			if ("4 Roleplay: Sylvester")
-				server = "main4"
-		data["server"] = server
+		var/datum/game_server/game_server = global.game_servers.input_server(src, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+		if(isnull(game_server))
+			return
+		data["server"] = istype(game_server) ? game_server.id : null // null = all servers
 
-		var/ban_time = input(usr,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Permanent","Custom")
+		var/ban_time = input(src,"How long will the ban be? (select Custom to alter existing duration)","Ban") as null|anything in \
+			list("Half-hour","One Hour","Six Hours","One Day","Half a Week","One Week","One Month","Until Appeal","Permanent","Custom")
 		var/mins = 0
 		switch(ban_time)
 			if("Half-hour")
@@ -470,23 +474,26 @@ var/global/list/playersSeen = list()
 				mins = 10080
 			if("One Month")
 				mins = 43200
+			if("Until Appeal")
+				mins = -1
 			if("Permanent")
-				mins = "perma"
+				mins = 0
 			else
-				var/cust_mins = input(usr,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
+				var/cust_mins = input(src,"How many minutes? (1440 = one day)","BAN HE",remaining ? remaining : 1440) as null|num
 				if(!cust_mins)
-					boutput(usr, "<span class='alert'>No time entered, cancelling ban.</span>")
+					boutput(src, "<span class='alert'>No time entered, cancelling ban.</span>")
 					return
 				if(cust_mins >= 525600)
-					boutput(usr, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
+					boutput(src, "<span class='alert'>Ban time too long. Ban shortened to one year (525599 minutes).</span>")
 					mins = 525599
 				else
 					mins = cust_mins
 
 		data["id"] = id
 		data["reason"] = reason
-		data["mins"] = (mins == "perma" ? 0 : mins)
-		data["akey"] = usr.ckey
+		data["mins"] = mins
+		data["text_ban_length"] = ban_time
+		data["akey"] = src.ckey
 		editBan(data)
 
 		src.holder.banPanel()
@@ -529,7 +536,7 @@ var/global/list/playersSeen = list()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
 		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 		return 0
 
@@ -544,8 +551,8 @@ var/global/list/playersSeen = list()
 
 
 /client/proc/deleteBanDialog(id, ckey, compID, ip, akey)
-	if (src.holder && usr.level >= LEVEL_SA)
-		if(alert(usr, "Are you sure you want to unban [ckey]?", "Confirmation", "Yes", "No") == "Yes")
+	if (src.holder?.level >= LEVEL_SA)
+		if(alert(src, "Are you sure you want to unban [ckey]?", "Confirmation", "Yes", "No") == "Yes")
 			var/data[] = new()
 			data["id"] = id
 			data["ckey"] = ckey
@@ -600,7 +607,7 @@ var/global/list/playersSeen = list()
 		ircmsg["key"] = (isclient(adminC) && adminC.key ? adminC.key : adminC)
 		ircmsg["name"] = (expired ? "\[Expired\]" : "[isclient(adminC) && adminC.mob && adminC.mob.name ? stripTextMacros(adminC.mob.name) : "N/A"]")
 		ircmsg["msg"] = (expired ? "[row["ckey"]]'s ban removed." : "deleted [row["ckey"]]'s ban.")
-		ircbot.export("admin", ircmsg)
+		ircbot.export_async("admin", ircmsg)
 
 		return 0
 
@@ -645,9 +652,9 @@ var/global/list/playersSeen = list()
 		src.holder.banPanel()
 	else
 		alert("UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-		usr << sound('sound/voice/farts/poo2.ogg')
-		logTheThing("admin", usr, null, "tried to access the ban panel")
-		logTheThing("diary", usr, null, "tried to access the ban panel", "admin")
+		src << sound('sound/voice/farts/poo2.ogg')
+		logTheThing("admin", src, null, "tried to access the ban panel")
+		logTheThing("diary", src, null, "tried to access the ban panel", "admin")
 	return
 
 

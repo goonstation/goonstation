@@ -4,7 +4,7 @@
 	desc = "Ew, this thing is just the wurst."
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3.0
+	organ_holder_required_op_stage = 3
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
 
@@ -72,9 +72,9 @@
 		return 1
 
 	breakme()
-		. = ..()
-		overloading = 0
+		if(..())
+			overloading = 0
 
 	on_removal()
-		. = ..()
 		overloading = 0
+		. = ..()

@@ -71,7 +71,7 @@
 	},
 /area/station/engine/vesselpower)
 "aai" = (
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	dir = 4;
 	id = "testchamber"
 	},
@@ -147,12 +147,10 @@
 	},
 /area/space)
 "aao" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aap" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aaq" = (
 /obj/cable{
@@ -1564,7 +1562,7 @@
 "acM" = (
 /obj/machinery/power/terminal,
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "zeta"
 	},
 /turf/simulated/floor/circuit/red,
@@ -1719,7 +1717,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -3132,7 +3130,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "afF" = (
-/obj/lrteleporter,
+/obj/machinery/lrteleporter,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -6616,7 +6614,7 @@
 /turf/simulated/floor/green,
 /area/station/vesselbridge)
 "alC" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8;
 	name = "Vessel Power Grid Monitoring"
 	},
@@ -7067,7 +7065,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/solar/east)
 "amE" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "amF" = (
 /obj/decal/cleanable/cobweb,
@@ -7415,7 +7413,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/solar_control/east,
+/obj/machinery/computer/solar_control/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "anv" = (
@@ -9474,7 +9472,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "arN" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/maintenance/northwest)
 "arO" = (
 /obj/machinery/space_heater,
@@ -11095,7 +11093,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -11959,7 +11957,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "awW" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /turf/simulated/floor/caution/west,
 /area/station/security/checkpoint/cargo)
 "awX" = (
@@ -12791,7 +12789,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ayM" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/crew_quarters/barber_shop)
 "ayN" = (
 /obj/machinery/door/poddoor/blast{
@@ -15852,7 +15850,7 @@
 /area/station/maintenance/west)
 "aFx" = (
 /obj/floorpillstatue,
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "aFy" = (
 /turf/simulated/wall/auto/gannets,
@@ -17017,7 +17015,7 @@
 /obj/item/device/radio/headset/deaf,
 /obj/item/robodefibrillator,
 /obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/cable{
 	icon_state = "0-2"
@@ -17036,7 +17034,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/west{
+/obj/machinery/computer/solar_control/west{
 	dir = 4;
 	id = "west"
 	},
@@ -18790,7 +18788,7 @@
 	},
 /obj/machinery/weapon_stand/shotgun_rack,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "aLL" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -19042,7 +19040,7 @@
 /obj/item/parts/robot_parts/robot_frame,
 /obj/item/parts/robot_parts/leg/left,
 /obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head,
 /obj/item/parts/robot_parts/arm/left,
 /obj/item/parts/robot_parts/arm/right,
@@ -22108,7 +22106,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRW" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/security/brig)
 "aRX" = (
 /turf/simulated/wall/auto/reinforced/gannets,
@@ -26190,7 +26188,7 @@
 	},
 /area/station/turret_protected/ai_upload)
 "aZz" = (
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -26554,7 +26552,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "bap" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/mining/staff_room)
 "baq" = (
 /obj/cable{
@@ -26577,7 +26575,6 @@
 /area/station/turret_protected/ai)
 "bat" = (
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
@@ -26710,7 +26707,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "baI" = (
 /obj/stool/chair{
 	dir = 4
@@ -27021,7 +27018,6 @@
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
 /obj/item/device/gps,
-/obj/item/aiModule/reset,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit,
 /area/station/bridge)
@@ -27132,7 +27128,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bbA" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -27151,13 +27147,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bbB" = (
 /obj/table/auto,
 /obj/item/device/radio/electropack,
 /obj/item/device/radio/signaler,
 /obj/item/storage/box/stinger_kit,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/storage/box/revimp_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -27169,7 +27165,7 @@
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bbC" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -27608,7 +27604,7 @@
 /area/station/security/brig)
 "bcp" = (
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bcq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light_switch{
@@ -27627,10 +27623,10 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bcs" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bct" = (
 /obj/machinery/door/airlock/external{
 	name = "Mining Outpost Airlock";
@@ -28532,7 +28528,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ben" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -29688,7 +29684,7 @@
 /area/station/security/main)
 "bgx" = (
 /obj/table/auto,
-/obj/item/storage/box/flashbang_kit,
+/obj/item/chem_grenade/flashbang,
 /obj/item/device/audio_log,
 /obj/item/audio_tape,
 /turf/simulated/floor/carpet,
@@ -29878,7 +29874,7 @@
 	name = "brig pipe"
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgR" = (
 /obj/cable{
 	icon_state = "2-8";
@@ -29894,13 +29890,13 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgT" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bgU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -29988,7 +29984,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/com_dish/comdish)
 "bhb" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/mining/hangar)
 "bhc" = (
 /turf/space,
@@ -30418,7 +30414,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "bhV" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/com_dish/comdish)
 "bhW" = (
 /obj/grille/catwalk,
@@ -30648,7 +30644,7 @@
 "bis" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/wall/auto/reinforced/gannets,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bit" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/cable{
@@ -31942,7 +31938,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/power/solar_control/alt{
+/obj/machinery/computer/solar_control/alt{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -32369,7 +32365,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -32878,7 +32874,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "bni" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -32906,14 +32902,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bnm" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bnn" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -32934,7 +32930,7 @@
 	},
 /area/listeningpost)
 "bnq" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -32979,7 +32975,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "bnv" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -33124,7 +33120,7 @@
 /area/listeningpost)
 "bnM" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -33891,13 +33887,13 @@
 /area/station/security/main)
 "bpz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap)
+/area/shuttle/escape/station)
 "bpA" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bpB" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/south)
@@ -33973,7 +33969,7 @@
 /obj/item/ammo/bullets/flare,
 /obj/item/gun/kinetic/flaregun,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "bpO" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
@@ -34039,7 +34035,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bpW" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	name = "Engine Output Monitoring"
 	},
@@ -34162,7 +34158,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	dir = 8
 	},
 /turf/simulated/floor/plating,

@@ -1,78 +1,54 @@
-//this is coded in a really dumb way lol
-//probably wouldve been faster to just have like 700000000 icon states and swap between them
-/obj/bookshelf //these should be placed on ground
+/obj/bookshelf
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
 	icon = 'icons/obj/furniture/bookshelf.dmi'
-	icon_state = "bookshelf_empty"
+	icon_state = "bookshelf_small"
 	anchored = 1
 	density = 1
-	var/variant = 1 //just used for normal shelves
-	var/update_icon_suffix = "" //set to either "1" or "2" in New()
-	var/capacity = 17 //how many books can it hold?
-	var/top_shelf_cap = 6
-	var/middle_shelf_cap = 5
-	var/bottom_shelf_cap = 6
-	var/list/bookshelf_contents = list() //idk if its important to have ordered bookshelf contents?
+	var/capacity = 30 //how many books can it hold?
+	var/list/obj/item/paper/bookshelf_contents = list() //ordered list of books
 
-	//this is where we store pixel offsets (i know its ugly, sorry, but i promise this cuts down on duplicate code)
-	//this one especially is a bit messy but thats because theres 2 variants on the same object i had to capture with 1 list
-	var/shelf_overlay_list = list(list(7,16,9,21),\
-	list(7,16,12,21),\
-	list(7,16,16,21),\
-	list(7,16,19,21),\
-	list(7,16,22,21),\
-	list(7,16,25,21),\
-	list(7,9,10,14),\
-	list(7,9,14,14),\
-	list(7,9,18,14),\
-	list(7,9,21,14),\
-	list(7,9,25,14),\
-	list(7,2,9,7),\
-	list(7,2,12,7),\
-	list(7,2,16,7),\
-	list(7,2,19,7),\
-	list(7,2,22,7),\
-	list(7,2,25,7),\
-	list("sideways"),\
-	list("sideways"),\
-	list(7,16,15,21),\
-	list(7,16,19,21),\
-	list(7,16,22,21),\
-	list(7,16,25,21),\
-	list(7,9,12,14),\
-	list("sideways"),\
-	list("sideways"),\
-	list(7,9,21,14),\
-	list(7,9,25,14),\
-	list(7,2,9,7),\
-	list(7,2,13,7),\
-	list(7,2,16,7),\
-	list(7,2,19,7),\
-	list(7,2,22,7),\
-	list(7,2,25,7))
+/obj/bookshelf/New()
+	..()
+	src.UpdateIcon()
 
-	New()
-		..()
-		if (variant)
-			update_icon_suffix = "[rand(1,2)]"
+/obj/bookshelf/update_icon()
+	var/icon_state_suffix
+	if (length(src.bookshelf_contents) == 0)
+		icon_state_suffix = ""
+	else if (length(src.bookshelf_contents) < 3) //from 0 to 2 books
+		icon_state_suffix = "-1"
+	else if (length(src.bookshelf_contents) < 6) //from 3 to 5 books
+		icon_state_suffix = "-2"
+	else if (length(src.bookshelf_contents) < 9) // 6 to 8 books
+		icon_state_suffix = "-3"
+	else if (length(src.bookshelf_contents) < 14) // 9 to 13 books
+		icon_state_suffix = "-4"
+	else if (length(src.bookshelf_contents) < 19) // 14 to 18 books
+		icon_state_suffix = "-5"
+	else if (length(src.bookshelf_contents) < 25) // 19 to 24 books
+		icon_state_suffix = "-6"
+	else if (length(src.bookshelf_contents) < 30) // 25 to 29 books
+		icon_state_suffix = "-7"
+	else // 30+ books, or - books
+		icon_state_suffix = "-8"
 
-	proc/add_to_bookshelf(var/obj/item/W)
-		bookshelf_contents += W
-		W.set_loc(src)
+	src.set_icon_state("[initial(src.icon_state)][icon_state_suffix]")
 
-	proc/take_off_bookshelf(var/obj/item/W)
-		bookshelf_contents -= W
-		W.set_loc(get_turf(src))
+/obj/bookshelf/proc/add_to_bookshelf(var/obj/item/I)
+	src.bookshelf_contents.Add(I)
+	I.set_loc(src)
+	src.UpdateIcon()
 
-///////////////////////////////////////////////
-//icon crap its garbage just dont look ok? ok//
-///////////////////////////////////////////////
+/obj/bookshelf/proc/take_off_bookshelf(var/obj/item/I)
+	src.bookshelf_contents.Remove(I)
+	I.set_loc(get_turf(src))
+	src.UpdateIcon()
 
-//sorry this whole thing is a bit messy but i commented the first part so hopefully its easier to understand?
-//only reason i did it like this is i felt like having 100+ iconstates would be really dumb and hard to work with
-//this is polished up A LOT from the last version
-//~adhara <3
+/obj/bookshelf/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/storage/bible))
+		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
+		return
 
 	proc/update_icon()
 		ClearSpecificOverlays("top_shelf", "middle_shelf", "bottom_shelf") //lets avoid any weird ghosts
@@ -210,140 +186,43 @@
 			new /obj/item/furniture_parts/bookshelf(src.loc)
 			qdel(src)
 		else
-			boutput(user, "You can't shelf that!")
+			boutput(user, "\The [src] is too full!")
+			return
 
-	attack_hand(mob/user as mob)
-		if (bookshelf_contents.len > 0)
-			var/book_sel = input("What book would you like to take off \the [src]?", "[src]") as null|anything in bookshelf_contents
-			if (!book_sel)
-				return
-			boutput(user, "You take the book off the shelf.")
-			take_off_bookshelf(book_sel)
-			user.put_in_hand_or_drop(book_sel)
-			update_icon()
-		else
-			boutput(user, "There's nothing to take off the shelf!")
+	else if (istype(W, /obj/item/wrench))
+		if (length(src.bookshelf_contents) > 0)
+			boutput(user, "You can't take apart \the [src] if there's still books on it.")
+			return
 
-/obj/bookshelf/long //these automatically pixel edit themselves to go onto a wall
-	icon_state = "bookshelf_empty_long"
-	density = 0
-	variant = 0
-	update_icon_suffix = "wall"
-	top_shelf_cap = 9
-	middle_shelf_cap = 10
-	bottom_shelf_cap = 10
-	capacity = 29
+		user.visible_message("[user] starts to take apart \the [src].", "You start to take apart \the [src].")
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/bookshelf/proc/deconstruct, list(), W.icon, W.icon_state,\
+		"[user] takes \the [src] apart.", null)
+		return
 
-	shelf_overlay_list = list(list(1,17,3,22),\
-	list(1,17,7,22),\
-	list(1,17,10,22),\
-	list(1,17,14,22),\
-	list(1,17,17,22),\
-	list(1,17,20,22),\
-	list(1,17,26,22),\
-	list(1,17,29,22),\
-	list(1,17,32,22),\
-	list("sideways"),\
-	list("sideways"),\
-	list(1,10,10,15),\
-	list(1,10,13,15),\
-	list(1,10,16,15),\
-	list(1,10,19,15),\
-	list(1,10,22,15),\
-	list(1,10,25,15),\
-	list(1,10,29,15),\
-	list(1,10,32,15),\
-	list(1,3,3,8),\
-	list(1,3,6,8),\
-	list(1,3,9,8),\
-	list(1,3,12,8),\
-	list(1,3,16,8),\
-	list(1,3,19,8),\
-	list("sideways"),\
-	list("sideways"),\
-	list(1,3,28,8),\
-	list(1,3,32,8))
+	else
+		boutput(user, "You can't shelf that!")
+		return
 
-	New()
-		..()
-		pixel_y += 32 //shifts it up to the tile above it
+/obj/bookshelf/attack_hand(mob/user)
+	if (length(src.bookshelf_contents) > 0)
+		var/book_sel = input("What book would you like to take off \the [src]?", "[src]") as null|anything in src.bookshelf_contents
+		if (!book_sel)
+			return
+		boutput(user, "You take the book off the shelf.")
+		src.take_off_bookshelf(book_sel)
+		user.put_in_hand_or_drop(book_sel)
+		src.UpdateIcon()
+	else
+		boutput(user, "There's nothing to take off the shelf!")
 
-/obj/bookshelf/long/end_left
-	icon_state = "bookshelf_empty_end_L"
-	update_icon_suffix = "L"
-	top_shelf_cap = 9
-	middle_shelf_cap = 9
-	bottom_shelf_cap = 9
-	capacity = 27
-
-	shelf_overlay_list = list(list(2,17,4,22),\
-	list(2,17,7,22),\
-	list(2,17,11,22),\
-	list(2,17,14,22),\
-	list(2,17,17,22),\
-	list(2,17,21,22),\
-	list(2,17,24,22),\
-	list(2,17,28,22),\
-	list(2,17,32,22),\
-	list(2,10,4,15),\
-	list(2,10,8,15),\
-	list(2,10,11,15),\
-	list(2,10,14,15),\
-	list(2,10,17,15),\
-	list(2,10,20,15),\
-	list(2,10,24,15),\
-	list(2,10,28,15),\
-	list(2,10,32,15),\
-	list(2,3,5,8),\
-	list(2,3,8,8),\
-	list(2,3,12,8),\
-	list(2,3,15,8),\
-	list(2,3,19,8),\
-	list(2,3,22,8),\
-	list(2,3,25,8),\
-	list(2,3,28,8),\
-	list(2,3,32,8))
-
-/obj/bookshelf/long/end_right
-	icon_state = "bookshelf_empty_end_R"
-	update_icon_suffix = "R"
-	top_shelf_cap = 9
-	middle_shelf_cap = 9
-	bottom_shelf_cap = 9
-	capacity = 27
-
-	shelf_overlay_list = list(list(1,17,4,22),\
-	list(1,17,7,22),\
-	list(1,17,10,22),\
-	list(1,17,13,22),\
-	list(1,17,16,22),\
-	list(1,17,20,22),\
-	list(1,17,23,22),\
-	list(1,17,27,22),\
-	list(1,17,31,22),\
-	list(1,10,3,15),\
-	list(1,10,7,15),\
-	list(1,10,11,15),\
-	list(1,10,15,15),\
-	list(1,10,19,15),\
-	list(1,10,22,15),\
-	list(1,10,25,15),\
-	list(1,10,28,15),\
-	list(1,10,31,15),\
-	list(1,3,4,8),\
-	list(1,3,8,8),\
-	list(1,3,11,8),\
-	list(1,3,14,8),\
-	list(1,3,18,8),\
-	list(1,3,21,8),\
-	list(1,3,24,8),\
-	list(1,3,27,8),\
-	list(1,3,31,8))
+/obj/bookshelf/proc/deconstruct()
+	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	var/obj/parts = new /obj/item/furniture_parts/bookshelf
+	parts.set_loc(src.loc)
+	qdel(src)
 
 /obj/bookshelf/persistent
 	desc = "This bookshelf doesn't get cleaned out between shifts. Neat!"
-	pixel_y = 24
-	density = 0
 	var/file_name = "data/persistent_bookshelf.json"
 
 	New()
@@ -400,7 +279,7 @@
 				B.flair_colorable = book_vars["flair_colorable"]
 				B.build_custom_book()
 				src.add_to_bookshelf(B)
-		src.update_icon()
+		src.UpdateIcon()
 
 	proc/build_curr_contents() //this takes our books and makes it into a giant weird list
 		var/list/curr_contents = list()

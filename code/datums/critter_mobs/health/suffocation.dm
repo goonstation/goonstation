@@ -26,7 +26,6 @@
 	count_in_total = 1
 	maximum_value = 0
 	value = 0
-	minimum_value = -200
 	depletion_threshold = -200
 
 	var/prime_breathing = "o"
@@ -46,7 +45,7 @@
 		if (istype(loc, /turf))
 			breath = loc.remove_air(TOTAL_MOLES(environment) * BREATH_PERCENTAGE)
 		if (holder.does_it_metabolize())
-			if (holder.reagents.has_reagent("lexorin") || HAS_MOB_PROPERTY(holder, PROP_REBREATHING))
+			if (holder.reagents.has_reagent("lexorin") || HAS_ATOM_PROPERTY(holder, PROP_MOB_REBREATHING))
 				gain_breath(2)
 				return
 		if (istype(loc, /obj/))
@@ -113,9 +112,6 @@
 					else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if (prob(20))
 							holder.emote(pick("giggle", "laugh"))
-				var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-				if(RV)
-					holder.changeStatus("radiation", RV.moles, 2)
 
 			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 			if (prob(10) && (FARD_pp > fart_smell_min))

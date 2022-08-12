@@ -2,15 +2,16 @@
 	name = "Throw"
 	desc = "Spin a grabbed opponent around and throw them."
 	icon_state = "throw"
-	targeted = 1
-	target_anything = 0
-	target_nodamage_check = 0
-	target_selection_check = 0
+	targeted = TRUE
+	target_anything = FALSE
+	target_nodamage_check = FALSE
+	target_selection_check = FALSE
 	max_range = 1
 	cooldown = 300
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	when_stunned = FALSE
+	not_when_handcuffed = TRUE
+	werewolf_only = TRUE
 	//throw mostly stolen from macho man. Doesn't spin as fast and doesn't deal with grabs, it's just a targetable ability.
 	cast(mob/target)
 		if (!holder)
@@ -20,7 +21,7 @@
 		if (!M || !HH)
 			return 1
 		if (M == target)
-			boutput(M, __red("You can't throw yourself."))
+			boutput(M, "<span class='alert'>You can't throw yourself.</span>")
 			return 1
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
@@ -37,11 +38,11 @@
 				if (0 to 4)
 					delay = 3
 			if (M && HH)
-				if (get_dist(M, HH) > max_range)
-					boutput(M, __red("[HH] is too far away!"))
+				if (GET_DIST(M, HH) > max_range)
+					boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 					return 0
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't throw [HH] from here!"))
+					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 					return 0
 				M.set_dir(turn(M.dir, 90))
 				var/turf/T = get_step(M, M.dir)
@@ -53,11 +54,11 @@
 				return 0
 			sleep (delay)
 		if (M && HH)
-			if (get_dist(M, HH) > max_range)
-				boutput(M, __red("[HH] is too far away!"))
+			if (GET_DIST(M, HH) > max_range)
+				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 				return 0
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't throw [HH] from here!"))
+				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 				return 0
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
 			M.visible_message("<span class='alert'><B>[M] throws [HH]!</B></span>")

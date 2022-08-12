@@ -69,6 +69,8 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			depletion_rate = 0.6
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -111,11 +113,12 @@ datum
 			fluid_b = 160
 			transparency = 60
 			penetrates_skin = 1
+			touch_modifier = 0.33
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult) // buffin this because fluorine is horrible - adding a burn effect
-				M.TakeDamage("chest", 0, 1*mult, 0, DAMAGE_BURN)
+				M.take_toxin_damage(0.75 * mult) // buffin this because fluorine is horrible - adding a burn effect
+				M.TakeDamage("chest", 0, 0.75 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 
@@ -157,13 +160,12 @@ datum
 					var/ethanol_amt = holder.get_reagent_amount(src.id)
 					if(H?.reagents.has_reagent("moonshine"))
 						mult *= 7
-						ethanol_amt *= 2
 					var/liver_damage = 0
 					if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
 						if (ethanol_amt >= 15)
 							if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 							H.stuttering += 1
-							if (H.canmove && isturf(H.loc) && probmult(10))
+							if (H.can_drunk_act() && probmult(10))
 								step(H, pick(cardinal))
 							if (prob(20)) H.make_dizzy(rand(3,5) * mult)
 						if (ethanol_amt >= 25)
@@ -176,7 +178,7 @@ datum
 								H.emote(pick("hiccup", "burp"))
 							if (probmult(15))
 								H.stuttering += rand(1,10)
-							if (H.canmove && isturf(H.loc) && probmult(8))
+							if (H.can_drunk_act() && probmult(8))
 								step(H, pick(cardinal))
 						if (ethanol_amt >= 55)
 							liver_damage = 0.4
@@ -185,18 +187,18 @@ datum
 							H.stuttering += 1
 							if (probmult(33))
 								H.change_eye_blurry(10 , 50)
-							if (H.canmove && isturf(H.loc) && probmult(15))
+							if (H.can_drunk_act() && probmult(15))
 								step(H, pick(cardinal))
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over \himself.</span>")
+								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
 								H.vomit()
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
 							H.change_eye_blurry(10 , 50)
-							if(probmult(6)) H.drowsyness += 5
+							if(probmult(6)) H.changeStatus("drowsy", 15 SECONDS)
 							if(prob(5)) H.take_toxin_damage(rand(1,2) * mult)
 
 					if (ishuman(M))
@@ -294,12 +296,11 @@ datum
 					if (M.nutrition > 10) // Not good for your stomach either
 						for(var/mob/O in viewers(M, null))
 							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						playsound(M.loc, "sound/effects/splat.ogg", 50, 1)
-						make_cleanable(/obj/decal/cleanable/vomit,M.loc)
+						M.vomit()
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 3 SECONDS))
+						M.setStatusMin("stunned", 3 SECONDS * mult)
+						M.setStatusMin("weakened", 3 SECONDS * mult)
 
 		lithium
 			name = "lithium"
@@ -351,8 +352,12 @@ datum
 				if(!M) M = holder.my_atom
 				if(prob(70))
 					M.take_brain_damage(1*mult)
+				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
+					var/mob/living/L = M
+					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
+					if (istype(plague))
+						L.cure_disease(plague)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("poison",1)
@@ -415,17 +420,13 @@ datum
 			minimum_reaction_temperature = T0C + 100
 			var/reacted_to_temp = 0 // prevent infinite loop in a fluid
 
-			pooled()
-				..()
-				reacted_to_temp = 0
-
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(!reacted_to_temp)
 					reacted_to_temp = 1
 					if(holder)
 						var/list/covered = holder.covered_turf()
 						for(var/turf/t in covered)
-							SPAWN_DBG(1 DECI SECOND) fireflash(t, min(max(0,((volume/covered.len)/15)),6))
+							SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
 				if(holder)
 					holder.del_reagent(id)
 
@@ -547,23 +548,24 @@ datum
 			pathogen_nutrition = list("sugar")
 			taste = "sweet"
 			stun_resist = 6
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar", 2)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar", 2)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_sugar")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_sugar")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.make_jittery(2 )
-				M.drowsyness = max(M.drowsyness-(5), 0)
+				M.changeStatus("drowsy", -10 SECONDS)
 				if(prob(4))
 					M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
 				//if(prob(2))
@@ -731,6 +733,7 @@ datum
 			taste = "bland"
 			minimum_reaction_temperature = -INFINITY
 			target_organs = list("left_kidney", "right_kidney")
+			heat_capacity = 400
 #ifdef UNDERWATER_MAP
 			block_slippy = 1
 			description = "A little strange. Not like any water you've seen. But definitely OSHA approved."
@@ -789,16 +792,16 @@ datum
 				return 1//fluid is better. remove this later probably
 
 			reaction_obj(var/obj/item/O, var/volume)
+				. = ..()
 				if(istype(O))
 					if(O.burning && prob(80))
 						O.combust_ended()
 					else if(istype(O, /obj/item/toy/sponge_capsule))
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
-				return 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				..()
+				. = ..()
 				if(!volume)
 					volume = 10
 				if(method == TOUCH)
@@ -806,7 +809,7 @@ datum
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -1 * volume SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
-				return 1
+						. = 0
 
 		water/water_holy
 			name = "holy water"
@@ -834,7 +837,7 @@ datum
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = volume * 1.25
-						burndmg = min(burndmg, 110) //cap burn at 110 so we can't instant-kill vampires. just crit em ok.
+						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)
 						reacted = 1
@@ -930,7 +933,7 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5 && !(locate(/obj/item/raw_material/ice) in T))
-					var/obj/item/raw_material/ice/I = unpool(/obj/item/raw_material/ice)
+					var/obj/item/raw_material/ice/I = new /obj/item/raw_material/ice
 					I.set_loc(T)
 				return
 

@@ -94,7 +94,8 @@ dmm_suite
 	*/
 	write_area(area/save_area, flags as num)
 		// Cancel out if the area isn't on the map
-		if(!(locate(/turf) in save_area.contents))
+		var/list/atom/save_area_contents = save_area.contents.Copy()
+		if(!(locate(/turf) in save_area_contents))
 			return FALSE
 		//
 		var/startZ = save_area.z
@@ -103,7 +104,7 @@ dmm_suite
 		var/endZ = 0
 		var/endY = 0
 		var/endX = 0
-		for(var/turf/containedTurf in save_area.contents)
+		for(var/turf/containedTurf in save_area_contents)
 			if(     containedTurf.z >   endZ)   endZ = containedTurf.z
 			else if(containedTurf.z < startZ) startZ = containedTurf.z
 			if(     containedTurf.y >   endY)   endY = containedTurf.y
@@ -161,7 +162,7 @@ dmm_suite/proc
 	to file or read into another position on the map.
 	*/
 	writeDimensions(startX, startY, startZ, width, height, depth, list/templates, list/templateBuffer)
-		var dmmText = ""
+		var/list/dmmText = list("//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE\n")
 		// Compile List of Keys mapped to Models
 		var keyLength = round/*floor*/(
 			1 + log(
@@ -171,28 +172,22 @@ dmm_suite/proc
 		var/list/keys[templates.len]
 		for(var/keyPos = 1 to templates.len)
 			keys[keyPos] = computeKeyIndex(keyPos, keyLength)
-			dmmText += {""[keys[keyPos]]" = ([templates[keyPos]])\n"}
+			dmmText += {""[keys[keyPos]]" = (\n[templates[keyPos]])\n"}
 		// Compile Level Grid Text
 		for(var/posZ = 0 to depth-1)
-			if(posZ)
-				dmmText += "\n"
-			dmmText += "\n(1,1,[posZ+1]) = {\"\n"
-			var/list/joinGrid = list() // Joining a list is faster than generating strings
-			for(var/posY = height-1 to 0 step -1)
-				var/list/joinLine = list()
-				for(var/posX = 0 to width-1)
+			for(var/posX = 0 to width-1)
+				dmmText += "\n([posX + 1],1,[posZ+1]) = {\"\n"
+				var/list/joinGrid = list() // Joining a list is faster than generating strings
+				for(var/posY = height-1 to 0 step -1)
 					var/compoundIndex = 1 + (posX) + (posY*width) + (posZ*width*height)
 					var/keyNumber = templateBuffer[compoundIndex]
 					var/tempKey = keys[keyNumber]
-					joinLine.Add(tempKey)
-					//dmmText += "[tempKey]"
+					joinGrid.Add(tempKey)
 					sleep(-1)
-				joinGrid.Add(list2text(joinLine, ""))
+				dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
 				sleep(-1)
-			dmmText += {"[list2text(joinGrid, "\n")]\n\"}"}
-			sleep(-1)
 		//
-		return dmmText
+		return jointext(dmmText, "")
 
 	/*-- makeTemplate --------------------------------
 	Generates a DMM model string from all contents of
@@ -207,34 +202,34 @@ dmm_suite/proc
 				if(O.loc != model) continue
 				if(istype(O, /obj/overlay) || !(flags & DMM_IGNORE_OVERLAYS)) continue
 				if(istype(O, /obj/particle)) continue
-				objTemplate += "[O.type][checkAttributes(O)],"
+				objTemplate += "[O.type][checkAttributes(O)],\n"
 		// Add Mob
 		var mobTemplate = ""
 		for(var/mob/M in model.contents)
 			if(M.loc != model) continue
 			if(M.client)
 				if(!(flags & DMM_IGNORE_PLAYERS))
-					mobTemplate += "[M.type][checkAttributes(M)],"
+					mobTemplate += "[M.type][checkAttributes(M)],\n"
 			else
 				if(!(flags & DMM_IGNORE_NPCS))
-					mobTemplate += "[M.type][checkAttributes(M)],"
+					mobTemplate += "[M.type][checkAttributes(M)],\n"
 		// Add Turf Template
 		var/skip_area = 0
 		var turfTemplate = ""
 		if(!(flags & DMM_IGNORE_TURFS))
 			for(var/appearance in model.underlays)
 				var /mutable_appearance/underlay = new(appearance)
-				turfTemplate = "[/turf/dmm_suite/underlay][checkAttributes(underlay)],[turfTemplate]"
+				turfTemplate = "[/turf/dmm_suite/underlay][checkAttributes(underlay)],\n[turfTemplate]"
 			if(istype(model, /turf/space))
 				if(flags & DMM_IGNORE_SPACE)
 					skip_area = 1
-					turfTemplate += "[/turf/dmm_suite/clear_turf],"
+					turfTemplate += "[/turf/dmm_suite/clear_turf],\n"
 				else
-					turfTemplate += "[model.type],"
+					turfTemplate += "[model.type],\n"
 			else
-				turfTemplate += "[model.type][checkAttributes(model)],"
+				turfTemplate += "[model.type][checkAttributes(model)],\n"
 		else
-			turfTemplate = "[/turf/dmm_suite/clear_turf],"
+			turfTemplate = "[/turf/dmm_suite/clear_turf],\n"
 		// Add Area Template
 		var areaTemplate = ""
 		if(!(flags & DMM_IGNORE_AREAS) && !skip_area)
@@ -262,17 +257,17 @@ dmm_suite/proc
 				continue
 			// Format different types of values
 			if(istext(A.vars[V])) // Text
-				if(saving) attributesText += "; "
+				if(saving) attributesText += ";\n\t"
 				var/val = replacetext(A.vars[V], {"""}, {"\\""}) // escape quotes
 				val = replacetext(val, "\n", "\\n")
 				attributesText += {"[V] = "[val]""}
 			else if(isnum(A.vars[V]) || ispath(A.vars[V])) // Numbers & Type Paths
-				if(saving) attributesText += "; "
+				if(saving) attributesText += ";\n\t"
 				attributesText += {"[V] = [A.vars[V]]"}
 			else if(isicon(A.vars[V]) || isfile(A.vars[V])) // Icons & Files
 				var filePath = "[A.vars[V]]"
 				if(!length(filePath)) continue // Bail on dynamic icons
-				if(saving) attributesText += "; "
+				if(saving) attributesText += ";\n\t"
 				attributesText += {"[V] = '[A.vars[V]]'"}
 			else // Otherwise, Bail
 				continue
@@ -281,7 +276,7 @@ dmm_suite/proc
 		//
 		if(!saving)
 			return
-		return "{[attributesText]}"
+		return "{\n\t[attributesText]\n\t}"
 
 	/*-- computeKeyIndex -----------------------------
 	Generates a DMM model index string of given length
@@ -353,7 +348,7 @@ dmm_suite/prefab_saving/makeTemplate(turf/model as turf, flags as num)
 		if(istype(model, /turf/space))
 			empty_area = 1
 			turfTemplate += "[/turf/variableTurf/clear],"
-		else if(istype(model, /turf/simulated/wall/asteroid))
+		else if(istype(model, /turf/simulated/wall/auto/asteroid))
 			empty_area = 1
 			turfTemplate += "[/turf/variableTurf/wall],"
 		else if(istype(model, /turf/simulated/floor/plating/airless/asteroid))

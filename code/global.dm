@@ -5,6 +5,8 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
+var/global/list/detailed_machine_power = list()
+var/global/list/detailed_machine_power_prev = list()
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -12,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf')
+var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/fonts/ibmvga9.ttf', 'interface/fonts/xfont.ttf', 'interface/fonts/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 
@@ -57,6 +59,7 @@ var/global
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
+	regex/full_url_regex = null
 	force_random_names = 0			// for the pre-roundstart thing
 	force_random_looks = 0			// same as above
 
@@ -74,7 +77,7 @@ var/global
 
 	list/factions = list()
 
-	list/traitList = list() //List of trait objects
+	list/obj/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -89,6 +92,8 @@ var/global
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
 	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
+
+	max_sound_range = MAX_SOUND_RANGE_NORMAL
 
 	list/cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
 	"Red" = 'icons/cursors/target/red.dmi',
@@ -238,6 +243,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -265,6 +271,7 @@ var/global
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
@@ -291,6 +298,10 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
+	no_emote_cooldowns = 0
+	spooky_light_mode = 0
+	// Default ghost invisibility. Set when the game is over
+	ghost_invisibility = INVIS_GHOST
 
 	datum/titlecard/lobby_titlecard
 
@@ -308,8 +319,8 @@ var/global
 
 	///////////////
 	//cyberorgan damage thresholds for emagging without emag
-	list/cyberorgan_brute_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
-	list/cyberorgan_burn_threshold = list("heart" = 0, "left_lung" = 0, "right_lung" = 0, "left_kidney" = 0, "right_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
 	///////////////
 	list/logs = list ( //Loooooooooogs
@@ -330,30 +341,24 @@ var/global
 		"deleted" = list (  ),
 		"vehicle" = list (  ),
 		"tgui" = list (), //me 2
+		"computers" = list(),
 		"audit" = list()//im a rebel, i refuse to add that gross SPACING
 	)
 	savefile/compid_file 	//The file holding computer ID information
 	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
-	list/wormholeturfs = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 
 	// Controllers
-	datum/research/disease/disease_research = new()
-	datum/research/artifact/artifact_research = new()
-	datum/research/robotics/robotics_research = new()
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
 	datum/sun/sun = null
@@ -378,6 +383,9 @@ var/global
 #endif
 
 	narrator_mode = 0
+
+	// Zam note: this is horrible
+	forced_desussification = 0
 
 	disable_next_click = 0
 
@@ -416,14 +424,15 @@ var/global
 	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
 	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
 	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindslave = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave")
+	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
+	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
 	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
 	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyslave = image('icons/mob/antag_overlays.dmi', icon_state = "spyslave")
+	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
 	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
 	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
@@ -432,6 +441,7 @@ var/global
 	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
@@ -485,8 +495,21 @@ var/global
 
 	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
+	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
+		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
+		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
+#if defined(MAP_OVERRIDE_POD_WARS)
+		,"pod_wars"
+#endif
+	)
+
+	hardRebootFilePath = "data/hard-reboot"
+
+	/// The map object used to display the AI station map
+	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

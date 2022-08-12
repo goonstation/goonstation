@@ -10,7 +10,7 @@
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
@@ -42,8 +42,8 @@
 	name = "toolbox/robot arm assembly"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -53,7 +53,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.icon_state = "firebot[src.on]"
 
@@ -70,14 +70,14 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
 			"content" = dat,
 		))
 
-/obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -86,7 +86,7 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
@@ -143,7 +143,7 @@
 		src.explode()
 	return
 
-/obj/machinery/bot/firebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/firebot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
@@ -219,7 +219,7 @@
 		if(IN_RANGE(src,src.target,3))
 			spray_at(src.target)
 		else
-			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 50)
+			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 30)
 			if (!src.path)
 				src.KillPathAndGiveUp(1)
 
@@ -306,7 +306,7 @@
 		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
 
 	for(var/a in 0 to 5)
-		var/obj/effects/water/W = unpool(/obj/effects/water)
+		var/obj/effects/water/W = new /obj/effects/water
 		if(!W) return
 		W.set_loc( get_turf(src) )
 		var/turf/my_target = pick(the_targets)
@@ -336,10 +336,10 @@
 
 /obj/machinery/bot/firebot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -371,7 +371,7 @@
 	new /obj/item/extinguisher(Tsec)
 
 	if (prob(50))
-		new /obj/item/parts/robot_parts/arm/left(Tsec)
+		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
 	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
@@ -414,7 +414,7 @@
 	qdel(P)
 	qdel(src)
 
-/obj/item/toolbox_arm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/toolbox_arm/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/extinguisher)) && (!src.extinguisher))
 		src.extinguisher = 1
 		boutput(user, "You add the fire extinguisher to [src]!")
@@ -444,8 +444,3 @@
 		src.created_name = t
 
 #undef FIREBOT_MOVE_SPEED
-
-/mob/living/critter/bot/firebot
-	name = "firebot"
-
-	emagged

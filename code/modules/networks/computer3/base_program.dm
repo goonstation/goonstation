@@ -4,7 +4,7 @@
 /datum/computer/file/terminal_program
 	name = "blank program"
 	extension = "TPROG"
-	//var/size = 4.0
+	//var/size = 4
 	//var/obj/item/disk/data/holder = null
 	var/obj/machinery/computer3/master = null
 	//var/active_icon = null
@@ -262,7 +262,7 @@
 
 					else
 						if (cmptext(copytext(., 1, 3), "sd"))
-							. = text2num(copytext(., 3))
+							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
@@ -338,7 +338,7 @@
 
 					else
 						if (cmptext(copytext(., 1, 3), "sd"))
-							. = text2num(copytext(., 3))
+							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 

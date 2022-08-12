@@ -21,22 +21,22 @@
 		src.processing = 1
 	if(src.processing)
 		src.processing = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(src.number < 3)
-				var/obj/effects/steam/I = unpool(/obj/effects/steam)
+				var/obj/effects/steam/I = new /obj/effects/steam
 				I.set_loc(src.oldposition)
 				src.number++
 				src.oldposition = get_turf(holder)
 				I.set_dir(src.holder.dir)
-				SPAWN_DBG(1 SECOND)
-					if (I && !I.disposed) pool(I)
+				SPAWN(1 SECOND)
+					if (I && !I.disposed) qdel(I)
 					src.number--
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()
 			else
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					if(src.on)
 						src.processing = 1
 						src.start()

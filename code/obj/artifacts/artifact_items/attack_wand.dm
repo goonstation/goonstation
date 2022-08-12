@@ -2,7 +2,6 @@
 	name = "artifact attack wand"
 	associated_datum = /datum/artifact/attack_wand
 	flags =  FPRINT | CONDUCT | EXTRADELAY
-	module_research_no_diminish = 1
 
 	// this is necessary so that this returns null
 	// else afterattack will not be called when out of range
@@ -26,6 +25,7 @@
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
 	type_name = "Elemental Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 200
 	validtypes = list("wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -38,8 +38,6 @@
 	var/recharge_phrase = ""
 	var/error_phrase = ""
 	var/list/powerVars = list()
-	module_research = list("weapons" = 5, "energy" = 5, "tools" = 5)
-	module_research_insight = 2
 
 	New()
 		..()
@@ -74,7 +72,7 @@
 			return
 
 		ready = 0
-		SPAWN_DBG(cooldown)
+		SPAWN(cooldown)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			ready = 1
@@ -96,7 +94,7 @@
 					if(locate(/obj/decal/icefloor) in TT.contents)
 						continue
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(TT)
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						B.dispose()
 				for (var/mob/living/M in range(T,powerVars["iceRadius"]))
 					if (M.bioHolder)

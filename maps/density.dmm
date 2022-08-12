@@ -684,7 +684,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -884,7 +884,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bZ" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ca" = (
@@ -1690,7 +1690,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "dS" = (
-/obj/machinery/power/monitor{
+/obj/machinery/computer/power_monitor{
 	name = "Station Power Grid Monitoring"
 	},
 /obj/machinery/power/data_terminal,
@@ -1999,7 +1999,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eE" = (
-/obj/decal/sink,
+/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "eF" = (
@@ -3616,7 +3616,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "hZ" = (
-/obj/machinery/computer/aiupload{
+/obj/machinery/lawrack{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -4405,7 +4405,6 @@
 	pixel_x = 28
 	},
 /obj/table/reinforced/auto,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /obj/item/aiModule/notHuman,
 /obj/item/aiModule/makeCaptain,
@@ -4443,7 +4442,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/bathroom)
 "jA" = (
-/obj/crematorium{
+/obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
 	},
 /turf/simulated/floor/grass,
@@ -4472,7 +4471,7 @@
 	},
 /area/station/chapel/sanctuary)
 "jD" = (
-/obj/morgue{
+/obj/machinery/traymachine/morgue{
 	dir = 2;
 	icon_state = "morgue1"
 	},
@@ -4978,7 +4977,7 @@
 /area/station/chapel/sanctuary)
 "kz" = (
 /turf/space,
-/area/shuttle/escape/station/cogmap2)
+/area/shuttle/escape/station)
 "kA" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment{
@@ -5100,7 +5099,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/lrteleporter{
+/obj/machinery/lrteleporter{
 	layer = 3
 	},
 /turf/simulated/floor/engine{
@@ -5146,7 +5145,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "kY" = (
-/obj/machinery/power/monitor/smes{
+/obj/machinery/computer/power_monitor/smes{
 	dir = 1;
 	icon_state = "power";
 	name = "Engine Output Monitoring"

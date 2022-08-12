@@ -15,7 +15,7 @@
 				return
 			else
 				owner.waiting_for_hotkey = 1
-				src.updateIcon()
+				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
 
@@ -32,7 +32,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -113,7 +113,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -146,17 +146,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		//maybe have to be on kudzu to use power?
@@ -204,7 +204,7 @@
 /obj/kudzu_marker
 	name = "benign kudzu"
 	desc = "A flowering subspecies of the kudzu plant that, is a non-invasive plant on space stations."
-	// invisibility = 101
+	// invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	opacity = 0
@@ -237,7 +237,7 @@
 		..()
 
 	//mostly same as kudzu
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -676,8 +676,8 @@
 	icon_state = "vine-item"
 	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	// item_state = "knife"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	burn_type = 1
@@ -691,6 +691,7 @@
 	New()
 		..()
 		src.build_buttons()
+		src.setItemSpecial(/datum/item_special/rangestab)
 
 	dropped(mob/user)
 		..()
@@ -708,7 +709,7 @@
 			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
 			qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special = 0)
+	attack(mob/M, mob/user, def_zone, is_special = 0)
 		..()
 
 		if (prob(20))
@@ -749,19 +750,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)	//20 growth is currently the lowest for dense kudzu. Should be a constant.
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, kudzu) > 1 ||  kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 ||  kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, kudzu) > 1 || kudzu == null || kudzu.growth < 20 || owner == null)
+		if(BOUNDS_DIST(owner, kudzu) > 0 || kudzu == null || kudzu.growth < 20 || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))

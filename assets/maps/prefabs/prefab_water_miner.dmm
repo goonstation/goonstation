@@ -1,75 +1,623 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_mining)
-"ab" = (/turf/variableTurf/clear,/area/space)
-"ac" = (/obj/wingrille_spawn/auto,/turf/simulated/floor,/area/prefab/sea_mining)
-"ad" = (/obj/rack,/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering,/obj/item/clothing/shoes/flippers,/obj/machinery/light/small/floor/netural,/turf/simulated/floor,/area/prefab/sea_mining)
-"ae" = (/turf/simulated/floor,/area/prefab/sea_mining)
-"af" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor,/area/prefab/sea_mining)
-"ag" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor,/area/prefab/sea_mining)
-"ah" = (/obj/rack,/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering,/obj/item/clothing/shoes/flippers,/turf/simulated/floor,/area/prefab/sea_mining)
-"ai" = (/obj/machinery/door/airlock/pyro/engineering/alt{name = "Mining"},/obj/access_spawn/mining,/turf/simulated/floor,/area/prefab/sea_mining)
-"aj" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor,/area/prefab/sea_mining)
-"ak" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"al" = (/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"am" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/secondary_system/cargo,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"an" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/communications/mining,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"ao" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/mainweapon/mining,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"ap" = (/turf/variableTurf/clear,/area/noGenerate)
-"aq" = (/obj/reagent_dispensers/watertank,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"ar" = (/obj/reagent_dispensers/foamtank,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"as" = (/obj/table/auto,/obj/item/hand_labeler,/turf/simulated/floor,/area/prefab/sea_mining)
-"at" = (/obj/table/reinforced/auto,/obj/item/ore_scoop,/obj/item/ore_scoop,/turf/simulated/floor,/area/prefab/sea_mining)
-"au" = (/obj/table/reinforced/auto,/obj/item/storage/firstaid/regular,/obj/item/device/gps,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"av" = (/obj/table/reinforced/auto,/obj/item/oreprospector,/obj/item/oreprospector,/obj/item/sea_ladder,/obj/item/sea_ladder,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"aw" = (/obj/table/reinforced/auto,/obj/item/storage/toolbox/mechanical,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"ax" = (/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"ay" = (/obj/machinery/manufacturer/general,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"az" = (/turf/simulated/floor/caution/south,/area/prefab/sea_mining)
-"aA" = (/obj/machinery/bot/medbot,/obj/machinery/light/small/floor/netural,/turf/simulated/floor/caution/south,/area/prefab/sea_mining)
-"aB" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/caution/south,/area/prefab/sea_mining)
-"aC" = (/obj/machinery/vehicle/tank/minisub/mining,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aD" = (/obj/machinery/light/small/floor/netural,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aE" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aF" = (/obj/machinery/manufacturer/hangar,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aG" = (/obj/table/auto,/obj/item/sheet/glass/fullstack,/obj/item/sheet/glass/reinforced/fullstack,/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
-"aH" = (/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
-"aI" = (/obj/table/auto,/obj/item/clothing/gloves/yellow,/obj/item/paper/book/from_file/minerals,/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
-"aJ" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/sensor/mining,/obj/item/shipcomponent/sensor/mining,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aK" = (/obj/table/reinforced/auto,/obj/item/shipcomponent/secondary_system/repair,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aL" = (/obj/table/reinforced/auto,/obj/item/wrench,/obj/item/clothing/shoes/magnetic,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aM" = (/obj/reagent_dispensers/fueltank,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aN" = (/obj/storage/closet/welding_supply,/turf/simulated/floor/shuttlebay,/area/prefab/sea_mining)
-"aO" = (/obj/table/auto,/obj/item/sheet/steel/fullstack,/obj/item/sheet/steel/reinforced/fullstack,/turf/simulated/floor/damaged2,/area/prefab/sea_mining)
-"aP" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"aQ" = (/obj/machinery/manufacturer/mining,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"aR" = (/obj/machinery/manufacturer/mining,/turf/simulated/floor,/area/prefab/sea_mining)
-"aS" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/scorched2,/area/prefab/sea_mining)
-"aT" = (/obj/table/auto,/obj/item/storage/toolbox/electrical,/obj/item/storage/toolbox/electrical,/obj/item/device/multitool,/obj/item/device/multitool,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"aU" = (/obj/item/tank/oxygen,/turf/simulated/floor/grime,/area/prefab/sea_mining)
-"aV" = (/turf/simulated/floor/damaged2,/area/prefab/sea_mining)
-"aW" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor,/area/prefab/sea_mining)
-"aX" = (/obj/machinery/oreaccumulator,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"aY" = (/obj/item/extinguisher,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"aZ" = (/obj/machinery/vending/cigarette,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"ba" = (/obj/machinery/vending/coffee,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"bb" = (/obj/machinery/portable_reclaimer,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"bc" = (/obj/machinery/vending/snack,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"bd" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/bot,/area/prefab/sea_mining)
-"be" = (/obj/item/device/gps{identifier = "NT-MO"},/turf/simulated/floor/caution/north,/area/prefab/sea_mining)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_mining)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ad" = (
+/obj/rack,
+/obj/item/clothing/suit/space/diving/engineering,
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering,
+/obj/item/clothing/shoes/flippers,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ae" = (
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"af" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ag" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ah" = (
+/obj/rack,
+/obj/item/clothing/suit/space/diving/engineering,
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering,
+/obj/item/clothing/shoes/flippers,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ai" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	name = "Mining"
+	},
+/obj/access_spawn/mining,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"aj" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"ak" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"al" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"am" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/secondary_system/cargo,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"an" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/communications/mining,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"ao" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/mainweapon/mining,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"ap" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aq" = (
+/obj/reagent_dispensers/watertank,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"ar" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"as" = (
+/obj/table/auto,
+/obj/item/hand_labeler,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"at" = (
+/obj/table/reinforced/auto,
+/obj/item/ore_scoop,
+/obj/item/ore_scoop,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"au" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular,
+/obj/item/device/gps,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"av" = (
+/obj/table/reinforced/auto,
+/obj/item/oreprospector,
+/obj/item/oreprospector,
+/obj/item/sea_ladder,
+/obj/item/sea_ladder,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"aw" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"ax" = (
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"ay" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"az" = (
+/turf/simulated/floor/caution/south,
+/area/prefab/sea_mining)
+"aA" = (
+/obj/machinery/bot/medbot,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/caution/south,
+/area/prefab/sea_mining)
+"aB" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/caution/south,
+/area/prefab/sea_mining)
+"aC" = (
+/obj/machinery/vehicle/tank/minisub/mining,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aD" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aE" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aF" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aG" = (
+/obj/table/auto,
+/obj/item/sheet/glass/fullstack,
+/obj/item/sheet/glass/reinforced/fullstack,
+/turf/simulated/floor/caution/north,
+/area/prefab/sea_mining)
+"aH" = (
+/turf/simulated/floor/caution/north,
+/area/prefab/sea_mining)
+"aI" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/paper/book/from_file/minerals,
+/turf/simulated/floor/caution/north,
+/area/prefab/sea_mining)
+"aJ" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/sensor/mining,
+/obj/item/shipcomponent/sensor/mining,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aK" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/secondary_system/repair,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aL" = (
+/obj/table/reinforced/auto,
+/obj/item/wrench,
+/obj/item/clothing/shoes/magnetic,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aM" = (
+/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aN" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/sea_mining)
+"aO" = (
+/obj/table/auto,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/reinforced/fullstack,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_mining)
+"aP" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"aQ" = (
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"aR" = (
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"aS" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_mining)
+"aT" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/toolbox/electrical,
+/obj/item/device/multitool,
+/obj/item/device/multitool,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"aU" = (
+/obj/item/tank/oxygen,
+/turf/simulated/floor/grime,
+/area/prefab/sea_mining)
+"aV" = (
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_mining)
+"aW" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor,
+/area/prefab/sea_mining)
+"aX" = (
+/obj/machinery/oreaccumulator,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"aY" = (
+/obj/item/extinguisher,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"aZ" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"ba" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"bb" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"bc" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"bd" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/bot,
+/area/prefab/sea_mining)
+"be" = (
+/obj/item/device/gps{
+	identifier = "NT-MO"
+	},
+/turf/simulated/floor/caution/north,
+/area/prefab/sea_mining)
 
 (1,1,1) = {"
-abababababababapapapapabababababababababab
-abababababababababaaaaaaacacacaaaaaaaaaaab
-abababababababababaaadaeaeaeaeaeaeafagaaab
-abababababababababaaahaeaeaeaeaeaeaeaeaaab
-abaaaaaaaaaaaaaaaaaaacaiaaaaaaaaacaaajaaab
-abakalamanaoalaqaraaasaeatauavawaxaaaeaaab
-abakayalalalalalalaaazaAazazazaBazaaajaaab
-abakalalaCalalalalaDalalalaEalalalaaababab
-abakaFalalalalalalaaaGaHaHbeaHaHaIaaababab
-abakalaJaKaLalaMaNaaaOaPaQaeaRaSaTaaababab
-abaaaaaaaaaaaaaaaaaaaxaUaxaVaxaxaeaaababab
-abababababababababaaaxaxaxaWaVaXaYaaababab
-abababababababababaaaZbabbbcaebdaXaaababab
-abababababababababaaaaacacacacacaaaaababab
-ababababababababababababapapapapababababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+ak
+ak
+ak
+ak
+ak
+aa
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+al
+ay
+al
+aF
+al
+aa
+ab
+ab
+ab
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+am
+al
+al
+al
+aJ
+aa
+ab
+ab
+ab
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+an
+al
+aC
+al
+aK
+aa
+ab
+ab
+ab
+ab
+"}
+(6,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+ao
+al
+al
+al
+aL
+aa
+ab
+ab
+ab
+ab
+"}
+(7,1,1) = {"
+ab
+ab
+ab
+ab
+aa
+al
+al
+al
+al
+al
+aa
+ab
+ab
+ab
+ab
+"}
+(8,1,1) = {"
+ap
+ab
+ab
+ab
+aa
+aq
+al
+al
+al
+aM
+aa
+ab
+ab
+ab
+ab
+"}
+(9,1,1) = {"
+ap
+ab
+ab
+ab
+aa
+ar
+al
+al
+al
+aN
+aa
+ab
+ab
+ab
+ab
+"}
+(10,1,1) = {"
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aD
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+"}
+(11,1,1) = {"
+ap
+aa
+ad
+ah
+ac
+as
+az
+al
+aG
+aO
+ax
+ax
+aZ
+aa
+ab
+"}
+(12,1,1) = {"
+ab
+aa
+ae
+ae
+ai
+ae
+aA
+al
+aH
+aP
+aU
+ax
+ba
+ac
+ab
+"}
+(13,1,1) = {"
+ab
+ac
+ae
+ae
+aa
+at
+az
+al
+aH
+aQ
+ax
+ax
+bb
+ac
+ap
+"}
+(14,1,1) = {"
+ab
+ac
+ae
+ae
+aa
+au
+az
+aE
+be
+ae
+aV
+aW
+bc
+ac
+ap
+"}
+(15,1,1) = {"
+ab
+ac
+ae
+ae
+aa
+av
+az
+al
+aH
+aR
+ax
+aV
+ae
+ac
+ap
+"}
+(16,1,1) = {"
+ab
+aa
+ae
+ae
+aa
+aw
+aB
+al
+aH
+aS
+ax
+aX
+bd
+ac
+ap
+"}
+(17,1,1) = {"
+ab
+aa
+ae
+ae
+ac
+ax
+az
+al
+aI
+aT
+ae
+aY
+aX
+aa
+ab
+"}
+(18,1,1) = {"
+ab
+aa
+af
+ae
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+"}
+(19,1,1) = {"
+ab
+aa
+ag
+ae
+aj
+ae
+aj
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(20,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

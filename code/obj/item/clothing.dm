@@ -14,7 +14,6 @@
 	var/color_b = 1
 
 	var/protective_temperature = 0
-	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
@@ -52,13 +51,6 @@
 		..()
 
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 
@@ -77,6 +69,12 @@
 			for (var/i in src.stains)
 				. += i + " "
 
+	proc/clean_stains()
+		if (islist(src.stains) && length(src.stains))
+			src.stains = list()
+			src.UpdateName()
+
+
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
 		..()
@@ -85,7 +83,7 @@
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'

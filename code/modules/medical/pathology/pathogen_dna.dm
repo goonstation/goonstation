@@ -71,13 +71,13 @@ datum/pathogendna
 	New(var/datum/pathogen/P)
 		..()
 		if (P)
-			reference = unpool(/datum/pathogen)
+			reference = new /datum/pathogen
 			reference.setup(0, P, 0, src)
 			recalculate()
 			reverse_engineer()
 			valid = 1
 		else
-			reference = unpool(/datum/pathogen)
+			reference = new /datum/pathogen
 			valid = 0
 
 	proc/clone()

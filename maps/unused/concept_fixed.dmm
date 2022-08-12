@@ -2300,7 +2300,7 @@
 /area/station/maintenance/solar/west)
 "aeE" = (
 /obj/cable,
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "westsolar";
 	name = "West Solar Control";
 	track = 2
@@ -2314,7 +2314,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -2662,7 +2662,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -2919,7 +2919,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "eastsolar";
 	name = "East Solar Control";
 	track = 2
@@ -3522,7 +3522,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -3566,7 +3566,7 @@
 /area/station/maintenance/northeast)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4196,7 +4196,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -5922,7 +5922,7 @@
 /area/station/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -7289,7 +7289,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/purple,
 /area/space{
@@ -7314,7 +7313,6 @@
 	},
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/notHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/purple,
 /area/space{
 	name = "Module Storage"
@@ -7348,7 +7346,6 @@
 	icon_state = "tabledir";
 	dir = 4
 	},
-/obj/item/aiModule/reset,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7738,7 +7735,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aoG" = (
@@ -7832,7 +7829,6 @@
 /area/station/storage/tech)
 "aoO" = (
 /obj/rack,
-/obj/item/circuitboard/aiupload,
 /obj/item/circuitboard/teleporter,
 /obj/item/circuitboard/card,
 /obj/item/circuitboard/robot_module_rewriter,
@@ -8688,7 +8684,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -9121,7 +9117,7 @@
 /area/space)
 "arE" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
+/obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/space)
 "arF" = (
@@ -10851,7 +10847,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -12562,7 +12558,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /turf/simulated/floor,
 /area/station/engine/power)
 "ayL" = (
@@ -13105,7 +13101,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "azN" = (
-/obj/machinery/power/monitor,
+/obj/machinery/computer/power_monitor,
 /obj/cable,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/engine/proto)
@@ -28411,7 +28407,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bbW" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,
@@ -29452,7 +29448,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor,
 /area/station/security/brig)
 "bdL" = (
@@ -29979,7 +29975,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "beD" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -30520,7 +30516,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "2-8";
 	d1 = 2;
@@ -35535,7 +35531,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/power/solar_control{
+/obj/machinery/computer/solar_control{
 	id = "rozetasolar";
 	name = "Zeta Solar Control";
 	track = 2

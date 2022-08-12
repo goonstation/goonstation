@@ -10,32 +10,32 @@
 /area/noGenerate)
 "d" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 8
+	dir = 8;
+	icon_state = "purple4"
 	},
 /area/noGenerate)
 "e" = (
 /obj/decal/cleanable/blood/gibs,
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple1"
 	},
 /area/noGenerate)
 "f" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/blood/gibs/core,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/simulated/floor/carpet{
-	icon_state = "fpurple1";
-	dir = 10
+	dir = 10;
+	icon_state = "fpurple1"
 	},
 /area/noGenerate)
 "g" = (
 /turf/simulated/floor/carpet{
-	icon_state = "purple4";
-	dir = 4
+	dir = 4;
+	icon_state = "purple4"
 	},
 /area/noGenerate)
 "h" = (
@@ -54,8 +54,8 @@
 /area/noGenerate)
 "j" = (
 /obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 4
+	dir = 4;
+	icon_state = "chair_wooden"
 	},
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
@@ -81,16 +81,16 @@
 /area/noGenerate)
 "m" = (
 /obj/stool/chair/wooden{
-	icon_state = "chair_wooden";
-	dir = 8
+	dir = 8;
+	icon_state = "chair_wooden"
 	},
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
 "n" = (
 /obj/table/wood/round,
 /obj/candle_light{
-	pixel_z = 12;
-	pixel_w = 1
+	pixel_w = 1;
+	pixel_z = 12
 	},
 /turf/simulated/floor/wood/two,
 /area/noGenerate)
@@ -131,8 +131,8 @@
 /area/noGenerate)
 "t" = (
 /turf/simulated/floor/airless/stairs/wood/wide{
-	icon_state = "wood_stairs2";
-	dir = 6
+	dir = 6;
+	icon_state = "wood_stairs2"
 	},
 /area/noGenerate)
 "u" = (

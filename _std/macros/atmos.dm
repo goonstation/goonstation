@@ -113,8 +113,8 @@
 
 #define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.15
 #define WALL_HEAT_TRANSFER_COEFFICIENT 0.12
-#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.20 //a hack to partly simulate radiative heat
-#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.40
+#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 //a hack to partly simulate radiative heat
+#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.18 //a hack for now
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
@@ -325,6 +325,10 @@ proc/gas_text_color(gas_id)
 #define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
 #define _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%[SEP]": "")
 #define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP))
+
+#define _SIMPLE_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[(round(MIXTURE.GAS / total_moles * 100)) ? "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" : ""]" +
+#define _SIMPLE_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP) "[(length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%[SEP]": "")]"
+#define SIMPLE_CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_SIMPLE_CONCENTRATION_REPORT, MIXTURE, SEP) _SIMPLE_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP))
 
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
 #define _LIST_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, LIST) LIST += (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")

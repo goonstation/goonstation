@@ -84,7 +84,7 @@
 
 /area/upper_arctic/exterior/surface
 	name = "Ice Moon Surface"
-	icon_state = "white"
+	icon_state = "purple"
 	filler_turf = "/turf/unsimulated/floor/arctic/abyss"
 	skip_sims = 1
 	sims_score = 30
@@ -118,29 +118,32 @@
 	sound_group = "precursor"  //Differs from the caves it's in, for a mysterious sound-blocking effect.
 	sound_loop = 'sound/ambience/industrial/Precursor_Drone1.ogg'
 
-	New()
-		..()
-		SPAWN_DBG(1 SECOND)
-			process()
+/area/precursor/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg','sound/ambience/industrial/Precursor_Choir.ogg','sound/ambience/industrial/Precursor_Drone3.ogg','sound/ambience/industrial/Precursor_Bells.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/precursor/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	pit
-		name = "Ominous Pit"
-		icon_state = "purple"
-		filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
-		sound_environment = 24
-		sound_group = "ominouspit"
-		skip_sims = 1
-		sims_score = 300
+/area/precursor/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg',\
+			'sound/ambience/industrial/Precursor_Choir.ogg',\
+			'sound/ambience/industrial/Precursor_Drone3.ogg',\
+			'sound/ambience/industrial/Precursor_Bells.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
+
+/area/precursor/pit
+	name = "Ominous Pit"
+	icon_state = "purple"
+	filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
+	sound_environment = 24
+	sound_group = "ominouspit"
+	skip_sims = 1
+	sims_score = 300
 
 ////////////////////// cogwerks - HELL
 
@@ -165,7 +168,6 @@
 	throwforce = 5
 	var/spam_flag = 0
 	var/pitch = 0
-	module_research = list("audio" = 20, "precursor" = 3)
 
 /////////////////////////////////////////////////////////////
 
@@ -240,7 +242,7 @@
 						M.activate()
 
 		src.add_fingerprint(user)
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			spam_flag = 0
 	return
 
@@ -258,7 +260,7 @@
 	ex_act(severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
 			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
@@ -316,8 +318,8 @@
 
 		src.tag = "orb_stand_[id]"
 
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
+	attack_hand(mob/user)
+		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
 		if (!src.assembled)
@@ -332,7 +334,7 @@
 		if (!istype(other))
 			return
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
 			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
@@ -346,7 +348,7 @@
 			sleep(5 SECONDS)
 			src.ready = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.ready || src.assembled)
 			..()
 			return
@@ -400,12 +402,12 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.default_state = src.opened
 			active = 0
 			pitch = rand(0,12)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/hell_sax) && !src.opened)
 			..()
 			user.visible_message("<span class='notice'><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
@@ -459,7 +461,7 @@
 			src.icon_state = "bluedoor_0"
 			set_density(0)
 			opacity = 0
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -478,7 +480,7 @@
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
-			SPAWN_DBG(1.3 SECONDS)
+			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
 
@@ -543,7 +545,7 @@
 			src.activate()
 
 		if(function == "electrical")
-			SPAWN_DBG(4 SECONDS)
+			SPAWN(4 SECONDS)
 				linked_object = locate("sphere_[id]")
 
 		return
@@ -588,9 +590,9 @@
 						if (isdead(poorSoul) && prob(15))
 							poorSoul.gib()
 
-					SPAWN_DBG(0.6 SECONDS)
+					SPAWN(0.6 SECONDS)
 						for (var/obj/O in lineObjs)
-							pool(O)
+							qdel(O)
 						light.disable()
 
 
@@ -635,7 +637,7 @@
 		..()
 		src.name = "[pick("ominous","tall","bulky","chilly","pointy","spinny","metallic","smooth","oblong","dapper")] [pick("device","doodad","gizmo","machine","column","thing","thingmabob")]"
 		//boutput(world, "[src] is checking for controller")
-		SPAWN_DBG(1 SECOND) // wait for the game to get started, then set up linkages with the controller object
+		SPAWN(1 SECOND) // wait for the game to get started, then set up linkages with the controller object
 			linked_controller = locate("controller_[id]")
 			if(linked_controller)
 				if(src.linked_controller) // just in case
@@ -656,7 +658,7 @@
 							return // oh good you set it up wrong IDIOT
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.active)	return
 		src.active = 1
 
@@ -776,7 +778,7 @@
 					target_blue++
 
 
-		SPAWN_DBG(1 SECOND) // set up linkages to the shields
+		SPAWN(1 SECOND) // set up linkages to the shields
 			for(var/obj/precursor_puzzle/shield/S in range(src,7))
 				if(S.id == src.id)
 					src.linked_shields += S
@@ -787,7 +789,7 @@
 		update()
 			if(active) return
 			src.active = 1
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.active = 0
 
 			var/setting_red = src.effector_NE.setting_red + src.effector_SE.setting_red + src.effector_SW.setting_red + src.effector_NW.setting_red
@@ -857,13 +859,13 @@
 			if(!src.active)
 				src.active = 1
 				src.set_density(1)
-				src.invisibility = 0
+				src.invisibility = INVIS_NONE
 				changing_state = 1
 				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					changing_state = 0
 			return
 
@@ -873,13 +875,13 @@
 			if(src.active)
 				src.active = 0
 				src.set_density(0)
-				src.invisibility = 100
+				src.invisibility = INVIS_ALWAYS_ISH
 				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					changing_state = 0
 			return
 
@@ -908,7 +910,7 @@
 			var/mob/living/carbon/user = AM
 			src.shock(user)
 
-	Bump(atom/movable/AM as mob)
+	bump(atom/movable/AM as mob)
 		if(iscarbon(AM))
 			var/mob/living/carbon/user = AM
 			src.shock(user)
@@ -918,7 +920,7 @@
 			elecflash(user,power=2)
 			var/shock_damage = rand(10,15)
 
-			if (user.bioHolder.HasEffect("resist_electric") == 2)
+			if (user.bioHolder.HasEffect("resist_electric_heal"))
 				var/healing = 0
 				if (shock_damage)
 					healing = shock_damage / 3
@@ -926,7 +928,7 @@
 				user.take_toxin_damage(0 - healing)
 				boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
 				return
-			else if (user.bioHolder.HasEffect("resist_electric") == 1)
+			else if (user.bioHolder.HasEffect("resist_electric"))
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
@@ -983,19 +985,19 @@
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		boutput(user, "<span class='notice'><b>You try to straighten [src], but it won't quite budge.</b></span>")
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 			qdel(src)
 			return
 		else
@@ -1015,7 +1017,7 @@
 	generic = 0
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 
@@ -1045,7 +1047,7 @@
 			boutput(M, "<span class='alert'><b>It burns!</b></span>")
 			M.TakeDamage("chest", 0, rand(5,15))
 
-		SPAWN_DBG(6 SECONDS)
+		SPAWN(6 SECONDS)
 			src.attacking = 0
 
 	ai_think()
@@ -1066,7 +1068,7 @@
 		..()
 		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		SPAWN_DBG(1.5 SECONDS)
+		SPAWN(1.5 SECONDS)
 			qdel(src)
 
 	seek_target()
@@ -1129,11 +1131,11 @@
 	New()
 		..()
 		if(jumpsuit)
-			overlays += image('icons/mob/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
 		if(oversuit)
-			overlays += image('icons/mob/overcoats/worn_suit.dmi', "[oversuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
 		if(overarmor)
-			overlays += image('icons/mob/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
+			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
 
 	process()
 		..()
@@ -1141,7 +1143,7 @@
 			animating = 1
 			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
 			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN_DBG(2.5 SECONDS)
+			SPAWN(2.5 SECONDS)
 				animating = 0
 
 	CritterDeath()
@@ -1171,7 +1173,7 @@
 		overarmor = "heavy"
 
 /obj/effects/ydrone_summon //WIP
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	var/range = 5
 	var/end_float_effect = 0
@@ -1181,7 +1183,7 @@
 		..()
 
 		range += rand(-1,2)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			summon()
 
 
@@ -1189,22 +1191,22 @@
 
 		var/temp_effect_limiter = 10
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 0
 			if(T_dist == 2)
 				T_effect_prob = 100
 			else
 				T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
 					animate_float(I, 5, 10)
 /*
-					SPAWN_DBG (rand(0,30))
+					SPAWN(rand(0,30))
 
 						var/n = 1
 						var/n2 = 0
@@ -1228,12 +1230,12 @@
 							sleep(0.2 SECONDS)
 */
 			if (prob(T_effect_prob))
-				SPAWN_DBG(rand(80, 100))
+				SPAWN(rand(80, 100))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
-						var/obj/somesparks = unpool(/obj/effects/sparks)
+						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
+						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1249,11 +1251,12 @@
 						else
 							T.ex_act(clamp(T_dist-2,1,3))
 							for (var/atom/A in T)
+								if(A.z != T.z) continue
 								A.ex_act(clamp(T_dist-2,1,3))
 
 						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
-							pool(O)
+							qdel(O)
 
 
 		sleep (100)
@@ -1300,7 +1303,7 @@
 		homing += rand(0,3)
 
 	process()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 		sleep(homing)
 		elec_zap()
@@ -1329,32 +1332,32 @@
 			poorPod.bullet_act(src)
 
 
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			for (var/obj/O in lineObjs)
-				pool(O)
+				qdel(O)
 
 			dispose()
 
 
 	die()
-		pool(src)
+		qdel(src)
 
 /obj/creepy_sound_trigger
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(1 MINUTE) active = 0
+					SPAWN(1 MINUTE) active = 0
 					playsound(AM, pick('sound/ambience/station/Station_SpookyAtmosphere1.ogg','sound/ambience/station/Station_SpookyAtmosphere2.ogg'), 75, 0)
 
 // cogwerks- variant for glaciers
@@ -1362,21 +1365,21 @@
 /obj/creepy_sound_trigger_glacier
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/active = 0
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(active) return
 		if(ismob(AM))
 			if(AM:client)
 				if(prob(75))
 					active = 1
-					SPAWN_DBG(1 MINUTE) active = 0
+					SPAWN(1 MINUTE) active = 0
 					if(prob(10))
-						playsound(AM, pick('sound/voice/animal/wendigo_scream.ogg', 'sound/voice/animal/wendigo_cry.ogg'),25, 1) // play these quietly so as to spook
+						playsound(AM, pick('sound/voice/animal/brullbar_scream.ogg', 'sound/voice/animal/brullbar_cry.ogg'),25, 1) // play these quietly so as to spook
 					else
 						playsound(AM, pick('sound/ambience/nature/Glacier_DeepRumbling1.ogg','sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_IceCracking.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/ambience/nature/Glacier_Scuttling.ogg'), 75, 0)
 ////////////
@@ -1390,7 +1393,7 @@
 	pixel_y = 32
 	var/activated = FALSE
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/dongle))
 			if (activated)
 				boutput(user, "<span class='alert'>There's already one plugged in!</span>")

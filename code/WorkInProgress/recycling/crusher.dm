@@ -5,10 +5,11 @@
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1.0
+	anchored = 1
 	mats = 20
 	is_syndicate = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS | USE_HASENTERED
+	flags = FLUID_SUBMERGE | UNCRUSHABLE
+	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
 	var/list/poking_jerks = null //Will be a list if need be
 
@@ -17,15 +18,30 @@
 	var/last_sfx = 0
 
 /obj/machinery/crusher/Bumped(atom/AM)
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid))
+	return_if_overlay_or_effect(AM)
+	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
 		actions.start(new /datum/action/bar/crusher(AM), src)
 
-/obj/machinery/crusher/HasEntered(atom/movable/AM, atom/OldLoc)
+/obj/machinery/crusher/Cross(atom/movable/mover)
 	. = ..()
-	if(istype(AM,/obj/item/scrap) || istype(AM, /obj/fluid) || istype(AM, /obj/decal) || isobserver(AM) || isintangible(AM) || istype(AM, /obj/machinery/conveyor))
+	if(mover.flags & UNCRUSHABLE)
+		. = TRUE
+
+/obj/machinery/crusher/Crossed(atom/movable/AM)
+	. = ..()
+	return_if_overlay_or_effect(AM)
+	if(AM.flags & UNCRUSHABLE)
+		return
+
+	var/turf/T = get_turf(src)
+	if (T.density) // no clipping through walls ty
 		return
 
 	if(!(AM.temp_flags & BEING_CRUSHERED))
@@ -37,11 +53,12 @@
 	var/atom/movable/target
 	var/classic
 
-	New(atom/movable/target)
+	New(atom/movable/target, ignore_z = FALSE)
 		. = ..()
 		var/turf/T = get_turf(target)
 		src.target = target
-		src.classic = isrestrictedz(T.z)
+		if (!ignore_z && T)
+			src.classic = isrestrictedz(T.z)
 		if(!ismob(target))
 			duration = rand(0, 20) DECI SECONDS
 			src.bar_icon_state = ""
@@ -62,7 +79,7 @@
 
 	onUpdate()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
@@ -83,7 +100,7 @@
 
 	onInterrupt(flag)
 		. = ..()
-		if(ismob(target) && target.temp_flags & BEING_CRUSHERED)
+		if(ismob(target) && !QDELETED(target) && (target.temp_flags & BEING_CRUSHERED))
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
@@ -97,7 +114,7 @@
 
 	onEnd()
 		. = ..()
-		if(!IN_RANGE(owner, target, 1))
+		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -150,7 +167,7 @@
 
 
 /obj/machinery/crusher/attack_hand(mob/user)
-	if(!user || user.stat || get_dist(user,src)>1 || istype(user, /mob/dead/aieye)) //No unconscious / dead / distant users
+	if(!user || user.stat || BOUNDS_DIST(user, src) > 0 || isintangible(user)) //No unconscious / dead / distant users
 		return
 
 	//Daring text showing how BRAVE THIS PERSON IS!!!
@@ -219,3 +236,5 @@
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
 		qdel(src)
 		return
+	for (var/atom/movable/AM in T) //heh
+		src.Crossed(AM)

@@ -8,10 +8,4 @@
 /obj/effects/ion_trails
 	name = "ion trails"
 	icon_state = "ion_trails"
-	anchored = 1.0
-
-/obj/effects/ion_trails/pooled(var/poolname)
-	icon_state = "blank"
-	pixel_x = 0
-	pixel_y = 0
-	..()
+	anchored = 1

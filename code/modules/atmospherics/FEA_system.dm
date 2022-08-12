@@ -29,11 +29,11 @@ Important variables:
 		This stores all data for.
 		If you modify, make sure to update the archived_cycle to prevent race conditions and maintain symmetry
 
-	atom/CanPass(atom/movable/mover, turf/target, height, air_group)
+	atom/Cross(atom/movable/mover, turf/target, height, air_group)
 		returns 1 for allow pass and 0 for deny pass
 		Turfs automatically call this for all objects/mobs in its turf.
-		This is called both as source.CanPass(target, height, air_group)
-			and  target.CanPass(source, height, air_group)
+		This is called both as source.Cross(target, height, air_group)
+			and  target.Cross(source, height, air_group)
 
 		Cases for the parameters
 		1. This is called with args (mover, location, height>0, air_group=0) for normal objects.
@@ -52,32 +52,24 @@ Important Procedures
 
 */
 
-/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return (!density || !height || air_group)
+/atom/Cross(atom/movable/mover)
+	return (!density)
 
+/atom/proc/gas_cross(turf/target)
+	return !src.gas_impermeable
 
-/turf/CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
-	if(!target) return 0
-
-	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !density
-
-	else // Now, doing more detailed checks for air movement and air group formation
-		if(target.blocks_air||blocks_air)
+/turf/gas_cross(turf/target)
+	if(!target)
+		return 0
+	if(target?.gas_impermeable || src.gas_impermeable)
+		return 0
+	for(var/atom/A as anything in src)
+		if(!A.gas_cross(target))
 			return 0
-
-		if (src.checkingcanpass > 0)
-			for(var/obj/obstacle as anything in src)
-				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, target, height, air_group))
-					return 0
-
-		if (target?.checkingcanpass > 0)
-			for(var/obj/obstacle as anything in target)
-				if((obstacle.event_handler_flags & USE_CANPASS) && !obstacle.CanPass(mover, src, height, air_group))
-					return 0
-
-		return 1
-
+	for(var/atom/A as anything in target)
+		if(!A.gas_cross(src))
+			return 0
+	return 1
 
 var/global/datum/controller/air_system/air_master
 var/global/total_gas_mixtures = 0
@@ -163,7 +155,7 @@ datum/controller/air_system
 		var/start_time = world.timeofday
 
 		for(var/turf/simulated/S in world)
-			if(!S.blocks_air && !S.parent)
+			if(!S.gas_impermeable && !S.parent)
 				assemble_group_turf(S)
 			S.update_air_properties()
 
@@ -183,7 +175,7 @@ datum/controller/air_system
 				test.length_space_border = 0
 				for(var/direction in cardinal)
 					var/turf/T = get_step(test,direction)
-					if(T && !(T in members) && test.CanPass(null, T, null,1))
+					if(T && !(T in members) && test.gas_cross(T))
 						if(istype(T,/turf/simulated))
 							if(!T:parent)
 								possible_members += T
@@ -220,7 +212,7 @@ datum/controller/air_system
 					if (b == test)
 						test.dist_to_space = 1
 						break
-					dist = get_dist(b, test)
+					dist = GET_DIST(b, test)
 					if ((test.dist_to_space == null) || (dist < test.dist_to_space))
 						test.dist_to_space = dist
 
@@ -278,7 +270,7 @@ datum/controller/air_system
 	process_tiles_to_space()
 		if(length(tiles_to_space))
 			for(var/turf/T as anything in tiles_to_space)
-				T.ReplaceWithSpace()
+				T.ReplaceWithSpaceForce() // If we made it this far, force is appropriate as we know it NEEDs to be updated
 			tiles_to_space.len = 0
 
 	process_update_tiles()

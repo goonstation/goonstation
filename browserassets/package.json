@@ -1,6 +1,6 @@
 {
   "private": true,
-  "devDependencies": {
+  "dependencies": {
     "autoprefixer-core": "^6.0.1",
     "cssnano": "^4.1.10",
     "grunt": "^1.3.0",

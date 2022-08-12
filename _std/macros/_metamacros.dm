@@ -1,7 +1,7 @@
 
 // zero overhead tuple macros
 // useful when you want to store multiple values in one macro
-// Note that you can use other macros inside a tuple definition, see mob_properties.dm for an example
+// Note that you can use other macros inside a tuple definition, see atom_properties.dm for an example
 /*
 Example:
 #define RADIO_MEDICAL(x) x(1356, "#461B7E", "medical")
@@ -35,11 +35,14 @@ Example:
 #define TUPLE_GET_9(x) x(_GETTER_9)
 #define TUPLE_GET_10(x) x(_GETTER_10)
 
+/// Useful for when you need to include in a macro, can't use #include directly due to # being interpreted as stringification
+#define INCLUDE #include
+
 /// Given x, evaluates to x.
 #define IDENTITY(x) x
 /// Evaluates to nothing.
 #define NOTHING(...)
-/// No operation dummy thing for mob property purposes, most of the stuff is there to suppress warnings, does nothing
+/// No operation dummy thing for atom property purposes, most of the stuff is there to suppress warnings, does nothing
 #define DUMMY(_, _, lol, ...) ASSERT(UNLINT(lol || 1))
 
 #define _LENGTH_GETTER(args...) _GETTER_10(##args, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)

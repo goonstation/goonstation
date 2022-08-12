@@ -10,6 +10,6 @@ var/global/datum/ui_state/tgui_human_adjacent_state/tgui_human_adjacent_state = 
 /datum/ui_state/tgui_human_adjacent_state/can_use_topic(src_object, mob/user)
 	. = user.default_can_use_topic(src_object)
 
-	if(!(IN_RANGE(src_object, user, 1)) || (!ishuman(user)))
+	if(!((BOUNDS_DIST(src_object, user) == 0)) || (!ishuman(user)))
 		// Can't be used unless adjacent and human, even with TK
 		. = min(., UI_UPDATE)

@@ -5,6 +5,7 @@
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
 	type_name = "Cloner"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
 	min_triggers = 2
 	max_triggers = 2
@@ -38,17 +39,14 @@
 			// fluff
 			if(swapSouls)
 				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
-			var/filter = filter(type="outline", size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP)
-			H.filters += filter
-			SPAWN_DBG(0.7 SECONDS)
-				H.filters -= filter
+			H.add_filter("cloner_art_outline", 0, outline_filter(size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP))
+			SPAWN(0.7 SECONDS)
+				H.remove_filter("cloner_art_outline")
 
 			if(deep_count > 0 && prob(5))
 				deep_count--
 				clone = semi_deep_copy(H, O, copy_flags=COPY_SKIP_EXPLOITABLE) // admins made me do it
-				var/lastFilterIndex = length(clone.filters)
-				if(lastFilterIndex)
-					clone.filters -= clone.filters[lastFilterIndex]
+				clone.remove_filter("cloner_art_outline")
 			else
 				// a bunch of stolen cloner code
 				clone = new /mob/living/carbon/human/clone(O)
@@ -59,8 +57,8 @@
 					clone.abilityHolder = H.abilityHolder.deepCopy()
 					clone.abilityHolder.transferOwnership(clone)
 					clone.abilityHolder.remove_unlocks()
-				if(H.traitHolder && length(H.traitHolder.traits))
-					clone.traitHolder.traits = H.traitHolder.traits.Copy()
+				if(!isnull(H.traitHolder))
+					H.traitHolder.copy_to(clone.traitHolder)
 				clone.real_name = user.real_name
 				clone.UpdateName()
 
@@ -81,7 +79,7 @@
 				// make original body evil
 				H.attack_alert = 0
 				H.ai_init()
-				SPAWN_DBG(rand(1 SECOND, 10 SECONDS))
+				SPAWN(rand(1 SECOND, 10 SECONDS))
 					if(H) // completely convincing dialogue
 						H.say(pick(
 							"Well, that was weird!",
@@ -102,18 +100,18 @@
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
 
-			SPAWN_DBG(imprison_time)
+			SPAWN(imprison_time)
 				if (!O.disposed)
 					O.ArtifactDeactivated()
 
 	effect_deactivate(obj/O)
 		if (..())
 			return
-		for(var/obj/I in O.contents)
-			I.set_loc(get_turf(O))
 		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
 			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
 		else
 			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+		for(var/atom/movable/I in (O.contents-O.vis_contents))
+			I.set_loc(get_turf(O))
 		clone = null

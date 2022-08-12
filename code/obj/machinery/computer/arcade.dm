@@ -37,7 +37,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	show_ui(user)
@@ -140,14 +140,14 @@
 		var/prizeselect = rand(1,8)
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/P = new /obj/item/spacecash
 				P.setup(src.loc)
 				prize = P
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				if (isrestrictedz(z))
-					var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/P = new /obj/item/spacecash
 					P.setup(src.loc)
 					prize = P
 					prize.name = "space ticket"
@@ -155,6 +155,7 @@
 				else
 					prize = new /obj/item/device/radio/beacon(src.loc)
 					prize.name = "electronic blink toy game"
+					prize.anchored = FALSE
 					prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo(src.loc)
@@ -227,6 +228,6 @@
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "arcade0"
 				status |= NOPOWER

@@ -13,7 +13,7 @@
 	mats = 8
 	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
-	var/on = 0
+	var/active = 0
 
 	var/customization_first_color = 0
 	var/customization_second_color = 0
@@ -26,7 +26,7 @@
 
 	dropped(mob/user)
 		..()
-		SPAWN_DBG(0) // Ported from cloaking device. Spawn call is necessary for some reason (Convair880).
+		SPAWN(0) // Ported from cloaking device. Spawn call is necessary for some reason (Convair880).
 			if (!src) return
 			if (ismob(src.loc) && src.loc == user)
 				if (ishuman(user))
@@ -37,11 +37,12 @@
 						return
 					if (H.belt && H.belt == src)
 						return
-			src.disrupt(user)
+			src.deactivate(user, FALSE)
 			return
 
-	attack_self(mob/user)
-		if (!src.on && (src.anti_spam && world.time < src.anti_spam + 100))
+	attack_self(mob/user as mob)
+		src.add_fingerprint(user)
+		if (!src.active && (src.anti_spam && world.time < src.anti_spam + 100))
 			user.show_text("[src] is recharging!", "red")
 			return
 		if (ishuman(user))
@@ -49,18 +50,63 @@
 			if (!H.bioHolder || !H.bioHolder.mobAppearance)
 				H.show_text("This device is only designed to work on humans!", "red")
 				return
-			src.toggle(H)
 		else
 			user.show_text("This device is only designed to work on humans!", "red")
+			return
+		if (src.active)
+			src.deactivate(user, TRUE)
+		else
+			switch (src.activate(user))
+				if (0)
+					user.show_text("You can't have more than one active [src.name] on your person.", "red")
+				if (1)
+					user.show_text("The [src.name] is now active.", "blue")
 		return
+
+	proc/activate(mob/user as mob)
+		// Multiple active devices can lead to weird effects, okay (Convair880).
+		var/list/number_of_devices = list()
+		for (var/obj/item/device/disguiser/D in user)
+			if (D.active)
+				number_of_devices += D
+		if (number_of_devices.len > 0)
+			return 0
+		RegisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE, .proc/deactivate)
+		src.active = 1
+		src.icon_state = "enshield1"
+		src.change_appearance(user, 0)
+		src.anti_spam = world.time
+		var/obj/overlay/T = new/obj/overlay(get_turf(src))
+		T.icon = 'icons/effects/effects.dmi'
+		flick("emppulse",T)
+		SPAWN(0.8 SECONDS)
+			if (T) qdel(T)
+		return 1
+
+	proc/deactivate(mob/user as mob, var/voluntary)
+		UnregisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE)
+		if(src.active && istype(user))
+			elecflash(src)
+			if (!voluntary)
+				user.visible_message("<span class='notice'><b>[user]'s disguiser is disrupted!</b></span>")
+			else
+				user.show_text("You deactivate the [src.name].", "blue")
+			src.change_appearance(user, 1)
+			src.anti_spam = world.time
+			var/obj/overlay/T = new/obj/overlay(get_turf(src))
+			T.icon = 'icons/effects/effects.dmi'
+			flick("emppulse",T)
+			SPAWN(0.8 SECONDS)
+				if (T) qdel(T)
+		src.active = 0
+		src.icon_state = "enshield0"
 
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (!H.bioHolder || !H.bioHolder.mobAppearance)
 				return
-			H.visible_message("<span class='notice'><b>[H]'s [src.name] is disrupted!</b></span>")
-			src.disrupt(H)
+			src.deactivate(H, FALSE)
 		return
 
 	// Added to 1) fix a couple bugs and 2) cut down on duplicate code.
@@ -94,73 +140,5 @@
 			user.update_inhands()
 			user.update_clothing()
 			user.update_colorful_parts()
-
-		return
-
-	proc/disrupt(mob/living/carbon/human/user)
-		if (!src)
-			return
-		if (src.on)
-			src.icon_state = "enshield0"
-			src.on = 0
-
-			if (!user || !ishuman(user))
-				return
-			var/datum/appearanceHolder/AH = user.bioHolder.mobAppearance
-			if (!AH || !istype(AH, /datum/appearanceHolder))
-				return
-
-			elecflash(src)
-
-			src.change_appearance(user, 1)
-			src.anti_spam = world.time
-		return
-
-	proc/toggle(mob/living/carbon/human/user)
-		if (!src || !user || !ishuman(user))
-			return
-		var/datum/appearanceHolder/AH = user.bioHolder.mobAppearance
-		if (!AH || !istype(AH, /datum/appearanceHolder))
-			return
-
-		if (src.on)
-			src.icon_state = "enshield0"
-			src.on = 0
-
-			elecflash(src)
-
-			user.show_text("You deactivate the [src.name].", "blue")
-			src.change_appearance(user, 1)
-			src.anti_spam = world.time
-
-			var/obj/overlay/T = new/obj/overlay(get_turf(src))
-			T.icon = 'icons/effects/effects.dmi'
-			flick("emppulse",T)
-			SPAWN_DBG(0.8 SECONDS)
-				if (T) qdel(T)
-
-		else
-
-			// Multiple active devices can lead to weird effects, okay (Convair880).
-			var/list/number_of_devices = list()
-			for (var/obj/item/device/disguiser/D in user)
-				if (D.on)
-					number_of_devices += D
-			if (number_of_devices.len > 0)
-				user.show_text("You can't have more than one active [src.name] on your person.", "red")
-				return
-
-			src.on = 1
-			src.icon_state = "enshield1"
-
-			user.show_text("You active the [src.name]", "blue")
-			src.change_appearance(user, 0)
-			src.anti_spam = world.time
-
-			var/obj/overlay/T = new/obj/overlay(get_turf(src))
-			T.icon = 'icons/effects/effects.dmi'
-			flick("emppulse",T)
-			SPAWN_DBG(0.8 SECONDS)
-				if (T) qdel(T)
 
 		return

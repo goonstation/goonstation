@@ -143,7 +143,7 @@
   else
     boutput(user, "<span class='notice'>This device processes Martian bodies that are placed into it or next to it.</span>")
 
-/obj/martianBiotech/cloner/attackby(obj/item/W as obj, mob/user as mob)
+/obj/martianBiotech/cloner/attackby(obj/item/W, mob/user)
   var/obj/item/grab/G = W
   if (ismartian(user) && istype(G) && ismob(G.affecting))
     if(src.in_use)
