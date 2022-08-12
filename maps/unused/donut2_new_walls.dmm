@@ -1090,7 +1090,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Telescience";
 	dir = 1
 	},
 /turf/simulated/floor/orangeblack/side/white,
@@ -1569,7 +1569,7 @@
 "afd" = (
 /obj/stool/bench/green/auto,
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Science Lobby";
 	dir = 8
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -2358,7 +2358,7 @@
 	bank_id = "Mixer"
 	},
 /obj/machinery/camera{
-	c_tag = "General Storage Entrance";
+	c_tag = "Toxins";
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -2486,21 +2486,6 @@
 	},
 /area/station/science/lobby)
 "ahM" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
-/turf/simulated/floor/purple/side{
-	dir = 1
-	},
-/area/station/science/lobby)
-"ahN" = (
-/obj/machinery/camera{
-	c_tag = "Central Hallway West";
-	dir = 2;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-s"
@@ -3615,7 +3600,7 @@
 /obj/machinery/bot/guardbot,
 /obj/machinery/light/incandescent,
 /obj/machinery/camera{
-	c_tag = "General Storage Entrance";
+	c_tag = "Robot Depot";
 	dir = 4
 	},
 /turf/simulated/floor/bot,
@@ -3833,7 +3818,7 @@
 /area/station/crew_quarters/observatory)
 "alD" = (
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Central Hallway South";
 	dir = 8
 	},
 /turf/simulated/floor/bluegreen/corner,
@@ -34518,7 +34503,7 @@
 /obj/machinery/light/incandescent,
 /obj/machinery/chem_heater,
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Chemistry Laboratory";
 	dir = 8
 	},
 /turf/simulated/floor/purplewhite{
@@ -36020,7 +36005,7 @@
 /area/station/quartermaster/refinery)
 "htE" = (
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Test Chamber";
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -40567,7 +40552,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Artifact Laboratory";
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -41799,7 +41784,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/camera{
-	c_tag = "General Storage Entrance";
+	c_tag = "Research Director's Office";
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -46968,7 +46953,7 @@
 /area/space)
 "udT" = (
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Central Hallway North";
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -47338,7 +47323,7 @@
 "uBY" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/camera{
-	c_tag = "General Storage Entrance";
+	c_tag = "Toxins Storage";
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -48776,7 +48761,7 @@
 /area/station/hallway/primary/south)
 "wqj" = (
 /obj/machinery/camera{
-	c_tag = "Electronics";
+	c_tag = "Research Podbay";
 	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
@@ -117335,7 +117320,7 @@ afF
 aec
 agI
 aho
-ahN
+ahM
 joE
 aiE
 ahq
