@@ -28,7 +28,7 @@ export const TrscArray = (props, context) => {
                     <ProgressBar value={cellDiff} color="#f9ae00" />
                   </Flex.Item>
                   <Flex.Item>
-                    <strong>Transceptions Remaining<br />Within Power Limit<br /></strong><h2>{sendsSafe}</h2>
+                    <strong>Transceptions Remaining<br />Within Standard Limit<br /></strong><h2>{sendsSafe}</h2>
                   </Flex.Item>
                   <Flex.Item>
                     <strong>Maximum Remaining<br />Transceptions<br /></strong><h2>{sendsMax}</h2>
