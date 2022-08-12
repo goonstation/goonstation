@@ -26766,7 +26766,10 @@
 	},
 /area/station/hangar/sec)
 "bxt" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/east,
+/obj/machinery/r_door_control/podbay/security{
+	pixel_x = 24;
+	name = "Security Hangar Door Control"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bxu" = (
@@ -27264,7 +27267,7 @@
 	},
 /area/station/hangar/sec)
 "byQ" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -45237,7 +45240,9 @@
 "slP" = (
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiHacking = 1
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "smO" = (
@@ -48033,10 +48038,10 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "vrM" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/light/incandescent,
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "vrS" = (
