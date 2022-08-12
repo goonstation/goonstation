@@ -7815,7 +7815,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -18442,7 +18443,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
-	name = "Cloning"
+	name = "Cloning";
+	id = "Cloning"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -52593,7 +52595,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
