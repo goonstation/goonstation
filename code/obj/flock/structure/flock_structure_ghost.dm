@@ -49,6 +49,8 @@
 	if (src.flock)
 		if(building == /obj/flock_structure/relay)
 			src.flock.relay_in_progress_or_finished = TRUE
+			src.uses_health_icon = FALSE
+			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
 
 /obj/flock_structure/ghost/disposing()
 	if (src.flock)

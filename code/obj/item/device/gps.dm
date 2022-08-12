@@ -271,7 +271,7 @@
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
-		if (get_dist(src,tracking_target) == 0)
+		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
 			icon_state = "gps"

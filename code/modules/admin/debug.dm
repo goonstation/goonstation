@@ -1077,11 +1077,11 @@ proc/display_camera_paths()
 	ADMIN_ONLY
 
 	if(!islist(usr.client.color))
-		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+		src.set_color()
 
 	var/list/newColorMatrix = generate_random_value_list(2, 20)
+	src.animate_color(newColorMatrix)
 
-	animate(usr.client, color=newColorMatrix, time=5, easing=SINE_EASING)
 	var/matrixTable = "<table>"
 	var/isBigMatrix = (newColorMatrix.len == 20)
 	var/rows = isBigMatrix ? 5 : 4
@@ -1178,12 +1178,12 @@ var/datum/flock/testflock
 
 	Topic(href, href_list)
 		if(!islist(usr.client.color))
-			usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+			usr.client.set_color()
 
 		// as somepotato pointed out this form is very insecure, so let's do some serverside verification that we got what we wanted
 		var/sanitised = sanitize(strip_html(href_list["matrix"]))
 		var/list/matrixStrings = splittext(sanitised, ",")
-		// we are expecting 12 strings, so abort if we don't have that many
+		// we are expecting 20 strings, so abort if we don't have that many
 		if(matrixStrings.len != 20)
 			return
 
@@ -1196,15 +1196,15 @@ var/datum/flock/testflock
 
 			if(href_list["animate"] == "y")
 				for(var/client/c)
-					animate(c, color=matrix, time=5, easing=SINE_EASING)
+					c.animate_color(matrix)
 			else
 				for(var/client/c)
-					c.color = matrix
+					c.set_color(matrix)
 		else
 			if(href_list["animate"] == "y")
-				animate(usr.client, color=matrix, time=5, easing=SINE_EASING)
+				usr.client.animate_color(matrix)
 			else
-				usr.client.color = matrix
+				usr.client.set_color(matrix)
 
 	proc/callJsFunc(var/client, var/funcName, var/list/params)
 		var/paramsJS = list2params(params)

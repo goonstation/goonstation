@@ -146,7 +146,7 @@
 				fellow_bee.task = "chasing"
 
 	attack_ai(mob/user as mob)
-		if (get_dist(user, src) < 2)
+		if (GET_DIST(user, src) < 2)
 			return attack_hand(user)
 		else
 			return ..()
@@ -338,7 +338,7 @@
 					src.visible_message("<b>[src]</b> bumbles happily!")
 					src.dance()
 				SPAWN(18 SECONDS)
-					if(src.task != "chasing" && src.task != "attacking" && user && get_dist(src, user) <= 7)
+					if(src.task != "chasing" && src.task != "attacking" && user && GET_DIST(src, user) <= 7)
 						src.visible_message("<b>[src]</b> buzzes in a clueless manner as to why [user] looks so dejected.[prob(5)?" You can tell because you studied bee linguistics, ok?": null]")
 
 						//Is this a bad idea? It probably is a bad idea.
@@ -1144,7 +1144,7 @@
 			var/mob/living/H = M
 			H.was_harmed(src)
 		SPAWN(2.5 SECONDS)
-			if ((get_dist(src, M) <= 6) && src.alive)
+			if ((GET_DIST(src, M) <= 6) && src.alive)
 				M.visible_message("<span class='alert'><b>[M.name] clutches their temples!</b></span>")
 				M.emote("scream")
 				M.setStatusMin("paralysis", 10 SECONDS)

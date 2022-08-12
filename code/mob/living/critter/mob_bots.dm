@@ -374,7 +374,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				break
 			if (F == get_turf(holder.owner))
 				continue
-			if (get_dist(holder.owner,F) > max_fire_range)
+			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
 			tfireflash(F,0.5,temp)
 

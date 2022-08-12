@@ -1038,7 +1038,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	use_ability()
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(critical_text, M)
 			C.play_optional_sound(critical_sound)
@@ -1108,7 +1108,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			return 0
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(inject_text, M)
 			C.play_optional_sound(inject_sound)

@@ -351,7 +351,7 @@
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
-				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
+				mindist = min(mindist, GET_DIST(T, get_turf(nucleus)))
 
 		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
 

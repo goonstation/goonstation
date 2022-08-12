@@ -414,6 +414,10 @@ var/global
 			C = target
 		else if (ismob(target))
 			C = target:client
+			if(istype(target, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = target
+				if(AI.deployed_to_eyecam)
+					C = AI.eyecam?.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
 

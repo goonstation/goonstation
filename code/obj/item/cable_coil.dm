@@ -252,7 +252,7 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
 		return
-	if (get_dist(target, source) > 1)
+	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 
@@ -274,7 +274,7 @@ obj/item/cable_coil/dropped(mob/user)
 	var/turf/target = C.loc
 	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
-	if (get_dist(C, user) > 1)		// make sure it's close enough
+	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on

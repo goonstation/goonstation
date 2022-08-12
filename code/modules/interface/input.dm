@@ -219,7 +219,7 @@ var/list/dirty_keystates = list()
 				stathover = null
 			else
 				var/turf/t = get_turf(object)
-				if( get_dist(t, get_turf(mob)) < 5 )
+				if( GET_DIST(t, get_turf(mob)) < 5 )
 					src.stathover = t
 					src.stathover_start = get_turf(mob)
 

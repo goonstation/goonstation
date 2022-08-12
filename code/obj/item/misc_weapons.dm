@@ -651,7 +651,7 @@
 	// can_disarm = 1
 	two_handed = 0
 	var/use_two_handed = 1
-	var/status = 0
+	var/status = FALSE
 	var/one_handed_force = 7
 	var/two_handed_force = 13
 
@@ -688,8 +688,9 @@
 		..()
 
 	dropped(mob/user)
-		setTwoHanded(0)
-		status = 0
+		if (src.status)
+			setTwoHanded(FALSE)
+			src.status = FALSE
 		..()
 
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
@@ -1468,6 +1469,7 @@ obj/item/fragile_sword
 			if(!isdead(C))
 				if(force >= minimum_force)
 					force -= 5
+					throwforce = force
 					boutput(user, "<span class='alert'>The [src]'s edge dulls slightly on impact!</span>")
 					take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 		..()
@@ -1476,6 +1478,7 @@ obj/item/fragile_sword
 		if (istype(W, /obj/item/whetstone))
 			if(force <= maximum_force)
 				force += 5
+				throwforce = force
 				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
 				playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
 		..()

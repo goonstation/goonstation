@@ -38,6 +38,8 @@ var/datum/artifact_controller/artifact_controls
 
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
+			if(!AI.type_name)
+				continue
 			artifact_types += AI
 			artifact_types_from_name[AI.type_name] = AI
 

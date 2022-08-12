@@ -119,6 +119,27 @@ datum/preferences
 			qdel(src.preview)
 			src.preview = null
 
+	ui_static_data(mob/user)
+		var/list/traits = list()
+		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits[trait.id] = list(
+				"id" = trait.id,
+				"name" = trait.name,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+			)
+
+		. = list(
+			"traitsData" = traits
+		)
+
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
@@ -145,6 +166,20 @@ datum/preferences
 				cloud_saves += name
 
 		sanitize_null_values()
+
+		var/list/traits = list()
+		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -210,6 +245,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -255,11 +293,6 @@ datum/preferences
 
 			if ("open-occupation-window")
 				src.SetChoices(usr)
-				ui.close()
-				return TRUE
-
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
 				ui.close()
 				return TRUE
 
@@ -869,6 +902,19 @@ datum/preferences
 
 			if ("update-preferredMap")
 				src.preferred_map = mapSwitcher.clientSelectMap(usr.client,pickable=0)
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
 				return TRUE
 
@@ -1538,10 +1584,6 @@ datum/preferences
 
 		if (link_tags["jobswindow"])
 			src.SetChoices(user)
-			return
-
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
 			return
 
 		if (link_tags["closejobswindow"])

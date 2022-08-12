@@ -543,7 +543,7 @@
 									break
 								else
 									attackers -= M
-									var/dist = get_dist(M, src)
+									var/dist = GET_DIST(M, src)
 									if (n_dist > dist)
 										n_dist = dist
 										nearest = M
@@ -691,7 +691,7 @@
 		return 0
 
 	onBlobHit(var/obj/blob/B, var/mob/M)
-		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
+		if (!prob(clamp((2000 - 100 * GET_DIST(B, src)) / 13, 1, 100)))
 			return
 		if (!(M in attackers))
 			attackers += M
@@ -703,7 +703,7 @@
 		counter = 0
 
 	onBlobDeath(var/obj/blob/B, var/mob/M)
-		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
+		if (!prob(clamp((2000 - 100 * GET_DIST(B, src)) / 13, 1, 100)))
 			return
 		attacker = M
 		if (istype(B, /obj/blob/ribosome))

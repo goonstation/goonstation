@@ -19,7 +19,7 @@
 		if (M == target)
 			boutput(M, "<span class='alert'>How could you afflict yourself with your own affliction?</span>")
 			return 1
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
@@ -51,7 +51,7 @@
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		// It's okay when the victim expired half-way through the spread, we're interrupted, find a new "victim"
@@ -65,7 +65,7 @@
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/done = TIME - started

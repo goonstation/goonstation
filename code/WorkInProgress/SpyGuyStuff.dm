@@ -956,8 +956,9 @@ proc/Create_Tommyname()
 
 // It will crumple when dropped
 /obj/item/garrote/dropped(mob/user)
+	if (src.wire_readied)
+		set_readiness(0)
 	..()
-	set_readiness(0)
 
 /obj/item/garrote/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
