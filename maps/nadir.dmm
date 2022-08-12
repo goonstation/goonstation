@@ -36441,10 +36441,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/computer3frame{
-	anchored = 1;
-	dir = 8;
-	state = 1
+/obj/machinery/computer/trsc_array{
+	dir = 8
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{

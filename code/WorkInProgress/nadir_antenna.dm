@@ -28,9 +28,10 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	///Beam overlay
 	var/obj/overlay/telebeam
 
-	//Failsafe variables
-	var/failsafe_enabled = TRUE
-	var/failsafe_active = TRUE
+	///Determines if failsafe threshold is equipment power threshold plus transception cost (true) or transception cost (false).
+	var/equipment_failsafe = TRUE
+	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
+	var/failsafe_active = FALSE
 
 	New()
 		. = ..()
@@ -59,7 +60,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(!powered() || !src.primed)
 			return TRANSCEIVE_NOPOWER
-		if(src.failsafe_prompt())
+		if(src.apc_power_check())
 			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
@@ -74,7 +75,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(!powered() || !src.primed)
 			return
-		if(src.failsafe_prompt())
+		if(src.apc_power_check())
 			return
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
@@ -102,8 +103,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			C.use(use_amount)
 			return 1
 
-	///If failsafe mode is active, disable primed status if power grows too low and (to be implemented) notify pad terminals of this failure
-	proc/failsafe_prompt() //returns true if error
+	///Checks status of local APC, disables transception if power is insufficient (just over 30% if equipment failsafe is enabled, 1 transception
+	proc/apc_power_check() //returns true if error
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return
@@ -111,7 +112,13 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
-		if (C.charge < combined_cost)
+		if (equipment_failsafe && C.charge < combined_cost)
+			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
+			src.primed = FALSE
+			src.failsafe_active = TRUE
+			src.UpdateIcon()
+			. = TRUE
+		else if(C.charge <= ARRAY_STARTCOST)
 			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
 			src.primed = FALSE
 			src.failsafe_active = TRUE
@@ -127,7 +134,11 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (AC && !AC.cell)
 			return
 		var/obj/item/cell/C = AC.cell
-		var/combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
+		var/combined_cost
+		if (equipment_failsafe)
+			combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
+		else
+			combined_cost = (0.1 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge > combined_cost)
 			playsound(src.loc, "sound/machines/shieldgen_startup.ogg", 50, 1)
 			src.primed = TRUE
@@ -138,9 +149,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	ex_act(severity) //tbi: damage and repair
 		return
-
-#undef ARRAY_STARTCOST
-#undef ARRAY_TELECOST
 
 /obj/machinery/communications_dish/transception/update_icon()
 	if(powered())
@@ -163,6 +171,61 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	icon_state = "allquiet"
 	plane = PLANE_ABOVE_LIGHTING
 	mouse_opacity = 0
+
+/obj/machinery/computer/trsc_array
+	name = "Transception Array Control"
+	desc = "Endpoint for status reporting and configuration for a nearby transception array."
+
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "alert:0"
+	flags = TGUI_INTERACTIVE
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "TrscArray")
+			ui.open()
+
+	ui_data(mob/user)
+		var/obj/machinery/power/apc/arrayapc = get_local_apc(transception_array)
+		var/obj/item/cell/arraycell = arrayapc.cell
+		var/cellstat_formatted
+		var/celldiff_val
+		var/safe_transceptions
+		var/max_transceptions
+		if(arraycell)
+			cellstat_formatted = "[round(arraycell.charge)]/[arraycell.maxcharge]"
+			celldiff_val = arraycell.charge / arraycell.maxcharge
+			var/check_safe = round((arraycell.charge - (0.3 * arraycell.maxcharge)) / ARRAY_STARTCOST)
+			var/check_max = round(arraycell.charge / ARRAY_STARTCOST)
+			safe_transceptions = "[check_safe]"
+			max_transceptions = "[check_max]"
+		else
+			cellstat_formatted = "ERROR"
+			celldiff_val = 0
+			safe_transceptions = "ERROR"
+			max_transceptions = "ERROR"
+		. = list(
+			"cellStat" = cellstat_formatted,
+			"cellDiff" = celldiff_val,
+			"sendsSafe" = safe_transceptions,
+			"sendsMax" = max_transceptions,
+			"failsafeThreshold" = transception_array.equipment_failsafe ? "STANDARD" : "MINIMUM",
+			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE TRIPPED" : "OPERATIONAL",
+			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
+			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
+		)
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		else if (action == "toggle_failsafe")
+			transception_array.equipment_failsafe = !(transception_array.equipment_failsafe)
+
+#undef ARRAY_STARTCOST
+#undef ARRAY_TELECOST
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
