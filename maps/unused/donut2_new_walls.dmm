@@ -1090,10 +1090,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera{
-	c_tag = "Telescience";
-	dir = 1;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 1
 	},
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
@@ -1571,10 +1569,8 @@
 "afd" = (
 /obj/stool/bench/green/auto,
 /obj/machinery/camera{
-	c_tag = "Science Lobby";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 8
 	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
@@ -2132,16 +2128,14 @@
 /turf/simulated/floor/blueblack,
 /area/station/science/lobby)
 "agU" = (
-/obj/machinery/camera{
-	c_tag = "Security Post";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
 /obj/disposalpipe/trunk/ejection{
 	dir = 8
 	},
 /obj/disposaloutlet{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Electronics";
 	dir = 8
 	},
 /turf/simulated/floor/blueblack{
@@ -2364,10 +2358,8 @@
 	bank_id = "Mixer"
 	},
 /obj/machinery/camera{
-	c_tag = "Toxins";
-	dir = 4;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "General Storage Entrance";
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -3622,6 +3614,10 @@
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
 /obj/machinery/light/incandescent,
+/obj/machinery/camera{
+	c_tag = "General Storage Entrance";
+	dir = 4
+	},
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
 "akL" = (
@@ -3837,10 +3833,8 @@
 /area/station/crew_quarters/observatory)
 "alD" = (
 /obj/machinery/camera{
-	c_tag = "Central Hallway South";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 8
 	},
 /turf/simulated/floor/bluegreen/corner,
 /area/station/science/lobby)
@@ -4050,10 +4044,8 @@
 /area/station/turret_protected/Zeta)
 "amR" = (
 /obj/machinery/camera{
-	c_tag = "Computer Core";
-	dir = 4;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "General Storage Entrance";
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -26766,7 +26758,10 @@
 	},
 /area/station/hangar/sec)
 "bxt" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/east,
+/obj/machinery/r_door_control/podbay/security{
+	pixel_x = 30;
+	name = "Security Podbay Door Control"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bxu" = (
@@ -27264,7 +27259,7 @@
 	},
 /area/station/hangar/sec)
 "byQ" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -32990,12 +32985,6 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
-/obj/machinery/camera{
-	c_tag = "Computer Core";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "dXg" = (
@@ -33830,15 +33819,13 @@
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/research)
 "ePd" = (
-/obj/machinery/camera{
-	c_tag = "Central Hallway South";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
 /obj/machinery/disposal/cart_port,
 /obj/disposalpipe/trunk/north,
 /obj/storage/cart/trash,
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "ePi" = (
@@ -34530,6 +34517,10 @@
 "fFY" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/chem_heater,
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 8
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -34558,6 +34549,10 @@
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
@@ -36025,10 +36020,8 @@
 /area/station/quartermaster/refinery)
 "htE" = (
 /obj/machinery/camera{
-	c_tag = "Test Chamber 1";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
@@ -40573,6 +40566,10 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/science/artifact)
 "mQe" = (
@@ -41795,18 +41792,16 @@
 	pixel_x = -24;
 	pixel_y = 0
 	},
-/obj/machinery/camera{
-	c_tag = "Research Director's Office";
-	dir = 4;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/camera{
+	c_tag = "General Storage Entrance";
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/hor)
 "omo" = (
@@ -45237,7 +45232,9 @@
 "slP" = (
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiHacking = 1
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "smO" = (
@@ -46970,20 +46967,12 @@
 /turf/space,
 /area/space)
 "udT" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
-	c_tag = "Telescience Hallway";
-	dir = 4;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 8
 	},
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
+/turf/simulated/floor,
+/area/station/science/lobby)
 "ufE" = (
 /obj/cable{
 	d1 = 1;
@@ -47346,6 +47335,14 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"uBY" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/camera{
+	c_tag = "General Storage Entrance";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "uCo" = (
 /obj/cable{
 	d1 = 1;
@@ -48033,10 +48030,10 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "vrM" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/light/incandescent,
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "vrS" = (
@@ -48779,10 +48776,8 @@
 /area/station/hallway/primary/south)
 "wqj" = (
 /obj/machinery/camera{
-	c_tag = "Science Hangar";
-	dir = 8;
-	name = "Outpost Camera";
-	network = "Zeta"
+	c_tag = "Electronics";
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
@@ -118848,7 +118843,7 @@ adq
 adq
 afG
 adq
-adq
+udT
 ahp
 euD
 wSY
@@ -119449,7 +119444,7 @@ aGg
 qvu
 aew
 aeQ
-afj
+uBY
 afI
 agh
 agM
@@ -125790,7 +125785,7 @@ adH
 adT
 afR
 adT
-udT
+adT
 adT
 afR
 adT
