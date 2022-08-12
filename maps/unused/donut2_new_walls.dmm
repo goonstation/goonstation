@@ -1090,7 +1090,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/camera{
-	c_tag = "Telescience";
+	c_tag = "Central Hallway West";
 	dir = 1
 	},
 /turf/simulated/floor/orangeblack/side/white,
@@ -42100,6 +42100,19 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"oBO" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway West";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "orange"
+	},
+/area/station/science/lobby)
 "oCp" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment{
@@ -46027,6 +46040,23 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"tbt" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway";
+	dir = 6;
+	icon_state = "camera"
+	},
+/turf/simulated/floor,
+/area/station/science/lobby)
 "tbS" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -116416,7 +116446,7 @@ wBi
 jnG
 oTK
 jpe
-aiD
+oBO
 aiU
 aju
 akd
@@ -120944,7 +120974,7 @@ afK
 agk
 aeR
 aeg
-nWJ
+tbt
 dkS
 euD
 aja
