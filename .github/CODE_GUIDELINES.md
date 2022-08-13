@@ -394,12 +394,12 @@ Perhaps you are breaking after a found item that's randomly in the list, or you 
 Code that avoids this list copying would look like:
 ```csharp
 /proc/direct_iteration()
-  var/list/some_list = list() // just say this has 10,000 objs in it
+	var/list/some_list = list() // just say this has 10,000 objs in it
 
-  for (var/i in 1 to length(some_list))
-    var/obj/mine = some_list[i]
+	for (var/i in 1 to length(some_list))
+	var/obj/mine = some_list[i]
 
-    // do stuff with this object
+	// do stuff with this object
 	if (condition)
 		break
 ```
