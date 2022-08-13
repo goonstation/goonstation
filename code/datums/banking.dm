@@ -33,9 +33,8 @@
 
 	New()
 		..()
-		// 5 minutes = 3000 milliseconds
-		time_between_paydays = 3000
-		time_between_lotto = 5000 // this was way too fuckin high
+		time_between_paydays = 5 MINUTES
+		time_between_lotto = 8 MINUTES
 
 		for(var/occupation in occupations)
 
@@ -108,28 +107,17 @@
 		src.time_until_lotto = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_lotto
 		src.time_until_payday = ( ticker ? ticker.round_elapsed_ticks : 0 ) + time_between_paydays
 
-	// This returns the time left in seconds
-	proc/timeleft()
+	proc/process()
 		if(!ticker)
-			return 0
+			return
 		var/timeleft = src.time_until_payday - ticker.round_elapsed_ticks
 
-		// TODO move this into process or something, currently it gets checked in mob/Stat
 		if(timeleft <= 0)
 			payday()
 			src.time_until_payday = ticker.round_elapsed_ticks + time_between_paydays
-			return 0
 		if(lottery_active && src.time_until_lotto <= ticker.round_elapsed_ticks)
 			lotteryDay()
 			src.time_until_lotto = ticker.round_elapsed_ticks + time_between_lotto
-
-		return timeleft
-
-	//Returns the time, in MM:SS format
-	proc/get_banking_timeleft()
-		var/timeleft = src.timeleft() / 10
-		if(timeleft)
-			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/checkLotteryTime()
 		if(!lottery_active)	return
@@ -164,6 +152,14 @@
 			if(station_budget >= t["wage"])
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
+				if (t["pda_net_id"])
+					var/datum/signal/signal = get_free_signal()
+					signal.data["sender"] = "00000000"
+					signal.data["command"] = "text_message"
+					signal.data["sender_name"] = "PAYROLL-MAILBOT"
+					signal.data["address_1"] = t["pda_net_id"]
+					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 			else
 				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0

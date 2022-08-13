@@ -129,7 +129,7 @@
 /datum/aiTask/succeedable/follow_hotspot/on_tick()
 	var/datum/aiHolder/aquatic/fish/F = holder
 	center_turf = F.my_hotspot.center.turf()
-	distance = get_dist(get_turf(holder.owner), center_turf)
+	distance = GET_DIST(get_turf(holder.owner), center_turf)
 	step_to(holder.owner, center_turf, distance - 1)
 
 /datum/aiTask/succeedable/loaf_around
@@ -184,7 +184,7 @@
 	var/datum/aiHolder/aquatic/fish/F = holder
 	var/current_distance = 15
 	for (var/datum/sea_hotspot/SH in hotspot_controller.hotspot_groups)
-		var/anticipated_distance = get_dist(get_turf(holder.owner), SH.center.turf())
+		var/anticipated_distance = GET_DIST(get_turf(holder.owner), SH.center.turf())
 		if (anticipated_distance < current_distance)
 			F.my_hotspot = SH
 			current_distance = anticipated_distance

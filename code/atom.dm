@@ -180,6 +180,11 @@
 		var/rot = arctan(src.transform.b, src.transform.a)
 		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
+	proc/SafeScaleAnim(var/scalex = 1, var/scaley = 1, var/anim_time=2 SECONDS, var/anim_easing=null)
+		var/rot = arctan(src.transform.b, src.transform.a)
+		var/matrix/new_transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
+		animate(src, transform=new_transform, time=anim_time, easing=anim_easing)
+
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
 
@@ -613,10 +618,10 @@
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
 
-	var/dist = get_dist(src, user)
+	var/dist = GET_DIST(src, user)
 	if (istype(user, /mob/dead/target_observer))
 		var/mob/dead/target_observer/target_observer_user = user
-		dist = get_dist(src, target_observer_user.target)
+		dist = GET_DIST(src, target_observer_user.target)
 
 	// added for custom examine behaviour override - cirr
 	var/special_description = src.special_desc(dist, user)

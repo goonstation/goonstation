@@ -3,7 +3,7 @@
 /datum/abilityHolder/vampire/proc/launch_bat_orbiters()
 	if (length(bat_orbiters))
 		for (var/obj/projectile/P in bat_orbiters)
-			if (get_dist(P,src.owner) < 4)
+			if (GET_DIST(P,src.owner) < 4)
 				P.targets = 0
 
 		bat_orbiters.len = 0

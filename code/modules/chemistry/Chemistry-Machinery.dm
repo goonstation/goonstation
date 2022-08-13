@@ -403,7 +403,7 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
+			if (isnull(pillname) || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(src.output_target)
 			P.name = "[pillname] pill"
@@ -429,7 +429,7 @@
 				return
 			// get the pill volume from the user
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
-			if (!pillvol || !src.beaker || !R || !isnum_safe(pillvol))
+			if (!pillvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(pillvol))
 				return
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
@@ -461,15 +461,11 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
-			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0)
+			if (isnull(bottlename) || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
-			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
-				R.trans_to(B,30)
-			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
-				R.trans_to(B,50)
+			B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
+			R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
 			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
@@ -484,7 +480,7 @@
 
 			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
 
-			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || isnull(input_design) || input_design > 26 || input_design < 1)
+			if (!src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || isnull(input_design) || input_design > 26 || input_design < 1)
 				return
 
 			var/obj/item/reagent_containers/food/drinks/cola/custom/C
@@ -505,7 +501,7 @@
 		else if (href_list["createpatch"])
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
+			if (isnull(patchname) || !src.beaker || R.total_volume <= CHEM_EPSILON || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/med = src.check_whitelist(R)
 			var/obj/item/reagent_containers/patch/P
@@ -551,7 +547,7 @@
 				return
 			// get the pill volume from the user
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
-			if (!patchvol || !src.beaker || !R || !isnum_safe(patchvol))
+			if (!patchvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(patchvol))
 				return
 			patchvol = clamp(patchvol, 5, 30)
 			// maths

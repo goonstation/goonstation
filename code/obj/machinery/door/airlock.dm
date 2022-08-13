@@ -478,6 +478,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		return
 	ex_act()
 		return
+	blob_act(power)
+		return
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
@@ -609,20 +611,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
-				return 1
+				return TRUE
 		if (get_dir(loc, mover.movement_newloc) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
 					// just let the door open instead.
-					. = 0
+					. = FALSE
 					UNCROSS_BUMP_CHECK(mover)
 					return
 				animate_door_squeeze(mover)
-				. = 1 // they can pass through a closed door
+				return TRUE // they can pass through a closed door
 			. = !density
 		else
-			. = 1
+			. = TRUE
 		UNCROSS_BUMP_CHECK(mover)
 
 	update_nearby_tiles(need_rebuild)
@@ -1958,7 +1960,7 @@ obj/machinery/door/airlock
 /obj/machinery/door/airlock/ui_data(mob/user)
 	. = list(
 		"userStates" = list(
-			"distance" = get_dist(src, user),
+			"distance" = GET_DIST(src, user),
 			"isBorg" = ishivebot(user) || isrobot(user),
 			"isAi" = isAI(user),
 			"isCarbon" = iscarbon(user),

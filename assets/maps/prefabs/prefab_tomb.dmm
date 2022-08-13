@@ -58,7 +58,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "o" = (
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "p" = (

@@ -493,7 +493,7 @@
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 5)
+		if (GET_DIST(over_object, src) > 5)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object, /obj/machinery/door_timer))

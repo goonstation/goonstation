@@ -610,8 +610,8 @@
 				new /obj/item/cloneModule/mindhack_module( src.loc )
 				clonehack = 0
 				implant_hacker = null
-				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor with a dull thunk!</span>")
-				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
+				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+				playsound(src.loc, "sound/effects/pop.ogg", 80, 0)
 				light.disable()
 				src.UpdateIcon()
 			else
@@ -1162,6 +1162,8 @@
 		if (grab == null || target == null || grinder == null || owner == null || BOUNDS_DIST(owner, grinder) > 0 || BOUNDS_DIST(owner, target) > 0 || BOUNDS_DIST(target, grinder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (grinder.occupant)
+			interrupt(INTERRUPT_ALWAYS)
 		var/mob/source = owner
 		if (!istype(source) || !source.find_in_hand(grab) || grab.affecting != target)
 			interrupt(INTERRUPT_ALWAYS)
@@ -1172,6 +1174,8 @@
 
 	onEnd()
 		..()
+		if (grinder.occupant)
+			return
 		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
 		logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (!isdead(target) && !isnpcmonkey(target))

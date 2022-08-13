@@ -652,7 +652,7 @@ SYNDICATE DRONE FACTORY AREAS
 	afterattack(atom/target, mob/user)
 		if(target == user) return
 
-		if(get_dist(user, target) > 5)
+		if(GET_DIST(user, target) > 5)
 			boutput(user, "<span class='alert'>That is too far away!</span>")
 			return
 
@@ -1351,7 +1351,7 @@ var/satellite_crash_event_status = -1
 		SPAWN(1 DECI SECOND)
 			fireflash(src.loc, 4)
 		for (var/mob/living/L in range(src.loc, 2))
-			L.ex_act(get_dist(src.loc, L))
+			L.ex_act(GET_DIST(src.loc, L))
 
 		sleep(0.5 SECONDS)
 		satellite.icon_state = "syndsat-crashed"

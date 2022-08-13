@@ -23,6 +23,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
 	is_syndicate = TRUE
+	issawfly = TRUE
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 

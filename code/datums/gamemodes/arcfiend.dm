@@ -8,7 +8,7 @@
 
 	has_wizards = 0
 	has_werewolves = 0
-	has_blobs = 0
+	major_threats = list(ROLE_WRAITH)
 
 	num_enemies_divisor = 20
 

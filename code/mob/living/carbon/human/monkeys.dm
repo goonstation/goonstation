@@ -297,7 +297,7 @@
 			src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
-			if (get_dist(src, pal) > 7)
+			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
@@ -337,7 +337,7 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 11))
+		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else

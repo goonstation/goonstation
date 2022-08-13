@@ -271,6 +271,7 @@ var/global
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
@@ -357,6 +358,7 @@ var/global
 	// Controllers
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
 	datum/sun/sun = null

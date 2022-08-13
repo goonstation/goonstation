@@ -1608,11 +1608,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()
-#ifdef UNDERWATER_MAP
-			//if (prob(10))
-			//	src.ex_act(severity+1)
-#endif
-
 		if(2)
 			switch(pick(1,2;75,3))
 				if (1)
