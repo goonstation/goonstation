@@ -1,6 +1,6 @@
 /* file for all objects pertaining to sawfly that don't really go anywhere else
  -->Includes:
--All grenades- reused, cluster and normal
+-All grenades- cluster and normal
 -The remote
 -The limb that does the damage
 
@@ -32,16 +32,20 @@
 	//used in dictating behavior when deployed from grenade
 	//var/fresh = TRUE
 	var/mob/living/critter/robotic/sawfly/heldfly = null
+	var/obj/item/organ/brain/currentbrain = null
 	var/mob/currentuser = null
 	var/isopen = FALSE
 	var/playercontrolled = FALSE
 
 	attack_self(mob/user)
-		if(playercontrolled)
-			if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
-			//ejectbrain
+		user = currentuser
+		if(isopen)
+			if(playercontrolled)
+				//if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
+				//ejectbrain(currentbrain)
+			else
+				//bungus gungus
 		else
-			user = currentuser
 			..()
 
 	prime()
@@ -67,11 +71,88 @@
 				isopen = TRUE
 				overlays += "open-overlay"
 		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
+			insertbrain( W, src, heldfly)//user,
+
+	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)//mob/user,
+		var/success = TRUE
+		//	boutput(user, "You insert the [brain] into the [sawflygrenade]. Please wait a maximum of 20 seconds for the [heldfly]'s systems to initalize.")
+		src.currentbrain = brain
+		var/ghost_delay = 200
+		var/list/text_messages = list()
+		var/place = get_turf(src)
+		var/mob/living/critter/robotic/sawfly/oursawfly = null
+
+		text_messages.Add("Would you like to be ressurected as a traitor's Sawfly? You may be randomly selected from the list of candidates.")
+		text_messages.Add("You are eligible to be ressurected as a traitor's Sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
+
+		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
+		if (!candidates)
+			sawflygrenade.visible_message("The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
+			src.ejectbrain(currentbrain)
+			return
+		var/datum/mind/lucky_dude = pick(candidates)
+
+		SPAWN(1) //IT'S TIME. FOR SOME FUCK SHIT!!!!!!
+			if (lucky_dude)
+				//new sawfly
+				oursawfly = new /mob/living/critter/robotic/sawfly(place)
+				lucky_dude.transfer_to(oursawfly)
+				brain.set_loc(oursawfly)
+				oursawfly.foldself()
 
 
-	proc/insertbrain()
-		//grungle bungle bongle
 
+				sawflygrenade.visible_message("The [oursawfly] emits a pleasant chime as glows with sapience!")
+				qdel(src)
+
+			else
+				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
+
+			//we're through with the necessary steps and we have our mind! Time to put things together
+
+
+			/*if (lucky_dude)
+				lucky_dude.transfer_to(heldfly)
+				src.visible_message("The [src.heldfly] emits a pleasant chime as glows with sapience!")
+				// ADD POPUP HERE
+			else
+				//boutput(user, "The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
+				src.ejectbrain(currentbrain)*/
+
+
+
+	proc/ejectbrain(/obj/item/organ/brain/currentbrain)
+		//bungus
+		if(!isopen)
+			isopen = TRUE
+		if(currentbrain)
+			if(currentbrain.owner)
+				boutput(currentbrain.owner, "You have been booted from your sawfly and are now a disconnected ghost!")
+				heldfly.ghostize()
+				currentbrain.owner = null
+
+			currentbrain.set_loc(get_turf(src))
+			src.playercontrolled = FALSE
+
+/datum/random_event/major/antag/sawflytest
+	name = "SAWFLY TEST"
+	required_elapsed_round_time = 26.6 MINUTES
+	customization_available = 1
+	announce_to_admins = 0 // Doing it manually.
+	centcom_headline = "Biogenic Outbreak"
+	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
+	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
+	var/place = null
+	var/obj/item/old_grenade/sawfly/firsttime/baby = null
+	var/obj/item/organ/brain/latejoin/brain = null
+
+	event_effect()
+		place = pick_landmark(LANDMARK_LATEJOIN)
+		baby = new /obj/item/old_grenade/sawfly(place)
+		brain = new /obj/item/organ/brain/latejoin(place)
+		SPAWN(1)
+			baby.insertbrain(brain, baby, baby.heldfly)
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
@@ -83,36 +164,6 @@
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
 		heldfly.set_loc(src)
 		..()
-/*/obj/item/old_grenade/sawfly/reused //unused as all grenades now contain a sawfly
-	name = "Compact sawfly"
-	//var/tempname = "Uh oh! Call 1-800-imcoder!"
-	desc = "A self-deploying antipersonnel robot. This one has seen some use."
-
-	//copy paste hours
-	det_time = 1.5 SECONDS
-	throwforce = 7
-	icon_state = "sawfly"
-	icon_state_armed = "sawflyunfolding"
-	sound_armed = 'sound/machines/sawflyrev.ogg'
-	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
-	is_dangerous = TRUE
-	is_syndicate = TRUE
-	mechanics_type_override = /obj/item/old_grenade/sawfly
-	issawfly = TRUE
-	contraband = 2
-	heldfly = null
-
-	prime()
-		var/turf/T =  get_turf(src)
-		if (T)
-			heldfly.set_loc(T)
-			heldfly.is_npc = TRUE
-			heldfly.isdisabled = FALSE
-			qdel(src)
-
-
-		return*/
-
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
