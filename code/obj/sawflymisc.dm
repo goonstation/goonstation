@@ -131,3 +131,14 @@
 			..()
 
 
+/mob/living/critter/robotic/sawfly/bippy //surplus ops sawfly
+	isnew = FALSE
+	name = "Lil' Bippy"
+	desc = "An old sawfly whose folding mechanism is jammed. Gives surprisingly good snuggles."
+
+	New()
+		..()
+		beeptext = list("Bips")
+
+	foldself()
+		src.visible_message("<span class='combat'>[src] makes a [pick("clank", "whir", "thump", "grind", "creak","kunk")]ing sound, but doesn't fold.</span>")

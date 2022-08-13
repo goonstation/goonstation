@@ -61451,10 +61451,7 @@
 "dAc" = (
 /obj/decal/cleanable/rust,
 /obj/machinery/light/small,
-/obj/item/tank/emergency_oxygen{
-	pixel_y = 2;
-	pixel_x = 4
-	},
+/obj/decoration/pottedfern,
 /turf/unsimulated/floor/blackwhite,
 /area/syndicate_station)
 "dAd" = (
@@ -69175,6 +69172,7 @@
 /area/sim/gunsim)
 "gmO" = (
 /obj/decal/cleanable/cobweb2,
+/obj/random_item_spawner/peripherals/two,
 /obj/item/sheet/steel,
 /obj/item/sheet/steel{
 	pixel_y = -5;
@@ -69184,7 +69182,6 @@
 	pixel_y = -5;
 	pixel_x = 2
 	},
-/obj/random_item_spawner/peripherals,
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
@@ -69292,6 +69289,7 @@
 /obj/stool/chair/office/red{
 	dir = 1
 	},
+/mob/living/critter/robotic/sawfly/bippy,
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
 "gyu" = (
@@ -69460,10 +69458,6 @@
 /area/crater/biodome/maint)
 "gRT" = (
 /obj/table/wood/auto,
-/obj/item/old_grenade/high_explosive{
-	pixel_y = 7;
-	pixel_x = 4
-	},
 /obj/random_item_spawner/desk_stuff/one,
 /turf/unsimulated/floor/redblack{
 	dir = 9
@@ -69474,8 +69468,11 @@
 	color = "#DD0000";
 	desc = "A mangled scrap of power cable.";
 	icon_state = "coil1";
-	name = "torn up cable"
+	name = "torn up cable";
+	pixel_x = 8;
+	pixel_y = -3
 	},
+/obj/item/wirecutters,
 /turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
 "gUy" = (
@@ -69614,16 +69611,18 @@
 /obj/item/clothing/suit/bedsheet/random{
 	pixel_x = -2
 	},
-/obj/item/material_piece/cloth/cottonfabric{
-	pixel_y = 5;
-	pixel_x = 6
-	},
-/obj/item/material_piece/cloth/cottonfabric{
-	pixel_y = 4;
-	pixel_x = -5
-	},
 /obj/landmark{
 	name = "Surplusops-Spawn"
+	},
+/obj/item/raw_material/cotton{
+	desc = "Seems like it was torn out of some jumpsuits.";
+	name = "shredded fabric"
+	},
+/obj/item/raw_material/cotton{
+	desc = "Seems like it was torn out of some jumpsuits.";
+	name = "shredded fabric";
+	pixel_x = 5;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
@@ -70378,6 +70377,15 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/arrival,
 /area/centcom)
+"iKZ" = (
+/obj/item/tank/emergency_oxygen{
+	pixel_y = 2;
+	pixel_x = 4
+	},
+/turf/unsimulated/floor/blackwhite{
+	dir = 4
+	},
+/area/syndicate_station)
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -71649,9 +71657,29 @@
 	},
 /area/syndicate_station)
 "lBl" = (
-/obj/decoration/pottedfern,
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "u_guilty"
+	},
+/obj/storage/crate,
+/obj/item/storage/pouch/highcap{
+	pixel_x = 4
+	},
+/obj/item/clothing/under/misc/syndicate{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_y = 3;
+	pixel_x = -3
+	},
+/obj/item/tool/omnitool/syndicate{
+	icon_state = "syndicate-omnitool-screwing";
+	pixel_x = 3
+	},
+/obj/item/old_grenade/high_explosive{
+	pixel_y = 7;
+	pixel_x = 4
 	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 10
@@ -71927,14 +71955,11 @@
 "mau" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/clothing/head/helmet/welding,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/under/rank,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/shoes/swat,
-/obj/item/storage/pouch/highcap,
 /obj/item/clothing/under/color/grey,
-/obj/item/clothing/under/misc/syndicate,
 /obj/random_item_spawner/desk_stuff/one_or_zero,
 /obj/item/clothing/suit/space/emerg{
 	pixel_y = -4
@@ -72794,7 +72819,6 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "nLp" = (
-/obj/item/wirecutters,
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
@@ -74117,6 +74141,13 @@
 /obj/item/reagent_containers/food/drinks/fueltank{
 	pixel_x = 8;
 	pixel_y = -4
+	},
+/obj/item/weldingtool{
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 9
 	},
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
@@ -75614,11 +75645,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
 "tsp" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay4,
+/obj/item/remote/syndicate_teleporter,
 /turf/space,
 /area/space)
 "tsP" = (
@@ -76726,7 +76753,9 @@
 /area/iomoon/base)
 "vOm" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate,
+/obj/storage/crate{
+	name = "Tool Storage"
+	},
 /obj/item/raw_material/scrap_metal/steel,
 /obj/item/scrap,
 /obj/item/sheet/steel{
@@ -76741,6 +76770,7 @@
 /obj/item/sheet/steel,
 /obj/item/device/light/flashlight,
 /obj/item/crowbar/red,
+/obj/item/cable_coil,
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "vOv" = (
@@ -77899,6 +77929,7 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
 "ybL" = (
+/obj/submachine/syndicate_teleporter,
 /turf/unsimulated/floor/plating,
 /area/space)
 "ybR" = (
@@ -118183,9 +118214,9 @@ aaa
 abj
 cnw
 bDu
+xfK
 cnw
-cnw
-cnw
+tsp
 cnw
 cnw
 cnw
@@ -118787,7 +118818,7 @@ aaa
 abj
 cnw
 ocB
-xfK
+tsp
 fJA
 cnw
 cnw
@@ -119088,7 +119119,7 @@ abp
 aaa
 abj
 cnw
-tsp
+aNO
 cnw
 vVm
 mdQ
@@ -119691,7 +119722,7 @@ aeX
 abp
 aaa
 abj
-cnw
+tsp
 cnw
 tsP
 wIx
@@ -120611,7 +120642,7 @@ ybR
 frN
 frN
 rVn
-frN
+iKZ
 mau
 kan
 cnw
