@@ -381,6 +381,29 @@ So, where possible, it's advised to use DM's syntax. (Note: the to keyword is in
 
 **Be Warned:** if either `some_value` or `i` changes within the body of the for (underneath the `for(...)`) or if you are looping over a list and changing the length of the list then you cannot use this type of for-loop!
 
+## for-in loop copying
+
+Almost all of the time when iterating through lists, we use the `for (var/i in some_list)` syntax. However, in __some very few__ cases, we run into a performance issue.
+
+Internally, BYOND copies the `some_list` for this operation, so that when you are iterating through the list, you don't skip items or run into things twice if you modify the list inside the loop.
+
+However, this can cause performance issues with large lists of *complex* objects, generally greater than ~5000.
+There exists a performance optimization, but bear in mind it's **only applicable if you are traversing less than half of the list**.
+Perhaps you are breaking after a found item that's randomly in the list, or you only want to process the first 20 entries or something.
+
+Code that avoids this list copying would look like:
+```csharp
+/proc/direct_iteration()
+  var/list/some_list = list() // just say this has 10,000 objs in it
+
+  for (var/i in 1 to length(some_list))
+    var/obj/mine = some_list[i]
+
+    // do stuff with this object
+	if (condition)
+		break
+```
+
 ## Default Return (`.`)
 
 Like other languages in the C family, DM has a `.` or "dot" operator, used for accessing variables/members/functions of an object instance. For example:
