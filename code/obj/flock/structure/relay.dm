@@ -111,6 +111,8 @@
 				src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
+	if(src.finished)
+		return
 	src.finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
