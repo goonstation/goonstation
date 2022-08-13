@@ -464,12 +464,8 @@
 			if (isnull(bottlename) || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
-			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
-				R.trans_to(B,30)
-			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
-				R.trans_to(B,50)
+			B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
+			R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
 			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")

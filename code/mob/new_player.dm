@@ -731,15 +731,20 @@ a.latejoin-card:hover {
 		ticker.mode.traitors += traitor
 
 		var/objective_set_path = null
+		// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
+		// It should be removed when all antagonists are on the new system.
+		var/do_objectives = TRUE
 		switch (type)
 			if (ROLE_TRAITOR)
-				var/datum/antagonist/A = traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				SPAWN (1 SECOND) // Give the mob some time to be equipped with their job gear, as otherwise the uplink will fail to add properly
-					if (A)
-						A.give_equipment()
+				if (traitor.assigned_role)
+					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
+					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
+				do_objectives = FALSE
 
 			if (ROLE_ARCFIEND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
 				traitor.special_role = ROLE_CHANGELING
@@ -784,19 +789,20 @@ a.latejoin-card:hover {
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
 
-		if (!isnull(objective_set_path))
-			if (ispath(objective_set_path, /datum/objective_set))
-				new objective_set_path(traitor)
-			else if (ispath(objective_set_path, /datum/objective))
-				ticker.mode.bestow_objective(traitor, objective_set_path)
+		if (do_objectives)
+			if (!isnull(objective_set_path))
+				if (ispath(objective_set_path, /datum/objective_set))
+					new objective_set_path(traitor)
+				else if (ispath(objective_set_path, /datum/objective))
+					ticker.mode.bestow_objective(traitor, objective_set_path)
 
-		var/obj_count = 1
-		for(var/datum/objective/objective in traitor.objectives)
-			#ifdef CREW_OBJECTIVES
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
-			#endif
-			boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+			var/obj_count = 1
+			for(var/datum/objective/objective in traitor.objectives)
+				#ifdef CREW_OBJECTIVES
+				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
+				#endif
+				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+				obj_count++
 
 	proc/close_spawn_windows()
 		if(client)

@@ -190,7 +190,7 @@ var/global/list/bible_contents = list()
 		playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
 		M.unequip_all()
 		M.emote("scream")
-		M.biblegib()
+		M.gib()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"

@@ -462,15 +462,15 @@
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	force = 8
+	force = 12
 	two_handed = 1
 	can_dual_wield = 0
-	shoot_delay = 6
+	shoot_delay = 8 DECI SECONDS
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread)
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgunslug)
 		..()
 
 	update_icon()
@@ -481,13 +481,6 @@
 			ratio = round(ratio, 0.25) * 100
 			set_icon_state("tasers[ratio]")
 			return
-
-	attack_self()
-		..()
-		if(istype(current_projectile, /datum/projectile/energy_bolt))
-			shoot_delay = 4
-		else
-			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
@@ -1648,10 +1641,25 @@
 		set_current_projectile(new/datum/projectile/special/howitzer)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
+/obj/item/gun/energy/optio1
+	name = "\improper Optio I"
+	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
+	w_class = W_CLASS_SMALL
+	icon_state = "optio_1"
+	item_state = "protopistol"
+	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	can_swap_cell = 0
+
+	New()
+		set_current_projectile(new/datum/projectile/bullet/optio)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/optio/hitscan)
+		..()
+
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
-	icon_state = "signifer2"
+	icon_state = "signifer_2"
 	w_class = W_CLASS_NORMAL		//for clarity
 	object_flags = NO_ARM_ATTACH
 	force = 8
@@ -1668,26 +1676,22 @@
 
 	update_icon()
 		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
-				src.icon_state = "signifer_2"
-				src.item_state = "signifer_2"
-				muzzle_flash = "muzzle_flash_elec"
-				shoot_delay = 2
-				spread_angle = 0
-				force = 9
-				w_class = W_CLASS_NORMAL
-			else //if (current_projectile.type == /datum/projectile/laser)
-				src.item_state = "signifer_2-smg"
-				src.icon_state = "signifer_2-smg"
-				muzzle_flash = "muzzle_flash_bluezap"
-				spread_angle = 3
-				shoot_delay = 5
-				force = 12
-				w_class = W_CLASS_BULKY
+		if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+			src.icon_state = "signifer_2"
+			src.item_state = "signifer_2"
+			muzzle_flash = "muzzle_flash_elec"
+			shoot_delay = 2
+			spread_angle = 0
+			force = 9
+			w_class = W_CLASS_NORMAL
+		else //if (current_projectile.type == /datum/projectile/laser)
+			src.item_state = "signifer_2-smg"
+			src.icon_state = "signifer_2-smg"
+			muzzle_flash = "muzzle_flash_bluezap"
+			spread_angle = 3
+			shoot_delay = 5
+			force = 12
+			w_class = W_CLASS_BULKY
 
 	attack_self(var/mob/M)
 		if (!setTwoHanded(!src.two_handed))
@@ -1731,8 +1735,9 @@
 	var/extended = FALSE
 
 	New()
-		set_current_projectile(new/datum/projectile/special/spreader/plasma_spreader)
+		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
 		..()
 
 	update_icon()
@@ -1740,11 +1745,13 @@
 		if(!src.extended)
 			src.icon_state = "cornicen_close"
 			src.item_state = "cornicen"
-			w_class = W_CLASS_NORMAL
+			src.w_class = W_CLASS_NORMAL
+			src.spread_angle = initial(src.spread_angle)
 		else
 			src.icon_state = "cornicen_ext"
 			src.item_state = "cornicen_ext"
-			w_class = W_CLASS_BULKY
+			src.w_class = W_CLASS_BULKY
+			src.spread_angle = 0
 
 	attack_self(var/mob/M)
 		..()

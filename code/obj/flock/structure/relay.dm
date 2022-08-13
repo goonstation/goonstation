@@ -111,6 +111,8 @@
 				src?.flock.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
+	if(src.finished)
+		return
 	src.finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
@@ -119,11 +121,11 @@
 	flock_speak(null, "!!! TRANSMITTING SIGNAL !!!", src.flock)
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_charge.ogg", 60, 0, 2)
+		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_charge.ogg", 30, 0)
 	sleep(final_charge_time_length SECONDS)
 
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 60, 0, 2)
+		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 30, 0)
 		M.flash(3 SECONDS)
 	if (!src.shuttle_departure_delayed)
 		SPAWN(1 SECOND)

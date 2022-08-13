@@ -346,7 +346,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
 		radius++
-		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
 		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine

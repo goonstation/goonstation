@@ -1,4 +1,18 @@
 
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
 (t)wed aug 03 22
 (u)TTerc
 (e)🆕|feature
