@@ -1683,6 +1683,7 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	acid_survival_time = 10 MINUTES
 
 	setupProperties()
 		..()

@@ -266,7 +266,7 @@
 	drop_table = list(
 		/obj/item/raw_material/rock = 60,
 		/obj/item/raw_material/molitz = 50,
-		/obj/item/raw_material/cobryl = 30
+		/obj/item/raw_material/pharosium = 30
 	)
 
 /obj/nadir_doodad/bitelung
@@ -277,7 +277,7 @@
 		/obj/item/raw_material/rock = 100,
 		/obj/item/raw_material/rock = 80,
 		/obj/item/raw_material/mauxite = 60,
-		/obj/item/raw_material/martian = 50
+		/obj/item/raw_material/fibrilith = 50
 	)
 
 //TURFS

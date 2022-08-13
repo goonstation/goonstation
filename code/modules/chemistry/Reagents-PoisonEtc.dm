@@ -984,26 +984,52 @@ datum
 				if(method == TOUCH)
 					. = 0
 				var/datum/reagents/fluid_group/wildwetride = src.holder
-				if(istype(wildwetride)) //applied by a fluid body, so we can keep it simpleish
-
-					//setup human, break out immediately if acid-immune
+				if(istype(wildwetride)) //applied by a fluid body, so we can keep it "simpleish"
 					var/mob/living/carbon/human/H
+					var/blocked = FALSE
+
+					//if fluid touch chemloop exists, eliminate this cooldown and pass apply_decay the mult-adjusted time spent in acid
+					if(ON_COOLDOWN(M, "corrode_a_homie", 1 SECOND))
+						return
+
 					if(ishuman(M))
 						H = M
-						if(H.head?.item_function_flags & IMMUNE_TO_ACID && H.wear_suit?.item_function_flags & IMMUNE_TO_ACID)
-							return
+						var/obj/item/clothing/head/headgear = H.head
+						var/obj/item/clothing/suit/suitgear = H.wear_suit
 
-					var/do_an_ouch = TRUE
-					if(ON_COOLDOWN(M, "corroded_message_cd", 1.1 SECONDS))
-						do_an_ouch = FALSE
+						//check for sealed protection
+						if(headgear && suitgear)
+							if(headgear.item_function_flags & IMMUNE_TO_ACID && suitgear.item_function_flags & IMMUNE_TO_ACID)
+								return
+							else if(headgear.c_flags & SPACEWEAR && suitgear.c_flags & SPACEWEAR) //full seal
+								blocked = TRUE
+
+						//apply decay if item isn't acid-immune and is yielding chemprot protection or full seal protection
+						if(headgear && (blocked || headgear.getProperty("chemprot") > 0))
+							var/datum/component/gear_corrosion/hcorroder = headgear.LoadComponent(/datum/component/gear_corrosion)
+							hcorroder.apply_decay()
+						if(suitgear && (blocked || suitgear.getProperty("chemprot") > 0))
+							var/datum/component/gear_corrosion/scorroder = suitgear.LoadComponent(/datum/component/gear_corrosion)
+							scorroder.apply_decay()
+
+					if(blocked)
+						return
+
 					var/damage2deal = clamp(volume / 6, 0, 10)
 
 					//INTERIM FUNCTIONALITY SECTION
-					//if chemprot becomes globally applied, this section should be removed in its entirety
-					var/chem_adjust = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
-					chem_adjust = clamp(1 - (chem_adjust / 100), 0, 2) //floats.
+					//if chemprot becomes globally applied, this section should be reworked considerably
+					var/chem_adjust = GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT)
+					boutput(M,"[chem_adjust]")
+					if(chem_adjust >= 100)
+						boutput(M,"blockerino")
+						return
+					chem_adjust = 1 - (chem_adjust / 100)
 					damage2deal *= chem_adjust
 					//END INTERIM FUNCTIONALITY SECTION
+
+					//var for message and emote, apply cooldown to this to make screams less often
+					var/do_an_ouch = TRUE
 
 					damage2deal = round(damage2deal)
 					if(damage2deal >= 5) //scream and face melty
