@@ -660,7 +660,7 @@
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -718,16 +718,16 @@
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
 				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
-				logTheThing("combat", usr, null, "moves [src] with wtk.")
+				logTheThing("combat", usr, null, "moves [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 				return
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with wtk.")
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 		else if (ismegakrampus(usr))
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with k_tk.")
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with k_tk.")
 		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && GET_DIST(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with tk.")
+			logTheThing("combat", usr, null, "throws [src] [dir2text(get_dir(usr, over_object))] with tk.")
 
 #ifdef HALLOWEEN
 		else if (istype(usr, /mob/dead/observer))	//ghost

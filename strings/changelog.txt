@@ -1,4 +1,34 @@
 
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
+(t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
+(u)NightmarechaMillian
+(p)9794
+(e)🎨⚖|sprites, balance
+(+)Glass pipeshot now requires 2 shards instead of 1.
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
 (t)tue aug 02 22
 (u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
 (p)9915

@@ -129,7 +129,7 @@ datum/preferences
 
 			traits[trait.id] = list(
 				"id" = trait.id,
-				"name" = trait.cleanName,
+				"name" = trait.name,
 				"desc" = trait.desc,
 				"category" = categories,
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),

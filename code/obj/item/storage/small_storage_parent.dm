@@ -346,6 +346,7 @@
 			return ..()
 
 /obj/item/storage/box/starter // the one you get in your backpack
+	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath)
 	make_my_stuff()
 		..()

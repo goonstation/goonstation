@@ -35,7 +35,8 @@
 
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
-	var/atom/movable/name_tag/outer/name_tag
+	var/atom/movable/name_tag/name_tag
+	var/mob_hovered_over = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -491,15 +492,13 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
 /mob/Logout()
 
 	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
-	src.last_client?.get_plane(PLANE_EXAMINE)?.alpha = 0
-
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
@@ -923,7 +922,7 @@
 /mob/verb/setdnr()
 	set name = "Set DNR"
 	set desc = "Set yourself as Do Not Resuscitate."
-	var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
+	var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
 	if (confirm != "Yes")
 		return
 	if (!src.mind)
@@ -1637,7 +1636,7 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.color = src.active_color_matrix
+	src.client?.set_color(src.active_color_matrix)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
@@ -3127,11 +3126,15 @@
 
 
 /mob/MouseEntered(location, control, params)
-	if(usr.client.check_key(KEY_EXAMINE))
-		src.name_tag?.show_hover(usr.client)
+	var/mob/M = usr
+	M.mob_hovered_over = src
+	if(M.client.check_key(KEY_EXAMINE))
+		src.name_tag?.show_images(M.client, FALSE, TRUE)
 
 /mob/MouseExited(location, control, params)
-	src.name_tag?.hide_hover(usr.client)
+	var/mob/M = usr
+	M.mob_hovered_over = null
+	src.name_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)

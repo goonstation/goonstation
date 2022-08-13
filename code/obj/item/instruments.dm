@@ -68,6 +68,7 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
+		logTheThing("combat", user, null, "plays instrument [src]")
 		if (note != clamp(note,1,sounds_instrument.len))
 			return 0
 		if (next_play > TIME)

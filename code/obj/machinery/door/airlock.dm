@@ -478,6 +478,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 		return
 	ex_act()
 		return
+	blob_act(power)
+		return
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
