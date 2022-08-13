@@ -74,7 +74,7 @@
 			insertbrain( W, src, heldfly)//user,
 
 	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)//mob/user,
-		var/success = TRUE
+		//var/success = TRUE
 		//	boutput(user, "You insert the [brain] into the [sawflygrenade]. Please wait a maximum of 20 seconds for the [heldfly]'s systems to initalize.")
 		src.currentbrain = brain
 		var/ghost_delay = 200
