@@ -14273,6 +14273,18 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"aCE" = (
+/obj/decal/poster/wallsign/hazard_exheat{
+	pixel_y = 32
+	},
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "aCG" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -43180,11 +43192,11 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "bNy" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
 /obj/decal/poster/wallsign/hazard_exheat{
 	pixel_y = 32
+	},
+/obj/grille/catwalk/cross{
+	dir = 6
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -80181,7 +80193,7 @@ bHh
 bHM
 bIe
 bIw
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80438,7 +80450,7 @@ bHY
 gtd
 bIt
 bIx
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80695,7 +80707,7 @@ bHZ
 bIg
 bJl
 bIx
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80952,7 +80964,7 @@ bHk
 bHP
 bIh
 bIC
-aaH
+aaa
 aay
 aaa
 aaa
@@ -81209,7 +81221,7 @@ dQp
 jCk
 jCk
 jCk
-bNy
+aCE
 aay
 aaa
 aaa
