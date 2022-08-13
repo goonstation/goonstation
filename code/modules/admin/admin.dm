@@ -3510,8 +3510,6 @@ var/global/noir = 0
 						src.owner:debug_variables(artifact_controls)
 					if("gauntlet")
 						src.owner:debug_variables(gauntlet_controller)
-					if("colosseum")
-						src.owner:debug_variables(colosseum_controller)
 					if("stock")
 						src.owner:debug_variables(stockExchange)
 					if("emshuttle")
@@ -4321,7 +4319,6 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsdebug;type=mechanic'>Mechanics</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=artifact'>Artifacts</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=gauntlet'>Gauntlet</A> |
-					<A href='?src=\ref[src];action=secretsdebug;type=colosseum'>Colosseum</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=stock'>Stock Market</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=emshuttle'>Emergency Shuttle</A> |
 					<A href='?src=\ref[src];action=secretsdebug;type=datacore'>Data Core</A> |
