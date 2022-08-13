@@ -2,6 +2,9 @@
 //###~GANNETS' RADIO STATION STUFF~###//
 //####################################//
 
+// When this comment was written, the Radio Station records were disabled. Remove this pre-processor line and change the description on line 242 when it's enabled again.
+#define MUSIC_OUTOFORDER 1
+
 /* --Contents:--
 	changed and new files
 	areas
@@ -236,7 +239,7 @@
 // Record player
 /obj/submachine/record_player
 	name = "record player"
-	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
+	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records. There's a small \"out of order\" label on the casing."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-3"
 	anchored = 1
@@ -254,6 +257,9 @@
 		if(has_record)
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
+			if(MUSIC_OUTOFORDER)
+				boutput(user, "<span class='alert'>You insert the record into the record player, but it won't turn on.</span>")
+				return
 			boutput(user, "You insert the record into the record player.")
 			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
