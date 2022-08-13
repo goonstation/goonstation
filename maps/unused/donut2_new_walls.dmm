@@ -26744,8 +26744,8 @@
 /area/station/hangar/sec)
 "bxt" = (
 /obj/machinery/r_door_control/podbay/security{
-	pixel_x = 30;
-	name = "Security Podbay Door Control"
+	pixel_x = 24;
+	name = "Security Hangar Door Control"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
