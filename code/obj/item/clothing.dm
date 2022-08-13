@@ -83,6 +83,8 @@
 	proc/finish_rip_up(mob/user)
 		for (var/i in 1 to 3)
 			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			CF.pixel_x = rand(-4,4)
+			CF.pixel_y = rand(-4,4)
 			CF.set_loc(get_turf(src))
 		user.u_equip(src)
 		qdel(src)
