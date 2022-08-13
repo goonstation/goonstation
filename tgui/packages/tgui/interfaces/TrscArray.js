@@ -61,7 +61,7 @@ export const TrscArray = (props, context) => {
         <Section title="Transception Systems" textAlign="center">
           <Flex justify="space-around">
             <Flex.Item>
-              <strong>Transception Systems:<br />{failsafeStat}</strong>
+              <strong>Transception Capability:<br />{failsafeStat}</strong>
             </Flex.Item>
             <Flex.Item>
               <strong>Power Loss Failsafe:<br />{failsafeThreshold} | </strong>

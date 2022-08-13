@@ -212,7 +212,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			"sendsSafe" = safe_transceptions,
 			"sendsMax" = max_transceptions,
 			"failsafeThreshold" = transception_array.equipment_failsafe ? "STANDARD" : "MINIMUM",
-			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE TRIPPED" : "OPERATIONAL",
+			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE HALT" : "OPERATIONAL",
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
 			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
 		)
