@@ -270,7 +270,7 @@ toxic - poisons
 			new /obj/effects/energy_bolt_aoe_burst(get_turf(O))
 
 		for (var/mob/M in range(1, O)) //direct hit power is a 'bonus for aim', so we want this to hit the target
-			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
+			if (isliving(M) && !check_target_immunity(M, FALSE, src) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
 				L.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
