@@ -2006,6 +2006,10 @@
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
+#ifdef MAP_OVERRIDE_NADIR
+		/datum/manufacture/nanoloom,
+		/datum/manufacture/nanoloom_cart,
+#endif
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,

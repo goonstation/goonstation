@@ -7993,10 +7993,7 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "elm" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 40
-	},
+/obj/storage/secure/closet/immersion/engineering,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -21892,10 +21889,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "laZ" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 40
-	},
+/obj/storage/secure/closet/immersion/engineering,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -23304,9 +23298,8 @@
 	name = "North Catalytic Substation"
 	})
 "lKz" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 26
+/obj/storage/secure/closet/immersion{
+	req_access = list(26)
 	},
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
@@ -27099,10 +27092,7 @@
 	name = "Southwest Breach Hull"
 	})
 "nEm" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 1
-	},
+/obj/storage/secure/closet/immersion/security,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -30026,7 +30016,7 @@
 /turf/simulated/floor/redblack/corner,
 /area/station/security/equipment)
 "pph" = (
-/obj/rack,
+/obj/storage/secure/closet/immersion/command,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -31790,10 +31780,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "qqY" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 24
-	},
+/obj/storage/secure/closet/immersion/research,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -34742,10 +34729,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "rYl" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 31
-	},
+/obj/storage/secure/closet/immersion/quartermasters,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -38355,10 +38339,7 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tLG" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 40
-	},
+/obj/storage/secure/closet/immersion/engineering,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -43151,10 +43132,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "wAo" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 24
-	},
+/obj/storage/secure/closet/immersion/research,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -44034,10 +44012,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "wYK" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 40
-	},
+/obj/storage/secure/closet/immersion/engineering,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -44621,10 +44596,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
 "xpw" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 37
-	},
+/obj/storage/secure/closet/immersion/security,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
@@ -44950,10 +44922,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "xxN" = (
-/obj/storage/secure/closet/engineering{
-	name = "\improper Acid Response Locker";
-	req_access = 19
-	},
+/obj/storage/secure/closet/immersion/command,
 /obj/item/clothing/suit/chemsuit,
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;

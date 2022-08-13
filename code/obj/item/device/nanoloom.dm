@@ -117,6 +117,7 @@
 	icon_state = "nanoloom-cart"
 	var/thread = 60
 	inventory_counter_enabled = 1
+	rand_pos = 1
 
 	New()
 		..()
