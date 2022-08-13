@@ -1020,9 +1020,7 @@ datum
 					//INTERIM FUNCTIONALITY SECTION
 					//if chemprot becomes globally applied, this section should be reworked considerably
 					var/chem_adjust = GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT)
-					boutput(M,"[chem_adjust]")
 					if(chem_adjust >= 100)
-						boutput(M,"blockerino")
 						return
 					chem_adjust = 1 - (chem_adjust / 100)
 					damage2deal *= chem_adjust
