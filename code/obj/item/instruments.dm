@@ -249,7 +249,7 @@
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "bagpipe"
 	item_state = "bagpipe"
-	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
+	sounds_instrument = list()
 	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
