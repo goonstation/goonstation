@@ -5645,7 +5645,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aso" = (
 /obj/decal/fakeobjects{
@@ -5656,17 +5656,17 @@
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "asp" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/computer3/terminal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "asq" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "asr" = (
 /obj/table/wood/auto,
@@ -5678,7 +5678,7 @@
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ass" = (
 /turf/simulated/floor/plating/random,
@@ -5920,7 +5920,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "asX" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "asZ" = (
 /obj/window/reinforced{
@@ -6113,13 +6113,13 @@
 /area/station/hangar/main)
 "atu" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "atv" = (
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "atx" = (
 /obj/landmark/gps_waypoint,
@@ -6329,12 +6329,12 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "atX" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "atY" = (
 /obj/table/wood/auto,
@@ -6346,7 +6346,7 @@
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aua" = (
 /obj/machinery/power/data_terminal,
@@ -8365,7 +8365,7 @@
 /area/ghostdrone_factory)
 "azs" = (
 /obj/machinery/drone_recharger/factory,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "azt" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -8872,7 +8872,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aAz" = (
 /obj/disposalpipe/segment{
@@ -8896,7 +8896,7 @@
 	icon_state = "pipe-s";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aAC" = (
 /obj/disposalpipe/segment{
@@ -8904,7 +8904,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aAD" = (
 /obj/reagent_dispensers/fueltank,
@@ -9222,7 +9222,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aBm" = (
 /obj/table/auto,
@@ -9232,7 +9232,7 @@
 /obj/item/light/bulb,
 /obj/item/light/tube,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aBn" = (
 /obj/table/auto,
@@ -9267,7 +9267,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aBs" = (
 /obj/stool/chair,
@@ -26766,7 +26766,10 @@
 	},
 /area/station/hangar/sec)
 "bxt" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/east,
+/obj/machinery/r_door_control/podbay/security{
+	pixel_x = 24;
+	name = "Security Hangar Door Control"
+	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "bxu" = (
@@ -27264,7 +27267,7 @@
 	},
 /area/station/hangar/sec)
 "byQ" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
@@ -45237,7 +45240,9 @@
 "slP" = (
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt,
+/obj/machinery/door/airlock/pyro/security/alt{
+	aiHacking = 1
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "smO" = (
@@ -48033,10 +48038,10 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "vrM" = (
-/obj/machinery/vehicle/pod_smooth/heavy{
+/obj/machinery/light/incandescent,
+/obj/machinery/vehicle/pod_smooth/heavy/security{
 	dir = 4
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "vrS" = (

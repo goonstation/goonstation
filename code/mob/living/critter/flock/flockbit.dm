@@ -103,7 +103,7 @@
 	switch (act)
 		if ("whistle", "beep", "burp", "scream", "growl", "abeep", "grump", "fart")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 40, 1)
+				playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, 1, extrarange = -10)
 				return "<b>[src]</b> chimes."
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.shrunk)
@@ -130,5 +130,5 @@
 	if(!istype(target, /turf/simulated) && !istype(target, /turf/space))
 		boutput(user, "<span class='alert'>Something about this structure prevents it from being assimilated.</span>")
 	else
-		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 40)
+		playsound(src, "sound/misc/flockmind/flockbit_wisp[pick("1","2","3","4","5","6")].ogg", 30, extrarange = -10)
 		actions.start(new/datum/action/bar/flock_convert(target, 25), user)
