@@ -691,6 +691,9 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/diner
 	icon_state = "shuttle"
 
+/area/shuttle/john/diner/nadir
+	filler_turf = "/turf/space/fluid/acid/clear"
+
 /area/shuttle/john/owlery
 	icon_state = "shuttle2"
 
