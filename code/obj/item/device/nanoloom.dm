@@ -8,6 +8,10 @@
 
 	var/obj/item/nanoloom_cartridge/loom_cart = new
 
+	New()
+		..()
+		UpdateIcon()
+
 	attack_self(mob/user as mob)
 		if (loom_cart)
 			boutput(user, "<span class='notice'>You remove the [loom_cart.thread ? null : "spent "]cartridge from the nanoloom.</span>")
@@ -27,6 +31,8 @@
 				user.u_equip(W)
 				src.loom_cart = W
 				UpdateIcon()
+			else
+				boutput(user, "<span class='alert'>There's already a cartridge in the nanoloom.</span>")
 			return
 		..()
 
@@ -135,9 +141,10 @@
 	desc = "A small cartridge of fine, densely-spun thread for use in a handheld nanoloom."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "nanoloom-cart"
-	var/thread = 60
+	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = 1
 	rand_pos = 1
+	var/thread = 60
 
 	New()
 		..()
