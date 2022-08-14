@@ -1056,6 +1056,7 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
