@@ -1,5 +1,9 @@
 
 (t)sun aug 14 22
+(u)glowbold
+(p)10226
+(e)|
+(+)Engineering cyborgs can no longer insert their material stacks into a reclaimer.
 (u)Amylizze
 (p)10237
 (e)|
