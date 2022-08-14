@@ -294,6 +294,7 @@
 	M.implanted(synd_mob)
 
 /proc/alive_player_count()
+	. = 0
 	for(var/client/C)
 		var/mob/M = C.mob
 		if(!M || istype(M, /mob/new_player))
