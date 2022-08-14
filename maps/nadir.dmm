@@ -597,14 +597,32 @@
 /area/station/crew_quarters/fitness)
 "amD" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 6
+	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "amL" = (
@@ -4653,6 +4671,10 @@
 /obj/item/nanoloom_cartridge{
 	pixel_x = 4;
 	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
@@ -16945,6 +16967,10 @@
 	pixel_x = 4;
 	pixel_y = 17
 	},
+/obj/item/device/nanoloom{
+	pixel_x = -3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
 "izU" = (
@@ -18520,15 +18546,15 @@
 	pixel_x = -10;
 	pixel_y = -1
 	},
-/obj/item/clothing/glasses/spectro{
-	pixel_x = -9;
-	pixel_y = 4
+/obj/machinery/light,
+/obj/item/device/nanoloom{
+	pixel_x = -12;
+	pixel_y = 9
 	},
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/oxygen{
 	pixel_x = 12
 	},
-/obj/machinery/light,
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
 	},
@@ -23835,8 +23861,12 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/auto,
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = 10
+	},
 /obj/item/robodefibrillator{
-	pixel_y = 4
+	pixel_y = -1
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
@@ -29007,10 +29037,28 @@
 /area/station/crew_quarters/kitchen)
 "oJh" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 6
+	},
+/obj/item/clothing/suit/bio_suit/paramedic{
+	pixel_x = 6
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = -3;
+	pixel_y = -2
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "oJM" = (
@@ -43396,21 +43444,18 @@
 	pixel_x = -10;
 	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_y = 2
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/item/device/nanoloom{
+	pixel_x = -10;
+	pixel_y = -2
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 3;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black/side,
 /area/station/storage/tools)

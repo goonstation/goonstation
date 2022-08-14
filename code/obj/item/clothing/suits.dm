@@ -259,6 +259,10 @@
 	item_state = "paramedic"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = 3000
+#ifdef MAP_OVERRIDE_NADIR
+	c_flags = SPACEWEAR
+	acid_survival_time = 5 MINUTES
+#endif
 
 	setupProperties()
 		..()
