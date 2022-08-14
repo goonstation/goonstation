@@ -8014,10 +8014,11 @@
 /area/station/turret_protected/ai)
 "elm" = (
 /obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -11928,10 +11929,14 @@
 /area/station/ranch)
 "gkw" = (
 /obj/rack,
-/obj/item/clothing/suit/chemsuit,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = 5;
+	pixel_y = 3
+	},
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/chemhood{
-	pixel_y = 5
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering{
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
@@ -15079,10 +15084,14 @@
 /area/station/crew_quarters/fitness)
 "hFM" = (
 /obj/rack,
-/obj/item/clothing/suit/chemsuit,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = 5;
+	pixel_y = 3
+	},
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/chemhood{
-	pixel_y = 5
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering{
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
@@ -21926,10 +21935,11 @@
 	})
 "laZ" = (
 /obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -23341,10 +23351,11 @@
 /obj/storage/secure/closet/immersion{
 	req_access = list(26)
 	},
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -27140,10 +27151,11 @@
 	})
 "nEm" = (
 /obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -30068,7 +30080,9 @@
 /area/station/security/equipment)
 "pph" = (
 /obj/storage/secure/closet/immersion/command,
-/obj/item/clothing/suit/chemsuit,
+/obj/item/clothing/suit/space/diving/command{
+	pixel_x = -4
+	},
 /obj/item/clothing/head/chemhood{
 	pixel_x = -6;
 	pixel_y = -2
@@ -30076,7 +30090,9 @@
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/engineer/diving/command{
+	pixel_x = -4
+	},
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
@@ -31247,10 +31263,14 @@
 /area/station/crew_quarters/baroffice)
 "pXH" = (
 /obj/rack,
-/obj/item/clothing/suit/chemsuit,
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = 5;
+	pixel_y = 3
+	},
 /obj/item/clothing/mask/breath,
-/obj/item/clothing/head/chemhood{
-	pixel_y = 5
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering{
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
@@ -31836,10 +31856,11 @@
 /area/station/crew_quarters/radio/lab)
 "qqY" = (
 /obj/storage/secure/closet/immersion/research,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -34792,10 +34813,11 @@
 	})
 "rYl" = (
 /obj/storage/secure/closet/immersion/quartermasters,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -38406,10 +38428,11 @@
 /area/station/science/artifact)
 "tLG" = (
 /obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -43204,10 +43227,11 @@
 /area/station/crew_quarters/cafeteria)
 "wAo" = (
 /obj/storage/secure/closet/immersion/research,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -44088,10 +44112,11 @@
 /area/station/maintenance/west)
 "wYK" = (
 /obj/storage/secure/closet/immersion/engineering,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -44676,10 +44701,11 @@
 /area/station/medical/medbay/lobby)
 "xpw" = (
 /obj/storage/secure/closet/immersion/security,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
@@ -45006,10 +45032,11 @@
 /area/station/hallway/primary/southwest)
 "xxN" = (
 /obj/storage/secure/closet/immersion/command,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = -6;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/command{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/command{
+	pixel_x = -4
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6

@@ -1311,6 +1311,7 @@
 	desc = "A diving suit designed to withstand the pressure of working deep undersea."
 	icon_state = "diving_suit"
 	item_state = "diving_suit"
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1337,9 +1338,14 @@
 		item_state = "diving_suit-eng"
 
 /obj/item/clothing/suit/space/industrial
+#ifdef MAP_OVERRIDE_NADIR
+	desc = "Armored, immersion-tight suit. Protects from a wide gamut of environmental hazards, including radiation and explosions."
+#else
 	desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
+#endif
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	acid_survival_time = 12 MINUTES
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
