@@ -79,7 +79,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 	. = FALSE //return true if item needed repairing
 	if(time_to_corrode < max_ttc)
 		. = TRUE
-		time_to_corrode = min(round(0.06 * max_ttc) + time_to_corrode, max_ttc) //repairs have an expenditure based on percentile of total health
+		time_to_corrode = min(round(0.05 * max_ttc) + time_to_corrode, max_ttc) //repairs have an expenditure based on percentile of total health
 	un_oof_the_gear()
 	var/decay_ratio = round((time_to_corrode/max_ttc) * 4.5)
 	if(decay_ratio != last_decay_ratio)

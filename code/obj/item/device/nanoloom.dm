@@ -65,7 +65,7 @@
 	update_icon()
 		if(loom_cart)
 			src.icon_state = "nanoloom"
-			var/threadlevel = ceil(loom_cart.thread/12)
+			var/threadlevel = ceil(loom_cart.thread/10)
 			UpdateOverlays(image('icons/obj/items/device.dmi', "nloom-[threadlevel]"), "thread")
 		else
 			src.icon_state = "nanoloom-empty"
@@ -144,7 +144,7 @@
 	w_class = W_CLASS_SMALL
 	inventory_counter_enabled = 1
 	rand_pos = 1
-	var/thread = 60
+	var/thread = 50
 
 	New()
 		..()
