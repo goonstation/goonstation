@@ -1905,7 +1905,10 @@
 		if (upgrade.active)
 			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !isrobot(src)) // Blame the teleport upgrade.
 				return
-			if (src.cell && src.cell.charge >= upgrade.drainrate)
+			if (!src.cell)
+				src.show_text("You do not have a power cell!", "red")
+				return
+			if (src.cell.charge >= upgrade.drainrate)
 				src.cell.charge -= upgrade.drainrate
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
@@ -3324,8 +3327,7 @@
 
 
 /client/proc/set_screen_color_to_red()
-	src.color = "#ff0000"
-
+	src.set_color(normalize_color_to_matrix("#ff0000"))
 
 #define can_step_sfx(H) (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 

@@ -351,12 +351,13 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_area_value()
 		var/value = 0
-		for (var/turf/simulated/floor/F in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt || F.icon_state == "plating")
 				continue
 			value++
 
-		for (var/obj/machinery/M in src.contents)
+		for (var/obj/machinery/M in our_contents)
 			if (M.status & BROKEN || M.status & NOPOWER)
 				continue
 			value++
@@ -365,17 +366,18 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_structure_value()
 		var/value = 0
-		for (var/turf/simulated/wall/W in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/wall/W in our_contents)
 			value++
-		for (var/turf/simulated/floor/F in src.contents)
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt)
 				continue
 			value++
-		for (var/obj/machinery/light/L in src.contents)
+		for (var/obj/machinery/light/L in our_contents)
 			if (L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
-		for (var/obj/window/W in src.contents)
+		for (var/obj/window/W in our_contents)
 			value++
 
 		return value

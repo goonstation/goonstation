@@ -35290,7 +35290,7 @@
 /obj/item/matchbook,
 /obj/item/cigpacket,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/lab)
 "bMI" = (
 /obj/stool/chair/office{

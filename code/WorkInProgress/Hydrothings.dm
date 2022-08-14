@@ -1369,7 +1369,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		return
 
 	M.verbs -= /proc/owl_slam
-
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
 	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
@@ -1410,13 +1410,14 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.channel = 5
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Owl Slam!</span>")
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
 		SPAWN(0)
 		M1.owlgib()
 	for(var/mob/living/carbon/human/M2 in range(50, M))
 		SPAWN(0)
-			if (!(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
+			if (!QDELETED(M2) && !(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
 				for(var/obj/item/clothing/O in M2)
 					M2.u_equip(O)
 					if (O)

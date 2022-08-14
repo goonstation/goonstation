@@ -1324,7 +1324,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acK" = (
 /obj/decal/fakeobjects{
@@ -1335,7 +1335,7 @@
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acL" = (
 /obj/machinery/light{
@@ -1344,12 +1344,12 @@
 	pixel_y = 21
 	},
 /obj/machinery/computer3/terminal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acM" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acN" = (
 /obj/table/wood/auto,
@@ -1361,7 +1361,7 @@
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acO" = (
 /turf/simulated/floor/plating/random,
@@ -1437,7 +1437,7 @@
 	},
 /area/space)
 "acY" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "acZ" = (
 /obj/grille/catwalk{
@@ -1602,13 +1602,13 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "adu" = (
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "adv" = (
 /obj/machinery/light{
@@ -1616,7 +1616,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "adw" = (
 /obj/lattice{
@@ -1848,12 +1848,12 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aec" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aed" = (
 /obj/table/wood/auto,
@@ -1865,7 +1865,7 @@
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aef" = (
 /obj/lattice{
@@ -4081,7 +4081,7 @@
 /area/ghostdrone_factory)
 "ajD" = (
 /obj/machinery/drone_recharger/factory,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ajE" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -4582,7 +4582,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "akP" = (
 /obj/disposalpipe/segment{
@@ -4605,7 +4605,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "akS" = (
 /obj/disposalpipe/segment{
@@ -4613,7 +4613,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "akT" = (
 /obj/machinery/light/small,
@@ -5084,7 +5084,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "alX" = (
 /obj/table/auto,
@@ -5094,7 +5094,7 @@
 /obj/item/light/bulb,
 /obj/item/light/tube,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "alY" = (
 /obj/table/auto,
@@ -5129,7 +5129,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "amc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -42874,7 +42874,7 @@
 	name = "mail junction (pod bay checkpoint)"
 	},
 /obj/storage/closet/wardrobe/orange,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -42885,7 +42885,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/computer3/generic/secure_data,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -42896,14 +42896,14 @@
 	pixel_y = 24;
 	text = "NF"
 	},
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
 "bRI" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -42920,7 +42920,7 @@
 	pixel_y = 8
 	},
 /obj/disposalpipe/segment/mail/bent/south,
-/turf/unsimulated/floor/red/side{
+/turf/simulated/floor/red/side{
 	dir = 1
 	},
 /area/station/security/checkpoint/podbay)
@@ -67171,7 +67171,7 @@
 /obj/disposalpipe/trunk/transport{
 	dir = 1
 	},
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "cVU" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -73596,7 +73596,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_south,
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "dki" = (
 /turf/simulated/floor/shuttlebay{
@@ -76436,7 +76436,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/floor/red/side,
+/turf/simulated/floor/red/side,
 /area/station/security/checkpoint/podbay)
 "giI" = (
 /obj/storage/secure/closet/brig,

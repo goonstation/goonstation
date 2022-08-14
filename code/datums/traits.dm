@@ -971,7 +971,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 	mutantRace = /datum/mutantrace/pug
 
 /obj/trait/super_slips
-	name = "Slipping Hazard (+1)"
+	name = "Slipping Hazard"
 	id = "super_slips"
 	desc = "You never were good at managing yourself slipping."
 	points = 1

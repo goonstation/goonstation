@@ -1,5 +1,31 @@
 
+(t)sun aug 14 22
+(u)Amylizzle
+(p)10185
+(e)|
+(+)Non-hostile flock actions are now much quieter, and can be heard from less far away.
+(u)ZWRh3
+(p)10081
+(e)|
+(+)Cyborg teleport upgrade no longer works while stunned
+(u)glowbold
+(p)10226
+(e)|
+(+)Engineering cyborgs can no longer insert their material stacks into a reclaimer.
+(u)Amylizze
+(p)10237
+(e)|
+(+)You can now clean up paint with a wet sponge.
 (t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
 (u)DisturbHerb
 (p)10103
 (e)🐛|bug

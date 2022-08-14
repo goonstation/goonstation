@@ -490,6 +490,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (isrobot(user))
 			boutput(user, "<span class='alert'>Why would you wanna flip over your precious bucket? Silly.</span>")
 			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "<span class='alert'>You can't flip that, it's stuck on.</span>")
+			return
 		if (src.reagents.total_volume)
 			user.show_text("<b>You turn the bucket upside down, causing it to spill!</b>", "red")
 			src.reagents.reaction(get_turf(src))

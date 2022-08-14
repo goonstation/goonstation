@@ -3367,20 +3367,22 @@ var/global/noir = 0
 
 					if ("command_report_zalgo")
 						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|text
+							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
 							input = zalgoify(input, rand(0,2), rand(0, 2), rand(0, 2))
 							if(!input)
 								return
-							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-							input2 = zalgoify(input, rand(0,3), rand(0, 3), rand(0, 3))
+							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
+							input2 = zalgoify(input2, rand(0,2), rand(0, 2), rand(0, 2))
+							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
+							if(!input3)
+								input3 = "Unknown Source"
 
-							if (tgui_alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", list("Send Report", "Cancel")) == "Send Report")
+							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report(ALERT_GENERAL, input)
+									C.add_centcom_report(input2, input)
 
 								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
-								if (!input2) command_alert(input, "", sound_to_play);
-								else command_alert(input, input2, sound_to_play);
+								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing("admin", usr, null, "has created a command report (zalgo): [input]")
 								logTheThing("diary", usr, null, "has created a command report (zalgo): [input]", "admin")
@@ -3388,19 +3390,21 @@ var/global/noir = 0
 
 					if ("command_report_void")
 						if (src.level >= LEVEL_ADMIN)
-							var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|text
+							var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
 							input = voidSpeak(input)
 							if(!input)
 								return
-							var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
+							var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
+							var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Unknown Source'", "What?", "") as null|text
+							if(!input3)
+								input3 = "Unknown Source"
 
-							if (tgui_alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", list("Send Report", "Cancel")) == "Send Report")
+							if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
 								for_by_tcl(C, /obj/machinery/communications_dish)
-									C.add_centcom_report("[ALERT_GENERAL] Update", input)
+									C.add_centcom_report(input2, input)
 
 								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
-								if (!input2) command_alert(input, "", sound_to_play);
-								else command_alert(input, input2, sound_to_play);
+								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing("admin", usr, null, "has created a command report (void): [input]")
 								logTheThing("diary", usr, null, "has created a command report (void): [input]", "admin")
