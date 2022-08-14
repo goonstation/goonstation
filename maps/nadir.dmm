@@ -8049,10 +8049,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -21974,10 +21970,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -31917,10 +31909,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -38489,10 +38477,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -43288,10 +43272,6 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -44169,10 +44149,6 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
-	},
-/obj/item/device/nanoloom{
-	pixel_x = 4;
-	pixel_y = -4
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
