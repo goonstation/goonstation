@@ -2407,7 +2407,8 @@
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
 		src.lying = 0
 		src.set_density(1)
-		if(src.stat) src.camera.camera_status = 0
+		if(src.stat)
+			src.camera.set_camera_status(FALSE)
 
 	use_power()
 		..()

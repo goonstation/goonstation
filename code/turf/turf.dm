@@ -553,6 +553,7 @@ proc/generate_space_color()
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
+	var/old_camera_coverage_emitters = src.camera_coverage_emitters
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -635,6 +636,7 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+	new_turf.camera_coverage_emitters = old_camera_coverage_emitters
 
 	new_turf.disposal_image = old_disposal_image
 

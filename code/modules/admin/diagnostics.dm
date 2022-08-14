@@ -710,8 +710,8 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && length(theTurf.cameras))
-				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+			if(theTurf.camera_coverage_emitters && length(theTurf.camera_coverage_emitters))
+				img.app.overlays = list(src.makeText(length(theTurf.camera_coverage_emitters)))
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0

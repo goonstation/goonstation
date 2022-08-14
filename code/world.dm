@@ -265,6 +265,8 @@ var/f_color_selector_handler/F_Color_Selector
 		respawn_controller = new /datum/respawn_controls()
 		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
 		cargo_pad_manager = new /datum/cargo_pad_manager()
+		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
+		camera_coverage_controller = new /datum/controller/camera_coverage()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -552,7 +554,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	world.updateCameraVisibility(TRUE)
+	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
