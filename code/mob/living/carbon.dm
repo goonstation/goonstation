@@ -65,7 +65,7 @@
 				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
 			if(src.getStatusDuration("slowed")< 20 SECONDS)
 				src.changeStatus("slowed", 4 SECONDS, optional = 15)
-			if(src.lying || src.getStatusDuration("slowed")> 15 SECONDS)
+			if(src.lying)  //if you lie down on glue you get your face stuck haha
 				boutput(src, "<span class='alert'>You get stuck to the sticky floor!</span>")
 				src.changeStatus("stunned", 4 SECONDS)
 
