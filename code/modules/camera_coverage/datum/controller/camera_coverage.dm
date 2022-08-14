@@ -82,11 +82,8 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		new_coverage += T
 
 	var/list/turf/not_covered = prev_coverage - new_coverage
-	// for (var/turf/T in (prev_coverage - new_coverage))
-	// 	not_covered += T
 	var/list/turf/now_covered = new_coverage - prev_coverage
-	// for (var/turf/T in (new_coverage - prev_coverage))
-	// 	now_covered += T
+
 
 	// Remove this emitter from any turfs it was viewing
 	for (var/turf/T as anything in not_covered)
