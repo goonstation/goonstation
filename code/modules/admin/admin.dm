@@ -414,6 +414,24 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
 
+		if("radio_audio_allow")
+			if(src.level >= LEVEL_MOD)
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					O.can_play_music = TRUE
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					O.can_play_tapes = TRUE
+				logTheThing("admin", usr, null, "allowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to allow radio audio.")
+		if("radio_audio_disallow")
+			if(src.level >= LEVEL_MOD)
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					O.can_play_music = FALSE
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					O.can_play_tapes = FALSE
+				logTheThing("admin", usr, null, "disallowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to disallow radio audio.")
 		if("toggle_shuttle_recalling")
 			if (src.level >= LEVEL_PA)
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
@@ -4277,7 +4295,6 @@ var/global/noir = 0
 			dat += "<b>Force players to use random names:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>[force_random_names ? "Yes" : "No"]</a><br>"
 			dat += "<b>Force players to use random appearances:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomlooks'>[force_random_looks ? "Yes" : "No"]</a><br>"
 			//dat += "<A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>Politely suggest all players use random names</a>" // lol
-
 	if (src.level >= LEVEL_SA)
 		dat += "<hr>"
 		dat += "<A href='?src=\ref[src];action=create_object'>Create Object</A><br>"
@@ -4300,6 +4317,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+				Radio Music | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
+				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
 
 			"}
 #ifdef SECRETS_ENABLED
