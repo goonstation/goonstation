@@ -2998,8 +2998,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/nanoloom
 	name = "Nanoloom"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(4,2)
+	item_paths = list("MET-2","CON-1","cobryl","FAB-1")
+	item_amounts = list(4,2,1,3)
 	item_outputs = list(/obj/item/device/nanoloom)
 	time = 15 SECONDS
 	create = 1

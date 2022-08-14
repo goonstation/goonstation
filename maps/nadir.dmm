@@ -3334,6 +3334,9 @@
 	id = "nadir_bhull_se"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -3905,16 +3908,17 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 7;
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/metalfoam{
+/obj/item/nanoloom_cartridge{
 	pixel_x = -7;
-	pixel_y = -2
+	pixel_y = -8
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 1;
+	pixel_y = -3
 	},
 /turf/simulated/floor/blackwhite,
 /area/station/storage/eva)
@@ -4641,6 +4645,14 @@
 	},
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = -3;
+	pixel_y = -12
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = 4;
+	pixel_y = -12
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
@@ -7847,6 +7859,14 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
+/obj/item/nanoloom_cartridge{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = 2;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "efZ" = (
@@ -8005,6 +8025,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
@@ -9058,6 +9082,9 @@
 	id = "nadir_bhull_nw"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -16900,6 +16927,14 @@
 /obj/item/reagent_containers/patch/mini/synthflesh{
 	pixel_y = 6
 	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = -3;
+	pixel_y = 17
+	},
+/obj/item/nanoloom_cartridge{
+	pixel_x = 4;
+	pixel_y = 17
+	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergency)
 "izU" = (
@@ -21902,6 +21937,10 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -23312,6 +23351,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
@@ -25534,6 +25577,9 @@
 	id = "nadir_bhull_sw"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -27108,6 +27154,10 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -30034,6 +30084,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "ppo" = (
@@ -31793,6 +31847,10 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -33061,6 +33119,9 @@
 	id = "nadir_bhull_ne"
 	},
 /obj/access_spawn/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -34741,6 +34802,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
@@ -38351,6 +38416,10 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
@@ -43145,6 +43214,10 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -44025,6 +44098,10 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -44611,6 +44688,10 @@
 	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "xpP" = (
@@ -44938,6 +45019,10 @@
 /obj/decal/tile_edge/line/black{
 	dir = 9;
 	icon_state = "line1"
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 9

@@ -1211,7 +1211,7 @@ proc/filter_trait_hats(var/type)
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	item_function_flags = IMMUNE_TO_ACID
 	seal_hair = 1
-	acid_survival_time = 10 MINUTES
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
