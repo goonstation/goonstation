@@ -63,8 +63,11 @@
 		if(T.sticky)
 			if(src.getStatusDuration("slowed")<1)
 				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
-			if(src.getStatusDuration("slowed")< 30 SECONDS)
-				src.changeStatus("slowed", 2 SECONDS, optional = 2)
+			if(src.getStatusDuration("slowed")< 20 SECONDS)
+				src.changeStatus("slowed", 4 SECONDS, optional = 15)
+			if(src.lying || src.getStatusDuration("slowed")> 15 SECONDS)
+				boutput(src, "<span class='alert'>You get stuck to the sticky floor!</span>")
+				src.changeStatus("stunned", 4 SECONDS)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
