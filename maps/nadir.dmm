@@ -3269,9 +3269,9 @@
 	pixel_y = 3;
 	rand_pos = 0
 	},
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -10;
-	pixel_y = 16
+/obj/item/device/nanoloom{
+	pixel_x = -13;
+	pixel_y = 18
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
@@ -13209,6 +13209,7 @@
 /obj/item/clothing/suit/hi_vis{
 	pixel_x = 5
 	},
+/obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -41406,6 +41407,7 @@
 /obj/item/clothing/suit/hi_vis{
 	pixel_x = 5
 	},
+/obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -44546,10 +44548,10 @@
 	})
 "xmi" = (
 /obj/table/reinforced/auto,
-/obj/machinery/coffeemaker,
 /obj/drink_rack/mug{
 	pixel_y = 32
 	},
+/obj/machinery/coffeemaker/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
