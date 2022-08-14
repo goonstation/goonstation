@@ -266,7 +266,8 @@
 	drop_table = list(
 		/obj/item/raw_material/rock = 60,
 		/obj/item/raw_material/molitz = 50,
-		/obj/item/raw_material/pharosium = 30
+		/obj/item/raw_material/cobryl = 30,
+		/obj/item/raw_material/pharosium = 20
 	)
 
 /obj/nadir_doodad/bitelung
