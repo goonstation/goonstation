@@ -413,6 +413,28 @@ var/global/noir = 0
 				ircbot.export_async("admin", ircmsg)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
+<<<<<<< HEAD
+=======
+
+		if("radio_audio_allow")
+			if(src.level >= LEVEL_MOD)
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					O.can_play_music = TRUE
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					O.can_play_tapes = TRUE
+				logTheThing("admin", usr, null, "allowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to allow radio audio.")
+		if("radio_audio_disallow")
+			if(src.level >= LEVEL_MOD)
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					O.can_play_music = FALSE
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					O.can_play_tapes = FALSE
+				logTheThing("admin", usr, null, "disallowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to disallow radio audio.")
+>>>>>>> c2354c4eb (Not-working prototype of what I'm aiming for.)
 		if("toggle_shuttle_recalling")
 			if (src.level >= LEVEL_PA)
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
@@ -4298,6 +4320,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+				Radio Music | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
+				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
 			"}
 #ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
