@@ -569,14 +569,12 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		spawn_contents = list(/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
 		/obj/item/storage/backpack/satchel/syndie/syndicate_medic_satchel,
 		/obj/item/clothing/suit/space/syndicate/specialist/medic,
-		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic,
-		/obj/item/extinguisher/large)
+		/obj/item/clothing/head/helmet/space/syndicate/specialist/medic)
 
 	engineer
 		name = "Class Crate - Combat Engineer"
@@ -588,7 +586,6 @@
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 

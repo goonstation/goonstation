@@ -1519,7 +1519,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -3162,6 +3162,7 @@
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if (isintangible(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY

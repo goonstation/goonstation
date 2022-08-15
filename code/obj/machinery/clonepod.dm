@@ -610,8 +610,8 @@
 				new /obj/item/cloneModule/mindhack_module( src.loc )
 				clonehack = 0
 				implant_hacker = null
-				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor with a dull thunk!</span>")
-				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
+				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+				playsound(src.loc, "sound/effects/pop.ogg", 80, 0)
 				light.disable()
 				src.UpdateIcon()
 			else

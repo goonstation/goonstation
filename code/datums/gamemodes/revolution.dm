@@ -347,6 +347,9 @@
 			if(isghostcritter(head_mind.current) || isVRghost(head_mind.current))
 				continue
 
+			if(istype(head_mind.current.loc, /obj/cryotron))
+				continue
+
 			// Check if they're on the current z-level
 			var/turf/T = get_turf(head_mind.current)
 			if(T.z != 1)
@@ -397,7 +400,8 @@
 			if(istype(T.loc, /area/station/security/brig) && !rev_mind.current.canmove)
 				continue
 
-
+			if(istype(rev_mind.current.loc, /obj/cryotron))
+				continue
 
 			return 0
 	return 1

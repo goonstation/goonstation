@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 
 	shoot(var/target,var/start ,var/mob/user)
-		if (src.canshoot())
+		if (src.canshoot() && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)

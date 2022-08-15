@@ -15,7 +15,7 @@
 
 	var/mob/living/carbon/human/character
 	if (random_human)
-		character = new /mob/living/carbon/human(currentLoc)
+		character = new /mob/living/carbon/human/normal(currentLoc)
 	else
 		character = new /mob/living/carbon/human(currentLoc, src.client.preferences.AH, src.client.preferences)
 
@@ -735,6 +735,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.client) return //ZeWaka: fix for null.preferences
 	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
+	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
 	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
@@ -874,14 +875,14 @@ var/respawn_arena_enabled = 0
 	return O
 
 // flocktraces are made by flockminds
-/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
+/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock, var/free = FALSE)
 	if (src.mind || src.client)
 		if(!spawnloc)
 			spawnloc = get_turf(src)
 		if(!flock)
 			flock = new/datum/flock()
 
-		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
+		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock, free)
 		if (src.mind)
 			src.mind.transfer_to(O)
 			flock.trace_minds[O.name] = O.mind

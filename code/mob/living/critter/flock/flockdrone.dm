@@ -455,11 +455,11 @@
 				return "<b>[src]</b> stares intently[(param ? " at [param]." : ".")]"
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> [act]s[(param ? " at [param]." : ".")]"
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> beeps grumpily[(param? " at [param]!" : "!")]"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
@@ -539,7 +539,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
@@ -562,7 +562,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
@@ -768,7 +768,7 @@
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 30, 1, extrarange = -10)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -1183,7 +1183,7 @@
 		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
-				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
+				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 30, 1, extrarange = -10)
 		if (I.health > 0)
 			return
 		if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
@@ -1194,7 +1194,7 @@
 			I.change_stack_amount(-1)
 			return
 
-	playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 30, 1, extrarange = -10)
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE

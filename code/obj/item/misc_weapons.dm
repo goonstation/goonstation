@@ -528,7 +528,7 @@
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
-	desc = "A light but robust combat knife that allows you to move faster in fights."
+	desc = "A light but robust combat knife that allows you to move faster in fights. Knocks down targets when thrown."
 	icon_state = "combat_knife"
 	force = 15
 	throwforce = 20

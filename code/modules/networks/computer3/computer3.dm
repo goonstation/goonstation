@@ -272,8 +272,17 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN(0.4 SECONDS)
+	src.base_icon_state = src.icon_state
 
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
+	SPAWN(0.4 SECONDS)
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -313,18 +322,6 @@
 				src.active_program = os
 
 			src.hd.root.add_file(os)
-
-		src.tag = null
-
-		src.base_icon_state = src.icon_state
-
-		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -653,10 +650,6 @@ function lineEnter (ev)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
