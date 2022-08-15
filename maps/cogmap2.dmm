@@ -1654,6 +1654,10 @@
 	dir = 8
 	},
 /obj/landmark/gps_waypoint,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "adB" = (
@@ -3823,10 +3827,6 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ajb" = (
@@ -5240,10 +5240,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "amr" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/plating,
@@ -5938,6 +5934,10 @@
 /area/station/maintenance/north)
 "aog" = (
 /obj/storage/closet/coffin,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aoh" = (
@@ -6709,10 +6709,6 @@
 	},
 /area/station/crew_quarters/showers)
 "aqi" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -8966,10 +8962,6 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -9218,6 +9210,10 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -9957,10 +9953,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -10099,10 +10091,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 4
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -11389,10 +11377,6 @@
 /area/station/crew_quarters/catering)
 "aAN" = (
 /obj/disposalpipe/segment,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -11628,10 +11612,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 8
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -12654,10 +12634,6 @@
 	name = "Lay-Z Chef Prison Food Chute"
 	},
 /obj/machinery/light,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/disposalpipe/trunk/food{
 	dir = 4
 	},
@@ -13682,10 +13658,6 @@
 "aFY" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aFZ" = (
@@ -13882,10 +13854,6 @@
 "aGA" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -16387,10 +16355,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aMP" = (
@@ -18685,6 +18649,10 @@
 /area/station/crew_quarters/barber_shop)
 "aSs" = (
 /obj/stool/chair/comfy/barber_chair,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "aSt" = (
@@ -20279,10 +20247,6 @@
 "aWu" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -21078,10 +21042,6 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor/specialroom/arcade,
@@ -22315,6 +22275,10 @@
 "baM" = (
 /obj/shrub{
 	dir = 1
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -32045,10 +32009,6 @@
 	dir = 4
 	},
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/bot,
 /area/station/engine/engineering)
 "bxd" = (
@@ -40052,10 +40012,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/light,
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -42178,10 +42134,6 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -42716,10 +42668,6 @@
 /area/station/security/main)
 "bRl" = (
 /obj/machinery/disposal,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -49432,6 +49380,10 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "chm" = (
@@ -49475,6 +49427,10 @@
 "chs" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
 "cht" = (
@@ -52648,10 +52604,6 @@
 	dir = 1
 	},
 /obj/machinery/disposal,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -53027,10 +52979,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 1
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -53999,10 +53947,6 @@
 	dir = 8;
 	pixel_x = -26;
 	pixel_y = -1
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/specialroom/arcade,
@@ -55629,10 +55573,6 @@
 "cvM" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/bot,
 /area/station/science/lab)
 "cvN" = (
@@ -55977,10 +55917,6 @@
 /area/station/medical/robotics)
 "cwu" = (
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/disposal/small{
 	dir = 1;
 	layer = 32;
@@ -56244,10 +56180,6 @@
 "cxc" = (
 /obj/disposalpipe/trunk{
 	dir = 1
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/disposal,
 /turf/simulated/floor/bot,
@@ -58259,10 +58191,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 1
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
@@ -61742,10 +61670,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/bot,
 /area/station/quartermaster/office)
 "cJM" = (
@@ -61937,10 +61861,6 @@
 "cKl" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -63237,10 +63157,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 4
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /turf/simulated/floor/bot,
 /area/station/science/lobby)
@@ -64733,10 +64649,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cQP" = (
@@ -64765,10 +64677,6 @@
 /obj/machinery/disposal/morgue{
 	desc = "A pneumatic delivery chute for sending things directly to the crematorium.";
 	name = "crematorium chute"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/light,
 /obj/disposalpipe/trunk/morgue{
@@ -64849,10 +64757,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 8
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/cloner)
@@ -67198,6 +67102,10 @@
 /area/station/mining/staff_room)
 "cVX" = (
 /obj/storage/closet/emergency,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "cVY" = (
@@ -67315,10 +67223,6 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
 	dir = 1
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -69654,10 +69558,6 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -69732,10 +69632,6 @@
 "dbg" = (
 /obj/machinery/disposal{
 	name = "monkeydome chute"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/disposalpipe/trunk/transport,
 /turf/simulated/floor/redwhite{
@@ -71029,6 +70925,16 @@
 "den" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
+"deo" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/maintenance/south)
 "deq" = (
 /obj/machinery/computer/barcode{
 	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","QM")
@@ -71349,10 +71255,6 @@
 "dfm" = (
 /obj/shrub{
 	dir = 6
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/grass{
@@ -71799,10 +71701,6 @@
 "dgl" = (
 /obj/shrub{
 	dir = 10
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/landmark{
 	name = "kudzustart"
@@ -77121,6 +77019,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"juO" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "jwB" = (
 /obj/item/sheet/steel{
 	amount = 50
@@ -77705,10 +77610,6 @@
 "lZN" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -77856,6 +77757,13 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
+"mzN" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/quartersA)
 "mAB" = (
 /turf/simulated/floor/stairs{
 	dir = 4
@@ -77978,6 +77886,13 @@
 "nfB" = (
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
+"nfI" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/arrivals)
 "nhh" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -78900,6 +78815,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/science)
+"siL" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "sng" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -79030,6 +78952,10 @@
 	dir = 1
 	},
 /obj/machinery/light,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue6"
@@ -79156,6 +79082,18 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
+"tjt" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
 "tkA" = (
 /obj/storage/secure/closet/civilian/hydro,
@@ -114472,7 +114410,7 @@ dey
 cPg
 dfE
 cHZ
-cuW
+siL
 cLH
 cqE
 cqE
@@ -122618,7 +122556,7 @@ cUl
 cuW
 cLH
 cuW
-dar
+deo
 cqE
 aaI
 aaa
@@ -124689,7 +124627,7 @@ bXa
 bPm
 bPm
 bmQ
-big
+juO
 bjP
 aaa
 aam
@@ -137336,7 +137274,7 @@ aYS
 bap
 bbP
 aNV
-aNV
+mzN
 bev
 aaa
 aam
@@ -137686,7 +137624,7 @@ cyV
 aaI
 aaa
 ceb
-cey
+tjt
 ceN
 cib
 ciZ
@@ -139148,7 +139086,7 @@ aYX
 bap
 bbR
 aNV
-aNV
+mzN
 bev
 aaa
 aam
@@ -139498,7 +139436,7 @@ cyX
 cAb
 aaa
 cem
-cey
+tjt
 ceX
 cib
 fJr
@@ -140331,7 +140269,7 @@ aqD
 aAD
 aqF
 aur
-aux
+nfI
 axh
 aze
 aAz
