@@ -28,6 +28,8 @@ TYPEINFO(/datum/component/gear_corrosion)
 	src.initial_chemprot = object.getProperty("chemprot")
 	src.initial_spacewear = object.c_flags & SPACEWEAR
 	if(istype(object.loc, /mob/living))
+		var/mob/living/to_notify = object.loc
+		boutput(to_notify,"<span class='alert'>Your \proper [object] begins deteriorating in contact with the acid.</span>")
 		show_pip()
 
 /datum/component/gear_corrosion/UnregisterFromParent()
@@ -102,7 +104,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 
 /obj/overlay/durability_pip
 	name = "durability pip"
-	desc = "Your gear has taken damage from acid, and will lose its protection if it degrades too much."
+	desc = "Your gear has taken damage from acid, and will lose its protection if it degrades too much. It can be repaired with a nanoloom."
 	icon = 'icons/ui/durability_pip.dmi'
 	icon_state = "pip4"
 	alpha = 180
