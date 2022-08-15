@@ -2,7 +2,7 @@
 	name = "nanoloom"
 	desc = "A small device capable of rapidly repairing degradation in equipment using material from an attached spool cartridge."
 	icon_state = "nanoloom"
-	flags = ONBELT
+	flags = ONBELT | SUPPRESSATTACK
 	click_delay = 0.7 SECONDS
 	rand_pos = 0
 
@@ -36,10 +36,6 @@
 			return
 		..()
 
-	attack(obj/item/I, mob/user as mob)
-		if(!istype(I))
-			..()
-
 	afterattack(obj/item/I, mob/user as mob)
 		if (!istype(I))
 			boutput(user, "<span class='alert'>You can't mend that.</span>")
@@ -51,7 +47,7 @@
 			boutput(user, "<span class='alert'>The nanoloom's attached cartridge is empty.</span>")
 			return
 		var/turf/repairing_at = get_turf(user) //anti cheese mechanic while fluid touch loop doesn't exist
-		if (repairing_at.active_liquid)
+		if (istype(repairing_at,/turf/space/fluid) || repairing_at.active_liquid)
 			boutput(user, "<span class='alert'>The nanoloom can't operate in the presence of fluid.</span>")
 			return
 		var/datum/component/gear_corrosion/corr = I.GetComponent(/datum/component/gear_corrosion)
@@ -120,7 +116,7 @@
 			return
 
 		var/turf/repairing_at = get_turf(user) //anti cheese mechanic while fluid touch loop doesn't exist
-		if (repairing_at.active_liquid)
+		if (istype(repairing_at,/turf/space/fluid) || repairing_at.active_liquid)
 			user.show_text("The nanoloom can't operate in the presence of fluid.", "red")
 			interrupt(INTERRUPT_ALWAYS)
 			return
