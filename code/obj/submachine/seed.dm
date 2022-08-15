@@ -32,6 +32,34 @@
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
+	ui_status(mob/user)
+		return tgui_admin_state.can_use_topic(src, user)
+
+	ui_data(mob/user)
+		var/result = list()
+		var/exlist = list()
+		for(var/exItem in src.extractables)
+			if (istype(exItem, /obj/item/seed))
+				var/obj/item/seed/S = exItem
+				geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
+			else if (istype(exItem, /obj/item/reagent_containers/food/snacks/plant))
+				var/obj/item/reagent_containers/food/snacks/plant/S = exItem
+				geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
+			exlist += geneout
+
+		var/seedlist = list()
+		for (var/obj/item/seed/S in src.seeds)
+
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "FlockPanel")
+			ui.open()
+
+	ui_act(action, list/params, datum/tgui/ui)
+
+
 	attack_hand(var/mob/user)
 		src.add_dialog(user)
 
