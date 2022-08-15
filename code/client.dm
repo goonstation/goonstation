@@ -984,7 +984,7 @@ var/global/curr_day = null
 	set name = "Ping"
 	boutput(usr, "Pong")
 
-#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#ifdef RP_MODE
 /client/proc/cmd_rp_rules()
 	set name = "RP Rules"
 	set category = "Commands"
