@@ -2114,13 +2114,26 @@
 			src.lights = new /obj/item/shipcomponent/pod_lights/police_siren( src )
 			src.lights.ship = src
 			src.components += src.lights
-/*
-	engineering
-		body_type =
-		icon_state =
+
+	engineering // broken down mess for the ce to repair.
+		body_type = "car"
+		icon_state = "car_yellow"
 
 		New()
 			..()
-			name = "engineering car
-			desc = "A Toriyama-Okawara EV-94 personal mobility vehicle, painted in engineering colours."
-*/
+			name = "Personal car"
+			desc = "A Toriyama-Okawara EV-89 personal mobility vehicle, pulled from a dump on Buttes. It appears the headlights are broken along with other parts of the ship."
+			health = -10
+
+			src.components -= src.fueltank
+			qdel(src.fueltank)
+			src.fueltank = null
+			src.lights.deactivate()
+			src.components -= src.lights
+			qdel(src.lights)
+			src.lights = null
+			src.engine.deactivate()
+			src.components -= src.engine
+			qdel(src.engine)
+			src.engine = null
+			checkhealth()
