@@ -50,6 +50,10 @@
 		if (!loom_cart.thread)
 			boutput(user, "<span class='alert'>The nanoloom's attached cartridge is empty.</span>")
 			return
+		var/turf/repairing_at = get_turf(user) //anti cheese mechanic while fluid touch loop doesn't exist
+		if (repairing_at.active_liquid)
+			boutput(user, "<span class='alert'>The nanoloom can't operate in the presence of fluid.</span>")
+			return
 		var/datum/component/gear_corrosion/corr = I.GetComponent(/datum/component/gear_corrosion)
 		if (!corr)
 			boutput(user, "<span class='alert'>The item isn't damaged.</span>")
@@ -112,6 +116,12 @@
 		..()
 		if (!N.loom_cart || N.loom_cart.thread <= 0)
 			user.show_text("[N]'s spool cartridge [N.loom_cart ? "was removed" : "is empty"].", "red")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		var/turf/repairing_at = get_turf(user) //anti cheese mechanic while fluid touch loop doesn't exist
+		if (repairing_at.active_liquid)
+			user.show_text("The nanoloom can't operate in the presence of fluid.", "red")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

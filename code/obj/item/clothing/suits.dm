@@ -261,7 +261,7 @@
 	protective_temperature = 3000
 #ifdef MAP_OVERRIDE_NADIR
 	c_flags = SPACEWEAR
-	acid_survival_time = 4 MINUTES
+	acid_survival_time = 5 MINUTES
 #endif
 
 	setupProperties()
@@ -1304,7 +1304,7 @@
 	desc = "A diving suit designed to withstand the pressure of working deep undersea."
 	icon_state = "diving_suit"
 	item_state = "diving_suit"
-	acid_survival_time = 5 MINUTES
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1338,7 +1338,7 @@
 #endif
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	acid_survival_time = 6 MINUTES
+	acid_survival_time = 8 MINUTES
 
 #ifdef UNDERWATER_MAP
 	name = "industrial diving suit"
