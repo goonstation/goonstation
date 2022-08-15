@@ -1,8 +1,8 @@
 /obj/submachine/seed_manipulator/
-	name = "PlantMaster Mk3"
+	name = "PlantMaster Mk4"
 	desc = "An advanced machine used for manipulating the genes of plant seeds. It also features an inbuilt seed extractor."
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	mats = 10
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
@@ -11,16 +11,12 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mode = "overview"
 	var/list/seeds = list()
-	var/seedfilter = null
-	var/seedoutput = 1
-	var/dialogue_open = 0
+	var/seedoutput = FALSE
 	var/obj/item/seed/splicing1 = null
 	var/obj/item/seed/splicing2 = null
 	var/list/extractables = list()
 	var/obj/item/reagent_containers/glass/inserted = null
-	var/const/genes_header = {"
 
-							"}
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
@@ -42,7 +38,6 @@
 					geneout["splicing"] = list("splicing", TRUE)
 					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 					seedlist += list(geneout)
-
 
 					var/datum/plant/P1 = src.splicing1.planttype
 					var/datum/plant/P2 = src.splicing2.planttype
@@ -123,7 +118,7 @@
 			"seeds" = seedlist,\
 			"category" = src.mode,\
 			"category_lengths" = list(length(src.extractables),length(src.seeds)),\
-			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume]" : "No reagent vessel",\
+			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",\
 			"inserted_container" = thisContainerData,\
 			"seedoutput" = src.seedoutput,\
 			"splice_chance" = splice_chance,\
@@ -140,6 +135,7 @@
 			if("change_tab")
 				src.mode = params["tab"]
 				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				src.ui_interact(ui.user, ui)
 
 			if("ejectbeaker")
 				var/obj/item/I = src.inserted
@@ -151,18 +147,40 @@
 					else
 						I.set_loc(src.loc) // causes Exited proc to be called
 						usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+				src.ui_interact(ui.user, ui)
+
+			if("insertbeaker")
+				if (src.inserted)
+					return
+				var/obj/item/inserting = usr.equipped()
+				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
+					if (isrobot(ui.user))
+						boutput(ui.user, "This machine does not accept containers from robots!")
+						return
+					if(src.inserted)
+						boutput(ui.user, "<span class='alert'>A container is already loaded into the machine.</span>")
+						return
+					src.inserted =  inserting
+					ui.user.drop_item()
+					inserting.set_loc(src)
+					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
+					src.ui_interact(ui.user, ui)
+
+
 
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
+					src.ui_interact(ui.user, ui)
 
 			if("ejectextractables")
 				for (var/obj/item/I in src.extractables)
 					src.extractables.Remove(I)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+					src.ui_interact(ui.user, ui)
 
 			if("eject")
 				var/obj/item/I = locate(params["eject_ref"]) in src
@@ -176,6 +194,7 @@
 					src.splicing2 = null
 				I.set_loc(src.loc)
 				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+				src.ui_interact(ui.user, ui)
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -185,6 +204,7 @@
 						phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
 					if (newName && I && GET_DIST(src, usr) < 2)
 						I.name = newName
+				src.ui_interact(ui.user, ui)
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -203,12 +223,12 @@
 						boutput(usr, "<span class='alert'>Genetic structure of item corrupted. Cannot scan.</span>")
 					else
 						HYPgeneticanalysis(usr,P,P.planttype,P.plantgenes)
-
 				else
 					boutput(usr, "<span class='alert'>Item cannot be scanned.</span>")
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
+				src.ui_interact(ui.user, ui)
 
 			if("extract")
 				var/obj/item/I = locate(params["extract_ref"]) in src
@@ -265,7 +285,7 @@
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)
-
+					src.ui_interact(ui.user, ui)
 				else
 					boutput(usr, "<span class='alert'>This item is not viable extraction produce.</span>")
 
@@ -282,6 +302,7 @@
 						src.mode = "splicing"
 				else
 					src.splicing1 = I
+				src.ui_interact(ui.user, ui)
 
 
 			if("splice_cancel")
@@ -289,10 +310,9 @@
 				src.splicing1 = null
 				src.splicing2 = null
 				src.mode = "seedlist"
+				src.ui_interact(ui.user, ui)
 
 			if("infuse")
-				if (dialogue_open)
-					return
 				var/obj/item/seed/S = locate(params["infuse_ref"]) in src
 				if (!istype(S))
 					return
@@ -311,7 +331,6 @@
 						if (!usable_reagents.len)
 							boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 						else
-							dialogue_open = 1
 							R = input(usr, "Use which reagent to infuse the seed?", "[src.name]", 0) in usable_reagents
 							if (!R || !S)
 								return
@@ -329,7 +348,7 @@
 									playsound(src, "sound/effects/zzzt.ogg", 50, 1)
 									boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 							src.inserted.reagents.remove_reagent(R.id,10)
-							dialogue_open = 0
+					src.ui_interact(ui.user, ui)
 
 			if("splice")
 				// Get the seeds being spliced first
@@ -499,7 +518,7 @@
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-
+				src.ui_interact(ui.user, ui)
 
 
 
