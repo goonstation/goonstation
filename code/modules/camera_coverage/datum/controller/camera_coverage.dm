@@ -1,7 +1,9 @@
 var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 /datum/controller/camera_coverage
-	var/list/datum/component/camera_coverage_emitter/update_queue
+	var/list/cooldowns
+	var/list/datum/component/camera_coverage_emitter/emitter_update_queue
+	var/list/turf/turf_update_queue
 
 /**
  * Called at world setup, creates an image on all turfs that will overlay for the AI when a turf is not visible in the camera coverage. At the end will update all camera coverage.
@@ -45,7 +47,6 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	game_start_countdown?.update_status("Updating cameras...\nCoverage...")
 	src.update_all_emitters()
-
 #endif
 
 /**
@@ -58,11 +59,11 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
  * Given a list of turfs, updates their respective attached aiImage based on camera coverage
  */
 /datum/controller/camera_coverage/proc/update_turfs(list/turf/turfs_to_update)
-	PRIVATE_PROC(TRUE)
 	if (!length(turfs_to_update))
 		return
-	boutput(world, "Updating [length(turfs_to_update)] turfs")
 	for(var/turf/T as anything in turfs_to_update)
+		if (global.explosions.exploding || ON_COOLDOWN(T, "camera_coverage_update", CAM_TURF_UPDATE_COOLDOWN))
+			LAZYLISTADDUNIQUE(src.turf_update_queue, turfs_to_update)
 		T.aiImage?.loc = length(T.camera_coverage_emitters) ? null : T
 
 /**
@@ -83,7 +84,6 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	var/list/turf/not_covered = prev_coverage - new_coverage
 	var/list/turf/now_covered = new_coverage - prev_coverage
-
 
 	// Remove this emitter from any turfs it was viewing
 	for (var/turf/T as anything in not_covered)
@@ -123,7 +123,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	for (var/datum/component/camera_coverage_emitter/emitter as anything in emitters)
 		if (global.explosions.exploding || ON_COOLDOWN(emitter, "camera_coverage_update", CAM_UPDATE_COOLDOWN))
-			LAZYLISTADDUNIQUE(src.update_queue, emitter)
+			LAZYLISTADDUNIQUE(src.emitter_update_queue, emitter)
 			continue
 		turfs_to_update |= src.update_emitter_internal(emitter)
 
