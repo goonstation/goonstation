@@ -859,14 +859,6 @@
 			return
 		var/brute_damage = power*7.5
 		var/burn_damage = max((power-2.5)*5,0)
-		/*switch(severity)
-			if(1.0)
-				SPAWN(1 DECI SECOND)
-					src.gib(1)
-				return
-			if(2.0) damage = 40
-			if(3.0) damage = 20
-		*/
 
 		SPAWN(0)
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
@@ -1201,8 +1193,6 @@
 				if (src.upgrades.len >= src.max_upgrades)
 					boutput(user, "<span class='alert'>There's no room - you'll have to remove an upgrade first.</span>")
 					return
-				//for (var/obj/item/roboupgrade/R in src.contents)
-					//(istype(W, R))
 				if (locate(W.type) in src.upgrades)
 					boutput(user, "<span class='alert'>This cyborg already has that upgrade!</span>")
 					return
@@ -1473,26 +1463,6 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You successfully attach the piece to [src.name].</span>")
 			src.update_bodypart(RP.slot)
-
-		/*else if (istype(W,/obj/item/reagent_containers/glass/))
-			var/obj/item/reagent_containers/glass/G = W
-			if (src.a_intent == "help" && user.a_intent == "help")
-				if(istype(src.module_active,/obj/item/reagent_containers/glass/))
-					var/obj/item/reagent_containers/glass/CG = src.module_active
-					if(G.reagents.total_volume < 1)
-						boutput(user, "<span class='alert'>Your [G.name] is empty!</span>")
-						boutput(src, "<B>[user.name]</B> waves an empty [G.name] at you.")
-						return
-					if(CG.reagents.total_volume >= CG.reagents.maximum_volume)
-						boutput(user, "<span class='alert'>[src.name]'s [CG.name] is already full!</span>")
-						boutput(src, "<span class='alert'><B>[user.name]</B> offers you [G.name], but your [CG.name] is already full.</span>")
-						return
-					G.reagents.trans_to(CG, G.amount_per_transfer_from_this)
-					src.visible_message("<b>[user.name]</b> pours some of the [G.name] into [src.name]'s [CG.name].")
-					return
-				else ..()
-			else ..()*/
-
 		else ..()
 		return
 
@@ -1620,8 +1590,6 @@
 								if (isturf(T))
 									src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
 									src.throw_at(T, 10, 2)
-						/*if (user.glove_weaponcheck())
-							user.energyclaws_attack(src)*/
 						else
 							user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
 							random_brute_damage(user, rand(2,5))
@@ -1992,23 +1960,6 @@
 		else return 0
 
 	proc/radio_menu()
-	/*
-		var/dat = {"
-		<TT>
-		Microphone: [src.radio.broadcasting ? "<A href='byond://?src=\ref[src.radio];talk=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];talk=1'>Disengaged</A>"]<BR>
-		Speaker: [src.radio.listening ? "<A href='byond://?src=\ref[src.radio];listen=0'>Engaged</A>" : "<A href='byond://?src=\ref[src.radio];listen=1'>Disengaged</A>"]<BR>
-		Frequency:
-		<A href='byond://?src=\ref[src.radio];freq=-10'>-</A>
-		<A href='byond://?src=\ref[src.radio];freq=-2'>-</A>
-		[format_frequency(src.radio.frequency)]
-		<A href='byond://?src=\ref[src.radio];freq=2'>+</A>
-		<A href='byond://?src=\ref[src.radio];freq=10'>+</A><BR>
-		-------
-	</TT>"}
-		src.Browse(dat, "window=radio")
-		onclose(src, "radio")
-		return
-	*/
 		if(istype(src.radio))
 			src.radio.AttackSelf(src)
 
@@ -3283,7 +3234,6 @@
 		new /obj/item/roboupgrade/repair(src)
 		new /obj/item/roboupgrade/aware(src)
 		new /obj/item/roboupgrade/opticmeson(src)
-		//new /obj/item/roboupgrade/opticthermal(src)
 		new /obj/item/roboupgrade/physshield(src)
 		new /obj/item/roboupgrade/fireshield(src)
 		new /obj/item/roboupgrade/teleport(src)
@@ -3347,23 +3297,6 @@
 	if (.)
 		//STEP SOUND HANDLING
 		if ((src.part_leg_r || src.part_leg_l) && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
-			/*if (NewLoc.active_liquid) //todo : hydraulic robot fluid splash step
-				if (NewLoc.active_liquid.step_sound)
-					if (src.m_intent == "run")
-						if (src.footstep >= 4)
-							src.footstep = 0
-						else
-							src.footstep++
-						if (src.footstep == 0)
-							playsound(NewLoc, NewLoc.active_liquid.step_sound, 50, 1)
-					else
-						if (src.footstep >= 2)
-							src.footstep = 0
-						else
-							src.footstep++
-						if (src.footstep == 0)
-							playsound(NewLoc, NewLoc.active_liquid.step_sound, 20, 1)
-			*/
 			src.footstep++
 			if (can_step_sfx(src))
 				var/obj/item/parts/robot_parts/leg/leg = null
