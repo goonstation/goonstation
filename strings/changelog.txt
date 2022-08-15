@@ -1,5 +1,9 @@
 
 (t)sun aug 14 22
+(u)Roddy
+(p)10259
+(e)|
+(+)Moved some pest spawns on Oshan.
 (u)Amylizzle
 (p)10185
 (e)|
