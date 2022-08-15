@@ -875,7 +875,6 @@ proc/Create_Tommyname()
 		wire_readied = 0
 		return
 
-
 	if(wire_readied)
 		playsound(usr, 'sound/items/garrote_twang.ogg', 25,5)
 		w_class = W_CLASS_BULKY
@@ -974,44 +973,31 @@ proc/Create_Tommyname()
 	if(src.chokehold && src.loc != src.chokehold.assailant)
 		set_readiness(0)
 
+/obj/item/garrote/proc/try_upgrade_grab()
+	if (istype(src.chokehold, /obj/item/grab/block))
+		return
+	var/obj/item/grab/garrote_grab/GG = src.chokehold
+	GG.extra_deadly = !GG.extra_deadly
+	if(GG.extra_deadly)
+		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
+	else
+		GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
+
+	src.update_state()
+
 // Change the size of the garrote or the posture
 /obj/item/garrote/attack_self(mob/user)
 	if(!chokehold)
 		..()
-		toggle_wire_readiness()
+		src.toggle_wire_readiness()
 	else
-		if (istype(src.chokehold, /obj/item/grab/block)) return
-		var/obj/item/grab/garrote_grab/GG = src.chokehold
-		GG.extra_deadly = !GG.extra_deadly
-		if(GG.extra_deadly)
-			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] tightens their grip on \the [src], it digs into [GG.affecting]'s neck!</span>")
-		else
-			GG.assailant.visible_message("<span class='combat bold'>[GG.assailant] releases their hold on [GG.affecting] slightly!</span>")
-
-		update_state()
+		src.try_upgrade_grab()
 
 /obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = 0)
-	attempt_grab(user, target)
-
-// Need a nice drop button
-/obj/item/garrote/Click(location, control, params)
-
-	if(src.chokehold)
-		if(usr == src.loc)
-			var/list/P = params2list(params)
-			var/x = text2num(P["icon-x"])
-			var/y = text2num(P["icon-y"])
-			DEBUG_MESSAGE("Click on [src] - params x,y: ([x], [y]) - [params]")
-
-			//The "drop" icon bounding box
-			// 16, 8
-			//CODER LOG: Click on the fibre wire - params x,y: (16, 8) - icon-x=16;icon-y=8;left=1;screen-loc=11:32,1:8
-			if((x >= 6 && x <= 28 ) && (y >= 4 && y <= 13 ))
-				drop_grab()
-				return
-
-	..()
-
+	if (target && target == src.chokehold?.affecting)
+		src.try_upgrade_grab()
+	else
+		src.attempt_grab(user, target)
 
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
@@ -1026,7 +1012,6 @@ proc/Create_Tommyname()
 		src.target = target
 		the_garrote=garrote
 		..()
-
 
 	proc/check_conditions()
 		. = 0

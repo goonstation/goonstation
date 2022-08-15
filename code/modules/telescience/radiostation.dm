@@ -241,7 +241,7 @@
 	icon_state = "mixtable-3"
 	anchored = 1
 	density = 1
-	var/can_play_music = FALSE
+	var/can_play_music = TRUE
 	var/has_record = FALSE
 	var/is_playing = FALSE
 	var/obj/item/record/record_inside = null
@@ -281,7 +281,7 @@
 				phrase_log.log_phrase("record", R)
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
-			//user.client.play_music_radio(record_inside.song, R)
+			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	density = 1
 	var/has_tape = FALSE
 	var/is_playing = FALSE
-	var/can_play_tapes = FALSE
+	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
 
 	get_desc()
@@ -819,9 +819,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
-			src.has_tape = FALSE
-			src.is_playing = FALSE
-			//user.client.play_music_radio(tape_inside.audio)
+			src.has_tape = TRUE
+			src.is_playing = TRUE
+			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)

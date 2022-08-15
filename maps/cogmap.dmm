@@ -27216,7 +27216,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bta" = (
 /obj/decal/fakeobjects{
@@ -27227,7 +27227,7 @@
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "btb" = (
 /obj/machinery/light{
@@ -27236,12 +27236,12 @@
 	pixel_y = 21
 	},
 /obj/machinery/computer3/terminal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "btc" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "btd" = (
 /obj/table/wood/auto,
@@ -27253,7 +27253,7 @@
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bte" = (
 /turf/simulated/floor/plating/random,
@@ -27484,7 +27484,7 @@
 /turf/space,
 /area/space)
 "btP" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "btQ" = (
 /obj/cable{
@@ -27783,13 +27783,13 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "buJ" = (
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "buK" = (
 /obj/machinery/light{
@@ -27797,7 +27797,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "buL" = (
 /obj/cable{
@@ -27960,12 +27960,12 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bvt" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bvu" = (
 /obj/table/wood/auto,
@@ -27977,7 +27977,7 @@
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bvx" = (
 /turf/simulated/floor/shuttlebay,
@@ -30380,7 +30380,7 @@
 /area/ghostdrone_factory)
 "bBZ" = (
 /obj/machinery/drone_recharger/factory,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bCa" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -30657,7 +30657,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bCP" = (
 /obj/disposalpipe/segment{
@@ -30680,7 +30680,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bCS" = (
 /obj/disposalpipe/segment{
@@ -30688,7 +30688,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bCT" = (
 /obj/machinery/light,
@@ -31047,7 +31047,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bDU" = (
 /obj/table/auto,
@@ -31057,7 +31057,7 @@
 /obj/item/light/bulb,
 /obj/item/light/tube,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bDV" = (
 /obj/table/auto,
@@ -31092,7 +31092,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bDZ" = (
 /obj/table/auto,
