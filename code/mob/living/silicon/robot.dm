@@ -1642,7 +1642,7 @@
 			logTheThing("station", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 		else
 			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
-			playsound(src, 'sound/misc/boing/[rand(1,6)].ogg', 40, 1)
+			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
 
 		src.uneq_active()
 		for (var/obj/item/roboupgrade/UPGR in src.contents) UPGR.upgrade_deactivate(src)
@@ -3393,7 +3393,7 @@
 						else if (priority < 0)
 							priority = leg ? leg.step_sound : "step_robo"
 
-						playsound(NewLoc, '[priority]", src.m_intent == "run' ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
 
