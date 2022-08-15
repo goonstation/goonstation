@@ -199,6 +199,9 @@
 					role = ROLE_FLOCKMIND
 					objective_path = /datum/objective/specialist/flock
 					send_to = 3
+					if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
+						SPAWN(1)
+							F.partition(TRUE)
 				else
 					failed = 1
 

@@ -875,14 +875,14 @@ var/respawn_arena_enabled = 0
 	return O
 
 // flocktraces are made by flockminds
-/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
+/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock, var/free = FALSE)
 	if (src.mind || src.client)
 		if(!spawnloc)
 			spawnloc = get_turf(src)
 		if(!flock)
 			flock = new/datum/flock()
 
-		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
+		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock, free)
 		if (src.mind)
 			src.mind.transfer_to(O)
 			flock.trace_minds[O.name] = O.mind
