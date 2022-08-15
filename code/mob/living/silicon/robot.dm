@@ -804,7 +804,7 @@
 					var/damage_reduced_by = min(damage, R.damage_reduction)
 					src.cell.use(damage_reduced_by * R.cell_drain_per_damage_reduction)
 					damage -= damage_reduced_by
-					playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 			if (damage <= 0)
 				boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
 				return 1
@@ -836,12 +836,12 @@
 				var/obj/item/roboupgrade/physshield/S = R
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
-				playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
 				var/obj/item/roboupgrade/fireshield/S = R
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your fire shield absorbs the heat of the blast!</span>")
-				playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				fire_protect = TRUE
 
 		if(!power)
@@ -920,13 +920,13 @@
 				var/damage_reduced_by = min(damage, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				damage -= damage_reduced_by
-				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated && dmgtype == 1)
 				var/obj/item/roboupgrade/fireshield/S = R
 				var/damage_reduced_by = min(damage, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				damage -= damage_reduced_by
-				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 
 		if (damage < 1)
 			return
@@ -1011,7 +1011,7 @@
 		if (Pshield)
 			src.cell.use(200)
 			boutput(src, "<span class='notice'>Your force shield absorbs the impact!</span>")
-			playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		else
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(35,0) == 1) src.compborg_lose_limb(RP)
@@ -1019,7 +1019,7 @@
 			if (Fshield)
 				src.cell.use(100)
 				boutput(src, "<span class='notice'>Your fire shield absorbs the heat!</span>")
-				playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 			else
 				for (var/obj/item/parts/robot_parts/RP in src.contents)
 					if (RP.ropart_take_damage(0, 35) == 1) src.compborg_lose_limb(RP)
@@ -1346,7 +1346,7 @@
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			switch(action)
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
@@ -1470,7 +1470,7 @@
 			RP.set_loc(src)
 			if(RP.robot_movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(src, RP.robot_movement_modifier, RP.type)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You successfully attach the piece to [src.name].</span>")
 			src.update_bodypart(RP.slot)
 
@@ -1642,7 +1642,7 @@
 			logTheThing("station", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 		else
 			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
-			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
+			playsound(src, 'sound/misc/boing/[rand(1,6)].ogg', 40, 1)
 
 		src.uneq_active()
 		for (var/obj/item/roboupgrade/UPGR in src.contents) UPGR.upgrade_deactivate(src)
@@ -2840,14 +2840,14 @@
 				var/damage_reduced_by = min(burn, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				burn -= damage_reduced_by
-				playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				continue
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
 				var/obj/item/roboupgrade/physshield/S = R
 				var/damage_reduced_by = min(brute, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				brute -= damage_reduced_by
-				playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				continue
 		if (burn == 0 && brute == 0)
 			boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
@@ -2975,7 +2975,7 @@
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
 		if(!part) return
 
-		playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
 		elecflash(src,power = 2)
 
@@ -3393,7 +3393,7 @@
 						else if (priority < 0)
 							priority = leg ? leg.step_sound : "step_robo"
 
-						playsound(NewLoc, "[priority]", src.m_intent == "run" ? 65 : 40, 1, extrarange = 3)
+						playsound(NewLoc, '[priority]", src.m_intent == "run' ? 65 : 40, 1, extrarange = 3)
 
 		//STEP SOUND HANDLING OVER
 
