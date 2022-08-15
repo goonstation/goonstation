@@ -4691,6 +4691,12 @@
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"cqv" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "cqw" = (
 /obj/item/storage/wall/emergency{
 	dir = 8
@@ -6852,6 +6858,14 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
+"dCz" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "dCA" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -7660,6 +7674,12 @@
 	},
 /area/station/science/construction{
 	name = "Extraction Nexus"
+	})
+"eap" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
 	})
 "eas" = (
 /turf/simulated/floor/redblack/corner,
@@ -10655,6 +10675,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
+"fDF" = (
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "fDR" = (
 /obj/machinery/plantpot,
 /obj/machinery/light,
@@ -12441,10 +12468,9 @@
 "gwb" = (
 /obj/rack,
 /obj/item/tank/air,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = 4;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 6
 	},
 /obj/item/clothing/mask/breath{
 	pixel_x = -3
@@ -15204,6 +15230,10 @@
 	dir = 5
 	},
 /area/station/ai_monitored/armory)
+"hHm" = (
+/obj/submachine/cargopad/hydroponic,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "hHx" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/gloves/latex,
@@ -15880,6 +15910,18 @@
 	dir = 8
 	},
 /area/station/science/bot_storage)
+"iaz" = (
+/obj/table/reinforced/auto,
+/obj/item/plate{
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 7
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "iaM" = (
 /obj/machinery/manufacturer/general,
 /obj/machinery/camera{
@@ -16746,10 +16788,9 @@
 "iww" = (
 /obj/rack,
 /obj/item/tank/air,
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = 4;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 6
 	},
 /obj/item/clothing/mask/breath{
 	pixel_x = -3
@@ -18499,6 +18540,13 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
+"jpZ" = (
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "jqj" = (
 /obj/shrub{
 	dir = 4;
@@ -18558,6 +18606,13 @@
 	dir = 8
 	},
 /area/station/storage/emergencyinternals)
+"jrb" = (
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "jrg" = (
 /obj/machinery/vending/pda,
 /turf/simulated/floor/grey/side{
@@ -20774,10 +20829,9 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = 4;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 6
 	},
 /obj/item/clothing/mask/breath{
 	pixel_x = -3
@@ -20868,6 +20922,13 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/disposal)
+"kxr" = (
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "kxz" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/beakerbox{
@@ -22241,6 +22302,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northeast)
+"lgK" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "lgN" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -23096,6 +23161,10 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"lEw" = (
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "lEz" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -23845,10 +23914,6 @@
 	},
 /turf/simulated/floor/black/side,
 /area/station/storage/tools)
-"lTT" = (
-/obj/disposalpipe/segment/mail/bent/west,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "lUE" = (
 /obj/machinery/light{
 	dir = 1;
@@ -29534,6 +29599,12 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"oWp" = (
+/obj/stool/chair,
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "oWr" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -29893,6 +29964,15 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/table/reinforced/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 7
+	},
+/obj/item/decoration/virvase{
+	pixel_x = -4;
+	pixel_y = 19
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
@@ -31908,7 +31988,6 @@
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
@@ -37367,6 +37446,17 @@
 /obj/item/reagent_containers/syringe,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"thP" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "tii" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37755,6 +37845,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"tsp" = (
+/obj/decal/tile_edge/line/green{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "tsG" = (
 /obj/machinery/light{
 	dir = 8;
@@ -38102,6 +38199,13 @@
 /obj/item/light/tube,
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"tBD" = (
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "tBM" = (
 /obj/cable{
 	d1 = 4;
@@ -42704,6 +42808,13 @@
 	dir = 8
 	},
 /area/station/hallway/primary/northwest)
+"wfN" = (
+/obj/decal/tile_edge/line/green{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "wgH" = (
 /obj/stool/chair/office,
 /obj/cable{
@@ -43109,6 +43220,15 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
+"wvv" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/security/wooden_tv/small{
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "wvw" = (
 /obj/machinery/ghost_catcher,
 /turf/simulated/floor/circuit/red,
@@ -43280,7 +43400,6 @@
 /obj/item/tank/emergency_oxygen{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/breath,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
@@ -44687,10 +44806,9 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
 	},
-/obj/item/clothing/suit/chemsuit,
-/obj/item/clothing/head/chemhood{
-	pixel_x = 4;
-	pixel_y = -2
+/obj/item/clothing/suit/space/diving/civilian,
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = 6
 	},
 /obj/item/clothing/mask/breath{
 	pixel_x = -3
@@ -78033,14 +78151,14 @@ dqY
 fsf
 lyE
 diT
-diT
-diT
+oWp
+iaz
 pjU
-diT
-diT
-diT
-diT
-fsf
+dCz
+eap
+oWp
+wvv
+thP
 dqY
 bHq
 hWJ
@@ -82555,9 +82673,9 @@ sdD
 wKU
 bYZ
 fLE
-jdV
-jdV
-jdV
+kxr
+jpZ
+tsp
 fLE
 ewv
 gbZ
@@ -82857,9 +82975,9 @@ sdD
 wKU
 bYZ
 kWV
-jdV
-jdV
-jdV
+cqv
+hHm
+fDF
 fDR
 ewv
 gbZ
@@ -83159,9 +83277,9 @@ sdD
 wKU
 bYZ
 fLE
-jdV
-jdV
-jdV
+wfN
+jrb
+tBD
 fLE
 ewv
 gbZ
@@ -92198,8 +92316,8 @@ rav
 ewG
 owZ
 heB
+lgK
 mmv
-nGx
 tbZ
 wAB
 rsq
@@ -92500,8 +92618,8 @@ wnn
 mMA
 tbZ
 tbZ
-lTT
-owZ
+nGx
+lEw
 wcV
 jcT
 sPy
