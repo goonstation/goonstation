@@ -239,6 +239,7 @@
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(I)
 				I.set_loc(src)
+				build_icon()
 				src.UpdateIcon()
 		else if (istype(I, /obj/item/wrench))
 			if (!src.defib)

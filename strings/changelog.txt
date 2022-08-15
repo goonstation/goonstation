@@ -1,5 +1,14 @@
 
+(t)mon aug 15 22
+(u)Gannets
+(p)10262
+(e)|
+(+)Redrew the syndicate combat knife & amended the description to mention it's throw-stun utility.
 (t)sun aug 14 22
+(u)Roddy
+(p)10259
+(e)|
+(+)Moved some pest spawns on Oshan.
 (u)Amylizzle
 (p)10185
 (e)|
