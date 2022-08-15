@@ -14,35 +14,11 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			new /obj/random_item_spawner/surplus/shortgun(src.loc)
-			new /obj/surplusopspawner/melee_item_spawner(src.loc)
+			new /obj/random_item_spawner/surplus/melee(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			qdel(src)
-/obj/surplusopspawner/melee_item_spawner
-	name = "melee loadout spawner"
-	var/list/items2spawn = list(/obj/item/ratstick,
-		/obj/item/bat,
-		/obj/item/katana_sheath/reverse,
-		/obj/item/breaching_hammer,
-		/obj/item/experimental/melee/spear/plaswood,
-		/obj/item/sword/discount,
-		/obj/item/survival_machete/syndicate,
-		/obj/item/dagger/syndicate/specialist,
-		/obj/item/deconstructor,
-		/obj/item/circular_saw,
-		/obj/item/wrench/battle,
-		/obj/item/mining_tool/powerhammer,
-		/obj/item/brick,
-		/obj/item/rods/steel,
-		/obj/item/fireaxe,
-		/obj/item/quarterstaff)
-	New()
-		..()
-		SPAWN(1 DECI SECOND)
 
-			var/obj/new_item = pick(items2spawn)
-			new new_item(src.loc)
-			qdel(src)
-/obj/surplusopspawner/melee_item_spawner/withcredits
+/obj/random_item_spawner/surplus/melee/withcredits
 	New()
 
 		SPAWN(1 DECI SECOND)
@@ -50,31 +26,16 @@
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 		..()
-/obj/surplusopspawner/medical
-	var/list/items2spawn = list(
-	/obj/item/reagent_containers/food/snacks/donkpocket_w,
-	/obj/item/storage/firstaid/crit,
-	/obj/item/storage/firstaid/fire,
-	/obj/item/storage/firstaid/brute,
-	/obj/item/storage/firstaid/regular,
-	/obj/item/storage/firstaid/regular/emergency,
-	/obj/item/canned_laughter, //you know what they say about laughter and medicine
-	/obj/item/canned_laughter,
-	/obj/item/storage/firstaid/old,
-	/obj/item/item_box/medical_patches/mini_synthflesh,
-	/obj/item/item_box/medical_patches/mini_styptic,
-	/obj/item/item_box/medical_patches/mini_silver_sulf,
-	/obj/item/storage/pill_bottle/salicylic_acid,
-	/obj/item/storage/pill_bottle/menthol
-	//add funny hypospray here/nukie injectors
-	)
+/obj/item/reagent_containers/glass/beaker/large/surplusmedical
+	name = "Beaker- Jungle Juice"
+	desc = "A beaker full of an odd-smelling medical cocktail."
+	initial_reagents = list("ephedrine"=30, "saline"= 30, "synaptizine" = 30, "omnizine" = 9)
+
+/obj/item/experimental/melee/spear/plaswood
 	New()
 		..()
-		SPAWN(1 DECI SECOND)
-			var/obj/new_item = pick(items2spawn)
-			new new_item(src.loc)
-			qdel(src)
+		setHeadMaterial(getMaterial("plasmaglass"))
+		setShaftMaterial(getMaterial("wood"))
+		buildOverlays()
 
 
-
-/obj/surplusopspawner/

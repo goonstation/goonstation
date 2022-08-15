@@ -92,6 +92,7 @@
 		/obj/item/gun/kinetic/derringer,
 		/obj/item/gun/energy/laser_gun,
 		/obj/item/gun/energy/phaser_gun,
+		/obj/item/gun/reagent/syringe, //while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
 
 	///obj/item/gun/energy/blaster_pod_wars/syndicate
 	)
@@ -100,7 +101,7 @@
 
 	/obj/item/gun/kinetic/revolver)
 
-/obj/random_item_spawner/surplus/melee //if anything's going to break convention the most it's gonna be this one
+/obj/random_item_spawner/surplus/melee
 	amt2spawn = 2
 	items2spawn = list(/obj/item/ratstick,
 		/obj/item/bat,
@@ -109,6 +110,7 @@
 		/obj/item/experimental/melee/spear/plaswood,
 		/obj/item/sword/discount,
 		/obj/item/survival_machete/syndicate,
+		/obj/item/dagger/syndicate,
 		/obj/item/dagger/syndicate/specialist,
 		/obj/item/deconstructor,
 		/obj/item/circular_saw,
@@ -116,7 +118,12 @@
 		/obj/item/mining_tool/powerhammer,
 		/obj/item/brick,
 		/obj/item/rods/steel,
-		/obj/item/quarterstaff)
+		/obj/item/fireaxe,
+		/obj/item/quarterstaff, //consider canning this since it's busted as hell
+		/obj/item/kitchen/utensil/knife/cleaver)
+	spawn_items()
+		var/obj/item/thingy = pick(items2spawn)
+		new thingy(get_turf(src))
 
 //utility
 /obj/random_item_spawner/surplus/grenades
@@ -126,7 +133,7 @@
 		/obj/item/chem_grenade/incendiary,
 		/obj/item/chem_grenade/very_incendiary,
 		/obj/item/chem_grenade/flashbang,
-		/obj/item/chem_grenade/napalm, //I am very much aware that this does nothing without a light, but that opens the door up for gamer plays
+		/obj/item/chem_grenade/napalm, //I am very much aware that this does nothing without a light, but that opens the door up for some truly gamer plays
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/old_grenade/stinger,
 		/obj/item/old_grenade/high_explosive,
@@ -135,83 +142,108 @@
 		/obj/item/chem_grenade/shock,
 		/obj/item/old_grenade/spawner/wasp,
 		/obj/item/old_grenade/sawfly,
+		/obj/item/chem_grenade/fcleaner,
 		/obj/item/old_grenade/emp)
 
 	rare_items2spawn = list(/obj/item/old_grenade/spawner/sawflycluster,
 		/obj/item/chem_grenade/pepper,
 		/obj/item/chem_grenade/fog,
+		/obj/item/chem_grenade/sarin,
 		/obj/item/gimmickbomb/butt)
 
 
-/*/obj/random_item_spawner/surplus/backup
-		items2spawn = list(
-			/obj/item/remote/reinforcement_beacon,
-			/obj/item/old_grenade/spawner/sawflycluster,
-			/obj/item/old_grenade/sawfly/withremote,
-			/obj/item/storage/box/wasp_grenade_kit,
-			/obj/item/spongecaps/syndicate,
-			/obj/item/pipebomb/bomb/miniature_syndicate,
-			/obj/item/gun/energy/wasp,
-			/obj/item/implanter/mindhack,
-			/obj/machinery/recharge_station/syndicate
-		)
-
-	/obj/random_item_spawner/surplus/expensive
-		items2spawn = list(/obj/item/card/emag,
-			/obj/item/storage/belt/wrestling,
-			/obj/item/clothing/head/bighat/syndicate,
-			/obj/item/implanter/super_mindhack,
-			/obj/item/katana_sheath,
-			/obj/item/sword,
-			/obj/item/storage/box/mindhack_module_kit
-			)*/
-
-/obj/random_item_spawner/surplus/stealth //chameleon, , holographic, radio jammer
+/obj/random_item_spawner/surplus/storage
 	amt2spawn = 1
+	items2spawn = list(/obj/item/storage/pouch/highcap,
+		/obj/item/storage/fanny/funny,
+		/obj/item/storage/fanny,
+		/obj/item/storage/belt/utility,
+		/obj/item/storage/belt,
+		/obj/item/storage/belt/medical,
+		/obj/item/storage/box/syndibox)
+	spawn_items()
+		var/obj/item/thingy = pick(src.items2spawn)
+		new thingy(get_turf(src))
+
+/obj/random_item_spawner/surplus/backup
 	items2spawn = list(
-		/obj/item/device/chameleon,
-		/obj/item/storage/backpack/chameleon,
-		/obj/item/radiojammer,
-		/obj/item/clothing/suit/armor/sneaking_suit,
-		/obj/item/pen/sleepypen,
-		/datum/syndicate_buylist/generic/trickcigs,
-		/obj/item/voice_changer,
-		/obj/item/clothing/suit/cardboard_box,
-		/obj/item/device/powersink)
-		//cham projector
-		//emagged hypospray
-		//just go through buylist
-
-	rare_items2spawn = list()
-/*/obj/random_item_spawner/surplus/backup
-
-/obj/random_item_spawner/surplus/entry emag, can of explosive, knocker rounds, breaching charges, one mprt
-
-/obj/random_item_spawner/surplus/fancy //c sabers, katanas, wrestling belts, stims. Add somethat useless fancy items too like crown and bullion
-
-/obj/random_item_spawner/surplus/storage*/
-/obj/random_item_spawner/surplus/healing
-	items2spawn = list(
-		///obj/item/reagent_containers/food/snacks/donkpocket_w,
-		/obj/item/storage/firstaid/crit,
-		/obj/item/storage/firstaid/fire,
-		/obj/item/storage/firstaid/brute,
-		/obj/item/storage/firstaid/regular,
-		/obj/item/storage/firstaid/regular/emergency,
-		/obj/item/canned_laughter, //you know what they say about laughter and medicine
-		/obj/item/canned_laughter,
-		/obj/item/storage/firstaid/old,
-		/obj/item/item_box/medical_patches/mini_synthflesh,
-		/obj/item/item_box/medical_patches/mini_styptic,
-		/obj/item/item_box/medical_patches/mini_silver_sulf,
-		/obj/item/storage/pill_bottle/salicylic_acid,
-		/obj/item/storage/pill_bottle/menthol)
-		//add funny hypospray here/nukie injectors
-
-	rare_items2spawn = list(/obj/item/storage/box/donkpocket_w_kit,
-	/obj/item/storage/firstaid/regular/doctor_spawn)
+		/obj/item/remote/reinforcement_beacon,
+		/obj/item/old_grenade/spawner/sawflycluster,
+		///obj/item/old_grenade/sawfly/withremote,
+		/obj/item/storage/box/wasp_grenade_kit,
+		/obj/item/spongecaps/syndicate,
+		/obj/item/pipebomb/bomb/miniature_syndicate,
+		/obj/item/gun/energy/wasp,
+		/obj/item/implanter/mindslave,
+		///obj/item/toy/plush/small/kitten,
+		/obj/machinery/recharge_station/syndicate)
 
 	spawn_items()
+		var/obj/item/thingy = pick(src.items2spawn)
+		new thingy(get_turf(src))
+
+
+/obj/random_item_spawner/surplus/expensive
+	items2spawn = list(/obj/item/card/emag,
+		/obj/item/storage/belt/wrestling,
+		/obj/item/clothing/head/bighat/syndicate,
+		/obj/item/implanter/super_mindslave,
+		/obj/item/katana_sheath,
+		/obj/item/sword,
+		 /obj/storage/crate/syndicate_surplus, //yo dawg, I heard you like surplus
+		/obj/item/storage/box/mindslave_module_kit)
+	spawn_items()
+		var/obj/item/thingy = pick(src.items2spawn)
+		new thingy(get_turf(src))
+
+/obj/random_item_spawner/surplus/stealth
+	amt2spawn = 1
+	items2spawn = list(
+		/obj/item/storage/backpack/chameleon,
+		/obj/item/radiojammer,
+		///obj/item/clothing/suit/armor/sneaking_suit,
+		/obj/item/pen/sleepypen,
+		/obj/item/device/chameleon,
+		/obj/item/cigpacket/syndicate,
+		/obj/item/voice_changer,
+		/obj/item/clothing/suit/cardboard_box,
+		/obj/item/device/powersink,
+		/obj/item/dna_scrambler,
+		/obj/item/cloak_gen,
+		/obj/item/lightbreaker,
+		/obj/item/storage/box/chameleonbomb,
+		/obj/item/storage/box/poison)
+
+
+	spawn_items()
+		var/obj/item/thingy = pick(src.items2spawn)
+		new thingy(get_turf(src))
+
+/obj/surplusopspawner/medical //the medical spawner uppity and refuses to work so we're doing this for the time being.
+	var/list/items2spawn = list(
+	/obj/item/reagent_containers/food/snacks/donkpocket_w,
+	/obj/item/storage/firstaid/crit,
+	/obj/item/storage/firstaid/fire,
+	/obj/item/storage/firstaid/brute,
+	/obj/item/storage/firstaid/regular,
+	/obj/item/storage/firstaid/regular/emergency,
+	/obj/item/canned_laughter, //you know what they say about laughter and medicine
+	/obj/item/canned_laughter,
+	/obj/item/storage/firstaid/old,
+	/obj/item/item_box/medical_patches/mini_synthflesh,
+	/obj/item/item_box/medical_patches/mini_styptic,
+	/obj/item/item_box/medical_patches/mini_silver_sulf,
+	/obj/item/storage/pill_bottle/salicylic_acid,
+	/obj/item/storage/pill_bottle/menthol,
+	/obj/item/reagent_containers/hypospray/emagged,
+	/obj/item/reagent_containers/emergency_injector/methamphetamine,
+	/obj/item/reagent_containers/glass/beaker/large/surplusmedical,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
+	/obj/item/storage/box/donkpocket_w_kit,
+	/obj/item/storage/firstaid/regular/doctor_spawn,
+	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
+	New()
+		..()
 		SPAWN(1 DECI SECOND)
 			var/obj/new_item = pick(items2spawn)
 			new new_item(src.loc)
