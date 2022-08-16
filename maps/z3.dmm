@@ -691,10 +691,16 @@
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
-/obj/machinery/networked/printer,
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Broken Printer";
+	true_name = "printer?";
+	desc = "It looks like it was never even plugged in. Did this ever work?!"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
