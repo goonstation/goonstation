@@ -1318,7 +1318,7 @@
 			else
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
-		playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 65, 1)
+		//playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 65, 1)
 		.= 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)

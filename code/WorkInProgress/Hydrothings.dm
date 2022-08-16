@@ -621,7 +621,7 @@ obj/item/gnomechompski/elf
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/device/key/owl))
 			boutput(user, "You insert the key into the wall causing it to slide into a crevice below!")
-			playsound(src.loc, 'sound/effects/rockscrape.ogg', 50, 1, -1)
+			//playsound(src.loc, 'sound/effects/rockscrape.ogg', 50, 1, -1)
 			qdel(src)
 
 /datum/projectile/wonk
