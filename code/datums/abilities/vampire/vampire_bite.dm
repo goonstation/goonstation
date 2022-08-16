@@ -161,6 +161,7 @@
 	eat_twitch(src.owner)
 	playsound(src.owner.loc,"sound/items/drink.ogg", rand(5,20), 1, pitch = 1.4)
 	HH.was_harmed(M, special = "vamp")
+	bleed(HH, 1, 3, get_turf(src.owner))
 
 /datum/abilityHolder/vampiric_thrall/var/list/blood_tally
 /datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
@@ -359,7 +360,7 @@
 		boutput(M, "<span class='notice'>You bite [HH] and begin to drain them of blood.</span>")
 		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
 
-		actions.start(new/datum/action/bar/icon/vamp_blood_suc(M,H,HH,src), M)
+		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)
 
 		return 0
 
@@ -367,7 +368,7 @@
 	thrall = 1
 
 
-/datum/action/bar/icon/vamp_blood_suc
+/datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "vamp_blood_suck"
@@ -413,6 +414,10 @@
 		if (istype(H))
 			H.vamp_isbiting = HH
 
+		HH.client?.images += bar.img
+		HH.client?.images += border.img
+		HH.client?.images += icon_image
+
 		src.loopStart()
 
 	loopStart()
@@ -447,6 +452,12 @@
 		src.end()
 
 		..()
+
+	onDelete()
+		. = ..()
+		HH.client?.images -= bar.img
+		HH.client?.images -= border.img
+		HH.client?.images -= icon_image
 
 	proc/end()
 		if (istype(H))
