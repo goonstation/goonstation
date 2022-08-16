@@ -566,11 +566,6 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		has_camera = 1
 		cam_network = "Zeta"
 
-	colosseum
-		name = "The Colosseum Arena"
-		has_camera = 1
-		cam_network = "Zeta"
-
 /datum/gauntletDrop
 	var/name = "Drop"
 	var/point_cost = 0
