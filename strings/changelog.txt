@@ -1,5 +1,9 @@
 
 (t)tue aug 16 22
+(u)LeahTheTech
+(p)10163
+(e)|
+(+)Vampire bite action bars are now only visible to the vampire, and biting a victim will now cause a little of their blood to drip to the floor at your feet.
 (u)Amylizzle
 (p)10234
 (e)|
