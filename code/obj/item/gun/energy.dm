@@ -105,7 +105,7 @@
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return 0
 
 
@@ -132,7 +132,7 @@
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(..(target, params, user, reach))
-			playsound(user, "sound/weapons/heavyioncharge.ogg", 90)
+			playsound(user, 'sound/weapons/heavyioncharge.ogg', 90)
 
 ////////////////////////////////////TASERGUN
 /obj/item/gun/energy/taser_gun
@@ -533,7 +533,7 @@
 	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo/power_cell))
 			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1, -6)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
 			return
@@ -608,7 +608,7 @@
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
-			playsound(user, "sound/weapons/DSBFG.ogg", 75)
+			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
@@ -1090,7 +1090,7 @@
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (canshoot()) // No more attack messages for empty guns (Convair880).
-			playsound(user, "sound/weapons/DSBFG.ogg", 75)
+			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
 		return ..(target, start, user)
 
@@ -1391,42 +1391,42 @@
 				if ("detain")
 					set_current_projectile(projectiles["detain"])
 					item_state = "lawg-detain"
-					playsound(M, "sound/vox/detain.ogg", 50)
+					playsound(M, 'sound/vox/detain.ogg', 50)
 				if ("execute", "exterminate")
 					set_current_projectile(projectiles["execute"])
 					current_projectile.cost = 30
 					item_state = "lawg-execute"
-					playsound(M, "sound/vox/exterminate.ogg", 50)
+					playsound(M, 'sound/vox/exterminate.ogg', 50)
 				if ("smokeshot","fog")
 					set_current_projectile(projectiles["smokeshot"])
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
-					playsound(M, "sound/vox/smoke.ogg", 50)
+					playsound(M, 'sound/vox/smoke.ogg', 50)
 				if ("knockout", "sleepshot")
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
-					playsound(M, "sound/vox/sleep.ogg", 50)
+					playsound(M, 'sound/vox/sleep.ogg', 50)
 				if ("hotshot","incendiary")
 					set_current_projectile(projectiles["hotshot"])
 					current_projectile.cost = 60
 					item_state = "lawg-hotshot"
-					playsound(M, "sound/vox/hot.ogg", 50)
+					playsound(M, 'sound/vox/hot.ogg', 50)
 				if ("bigshot","highexplosive","he")
 					set_current_projectile(projectiles["bigshot"])
 					current_projectile.cost = 170
 					item_state = "lawg-bigshot"
-					playsound(M, "sound/vox/high.ogg", 50)
+					playsound(M, 'sound/vox/high.ogg', 50)
 					SPAWN(0.4 SECONDS)
-						playsound(M, "sound/vox/explosive.ogg", 50)
+						playsound(M, 'sound/vox/explosive.ogg', 50)
 				if ("clownshot","clown")
 					set_current_projectile(projectiles["clownshot"])
 					item_state = "lawg-clownshot"
-					playsound(M, "sound/vox/clown.ogg", 30)
+					playsound(M, 'sound/vox/clown.ogg', 30)
 				if ("pulse", "push", "throw")
 					set_current_projectile(projectiles["pulse"])
 					item_state = "lawg-pulse"
-					playsound(M, "sound/vox/push.ogg", 50)
+					playsound(M, 'sound/vox/push.ogg', 50)
 
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
@@ -1450,7 +1450,7 @@
 			if (src in M.contents)
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
-					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
+					playsound(src.loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN(2 SECONDS)
@@ -1554,7 +1554,7 @@
 /obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))
 	var/range = 6
-	playsound(user.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+	playsound(user.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 	var/turf/currentturf
 	var/turf/previousturf
 	for(var/turf/F in affected_turfs)

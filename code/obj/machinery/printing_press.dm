@@ -218,7 +218,7 @@
 					boutput(user, "no good, asshole >:\[")
 					return
 			qdel(W)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else
 			..()
@@ -466,7 +466,7 @@
 				UpdateIcon()
 				break
 
-			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))

@@ -95,11 +95,11 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, "sound/items/pickup_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, "sound/items/putback_defib.ogg", 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
@@ -143,7 +143,7 @@
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, "sound/weapons/flash.ogg", 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -317,7 +317,7 @@
 		return
 
 	src.create_photo(target)
-	playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
+	playsound(src, 'sound/items/polaroid[rand(1,2)].ogg', 75, 1, -3)
 
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)

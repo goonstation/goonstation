@@ -17,7 +17,7 @@
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
-			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
 			if (do_after(user, 4.6 SECONDS))

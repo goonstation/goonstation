@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			new payload(T)
 			for (var/i = 1; i<= 8; i= i*2)
 				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			var/obj/item/old_grenade/smoke/mustard/M = null
 			if (istype(src, /obj/item/old_grenade/smoke/mustard))
 				M = src
-			playsound(T, "sound/effects/smoke.ogg", 50, 1, -3)
+			playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
 
 			SPAWN(0)
 				if (src)
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
@@ -417,7 +417,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (istype(src, /obj/item/old_grenade/stinger/frag))
 				F = src
 			if (F)
-				playsound(T, "sound/effects/smoke.ogg", 20, 1, -2)
+				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
 				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
@@ -468,7 +468,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		var/turf/T = ..()
 		if (T)
 			explosion_new(src, T, 5.0, 2)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"
@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src)
 				return
 
-			playsound(T, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/items/Welder2.ogg", 25, 1)
+			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -618,7 +618,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 			animate(E, alpha=0, time=2.5 SECONDS)
-			playsound(T, "sound/weapons/flashbang.ogg", 30, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 30, 1)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
@@ -626,7 +626,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 		else
 			animate(E, alpha=0, time=2 SECONDS)
-			playsound(T, "sound/weapons/flashbang.ogg", 15, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 15, 1)
 
 		E.fingerprintslast = src.fingerprintslast
 		qdel(src)
@@ -1042,9 +1042,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 2)
 
 				if (src.bootleg_level == 0)
-					playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+					playsound(src.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 				else
-					playsound(src.loc, "sound/effects/Explosion2.ogg", 75, 1)
+					playsound(src.loc, 'sound/effects/Explosion2.ogg', 75, 1)
 
 		src.visible_message("<span class='alert'>\The [src] explodes!</span>")
 
@@ -1236,7 +1236,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					playsound(src.loc, pick(sounds_explosion), 75, 1)
 					new/obj/effect/supplyexplosion(src.loc)
 			else
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 			explosion(src, location, src.expl_devas, src.expl_heavy, src.expl_light, src.expl_flash)
 			// Breaching charges should be, you know, actually be decent at breaching walls and windows (Convair880).
@@ -1323,7 +1323,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src)
 				return
 
-			playsound(location, "sound/effects/bamf.ogg", 100, 0.5)
+			playsound(location, 'sound/effects/bamf.ogg', 100, 0.5)
 			src.invisibility = INVIS_ALWAYS
 
 			for (var/turf/T in range(src.expl_range, location))
@@ -1449,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
 				user.u_equip(src)
 				user.u_equip(W)
-				playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
 				user.put_in_hand_or_drop(S)
 				qdel(W)
@@ -1697,11 +1697,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
-					playsound(src.loc, "sound/voice/farts/superfart.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3+butt,src.loc))
 						ass_explosion(M, 0, 5)
 				else
-					playsound(src.loc, "sound/voice/farts/poo2.ogg", 90, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 					for (var/mob/M in view(3,src.loc))
 						ass_explosion(M, 0, 5)
 			if (confetti)
@@ -1759,7 +1759,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, "sound/items/Deconstruct.ogg", 70, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 70, 1)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

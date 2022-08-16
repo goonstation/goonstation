@@ -39,7 +39,7 @@
 	reagents.reaction(M, INGEST)
 	expended = TRUE
 	icon_state = "amp-broken"
-	playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 	return
 
 /obj/item/reagent_containers/ampoule/on_reagent_change()

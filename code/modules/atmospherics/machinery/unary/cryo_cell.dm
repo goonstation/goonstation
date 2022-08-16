@@ -75,7 +75,7 @@
 				else
 					if(occupant.mind)
 						src.go_out()
-						playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
 		if(air_contents)
 			ARCHIVED(temperature) = air_contents.temperature
@@ -223,7 +223,7 @@
 			else
 				reagent_scan_enabled = 1
 				boutput(user, "<span class='notice'>Reagent scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(I)
 				qdel(I)
 				return
@@ -236,7 +236,7 @@
 					return
 				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(I)
 				I.set_loc(src)
 				src.UpdateIcon()
@@ -248,7 +248,7 @@
 				src.defib = null
 				src.UpdateIcon()
 				src.visible_message("<span class='alert'>[user] removes the Defibrillator from [src].</span>")
-				playsound(src.loc ,"sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc , 'sound/items/Ratchet.ogg', 50, 1)
 		else if (istype(I, /obj/item/device/analyzer/healthanalyzer))
 			if (!occupant)
 				boutput(user, "<span class='notice'>This Cryo Cell is empty!</span>")

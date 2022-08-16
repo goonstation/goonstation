@@ -357,7 +357,7 @@
 
 			proc/toggle(var/mob/toggler)
 				src.on = !src.on
-				playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+				playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 				if (ishuman(toggler))
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
@@ -760,7 +760,7 @@
 			return
 		weeoo_in_progress = 10
 		SPAWN(0)
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 			light.enable()
 			src.icon_state = "siren1"
 			for (weeoo_in_progress, weeoo_in_progress > 0, weeoo_in_progress--)

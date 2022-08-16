@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")
 			src.report_attack()
 			src.takeDamage("brute", 1)
-			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 
 	else
 		var/action = ""
@@ -230,9 +230,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if (src.hitTwitch)
 		hit_twitch(src)
 	if (W.force < 5)
-		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 	else
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
 
 
 /obj/flock_structure/proc/report_attack()

@@ -3306,7 +3306,7 @@ var/global/noir = 0
 										sawarm:set_item(new /obj/item/saw/elimbinator())
 
 
-									playsound(M, "sound/machines/chainsaw_red.ogg", 60, 1)
+									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, 1)
 									M.update_body()
 							message_admins("[key_name(usr)] has given everyone new arms.")
 							logTheThing("admin", usr, null, "used the Saw Arms secret.")

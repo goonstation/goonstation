@@ -266,7 +266,7 @@
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.camera_status = FALSE
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
 	updateCoverage()
 	if (user)
@@ -276,7 +276,7 @@
 
 /obj/machinery/camera/proc/repair_camera(mob/user)
 	src.camera_status = TRUE
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
 	updateCoverage()
 	if (user)

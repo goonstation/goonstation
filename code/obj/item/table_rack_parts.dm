@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/furniture_parts/bookshelf(get_turf(src))
 			qdel(src)
 			qdel(W)
@@ -696,11 +696,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

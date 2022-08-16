@@ -1887,7 +1887,7 @@
 	else
 		partygibs(src.loc, virus)
 
-	playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 100, 1)
+	playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -1938,7 +1938,7 @@
 	else
 		gibs(src.loc, virus)
 
-	playsound(src.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+	playsound(src.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -2004,7 +2004,7 @@
 		var/mob/dead/observer/newmob = ghostize()
 		newmob.corpse = null
 
-	playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 
 	if (animation)
 		animation.delaydispose()
@@ -2137,7 +2137,7 @@
 	else
 		gibs(src.loc, virus, ejectables)
 
-	playsound(src.loc, "sound/voice/farts/superfart.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/farts/superfart.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 	var/turf/src_turf = get_turf(src)
 	if(src_turf)
 		src_turf.fluid_react_single("toxic_fart",50,airborne = 1)
@@ -2869,7 +2869,7 @@
 // no text description though, because it's all different everywhere
 /mob/proc/vomit(var/nutrition=0, var/specialType=null)
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
-	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)

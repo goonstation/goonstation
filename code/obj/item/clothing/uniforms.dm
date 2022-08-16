@@ -1242,7 +1242,7 @@
 			else
 				for (var/i=3, i>0, i--)
 					new /obj/item/bandage(get_turf(src))
-				playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 				boutput(user, "You cut [src] into bandages.")
 				user.u_equip(src)
 				qdel(src)

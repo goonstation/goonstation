@@ -49,7 +49,7 @@
 		grab_smash(C, user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.break_tile_to_plating()
 		return
 	if(src.broken)
@@ -60,11 +60,11 @@
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
-		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 		break_tile()
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, 1)
 	user.lastattacked = src
 
 /turf/simulated/floor/feather/break_tile_to_plating()
@@ -134,7 +134,7 @@
 	src.name = "weird glowing floor"
 	src.desc = "Looks like disco's not dead after all."
 	on = TRUE
-	//playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
+	//playsound(src.loc, 'sound/machines/ArtifactFea3.ogg', 25, 1)
 	src.light.enable()
 
 /turf/simulated/floor/feather/proc/off()
@@ -218,7 +218,7 @@
 	if(!C || !user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.destroy()
 		return
 	if(src.broken)
@@ -270,7 +270,7 @@
 /turf/simulated/wall/auto/feather/proc/takeDamage(damageType, amount, playAttackSound = TRUE)
 	src.health = max(src.health - amount, 0)
 	if (src.health > 0 && playAttackSound)
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 80, 1)
 
 	if (!src.broken && src.health <= 0)
 		src.name = "weird broken wall"
@@ -279,7 +279,7 @@
 		src.UpdateIcon()
 		src.material.setProperty("reflective", 3)
 		if (playAttackSound)
-			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+			playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 
 		for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 			if (flockdrone.floorrunning)

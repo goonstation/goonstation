@@ -768,7 +768,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")

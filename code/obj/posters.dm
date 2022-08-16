@@ -56,7 +56,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
-				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
+				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/np = new(get_turf(P))
 					if (p_title)
@@ -159,7 +159,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				if (P.status & (NOPOWER|BROKEN))
 					continue
 				flick("printer-printing",P)
-				playsound(P.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
+				playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 				SPAWN(3.2 SECONDS)
 					var/obj/item/poster/titled_photo/wp = new(get_turf(P))
 					if (w_name)
@@ -499,7 +499,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(src, "sound/machines/printer_dotmatrix.ogg", 30, 1)
+		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"

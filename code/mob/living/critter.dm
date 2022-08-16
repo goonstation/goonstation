@@ -1018,7 +1018,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
 								wiggle--

@@ -677,7 +677,7 @@ function lineEnter (ev)
 			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
@@ -1089,7 +1089,7 @@ function lineEnter (ev)
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")

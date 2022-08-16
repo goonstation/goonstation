@@ -27,7 +27,7 @@
 			SPtime = 50
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_phase.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_phase.ogg', 25, 1, -1)
 		spell_invisibility(holder.owner, SPtime, 0, 1)
 
 // Merged some stuff from wizard and vampire phaseshift for easy of use (Convair880).
@@ -209,7 +209,7 @@
 
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc)
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 
 		//overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 		//overlay_image.color = "#333333"
@@ -276,7 +276,7 @@
 		var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 		P.setup(src.loc, forced)
 
-		playsound(src.loc,"sound/effects/poff.ogg", 50, 1, pitch = 1.3)
+		playsound(src.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1.3)
 
 		qdel(src)
 
@@ -311,7 +311,7 @@
 				if (vampholder)
 					if (ishuman(atom) && vampholder.can_bite(atom, is_pointblank = 0))
 						vampholder.do_bite(atom, mult = 0.25)
-						playsound(src.loc,"sound/impact_sounds/Flesh_Crush_1.ogg", 35, 1, pitch = 1.3)
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 35, 1, pitch = 1.3)
 						break
 				if (istype(atom,/obj/machinery/door))
 					var/obj/machinery/door/D = atom
@@ -351,7 +351,7 @@
 
 		New()
 			..()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 1.8)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 1.8)
 
 		relaymove()
 			..()
@@ -359,5 +359,5 @@
 
 
 		dispel()
-			playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 15, 1, pitch = 2)
+			playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 15, 1, pitch = 2)
 			..()

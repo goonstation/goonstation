@@ -525,7 +525,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.add_fingerprint(user)
 		src.connected?.updateUsrDialog()
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
 	attack_hand(mob/user)
 		..()
@@ -576,7 +576,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		src.icon_state = "scanner_0"
 
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 		return
 

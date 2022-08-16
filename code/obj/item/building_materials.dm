@@ -978,7 +978,7 @@ MATERIAL
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
 		user.changeStatus("stunned", 50 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if(prob(40)) user.emote("scream")
 
 		SPAWN(1 SECOND)
@@ -988,7 +988,7 @@ MATERIAL
 			heads += head
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))

@@ -51,7 +51,7 @@
 	p_open = 1
 	play_animation("opening")
 	UpdateIcon()
-	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
+	playsound(src, 'sound/machines/airlock_swoosh_temp.ogg', 100, 0)
 	SPAWN(2.5)
 		set_density(0) // let them through halfway through the anim
 	SPAWN(0.5 SECONDS)
@@ -69,7 +69,7 @@
 	p_open = 0
 	play_animation("closing")
 	UpdateIcon()
-	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
+	playsound(src, 'sound/machines/airlock_swoosh_temp.ogg', 100, 0)
 	SPAWN(2.5)
 		set_density(1)
 	SPAWN(0.5 SECONDS)
@@ -97,7 +97,7 @@
 					flick("vdeny", src)
 				else
 					flick("deny", src)
-				playsound(src, "sound/machines/airlock_deny_temp.ogg", 100, 0) // kinda hacky, oh well
+				playsound(src, 'sound/machines/airlock_deny_temp.ogg', 100, 0) // kinda hacky, oh well
 	UpdateIcon()
 
 /obj/machinery/door/supernorn/proc/check_safeties()

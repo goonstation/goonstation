@@ -59,7 +59,7 @@
 				if (!F.group.draining)
 					F.group.add_drain_process()
 
-				playsound(src.loc, "sound/misc/drain_glug.ogg", 50, 1)
+				playsound(src.loc, 'sound/misc/drain_glug.ogg', 50, 1)
 
 				//moved to fluid process
 				//F.group.reagents.skip_next_update = 1
@@ -268,7 +268,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0.1, 0.7)
 				UpdateIcon()
 
 		else if (pissing)
@@ -452,7 +452,7 @@
 
 	proc/deploy_ladder(turf/source, turf/dest, mob/user)
 		user.show_text("You deploy [src].")
-		playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 60, 1)
 
 		var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(source)
 		L.linked_ladder = new /obj/sea_ladder_deployed(dest)

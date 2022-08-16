@@ -93,7 +93,7 @@
 			target.job = "Cluwne"
 			target.real_name = "cluwne"
 			target.UpdateName()
-			playsound(target, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
+			playsound(target, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg", 'sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
 			target.change_misstep_chance(60)
 
 			animate_clownspell(target)

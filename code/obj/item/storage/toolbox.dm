@@ -256,7 +256,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return

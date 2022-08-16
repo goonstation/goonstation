@@ -110,7 +110,7 @@
 
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
-	playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return
@@ -240,7 +240,7 @@
 
 	if (src.part1)
 		src.part1.attack_self(user, 1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -324,7 +324,7 @@
 /obj/item/assembly/radio_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 		src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return

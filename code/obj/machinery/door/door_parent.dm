@@ -102,7 +102,7 @@
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
 			if (prob(20) && !ON_COOLDOWN(H,"brainstumble_cooldown", 1 SECOND))
-				playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					var/obj/item/affecting = H.organs["head"]
@@ -699,11 +699,11 @@
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	. = ..()
 
 /obj/machinery/door/unpowered/martian/close()
-	playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 	. = ..()
 
 // APRIL FOOLS
@@ -780,7 +780,7 @@
 		return
 	if (user.is_hulk())
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 		src.operating = -1
 		src.locked = 0
 		open()
@@ -792,17 +792,17 @@
 			close()
 	else if (src.density)
 		play_animation("deny")
-		playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
+		playsound(src.loc, 'sound/machines/door_locked.ogg', 50, 1, -2)
 		boutput(user, "<span class='alert'>The door is locked!</span>")
 	return
 
 /obj/machinery/door/unpowered/wood/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
+	playsound(src.loc, 'sound/machines/door_open.ogg', 50, 1)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/close()
-	playsound(src.loc, "sound/machines/door_close.ogg", 50, 1)
+	playsound(src.loc, 'sound/machines/door_close.ogg', 50, 1)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
@@ -854,20 +854,20 @@
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [the_door]'s lock!</span>")
-			playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
+			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		owner.visible_message("<span class='alert'>[owner] begins picking [the_door]'s lock!</span>")
-		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 	onEnd()
 		..()
 		the_door.locked = 0
 		owner.visible_message("<span class='alert'>[owner] jimmies [the_door]'s lock open!</span>")
-		playsound(the_door, "sound/items/Screwdriver2.ogg", 50, 1)
+		playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 
 /obj/machinery/door/unpowered/bulkhead
 	name = "bulkhead door"

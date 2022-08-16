@@ -20,7 +20,7 @@
 		if(!holder.owner.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
-		playsound(holder.owner.loc, "sound/effects/mag_forcewall.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_forcewall.ogg', 25, 1, -1)
 		var/forcefield1
 		var/forcefield2
 		var/forcefield3

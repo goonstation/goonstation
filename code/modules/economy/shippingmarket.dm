@@ -499,7 +499,7 @@
 
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
-				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
+				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
 				SPAWN(SUPPLY_OPEN_TIME)
 					if (P?.density)
 						P.open()

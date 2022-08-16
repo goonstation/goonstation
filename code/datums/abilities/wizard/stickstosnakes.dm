@@ -75,4 +75,4 @@
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")
 		logTheThing("combat", holder.owner, stick, "casts Sticks to Snakes on [constructTarget(stick,"combat")] turning it into [snake] at [log_loc(snake)].")
-		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

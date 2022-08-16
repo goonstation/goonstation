@@ -71,12 +71,12 @@ Contains:
 	if (iswrenchingtool(W))
 		if (!anchored)
 			anchored = 1
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the [src.name] to the floor.")
 			src.anchored = 1
 		else if (anchored)
 			anchored = 0
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You unsecure the [src.name].")
 			src.anchored = 0
 
@@ -650,7 +650,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			desc = "Projects an energy field when active. It has been bolted to the floor."
 			src.anchored = 1
@@ -658,7 +658,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			desc = "Projects an energy field when active."
 			src.anchored = 0
@@ -1078,7 +1078,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			desc = "Shoots a high power laser when active, it has been bolted to the floor."
@@ -1086,7 +1086,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			desc = "Shoots a high power laser when active."
@@ -1298,11 +1298,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
 			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
@@ -1525,11 +1525,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
 			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
@@ -1569,14 +1569,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			return
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			return

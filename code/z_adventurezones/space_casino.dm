@@ -104,14 +104,14 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E) // Freak out and die
 		src.icon_state = "slotsitem-malf"
-		playsound(get_turf(src), "sound/misc/klaxon.ogg", 55, 1)
+		playsound(get_turf(src), 'sound/misc/klaxon.ogg', 55, 1)
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'WINNER! WINNER! JACKPOT! WINNER! JACKPOT! BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 60, 1, pitch = 1.2)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 60, 1, pitch = 1.2)
 		animate_shake(src,7,5,2)
 		sleep(3.5 SECONDS)
 
 		src.visible_message("<span class='subtle'><b>[src]</b> says, 'BIG WINNER! BIG WINNER!'</span>")
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_2.ogg", 60, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_2.ogg', 60, 1, pitch = 0.8)
 		animate_shake(src,5,7,2)
 		sleep(1.5 SECONDS)
 

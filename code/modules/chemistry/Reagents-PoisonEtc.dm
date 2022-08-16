@@ -383,7 +383,7 @@ datum
 							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
-							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
@@ -650,7 +650,7 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								take_bleeding_damage(H, null, rand(10,30) * mult, DAMAGE_STAB)
 								H.visible_message("<span class='alert'><B>A bee bursts out of [H]'s chest! Oh fuck!</B></span>", \
 								"<span class='alert'><b>A bee bursts out of your chest! OH FUCK!</b></span>")
@@ -731,7 +731,7 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
@@ -1535,7 +1535,7 @@ datum
 				if (probmult(7))
 					for(var/mob/O in AIviewers(M, null))
 						O.show_message("<span class='alert'>[M] vomits up some green goo.</span>", 1)
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					make_cleanable( /obj/decal/cleanable/greenpuke,M.loc)
 				..()
 
@@ -2047,7 +2047,7 @@ datum
 					else if (prob(5))
 						var/damage = rand(1,10)
 						H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-						playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 

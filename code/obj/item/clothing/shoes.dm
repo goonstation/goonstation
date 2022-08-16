@@ -188,13 +188,13 @@
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
-		playsound(src.loc, "sound/items/miningtool_on.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
-		playsound(src.loc, "sound/items/miningtool_off.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.

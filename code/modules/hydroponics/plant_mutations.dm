@@ -186,7 +186,7 @@
 		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -297,7 +297,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -691,7 +691,7 @@
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
-			playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+			playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg", 'sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
@@ -700,7 +700,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
-		playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+		playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg", 'sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed

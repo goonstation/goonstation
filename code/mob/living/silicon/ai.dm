@@ -365,24 +365,24 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
 		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> closes [src.name]'s chassis cover.</span>")
 			src.dismantle_stage = 1
 		else ..()
 
 	else if (iswrenchingtool(W))
 		if (src.dismantle_stage == 2)
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
@@ -392,7 +392,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU bolts.</span>")
 				src.dismantle_stage = 3
 		else if (src.dismantle_stage == 3)
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
@@ -415,7 +415,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		var/obj/item/cable_coil/coil = W
 		src.add_fingerprint(user)
 		if(src.fireloss)
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			coil.use(1)
 			src.HealDamage(null, 0, 15)
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
@@ -525,7 +525,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		else
 			var/obj/item/ai_plating_kit/kit = W
 			src.setSkin(kit.skin)
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
 			qdel(W)
 
@@ -658,14 +658,14 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 					user.visible_message("<span class='alert'><b>[user.name]</b> pats [src.name] on the head.</span>")
 			if(INTENT_DISARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> shoves [src.name] around a bit.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_GRAB)
 				user.visible_message("<span class='alert'><b>[user.name]</b> grabs and shakes [src.name].</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
 				logTheThing("combat", user, src, "kicks [constructTarget(src,"combat")]")
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
 				if (ishuman(user) && prob(10))
@@ -2516,7 +2516,7 @@ proc/get_mobs_trackable_by_AI()
 				if (M.change_stack_amount(-3))
 					src.build_step++
 					boutput(user, "You add plating to [src]!")
-					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
 					src.UpdateOverlays(src.image_background_overlay, "background")
 					src.UpdateOverlays(src.image_top_overlay, "top")
@@ -2535,7 +2535,7 @@ proc/get_mobs_trackable_by_AI()
 					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
-						playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 						src.has_glass = 1
 						src.UpdateOverlays(src.image_glass_overlay, "glass")
 						return
@@ -2560,7 +2560,7 @@ proc/get_mobs_trackable_by_AI()
 			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.UpdateOverlays(src.image_wire_overlay, "wires")
 				if (coil.amount < 1)
 					user.drop_item()
@@ -2581,7 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -2599,7 +2599,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.has_radios < 3)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.has_radios++
 				qdel(W)
 				if (src.has_radios == 1) // we just added the first one, so this is the only time we need to worry about the overlays
@@ -2617,7 +2617,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.has_interface = 1
 				qdel(W)
 				src.UpdateOverlays(image_interface_overlay, "interface")
@@ -2673,7 +2673,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 		src.build_step++
 		boutput(user, "You use the [W] to lay the exterior plating on the [src]!")
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 		qdel(plating)
 		skinToApply = plating.skin
 		UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")

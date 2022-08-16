@@ -84,7 +84,7 @@
 			return
 
 		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			playsound(src.loc, 'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
 			return
@@ -110,7 +110,7 @@
 			src.linked.hang_up()
 		ringing = 0
 		icon_state = phoneicon
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		playsound(src.loc, 'sound/machines/phones/hang_up.ogg' ,50,0)
 
 
 	proc/find_nearest_radio_tower()

@@ -118,7 +118,7 @@
 		logTheThing("combat", usr, null, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
 			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
-			playsound(usr.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+			playsound(usr.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				if(M == usr)
 					continue
@@ -130,7 +130,7 @@
 					if(prob(50))
 						M.make_critter(/mob/living/critter/small_animal/bird/owl/large/hooter, M.loc)
 					else
-						playsound(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						playsound(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						M.gib()
 						new /mob/living/critter/small_animal/bird/owl/large/hooter(M.loc)
 					continue
@@ -316,5 +316,5 @@ proc/timeywimey(var/time)
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)
 		elecflash(L,power = 2)
-		playsound(L.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+		playsound(L.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 	return 1

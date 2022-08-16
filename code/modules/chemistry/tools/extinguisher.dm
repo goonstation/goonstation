@@ -95,7 +95,7 @@
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
-		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 		user.lastattacked = target
 		return
 
@@ -105,7 +105,7 @@
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
 			fireflash(src.loc, 0)
 			explosion(src, src.loc, -1,0,1,1)
 			src.reagents.remove_any(src.initial_volume)
@@ -126,7 +126,7 @@
 			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
 			fireflash(src.loc, 0)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
@@ -150,7 +150,7 @@
 				qdel(src)
 				return
 
-		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src, 'sound/effects/spray.ogg', 30, 1, -3)
 
 		var/direction = get_dir(src,target)
 

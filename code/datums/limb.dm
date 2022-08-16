@@ -114,7 +114,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
-		playsound(user.loc, "sound/weapons/lasermed.ogg", 100, 1)
+		playsound(user.loc, 'sound/weapons/lasermed.ogg', 100, 1)
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
 			var/mob/MT = target
@@ -151,11 +151,11 @@
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, "sound/effects/mag_warp.ogg", 50, 1)
+		playsound(user, 'sound/effects/mag_warp.ogg', 50, 1)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
-			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
+			playsound(user, 'sound/weapons/railgun.ogg', 50, 1)
 			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -509,7 +509,7 @@
 				var/obj/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message("<span class='alert'><b>[user]</b> violently slashes [O]!</span>")
-					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 					O.damage_slashing(5)
 				hit = TRUE
 
@@ -523,7 +523,7 @@
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
-				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(O.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				O.deconstruct()
 				hit = TRUE
 
@@ -853,7 +853,7 @@
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 				SPAWN(0.1 SECONDS)
-					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
+					if (user) playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")
 				victim.health -= rand(4,8) * victim.brutevuln

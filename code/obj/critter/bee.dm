@@ -353,7 +353,7 @@
 				E.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [E]!")
 				E.name = "sticky [E.name]"
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				E.set_loc(get_turf(src))
 		return
 
@@ -504,13 +504,13 @@
 			// ANNOUNCE THE CRIME!
 
 			SPAWN(1 SECOND)
-				playsound(src.loc, "sound/vox/bees.ogg", 100, 1)
+				playsound(src.loc, 'sound/vox/bees.ogg', 100, 1)
 				sleep(1 SECOND)
-				playsound(src.loc, "sound/vox/great.ogg", 100, 1)
+				playsound(src.loc, 'sound/vox/great.ogg', 100, 1)
 				sleep(1 SECOND)
-				playsound(src.loc, "sound/vox/at.ogg", 100, 1)
+				playsound(src.loc, 'sound/vox/at.ogg', 100, 1)
 				sleep(1 SECOND)
-				playsound(src.loc, "sound/vox/crime.ogg", 100, 1)
+				playsound(src.loc, 'sound/vox/crime.ogg', 100, 1)
 
 			return
 
@@ -574,7 +574,7 @@
 			honey.reagents.maximum_volume = honey_production_amount
 
 		src.reagents.trans_to(honey, honey_production_amount)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		if (src.honey_color)
 			var/icon/composite = icon(honey.icon, honey.icon_state)
 			composite.ColorTone( honey_color )
@@ -707,7 +707,7 @@
 
 				honeycube.set_loc(src.loc)
 				src.visible_message("<b>[src]</b> regurgitates [M]!")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			src.attacking = 0
 			task = "thinking"
@@ -1039,7 +1039,7 @@
 
 			cleaned = 1
 			W.reagents.clear_reagents()
-			playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
+			playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 			user.visible_message("<span class='notice'><b>[user]</b> washes [src]!</span>", "<span class='notice'>You clean the HECK out of [src]!</span>")
 			src.visible_message("<span class='notice'>[src] bumbles really happily!  Also, a little squeakily.</span>")
 			//todo: splash visual effect
@@ -1117,7 +1117,7 @@
 			honey.reagents.maximum_volume = honey_production_amount
 		src.reagents.trans_to(honey, honey_production_amount)
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
-		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 1)
 
 	CritterAttack(mob/M)
 		if (!istype(M))
@@ -1175,7 +1175,7 @@
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
 				W.name = "golden key"
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				W.set_loc(get_turf(src))
 		else
 			return ..()
@@ -1215,7 +1215,7 @@
 
 					if (100)
 						src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
-						playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 						// Something is fishy about this bee.
 						var/obj/item/device/key/K
@@ -1867,7 +1867,7 @@
 			return
 		hatched = 1
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		var/obj/critter/domestic_bee_larva/newLarva
 		if (larva_type)
@@ -1953,7 +1953,7 @@
 
 			src.hatched = 1
 			src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/eggsplat,T)
 			var/obj/critter/domestic_bee_larva/newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 			if (bee_name)

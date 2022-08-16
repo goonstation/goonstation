@@ -634,7 +634,7 @@
 			if (senderAtom.loc != master.module) // An equipped tool has changed its icon; refresh module display
 				update_equipment()
 
-/mob/living/silicon/robot
+/mob/living/silicon/robot	
 	updateStatusUi()
 		if(src.hud && istype(src.hud, /datum/hud/robot))
 			var/datum/hud/robot/H = src.hud

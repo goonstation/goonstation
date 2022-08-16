@@ -134,7 +134,7 @@
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
 		if(last_sound + 6 < world.time)
-			playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 0, 0)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 			last_sound = world.time
 			damage_pipe()
 			if(prob(30))
@@ -323,7 +323,7 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
@@ -333,7 +333,7 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -884,7 +884,7 @@
 		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
-			playsound(src.loc, "sound/machines/mixer.ogg", 30, 1)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 30, 1)
 			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
 			src.icon_state = "pipe-loaf1"
 
@@ -917,7 +917,7 @@
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
-					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 30, 1)
+					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg", 'sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
 					var/mob/living/poorSoul = newIngredient
 					if (issilicon(poorSoul))
 						newLoaf.reagents.add_reagent("oil",10)
@@ -951,10 +951,10 @@
 			StopLoafing:
 
 			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
-			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 30, 1)
+			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg", 'sound/effects/brrp.ogg'), 30, 1)
 			sleep(0.3 SECONDS)
 
-			playsound(src.loc, "sound/machines/engine_grump1.ogg", 30, 1)
+			playsound(src.loc, 'sound/machines/engine_grump1.ogg', 30, 1)
 			sleep(3 SECONDS)
 			src.icon_state = "pipe-loaf0"
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
@@ -1308,10 +1308,10 @@
 
 		if (allowDump)
 			flick("unblockoutlet-open", src)
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 
 			for(var/atom/movable/AM in H)
@@ -1379,10 +1379,10 @@
 
 		if (things_to_dump.len)
 			flick("unblockoutlet-open", src)
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
@@ -1774,10 +1774,10 @@
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
 		flick("outlet-open", src)
-		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))

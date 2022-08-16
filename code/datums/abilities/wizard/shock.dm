@@ -25,12 +25,12 @@
 			return 1
 		if(!IN_RANGE(target, holder.owner, max_range))
 			return 1
-		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/elec_bzzz.ogg', 25, 1, -1)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("EI NATH", FALSE, maptext_style, maptext_colors)
 		..()
 
-		playsound(holder.owner.loc, "sound/effects/elec_bigzap.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/elec_bigzap.ogg', 25, 1, -1)
 
 		if (ishuman(target))
 			if (target.traitHolder.hasTrait("training_chaplain"))

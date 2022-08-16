@@ -562,7 +562,7 @@
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
 								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
@@ -979,7 +979,7 @@
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
-				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
@@ -990,7 +990,7 @@
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
 				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)

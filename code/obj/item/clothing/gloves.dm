@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 

@@ -142,7 +142,7 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 	if (!src.turboflash)
@@ -236,7 +236,7 @@
 			return
 
 	// Play animations.
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
 	flick(src.animation_type, src)
 	src.l_time = world.time
 
@@ -288,7 +288,7 @@
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 		var/datum/game_mode/revolution/R = ticker.mode
 		if (ishuman(M))
-			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+			//playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1 , 0, 0.6) //moved to rev flash only
 
 			var/mob/living/carbon/human/H = M
 			var/safety = 0
@@ -443,7 +443,7 @@
 					user.show_text("[src] refuses to flash!", "red") //lol
 					return
 		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(src, "sound/weapons/rev_flash_startup.ogg", 30, 1 , 0, 0.6)
+			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)
 				user.show_text("Hold still to override . . . ", "red")

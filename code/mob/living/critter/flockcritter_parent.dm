@@ -165,7 +165,7 @@
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
@@ -175,7 +175,7 @@
 				F.set_loc(src.loc)
 				SPAWN(10 SECONDS)
 					qdel(F)
-			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
+			playsound(src, 'sound/effects/spray.ogg', 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = FALSE
@@ -215,7 +215,7 @@
 	walk(src, 0)
 	src.update_health_icon()
 	src.flock?.removeDrone(src)
-	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()
 	if (src.flock)
@@ -259,7 +259,7 @@
 		..()
 		if(owner && target)
 			boutput(owner, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
-			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 30, 1, extrarange = -10)
+			playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, 1, extrarange = -10)
 
 			var/flick_anim = "spawn-floor"
 			if(istype(target, /turf/space))
@@ -345,9 +345,9 @@
 		if(owner && target)
 			boutput(owner, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
 			if(duration <= 30)
-				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
+				playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, 1, extrarange = -10)
 			else
-				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
+				playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, 1, extrarange = -10)
 
 			var/flick_anim = "spawn-barricade"
 			src.decal = new /obj/decal/flock_build_barricade
@@ -369,7 +369,7 @@
 			F.pay_resources(FLOCK_BARRICADE_COST)
 			var/obj/O = new structurepath(target)
 			animate_flock_convert_complete(O)
-			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 30, 1, extrarange = -10)
+			playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 30, 1, extrarange = -10)
 			O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
@@ -395,7 +395,7 @@
 			return
 		if(F && prob(40))
 			animate_shake(F)
-			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1, extrarange = -10)
+			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", 'sound/impact_sounds/Metal_Clang_1.ogg'), 30, 1, extrarange = -10)
 
 	onStart()
 		..()
@@ -410,7 +410,7 @@
 			F.canmove = TRUE
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
-			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, extrarange = -10)
+			playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, extrarange = -10)
 			F.pay_resources(FLOCK_LAY_EGG_COST)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -457,7 +457,7 @@
 			F.visible_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
 				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
-		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, 1, extrarange = -10)
 
 	onEnd()
 		..()
@@ -542,7 +542,7 @@
 				if(src.decal)
 					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
-				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
+				playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, 1, extrarange = -10)
 
 	onInterrupt()
 		..()
@@ -557,7 +557,7 @@
 		if(F && target && in_interact_range(owner, target) && istype(target.loc, /turf))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
-			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
+			playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
 
 ///
 //decon action
@@ -603,7 +603,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
+			playsound(f, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target
@@ -658,7 +658,7 @@
 
 	onStart()
 		..()
-		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, 1, extrarange = -10)
 
 	onEnd()
 		..()

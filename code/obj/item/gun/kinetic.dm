@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				return 1
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -429,10 +429,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 				boutput(user, "<span class='alert'>The [src]'s shodilly thrown-together [pick("breech", "barrel", "bullet holder", "firing pin", "striker", "staple-driver mechanism", "bendy metal part", "shooty-bit")][pick("", "...thing")] [pick("cracks", "pops off", "bends nearly in half", "comes loose")]!</span>")
 			else						// Other times, less obvious
-				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		..()
 		return
 
@@ -826,7 +826,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		if(!pulled)
 			pulled = 1
-			playsound(user.loc, "sound/weapons/gunload_click.ogg", 60, 1)
+			playsound(user.loc, 'sound/weapons/gunload_click.ogg', 60, 1)
 			UpdateIcon()
 
 	update_icon()
@@ -845,7 +845,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot(var/target,var/start ,var/mob/user)
 		if(!pulled)
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return
 		..()
 		pulled = 0
@@ -854,7 +854,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	shoot_point_blank(atom/target, var/mob/user as mob)
 		if(!pulled)
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, "sound/weapons/Gunclick.ogg", 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
 			return
 		..()
 		pulled = 0
@@ -987,7 +987,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			hammer_cocked = 1
 			icon_state = "colt_saa-c"
 			boutput(user, "<span class='alert'>You cock the hammer!</span>")
-			playsound(user.loc, "sound/weapons/gun_cocked_colt45.ogg", 70, 1)
+			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
 
 //0.58
 /obj/item/gun/kinetic/flintlockpistol
@@ -1056,7 +1056,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		user.visible_message("<span class='alert'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		qdel(head)
-		playsound(src, "sound/weapons/shotgunshot.ogg", 100, 1)
+		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = make_cleanable( /obj/decal/cleanable/blood/gibs,get_turf(user))
 		gib.streak_cleanable(turn(user.dir,180))
 		health_update_queue |= user
@@ -1144,7 +1144,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, "<span class='notice'>You rack the slide of the shotgun!</span>")
-				playsound(user.loc, "sound/weapons/shotgunpump.ogg", 50, 1)
+				playsound(user.loc, 'sound/weapons/shotgunpump.ogg', 50, 1)
 				src.casings_to_eject = 0
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
@@ -1938,7 +1938,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, 'sound/weapons/scope.ogg', 50, 1)
 		break
 
 
@@ -2031,7 +2031,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.ejectcasings()
 				src.shells_to_eject = 0
 
-		playsound(user.loc, "sound/weapons/gunload_click.ogg", 15, TRUE)
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
 		..()
 

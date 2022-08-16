@@ -29,7 +29,7 @@
 		holder.owner.underlays += shield_overlay
 		boutput(holder.owner, "<span class='notice'><b>You are surrounded by a magical barrier!</b></span>")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] is encased in a protective shield.</span>")
-		playsound(holder.owner,"sound/effects/MagShieldUp.ogg",50,1)
+		playsound(holder.owner, 'sound/effects/MagShieldUp.ogg',50,1)
 		SPAWN(10 SECONDS)
 			if(holder.owner && holder.owner.spellshield)
 				holder.owner.spellshield = 0
@@ -37,4 +37,4 @@
 				shield_overlay = null
 				boutput(holder.owner, "<span class='notice'><b>Your magical barrier fades away!</b></span>")
 				holder.owner.visible_message("<span class='alert'>The shield protecting [holder.owner] fades away.</span>")
-				playsound(usr,"sound/effects/MagShieldDown.ogg", 50, 1)
+				playsound(usr, 'sound/effects/MagShieldDown.ogg', 50, 1)

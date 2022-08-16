@@ -170,7 +170,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	syndicatecorpse8_takeitem
@@ -322,7 +322,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 
@@ -587,7 +587,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Sgt. Wilkins Private Computer","Password") as text
 				if (X == "Icarus")
@@ -610,7 +610,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log2
@@ -623,7 +623,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log3
@@ -636,7 +636,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log4
@@ -649,7 +649,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log5
@@ -661,7 +661,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 		getNodeText(var/client/C)
@@ -771,7 +771,7 @@
 
 		onActivate(var/client/C)
 			taken = 1
-			playsound(C.mob.loc, "sound/items/Crowbar.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/items/Crowbar.ogg', 50, 1,1)
 			C.mob.put_in_hand_or_drop(new/obj/item/blackbox, C.mob.hand)
 			return
 
@@ -811,7 +811,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Engineering Computer","Password") as text
 				if (X == "Congaline")
@@ -834,7 +834,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log2
@@ -847,7 +847,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log3
@@ -860,7 +860,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log4
@@ -873,7 +873,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 //ENGINEER
@@ -925,7 +925,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	engineerscorpse_takeitem
@@ -994,7 +994,7 @@
 
 		onActivate(var/client/C)
 			flick("futurecrateopen",master.master)
-			playsound(C.mob.loc, "sound/effects/polaris_crateopening.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/polaris_crateopening.ogg', 50, 1,1)
 			master.master.icon_state = "futurecrateopened"
 			return
 

@@ -35,7 +35,7 @@
 
 	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 40, 1)
 		src.add_fingerprint(user)
 		return
 
@@ -125,7 +125,7 @@
 							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							animate_shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
@@ -187,7 +187,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 
@@ -236,7 +236,7 @@
 				M.icon_state = "cybermeat"
 				if (prob(50))
 					M.reagents.add_reagent("nanites", 5)
-			playsound(src.loc, "sound/machines/engine_grump2.ogg", 75, 1)
+			playsound(src.loc, 'sound/machines/engine_grump2.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
 			..()
 

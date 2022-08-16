@@ -365,7 +365,7 @@
 			var/obj/item/tile/T = C
 			if (T.amount >= 1)
 				T.build(get_turf(src))
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
 			return
@@ -390,7 +390,7 @@
 
 	proc/barricade_damage(var/hitstrength)
 		strength -= hitstrength
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if (strength < 1)
 			src.visible_message("The barricade breaks!")
 			if (prob(50)) new /obj/item/rods/steel(src.loc)
@@ -428,7 +428,7 @@
 			if (W.force > 8)
 				user.lastattacked = src
 				src.barricade_damage(W.force / 8)
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 			..()
 
 	ex_act(severity)

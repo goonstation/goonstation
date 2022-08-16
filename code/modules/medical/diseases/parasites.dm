@@ -147,7 +147,7 @@
 						larva.custom_bee_type = /obj/critter/domestic_bee/cluwnebee
 						larva.color = "#35bf4f"
 
-				playsound(affected_mob.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(affected_mob.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] horks up a bee larva!  Grody!</b></span>", "<span class='alert'><b>You cough up...a bee larva. Uhhhhh</b></span>")
 
 				affected_mob.cure_disease(D)

@@ -279,7 +279,7 @@ datum/teg_transformation/vampire
 		if(length(targets))
 			if(probmult(30))
 				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
-					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
+					playsound(src.teg, 'sound/effects/blood.ogg', rand(10,20), 0, -1)
 
 			var/mob/living/carbon/target = pick(targets)
 
@@ -335,7 +335,7 @@ datum/teg_transformation/vampire
 					src.health -= 5
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
-						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
+						playsound(C.loc, 'sound/effects/bubbles3.ogg', 80, 1, -3, pitch=0.7)
 						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)

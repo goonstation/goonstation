@@ -396,7 +396,7 @@
 			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
-		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+		playsound(M.loc, 'sound/items/eatfood.ogg', rand(10, 50), 1)
 		eat_twitch(M)
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
@@ -431,7 +431,7 @@
 			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
-		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
+		playsound(M.loc, 'sound/items/eatfood.ogg', rand(10, 50), 1)
 		eat_twitch(M)
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
@@ -1158,7 +1158,7 @@
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else
-			playsound(oldloc_sfx, "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg", 56, vary=0.2)
+			playsound(oldloc_sfx, 'sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg', 56, vary=0.2)
 
 	return 1
 

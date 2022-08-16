@@ -118,12 +118,12 @@
 			return
 
 		if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
-			playsound(defender, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
+			playsound(defender, 'sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg', 50, 1)
 			attacker.do_disorient(0,0,0,0,10,1)
 			return 1
 
 		else if(defender.hasStatus("blocking"))
-			playsound(defender, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
+			playsound(defender, 'sound/impact_sounds/kendo_block_[pick(1,2)].ogg', 50, 1)
 			if(attacker.equipped())
 				defender.do_disorient((attacker.equipped().stamina_cost*1.5),0,0,0,0,1,null)
 			return 2
