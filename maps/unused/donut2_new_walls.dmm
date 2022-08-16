@@ -46785,9 +46785,9 @@
 /obj/machinery/light_switch/south,
 /obj/item/clothing/under/misc/mimedress,
 /obj/item/stamp/mime,
-/mob/living/critter/small_animal/bee/mimebee,
 /obj/item/clothing/mask/mime,
 /obj/item/clothing/head/mime_beret,
+/obj/critter/domestic_bee/mimebee,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "tGF" = (
