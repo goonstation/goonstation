@@ -3058,10 +3058,13 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
-		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
-		M.ghostize()
-		qdel(M)
 		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
+		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
+		animate_bouncy(src)
+		SPAWN(1 SECONDS)
+			M.ghostize()
+			qdel(M)
+
 
 
 
