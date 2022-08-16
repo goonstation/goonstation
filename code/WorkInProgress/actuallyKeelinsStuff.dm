@@ -2606,34 +2606,34 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/user = thr.user
-		if(hit_atom == user)
-			if(prob(prob_clonk))
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
-				user.force_laydown_standup()
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				if(prob(prob_clonk))
+					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+					user.changeStatus("stunned", 5 SECONDS)
+					user.changeStatus("weakened", 3 SECONDS)
+					user.changeStatus("paralysis", 2 SECONDS)
+					user.force_laydown_standup()
+				else
+					src.Attackhand(user)
+				return
 			else
-				src.Attackhand(user)
-			return
-		else
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
-				if(safari)
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
+				if(ishuman(hit_atom))
+					var/mob/living/carbon/human/H = hit_atom
+					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
+						H.changeStatus("stunned", 4 SECONDS)
+						H.changeStatus("weakened", 2 SECONDS)
+						H.force_laydown_standup()
+						//H.paralysis++
+						playsound(H.loc, "swing_hit", 50, 1)
 
-				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN(2 SECONDS)
-					prob_clonk = max(prob_clonk - 5, 0)
+					prob_clonk = min(prob_clonk + 5, 40)
+					SPAWN(2 SECONDS)
+						prob_clonk = max(prob_clonk - 5, 0)
 
-		return ..(hit_atom)
+			return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
