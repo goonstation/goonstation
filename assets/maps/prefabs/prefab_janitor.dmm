@@ -194,10 +194,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aF" = (
-/obj/machinery/power/apc/autoname_south{
-	cell_type = 7500;
-	start_charge = 45
-	},
+/obj/machinery/power/apc/autoname_south/nopoweralert,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
