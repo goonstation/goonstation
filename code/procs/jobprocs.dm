@@ -550,14 +550,41 @@
 /// Equip items from sensory traits
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
-		src.drop_from_slot(src.glasses)
+		src.store_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
 	if (src.traitHolder.hasTrait("shortsighted"))
-		src.drop_from_slot(src.glasses)
+		src.store_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
 	if (src.traitHolder.hasTrait("deaf"))
-		src.drop_from_slot(src.ears)
+		src.store_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
+
+/mob/living/carbon/human/proc/store_from_slot(obj/item/item,) //this is in here over mob.dm because equip_if_possible wouldnt work lmao
+	var/equipped = 0
+	if (!item)
+		return
+	if (!(item in src.contents))
+		return
+	if (item.cant_drop)
+		return
+	if (item.cant_self_remove && src.l_hand != item && src.r_hand != item)
+		return
+	u_equip(item)
+	src.set_clothing_icon_dirty() //copied this from the drop_from_slot proc, its probably not all needed
+
+	if (!equipped)
+		if (!src.l_store && src.equip_if_possible(item, slot_l_store))
+			equipped = 1
+		else if (!src.r_store && src.equip_if_possible(item, slot_r_store))
+			equipped = 1
+		else if (!src.l_hand && src.equip_if_possible(item, slot_l_hand))
+			equipped = 1
+		else if (!src.r_hand && src.equip_if_possible(item, slot_r_hand))
+			equipped = 1
+
+		if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
+			item.set_loc(get_turf(src))
+
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
