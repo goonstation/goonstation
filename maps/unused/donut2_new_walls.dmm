@@ -16131,7 +16131,7 @@
 "aVz" = (
 /obj/decal/poster/wallsign/fudad,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "aVB" = (
 /obj/cable{
 	d1 = 1;
@@ -17922,7 +17922,7 @@
 	dir = 10;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "aZX" = (
 /obj/cable{
 	d2 = 2;
@@ -18707,7 +18707,7 @@
 	dir = 9;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bbU" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -18717,7 +18717,7 @@
 	dir = 1;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bbV" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -18728,7 +18728,7 @@
 	dir = 5;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bbW" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor/plating,
@@ -18841,26 +18841,26 @@
 	dir = 9;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bcr" = (
 /obj/critter/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred4"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bcs" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred3"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bct" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred4"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bcu" = (
 /obj/shrub{
 	dir = 10;
@@ -18870,7 +18870,7 @@
 	dir = 5;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bcv" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -18888,7 +18888,7 @@
 	dir = 6;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bcy" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -19114,14 +19114,14 @@
 	dir = 10;
 	icon_state = "fred4"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bdn" = (
 /obj/critter/boogiebot,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred4"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bdo" = (
 /obj/submachine/ATM{
 	pixel_x = 0;
@@ -19139,7 +19139,7 @@
 	dir = 6;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bdr" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -19387,7 +19387,7 @@
 	dir = 2;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "bdX" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -21154,7 +21154,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
 "bjn" = (
-/obj/machinery/power/apc/autoname_west,
+/obj/machinery/power/apc/autoname_west/noaicontrol,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -31188,6 +31188,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "dzO" = (
@@ -32460,6 +32461,14 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"eNY" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/circuit/purple,
+/area/station/turret_protected/AIsat)
 "eOd" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
@@ -33265,6 +33274,21 @@
 	dir = 8
 	},
 /area/station/hangar/main)
+"fDQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/red,
+/area/station/turret_protected/AIsat)
 "fEU" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/stage_edge{
@@ -34404,6 +34428,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"gOr" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/AIsat)
 "gOz" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -34975,6 +35018,14 @@
 /obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"hup" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/red,
+/area/station/turret_protected/AIsat)
 "hus" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
@@ -35157,7 +35208,7 @@
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "hCM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -35259,7 +35310,7 @@
 	dir = 10;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "hJj" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -35586,7 +35637,7 @@
 	dir = 4;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "ieR" = (
 /obj/cable{
 	d1 = 4;
@@ -35866,7 +35917,7 @@
 	dir = 2;
 	icon_state = "fred3"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "iwv" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -36540,6 +36591,10 @@
 	dir = 10
 	},
 /area/station/medical/medbay/treatment)
+"jes" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/jazz)
 "jey" = (
 /obj/stool/chair/office/blue{
 	dir = 1;
@@ -37442,6 +37497,13 @@
 	dir = 1
 	},
 /area/station/medical/staff)
+"kdo" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "kdq" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/toilets)
@@ -37626,7 +37688,7 @@
 	dir = 8;
 	icon_state = "fred3"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "knp" = (
 /obj/cable{
 	d2 = 4;
@@ -37673,6 +37735,9 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"kqS" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/jazz)
 "kqW" = (
 /obj/stool/chair/wooden{
 	dir = 4
@@ -37928,7 +37993,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "kDo" = (
 /obj/cable{
 	d1 = 2;
@@ -39260,6 +39325,19 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"lZU" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "lZX" = (
 /obj/table/auto,
 /obj/item/extinguisher{
@@ -41058,7 +41136,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "nON" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42249,6 +42327,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"pbK" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "pcj" = (
 /obj/critter/mouse/remy,
 /obj/machinery/drainage,
@@ -46078,6 +46161,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"taE" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/AIsat)
 "taR" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/seven,
@@ -46740,7 +46828,7 @@
 	dir = 4;
 	icon_state = "fred3"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "tDR" = (
 /obj/submachine/ATM{
 	pixel_x = 0;
@@ -47302,6 +47390,14 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"ult" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/circuit/red,
+/area/station/turret_protected/AIsat)
 "ulJ" = (
 /obj/disposaloutlet{
 	density = 0;
@@ -48108,7 +48204,7 @@
 	dir = 8;
 	icon_state = "fred6"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/jazz)
 "uWa" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
@@ -71196,8 +71292,8 @@ aqI
 aaa
 aaa
 avq
-arN
-asx
+kdo
+lZU
 aRZ
 azA
 dzO
@@ -83663,8 +83759,8 @@ bEY
 bFw
 gvH
 bAW
-bEl
-bAP
+uUE
+pbK
 bCV
 acG
 acG
@@ -86337,11 +86433,11 @@ aaa
 aaa
 aaa
 aaa
-aCy
-bcj
-bcj
-bcj
-aCy
+kqS
+jes
+jes
+jes
+kqS
 aaa
 aaa
 aaa
@@ -86638,13 +86734,13 @@ aXO
 acG
 acG
 acG
-aCy
-aCy
+kqS
+kqS
 bcq
 uVZ
 hIR
-aCy
-aCy
+kqS
+kqS
 acG
 aCy
 aCy
@@ -86940,13 +87036,13 @@ aXO
 aaa
 aaa
 aaa
-bcj
+jes
 bbT
 bcr
 kmU
 bdl
 aZW
-bcj
+jes
 aaa
 aGx
 azU
@@ -87242,13 +87338,13 @@ aXO
 aaa
 aaa
 aaa
-bcj
+jes
 bbU
 bcs
 nOg
 iwe
 bdV
-bcj
+jes
 aaa
 aCy
 aEQ
@@ -87544,13 +87640,13 @@ aXO
 aaa
 aaa
 aaa
-bcj
+jes
 bbV
 bct
 tDO
 bdn
 bcw
-bcj
+jes
 aaa
 aCy
 azP
@@ -87846,13 +87942,13 @@ aXO
 aaa
 aaa
 aaa
-aCy
-aCy
+kqS
+kqS
 bcu
 ieJ
 bdo
-aCy
-aCy
+kqS
+kqS
 aaa
 aCy
 mqE
@@ -88149,11 +88245,11 @@ aaa
 aaa
 aaa
 aaa
-aCy
-aCy
+kqS
+kqS
 kDh
-aCy
-aCy
+kqS
+kqS
 aCy
 aCy
 aCy
@@ -88452,9 +88548,9 @@ aaa
 aaa
 aaa
 aaA
-aCy
+kqS
 hCj
-aCy
+kqS
 azU
 azU
 edp
@@ -88754,9 +88850,9 @@ aaa
 aaa
 aaa
 aaA
-aCy
+kqS
 hCj
-aCy
+kqS
 azU
 azU
 azU
@@ -89058,7 +89154,7 @@ aCy
 bcj
 aVz
 kDh
-aCy
+kqS
 azU
 azU
 azU
@@ -122018,9 +122114,9 @@ sNX
 bFg
 bFg
 bGF
-bGF
-kWD
-bvy
+ult
+eNY
+taE
 ecY
 btl
 btl
@@ -122320,7 +122416,7 @@ sNX
 sNX
 bFg
 bFg
-bGF
+hup
 ecY
 ecY
 ecY
@@ -122622,7 +122718,7 @@ wEi
 sNX
 sNX
 bFg
-bGF
+hup
 ecY
 nEX
 xXK
@@ -122924,7 +123020,7 @@ uxt
 wEi
 sNX
 bFg
-bGF
+hup
 ecY
 eJS
 iCI
@@ -123226,7 +123322,7 @@ jPK
 wEi
 bGq
 ugx
-bGF
+hup
 ecY
 ecY
 ecY
@@ -123528,7 +123624,7 @@ jPK
 wEi
 bGr
 ccT
-tWQ
+fDQ
 ecY
 omo
 qoa
@@ -123830,7 +123926,7 @@ ydk
 bBk
 lNU
 bGB
-cjG
+gOr
 bGL
 xse
 pSU
