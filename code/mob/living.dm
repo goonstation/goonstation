@@ -755,15 +755,6 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	//Pod coloseum is broken - disable this unnecessary istype
-	/*
-	if (istype(loc, /obj/machinery/colosseum_putt))
-		var/obj/machinery/colosseum_putt/C = loc
-		logTheThing("say", src, null, "<i>broadcasted between Colosseum Putts:</i> \"[message]\"")
-		C.broadcast(message)
-		return
-	*/
-
 	message = trim(message)
 
 	// check for singing prefix before radio prefix
@@ -1050,8 +1041,6 @@
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, messages, null, src.real_name, lang_id)
-			for (var/obj/colosseum_radio/M in hearers(1, src))
-				M.hear_talk(src, messages, real_name, lang_id)
 
 			message_range = 1
 			italics = 1

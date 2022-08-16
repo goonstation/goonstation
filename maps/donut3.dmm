@@ -72303,7 +72303,7 @@
 /area/station/security/detectives_office)
 "uEH" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker{
+/obj/machinery/coffeemaker/engineering{
 	pixel_y = 3
 	},
 /obj/machinery/light_switch/north,

@@ -26,7 +26,9 @@
 	src.name = src.real_name
 	src.update_name_tag()
 
+	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
 /mob/living/intangible/flock/trace/proc/describe_state()
