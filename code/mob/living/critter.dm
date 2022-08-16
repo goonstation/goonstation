@@ -297,14 +297,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	attackby(var/obj/item/I, var/mob/M)
 		if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 			if (src.skinresult && max_skins)
-				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
+				if (issawingtool(I) || iscuttingtool(I))
 					for (var/i, i<rand(1, max_skins), i++)
 						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
+			if (issawingtool(I) || iscuttingtool(I))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 

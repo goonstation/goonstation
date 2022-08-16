@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
-			if(istype(tool, /obj/item/scalpel) || istype(tool, /obj/item/raw_material/shard) || istype(tool, /obj/item/kitchen/utensil/knife))
+			if(iscuttingtool(tool))
 				remove_stage++
 			else
 				wrong_tool = 1
