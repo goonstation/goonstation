@@ -12,6 +12,8 @@
 	var/mode = "overview"
 	var/list/seeds = list()
 	var/seedoutput = FALSE
+	var/sort = "name"
+	var/sortAsc = TRUE
 	var/obj/item/seed/splicing1 = null
 	var/obj/item/seed/splicing2 = null
 	var/list/extractables = list()
@@ -25,45 +27,36 @@
 		var/seedlist = list()
 		var/geneout = null//tmp var for storing analysis results
 		var/splice_chance = 100
+		var/splice1_geneout
+		var/splice2_geneout
+
+		if (src.splicing1 && src.splicing2)
+			var/datum/plant/P1 = src.splicing1.planttype
+			var/datum/plant/P2 = src.splicing2.planttype
+
+			var/genome_difference = abs(P1.genome - P2.genome)
+			splice_chance -= genome_difference * 10
+
+			splice_chance -= src.splicing1.seeddamage
+			splice_chance -= src.splicing2.seeddamage
+
+			if (src.splicing1.plantgenes.commuts)
+				for (var/datum/plant_gene_strain/splicing/S in src.splicing1.plantgenes.commuts)
+					if (S.negative)
+						splice_chance -= S.splice_mod
+					else
+						splice_chance += S.splice_mod
+
+			if (src.splicing2.plantgenes.commuts)
+				for (var/datum/plant_gene_strain/splicing/S in src.splicing2.plantgenes.commuts)
+					if (S.negative)
+						splice_chance -= S.splice_mod
+					else
+						splice_chance += S.splice_mod
+
+			splice_chance = clamp(splice_chance, 0, 100)
+
 		switch(src.mode)
-			if("splicing")
-				if (src.splicing1 && src.splicing2)
-					geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
-					geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
-					geneout["splicing"] = list("splicing", TRUE)
-					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
-					seedlist += list(geneout)
-					geneout = QuickAnalysisRow(src.splicing2, src.splicing2.planttype, src.splicing2.plantgenes)
-					geneout["damage"] = list(src.splicing2.seeddamage, FALSE)
-					geneout["splicing"] = list("splicing", TRUE)
-					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
-					seedlist += list(geneout)
-
-					var/datum/plant/P1 = src.splicing1.planttype
-					var/datum/plant/P2 = src.splicing2.planttype
-
-					var/genome_difference = abs(P1.genome - P2.genome)
-					splice_chance -= genome_difference * 10
-
-					splice_chance -= src.splicing1.seeddamage
-					splice_chance -= src.splicing2.seeddamage
-
-					if (src.splicing1.plantgenes.commuts)
-						for (var/datum/plant_gene_strain/splicing/S in src.splicing1.plantgenes.commuts)
-							if (S.negative)
-								splice_chance -= S.splice_mod
-							else
-								splice_chance += S.splice_mod
-
-					if (src.splicing2.plantgenes.commuts)
-						for (var/datum/plant_gene_strain/splicing/S in src.splicing2.plantgenes.commuts)
-							if (S.negative)
-								splice_chance -= S.splice_mod
-							else
-								splice_chance += S.splice_mod
-
-					splice_chance = clamp(splice_chance, 0, 100)
-
 			if("extractables")
 				for(var/exItem in src.extractables)
 					if (istype(exItem, /obj/item/seed))
@@ -76,6 +69,7 @@
 
 			if("seedlist")
 				for (var/obj/item/seed/S in src.seeds)
+					if((S == src.splicing1) || (S == src.splicing2)) continue;
 					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
 					geneout["damage"] = list(S.seeddamage, FALSE)
 					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
@@ -96,22 +90,19 @@
 					finalColor = "#000000"
 				)
 
-				var/list/contents = thisContainerData["contents"]
 				if(istype(R) && R.reagent_list.len>0)
 					thisContainerData["finalColor"] = R.get_average_rgb()
-					// Reagent data
-					for(var/reagent_id in R.reagent_list)
-						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
-						contents.Add(list(list(
-							name = reagents_cache[reagent_id],
-							id = reagent_id,
-							colorR = current_reagent.fluid_r,
-							colorG = current_reagent.fluid_g,
-							colorB = current_reagent.fluid_b,
-							volume = current_reagent.volume
-						)))
-
+		if(src.splicing1)
+			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
+			splice1_geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
+			splice1_geneout["splicing"] = list("splicing", TRUE)
+			splice1_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
+		if(src.splicing2)
+			splice2_geneout = QuickAnalysisRow(src.splicing2, src.splicing2.planttype, src.splicing2.plantgenes)
+			splice2_geneout["damage"] = list(src.splicing2.seeddamage, FALSE)
+			splice2_geneout["splicing"] = list("splicing", TRUE)
+			splice2_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 
 		return list(\
 			"extractables" = exlist,\
@@ -122,6 +113,10 @@
 			"inserted_container" = thisContainerData,\
 			"seedoutput" = src.seedoutput,\
 			"splice_chance" = splice_chance,\
+			"show_splicing" = src.splicing1 || src.splicing2,
+			"splice_seeds" = list(splice1_geneout, splice2_geneout),
+			"sortBy" = src.sort,
+			"sortAsc" = src.sortAsc,
 		)
 
 	ui_interact(mob/user, datum/tgui/ui)
@@ -135,7 +130,7 @@
 			if("change_tab")
 				src.mode = params["tab"]
 				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 			if("ejectbeaker")
 				var/obj/item/I = src.inserted
@@ -147,7 +142,7 @@
 					else
 						I.set_loc(src.loc) // causes Exited proc to be called
 						usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 			if("insertbeaker")
 				if (src.inserted)
@@ -164,7 +159,7 @@
 					ui.user.drop_item()
 					inserting.set_loc(src)
 					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
-					src.ui_interact(ui.user, ui)
+					tgui_process.update_uis(src)
 
 
 
@@ -173,14 +168,14 @@
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
-					src.ui_interact(ui.user, ui)
+					tgui_process.update_uis(src)
 
 			if("ejectextractables")
 				for (var/obj/item/I in src.extractables)
 					src.extractables.Remove(I)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-					src.ui_interact(ui.user, ui)
+					tgui_process.update_uis(src)
 
 			if("eject")
 				var/obj/item/I = locate(params["eject_ref"]) in src
@@ -194,7 +189,12 @@
 					src.splicing2 = null
 				I.set_loc(src.loc)
 				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
+
+
+			if("sort")
+				src.sort = params["sortBy"]
+				src.sortAsc = text2num(params["asc"])
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -204,7 +204,7 @@
 						phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
 					if (newName && I && GET_DIST(src, usr) < 2)
 						I.name = newName
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -228,7 +228,7 @@
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 			if("extract")
 				var/obj/item/I = locate(params["extract_ref"]) in src
@@ -285,7 +285,7 @@
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)
-					src.ui_interact(ui.user, ui)
+					tgui_process.update_uis(src)
 				else
 					boutput(usr, "<span class='alert'>This item is not viable extraction produce.</span>")
 
@@ -294,15 +294,17 @@
 				var/obj/item/I = locate(params["splice_select_ref"]) in src
 				if (!istype(I))
 					return
-				if (src.splicing1)
-					if (I == src.splicing1)
-						src.splicing1 = null
-					else
-						src.splicing2 = I
-						src.mode = "splicing"
-				else
+
+				if (I == src.splicing1)
+					src.splicing1 = null
+				else if(I == src.splicing2)
+					src.splicing2 = null
+				else if(!src.splicing1)
 					src.splicing1 = I
-				src.ui_interact(ui.user, ui)
+				else if(!src.splicing2)
+					src.splicing2 = I
+
+				tgui_process.update_uis(src)
 
 
 			if("splice_cancel")
@@ -310,7 +312,7 @@
 				src.splicing1 = null
 				src.splicing2 = null
 				src.mode = "seedlist"
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 			if("infuse")
 				var/obj/item/seed/S = locate(params["infuse_ref"]) in src
@@ -348,7 +350,7 @@
 									playsound(src, "sound/effects/zzzt.ogg", 50, 1)
 									boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 							src.inserted.reagents.remove_reagent(R.id,10)
-					src.ui_interact(ui.user, ui)
+					tgui_process.update_uis(src)
 
 			if("splice")
 				// Get the seeds being spliced first
@@ -518,7 +520,7 @@
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-				src.ui_interact(ui.user, ui)
+				tgui_process.update_uis(src)
 
 
 
@@ -531,7 +533,8 @@
 			user.drop_item()
 			W.set_loc(src)
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
+
 
 		else if(istype(W, /obj/item/reagent_containers/food/snacks/plant/) || istype(W, /obj/item/seed/))
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
@@ -540,7 +543,7 @@
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
 			W.dropped(user)
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 			return
 
 		else if(istype(W,/obj/item/satchel/hydro))
@@ -564,6 +567,7 @@
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.UpdateIcon()
+				tgui_process.update_uis(src)
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
