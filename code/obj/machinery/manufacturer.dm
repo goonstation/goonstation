@@ -2209,6 +2209,7 @@
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,

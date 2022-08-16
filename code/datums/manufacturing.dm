@@ -1718,6 +1718,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/artifactforms
+	name ="Artifact Analysis Forms"
+	item_paths = list("MET-1", "FAB-1")
+	item_amounts = list(2,5)
+	item_outputs = list(/obj/item/paper_bin/artifact_paper)
+	time = 10 SECONDS
+	create = 1
+	category = "Resource"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet

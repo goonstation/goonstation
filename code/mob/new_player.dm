@@ -180,56 +180,6 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
-
-		if(href_list["show_preferences"])
-			client.preferences.ShowChoices(src)
-			return 1
-
-		if(href_list["ready"])
-			if(!ready)
-				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes", "No")) == "Yes")
-					ready = 1
-
-		if(href_list["observe"])
-			if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
-				if(!src.client) return
-				var/mob/dead/observer/observer = new(src)
-
-				src.spawning = 1
-
-				close_spawn_windows()
-				boutput(src, "<span class='notice'>Now teleporting.</span>")
-				var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (ASLoc)
-					observer.set_loc(ASLoc)
-				else
-					observer.set_loc(locate(1, 1, 1))
-				observer.apply_looks_of(client)
-
-				if(src.mind)
-					//src.mind.dnr = 1
-					src.mind.joined_observer = 1
-					src.mind.transfer_to(observer)
-				else
-					src.mind = new /datum/mind()
-					//src.mind.dnr = 1
-					src.mind.joined_observer = 1
-					src.mind.transfer_to(observer)
-
-				if(client.preferences.be_random_name)
-					client.preferences.randomize_name()
-				observer.name = client.preferences.real_name
-				observer.real_name = observer.name
-				observer.Equip_Bank_Purchase(observer.mind.purchased_bank_item)
-
-				src.client.loadResources()
-
-
-				qdel(src)
-
-		if(href_list["late_join"])
-			LateChoices()
-
 		if(href_list["SelectedJob"])
 			if (src.spawning)
 				return
@@ -898,7 +848,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
+		if(alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", "Yes", "No") == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token

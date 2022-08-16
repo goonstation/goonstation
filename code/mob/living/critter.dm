@@ -1147,15 +1147,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return 1
 		return 0
 
-	get_explosion_resistance()
-		var/ret = explosion_resistance
-		for (var/datum/equipmentHolder/EH in equipment)
-			if (EH.armor_coverage & TORSO)
-				var/obj/item/clothing/suit/S = EH.item
-				if (istype(S))
-					ret += S.getProperty("exploprot")
-		return ret/100
-
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()

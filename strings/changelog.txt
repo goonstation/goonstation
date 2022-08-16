@@ -1,5 +1,22 @@
 
+(t)tue aug 16 22
+(u)Amylizzle
+(p)10234
+(e)|
+(+)Removed the broken pod colosseum
 (t)mon aug 15 22
+(u)zjdtmkhzt
+(p)10144
+(e)|
+(+)Lost your tray of artifact forms in a terrible accident? You can now make a new one at the Science Fabricator!
+(u)Roddy
+(p)10136
+(e)|
+(*)Updates Donut 2 Crew Quarters
+(u)Roddy
+(p)10260
+(e)|
+(+)Moved several Cog2 pest starts.
 (u)Gannets
 (p)10262
 (e)|
