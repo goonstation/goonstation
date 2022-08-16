@@ -499,7 +499,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		return
 
 	proc/howl()
-		src.audible_message("<span class="combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he"s singing!</span>")
+		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! He thinks he's singing!</span>")
 		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
 
 /obj/critter/dog/george/blair

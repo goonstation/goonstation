@@ -694,7 +694,7 @@ TYPEINFO(/datum/mutantrace)
 		src.mob.see_in_dark = SEE_DARK_FULL
 
 	proc/flub()
-		playsound(src.mob, 'sound/misc/boing/[rand(1,6)].ogg', 20, 1 )
+		playsound(src.mob, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
 		animate(src.mob, time = 1, pixel_y = 16, easing = ELASTIC_EASING)
 		animate(time = 1, pixel_y = 0, easing = ELASTIC_EASING)
 
@@ -1090,7 +1090,7 @@ TYPEINFO(/datum/mutantrace)
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
 				message = "<B>[src.mob]</B> moans!"
-				playsound(src.mob, 'sound/voice/Zgroan[pick("1","2","3","4")].ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
 					src.mob.emote_allowed = 1
 			return message

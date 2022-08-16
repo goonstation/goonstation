@@ -600,7 +600,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		switch (act)
 			if ("scream","bark","howl")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/howl[rand(1,6)].ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> [pick("barks","howls")]!</span>"
 		return ..()
 
@@ -657,7 +657,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	proc/howl()
 		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-		playsound(src, 'sound/voice/animal/howl[rand(1,6)].ogg', 100, 0)
+		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
 
 
 /* -------------------- Shiba -------------------- */
@@ -920,7 +920,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			animate( src )
 			animate( src, pixel_y = 10, easing = SINE_EASING, time = ((NewLoc.y-y)>0)?3:1 )
 			animate( pixel_y = opy, easing = SINE_EASING, time = 3 )
-			playsound( get_turf(src), 'sound/misc/boing/[rand(1,6)].ogg', 20, 1 )
+			playsound( get_turf(src), "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
 
 	proc/create_feather(var/turf/T)
 		if (!T)

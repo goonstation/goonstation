@@ -1158,7 +1158,7 @@
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else
-			playsound(oldloc_sfx, 'sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg', 56, vary=0.2)
+			playsound(oldloc_sfx, "sound/items/pickup_[clamp(src.w_class, 1, 3)].ogg", 56, vary=0.2)
 
 	return 1
 

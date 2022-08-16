@@ -1391,7 +1391,7 @@ datum
 					M.setStatusMin("muted", 3 SECONDS * mult)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(M, 'sound/voice/death_[pick(1,2)].ogg', 40, 0, 0, M.get_age_pitch())
+					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
 			on_mob_life_complete()
@@ -1421,7 +1421,7 @@ datum
 				if (counter >= 19 && !fakedeathed)
 					M.visible_message("<B>[M]</B> seizes up and falls limp, [his_or_her(M)] eyes dead and lifeless...")
 					M.setStatus("resting", INFINITE_STATUS)
-					playsound(M, 'sound/voice/death_[pick(1,2)].ogg', 40, 0, 0, M.get_age_pitch())
+					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
 

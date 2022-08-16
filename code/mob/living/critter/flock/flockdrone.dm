@@ -455,11 +455,11 @@
 				return "<b>[src]</b> stares intently[(param ? " at [param]." : ".")]"
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, 'sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg', 30, 1, extrarange = (voluntary ? 0 : -10))
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> [act]s[(param ? " at [param]." : ".")]"
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, 'sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg', 30, 1, extrarange = (voluntary ? 0 : -10))
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> beeps grumpily[(param? " at [param]!" : "!")]"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
@@ -1183,7 +1183,7 @@
 		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
-				playsound(flock_owner, 'sound/effects/sparks[rand(1, 6)].ogg', 30, 1, extrarange = -10)
+				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 30, 1, extrarange = -10)
 		if (I.health > 0)
 			return
 		if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
