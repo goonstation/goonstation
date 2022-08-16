@@ -484,9 +484,6 @@
 	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
-	return 0
-
-/mob/living/carbon/human/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
