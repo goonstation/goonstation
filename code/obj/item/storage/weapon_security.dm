@@ -268,7 +268,7 @@
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -348,10 +348,11 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)
-	
+
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

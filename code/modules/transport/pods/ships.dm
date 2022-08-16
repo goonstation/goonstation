@@ -233,7 +233,7 @@ obj/machinery/vehicle/miniputt/pilot
 	name = "Strelka-"
 	icon_state = "soviputt"
 	desc = "A little solo vehicle for scouting and exploration work. Seems to be a Russian model."
-	armor_score_multiplier = 1.0
+	armor_score_multiplier = 1
 	health = 225
 	maxhealth = 225
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
@@ -818,9 +818,9 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 5)
+			src.maxhealth = max(75, src.material.getProperty("density") * 40)
 			src.health = maxhealth
-			src.speed = clamp((src.material.getProperty("electrical")) / 30, 0.75, 1.5)
+			src.speed = 1 - (src.material.getProperty("electrical") - 5) / 15
 		return
 
 	attackby(obj/item/W, mob/living/user)

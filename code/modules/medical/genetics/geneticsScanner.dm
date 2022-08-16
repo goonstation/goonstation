@@ -11,7 +11,7 @@ var/list/genetek_hair_styles = list()
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
@@ -239,7 +239,7 @@ var/list/genetek_hair_styles = list()
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -260,6 +260,9 @@ var/list/genetek_hair_styles = list()
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -4,7 +4,11 @@
 	name = "human"
 	voice_name = "human"
 	icon = 'icons/mob/mob.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "m-none"
+#else
 	icon_state = "blank"
+#endif
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
@@ -56,7 +60,7 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 
-	var/last_b_state = 1.0
+	var/last_b_state = 1
 
 	var/chest_cavity_open = 0
 	var/obj/item/chest_item = null	// Item stored in chest cavity
@@ -159,14 +163,13 @@
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 
-	var/last_show_inv = 0 //used to speedup update_clothing check. its hacky, im sorry
-	var/list/showing_inv
-
 	var/icon/flat_icon = null
 
 	can_bleed = 1
 	blood_id = "blood"
 	blood_volume = 500
+
+	var/datum/humanInventory/inventory = null
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
@@ -248,6 +251,8 @@
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
+
+	inventory = new(src)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -537,8 +542,6 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
-
-	showing_inv = null
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -731,12 +734,12 @@
 
 	if (src.mind) // I think this is kinda important (Convair880).
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDSLAVE)
-			remove_mindslave_status(src, "mslave", "death")
+		if (src.mind.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(src, "mindhack", "death")
 		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindslave_status(src, "vthrall", "death")
+			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
-			remove_mindslave_status(src, "otherslave", "death")
+			remove_mindhack_status(src, "otherhack", "death")
 #ifdef DATALOGGER
 		if (src.mind.ckey)
 			// game_stats.Increment("playerdeaths")
@@ -896,9 +899,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if (src.client)
-			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
-
 		stat(null, " ")
 		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
@@ -1018,11 +1018,6 @@
 	if (src.stat)
 		return
 
-
-	//MBC : removing this because it felt bad and it wasn't *too* exploitable. still does click delay on the end of a throw anyway.
-	//if (usr.next_click > world.time)
-	//	return
-
 	var/obj/item/I = src.equipped()
 
 	if (!I || !isitem(I) || I.cant_drop) return
@@ -1036,7 +1031,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
@@ -1044,6 +1039,7 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
+		var/throw_dir = get_dir(target, src)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_chance = 1
@@ -1060,18 +1056,18 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src)
+			src.inertia_dir = throw_dir
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
-			M.inertia_dir = get_dir(src,target)
+			M.inertia_dir = throw_dir
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
@@ -1218,14 +1214,14 @@
 			src.update_name_tag("")
 	else
 		if (id_name != src.real_name)
-			if (src.decomp_stage > 2)
+			if (src.decomp_stage > 2 || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 		else
-			if (src.decomp_stage > 2)
+			if (src.decomp_stage > 2 || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
@@ -1324,37 +1320,6 @@
 // new damage icon system
 // now constructs damage icon for each organ from mask * damage field
 
-
-/mob/living/carbon/human/proc/show_inv(mob/user as mob)
-	src.add_dialog(user)
-	var/dat = {"
-	<B><HR><FONT size=3>[src.name]</FONT></B>
-	<BR><HR>
-	<B>Head:</B> <A href='?src=\ref[src];varname=head;slot=[src.slot_head];item=head'>[(src.head ? src.head : "Nothing")]</A>
-	<BR><B>Mask:</B> <A href='?src=\ref[src];varname=wear_mask;slot=[src.slot_wear_mask];item=mask'>[(src.wear_mask ? src.wear_mask : "Nothing")]</A>
-	<BR><B>Eyes:</B> <A href='?src=\ref[src];varname=glasses;slot=[src.slot_glasses];item=eyes'>[(src.glasses ? src.glasses : "Nothing")]</A>
-	<BR><B>Ears:</B> <A href='?src=\ref[src];varname=ears;slot=[src.slot_ears];item=ears'>[(src.ears ? src.ears : "Nothing")]</A>
-	<BR><B>Left Hand:</B> <A href='?src=\ref[src];varname=l_hand;slot=[src.slot_l_hand];item=l_hand'>[(src.l_hand ? src.l_hand  : "Nothing")]</A>
-	<BR><B>Right Hand:</B> <A href='?src=\ref[src];varname=r_hand;slot=[src.slot_r_hand];item=r_hand'>[(src.r_hand ? src.r_hand : "Nothing")]</A>
-	<BR><B>Gloves:</B> <A href='?src=\ref[src];varname=gloves;slot=[src.slot_gloves];item=gloves'>[(src.gloves ? src.gloves : "Nothing")]</A>
-	<BR><B>Shoes:</B> <A href='?src=\ref[src];varname=shoes;slot=[src.slot_shoes];item=shoes'>[(src.shoes ? src.shoes : "Nothing")]</A>
-	<BR><B>Belt:</B> <A href='?src=\ref[src];varname=belt;slot=[src.slot_belt];item=belt'>[(src.belt ? src.belt : "Nothing")]</A>
-	<BR><B>Uniform:</B> <A href='?src=\ref[src];varname=w_uniform;slot=[src.slot_w_uniform];item=uniform'>[(src.w_uniform ? src.w_uniform : "Nothing")]</A>
-	<BR><B>Outer Suit:</B> <A href='?src=\ref[src];varname=wear_suit;slot=[src.slot_wear_suit];item=suit'>[(src.wear_suit ? src.wear_suit : "Nothing")]</A>
-	<BR><B>Back:</B> <A href='?src=\ref[src];varname=back;slot=[src.slot_back];item=back'>[(src.back ? src.back : "Nothing")]</A> [((istype(src.wear_mask, /obj/item/clothing/mask) && istype(src.back, /obj/item/tank) && !( src.internal )) ? text(" <A href='?src=\ref[];item=internal;slot=internal'>Set Internal</A>", src) : "")]
-	<BR><B>ID:</B> <A href='?src=\ref[src];varname=wear_id;slot=[src.slot_wear_id];item=id'>[(src.wear_id ? src.wear_id : "Nothing")]</A>
-	<BR><B>Left Pocket:</B> <A href='?src=\ref[src];varname=l_store;slot=[src.slot_l_store];item=pockets'>[(src.l_store ? "Something" : "Nothing")]</A>
-	<BR><B>Right Pocket:</B> <A href='?src=\ref[src];varname=r_store;slot=[src.slot_r_store];item=pockets'>[(src.r_store ? "Something" : "Nothing")]</A>
-	<BR>[(src.hasStatus("handcuffed") ? text("<A href='?src=\ref[src];slot=handcuff;item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff;slot=handcuff'>Not Handcuffed</A>"))]
-	<BR>[(src.internal ? text("<A href='?src=\ref[src];slot=internal;item=internal'>Remove Internal</A>") : "")]
-	<BR><A href='?action=mach_close&window=mob[src.name]'>Close</A>
-	<BR>"}
-	user.Browse(dat, text("window=mob[src.name];size=340x480"))
-	onclose(user, "mob[src.name]")
-	src.last_show_inv = world.time
-	return
-	//	<BR><A href='?src=\ref[src];item=pockets'>Empty Pockets</A>
-
 /mob/living/carbon/human/mouse_drop(mob/M as mob)
 	..()
 	if (M != usr) return
@@ -1374,22 +1339,6 @@
 	var/obj/machinery/bot/mulebot/MB = AM
 	if (istype(MB))
 		MB.RunOver(src)
-
-/mob/living/carbon/human/Topic(href, href_list)
-	if (istype(usr.loc,/obj/dummy/spell_invis/) || isghostdrone(usr))
-		return
-	var/canmove_or_pinning = usr.canmove
-	for (var/obj/item/grab/G in usr.equipped_list(check_for_magtractor = 0))
-		if (G.state == GRAB_PIN)
-			canmove_or_pinning = 1
-
-	if (!usr.stat && canmove_or_pinning && !usr.restrained() && in_interact_range(src, usr) && ticker && usr.can_strip(src))
-		if (href_list["slot"] == "handcuff")
-			actions.start(new/datum/action/bar/icon/handcuffRemovalOther(src), usr)
-		else if (href_list["slot"] == "internal")
-			actions.start(new/datum/action/bar/icon/internalsOther(src), usr)
-		else if (href_list["item"])
-			actions.start(new/datum/action/bar/icon/otherItem(usr, src, usr.equipped(), text2num(href_list["slot"]), 0, href_list["item"] == "pockets") , usr)
 
 /* ----------------------------------------------------------------------------------------------------------------- */
 
@@ -1434,12 +1383,14 @@
 			rendered += "[src.wear_id:registered]</span>"
 		else
 			rendered += "Unknown</span>"
+	else if (src.vdisfigured)
+		rendered += "Unknown</span>"
 	else
 		rendered += "[src.real_name]</span>[alt_name]"
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = 0)
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1495,7 +1446,7 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 
@@ -1568,7 +1519,7 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -1720,6 +1671,8 @@
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
+	show_speech_bubble(speech_bubble)
+
 /mob/living/carbon/human/var/const
 	slot_back = 1
 	slot_wear_mask = 2
@@ -1853,28 +1806,6 @@
 		W.dropped(src)
 		src.l_hand = null
 		src.update_inhands()
-
-/mob/living/carbon/human/update_equipped_modifiers() // A bruteforce approach, for things like the garrote that like to change their modifier while equipped
-	var/datum/movement_modifier/equipment/equipment_proxy = locate() in src.movement_modifiers
-	if (!equipment_proxy)
-		equipment_proxy = new
-		APPLY_MOVEMENT_MODIFIER(src, equipment_proxy, /obj/item)
-
-	// reset the modifiers to defaults
-	equipment_proxy.additive_slowdown = 0
-	equipment_proxy.aquatic_movement = 0
-	equipment_proxy.space_movement = 0
-
-	for (var/obj/item/I in src.get_equipped_items())
-		equipment_proxy.additive_slowdown += I.getProperty("movespeed")
-		var/fluidmove = I.getProperty("negate_fluid_speed_penalty")
-		if (fluidmove)
-			equipment_proxy.additive_slowdown += fluidmove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.aquatic_movement += fluidmove
-		var/spacemove = I.getProperty("space_movespeed")
-		if (spacemove)
-			equipment_proxy.additive_slowdown += spacemove // compatibility hack for old code treating space & fluid movement capability as a slowdown
-			equipment_proxy.space_movement += spacemove
 
 
 /mob/living/carbon/human/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -2644,7 +2575,7 @@
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density")) SECONDS, 20 SECONDS, 50 SECONDS)
+				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density"))*5 SECONDS, 20 SECONDS, 50 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)
@@ -2891,8 +2822,7 @@
 
 /mob/living/carbon/human/hand_attack(atom/target, params, location, control)
 	if (src.lying && src.buckled != target) //lol we need to allow unbuckling here i guess...
-		if (src.limbs.r_leg || src.limbs.l_leg) //legless people should still be able to interact
-			return
+		return
 
 	if (mutantrace?.override_attack)
 		if(mutantrace.custom_attack(target))
@@ -3232,6 +3162,7 @@
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if (isintangible(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY

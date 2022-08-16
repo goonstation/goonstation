@@ -399,7 +399,7 @@
 			count++
 			if (count > max_defensive_babies)
 				break
-			if (get_dist(src, CS) > 7)
+			if (GET_DIST(src, CS) > 7)
 				continue
 			if (defenders >= 3)
 				return

@@ -647,3 +647,37 @@
 		logTheThing("diary", "[user] (Discord)", null, "renamed station to [src.new_name]!", "admin")
 		var/success_msg = "Station renamed to [src.new_name]."
 		system.reply(success_msg)
+
+/datum/spacebee_extension_command/medal
+	name = "medal"
+	help_message = "Give or revoke a medal for a player. E.g., `;;medal give zewaka Contributor`"
+	argument_types = list(
+		/datum/command_argument/string = "giverevoke",
+		/datum/command_argument/string/ckey = "player",
+		/datum/command_argument/the_rest = "medalname"
+	)
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, giverevoke, player, medalname)
+		if(isnull(giverevoke) || isnull(player) || isnull(medalname))
+			system.reply("Failed to set medal; insufficient arguments. \
+				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
+			return
+
+		var/result
+		if (giverevoke == "give")
+			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+		else if (giverevoke == "revoke")
+			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+		else
+			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
+			return
+		if (isnull(result))
+			system.reply("Failed to set medal; error communicating with BYOND hub!")
+			return
+
+		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
+		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
+		logTheThing("admin", "[user] (Discord)", null, "[to_log]")
+		logTheThing("diary", "[user] (Discord)", null, "[to_log]", "admin")
+		system.reply("[user] [to_log]")

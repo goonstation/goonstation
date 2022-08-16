@@ -17,12 +17,12 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute()
-	var/mob/living/intangible/flock/flockmind/F = owner
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
-		return //someone made a flockmind without a flock, or gave this ability holder to something else.
-	src.totalCompute = F.flock.total_compute()
-	src.points = src.totalCompute - F.flock.used_compute()
+		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
+	src.points = totalCompute - usedCompute
+	src.totalCompute = totalCompute
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
@@ -126,18 +126,18 @@
 /datum/targetable/flockmindAbility/designateTile/cast(atom/target)
 	if(..())
 		return TRUE
-	var/mob/living/intangible/flock/flockmind/F = holder.owner
+	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
 	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
-		boutput(holder.owner, "<span class='alert'>The flock can't convert this.</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
 		return TRUE
 	if(isfeathertile(T))
-		boutput(holder.owner, "<span class='alert'>This tile has already been converted.</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>This tile has already been converted.</span>")
 		return TRUE
 	if (!(T in F.flock.priority_tiles))
 		for (var/name in F.flock.busy_tiles)
 			if (T == F.flock.busy_tiles[name])
-				boutput(holder.owner, "<span class='alert'>This tile is already scheduled for conversion!</span>")
+				boutput(holder.get_controlling_mob(), "<span class='alert'>This tile is already scheduled for conversion!</span>")
 				return TRUE
 	F.flock?.togglePriorityTurf(T)
 
@@ -212,14 +212,14 @@
 	if(!istype(target))
 		return TRUE
 	if (target.get_health_percentage() >= 1)
-		boutput(holder.owner, "<span class='notice'>[target.real_name] has no damage!</span>")
+		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] has no damage!</span>")
 		return TRUE
 	if (isdead(target))
-		boutput(holder.owner, "<span class='notice'>[target.real_name] is dead!</span>")
+		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
 		return TRUE
 
-	playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-	boutput(holder.owner, "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
+	playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	target.HealDamage("All", 200, 200)
 	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
 
@@ -263,17 +263,17 @@
 	if(..())
 		return 1
 	var/list/targets = list()
-	for(var/obj/machinery/door/airlock/A in range(10, holder.owner))
+	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
 	if(length(targets))
-		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-		boutput(holder.owner, "<span class='notice'>You force open all the doors around you.</span>")
+		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			A.open()
 	else
-		boutput(holder.owner, "<span class='alert'>No targets in range that can be opened via radio.</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range that can be opened via radio.</span>")
 		return TRUE
 
 /////////////////////////////////////////
@@ -289,21 +289,21 @@
 	if(..())
 		return TRUE
 	var/list/targets = list()
-	for(var/mob/living/M in range(10, holder.owner))
+	for(var/mob/living/M in range(10, holder.get_controlling_mob()))
 		if(M.ear_disability)
 			continue
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
 	if(length(targets))
-		playsound(holder.owner, "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
-		boutput(holder.owner, "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
+		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
-			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
+			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
-		boutput(holder.owner, "<span class='alert'>No targets in range with active radio headsets.</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range with active radio headsets.</span>")
 		return TRUE
 
 /////////////////////////////////////////
@@ -335,14 +335,14 @@
 			logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
-			var/mob/living/intangible/flock/flockmind/F = holder.owner
+			var/mob/living/intangible/flock/F = holder.owner
 			var/datum/flock/flock = F.flock
 			if(flock)
 				flockName = flock.name
 			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
-			boutput(holder.owner, "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
+			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
 		else
-			boutput(holder.owner, "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
+			boutput(holder.get_controlling_mob(), "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
 			return TRUE
 	else if(istype(target, /obj/item/device/radio))
 		R = target
@@ -359,7 +359,7 @@
 		R.talk_into(holder.owner, messages, 0, "Unknown")
 		holder.owner.name = name
 	else
-		boutput(holder.owner, "<span class='alert'>That isn't a valid target.</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>That isn't a valid target.</span>")
 		return TRUE
 
 /////////////////////////////////////////
@@ -375,7 +375,7 @@
 	if(..())
 		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
-	F.flock.ui_interact(F, F.flock.flockpanel)
+	F.flock.ui_interact(holder.get_controlling_mob(), F.flock.flockpanel)
 
 ////////////////////////////////
 
@@ -387,15 +387,18 @@
 	targeted = 0
 
 /datum/targetable/flockmindAbility/createStructure/cast()
-	var/turf/T = get_turf(holder.owner)
-	if(!istype(T, /turf/simulated/floor/feather))
-		boutput(holder.owner, "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
+	if(!istype(T))
+		boutput(holder.get_controlling_mob(), "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		return TRUE
+	if (T.broken)
+		boutput(holder.get_controlling_mob(), "<span class='alert'>The flocktile you're above is broken!</span>")
 		return TRUE
 	if(locate(/obj/flock_structure/ghost) in T)
-		boutput(holder.owner, "<span class='alert'>A tealprint has already been scheduled here!</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>A tealprint has already been scheduled here!</span>")
 		return TRUE
 	if(locate(/obj/flock_structure) in T)
-		boutput(holder.owner, "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		boutput(holder.get_controlling_mob(), "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return TRUE
 
 	var/list/friendlyNames = list()
@@ -407,7 +410,7 @@
 
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 
-	var/structurewanted = tgui_input_list(holder.owner, "Select which structure you would like to create", "Tealprint selection", friendlyNames)
+	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create", "Tealprint selection", friendlyNames)
 
 	if (!structurewanted)
 		return TRUE
@@ -464,4 +467,6 @@
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task
+	if(drone.ai_paused)
+		drone.wake_from_ai_pause()
 	drone.ai.interrupt()

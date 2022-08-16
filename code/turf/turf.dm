@@ -7,7 +7,7 @@
 
 	var/tagged = 0 // Gang wars thing
 
-	level = 1.0
+	level = 1
 
 	unsimulated
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
@@ -67,8 +67,6 @@
 		if(istype(src.material))
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
-
-		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -741,11 +739,16 @@ proc/generate_space_color()
 /turf/proc/ReplaceWithSpace()
 	var/area/my_area = loc
 	var/turf/floor
+	var/turf/replacement = map_settings.space_turf_replacement
 	if (my_area)
 		if (my_area.filler_turf)
 			floor = ReplaceWith(my_area.filler_turf)
+		else if (replacement)
+			floor = ReplaceWith(replacement)
 		else
 			floor = ReplaceWith("Space")
+	else if (replacement)
+		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
 
@@ -1080,9 +1083,9 @@ proc/generate_space_color()
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.icon_state = "vrspace"
-		if(2.0)
+		if(2)
 			switch(pick(1;75,2))
 				if(1)
 					src.icon_state = "vrspace"
@@ -1090,18 +1093,18 @@ proc/generate_space_color()
 					if(prob(80))
 						src.icon_state = "vrplating"
 
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.icon_state = "vrplating"
 	return
 
 /turf/unsimulated/wall/bombvr/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			opacity = 0
 			set_density(0)
 			src.icon_state = "vrspace"
-		if(2.0)
+		if(2)
 			switch(pick(1;75,2))
 				if(1)
 					opacity = 0
@@ -1113,7 +1116,7 @@ proc/generate_space_color()
 						set_density(0)
 						src.icon_state = "vrplating"
 
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.icon_state = "vrwallbroken"
 				opacity = 0

@@ -14,6 +14,8 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
 	var/list/proj_impacts = list()
 	var/list/forensic_impacts = list()
@@ -36,6 +38,10 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
@@ -63,7 +69,10 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			health = material.hasProperty("density") ? round(material.getProperty("density") * 2.5) : health
+			if(src.material.getProperty("density") >= 6)
+				health *= 1.5
+			else if (src.material.getProperty("density") <= 2)
+				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
 		return
@@ -144,39 +153,6 @@
 	src.add_fingerprint(user)
 	user.u_equip(parts)
 	qdel(parts)
-
-/turf/simulated/wall/proc/take_hit(var/obj/item/I)
-	if(src.material)
-		if(I.material)
-			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= (src.material.getProperty("hard") ? src.material.getProperty("hard") : 60))
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-		else
-			if((I.throwing ? I.throwforce : I.force) >= 80)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-	else
-		if(I.material)
-			if((I.material.getProperty("hard") ? I.material.getProperty("hard") : (I.throwing ? I.throwforce : I.force)) >= 60)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-		else
-			if((I.throwing ? I.throwforce : I.force) >= 80)
-				src.health -= round((I.throwing ? I.throwforce : I.force) / 10)
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [I]!</span>", "<span class='alert'>You hit [src] with [I]!</span>")
-			else
-				src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [I].</span>", "<span class='alert'>You hit [src] with [I] but it takes no damage.</span>")
-
-	if(health <= 0)
-		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] destroys [src]!</span>", "<span class='alert'>You destroy [src]!</span>")
-		dismantle_wall(1)
-	return
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
@@ -311,17 +287,6 @@
 				boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
 				return
 
-	if(src.material)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-		if(fail)
-			user.visible_message("<span class='alert'>You punch the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] punches the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			dismantle_wall(1)
-			return
-
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
 	playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
 	interact_particle(user,src)
@@ -374,17 +339,7 @@
 	else
 		if(src.material)
 			src.material.triggerOnHit(src, W, user, 1)
-			var/fail = 0
-			if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-			if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
-
-			if(fail)
-				user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				del(src)
-				return
-
-		src.take_hit(W)
+		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
@@ -406,7 +361,10 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			health = material.hasProperty("density") ? round(material.getProperty("density") * 4.5) : health
+			if(src.material.getProperty("density") >= 6)
+				health *= 1.5
+			else if (src.material.getProperty("density") <= 2)
+				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
 		return
@@ -565,17 +523,8 @@
 
 	if(src.material)
 		src.material.triggerOnHit(src, W, user, 1)
-		var/fail = 0
-		if(src.material.hasProperty("stability") && src.material.getProperty("stability") < 15) fail = 1
-		if(src.material.quality < 0) if(prob(abs(src.material.quality))) fail = 1
 
-		if(fail)
-			user.visible_message("<span class='alert'>You hit the wall and it [getMatFailString(src.material.material_flags)]!</span>","<span class='alert'>[user] hits the wall and it [getMatFailString(src.material.material_flags)]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-			del(src)
-			return
-
-	src.take_hit(W)
+	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)
 
 

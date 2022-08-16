@@ -18,6 +18,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
+	var/isdisabled = FALSE //only used in reusable grenade- stops life() from doing anything
+	speechverb_say = "whirrs"
+	speechverb_exclaim = "buzzes"
+	speechverb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/friends = list()
@@ -44,19 +48,13 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		add_hh_robot_burn(25, 1)
 
 
-
 	New()
 		..()
 		if(isnew)
 			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
 		deathtimer = rand(1, 5)
-		beeptext = "[pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))]"
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
-		// ai setup
-		src.mob_flags |= HEAVYWEIGHT_AI_MOB
-		src.ai = new /datum/aiHolder/sawfly(src)
-		src.is_npc = TRUE
 		START_TRACKING
 
 	setup_hands()
@@ -72,17 +70,26 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		. = ..()
 		STOP_TRACKING
 
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				playsound(src, pick(src.beeps), 40, 1)
+				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
+
 
 	proc/foldself()
 		if(!isalive(src))
 			return 0
 		else
-			var/obj/item/old_grenade/sawfly/reused/N = new /obj/item/old_grenade/sawfly/reused(get_turf(src))
+			var/obj/item/old_grenade/sawflyreused/N = new /obj/item/old_grenade/sawflyreused(get_turf(src))
 			// pass our name and health
 			N.name = "Compact [name]"
 			N.tempname = src.name
-			N.tempdam = (50 - src.health )
-			qdel(src)
+			src.is_npc = FALSE
+			src.isdisabled = TRUE
+			N.heldfly = src
+
+			src.set_loc(N)
 
 
 	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
@@ -95,10 +102,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(prob(beepchance))
 			if(isalive(src))
 				playsound(src, pick(src.beeps), 40, 1)
-				src.visible_message("<b>[src] [beeptext].</b>")
+				src.visible_message("<b>[src] [pick(list("beeps",  "boops", "bwoops", "bips", "bwips", "bops", "chirps", "whirrs", "pings", "purrs", "thrums"))].</b>")
 
 
-	emp_act() //same thing as if you emagged the controller, but much higher chance
+	emp_act() // allows armory's pulse rifles to fuck their shit
 		if(prob(80))
 			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to spiral out of control!</span>")
 			SPAWN(2 SECONDS)
@@ -142,12 +149,14 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		//for whatever whacky reason tokenized_message() does 2 messages so we gotta do it the old fashioned way
 		src.is_npc = FALSE // //shut down the AI
+
 		src.throws_can_hit_me = FALSE  //prevent getting hit by thrown stuff- important in avoiding jank
 
 		if(!gibbed)
 			animate(src) //no more float animation
 			src.visible_message("<span class='alert'[death_text]<span>") //this has to be done here, and without tokenized message, otherwise it duplicates. Idunno why.
 			src.anchored = 0
+			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
 		// checks that determine rolled behavior on death
 			if (prob(20))
 				new /obj/item/device/prox_sensor(src.loc)
@@ -167,7 +176,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.pixel_x += rand(-5, 5)
 		src.pixel_y += rand(-1, 5)
 
-	proc/blowup() // used in emagged controllers and has a chance to activate when they die
+	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
 			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!<span>")
 			fireflash(src,1,TRUE)
@@ -177,7 +186,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
-		if(isalive(src)) // prevents weirdness from emagged controllers causing frankenstein sawflies
+		if(isalive(src)) // if they get EMP'd, they don't die, we we'll want to fix that
 			qdel(src)
 
 
@@ -186,21 +195,33 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				if(isalive(src))
+					src.is_npc = FALSE
+					ghostize() // should any admins have any funny ideas, prevent crashing
 					boutput(user, "You collapse [src].")
 					src.foldself()
 		else
 			if(prob(50)&& isalive(src))
-				src.visible_message("<span class='alert' In [his_or_her(user)] attempt to pet [src], [user] cuts himself_or_herself(user)!</span>", "<span class='alert' In your attempt to pet [src], you cut yourself!</span>")
+				boutput(user, "<span class='alert' In your attempt to pet [src], you cut yourself on it's blades!</span>")
 
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		..()
 
-
 	Life()
+		if(src.isdisabled) //prevents them from doing much of anything when in grenade form
+			return
 		..()
 		if(prob(8)) communalbeep()
 		if(!isalive(src)) src.set_density(FALSE) //according to lizzle something in the mob life resets density so this has to be below parent-
 
 
+/mob/living/critter/robotic/sawfly/ai_controlled
+
+	New()
+		..()
+		// gottaa get the AI chuggin' along
+		src.mob_flags |= HEAVYWEIGHT_AI_MOB
+		src.ai = new /datum/aiHolder/sawfly(src)
+		src.is_npc = TRUE
+		START_TRACKING
 

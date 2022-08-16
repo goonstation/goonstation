@@ -353,7 +353,6 @@ proc/create_fluff(datum/mind/target)
 		"Become a vigilante and violently harass people over the slightest suspicion.",
 		"Seek out any non-security vigilantes on the station and make their life utter hell.",
 		"Find another crew member's pet project and subvert it to a more violent purpose.",
-		"FUCK THE POLICE.",
 		"Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado.",
 		"Spy on the crew and uncover their deepest secrets.",
 		"Kidnap George and hold him for ransom.",

@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 			return 1
 		if (!user.in_real_view_range(T))
 			return 1
-		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
+		else if (!user.client && GET_DIST(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
 		O.add_fingerprint(user)
 		if (!istype(O, /obj/item/artifact/attack_wand)) // Special log handling required there.
@@ -216,11 +216,12 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
 	var/obj/machinery/artifact/turret/turretArt = null

@@ -25,12 +25,16 @@
 			boutput(M, "<span class='alert'>Why would you want to maul yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
 			boutput(M, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
+			return 1
+
+		if (isnpc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
+			boutput(M, "<span class='alert'>Something about [target]'s smell puts you off feasting on them.</span>")
 			return 1
 
 		if (!target.lying)
@@ -63,7 +67,7 @@
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = feast.holder
 
-		if (!feast || get_dist(M, target) > feast.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!feast || GET_DIST(M, target) > feast.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -91,7 +95,7 @@
 		var/datum/abilityHolder/A = feast.holder
 		var/mob/living/carbon/human/HH = target
 
-		if (!feast || get_dist(M, HH) > feast.max_range || HH == null || M == null || !ishuman(HH) || !ishuman(M) || !A || !istype(A) || (!HH.lying))
+		if (!feast || GET_DIST(M, HH) > feast.max_range || HH == null || M == null || !ishuman(HH) || !ishuman(M) || !A || !istype(A) || (!HH.lying))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -124,7 +128,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 10)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>You finish chewing on [HH], but what a feast it was!</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")
@@ -159,7 +163,7 @@
 							M.add_stam_mod_max("feast-[W.feed_objective.feed_count]", 5)
 							M.max_health += 10
 							health_update_queue |= M
-							W.lower_cooldowns(0.10)
+							W.lower_cooldowns(0.1)
 							boutput(M, "<span class='notice'>Your feast was interrupted, but it satisfied your hunger for the time being.</span>")
 						else
 							boutput(M, "<span class='alert'>You've mauled [HH] before and didn't like the aftertaste. Better find a different prey.</span>")

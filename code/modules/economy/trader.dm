@@ -1076,6 +1076,7 @@
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
+		src.goods_sell += new /datum/commodity/costume/vampire(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
 		src.goods_sell += new /datum/commodity/costume/purpwitch(src)

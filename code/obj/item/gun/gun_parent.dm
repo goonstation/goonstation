@@ -5,12 +5,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	icon = 'icons/obj/items/gun.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
+	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/gunpoint
 
 	item_state = "gun"
 	m_amt = 2000
-	force = 10.0
+	force = 10
 	throwforce = 5
 	health = 7
 	w_class = W_CLASS_NORMAL

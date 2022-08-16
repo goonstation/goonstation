@@ -39,7 +39,7 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	w_class = W_CLASS_SMALL
 
 	attack_self(mob/user as mob)

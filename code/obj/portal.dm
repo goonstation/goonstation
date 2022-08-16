@@ -5,7 +5,7 @@
 	density = 1
 	var/failchance = 5
 	var/obj/item/target = null
-	anchored = 1.0
+	anchored = 1
 	var/portal_lums = 2
 	var/datum/light/light
 	event_handler_flags = USE_FLUID_ENTER

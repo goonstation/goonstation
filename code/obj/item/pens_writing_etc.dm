@@ -15,7 +15,7 @@
 /* =============== PENS =============== */
 
 /obj/item/pen
-	desc = "It's a normal black ink pen."
+	desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -155,7 +155,7 @@
 
 /obj/item/pen/fancy
 	name = "fancy pen"
-	desc = "A pretty swag pen."
+	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
 	icon_state = "pen_fancy"
 	item_state = "pen_fancy"
 	font_color = "blue"
@@ -165,7 +165,7 @@
 
 /obj/item/pen/odd
 	name = "odd pen"
-	desc = "There's something strange about this pen."
+	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
 	font = "Wingdings"
 
 /obj/item/pen/red // we didn't have one of these already??
@@ -193,7 +193,7 @@
 
 /obj/item/pen/marker
 	name = "felt marker"
-	desc = "Try not to sniff it too much. Weirdo."
+	desc = "It's the National Notary 'Edgewater' waterproof marker. Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
 	font = "'Permanent Marker', cursive"
@@ -1206,7 +1206,7 @@
 /* ============== PRINTERS & TYPEWRITERS ================= */
 
 /obj/item/pen/typewriter
-	name = "integrated typewriter pen"
+	name = "National Notary 'Turbot Landing' experimental integrated typewriter pen"
 	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
 	font = "Monospace"
 	clicknoise = FALSE

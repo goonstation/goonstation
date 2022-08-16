@@ -1,6 +1,7 @@
 /obj/dummy/chameleon
 	name = ""
 	desc = ""
+	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = 1
 	soundproofing = -1
@@ -69,7 +70,7 @@
 	icon_state = "shield0"
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT | SUPPRESSATTACK
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -120,6 +121,8 @@
 		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
@@ -234,6 +237,8 @@
 		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)

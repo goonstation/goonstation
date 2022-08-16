@@ -53,7 +53,7 @@
 				B.set_loc(A.loc)
 
 				step_to(A,MT,0)
-				if (get_dist(A,MT) == 0)
+				if (GET_DIST(A,MT) == 0)
 					for(var/mob/O in AIviewers(MT, null))
 						O.show_message("<span class='alert'><B>[MT.name] is hit by the acid spit!</B></span>", 1)
 					A.reagents.reaction(MT)

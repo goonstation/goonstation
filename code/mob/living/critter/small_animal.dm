@@ -1873,7 +1873,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					src.ball_up(emote=FALSE)
 		..()
 		if(infected && prob(1))
-			M.infected(ez_pathogen(/datum/pathogeneffects/malevolent/leprosy), null, null, 0)
+			M.contract_disease(/datum/ailment/disease/leprosy, null, null, 1) // path, name, strain, bypass resist
 
 	death(var/gibbed)
 		if(is_balled())
@@ -1907,6 +1907,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else
 				. = "<span class='alert'><b>[src]</b> curls into a ball!</span>"
 			if(!isdead(src))
+				for (var/obj/item/grab/G in src.grabbed_by)
+					G.affecting.visible_message("<span class='alert'>[G.affecting] slips free of [G.assailant]'s grip!</span>")
+					qdel(G)
 				var/obj/item/armadillo_ball/ball = new(get_turf(src))
 				src.set_loc(ball)
 				ball.dir = src.dir
@@ -1925,7 +1928,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<span class='emote'><b>[src]</b> shrieks!</span>"
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/cat_hiss.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> hisses!</span>"
 			if("flip")
 				return ball_up(TRUE)

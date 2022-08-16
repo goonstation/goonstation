@@ -10,7 +10,6 @@
 	when_stunned = 1
 	not_when_handcuffed = 0
 	sticky = 1
-	unlock_message = "You have gained Hide Coffin. It allows you to hide a coffin somewhere on the station."
 
 	cast(mob/target)
 		if (!holder)
@@ -21,6 +20,10 @@
 
 		if (actions.hasAction(M, "vamp_blood_suck"))
 			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
+			return 1
+
+		if (isnpc(target))
+			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
@@ -52,7 +55,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -66,7 +69,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (get_dist(M, HH) > 7)
+		if (GET_DIST(M, HH) > 7)
 			boutput(M, "<span class='alert'>That target is too far away!</span>")
 			return
 
@@ -96,7 +99,7 @@
 		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()

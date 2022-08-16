@@ -108,11 +108,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/ex_act(severity)
 	var/chance //This switch was just the same loop with different probabilities 3 times and fuck that
 	switch(severity)
-		if(1.0)
+		if(1)
 			chance = 100
-		if(2.0)
+		if(2)
 			chance = 50
-		if(3.0)
+		if(3)
 			chance = 5
 	if (prob(chance))
 		for(var/atom/movable/A in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/proc/collect_tray()
 	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
 	for( var/atom/movable/A as mob|obj in my_tray.loc)
-		if (!( A.anchored )) //note the tray is anchored
+		if (!(A.anchored) && (istype(A, /obj/item) || (istype(A, /mob)))) //note the tray is anchored
 			A.set_loc(src)
 	my_tray.set_loc(src)
 	update()
@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "crema_switch"
 	anchored = TRUE
 	req_access = list(access_crematorium)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1

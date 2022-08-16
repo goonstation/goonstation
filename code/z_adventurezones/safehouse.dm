@@ -480,7 +480,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		..()
 		light = new/datum/light/point //We want this to stand out in the dark & draw the player to examine it.
 		light.set_brightness(0.3)
-		light.set_color(1, 0.50, 0.50)
+		light.set_color(1, 0.5, 0.5)
 		light.attach(src)
 		light.enable()
 

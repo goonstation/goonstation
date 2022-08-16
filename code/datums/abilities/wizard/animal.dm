@@ -40,11 +40,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/FurryGrim.ogg"
 	voice_fem = "sound/voice/wizard/FurryFem.ogg"
 	voice_other = "sound/voice/wizard/FurryLoud.ogg"
+	maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
 
 	cast(mob/target)
 		if (!holder)
@@ -86,20 +88,20 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onStart()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))

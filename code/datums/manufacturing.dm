@@ -661,6 +661,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/red_o2_grenade
+	name = "Red Oxygen Grenade"
+	item_paths = list("MET-2","CON-1","molitz","char")
+	item_amounts = list(2,2,10,1)
+	item_outputs = list(/obj/item/old_grenade/oxygen)
+	time = 10 SECONDS
+	create = 1
+	category = "Tool"
+
 ////////////////////////////////
 
 /datum/manufacture/player_module
@@ -691,7 +700,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"
-	item_paths = list("MET-3", "DEN-3", "CON-2", "POW-2")
+	item_paths = list("MET-3", "CRY-2", "CON-2", "POW-2")
 	item_amounts = list(20, 10, 10, 10)
 	item_outputs = list(/obj/item/rcd)
 	time = 90 SECONDS
@@ -718,7 +727,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("DEN-3")
+	item_paths = list("CRY-2")
 	item_amounts = list(40)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
@@ -1556,7 +1565,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/robup_expand
 	name = "Expansion Upgrade"
-	item_paths = list("DEN-3","POW-3")
+	item_paths = list("CRY-2","POW-3")
 	item_amounts = list(3,1)
 	item_outputs = list(/obj/item/roboupgrade/expand)
 	time = 120 SECONDS
@@ -1709,6 +1718,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/artifactforms
+	name ="Artifact Analysis Forms"
+	item_paths = list("MET-1", "FAB-1")
+	item_amounts = list(2,5)
+	item_outputs = list(/obj/item/paper_bin/artifact_paper)
+	time = 10 SECONDS
+	create = 1
+	category = "Resource"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -2576,7 +2595,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/hermes
 	name = "Offering to the Fabricator Gods"
-	item_paths = list("MET-3","CON-2","POW-3","DEN-3","FAB-1","INS-1")
+	item_paths = list("MET-3","CON-2","POW-3","CRY-2","FAB-1","INS-1")
 	item_amounts = list(30,30,6,1,30,30)
 	item_outputs = list(/obj/item/clothing/shoes/hermes)
 	time = 120 //suspense
@@ -2741,7 +2760,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
-	item_paths = list("POW-1","MET-3","DEN-3")
+	item_paths = list("POW-1","MET-3","CRY-2")
 	item_amounts = list(10,10,20)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	time = 20 SECONDS
@@ -2750,7 +2769,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/pod/weapon/mining/drill
 	name = "Rock Drilling Rig"
-	item_paths = list("POW-1","MET-3","DEN-3")
+	item_paths = list("POW-1","MET-3","CRY-2")
 	item_amounts = list(10,10,10)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
 	time = 20 SECONDS

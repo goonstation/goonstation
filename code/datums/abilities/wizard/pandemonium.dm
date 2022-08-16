@@ -9,12 +9,13 @@
 	voice_grim = "sound/voice/wizard/PandemoniumGrim.ogg"
 	voice_fem = "sound/voice/wizard/PandemoniumFem.ogg"
 	voice_other = "sound/voice/wizard/PandemoniumLoud.ogg"
+	maptext_colors = list("#FF0000", "#00FF00", "#FFFF00", "#0000FF", "#00FFFF", "#FF00FF")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("WATT LEHFUQUE")
+			holder.owner.say("WARR LEHFUQUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
@@ -86,7 +87,7 @@
 				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
 				playsound(W.loc, "sound/weapons/flashbang.ogg", 50, 1)
 				for(var/mob/M in AIviewers(W, null))
-					if(get_dist(M, W) <= 6)
+					if(GET_DIST(M, W) <= 6)
 						if(M != W)
 							if (targetSpellImmunity(M, FALSE, 0))
 								continue
@@ -146,7 +147,7 @@
 					signal_loss -= 100
 			if("grilles")
 				spell_result = "metal grilles"
-				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around \him!</span>")
+				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around [him_or_her(W)]!</span>")
 				playsound(W.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))

@@ -15,6 +15,8 @@
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
  */
 /proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0 SECONDS)
+	if (!user.client) // No NPCs or they hang Mob AI process
+		return
 	if (!user)
 		user = usr
 	if (!istype(user))

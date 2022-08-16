@@ -17,8 +17,8 @@ MATERIAL
 	flags = FPRINT | TABLEPASS| CONDUCT
 	health = 3
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -130,6 +130,7 @@ MATERIAL
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
+					G.add_fingerprint(user)
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -149,7 +150,7 @@ MATERIAL
 	icon_state = "sheet"
 	desc = "A heavy sheet of metal."
 	m_amt = 3750
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -399,10 +400,10 @@ MATERIAL
 	desc = "A very heavy sheet of metal."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-r"
-	force = 5.0
+	force = 5
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = 15
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL

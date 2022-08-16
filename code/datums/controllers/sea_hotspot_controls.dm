@@ -261,7 +261,7 @@
 	var/static/heat_dropoff_per_dist_unit = 0.1 // possible todo : a quad curve
 	var/static/base_heat = 1000
 	//var/static/max_activity_heat_bonus = 2000 //when mining underneath this hotspot on the trench zlevel, increase bonus heat (NOT USED)
-	//var/static/heat_polled_past_max_factor = 0.10 //When polled at cap, return heat with this multiplier applied.
+	//var/static/heat_polled_past_max_factor = 0.1 //When polled at cap, return heat with this multiplier applied.
 
 	var/static/per_activity = 95
 
@@ -412,7 +412,7 @@
 
 	proc/get_tile_heat(var/turf/T)
 
-		d = get_dist(T, center.turf())
+		d = GET_DIST(T, center.turf())
 		if (d > radius)
 			.= 0
 			if (d <= radius + cool_cushion)
@@ -534,12 +534,12 @@
 					if (src.loc == center)
 						true_center += 1
 
-					var/d = get_dist(src.loc,center)
+					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
 						closest_hotspot = H
-						dist_last = get_dist(src.loc,center)
+						dist_last = GET_DIST(src.loc,center)
 
-					val += get_dist(src.loc,center)
+					val += GET_DIST(src.loc,center)
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 

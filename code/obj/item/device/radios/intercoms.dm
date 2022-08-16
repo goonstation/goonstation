@@ -5,7 +5,7 @@
 #else
 	icon_state = "intercom-map"
 #endif
-	anchored = 1.0
+	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
 	mats = 3
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -66,16 +66,6 @@
 		return
 	var/maptext = generateMapText(msg, textLoc, style = "color:#7F7FE2;", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
-
-/obj/item/device/radio/intercom/putt
-	name = "Colosseum Intercommunicator"
-	frequency = R_FREQ_INTERCOM_COLOSSEUM
-	broadcasting = 1
-	device_color = "#aa5c00"
-	protected_radio = 1
-
-	initialize()
-		set_frequency(frequency)
 
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual

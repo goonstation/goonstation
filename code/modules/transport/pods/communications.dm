@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)
@@ -26,10 +26,38 @@
 		desc = "Allows a pod to communicate with a Mining Magnet for more convenient mining."
 		power_used = 30
 		color = "#FABF0F"
+		var/obj/machinery/mining_magnet/linked_magnet
+
+		ui_interact(mob/user, datum/tgui/ui)
+			ui = tgui_process.try_update_ui(user, src, ui)
+			if(!ui)
+				ui = new(user, src, "MineralMagnet", src.name)
+				ui.open()
+
+		ui_data(mob/user)
+			. = ..()
+			if(istype(linked_magnet))
+				. = linked_magnet.ui_data(user)
+				.["isLinked"] = TRUE
+			else
+				.["isLinked"] = FALSE
+
+		ui_act(action, params)
+			. = ..()
+			if (.)
+				return
+			if(istype(src.linked_magnet))
+				. = src.linked_magnet.ui_act(action, params)
+
+		ui_status(mob/user, datum/ui_state/state)
+			. = ..()
+			if(istype(src.linked_magnet))
+				. = min(., linked_magnet.ui_status(user))
 
 		External()
 			for(var/obj/machinery/mining_magnet/MM in range(7,src.ship))
-				MM.generate_interface(usr)
+				linked_magnet = MM
+				ui_interact(usr)
 				return null
 			boutput(usr, "<span class='alert'>No magnet found in range of seven meters.</span>")
 			return null
@@ -77,6 +105,9 @@
 			var/mob/living/carbon/human/H = usr
 			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)
 				. = H.wear_id:registered
+			else if (H.vdisfigured)
+				. = "Unknown"
+
 			else
 				. = usr.name
 		else

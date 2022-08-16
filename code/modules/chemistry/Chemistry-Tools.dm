@@ -423,9 +423,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-			src.reagents.reaction(get_turf(user), TOUCH)
-			src.reagents.clear_reagents()
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
@@ -486,6 +489,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (isrobot(user))
 			boutput(user, "<span class='alert'>Why would you wanna flip over your precious bucket? Silly.</span>")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "<span class='alert'>You can't flip that, it's stuck on.</span>")
 			return
 		if (src.reagents.total_volume)
 			user.show_text("<b>You turn the bucket upside down, causing it to spill!</b>", "red")

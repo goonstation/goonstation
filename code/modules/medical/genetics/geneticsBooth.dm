@@ -224,7 +224,7 @@
 		UpdateIcon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
+		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.6)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P as anything in offered_genes)
@@ -406,6 +406,9 @@
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
 
 //next :
 	//sound effects

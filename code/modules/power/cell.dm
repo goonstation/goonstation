@@ -6,8 +6,8 @@
 	icon_state = "cell"
 	item_state = "cell"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	health = 8
@@ -69,16 +69,24 @@
 		if (istype(src.material))
 			genrate = 0
 			if(src.material.hasProperty("radioactive"))
-				genrate += round((material.getProperty("radioactive") / 6.33))
+				genrate += round(material.getProperty("radioactive"))
 			if(src.material.hasProperty("n_radioactive"))
-				genrate += round((material.getProperty("n_radioactive") / 4.33))
+				genrate += round(material.getProperty("n_radioactive") * 2)
 			if(src.material.hasProperty("electrical"))
-				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
+				maxcharge = round((src.material.getProperty("electrical") ** 2) * 300, 500)
 			else
 				maxcharge = 2500
 
 			charge = maxcharge
 		return
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			maxcharge = round((conductivity ** 2) * 300, 500)
+			genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
 
 /obj/item/cell/charged
 	charge = 7500
@@ -296,8 +304,8 @@
 	unusualCell = 1
 	m_amt = 20000
 	g_amt = 20000
-	max_charge = 10.0
-	recharge_rate = 0.0
+	max_charge = 10
+	recharge_rate = 0
 
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()

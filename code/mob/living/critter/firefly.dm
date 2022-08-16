@@ -293,7 +293,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.3
-	base_walk_delay = 2.0
+	base_walk_delay = 2
 	health_brute = 10
 	health_burn = 10
 	isFlying = 1

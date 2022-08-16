@@ -445,14 +445,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else

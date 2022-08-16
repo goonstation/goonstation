@@ -685,8 +685,8 @@ var/sound/iomoon_alarm_sound = null
 	name = "XIANG|GIESEL Onboarding Course"
 	desc = "A cover sheet meant to accompany a set of corporate training materials."
 	icon_state = "paper_burned"
-	sizex = 718
-	sizey = 1023
+	sizex = 740
+	sizey = 1100
 
 	New()
 		..()
@@ -703,6 +703,18 @@ var/sound/iomoon_alarm_sound = null
 	name = "XIANG|GIESEL Onboarding Tape 2"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
 	audio = "sound/radio_station/xg_onboarding2.ogg"
+
+/obj/item/radio_tape/adventure/xg3
+	name = "XIANG|GIESEL Onboarding Tape 3"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = "sound/radio_station/xg_onboarding3.ogg"
+
+/obj/item/radio_tape/adventure/xg4
+	name = "XIANG|GIESEL Onboarding Tape 4"
+	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
+	audio = "sound/radio_station/xg_onboarding4.ogg"
+
+
 
 /obj/storage/crate/classcrate/xg
 	name = "shielded crate"
@@ -904,7 +916,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 
 			if (src.health <= 0 && active != -1)
@@ -1005,7 +1017,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
 			if (src.health <= 0)

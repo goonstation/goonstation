@@ -10,14 +10,12 @@
 	var/flash_prob = 80
 
 	proc/flash()
-		if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
-			return
-
 		playsound(src.loc, "sound/voice/animal/hoot.ogg", 100, 1)
 		flick("[base_state]_flash", src)
+		ON_COOLDOWN(src, "flash", 5 SECONDS)
 
 	HasProximity(atom/movable/AM as mob|obj)
-		if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
+		if(GET_COOLDOWN(src, "flash"))
 			return
 
 		if (iscarbon(AM))
@@ -40,7 +38,7 @@
 
 	attack_hand(user)
 		if (src.anchored)
-			if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
+			if(GET_COOLDOWN(src, "flash"))
 				return
 
 			src.flash()
@@ -68,6 +66,7 @@
 				if (iswraith(M) || isintangible(M))
 					continue
 				mobs_nearby += M
-			var/mob/frown_target = pick(mobs_nearby)
-			if (frown_target)
-				src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")
+			if(length(mobs_nearby))
+				var/mob/frown_target = pick(mobs_nearby)
+				if (frown_target)
+					src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")

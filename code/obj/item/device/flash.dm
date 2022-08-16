@@ -9,6 +9,7 @@
 	throw_speed = 4
 	throw_range = 10
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
 	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
@@ -263,7 +264,7 @@
 			if (src.turboflash)
 				M.apply_flash(35, 0, 0, 25)
 			else
-				var/dist = get_dist(get_turf(src),M)
+				var/dist = GET_DIST(get_turf(src),M)
 				dist = min(dist,4)
 				dist = max(dist,1)
 				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)

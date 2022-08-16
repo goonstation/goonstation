@@ -254,7 +254,7 @@ proc/is_weak_rollable_contract(type)
 	burn_possible = 0 //Only makes sense since it's from hell.
 	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	desc = "A diabolical human leather-bound briefcase, capable of holding a number of small objects and tormented souls. All those tormented souls give it a good deal of heft; you could use it as a great improvised bludgeoning weapon."
 	stamina_damage = 80 //buffed from 40
 	stamina_cost = 20 //nerfed from 10
@@ -362,7 +362,7 @@ END GUIDE
 	name = "infernal contract"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	var/uses = 4.0
+	var/uses = 4
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -433,7 +433,10 @@ END GUIDE
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
 			return
 		else if (isdiabolical(user))
-			if (M == user)
+			if (isnpc(M))
+				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
+				return
+			else if (M == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			else if (!M.literate)
@@ -578,7 +581,6 @@ obj/item/contract/wrestle
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 			user.visible_message("<span class='alert'>[user]'s pupils dilate.</span>")
 			user.changeStatus("stunned", 100 SECONDS)
-			ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -618,7 +620,6 @@ obj/item/contract/genetic
 					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
 						user.mind.special_role = "Genetic Demigod"
-						ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -662,7 +663,6 @@ obj/item/contract/horse
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
 			user.mind.special_role = "Faustian Horse"
-			ticker.mode.Agimmicks.Add(user)
 
 		return 1
 
@@ -704,7 +704,6 @@ obj/item/contract/vampire
 		SPAWN(1 DECI SECOND)
 			user.mind.special_role = ROLE_VAMPIRE
 			user.make_vampire(1)
-			ticker.mode.Agimmicks.Add(user)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
 		return 1

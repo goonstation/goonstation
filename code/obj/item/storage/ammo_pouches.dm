@@ -9,7 +9,7 @@
 	desc = "A sturdy fabric pouch designed for carrying ammunition. Can be attatched to the webbing of a uniform to allow for quick access during combat."
 	health = 6
 	w_class = W_CLASS_TINY
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	slots = 5
 	does_not_open_in_pocket = 0
 	can_hold = list(/obj/item/ammo)
@@ -166,6 +166,9 @@
 	/obj/item/reagent_containers/food/snacks/donut,\
 	/obj/item/instrument/whistle)
 
+	empty
+		spawn_contents = list()
+
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
@@ -175,7 +178,7 @@
 /obj/item/storage/ntsc_pouch
 	name = "tacticool pouch"
 	desc = "A dump pouch for various security accessories, partially-loaded magazines, or maybe even a snack! Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
-	icon_state = "ammopouch-large"
+	icon_state = "ammopouch-ntsc"
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5

@@ -7,7 +7,7 @@
 	organ_name = "tail"
 	organ_holder_name = "tail"
 	organ_holder_location = "chest"	// chest-ish
-	organ_holder_required_op_stage = 11.0
+	organ_holder_required_op_stage = 11
 	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
 	icon_state = "tail-wolf"
@@ -96,9 +96,9 @@
 				user.u_equip(src)
 			H.organHolder.receive_organ(src, "tail", 3.0)
 			if (boned)
-				H.organHolder.tail.op_stage = 0.0
+				H.organHolder.tail.op_stage = 0
 			else
-				H.organHolder.tail.op_stage = 11.0
+				H.organHolder.tail.op_stage = 11
 			src.build_mob_tail_image()
 			H.update_body()
 			H.bioHolder.RemoveEffect(src.failure_ability)

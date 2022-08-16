@@ -299,7 +299,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	anchored = 0
 	p_class = 1.8
 	req_access = list(access_security)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	mats = 30
 	var/mob/occupant = null
 	var/locked = 0
@@ -458,7 +458,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)

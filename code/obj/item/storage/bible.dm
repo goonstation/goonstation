@@ -10,7 +10,7 @@ var/global/list/bible_contents = list()
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -64,7 +64,7 @@ var/global/list/bible_contents = list()
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot.</span>")
 			random_brute_damage(user, 10)
 			user.changeStatus("stunned", 3 SECONDS)
 			JOB_XP(user, "Clown", 1)
@@ -179,10 +179,18 @@ var/global/list/bible_contents = list()
 			user?.gib()
 			return TRUE
 		else
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-			user.gib()
+			smite(user)
 			return TRUE
+
+	proc/smite(mob/M)
+		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
+		logTheThing("combat", M, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		var/turf/T = get_turf(M)
+		showlightning_bolt(T)
+		playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+		M.unequip_all()
+		M.emote("scream")
+		M.gib()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
@@ -211,7 +219,7 @@ var/global/list/bible_contents = list()
 
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
 		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-		user.gib()
+		smite(user)
 		return TRUE
 
 /obj/item/storage/bible/hungry
@@ -238,7 +246,7 @@ var/global/list/bible_contents = list()
 				for( var/obj/gib in gibz )
 					if(!gib.loc) continue
 					step_to( gib, src )
-					if( get_dist( gib, src ) == 0 )
+					if( GET_DIST( gib, src ) == 0 )
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
@@ -257,7 +265,7 @@ var/global/list/bible_contents = list()
 			for( var/i = 1, i <= 50, i++ )
 				for( var/obj/gib in gibz )
 					step_to( gib, src )
-					if( get_dist( gib, src ) == 0 )
+					if( GET_DIST( gib, src ) == 0 )
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )

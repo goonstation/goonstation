@@ -43,10 +43,10 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -290,20 +290,20 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				for (var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
 					return
-			if (3.0)
+			if (3)
 				if (prob(25))
 					for (var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
@@ -512,7 +512,10 @@
 		if (!src || !src.occupant)
 			return
 		if (src.occupant.loc == src)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -527,7 +530,6 @@
 			src.occupant = null
 			src.UpdateIcon()
 			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -609,7 +611,7 @@
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user)) return
+		if (!isalive(user) || iswraith(user) || isintangible(user)) return
 		src.go_out()
 		add_fingerprint(user)
 

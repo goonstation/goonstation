@@ -283,7 +283,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || GET_DIST(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -477,12 +477,12 @@ Contents:
 			if(istype(O,/obj/item/unfinished_katana))
 				var/obj/item/unfinished_katana/K = O
 				K.temperature = lerp(K.temperature, src.temperature, 0.3)
-				if(K.temperature >= src.temperature * 0.90)
+				if(K.temperature >= src.temperature * 0.9)
 					effect.spark_up()
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 30 && R.material.getProperty("hard") >= 15)
+					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else

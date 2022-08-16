@@ -435,7 +435,7 @@
 /datum/materiel/utility/knife
 	name = "Combat Knife"
 	path = /obj/item/dagger/syndicate/specialist
-	description = "A field-tested 10 inch combat knife, helps you move faster when held."
+	description = "A field-tested 10 inch combat knife, helps you move faster when held & knocks down targets when thrown."
 
 /datum/materiel/utility/rpg_ammo
 	name = "MPRT Rocket Ammunition"
@@ -490,6 +490,7 @@
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "req-token"
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 
 

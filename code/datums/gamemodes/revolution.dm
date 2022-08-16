@@ -347,6 +347,9 @@
 			if(isghostcritter(head_mind.current) || isVRghost(head_mind.current))
 				continue
 
+			if(istype(head_mind.current.loc, /obj/cryotron))
+				continue
+
 			// Check if they're on the current z-level
 			var/turf/T = get_turf(head_mind.current)
 			if(T.z != 1)
@@ -397,7 +400,8 @@
 			if(istype(T.loc, /area/station/security/brig) && !rev_mind.current.canmove)
 				continue
 
-
+			if(istype(rev_mind.current.loc, /obj/cryotron))
+				continue
 
 			return 0
 	return 1
@@ -543,7 +547,7 @@
 					var/found = 0
 					for (var/datum/mind/M in R.head_revolutionaries)
 						if (M.current && ishuman(M.current))
-							if (get_dist(owner,M.current) <= 5)
+							if (GET_DIST(owner,M.current) <= 5)
 								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
 									found = 1
 									break

@@ -174,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1
@@ -217,7 +217,7 @@
 
 	var/list/possibleStats = list()
 	for(var/x in globalPropList)
-		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty")
+		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty" && x != "movespeed")
 			possibleStats += x
 
 	for(var/i=0,i<numStats,i++)

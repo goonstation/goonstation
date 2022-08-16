@@ -11,7 +11,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/living_state = null
 	var/dead_state = null
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
@@ -123,16 +123,12 @@
 			report_state = 1
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.increaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.increaseCritters(src)
 
 	proc/report_death()
 		if (report_state == 1)
 			report_state = 0
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.decreaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -459,12 +455,12 @@
 		on_damaged()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -548,15 +544,6 @@
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
-
-		if (!waking)
-			if (get_area(src) == colosseum_controller.colosseum)
-				waking = 1
 
 		if(waking)
 			hibernate_check = 20
@@ -648,7 +635,7 @@
 					current_target = src.food_target
 
 				if (current_target)
-					if (get_dist(src, current_target) <= src.attack_range)
+					if (GET_DIST(src, current_target) <= src.attack_range)
 						if (current_target == src.corpse_target)
 							src.task = "scavenging"
 						else if (current_target == src.food_target)
@@ -661,15 +648,15 @@
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
-							var/turf/olddist = get_dist(src, current_target)
+							var/turf/olddist = GET_DIST(src, current_target)
 							walk_to(src, current_target,1,4)
-							if ((get_dist(src, current_target)) >= (olddist))
+							if ((GET_DIST(src, current_target)) >= (olddist))
 								src.frustration++
 								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
-							if (get_dist(src, current_target) > attack_range)
+							if (GET_DIST(src, current_target) > attack_range)
 								src.frustration++
 							else
 								src.frustration = 0
@@ -680,21 +667,21 @@
 
 				if (!src.chases_food || src.food_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.food_target) <= src.attack_range)
+				else if (GET_DIST(src, src.food_target) <= src.attack_range)
 					src.task = "eating"
 				else if (src.mobile)
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.task = "eating2"
 
 			if ("eating2")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
@@ -715,7 +702,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.corpse_target) <= src.attack_range)
+				else if (GET_DIST(src, src.corpse_target) <= src.attack_range)
 					src.task = "scavenging"
 				else if (src.mobile)
 					walk_to(src, src.corpse_target,1,4)
@@ -724,7 +711,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				if (get_dist(src, src.corpse_target) > src.attack_range)
+				if (GET_DIST(src, src.corpse_target) > src.attack_range)
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
@@ -747,11 +734,11 @@
 			if ("attacking")
 
 				// see if he got away
-				if ((get_dist(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
+				if ((GET_DIST(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = initial(src.anchored)
 					src.task = "chasing"
 				else
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
 							if(ATTACK_CHECK(src.target))
@@ -1056,6 +1043,7 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
@@ -1066,45 +1054,44 @@
 					user.u_equip(src)
 				src.set_loc(get_turf(src))
 
-			SPAWN(0)
-				if (shouldThrow && T)
-					src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-					playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			if (shouldThrow && T)
+				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			else
+				var/hatch_wiggle_counter = rand(3,8)
+				while (hatch_wiggle_counter-- > 0)
+					src.pixel_x++
+					sleep(0.2 SECONDS)
+					src.pixel_x--
+					sleep(1 SECOND)
+				src.visible_message("[src] hatches!")
+
+			if (!ispath(critter_type))
+				if (istext(critter_type))
+					critter_type = text2path(critter_type)
 				else
-					var/hatch_wiggle_counter = rand(3,8)
-					while (hatch_wiggle_counter-- > 0)
-						src.pixel_x++
-						sleep(0.2 SECONDS)
-						src.pixel_x--
-						sleep(1 SECOND)
-					src.visible_message("[src] hatches!")
+					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					src.visible_message("Looks like there wasn't anything inside of [src]!")
+					qdel(src)
+					return
 
-				if (!ispath(critter_type))
-					if (istext(critter_type))
-						critter_type = text2path(critter_type)
-					else
-						logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
-						src.visible_message("Looks like there wasn't anything inside of [src]!")
-						qdel(src)
-						return
+			var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
 
-				var/obj/critter/newCritter = new critter_type(T ? T : get_turf(src), src.parent)
+			if (critter_name)
+				newCritter.name = critter_name
 
-				if (critter_name)
-					newCritter.name = critter_name
+			if (shouldThrow && T)
+				newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 
-				if (shouldThrow && T)
-					newCritter.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			//hack. Clownspider queens keep track of their babies.
+			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
+				var/mob/living/critter/spider/clownqueen/queen = src.parent
+				if (islist(queen.babies))
+					queen.babies += newCritter
 
-				//hack. Clownspider queens keep track of their babies.
-				if (istype(src.parent, /mob/living/critter/spider/clownqueen))
-					var/mob/living/critter/spider/clownqueen/queen = src.parent
-					if (islist(queen.babies))
-						queen.babies += newCritter
-
-				sleep(0.1 SECONDS)
-				qdel(src)
-				return
+			sleep(0.1 SECONDS)
+			qdel(src)
+			return newCritter
 		else
 			return
 

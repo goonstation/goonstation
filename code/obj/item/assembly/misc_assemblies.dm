@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -21,7 +22,7 @@ Contains:
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
-	var/status = 0.0
+	var/status = 0
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
 	throw_speed = 4
@@ -79,6 +80,8 @@ Contains:
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -416,6 +419,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -592,6 +597,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	if (src.part2)
@@ -702,7 +709,7 @@ Contains:
 	icon_state = "radio-horn"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
@@ -868,3 +875,51 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+/datum/pipeshotrecipe
+	var/thingsneeded = null
+	var/obj/item/ammo/bullets/result = null
+	var/obj/item/accepteditem = null
+
+	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if (istype(craftingitem, accepteditem)) //success! items match
+			src.thingsneeded --
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You add the [craftingitem] to the [frame]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
+
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+
+			qdel(craftingitem)
+
+/datum/pipeshotrecipe/scrap
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/scrap/
+	accepteditem = /obj/item/raw_material/scrap_metal
+/datum/pipeshotrecipe/glass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/glass/
+	accepteditem = /obj/item/raw_material/shard
+
+/obj/item/assembly/makeshiftshell
+	name = "filled pipe hulls"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
+	icon_state = "Pipeshotrow"
+
+	var/datum/pipeshotrecipe/recipe = null
+
+	attackby(obj/item/W, mob/user)
+		if (!recipe) //no recipie? assign one
+			if (istype(W, /obj/item/raw_material/shard))
+				recipe = new/datum/pipeshotrecipe/glass
+			if (istype(W, /obj/item/raw_material/scrap_metal))
+				recipe = new/datum/pipeshotrecipe/scrap
+		if(recipe) //probably a better way to do this but my feverish brain is not coming up with it
+			recipe.craftwith(W, src, user)
+		..()
+

@@ -12,7 +12,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "shipalert0"
 	desc = ""
-	anchored = 1.0
+	anchored = 1
 	mats = 5
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = 0 //processing loops
@@ -63,9 +63,9 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
 
-/obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
+/obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
@@ -127,7 +127,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5.0
+	object_flags = NO_GHOSTCRITTER
+	force = 5
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	m_amt = 50

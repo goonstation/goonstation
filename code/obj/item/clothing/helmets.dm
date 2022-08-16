@@ -19,7 +19,7 @@
 	name = "space helmet"
 	icon_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
@@ -46,7 +46,7 @@
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	var/on = 0
 
@@ -123,62 +123,55 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
-
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
 
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
-	item_state = "s_helmet"
-
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	var/datum/material/visr_material = null
-	var/image/fabrImg = null
-	var/image/visrImg = null
+	var/image/fabrItemImg = null
+	var/image/fabrWornImg = null
+	var/image/visrItemImg = null
+	var/image/visrWornImg = null
 
 	New()
 		..()
+		// Prep the item overlays
+		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
+		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
+		// Prep the worn overlays
+		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
+		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
-		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
-		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
+		src.setMaterial(
+			helmMat,
+			FALSE, // We want to purely rely on the overlay colours
+		)
+		name = "[visrMat]-visored [helmMat] helmet"
 
-	proc/setupVisorMat(var/datum/material/V)
-		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
-		if (visr_material)
-			if (visr_material.hasProperty("thermal"))
-				var/prot = round((100 - visr_material.getProperty("thermal")) / 2)
-				setProperty("coldprot", 10+prot)
-				setProperty("heatprot", 1+round(prot/2))
-			else
-				setProperty("coldprot", 10)
-				setProperty("heatprot", 2)
+		// Setup the clothing stats based on material properties
+		var/prot = max(0, (5 - visrMat.getProperty("thermal")) * 5)
+		setProperty("coldprot", 10+prot)
+		setProperty("heatprot", 2+round(prot/2))
+		// All crystals (assuming default chem value) will give 20 chemprot, same as normal helm
+		prot =  clamp(((visrMat.getProperty("chemical") - 4) * 10), 0, 35)
+		setProperty("chemprot", prot)
+		 // Even if soft visor, still gives some value
+		prot = max(0, visrMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot_head", 3 + prot)
 
-			if (visr_material.hasProperty("permeable"))
-				var/prot = 100 - visr_material.getProperty("permeable")
-				setProperty("viralprot", prot)
-			else
-				setProperty("viralprot", 40)
-
-			if (visr_material.hasProperty("density"))
-				var/prot = round(visr_material.getProperty("density") / 20)
-				setProperty("meleeprot_head", 2+ max(2, prot)) // even if soft visor, still decent helmet
-			else
-				setProperty("meleeprot_head", 4) // always at least be as good as baseline item
-
-		// overlay stuff
-
-		fabrImg.color = src.material
-		UpdateOverlays(fabrImg, "helmet")
-
-		visrImg.color = visr_material.color
-		UpdateOverlays(visrImg, "visor")
-
-
-	UpdateName()
-		if (visr_material && src.material)
-			name = "[visr_material]-visored [src.material] helmet"
-		else if (visr_material)
-			name = " [src.material] helmet"
+		// Setup item overlays
+		fabrItemImg.color = helmMat.color
+		visrItemImg.color = visrMat.color
+		UpdateOverlays(visrItemImg, "item-visor")
+		UpdateOverlays(fabrItemImg, "item-helmet")
+		// Setup worn overlays
+		fabrWornImg.color = helmMat.color
+		visrWornImg.color = visrMat.color
+		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += visrWornImg
+		// Add back the helmet texture since we overide the material apparance
+		if (helmMat.texture)
+			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
 
 // Sealab helmets
 
@@ -281,6 +274,7 @@
 
 	New()
 		..()
+		setProperty("chemprot",30)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -353,7 +347,7 @@
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = 0.0
+			see_face = 0
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -398,7 +392,6 @@
 			setupProperties()
 				..()
 				setProperty("viralprot", 50)
-				setProperty("chemprot", 30)
 
 			equipped(var/mob/user, var/slot)
 				..()
@@ -478,6 +471,7 @@
 
 	setupProperties()
 		..()
+		setProperty("chemprot",30)
 		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/head/helmet/swat
@@ -659,42 +653,61 @@
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
-	color_r = 0.3 // darken
-	color_g = 0.3
-	color_b = 0.3
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_down(mob/user)
+	proc/obscure(mob/user)
+		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/reveal(mob/user)
+		user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
+		user.updateOverlaysClient(user.client)
+
+	proc/flip_down(var/mob/living/carbon/human/user)
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		color_r = initial(color_r) // darken
-		color_g = initial(color_g)
-		color_b = initial(color_b)
-		user.set_clothing_icon_dirty()
+		if (user.head == src)
+			src.obscure(user)
+			user.update_clothing()
 
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
-	proc/flip_up(mob/user)
+	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		color_r = 1 // no effect
-		color_g = 1
-		color_b = 1
-		user.set_clothing_icon_dirty()
+		if (user.head == src)
+			src.reveal(user)
+			user.update_clothing()
 
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (!src.up)
+			src.obscure(user)
+
+	unequipped(mob/user)
+		. = ..()
+		src.reveal(user)
+
+	disposing()
+		. = ..()
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/owner = src.loc
+			if (owner.head == src) //human is actually wearing it
+				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
 		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
@@ -800,7 +813,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 8)

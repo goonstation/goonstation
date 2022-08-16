@@ -208,6 +208,10 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.real_name = "Father Ted"
 
 /mob/living/carbon/human/fatherjack
+	real_name = "Father Jack"
+	gender = MALE
+	is_npc = TRUE
+
 	New()
 		..()
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
@@ -216,8 +220,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.gender = "male"
-		src.real_name = "Father Jack"
 		bioHolder.bloodType = "B+"
 
 	Life(datum/controller/process/mobs/parent)
@@ -347,6 +349,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/biker
 	real_name = "Shitty Bill"
 	gender = MALE
+	is_npc = TRUE
 	var/talk_prob = 5
 	var/greeted_murray = 0
 
@@ -527,7 +530,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		SPAWN(0)
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
-			if (murray && get_dist(src,murray) > 7)
+			if (murray && GET_DIST(src,murray) > 7)
 				murray = null
 			if (istype(murray))
 				if (!findtext(murray.name, "murray"))
@@ -684,7 +687,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
 			var/mob/living/carbon/human/john/J = JB
-			if (get_dist(J,src) <= 7)
+			if (GET_DIST(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
 					M.add_karma(-1)
@@ -704,6 +707,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // merchant
 
 /mob/living/carbon/human/merchant
+	is_npc = TRUE
+
 	New()
 		..()
 		SPAWN(0)
@@ -806,6 +811,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/don_glab
 	real_name = "Donald \"Don\" Glabs"
 	gender = MALE
+	is_npc = TRUE
 
 	New()
 		..()
@@ -928,7 +934,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 
 /mob/living/carbon/human/spacer
-	is_npc = 1
+	is_npc = TRUE
 	uses_mobai = 1
 	New()
 		..()
@@ -963,7 +969,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
 	gender = MALE
-	is_npc = 1
+	is_npc = TRUE
 	uses_mobai = 1
 
 	New()

@@ -701,15 +701,15 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (!isdead(src))
 				b_loss += rand(90,120)
 				f_loss += rand(90,120)
-		if(2.0)
+		if(2)
 			if (!isdead(src))
 				b_loss += rand(60,90)
 				f_loss += rand(60,90)
-		if(3.0)
+		if(3)
 			if (!isdead(src))
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss
@@ -1546,13 +1546,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/stored = ""
-	if(length(by_type[/obj/cryotron]))
-		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-		for(var/L as anything in cryo_unit.stored_crew_names)
-			stored += "<i>- [L]<i><br>"
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
@@ -1996,8 +1990,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	if (!message_mob.client || isdead(src))
 		return
 
-	if (!ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown))
-		choose_name(retries = 3, default_name = src.real_name, renaming_mob = message_mob)
+	if (!GET_COOLDOWN(src, "ai_self_rename"))
+		choose_name(retries = 3, renaming_mob = message_mob)
 	else
 		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
@@ -2435,7 +2429,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2456,6 +2450,7 @@ proc/get_mobs_trackable_by_AI()
 					src.real_name = newname
 					if (src.deployed_to_eyecam)
 						src.eyecam.real_name = newname
+					ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown)
 					break
 				else
 					continue

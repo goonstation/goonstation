@@ -10,6 +10,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	var/empty = 0
 	attack(mob/M, mob/user, def_zone)
 		if(empty)

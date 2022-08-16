@@ -202,9 +202,9 @@
 			enter_shell()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= shell_count ? 75 : 200
-			if(2.0)
+			if(2)
 				src.health -= shell_count ? 25 : 75
 			else
 				src.health -= shell_count ? 0 : 25
@@ -250,7 +250,7 @@
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
 				for (var/mob/M in mobs)
-					if (M.job == "Clown" && get_dist(src, M) < 7)
+					if (M.job == "Clown" && GET_DIST(src, M) < 7)
 						target = M
 						attack = 1
 						task = "chasing"

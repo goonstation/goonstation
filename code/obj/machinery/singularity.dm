@@ -41,7 +41,7 @@ Contains:
 	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
+		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
 				smallestdimension = min(smallestdimension, gen.shortestlink)
@@ -57,7 +57,7 @@ Contains:
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -138,7 +138,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.Dtime = Ti
 
 	var/offset = rand(1000)
-	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 	..()
@@ -205,7 +205,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	return // No action required this should be the one doing the EMPing
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in range(grav_pull, src.get_center()))
+
+	var/turf/sing_center = src.get_center()
+	for (var/X in range(grav_pull, sing_center))
 		if (!X)
 			continue
 		if (X == src)
@@ -221,7 +223,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src.get_center(), X) <= radius) // why was this a switch before ffs
+			if(IN_EUCLIDEAN_RANGE(sing_center, X, radius+0.5))
 				src.Bumped(A)
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
@@ -311,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
-			O.ex_act(1.0)
+			O.ex_act(1)
 			if (O)
 				qdel(O)
 			gain = 2
@@ -344,7 +346,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
 		radius++
-		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
 		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
@@ -395,11 +397,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-
-	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	var/turf/sing_center = src.get_center()
+	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
+
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -455,7 +458,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -948,7 +951,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/active = 0
 	var/power = 20
 	var/fire_delay = 100
@@ -1551,7 +1554,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	var/state = UNWRENCHED
-	var/timing = 0.0
+	var/timing = 0
 	var/time = 30
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
@@ -1736,7 +1739,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
-		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
 	SPAWN(3 SECONDS)
@@ -1748,7 +1751,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 5, 0.5)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

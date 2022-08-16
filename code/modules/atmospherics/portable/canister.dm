@@ -3,8 +3,9 @@
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "empty"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | NO_GHOSTCRITTER
 	p_class = 2
 	status = REQ_PHYSICAL_ACCESS
 
@@ -32,12 +33,6 @@
 		src.AddComponent(/datum/component/bullet_holes, 5, 0)
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 		bomb_dmi = image('icons/obj/canisterbomb.dmi')
-
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			temperature_resistance = 400 + T0C + (((src.material.getProperty("flammable") - 50) * (-1)) * 3)
-		return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -78,12 +73,12 @@
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
-	filled = 2.0
+	filled = 2
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
-	filled = 5.0
+	filled = 5
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
@@ -132,6 +127,8 @@
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
+		if(src.material?.getProperty("flammable") > 3) //why would you make a canister out of wood/etc
+			health -= 1000 //BURN
 		healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/proc/healthcheck(mob/user)
@@ -303,7 +300,7 @@
 				var/T = get_turf(src)
 
 				for(var/obj/window/W in range(4, T)) // smash shit
-					if(prob( get_dist(W,T)*6 ))
+					if(prob( GET_DIST(W,T)*6 ))
 						continue
 					W.health = 0
 					W.smash()
@@ -385,7 +382,7 @@
 	..()
 
 /obj/machinery/portable_atmospherics/canister/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 

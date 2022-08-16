@@ -292,9 +292,7 @@ var/reverse_mode = 0
 		return 1
 	var/list/line = getline(A,B)
 	for (var/turf/T in line)
-		if (T == AT || T == BT)
-			break
-		if (T.density)
+		if (!T.gas_cross(T))
 			return 0
 		var/obj/blob/BL = locate() in T
 		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))

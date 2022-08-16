@@ -1,6 +1,7 @@
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
@@ -247,7 +248,8 @@
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
-	/obj/item/clipboard)
+	/obj/item/clipboard,
+	/obj/item/clothing/suit/hopjacket)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -491,7 +493,7 @@
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 5)
+		if (GET_DIST(over_object, src) > 5)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object, /obj/machinery/door_timer))
