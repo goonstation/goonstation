@@ -1021,7 +1021,8 @@
 	name = "AI-Sat"
 	},
 /obj/landmark/start{
-	name = "AI"
+	name = "AI";
+	icon_state = "ai-start"
 	},
 /obj/machinery/door_control{
 	id = "ai_core";
@@ -3062,7 +3063,8 @@
 /area/station/maintenance/solar/north)
 "ahm" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
@@ -3464,7 +3466,8 @@
 	},
 /obj/disposalpipe/segment,
 /obj/landmark/spawner{
-	name = "monkeyspawn_horse"
+	name = "monkeyspawn_horse";
+	icon_state = "chimp-start"
 	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/grime,
@@ -5540,7 +5543,8 @@
 	icon_state = "4-8"
 	},
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/carpet/grime,
@@ -7845,7 +7849,7 @@
 /area/station/maintenance/northeast)
 "asQ" = (
 /obj/landmark{
-	icon_state = "x3";
+	icon_state = "pest-start";
 	name = "peststart"
 	},
 /obj/storage/closet/coffin,
@@ -13444,7 +13448,8 @@
 	dir = 4
 	},
 /obj/landmark{
-	name = "JoinLate"
+	name = "JoinLate";
+	icon_state = "latejoin"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -14135,7 +14140,8 @@
 	dir = 4
 	},
 /obj/landmark{
-	name = "JoinLate"
+	name = "JoinLate";
+	icon_state = "latejoin"
 	},
 /obj/machinery/light{
 	dir = 4
@@ -14732,7 +14738,8 @@
 	dir = 4
 	},
 /obj/landmark{
-	name = "JoinLate"
+	name = "JoinLate";
+	icon_state = "latejoin"
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -16081,7 +16088,8 @@
 	dir = 10
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
@@ -16096,7 +16104,8 @@
 	dir = 1
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
@@ -16221,7 +16230,8 @@
 	dir = 6
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
@@ -16583,7 +16593,8 @@
 	dir = 8
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles"
+	name = "monkeyspawn_mrmuggles";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor{
 	icon_state = "carpetSE"
@@ -18637,7 +18648,8 @@
 /area/station/crew_quarters/pool)
 "aSw" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -18792,7 +18804,8 @@
 	},
 /obj/critter/owl,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -18806,7 +18819,8 @@
 	dir = 1
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -20139,7 +20153,8 @@
 /area/station/crew_quarters/barber_shop)
 "aWl" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_tanhony"
+	name = "monkeyspawn_tanhony";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -20401,7 +20416,8 @@
 	dir = 6
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -20655,7 +20671,8 @@
 /area/station/security/checkpoint/arrivals)
 "aXA" = (
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /obj/shrub{
 	dir = 6
@@ -22488,7 +22505,8 @@
 /area/station/turret_protected/ai)
 "bby" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -23059,7 +23077,8 @@
 	pixel_y = 21
 	},
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quartersA)
@@ -25105,7 +25124,8 @@
 /area/station/maintenance/inner/central)
 "bhK" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -27014,7 +27034,8 @@
 "bmw" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
 /turf/simulated/floor/grey/side{
@@ -31986,7 +32007,8 @@
 	dir = 1
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/engineering)
@@ -33889,7 +33911,8 @@
 	icon_state = "1-2"
 	},
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /obj/disposalpipe/segment/mail/bent/south,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical,
@@ -36775,7 +36798,8 @@
 	},
 /obj/disposalpipe/segment,
 /obj/landmark/spawner{
-	name = "monkeyspawn_rathen"
+	name = "monkeyspawn_rathen";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -38754,7 +38778,8 @@
 "bJM" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -47601,7 +47626,8 @@
 /area/station/maintenance/central)
 "ccE" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -47673,7 +47699,8 @@
 	dir = 4
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_stirstir"
+	name = "monkeyspawn_stirstir";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -50434,7 +50461,8 @@
 	pixel_y = 21
 	},
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -51510,7 +51538,8 @@
 	icon_state = "plant"
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/arrival{
 	dir = 1
@@ -51656,7 +51685,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
 /obj/landmark/spawner{
-	name = "monkeyspawn_albert"
+	name = "monkeyspawn_albert";
+	icon_state = "chimp-start"
 	},
 /obj/cable{
 	d2 = 8;
@@ -53639,7 +53669,8 @@
 	},
 /obj/disposalpipe/segment,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
@@ -54065,7 +54096,8 @@
 	dir = 8
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles"
+	name = "monkeyspawn_mrsmuggles";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -55993,7 +56025,8 @@
 	},
 /obj/item/storage/wall/random,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
@@ -57030,7 +57063,8 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
@@ -57479,7 +57513,8 @@
 "cAc" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/arrival{
 	dir = 5
@@ -60204,7 +60239,8 @@
 	pixel_x = -10
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 10
@@ -60443,7 +60479,8 @@
 "cHf" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/market)
@@ -60585,7 +60622,8 @@
 	icon_state = "1-2"
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -60669,7 +60707,8 @@
 "cHN" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /obj/machinery/light/emergency,
 /turf/simulated/floor/arrival{
@@ -63784,7 +63823,8 @@
 	icon_state = "plant"
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -64695,7 +64735,8 @@
 	},
 /obj/disposalpipe/segment/transport,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -67821,7 +67862,8 @@
 	pixel_x = -10
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /obj/machinery/power/apc{
 	dir = 1;
@@ -68333,7 +68375,8 @@
 /area/station/science/storage)
 "cYF" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/station/maintenance/southeast)
@@ -70462,7 +70505,8 @@
 /area/station/medical/dome)
 "dda" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass{
@@ -70766,7 +70810,8 @@
 	icon_state = "plant"
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -70994,7 +71039,8 @@
 /area/station/medical/dome)
 "deF" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -71087,7 +71133,8 @@
 /area/station/hangar/science)
 "deO" = (
 /obj/landmark{
-	name = "blobstart"
+	name = "blobstart";
+	icon_state = "blob-start"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
@@ -71223,7 +71270,8 @@
 	name = "palm tree"
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -71374,7 +71422,8 @@
 /area/station/medical/medbay)
 "dfJ" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -71522,7 +71571,8 @@
 "dfX" = (
 /obj/shrub,
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/landmark/start{
@@ -71619,7 +71669,8 @@
 	name = "palm tree"
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+	name = "monkeyspawn_normal";
+	icon_state = "chimp-start"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -71657,7 +71708,8 @@
 	dir = 10
 	},
 /obj/landmark{
-	name = "kudzustart"
+	name = "kudzustart";
+	icon_state = "kudzu-start"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"

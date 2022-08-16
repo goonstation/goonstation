@@ -38181,6 +38181,9 @@
 	req_access = null
 	},
 /obj/access_spawn/ai_upload,
+/obj/landmark{
+	name = "AI-Sat"
+	},
 /obj/landmark/start{
 	name = "AI";
 	icon_state = "ai-start"
