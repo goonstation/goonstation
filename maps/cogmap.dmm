@@ -55939,8 +55939,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
 /obj/table/wood/auto,
 /obj/item/device/radio/headset/medical{
 	pixel_x = -15;
@@ -64216,6 +64214,7 @@
 	},
 /obj/machinery/networked/printer,
 /obj/table/wood/auto,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
