@@ -10,9 +10,10 @@
 
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
-/mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F)
-	..()
-
+/mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
+	if (free)
+		src.compute = 0
+	..(loc)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
 	if(istype(F))
@@ -85,7 +86,7 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.flock && src.flock.total_compute() < src.flock.used_compute)
+	if (src.flock && src.compute != 0 && src.flock.total_compute() < src.flock.used_compute)
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness!</span>")
 		src.death()
 
