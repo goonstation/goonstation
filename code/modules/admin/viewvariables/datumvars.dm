@@ -774,8 +774,8 @@
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
-		logTheThing("admin", usr, null, "tried to varedit [D.type] but was denied!")
-		logTheThing("diary", usr, null, "tried to varedit [D.type] but was denied!", "admin")
+		logTheThing("admin", usr, "tried to varedit [D.type] but was denied!")
+		logTheThing("diary", usr, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
@@ -849,8 +849,8 @@
 
 
 
-	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
-	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
+	logTheThing("admin", src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
+	logTheThing("diary", src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
 	SPAWN(0)
 		if (istype(D, /datum))
@@ -862,8 +862,8 @@
 	set category = "Debug"
 	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
 		if("Yes")
-			logTheThing("admin", usr, null, "deleted [A.name] at ([log_loc(A)])")
-			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
+			logTheThing("admin", usr, "deleted [A.name] at ([log_loc(A)])")
+			logTheThing("diary", usr, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
 
 /proc/debug_overlays(target_thing, client/user, indent="")
 	for(var/ov in target_thing:overlays)

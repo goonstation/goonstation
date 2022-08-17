@@ -73,7 +73,7 @@
 			src.armed = FALSE
 			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
-			logTheThing("bombing", user, null, "has disarmed the [src.name] at [log_loc(user)].")
+			logTheThing("bombing", user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
 			src.our_timer.attack_self(user)

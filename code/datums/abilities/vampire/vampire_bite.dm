@@ -422,7 +422,7 @@
 
 	loopStart()
 		..()
-		logTheThing("combat", M, HH, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
+		logTheThing("combat", M, "bites [constructTarget(HH,"combat")]'s neck at [log_loc(M)].")
 		return
 
 	onEnd()

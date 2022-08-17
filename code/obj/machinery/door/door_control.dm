@@ -414,7 +414,7 @@
 	if (!src.id)
 		return
 
-	logTheThing("station", user, null, "toggled the [src.name] at [log_loc(src)].")
+	logTheThing("station", user, "toggled the [src.name] at [log_loc(src)].")
 
 	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)

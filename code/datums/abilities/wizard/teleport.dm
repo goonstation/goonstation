@@ -167,7 +167,7 @@
 				L += T3
 
 	var/turf/destination = pick(L)
-	logTheThing("combat", src, null, "teleported from [log_loc(src)] to [log_loc(destination)].")
+	logTheThing("combat", src, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
 		animate_teleport_wiz(src)
 		sleep(2 SECONDS) // Animation.

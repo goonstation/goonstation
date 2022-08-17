@@ -591,7 +591,7 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
-			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+			logTheThing("combat", owner, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner

@@ -42,7 +42,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+			logTheThing("diary", src, "(HIVEMIND): [message]", "hivesay")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")

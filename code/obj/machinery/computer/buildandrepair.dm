@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					B.records = circuit.records
 				if (circuit.frequency)
 					B.frequency = circuit.frequency
-				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				logTheThing("station", user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
 /obj/computerframe/proc/state_actions(obj/item/P, mob/user)

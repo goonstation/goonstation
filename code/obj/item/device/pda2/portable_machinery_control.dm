@@ -186,7 +186,7 @@
 						P3.locked = 1
 
 					if (P3.occupant)
-						logTheThing("station", usr, P3.occupant, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
+						logTheThing("station", usr, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
 
 					PDA.display_alert("<span style=\"color:blue\">The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"].</span>")
 
@@ -237,7 +237,7 @@
 
 						flick("[P4.icon_state]-tele", P4)
 						elecflash(P4)
-						logTheThing("station", usr, null, "teleports [P4] to [log_loc(our_loc)].")
+						logTheThing("station", usr, "teleports [P4] to [log_loc(our_loc)].")
 
 			if ("return")
 				var/obj/P5 = src.active
@@ -285,7 +285,7 @@
 							PS2.on_teleport()
 						flick("[P5.icon_state]-tele", P5)
 						elecflash(P5)
-						logTheThing("station", usr, null, "teleports [P5] to its home turf [log_loc(dest_loc)].")
+						logTheThing("station", usr, "teleports [P5] to its home turf [log_loc(dest_loc)].")
 
 		PDA.updateSelfDialog()
 		return

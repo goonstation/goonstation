@@ -60,7 +60,7 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		logTheThing("combat", I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
@@ -547,7 +547,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("[source][small_message].")
 			var/area/A = get_area(source)
 			if (!A.dont_log_combat)
-				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				logTheThing("bombing", source, "triggered \a [src] on death at [log_loc(source)].")
 				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
-			logTheThing("combat", H, implant_hacker, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
+			logTheThing("combat", H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return 0
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)

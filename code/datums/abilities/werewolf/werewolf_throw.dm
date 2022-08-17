@@ -70,5 +70,5 @@
 				HH.throw_at(T, 10, 4)
 				HH.changeStatus("weakened", 2 SECONDS)
 				HH.change_misstep_chance(33)
-			logTheThing("combat", M, HH, "uses the throw werewolf move on [constructTarget(HH,"combat")] at [log_loc(M)].")
+			logTheThing("combat", M, "uses the throw werewolf move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 		return 0

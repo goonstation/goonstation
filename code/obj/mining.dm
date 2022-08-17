@@ -1780,7 +1780,7 @@ obj/item/clothing/gloves/concussive
 						boutput(user, "<span class='alert'>The timing mechanism malfunctions!</span>")
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					logTheThing("combat", user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
@@ -1794,7 +1794,7 @@ obj/item/clothing/gloves/concussive
 
 						// Yes, please (Convair880).
 						if (src?.hacked)
-							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
+							logTheThing("combat", user, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
 						user.set_dir(get_dir(user, target))
 						user.drop_item()
@@ -1982,7 +1982,7 @@ obj/item/clothing/gloves/concussive
 
 		for (var/mob/M in cargo.contents)
 			if (M)
-				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				logTheThing("station", user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2034,7 +2034,7 @@ obj/item/clothing/gloves/concussive
 
 		// Logs for good measure (Convair880).
 		for (var/mob/M in cargo.contents)
-			logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+			logTheThing("station", user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(src.target)
 		elecflash(src)

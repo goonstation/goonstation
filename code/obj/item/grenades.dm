@@ -111,7 +111,7 @@ PIPE BOMBS + CONSTRUCTION
 		if(!A.dont_log_combat)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logTheThing("combat", user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner
@@ -704,7 +704,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (istype(target, /obj/item/storage)) return ..()
 		if (src.state == 0)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logTheThing("combat", user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
 			src.state = 1
 			src.add_fingerprint(user)
@@ -717,7 +717,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			return
 		if (src.state == 0)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logTheThing("combat", user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
 			src.state = 1
 		return
@@ -755,14 +755,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					random_brute_damage(user, 200)
 					sleep(1 DECI SECOND)
 					if (isdead(user) || user.nodamage || isAI(user)) return
-					logTheThing("combat", user, null, "was killed by touching a [src] at [log_loc(src)].")
+					logTheThing("combat", user, "was killed by touching a [src] at [log_loc(src)].")
 					var/mob/dead/observer/newmob
 					newmob = new/mob/dead/observer(user)
 					user.client.mob = newmob
 					user.mind.transfer_to(newmob)
 					qdel(user)
 				else
-					logTheThing("combat", user, null, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")
+					logTheThing("combat", user, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")
 					if (destination)
 						user.set_loc(destination)
 					else
@@ -808,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if(!A.dont_log_combat)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a grenade ([src.type]) at [log_loc(user)].")
+			logTheThing("combat", user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 	proc/arm(mob/usr as mob)
 		usr.show_message("<span class='alert'><B>You have armed the [src.name]!</span>")
@@ -1181,7 +1181,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
-						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+						logTheThing("combat", user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1198,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					// Yes, please (Convair880).
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
-						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+						logTheThing("combat", user, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN(src.det_time)
 						if (src)
@@ -1287,7 +1287,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
-						logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+						logTheThing("combat", user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						user.u_equip(src)
 						src.boom()
@@ -1304,7 +1304,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					// Yes, please (Convair880).
 					var/area/A = get_area(src)
 					if(!A.dont_log_combat)
-						logTheThing("combat", user, null, "attaches a [src] to [target] at [log_loc(target)].")
+						logTheThing("combat", user, "attaches a [src] to [target] at [log_loc(target)].")
 
 					SPAWN(src.det_time)
 						if (src)
@@ -1661,7 +1661,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if(!A.dont_log_combat)
 			if(is_dangerous)
 				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "arms a [src.name] (power [strength]) at [log_loc(src)])")
+			logTheThing("combat", user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
 			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!

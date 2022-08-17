@@ -474,7 +474,7 @@
 
 		if (user)
 			boutput(user, "You finish slicing [C].")
-			logTheThing("station", user, null, "unwelded the disposal pipe at [log_loc(C)]")
+			logTheThing("station", user, "unwelded the disposal pipe at [log_loc(C)]")
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag

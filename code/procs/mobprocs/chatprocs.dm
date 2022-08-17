@@ -18,7 +18,7 @@
 		return
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
-		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
+		logTheThing("say", src, "SAY: [html_encode(message)] [log_loc(src)]")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
@@ -145,8 +145,8 @@
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
 		if (copytext(message, 1, 2) != "*") // if this is an emote it is logged in emote
-			logTheThing("say", src, null, "SAY: [message]")
-	else logTheThing("say", src, null, "SAY: [message]")
+			logTheThing("say", src, "SAY: [message]")
+	else logTheThing("say", src, "SAY: [message]")
 */
 /mob/verb/me_verb(message as text)
 	set name = "me"
@@ -172,7 +172,7 @@
 /* ghost emotes wooo also the logging is already taken care of in the emote() procs vOv
 	if (isliving(src) && isalive(src))
 		src.emote(message, 1)
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing("say", src, "EMOTE: [message]")
 	else
 		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
 */
@@ -222,7 +222,7 @@
 #endif
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing("say", src, "SAY: [message]")
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
@@ -282,7 +282,7 @@
 #endif
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing("say", src, "SAY: [message]")
 
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -320,7 +320,7 @@
 #endif
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing("say", src, "SAY: [message]")
 
 	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -345,10 +345,10 @@
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
 #endif
-	logTheThing("diary", src, null, "(KUDZU): [message]", "hivesay")
+	logTheThing("diary", src, "(KUDZU): [message]", "hivesay")
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing("say", src, "SAY: [message]")
 
 	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -560,12 +560,12 @@
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing("admin", src, null, "has attempted to advertise in OOC.")
-		logTheThing("diary", src, null, "has attempted to advertise in OOC.", "admin")
+		logTheThing("admin", src, "has attempted to advertise in OOC.")
+		logTheThing("diary", src, "has attempted to advertise in OOC.", "admin")
 		message_admins("[key_name(src)] has attempted to advertise in OOC.")
 		return
 
-	logTheThing("diary", src, null, ": [msg]", "ooc")
+	logTheThing("diary", src, ": [msg]", "ooc")
 	phrase_log.log_phrase("ooc", msg)
 
 #ifdef DATALOGGER
@@ -575,7 +575,7 @@
 	for (var/client/C in clients)
 		// DEBUGGING
 		if (!C.preferences)
-			logTheThing("debug", null, null, "[C] (\ref[C]): client.preferences is null")
+			logTheThing("debug", null, "[C] (\ref[C]): client.preferences is null")
 
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
@@ -610,7 +610,7 @@
 
 		boutput(C, rendered)
 
-	logTheThing("ooc", src, null, "OOC: [msg]")
+	logTheThing("ooc", src, "OOC: [msg]")
 
 /mob/proc/listen_looc()
 	set name = "(Un)Mute LOOC"
@@ -647,12 +647,12 @@
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing("admin", src, null, "has attempted to advertise in LOOC.")
-		logTheThing("diary", src, null, "has attempted to advertise in LOOC.", "admin")
+		logTheThing("admin", src, "has attempted to advertise in LOOC.")
+		logTheThing("diary", src, "has attempted to advertise in LOOC.", "admin")
 		message_admins("[key_name(src)] has attempted to advertise in LOOC.")
 		return
 
-	logTheThing("diary", src, null, ": [msg]", "ooc")
+	logTheThing("diary", src, ": [msg]", "ooc")
 
 #ifdef DATALOGGER
 	game_stats.ScanText(msg)
@@ -697,7 +697,7 @@
 	for (var/client/C in recipients)
 		// DEBUGGING
 		if (!C.preferences)
-			logTheThing("debug", null, null, "[C] (\ref[C]): client.preferences is null")
+			logTheThing("debug", null, "[C] (\ref[C]): client.preferences is null")
 
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
@@ -729,7 +729,7 @@
 		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			looc_text.show_to(C)
 
-	logTheThing("ooc", src, null, "LOOC: [msg]")
+	logTheThing("ooc", src, "LOOC: [msg]")
 
 /mob/proc/heard_say(var/mob/other)
 	return

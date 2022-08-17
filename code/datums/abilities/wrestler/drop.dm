@@ -111,7 +111,7 @@
 			target.force_laydown_standup()
 
 			M.pixel_y = 0
-			logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing("combat", M, "uses the [fake ? "fake " : ""]drop wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)

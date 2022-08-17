@@ -375,7 +375,7 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing("debug", src, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
@@ -410,5 +410,5 @@
 				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
+			logTheThing("station", ownerMob, "[verbens] [the_railing].")
 

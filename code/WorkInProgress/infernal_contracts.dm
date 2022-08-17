@@ -166,7 +166,7 @@ proc/is_weak_rollable_contract(type)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
 		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
-		logTheThing("admin", src, null, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
+		logTheThing("admin", src, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
 	else
 		return
@@ -406,7 +406,7 @@ END GUIDE
 			boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 			return 0
 		src.visible_message("<span class='alert'><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
-		logTheThing("admin", user, null, "signed a [src.type] contract at [log_loc(user)]!")
+		logTheThing("admin", user, "signed a [src.type] contract at [log_loc(user)]!")
 		. = user.sell_soul(100, 0, 1)
 		if(!.)
 			boutput(badguy, "[user] signed [src] but had no soul to give!")
@@ -519,7 +519,7 @@ END GUIDE
 	onEnd()
 		. = ..()
 		target.visible_message("<span class='alert'>[owner] forces [target] to sign [my_contract]!</span>")
-		logTheThing("combat", owner, target, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
+		logTheThing("combat", owner, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
 		my_contract.MagicEffect(target, owner)
 		SPAWN(1 DECI SECOND)
 			my_contract.inuse = 0

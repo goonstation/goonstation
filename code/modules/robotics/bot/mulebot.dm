@@ -370,7 +370,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing("vehicle", usr, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = usr
 						wires &= ~wirebit
 					else
@@ -379,7 +379,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing("vehicle", usr, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = null
 						wires |= wirebit
 					else
@@ -727,7 +727,7 @@
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
-		logTheThing("vehicle", H, src.emagger, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
+		logTheThing("vehicle", H, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
 
 		if(ismob(load))
 			var/mob/M = load

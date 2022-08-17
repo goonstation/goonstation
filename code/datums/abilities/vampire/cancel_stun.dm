@@ -49,7 +49,7 @@
 		M.force_laydown_standup()
 
 
-		logTheThing("combat", M, null, "uses cancel stuns at [log_loc(M)].")
+		logTheThing("combat", M, "uses cancel stuns at [log_loc(M)].")
 		return
 
 	cast(mob/target)

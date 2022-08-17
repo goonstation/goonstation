@@ -138,7 +138,7 @@
 				src.client.images.Add(I)
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing("combat", src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
@@ -935,7 +935,7 @@
 				return
 
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing("say", src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)

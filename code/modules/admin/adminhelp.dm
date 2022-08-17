@@ -51,9 +51,9 @@
 	game_stats.ScanText(msg)
 #endif
 	boutput(client.mob, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span> You</b>: [msg]</font></span>")
-	logTheThing("admin_help", client.mob, null, "HELP: [msg]")
+	logTheThing("admin_help", client.mob, "HELP: [msg]")
 	var/logLine = global.logLength
-	logTheThing("diary", client.mob, null, "HELP: [msg]", "ahelp")
+	logTheThing("diary", client.mob, "HELP: [msg]", "ahelp")
 
 	if (!first_adminhelp_happened)
 		first_adminhelp_happened = 1
@@ -99,7 +99,7 @@
 				else
 					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
 					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
-		logTheThing("diary", client.mob, null, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
+		logTheThing("diary", client.mob, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
 		return
 
 	if (client.cloud_available() && client.cloud_get("mentorhelp_banner"))
@@ -138,8 +138,8 @@
 				boutput(C, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
-	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
-	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+	logTheThing("mentor_help", client.mob, "MENTORHELP: [msg]")
+	logTheThing("diary", client.mob, "MENTORHELP: [msg]", "mhelp")
 #ifdef DATALOGGER
 	game_stats.Increment("mentorhelps")
 #endif
@@ -198,12 +198,12 @@
 	if (is_atheist)
 		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
 		client.mob.take_oxygen_deprivation(10)
-		logTheThing("admin_help", client.mob, null, "PRAYER (atheist): [msg]")
-		logTheThing("diary", client.mob, null, "PRAYER (atheist): [msg]", "ahelp")
+		logTheThing("admin_help", client.mob, "PRAYER (atheist): [msg]")
+		logTheThing("diary", client.mob, "PRAYER (atheist): [msg]", "ahelp")
 	else
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
-		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
-		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+		logTheThing("admin_help", client.mob, "PRAYER: [msg]")
+		logTheThing("diary", client.mob, "PRAYER: [msg]", "ahelp")
 
 #ifdef DATALOGGER
 	game_stats.Increment("prayers")
@@ -281,8 +281,8 @@
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
 
-		logTheThing("admin_help", user, M, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
-		logTheThing("diary", user, M, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
+		logTheThing("admin_help", user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
+		logTheThing("diary", user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""

@@ -697,7 +697,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
-			logTheThing("combat", owner, null, "gains the [newEffect] mutation at [log_loc(owner)].")
+			logTheThing("combat", owner, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
 
 		return 0
@@ -741,7 +741,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
-		logTheThing("combat", owner, null, "gains the [BE] mutation at [log_loc(owner)].")
+		logTheThing("combat", owner, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
 
 	proc/RemoveEffect(var/id)
@@ -766,7 +766,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
-			logTheThing("combat", owner, null, "loses the [D] mutation at [log_loc(owner)].")
+			logTheThing("combat", owner, "loses the [D] mutation at [log_loc(owner)].")
 			return effects.Remove(D.id)
 
 		return 0

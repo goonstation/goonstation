@@ -96,7 +96,7 @@
 		if (prob(25))
 			boutput(HH, "<span class='alert'>Some blood is forced right out of your body!</span>")
 
-		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
+		logTheThing("combat", M, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
 		if(GET_DIST(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))

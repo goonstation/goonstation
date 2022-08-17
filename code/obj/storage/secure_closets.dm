@@ -144,13 +144,13 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing("combat", shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing("combat", src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			else if (M)
-				logTheThing("combat", M, null, "broke open [src] with [I] at [log_loc(src)]")
+				logTheThing("combat", M, "broke open [src] with [I] at [log_loc(src)]")
 			else
-				logTheThing("combat", src, null, "was broken open by an unknown cause at [log_loc(src)]")
+				logTheThing("combat", src, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
 
 	proc/break_open(var/obj/projectile/P)
@@ -475,7 +475,7 @@
 						break
 				if (!src.our_timer)
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
-					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
+					logTheThing("debug", null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
 	disposing()

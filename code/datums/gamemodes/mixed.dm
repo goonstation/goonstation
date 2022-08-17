@@ -132,7 +132,7 @@
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
 
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing("admin", tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	if(num_wizards)

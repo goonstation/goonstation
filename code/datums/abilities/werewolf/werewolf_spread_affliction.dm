@@ -31,7 +31,7 @@
 		if (target.canmove)
 			boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 			return 1
-		logTheThing("combat", M, target, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing("combat", M, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0
 /datum/action/bar/private/icon/werewolf_spread_affliction
@@ -129,7 +129,7 @@
 						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
 						boutput(W, "<span class='alert'>You passed your terribly affliction onto [HH]! You are no longer a werewolf!</span>")
-						logTheThing("combat", M, target, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
+						logTheThing("combat", M, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
 		if (A && istype(A))
 			A.locked = 0
 	onInterrupt()

@@ -58,7 +58,7 @@
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing("station", usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	relaymove(mob/usr as mob, dir)

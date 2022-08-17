@@ -3,9 +3,9 @@ Some procs  exist for replacement within text:
 	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
+		logTheThing("admin", src, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
 Example out of game log call:
-		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
+		logTheThing("diary", src, "gibbed everyone ever", "admin")
 */
 
 //We save this as html because the non-diary logging currently has html tags in place
@@ -21,7 +21,7 @@ var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
 var/global/logLength = 0
 
-/proc/logTheThing(type, source, target, text, diaryType)
+/proc/logTheThing(type, source, text, diaryType)
 	var/diaryLogging
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
@@ -31,9 +31,6 @@ var/global/logLength = 0
 		source = constructName(source, type)
 	else
 		if (type != "diary") source = "<span class='blank'>(blank)</span>"
-
-	//if (target) target does nothing but i cant be assed to remove its arg from every single logthething and idk regex
-	//	target = constructTarget(target,type)
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == "diary")
@@ -346,17 +343,17 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			friendly_fire = 1
 
 	if (friendly_fire)
-		logTheThing("combat", shooter_data, SHOT, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing("combat", shooter_data, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.stats_manager?.inc_friendly_fire(shooter_data)
 	else
-		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing("combat", shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #else
 	if (shooter_data)
-		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing("combat", shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 	else
-		logTheThing("combat", SHOT, null, "is hit by a projectile [target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing("combat", SHOT, "is hit by a projectile [target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #endif
 
 
@@ -416,7 +413,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		nameRegex = regex(searchString,"ig")
 	catch()
 		nameRegex = searchString
-		logTheThing("debug", null, null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
+		logTheThing("debug", null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
 
 	var/list/dat = list("<table>")
 

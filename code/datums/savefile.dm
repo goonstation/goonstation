@@ -431,7 +431,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing("debug", null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -464,7 +464,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
+			logTheThing("debug", null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -483,7 +483,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing("debug", null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		user.player.cloudsaves.Remove( name )

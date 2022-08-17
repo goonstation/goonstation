@@ -218,7 +218,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing("combat", user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
@@ -1058,8 +1058,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
+	logTheThing("admin", usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
+	logTheThing("diary", usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled every goddamn atom by X:[scalex] Y:[scaley]")
 	for(var/atom/A in world)
 		A.Scale(scalex,scaley)
@@ -1068,8 +1068,8 @@ N, S, E, W, NE, SE, SW, NW
 
 /proc/rotateatomall()
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated every goddamn atom by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated every goddamn atom by [rot] degrees", "admin")
+	logTheThing("admin", usr, "rotated every goddamn atom by [rot] degrees")
+	logTheThing("diary", usr, "rotated every goddamn atom by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated every goddamn atom by [rot] degrees")
 	for(var/atom/A in world)
 		A.Turn(rot)
@@ -1080,8 +1080,8 @@ N, S, E, W, NE, SE, SW, NW
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
+	logTheThing("admin", usr, "scaled [target] by X:[scalex] Y:[scaley]")
+	logTheThing("diary", usr, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley]")
 	target.Scale(scalex, scaley)
 	return
@@ -1089,8 +1089,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/rotateatom()
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees", "admin")
+	logTheThing("admin", usr, "rotated [target] by [rot] degrees")
+	logTheThing("diary", usr, "rotated [target] by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return

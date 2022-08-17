@@ -190,7 +190,7 @@
 				B.set_loc(src)
 				B.owner.transfer_to(controller)
 				user.show_text("You install \the [B] in \the [src].", "blue")
-				logTheThing("combat", user, controller, "installs [constructTarget(controller,"combat")] into a brain assembly!")
+				logTheThing("combat", user, "installs [constructTarget(controller,"combat")] into a brain assembly!")
 				UpdateIcon()
 			else
 				user.show_text("This brain seems unfit to use in the assembly.", "red")
@@ -338,5 +338,5 @@
 
 	controller.show_text("You open the valve on \the [TV]! [prob(20) ? "This is gonna be good!" : null]")
 	TV.toggle_valve()
-	logTheThing("bombing", controller, null, "opened the valve on a tank-transfer bomb.")
+	logTheThing("bombing", controller, "opened the valve on a tank-transfer bomb.")
 

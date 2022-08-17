@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT) lasterr = 101
 		if (POT.dead || !POT.current) lasterr = 102
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing("debug", null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc = 0
 		return lasterr
 
@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT || !user) lasterr = 201
 		if (POT.dead || !POT.current) lasterr = 202
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing("debug", null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc = 0
 		return lasterr
 
@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (POT.dead || !POT.current) return 302
 		if (!src.harvestable || !src.crop) return 303
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing("debug", null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc = 0
 		return lasterr
 

@@ -800,7 +800,7 @@
 
 	activate()
 		if (crashable == 0) // To avoid spam. SEEDs can't be deactivated (Convair880).
-			logTheThing("vehicle", usr, null, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
+			logTheThing("vehicle", usr, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
 		crashable = 1
 		return
 

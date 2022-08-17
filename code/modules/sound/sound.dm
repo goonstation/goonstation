@@ -464,7 +464,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	//yeah that sound outright doesn't exist
 	if (!S)
-		logTheThing("debug", null, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
+		logTheThing("debug", null, "<b>Sounds:</b> Unable to find sound: [soundin]")
 		return
 
 	S.falloff = 9999//(world.view + extrarange) / 3.5

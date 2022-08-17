@@ -419,7 +419,7 @@
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
 							if(reward) sell_crate.contents += reward
-							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							else logTheThing("debug", null, "QM contract [contract.type] failed to build [giftback.type]")
 					else if(success == REQ_RETURN_FULLSALE)
 						return_handling = RET_NOSENDBACK
 
@@ -482,11 +482,11 @@
 			break
 
 		if (!spawnpoint)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
+			logTheThing("debug", null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
+			logTheThing("debug", null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
 		shipped_thing.set_loc(spawnpoint)

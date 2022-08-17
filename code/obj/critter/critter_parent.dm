@@ -495,16 +495,16 @@
 			return
 
 		if (src.loc == followed_path_retry_target)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
+			logTheThing("debug", null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
 			followed_path = null
 			followed_path_retries = 0
 			followed_path_retry_target = null
 		else if (!followed_path)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
+			logTheThing("debug", null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
 			task = "thinking"
 		else if (!followed_path.len)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
+			logTheThing("debug", null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
 			task = "thinking"
 		else
 			var/turf/nextturf = followed_path[1]
@@ -520,10 +520,10 @@
 				if (!followed_path_retry_target)
 					task = "thinking"
 				else if (followed_path_retries > 10)
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
+					logTheThing("debug", null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
 					task = "thinking"
 				else
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
+					logTheThing("debug", null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
 					followed_path = findPath(src.loc, followed_path_retry_target)
 					return
 			else
@@ -1003,7 +1003,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
-			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
+			logTheThing("debug", user, "names a critter egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
@@ -1070,7 +1070,7 @@
 				if (istext(critter_type))
 					critter_type = text2path(critter_type)
 				else
-					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					logTheThing("debug", null, "EGG: [src] has invalid critter path!")
 					src.visible_message("Looks like there wasn't anything inside of [src]!")
 					qdel(src)
 					return
@@ -1109,7 +1109,7 @@
 		C.set_density(initial(C.density))
 		C.on_revive()
 		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
+		logTheThing("admin", src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else
 		boutput(src, "[C] isn't dead, you goof!")
@@ -1125,7 +1125,7 @@
 	if (C.alive)
 		C.health = 0
 		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
+		logTheThing("admin", src, "killed [C] (critter).")
 		message_admins("[key_name(src)] killed [C] (critter)!")
 	else
 		boutput(src, "[C] isn't alive, you goof!")

@@ -829,7 +829,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing("debug", null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

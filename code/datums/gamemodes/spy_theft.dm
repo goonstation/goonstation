@@ -120,7 +120,7 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
-			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
+			logTheThing("debug", user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
@@ -169,7 +169,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing("admin", tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = ROLE_SPY_THIEF, amount = num_spies, recordChosen = 1)
@@ -618,7 +618,7 @@
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
 		if (big_station_bounties.len <= 0)
-			logTheThing("debug", src, null, "spy_theft.dm was unable to create enough big station bounties.")
+			logTheThing("debug", src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
 		// Pick an item type then check if it is valid
@@ -657,7 +657,7 @@
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
 		if (station_bounties.len <= 0)
-			logTheThing("debug", src, null, "spy_theft.dm was unable to create enough item bounties.")
+			logTheThing("debug", src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
 		// Pick an item type then check if it is valid

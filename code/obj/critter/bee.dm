@@ -254,7 +254,7 @@
 			return
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("tiny","eeny-weeny","minute","little", "nubby")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>", group = "beeattack")
-		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
+		logTheThing("combat", src.name, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (isliving(M))
 			var/mob/living/H = M
@@ -277,7 +277,7 @@
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [pick("nubby","stubby","tiny")] little stinger!</span>", group = "beeattack")
-		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
+		logTheThing("combat", src.name, "stings [constructTarget(M,"combat")]")
 		if (isliving(M))
 			var/mob/living/H = M
 			H.was_harmed(src)
@@ -671,7 +671,7 @@
 			src.task = "thinking"
 			return
 		src.visible_message("<span class='alert'><B>[src]</B> pokes [M] with its [prob(50) ? "IMMENSE" : "COLOSSAL"] stinger!</span>")
-		logTheThing("combat", src.name, M, "stings [constructTarget(M,"combat")]")
+		logTheThing("combat", src.name, "stings [constructTarget(M,"combat")]")
 		random_brute_damage(src.target, 10)//armor-piercing stingers
 
 		if(M.reagents)
@@ -714,7 +714,7 @@
 			return
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M] with its [pick("rather large","big","expansive","proportionally small but still sizable")] [prob(50) ? "mandibles" : "bee-teeth"]!</span>")
-		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
+		logTheThing("combat", src.name, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 10,1)
 		if (isliving(M))
 			var/mob/living/H = M
@@ -1801,7 +1801,7 @@
 			if (!bee_name)
 				bee_name = pick_string("bee_names.txt", "beename")
 			var/t = input(user, "Enter new bee name", src.name, src.bee_name) as null|text
-			logTheThing("debug", user, null, "names a bee egg \"[t]\"")
+			logTheThing("debug", user, "names a bee egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-bee", t, no_duplicates=TRUE)
@@ -1821,7 +1821,7 @@
 			return
 		user.visible_message("[user] primes [src] and puts it down.", "You twist [src], priming it to hatch, then place it on the ground.")
 		user.u_equip(src)
-		logTheThing("station", user, null, "primes a bee egg for hatching at [log_loc(user)]")
+		logTheThing("station", user, "primes a bee egg for hatching at [log_loc(user)]")
 
 		SPAWN(0)
 			src.hatch(user,get_turf(user))
@@ -2076,7 +2076,7 @@
 		src.attacking = 1
 
 		src.visible_message("<span class='alert'><B>[src]</B> bites [M]!</span>")
-		logTheThing("combat", src.name, M, "bites [constructTarget(M,"combat")]")
+		logTheThing("combat", src.name, "bites [constructTarget(M,"combat")]")
 		random_brute_damage(M, 2, 1)
 		if (M.stat || M.getStatusDuration("paralysis"))
 			src.task = "thinking"

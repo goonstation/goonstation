@@ -845,8 +845,8 @@ datum/pump_ui/circulator_ui
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
 			// uncomment to debug
-			// logTheThing("debug", null, null, "pre delta, cold temp = [cold_air.temperature], hot temp = [hot_air.temperature]")
-			// logTheThing("debug", null, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
+			// logTheThing("debug", null, "pre delta, cold temp = [cold_air.temperature], hot temp = [hot_air.temperature]")
+			// logTheThing("debug", null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				// carnot efficiency * 65%
 				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(delta_temperature, hot_air_heat_capacity, cold_air_heat_capacity) //controller expressed as a percentage
@@ -865,7 +865,7 @@ datum/pump_ui/circulator_ui
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
 				// uncomment to debug
-				// logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
+				// logTheThing("debug", null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 		// update icon overlays only if displayed level has changed
 
 		if(swapped)

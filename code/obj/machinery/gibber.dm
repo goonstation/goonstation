@@ -81,7 +81,7 @@
 /obj/machinery/gibber/proc/gibber_action(obj/item/grab/G as obj, mob/user as mob)
 	if(G?.affecting && (BOUNDS_DIST(user, src) == 0))
 		user.visible_message("<span class='alert'>[user] shoves [G.affecting] on top of the gibber!</span>")
-		logTheThing("combat", user, G.affecting, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
+		logTheThing("combat", user, "forced [constructTarget(G.affecting,"combat")] into a gibber at [log_loc(src)].")
 		var/mob/M = G.affecting
 		enter_gibber(M)
 		qdel(G)
@@ -150,7 +150,7 @@
 			btype = src.occupant.bioHolder.bloodType
 
 		if(user != src.occupant) //for suiciding with gibber
-			logTheThing("combat", user, src.occupant, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
+			logTheThing("combat", user, "grinds [constructTarget(src.occupant,"combat")] in a gibber at [log_loc(src)].")
 			if(src.occupant.client)
 				message_admins("[key_name(src.occupant, 1)] is ground up in a gibber by [key_name(user)] at [log_loc(src)].")
 		src.occupant.death(TRUE)

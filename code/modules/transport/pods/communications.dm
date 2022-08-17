@@ -100,7 +100,7 @@
 		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
 		if(!broadcast)
 			return
-		logTheThing("diary", usr, null, "(POD) : [broadcast]", "say")
+		logTheThing("diary", usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
 			var/mob/living/carbon/human/H = usr
 			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)

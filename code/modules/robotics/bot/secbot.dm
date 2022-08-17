@@ -322,7 +322,7 @@
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			src.updateUsrDialog()
-			logTheThing("station", usr, null, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+			logTheThing("station", usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
 
 		switch(href_list["operation"])
 			if ("idcheck")
@@ -412,7 +412,7 @@
 			if(user)
 				src.oldtarget_name = user.name
 				ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
-			logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+			logTheThing("station", user, "emagged a [src] at [log_loc(src)].")
 			return 1
 		return 0
 

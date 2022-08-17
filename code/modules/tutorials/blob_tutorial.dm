@@ -14,18 +14,18 @@
 		..()
 		AddBlobSteps(src)
 		src.region = get_singleton(/datum/mapPrefab/allocated/blob_tutorial).load()
-		logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
+		logTheThing("debug", usr, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				initial_turf = T
 				break
 		if (!initial_turf)
-			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
+			logTheThing("debug", usr, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
 			throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
 
 	Start()
 		if (!initial_turf)
-			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Failed setup.")
+			logTheThing("debug", usr, "<b>Blob Tutorial</b>: Failed setup.")
 			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
 			qdel(src)
 			return

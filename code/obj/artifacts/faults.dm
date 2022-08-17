@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
-		logTheThing("combat", user, null, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
+		logTheThing("combat", user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 
 /datum/artifact_fault/explode
@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			else
 				user.say(generate_message(O, user))
 			var/datum/artifact/A = O.artifact
-			logTheThing("say", src, null, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
+			logTheThing("say", src, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")

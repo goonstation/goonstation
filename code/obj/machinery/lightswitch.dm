@@ -90,7 +90,7 @@
 
 	if(user)
 		src.add_fingerprint(user)
-		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+		logTheThing("station", user, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
 	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
 

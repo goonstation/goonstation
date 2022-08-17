@@ -151,7 +151,7 @@
 					if (src.timing)
 						src.time_started = TIME
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
+						logTheThing("station", usr, "initiates a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""][src.time/10] seconds), forcing [constructTarget(src.our_sleeper.occupant,"station")] asleep at [log_loc(src.our_sleeper)].")
 					else
 						src.time = clamp(src.time + src.time_started - TIME, 0, src.maximum_time)
 						src.time_started = 0
@@ -162,7 +162,7 @@
 					var/t = params["tp"]
 					if (t > 0 && src.timing && src.our_sleeper.occupant)
 						// People do use sleepers for grief from time to time.
-						logTheThing("station", usr, src.our_sleeper.occupant, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
+						logTheThing("station", usr, "increases a sleeper's timer ([src.our_sleeper.emagged ? "<b>EMAGGED</b>, " : ""]occupied by [constructTarget(src.our_sleeper.occupant,"station")]) by [t] seconds at [log_loc(src.our_sleeper)].")
 					src.time = clamp(src.time + (t*10), 0, src.maximum_time)
 				. = TRUE
 			if("inject")
@@ -322,7 +322,7 @@
 			if (user && ismob(user))
 				user.show_text("You short out [src]'s reagent synthesis safety protocols.", "blue")
 			src.visible_message("<span class='alert'><b>[src] buzzes oddly!</b></span>")
-			logTheThing("station", user, src.occupant, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
+			logTheThing("station", user, "emags \a [src] [src.occupant ? "with [constructTarget(src.occupant,"station")] inside " : ""](setting it to inject poisons) at [log_loc(src)].")
 			return 1
 
 	demag(var/mob/user)
@@ -477,7 +477,7 @@
 					// don't set injected_anything (the poison uses a sneaky silent injector)
 					//DEBUG_MESSAGE("Injected occupant with [inject_p] units of [our_poison] at [log_loc(src)].")
 					if (manual_injection == 1)
-						logTheThing("station", user_feedback, src.occupant, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
+						logTheThing("station", user_feedback, "manually injects [constructTarget(src.occupant,"station")] with [our_poison] ([inject_p]) from an emagged sleeper at [log_loc(src)].")
 			else
 				if (src.occupant.health < src.crit_threshold && crit < src.maximum_reagent)
 					var/inject_c = src.inject_reagent
@@ -732,7 +732,7 @@
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing("station", usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	move_inside()

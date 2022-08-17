@@ -224,8 +224,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a desert.")
-			logTheThing("diary", ui.user, null, "turned space into a desert.", "admin")
+			logTheThing("admin", ui.user, "turned space into a desert.")
+			logTheThing("diary", ui.user, "turned space into a desert.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a desert.")
 
 
@@ -249,8 +249,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into an THE VOID.")
-			logTheThing("diary", ui.user, null, "turned space into an THE VOID.", "admin")
+			logTheThing("admin", ui.user, "turned space into an THE VOID.")
+			logTheThing("diary", ui.user, "turned space into an THE VOID.", "admin")
 			message_admins("[key_name(ui.user)] turned space into THE VOID.")
 
 
@@ -310,8 +310,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 
-			logTheThing("admin", ui.user, null, "turned space into an another outpost on Theta.")
-			logTheThing("diary", ui.user, null, "turned space into an another outpost on Theta.", "admin")
+			logTheThing("admin", ui.user, "turned space into an another outpost on Theta.")
+			logTheThing("diary", ui.user, "turned space into an another outpost on Theta.", "admin")
 			message_admins("[key_name(ui.user)] turned space into an another outpost on Theta.")
 
 
@@ -364,8 +364,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a swamp.")
-			logTheThing("diary", ui.user, null, "turned space into a swamp.", "admin")
+			logTheThing("admin", ui.user, "turned space into a swamp.")
+			logTheThing("diary", ui.user, "turned space into a swamp.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a swamp.")
 
 
@@ -414,8 +414,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			ambient_value = lerp(20,80,0.5)
 			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
-			logTheThing("admin", ui.user, null, "turned space into Mars.")
-			logTheThing("diary", ui.user, null, "turned space into Mars.", "admin")
+			logTheThing("admin", ui.user, "turned space into Mars.")
+			logTheThing("diary", ui.user, "turned space into Mars.", "admin")
 			message_admins("[key_name(ui.user)] turned space into Mars.")
 
 	special_repair(list/turf/TS)
@@ -492,8 +492,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 				LAGCHECK(LAG_MED)
 			station_repair.clean_up_station_level(add_sub=params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
-			logTheThing("diary", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
+			logTheThing("admin", ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
+			logTheThing("diary", ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 			message_admins("[key_name(ui.user)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 
 
@@ -538,8 +538,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a snowscape.")
-			logTheThing("diary", ui.user, null, "turned space into a snowscape.", "admin")
+			logTheThing("admin", ui.user, "turned space into a snowscape.")
+			logTheThing("diary", ui.user, "turned space into a snowscape.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a snowscape.")
 
 

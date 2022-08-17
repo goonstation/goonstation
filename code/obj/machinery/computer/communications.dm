@@ -39,9 +39,9 @@
 
 /obj/machinery/computer/communications/special_deconstruct(obj/computerframe/frame as obj)
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing("station", usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing("station", usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/communications/process()
@@ -324,8 +324,8 @@
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
 
-	logTheThing("admin", usr, null,  "called the Emergency Shuttle (reason: [call_reason])")
-	logTheThing("diary", usr, null, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+	logTheThing("admin", usr,  "called the Emergency Shuttle (reason: [call_reason])")
+	logTheThing("diary", usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 	call_shuttle_proc(usr, call_reason)
 
@@ -374,7 +374,7 @@
 		call_reason = "No reason given."
 
 	message_admins("<span class='internal'>[key_name(user)] called the Emergency Shuttle to the station</span>")
-	logTheThing("station", null, null, "[key_name(user)] called the Emergency Shuttle to the station")
+	logTheThing("station", null, "[key_name(user)] called the Emergency Shuttle to the station")
 
 	emergency_shuttle.incall()
 	command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
@@ -394,7 +394,7 @@
 
 	boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>") //marker4
 
-	logTheThing("station", user, null, "recalled the Emergency Shuttle")
+	logTheThing("station", user, "recalled the Emergency Shuttle")
 	message_admins("<span class='internal'>[key_name(user)] recalled the Emergency Shuttle</span>")
 	emergency_shuttle.recall()
 

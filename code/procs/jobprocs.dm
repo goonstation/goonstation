@@ -64,7 +64,7 @@
 			unassigned += player
 
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
-	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
+	logTheThing("debug", null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
 	if (unassigned.len == 0)
 		return 0
@@ -132,25 +132,25 @@
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
+				logTheThing("debug", null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
+				logTheThing("debug", null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
+				logTheThing("debug", null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 	else
@@ -193,9 +193,9 @@
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
 
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
+			logTheThing("debug", null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
-			logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+			logTheThing("debug", player, "assigned job: [player.mind.assigned_role]")
 			unassigned -= player
 			JOB.assigned++
 
@@ -221,9 +221,9 @@
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
+			logTheThing("debug", null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing("debug", candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -248,9 +248,9 @@
 				medical_staff += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
+			logTheThing("debug", null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing("debug", candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -268,9 +268,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing("debug", null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
@@ -278,9 +278,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing("debug", null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
@@ -288,9 +288,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing("debug", null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing("debug", candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 
 
@@ -301,9 +301,9 @@
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
 		if(!player?.mind) continue
-		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
+		logTheThing("debug", null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
-		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+		logTheThing("debug", player, "assigned job: [player.mind.assigned_role]")
 
 	return 1
 
@@ -479,7 +479,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
-				logTheThing("station", src, null, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
+				logTheThing("station", src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null
@@ -511,7 +511,7 @@
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
-				logTheThing("station", src, null, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
+				logTheThing("station", src, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -792,7 +792,7 @@
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		logTheThing("debug", H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/

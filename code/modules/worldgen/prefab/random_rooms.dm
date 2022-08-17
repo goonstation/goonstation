@@ -53,7 +53,7 @@ proc/buildRandomRooms()
 		if(isnull(room_prefab))
 			CRASH("No random room prefab found for size: " + size)
 		room_prefab.applyTo(src.loc)
-		logTheThing("debug", null, null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
+		logTheThing("debug", null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
 
 	size3x3

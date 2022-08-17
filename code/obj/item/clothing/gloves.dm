@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
 				"<span class='alert'><b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!</span>"
 			)
-			logTheThing("combat", challenger, target, "glove-slapped [constructTarget(target,"combat")]")
+			logTheThing("combat", challenger, "glove-slapped [constructTarget(target,"combat")]")
 		else
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
@@ -563,7 +563,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 				else if(isliving(target_r)) //Probably unsafe.
 					var/mob/living/victim = target_r
-					logTheThing("combat", user, target_r, "zaps [constructTarget(target_r,"combat")] with power gloves")
+					logTheThing("combat", user, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user.a_intent)
 						if("harm")
 							src.electrocute(victim, 100, netnum)

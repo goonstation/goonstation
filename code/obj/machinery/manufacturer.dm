@@ -1909,7 +1909,7 @@
 					src.update_resource_amount(P.material.mat_id, free_resource_amt * 10)
 			free_resource_amt = 0
 		else
-			logTheThing("debug", null, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+			logTheThing("debug", null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)

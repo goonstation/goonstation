@@ -74,10 +74,10 @@
 
 			if (!src.welded)
 				src.welded = 1
-				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				logTheThing("station", user, "welded [name] shut at [log_loc(user)].")
 				user.show_text("You weld the drain shut.")
 			else
-				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				logTheThing("station", user, "un-welded [name] at [log_loc(user)].")
 				src.welded = 0
 				user.show_text("You unseal the drain with your welder.")
 
@@ -91,7 +91,7 @@
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
-			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
+			logTheThing("station", user, "clogs [name] shut temporarily at [log_loc(user)].")
 			qdel(I)
 			src.UpdateIcon()
 			return
@@ -495,7 +495,7 @@
 
 	proc/boom()
 		if (src.active)
-			logTheThing("bombing", src.fingerprintslast, null, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing("bombing", src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 			src.blowthefuckup(boom_str)
 
 

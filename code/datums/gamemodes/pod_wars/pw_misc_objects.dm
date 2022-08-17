@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing("diary", user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -796,7 +796,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing("station", user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

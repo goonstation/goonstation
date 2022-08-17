@@ -57,7 +57,7 @@
 			if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && src.alive) // added a health check so dead maneaters stop eating people - cogwerks
 				if(iscarbon(M))
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
-					logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+					logTheThing("combat", M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 					playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
 					M.death(TRUE)
 					var/atom/movable/overlay/animation = null

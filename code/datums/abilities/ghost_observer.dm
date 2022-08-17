@@ -114,7 +114,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// if (!usesPoints)
 		// 	return 1
 		if (spooktober_GH.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing("debug", usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			spooktober_GH.points = 0
 		if (cost > spooktober_GH.points)
 			boutput(owner, notEnoughPointsMessage)
@@ -538,7 +538,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [string]")
+		logTheThing("station", user, "writes on [T] with [src] [log_loc(T)]: [string]")
 		G.icon_state = string
 		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])

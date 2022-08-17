@@ -26,7 +26,7 @@
 			if (in_container)
 				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
 				for (var/mob/living/M in psource)
-					logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
+					logTheThing("combat", M, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 					M.TakeDamage("All", damage, 0)
 					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 

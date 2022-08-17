@@ -48,7 +48,7 @@
 			user.show_text("You short out the flash control circuit on [src]!", "red")
 			src.emagger = user
 			src.add_fingerprint(user)
-			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
+			logTheThing("station", src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		playsound(src, "sound/weapons/flash.ogg", 50, 1)

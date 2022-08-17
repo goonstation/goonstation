@@ -677,7 +677,7 @@ var/datum/action_controller/actions
 		sheet.change_stack_amount(-cost)
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
-		logTheThing("station", owner, null, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		logTheThing("station", owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.mat_id ? "[mat.mat_id]" : "*UNKNOWN*"]) at [log_loc(owner)].")
 		if(isliving(owner))
 			var/mob/living/M = owner
 			R.add_fingerprint(M)
@@ -940,7 +940,7 @@ var/datum/action_controller/actions
 				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			logTheThing("combat", source, target, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
+			logTheThing("combat", source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
@@ -955,7 +955,7 @@ var/datum/action_controller/actions
 				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			logTheThing("combat", source, target, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
+			logTheThing("combat", source, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
 				icon = I.icon
@@ -979,7 +979,7 @@ var/datum/action_controller/actions
 		if(item)
 			if(item == source.equipped() && !I)
 				if(target.can_equip(item, slot))
-					logTheThing("combat", source, target, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
+					logTheThing("combat", source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
 						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
 					source.u_equip(item)
@@ -989,7 +989,7 @@ var/datum/action_controller/actions
 					target.update_inv()
 		else if (I) //Wire: Fix for Cannot execute null.handle other remove().
 			if(I.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
+				logTheThing("combat", source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
 
@@ -1116,7 +1116,7 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", owner, target, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
+		logTheThing("combat", owner, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
 
 		duration *= cuffs.apply_multiplier
 
@@ -1154,7 +1154,7 @@ var/datum/action_controller/actions
 			else
 				ownerMob.u_equip(cuffs)
 
-			logTheThing("combat", ownerMob, target, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
+			logTheThing("combat", ownerMob, "handcuffs [constructTarget(target,"combat")] with [cuffs2 ? "[cuffs2]" : "[cuffs]"] at [log_loc(ownerMob)].")
 
 			if (cuffs2 && istype(cuffs2))
 				cuffs2.set_loc(target)
@@ -1720,7 +1720,7 @@ var/datum/action_controller/actions
 		else if (istype(item, /obj/item/reagent_containers/food/drinks/))
 			src.drink = item
 		else
-			logTheThing("debug", src, null, "/datum/action/bar/icon/forcefeed called with invalid food/drink type [item].")
+			logTheThing("debug", src, "/datum/action/bar/icon/forcefeed called with invalid food/drink type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
 
@@ -1767,7 +1767,7 @@ var/datum/action_controller/actions
 		if (istype(item, /obj/item/reagent_containers/syringe))
 			S = item
 		else
-			logTheThing("debug", src, null, "/datum/action/bar/icon/syringe called with invalid type [item].")
+			logTheThing("debug", src, "/datum/action/bar/icon/syringe called with invalid type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
 

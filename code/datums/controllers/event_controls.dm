@@ -124,10 +124,10 @@ var/datum/event_controller/random_events
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
-			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
+			logTheThing("debug", null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
 		if (!ticker?.mode?.do_random_events)
-			logTheThing("debug", null, null, "<b>Random Events:</b> Random events are turned off on this game mode.")
+			logTheThing("debug", null, "<b>Random Events:</b> Random events are turned off on this game mode.")
 			return
 		var/list/eligible = list()
 		var/list/weights = list()
@@ -139,7 +139,7 @@ var/datum/event_controller/random_events
 			var/datum/random_event/this = weightedprob(eligible, weights)
 			this.event_effect(source)
 		else
-			logTheThing("debug", null, null, "<b>Random Events:</b> do_random_event couldn't find any eligible events")
+			logTheThing("debug", null, "<b>Random Events:</b> do_random_event couldn't find any eligible events")
 
 	proc/force_event(var/string,var/reason)
 		if (!string)
@@ -262,8 +262,8 @@ var/datum/event_controller/random_events
 				return
 			RE.disabled = !RE.disabled
 			message_admins("Admin [key_name(usr)] switched [RE.name] event [RE.disabled ? "Off" : "On"]")
-			logTheThing("admin", usr, null, "switched [RE.name] event [RE.disabled ? "Off" : "On"]")
-			logTheThing("diary", usr, null, "switched [RE.name] event [RE.disabled ? "Off" : "On"]", "admin")
+			logTheThing("admin", usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]")
+			logTheThing("diary", usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]", "admin")
 
 		else if(href_list["DisableMEvent"])
 			var/datum/random_event/RE = locate(href_list["DisableMEvent"]) in minor_events
@@ -271,8 +271,8 @@ var/datum/event_controller/random_events
 				return
 			RE.disabled = !RE.disabled
 			message_admins("Admin [key_name(usr)] switched [RE.name] event [RE.disabled ? "Off" : "On"]")
-			logTheThing("admin", usr, null, "switched [RE.name] event [RE.disabled ? "Off" : "On"]")
-			logTheThing("diary", usr, null, "switched [RE.name] event [RE.disabled ? "Off" : "On"]", "admin")
+			logTheThing("admin", usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]")
+			logTheThing("diary", usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]", "admin")
 
 		else if(href_list["MinPop"])
 			var/new_min = input("How many players need to be connected before events will occur?","Random Events",minimum_population) as num
@@ -285,48 +285,48 @@ var/datum/event_controller/random_events
 				minimum_population = new_min
 
 			message_admins("Admin [key_name(usr)] set the minimum population for events to [minimum_population]")
-			logTheThing("admin", usr, null, "set the minimum population for events to [minimum_population]")
-			logTheThing("diary", usr, null, "set the minimum population for events to [minimum_population]", "admin")
+			logTheThing("admin", usr, "set the minimum population for events to [minimum_population]")
+			logTheThing("diary", usr, "set the minimum population for events to [minimum_population]", "admin")
 
 		else if(href_list["EventBegin"])
 			var/time = input("How many minutes into the round until events begin?","Random Events") as num
 			major_events_begin = time * 600
 
 			message_admins("Admin [key_name(usr)] set random events to begin at [time] minutes")
-			logTheThing("admin", usr, null, "set random events to begin at [time] minutes")
-			logTheThing("diary", usr, null, "set random events to begin at [time] minutes", "admin")
+			logTheThing("admin", usr, "set random events to begin at [time] minutes")
+			logTheThing("diary", usr, "set random events to begin at [time] minutes", "admin")
 
 		else if(href_list["MEventBegin"])
 			var/time = input("How many minutes into the round until minor events begin?","Random Events") as num
 			minor_events_begin = time * 600
 
 			message_admins("Admin [key_name(usr)] set minor events to begin at [time] minutes")
-			logTheThing("admin", usr, null, "set minor events to begin at [time] minutes")
-			logTheThing("diary", usr, null, "set minor events to begin at [time] minutes", "admin")
+			logTheThing("admin", usr, "set minor events to begin at [time] minutes")
+			logTheThing("diary", usr, "set minor events to begin at [time] minutes", "admin")
 
 		else if(href_list["EnableEvents"])
 			events_enabled = !events_enabled
 			message_admins("Admin [key_name(usr)] [events_enabled ? "enabled" : "disabled"] random events")
-			logTheThing("admin", usr, null, "[events_enabled ? "enabled" : "disabled"] random events")
-			logTheThing("diary", usr, null, "[events_enabled ? "enabled" : "disabled"] random events", "admin")
+			logTheThing("admin", usr, "[events_enabled ? "enabled" : "disabled"] random events")
+			logTheThing("diary", usr, "[events_enabled ? "enabled" : "disabled"] random events", "admin")
 
 		else if(href_list["EnableMEvents"])
 			minor_events_enabled = !minor_events_enabled
 			message_admins("Admin [key_name(usr)] [minor_events_enabled ? "enabled" : "disabled"] minor events")
-			logTheThing("admin", usr, null, "[minor_events_enabled ? "enabled" : "disabled"] minor events")
-			logTheThing("diary", usr, null, "[minor_events_enabled ? "enabled" : "disabled"] minor events", "admin")
+			logTheThing("admin", usr, "[minor_events_enabled ? "enabled" : "disabled"] minor events")
+			logTheThing("diary", usr, "[minor_events_enabled ? "enabled" : "disabled"] minor events", "admin")
 
 		else if(href_list["AnnounceEvents"])
 			announce_events = !announce_events
 			message_admins("Admin [key_name(usr)] [announce_events ? "enabled" : "disabled"] random event announcements")
-			logTheThing("admin", usr, null, "[announce_events ? "enabled" : "disabled"] random event announcements")
-			logTheThing("diary", usr, null, "[announce_events ? "enabled" : "disabled"] random event announcements", "admin")
+			logTheThing("admin", usr, "[announce_events ? "enabled" : "disabled"] random event announcements")
+			logTheThing("diary", usr, "[announce_events ? "enabled" : "disabled"] random event announcements", "admin")
 
 		else if(href_list["TimeLocks"])
 			time_lock = !time_lock
 			message_admins("Admin [key_name(usr)] [time_lock ? "enabled" : "disabled"] random event time locks")
-			logTheThing("admin", usr, null, "[time_lock ? "enabled" : "disabled"] random event time locks")
-			logTheThing("diary", usr, null, "[time_lock ? "enabled" : "disabled"] random event time locks", "admin")
+			logTheThing("admin", usr, "[time_lock ? "enabled" : "disabled"] random event time locks")
+			logTheThing("diary", usr, "[time_lock ? "enabled" : "disabled"] random event time locks", "admin")
 
 		else if(href_list["TimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
@@ -340,8 +340,8 @@ var/datum/event_controller/random_events
 			else
 				time_between_events_lower = time
 				message_admins("Admin [key_name(usr)] set event lower interval bound to [time_between_events_lower / 600] minutes")
-				logTheThing("admin", usr, null, "set event lower interval bound to [time_between_events_lower / 600] minutes")
-				logTheThing("diary", usr, null, "set event lower interval bound to [time_between_events_lower / 600] minutes", "admin")
+				logTheThing("admin", usr, "set event lower interval bound to [time_between_events_lower / 600] minutes")
+				logTheThing("diary", usr, "set event lower interval bound to [time_between_events_lower / 600] minutes", "admin")
 
 		else if(href_list["TimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
@@ -355,8 +355,8 @@ var/datum/event_controller/random_events
 			else
 				time_between_events_upper = time
 			message_admins("Admin [key_name(usr)] set event upper interval bound to [time_between_events_upper / 600] minutes")
-			logTheThing("admin", usr, null, "set event upper interval bound to [time_between_events_upper / 600] minutes")
-			logTheThing("diary", usr, null, "set event upper interval bound to [time_between_events_upper / 600] minutes", "admin")
+			logTheThing("admin", usr, "set event upper interval bound to [time_between_events_upper / 600] minutes")
+			logTheThing("diary", usr, "set event upper interval bound to [time_between_events_upper / 600] minutes", "admin")
 
 		else if(href_list["MTimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
@@ -370,8 +370,8 @@ var/datum/event_controller/random_events
 			else
 				time_between_minor_events_lower = time
 			message_admins("Admin [key_name(usr)] set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
-			logTheThing("admin", usr, null, "set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
-			logTheThing("diary", usr, null, "set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes", "admin")
+			logTheThing("admin", usr, "set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
+			logTheThing("diary", usr, "set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes", "admin")
 
 		else if(href_list["MTimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
@@ -385,7 +385,7 @@ var/datum/event_controller/random_events
 			else
 				time_between_minor_events_upper = time
 			message_admins("Admin [key_name(usr)] set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")
-			logTheThing("admin", usr, null, "set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")
-			logTheThing("diary", usr, null, "set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes", "admin")
+			logTheThing("admin", usr, "set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")
+			logTheThing("diary", usr, "set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes", "admin")
 
 		src.event_config()

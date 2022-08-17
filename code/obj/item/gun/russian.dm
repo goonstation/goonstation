@@ -64,7 +64,7 @@
 			user.visible_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>",\
 				"<span class='alert'><B>BOOM!</B></span>",\
 				"<span class='alert'>You hear someone's head explode.</span>")
-			logTheThing("combat", user, null, "shoots themselves with [src] at [log_loc(user)].")
+			logTheThing("combat", user, "shoots themselves with [src] at [log_loc(user)].")
 			inventory_counter.update_number(0)
 			return 1
 		else

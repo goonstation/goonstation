@@ -395,12 +395,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
+				logTheThing("combat", src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
+				logTheThing("combat", src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
 				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
@@ -770,7 +770,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing("combat", src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
 
@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing("say", src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1286,7 +1286,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	..()
 
 /mob/living/critter/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing("combat", src, "is hit by a blob")
 
 	if (isdead(src) || src.nodamage)
 		return

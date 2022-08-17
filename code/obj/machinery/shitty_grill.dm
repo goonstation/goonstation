@@ -82,7 +82,7 @@
 				return
 			else
 				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
-				logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
+				logTheThing("user", user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
@@ -92,7 +92,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing("combat", user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
@@ -109,7 +109,7 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing("combat", user, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] onto the [src]!</b></span>")
 				src.icon_state = "shittygrill_bake"
 				light.enable()
@@ -121,7 +121,7 @@
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
+			logTheThing("combat", user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face onto the [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 

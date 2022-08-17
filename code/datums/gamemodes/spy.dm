@@ -288,7 +288,7 @@
 			return
 
 		if (override == -1)
-			logTheThing("combat", M, Implanter, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
+			logTheThing("combat", M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
 			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
 			return
 

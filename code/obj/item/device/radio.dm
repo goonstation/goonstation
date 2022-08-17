@@ -826,7 +826,7 @@ var/list/headset_channel_lookup
 		var/mob/M = src.loc
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
+			logTheThing("signalers", usr, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -951,17 +951,17 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if(src.master && (src.wires & WIRE_SIGNAL))
 		var/turf/T = get_turf(src.master)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
-			logTheThing("bombing", usr, null, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing("bombing", usr, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
-			logTheThing("bombing", usr, null, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+			logTheThing("bombing", usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
-			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing("bombing", usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)

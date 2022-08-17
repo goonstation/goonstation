@@ -147,12 +147,12 @@
 			if (!frame)
 				// i can only imagine bad shit happening if you just try to straight spawn one like from the spawn menu or
 				// whatever so let's not allow that for the time being, just to make sure
-				logTheThing("debug", null, null, "<b>I Said No/Composite Cyborg:</b> Composite borg attempted to spawn with null frame")
+				logTheThing("debug", null, "<b>I Said No/Composite Cyborg:</b> Composite borg attempted to spawn with null frame")
 				qdel(src)
 				return
 			else
 				if (!frame.head || !frame.chest)
-					logTheThing("debug", null, null, "<b>I Said No/Composite Cyborg:</b> Composite borg attempted to spawn from incomplete frame")
+					logTheThing("debug", null, "<b>I Said No/Composite Cyborg:</b> Composite borg attempted to spawn from incomplete frame")
 					qdel(src)
 					return
 				src.part_head = frame.head
@@ -221,7 +221,7 @@
 				B.owner = src.mind
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
-					logTheThing("debug", null, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
+					logTheThing("debug", null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
 					stack_trace("Cyborg [src] (\ref[src]) was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
@@ -252,7 +252,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing("combat", src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
@@ -284,7 +284,7 @@
 		if (!( cancel ))
 			boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 			SPAWN( 300 )
-				logTheThing("diary", null, null, "Rebooting because of no live players", "game")
+				logTheThing("diary", null, "Rebooting because of no live players", "game")
 				Reboot_server()
 				return
 #endif
@@ -645,7 +645,7 @@
 							if(I != chat_text)
 								I.bump_up(chat_text.measured_height)
 				if (message)
-					logTheThing("say", src, null, "EMOTE: [message]")
+					logTheThing("say", src, "EMOTE: [message]")
 					act = lowertext(act)
 					if (m_type & 1)
 						for (var/mob/O in viewers(src, null))
@@ -659,7 +659,7 @@
 							O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 		else
 			if (message)
-				logTheThing("say", src, null, "EMOTE: [message]")
+				logTheThing("say", src, "EMOTE: [message]")
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
 						O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -966,7 +966,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				src.emagged = 1
-				logTheThing("station", src, null, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
+				logTheThing("station", src, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
 				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
 					src.mind.special_role = ROLE_EMAGGED_ROBOT
@@ -1121,14 +1121,14 @@
 			if(linker.linked_rack in ticker.ai_law_rack_manager.registered_racks)
 				if(src.emagged || src.syndicate)
 					boutput(user, "The link port sparks violently! It didn't work!")
-					logTheThing("station", src, null, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
+					logTheThing("station", src, "[constructName(user)] tried to connect [src] to the rack [constructName(src.law_rack_connection)] but they are [src.emagged ? "emagged" : "syndicate"], so it failed.")
 					elecflash(src,power=2)
 					return
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
 						src.law_rack_connection = linker.linked_rack
-						logTheThing("station", src, src.law_rack_connection, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
+						logTheThing("station", src, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
 						var/area/A = get_area(src.law_rack_connection)
 						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -1506,7 +1506,7 @@
 						return
 
 					src.visible_message("<span class='alert'>[user] removes [src]'s AI interface!</span>")
-					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s ai_interface at [log_loc(src)].")
+					logTheThing("combat", user, "removes [constructTarget(src,"combat")]'s ai_interface at [log_loc(src)].")
 
 					src.uneq_active()
 					for (var/obj/item/roboupgrade/UPGR in src.contents)
@@ -1560,7 +1560,7 @@
 					user.put_in_hand_or_drop(src.cell)
 					user.show_text("You remove [src.cell] from [src].", "red")
 					src.show_text("Your power cell was removed!", "red")
-					logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
+					logTheThing("combat", user, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
 					cell.add_fingerprint(user)
 					cell.UpdateIcon()
 					src.part_chest.cell = null
@@ -1607,7 +1607,7 @@
 
 		if (user)
 			src.visible_message("<span class='alert'>[user] removes [src]'s brain!</span>")
-			logTheThing("station", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+			logTheThing("station", user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 		else
 			src.visible_message("<span class='alert'>[src]'s brain is ejected from its head!</span>")
 			playsound(src, "sound/misc/boing/[rand(1,6)].ogg", 40, 1)
@@ -2514,7 +2514,7 @@
 				if(src.client)
 					boutput(src, "<span class='alert'><B>Killswitch Activated!</B></span>")
 				killswitch = 0
-				logTheThing("combat", src, null, "has died to the killswitch robot self destruct protocol")
+				logTheThing("combat", src, "has died to the killswitch robot self destruct protocol")
 
 				// Pop the head ompartment open and eject the brain
 				src.eject_brain(fling = TRUE)

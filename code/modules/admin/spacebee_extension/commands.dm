@@ -622,7 +622,7 @@
 			logMessage = "queued a server hard reboot"
 
 		logTheThing("debug", "[user] (Discord)", null, logMessage)
-		logTheThing("diary", "[user] (Discord)", null, logMessage, "admin")
+		logTheThing("diary", "[user] (Discord)", null, "admin")
 		message_admins("[user] (Discord) [logMessage]")
 		system.reply(logMessage)
 
@@ -679,5 +679,5 @@
 		var/to_log = "[giverevoke == "revoke" ? "revoked" : "gave"] the [medalname] medal for [player]."
 		message_admins("<span class='alert'>Admin [user] (Discord) [to_log]</span>")
 		logTheThing("admin", "[user] (Discord)", null, "[to_log]")
-		logTheThing("diary", "[user] (Discord)", null, "[to_log]", "admin")
+		logTheThing("diary", "[user] (Discord)", null, "admin")
 		system.reply("[user] [to_log]")

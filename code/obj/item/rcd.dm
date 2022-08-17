@@ -562,7 +562,7 @@ Broken RCD + Effects
 		return 0
 
 	proc/log_construction(mob/user as mob, var/what)
-		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
+		logTheThing("station", user, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
 		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
@@ -682,7 +682,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing("station", user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -698,7 +698,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing("station", user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -729,7 +729,7 @@ Broken RCD + Effects
 						R.pass="[hangar_id]"
 						R.name="Access code: [hangar_id]"
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing("station", user, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
 
 		else if (mode == RCD_MODE_PODDOOR)
@@ -747,7 +747,7 @@ Broken RCD + Effects
 						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing("station", user, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
@@ -1065,7 +1065,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing("combat", user, null, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing("combat", user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)

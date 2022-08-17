@@ -510,7 +510,7 @@ obj/item/gnomechompski/elf
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
-				logTheThing("combat", affected_mob, null, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
+				logTheThing("combat", affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob.gib()
 
 /obj/item/reagent_containers/food/snacks/candy/butterscotch
@@ -1148,7 +1148,7 @@ obj/critter/madnessowl/switchblade
 				src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-				logTheThing("combat", src, BORG, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
+				logTheThing("combat", src, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
 				BORG.gib()
 				src.target = null
 				src.boredom_countdown = 0
@@ -1370,7 +1370,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	M.verbs -= /proc/owl_slam
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
-	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
+	logTheThing("combat", M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)

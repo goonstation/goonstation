@@ -232,7 +232,7 @@
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
-				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
+				logTheThing("combat", user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)

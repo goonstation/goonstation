@@ -150,7 +150,7 @@
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
-			logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
+			logTheThing("combat", source, "rips out the staples on [constructTarget(target,"combat")]'s butt hat") //Crime
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/timer))

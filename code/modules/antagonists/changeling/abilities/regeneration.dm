@@ -27,7 +27,7 @@
 
 		if(!H.in_fakedeath)
 			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")
-			logTheThing("combat", holder.owner, null, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
+			logTheThing("combat", holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
 			var/list/implants = list()
 			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
 				implants += I
@@ -63,7 +63,7 @@
 					C.lying = 0
 					C.canmove = 1
 					boutput(C, "<span class='notice'>We have regenerated.</span>")
-					logTheThing("combat", C, null, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+					logTheThing("combat", C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
 					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))

@@ -16,7 +16,7 @@
 			source = "random"
 		if (announce_to_admins)
 			message_admins("<span class='internal'>Beginning [src.name] event (Source: [source]).</span>")
-			logTheThing("admin", null, null, "Random event [src.name] was triggered. Source: [source]")
+			logTheThing("admin", null, "Random event [src.name] was triggered. Source: [source]")
 
 		if (centcom_headline && centcom_message && random_events.announce_events)
 			SPAWN(message_delay)

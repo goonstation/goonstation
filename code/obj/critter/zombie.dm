@@ -136,7 +136,7 @@
 			SPAWN(6 SECONDS)
 				if (BOUNDS_DIST(src, M) == 0 && ((M:loc == target_lastloc)) && M.lying)
 					if(iscarbon(M))
-						logTheThing("combat", M, null, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+						logTheThing("combat", M, "was zombified by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 						M.death(TRUE)
 						src.visible_message("<span class='alert'><B>[src]</B> slurps up [M]'s brain!</span>")
 						playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)

@@ -50,7 +50,7 @@
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
-	logTheThing("diary", src, null, "(GHOST): [message]", "say")
+	logTheThing("diary", src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
@@ -174,7 +174,7 @@
 			GH.change_points(5)
 
 #endif
-		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
+		logTheThing("say", src, "EMOTE: [html_encode(message)]")
 		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

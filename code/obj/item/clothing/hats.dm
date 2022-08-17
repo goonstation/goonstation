@@ -437,7 +437,7 @@ proc/filter_trait_hats(var/type)
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
 			src.phrase = n_name
-			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
+			logTheThing("say", usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
 
 	proc/make_inspector()
@@ -1016,7 +1016,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, null, "equipped [src].")
+		logTheThing("combat", user, "equipped [src].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src

@@ -64,7 +64,7 @@
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc), original_arm)
 		if (use_mob.mind)
@@ -164,7 +164,7 @@
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc), original_eye)
 
@@ -263,7 +263,7 @@
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
 		if (use_mob.mind)
@@ -346,7 +346,7 @@
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing("combat", holder.owner, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
 		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc), original_butt)
 
@@ -398,8 +398,8 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "<b>(HIVESAY):</b> [message]")
-		//logTheThing("diary", holder.owner, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing("say", holder.owner, "<b>(HIVESAY):</b> [message]")
+		//logTheThing("diary", holder.owner, "(HIVEMIND): [message]", "hivesay")
 		.= holder.owner.say_hive(message, holder)
 
 		return 0
@@ -505,7 +505,7 @@
 			return TRUE
 
 		//Do the actual control-granting here.
-		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
+		logTheThing("combat", holder.owner, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
 		//Transfer the owner's mind into a hivemind observer and grant it the recovery verb
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
 		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control
