@@ -69,6 +69,9 @@
 	},
 /area/station/security/main)
 "abk" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
@@ -86,6 +89,7 @@
 /obj/machinery/door/airlock/pyro/medical/alt2,
 /obj/access_spawn/robotics,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "abY" = (
@@ -428,6 +432,7 @@
 /obj/access_spawn/cargo,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "aiQ" = (
@@ -1081,6 +1086,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "ayc" = (
@@ -1230,6 +1236,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "aBu" = (
@@ -1306,6 +1313,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "aDn" = (
@@ -1734,10 +1742,6 @@
 	})
 "aRh" = (
 /obj/machinery/chem_dispenser,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/engine/caution/east,
 /area/station/medical/medbay/pharmacy)
 "aRC" = (
@@ -1854,6 +1858,13 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
+"aUZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grey/blackgrime/other,
+/area/station/storage/tech)
 "aVa" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
@@ -1999,6 +2010,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aXK" = (
@@ -2019,6 +2031,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
 "aYA" = (
@@ -2190,6 +2203,7 @@
 	icon_state = "line1"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "bdy" = (
@@ -2293,6 +2307,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/treatment)
 "bhj" = (
@@ -3058,6 +3073,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "byS" = (
@@ -4149,6 +4165,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "caj" = (
@@ -4558,6 +4575,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"cnq" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "cnt" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/shower{
@@ -5194,6 +5215,10 @@
 	})
 "cGI" = (
 /obj/machinery/manufacturer/mining,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -6293,6 +6318,10 @@
 /area/station/crew_quarters/arcade/dungeon)
 "dns" = (
 /obj/machinery/chem_dispenser,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/crew_quarters/baroffice)
 "dnt" = (
@@ -6348,6 +6377,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -7061,6 +7091,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "dHz" = (
@@ -7294,6 +7325,16 @@
 	},
 /turf/space/fluid/acid,
 /area/space)
+"dOq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint{
+	name = "Security Overwatch"
+	})
 "dOr" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/yellowblack,
@@ -7408,6 +7449,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -8023,6 +8065,9 @@
 /obj/landmark/start{
 	name = "Roboticist"
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "ejY" = (
@@ -8219,6 +8264,7 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "eqd" = (
@@ -8623,6 +8669,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "ezI" = (
@@ -8677,6 +8724,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -8728,6 +8776,7 @@
 "eDe" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "eDr" = (
@@ -9475,6 +9524,10 @@
 /area/station/garden/owlery)
 "eVY" = (
 /obj/vehicle/tug,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -10253,6 +10306,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ftM" = (
@@ -10835,6 +10889,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -10964,6 +11019,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
 "fLK" = (
@@ -11109,6 +11165,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/kitchen,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "fPl" = (
@@ -11562,6 +11619,9 @@
 "gbc" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -12453,6 +12513,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "gvL" = (
@@ -12490,6 +12551,10 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_west)
@@ -12673,6 +12738,7 @@
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/access_spawn/medical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "gAS" = (
@@ -12842,6 +12908,14 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
+"gFu" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
+	})
 "gFF" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/left{
@@ -13746,6 +13820,10 @@
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
 /obj/item/cell/supercell/charged,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "haz" = (
@@ -13832,6 +13910,10 @@
 "hcq" = (
 /obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /obj/shrub/captainshrub,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "hcP" = (
@@ -14197,6 +14279,15 @@
 "hkq" = (
 /turf/simulated/floor/darkblue/checker,
 /area/station/turret_protected/ai)
+"hkz" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/medical/medbay/surgery)
 "hkF" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -15207,6 +15298,7 @@
 	icon_state = "line1"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/minitiles/black,
 /area/station/communications/centre)
 "hHe" = (
@@ -15667,6 +15759,10 @@
 	dir = 8
 	},
 /obj/access_spawn/cargo,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
 "hVr" = (
@@ -15843,6 +15939,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -16146,6 +16243,10 @@
 /area/station/security/equipment)
 "ieD" = (
 /obj/storage/closet/medicalclothes,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 10
 	},
@@ -16182,6 +16283,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -16211,6 +16313,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "ihh" = (
@@ -16580,11 +16683,13 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/treatment)
 "iqd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -17263,6 +17368,7 @@
 /obj/access_spawn/robotics,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "iHN" = (
@@ -17906,6 +18012,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
 "jak" = (
@@ -18505,6 +18612,10 @@
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
@@ -19620,6 +19731,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "jSq" = (
@@ -20145,6 +20260,13 @@
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/listeningpost)
+"keZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/security/equipment)
 "kfi" = (
 /obj/landmark/random_room/size3x5,
 /turf/simulated/floor/plating,
@@ -20942,6 +21064,9 @@
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = 14
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "kxH" = (
@@ -21062,6 +21187,7 @@
 	p_open = 1
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "kzz" = (
@@ -21117,6 +21243,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kBj" = (
@@ -21797,6 +21924,10 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/firealarm{
+	pixel_x = 4;
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "kVj" = (
@@ -21920,6 +22051,10 @@
 	},
 /obj/submachine/ATM{
 	pixel_y = 32
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/engine/caution/corner,
 /area/station/bridge/customs{
@@ -22166,6 +22301,7 @@
 "ldf" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -22286,6 +22422,10 @@
 "lgI" = (
 /obj/machinery/chem_master{
 	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -22573,6 +22713,10 @@
 /obj/machinery/cashreg{
 	pixel_y = -2
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
 "lmL" = (
@@ -22744,6 +22888,10 @@
 /area/station/hallway/secondary/exit)
 "ltn" = (
 /obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -25397,6 +25545,16 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
+"mEo" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
 "mEp" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -27122,6 +27280,9 @@
 	pixel_x = -2;
 	pixel_y = 11
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "nAo" = (
@@ -28158,6 +28319,7 @@
 	icon_state = "line1"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "ofG" = (
@@ -28457,6 +28619,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/engine/glow,
 /area/station/ai_monitored/armory)
 "opC" = (
@@ -28554,6 +28717,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "oty" = (
@@ -28976,6 +29140,7 @@
 /obj/machinery/door/airlock/pyro/medical/morgue,
 /obj/access_spawn/morgue,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "oFy" = (
@@ -29665,6 +29830,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -29785,6 +29951,10 @@
 "pdH" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/storage/toolbox/emergency,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -29852,6 +30022,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
@@ -29908,6 +30079,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "phv" = (
@@ -29938,6 +30110,7 @@
 /obj/machinery/door/airlock/pyro/mining,
 /obj/access_spawn/cargo,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "pjd" = (
@@ -30504,6 +30677,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -30576,6 +30750,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "pzt" = (
@@ -30617,6 +30792,7 @@
 /obj/machinery/cashreg,
 /obj/access_spawn/medical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "pAp" = (
@@ -31144,6 +31320,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/customs{
 	name = "Bridge Reception"
@@ -31255,8 +31432,19 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"pTa" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/bent/east,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/fitness)
 "pTB" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -31293,6 +31481,7 @@
 /obj/access_spawn/hos,
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "pUw" = (
@@ -31333,6 +31522,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
 "pUS" = (
@@ -31708,6 +31898,7 @@
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/access_spawn/teleporter,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "qgt" = (
@@ -32927,6 +33118,7 @@
 	icon_state = "line3"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "qSd" = (
@@ -33198,6 +33390,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
 "raq" = (
@@ -33472,6 +33665,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -34348,6 +34542,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "rJg" = (
@@ -34402,6 +34599,10 @@
 	icon_state = "palm1";
 	layer = 10;
 	name = "palm tree"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
@@ -34729,6 +34930,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "rTL" = (
@@ -34873,6 +35075,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "rWN" = (
@@ -35262,6 +35465,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
@@ -36203,6 +36407,7 @@
 "sDR" = (
 /obj/disposalpipe/segment/brig,
 /obj/disposalpipe/segment/horizontal,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
@@ -36313,6 +36518,10 @@
 /obj/machinery/recharger,
 /obj/item/stamp/hos{
 	pixel_y = 18
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -36626,6 +36835,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sOF" = (
@@ -37321,6 +37531,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
 "tfh" = (
@@ -37483,6 +37694,10 @@
 	glass_amt = 5;
 	pixel_y = 4
 	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 4
 	},
@@ -37588,6 +37803,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/staff)
 "tlM" = (
@@ -38830,6 +39046,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/kitchen,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "tRz" = (
@@ -38912,6 +39129,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"tTz" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "tTK" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/plating,
@@ -38996,6 +39217,7 @@
 	dir = 4
 	},
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "tWO" = (
@@ -39202,6 +39424,10 @@
 "ubV" = (
 /obj/storage/secure/closet/courtroom,
 /obj/item/paper/book/from_file/space_law,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -39459,6 +39685,7 @@
 	p_open = 1
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "uls" = (
@@ -41705,6 +41932,9 @@
 "vvB" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -42546,6 +42776,7 @@
 	pixel_y = 10
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "vVg" = (
@@ -43195,6 +43426,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "wup" = (
@@ -43472,6 +43704,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "wCF" = (
@@ -43620,9 +43853,6 @@
 /obj/machinery/drainage,
 /obj/stool/chair/office{
 	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
 	},
 /obj/cable{
 	d2 = 2;
@@ -44092,6 +44322,7 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
 "wUj" = (
@@ -44219,6 +44450,7 @@
 /obj/access_spawn/kitchen,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "wXk" = (
@@ -44817,6 +45049,14 @@
 	dir = 1
 	},
 /area/station/storage/eva)
+"xnI" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/customs{
+	name = "Bridge Reception"
+	})
 "xnY" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
@@ -44968,6 +45208,7 @@
 	pixel_y = 10
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -45043,6 +45284,9 @@
 	name = "Northeast Breach Hull"
 	})
 "xvD" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/bridge)
 "xvH" = (
@@ -45647,6 +45891,18 @@
 "xKn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/east)
+"xLa" = (
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/station/medical/morgue)
 "xLi" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -45918,6 +46174,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "xSb" = (
@@ -45927,6 +46184,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "xSf" = (
@@ -46068,6 +46326,9 @@
 /turf/simulated/floor/black,
 /area/station/ranch)
 "xVu" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -46283,6 +46544,7 @@
 	icon_state = "line3"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/surgery)
 "yaN" = (
@@ -46462,6 +46724,10 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = -3;
+	pixel_y = 23
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
@@ -80296,7 +80562,7 @@ fvO
 mKo
 fCA
 qBw
-wpc
+keZ
 cTM
 wpc
 gqe
@@ -82041,7 +82307,7 @@ bRa
 czO
 qCi
 qCi
-nlU
+pTa
 xov
 fEn
 gWc
@@ -82682,7 +82948,7 @@ gbZ
 iHN
 nAa
 rCD
-maE
+tTz
 ssc
 fPh
 vNp
@@ -83005,7 +83271,7 @@ qNO
 etI
 fTq
 xib
-pvO
+dOq
 pvO
 sBx
 bIb
@@ -87237,7 +87503,7 @@ irE
 mHk
 fmK
 raO
-uus
+mEo
 uus
 fJt
 pSd
@@ -87246,7 +87512,7 @@ hgd
 gew
 dbc
 tPi
-tPi
+cnq
 tPi
 kIM
 huU
@@ -90190,7 +90456,7 @@ jUu
 bEp
 iqo
 eej
-eej
+hkz
 eej
 sPN
 xlx
@@ -92974,7 +93240,7 @@ qQK
 fdg
 ach
 mhK
-eZe
+xnI
 xXM
 kaL
 kaL
@@ -94418,7 +94684,7 @@ aFj
 iVP
 sUR
 vYx
-vYx
+xLa
 pUw
 vYx
 rSs
@@ -98117,7 +98383,7 @@ wYt
 ixC
 gYR
 buB
-pwc
+aUZ
 dCD
 fle
 lwx
@@ -103200,7 +103466,7 @@ bWq
 wEP
 tGr
 mGk
-hXv
+gFu
 ple
 gDm
 kqO
