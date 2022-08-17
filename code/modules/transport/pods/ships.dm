@@ -406,7 +406,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/puttframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 		var/obj/O = new /obj/structure/vehicleframe/subframe( get_turf(user) )
-		logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
 		O.fingerprints_full = src.fingerprints_full
 		qdel(src)
@@ -531,7 +531,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		// all other steps were tool applications, no more parts to create
 
 	O = new src.box_type( get_turf(src) )
-	logTheThing("station", usr, null, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
+	logTheThing(LOG_STATION, usr, "deconstructs [src] in [get_area(usr)] ([log_loc(usr)])")
 	O.fingerprints = src.fingerprints
 	O.fingerprints_full = src.fingerprints_full
 	qdel(src)
@@ -725,7 +725,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (src.armor_type == /obj/item/podarmor/armor_custom)
 					V.name = src.vehicle_name
 					V.setMaterial(src.material)
-				logTheThing("station", user, null, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
+				logTheThing(LOG_STATION, user, "finishes building a [V] in [get_area(user)] ([log_loc(user)])")
 				qdel(src)
 
 			else
@@ -1338,7 +1338,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		if (canbuild)
 			boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/structure/vehicleframe/podframe( get_turf(user) )
-			logTheThing("station", user, null, "builds [O] in [get_area(user)] ([log_loc(user)])")
+			logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 			O.fingerprints = src.fingerprints
 			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
@@ -1460,7 +1460,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
 			P.target = T
 			src.set_loc(T)
-			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
+			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
 
 	proc/fail()

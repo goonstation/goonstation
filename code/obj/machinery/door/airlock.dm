@@ -37,7 +37,7 @@
 		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
 		src.secondsElectrified = 30
-		logTheThing("combat", user, null, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
+		logTheThing(LOG_COMBAT, user, "electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] for 30 seconds.")
 		SPAWN(1 SECOND)
 			while (src.secondsElectrified>0)
@@ -57,7 +57,7 @@
 		src.locked = 0
 		UpdateIcon()
 	else
-		logTheThing("station",user,null,"[user] has bolted a door at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
 		UpdateIcon()
 
@@ -75,7 +75,7 @@
 	else if (src.secondsElectrified!=0)
 		boutput(user, text("<span class='alert'>The door is already electrified. You can't re-electrify it while it's already electrified.<br><br></span>"))
 	else
-		logTheThing("combat", user, null, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
+		logTheThing(LOG_COMBAT, user, "electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		message_admins("[key_name(user)] electrified airlock ([src]) at [log_loc(src)] indefinitely.")
 		src.secondsElectrified = -1
 
@@ -88,7 +88,7 @@
 		boutput(user, text("<span class='alert'>Can't un-electrify the airlock - The electrification wire is cut.<br><br></span>"))
 	else if (src.secondsElectrified!=0)
 		src.secondsElectrified = 0
-		logTheThing("combat", user, null, "de-electrified airlock ([src]) at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "de-electrified airlock ([src]) at [log_loc(src)].")
 		message_admins("[key_name(user)] de-electrified airlock ([src]) at [log_loc(src)].")
 
 
@@ -914,7 +914,7 @@ About the new airlock wires panel:
 			//raises them if they are down (only if power's on)
 			if (!src.locked)
 				src.locked = 1
-				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
 				boutput(usr, "You hear a click from the bottom of the door.")
 				tgui_process.update_uis(src)
 			else
@@ -954,7 +954,7 @@ About the new airlock wires panel:
 				return
 			if (src.secondsElectrified==0)
 				src.secondsElectrified = 30
-				logTheThing("station", usr, null, "temporarily electrified an airlock at [log_loc(src)] with a pulse.")
+				logTheThing(LOG_STATION, usr, "temporarily electrified an airlock at [log_loc(src)] with a pulse.")
 				SPAWN(1 SECOND)
 					//TODO: Move this into process() and make pulsing reset secondsElectrified to 30
 					while (src.secondsElectrified>0)
@@ -973,7 +973,7 @@ About the new airlock wires panel:
 					close()
 
 		if(AIRLOCK_WIRE_SAFETY)
-			logTheThing("station", usr, null, "caused an airlock to close and crush at [log_loc(src)] with a pulse.")
+			logTheThing(LOG_STATION, usr, "caused an airlock to close and crush at [log_loc(src)] with a pulse.")
 			src.safety = 0
 			src.close(1)
 			src.safety = 1
@@ -999,7 +999,7 @@ About the new airlock wires panel:
 	R.airlock_wire = wire_color
 	src.signalers[wire_color] = R
 	tgui_process.update_uis(src)
-	logTheThing("station", user, null, "attaches a remote signaller on frequency [R.frequency] to [src] at [log_loc(src)].")
+	logTheThing(LOG_STATION, user, "attaches a remote signaller on frequency [R.frequency] to [src] at [log_loc(src)].")
 	return TRUE
 
 /obj/machinery/door/airlock/proc/detach_signaler(var/wire_color, mob/user)
@@ -1036,7 +1036,7 @@ About the new airlock wires panel:
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
 			if (src.locked!=1)
 				src.locked = 1
-				logTheThing("station",usr,null,"[usr] has bolted a door at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
 			UpdateIcon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
@@ -1058,11 +1058,11 @@ About the new airlock wires panel:
 		if (AIRLOCK_WIRE_ELECTRIFY)
 			//Cutting this wire electrifies the door, so that the next person to touch the door without insulated gloves gets electrocuted.
 			if (src.secondsElectrified != -1 && can_shock)
-				logTheThing("station", usr, null, "permanently electrified an airlock at [log_loc(src)] by cutting the shock wire.")
+				logTheThing(LOG_STATION, usr, "permanently electrified an airlock at [log_loc(src)] by cutting the shock wire.")
 				src.secondsElectrified = -1
 
 		if(AIRLOCK_WIRE_SAFETY)
-			logTheThing("station", usr, null, "permanently disabled the safety of an airlock at [log_loc(src)] by cutting the safety wire.")
+			logTheThing(LOG_STATION, usr, "permanently disabled the safety of an airlock at [log_loc(src)] by cutting the safety wire.")
 			src.safety = 0
 
 	tgui_process.update_uis(src)
@@ -1104,7 +1104,7 @@ About the new airlock wires panel:
 				src.secondsElectrified = 0
 
 		if(AIRLOCK_WIRE_SAFETY)
-			logTheThing("station", usr, null, "re-enabled the safety of an airlock at [log_loc(src)] by mending the safety wire.")
+			logTheThing(LOG_STATION, usr, "re-enabled the safety of an airlock at [log_loc(src)] by mending the safety wire.")
 			src.safety = 1
 
 	tgui_process.update_uis(src)
@@ -1531,10 +1531,10 @@ About the new airlock wires panel:
 		return
 	if (!src.welded)
 		src.welded = 1
-		logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "welded [name] shut at [log_loc(user)].")
 		user.unlock_medal("Lock Block", 1)
 	else
-		logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 		src.welded = null
 	src.UpdateIcon()
 

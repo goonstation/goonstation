@@ -158,7 +158,7 @@
 				boutput(user, "<span class='notice'>You unsecure the [src].</span>")
 			else if(secured == 2)
 				boutput(user, "<span class='alert'>You deploy the [src]!</span>")
-				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
+				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -443,11 +443,11 @@
 
 	syndicate
 		is_syndicate = TRUE
-	
+
 	New()
 		. = ..()
 		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
-	
+
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
 		. = ..()
@@ -480,7 +480,7 @@
 			do_scan_effects(A, user)
 			boutput(user, scan_output)
 		return TRUE
-	
+
 	proc/do_scan_effects(atom/target, mob/user)
 		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
 		user.tri_message(target,
@@ -912,7 +912,7 @@
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 

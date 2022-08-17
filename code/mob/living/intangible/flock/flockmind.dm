@@ -135,25 +135,25 @@
 
 	if (src.disposed)
 		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
-		logTheThing("admin", null, null, "No Flocktraces were created for [src.real_name] due to their death.")
+		logTheThing(LOG_ADMIN, null, "No Flocktraces were created for [src.real_name] due to their death.")
 		return TRUE
 
 	if (!length(candidates))
 		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
-		logTheThing("admin", null, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
+		logTheThing(LOG_ADMIN, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
 		return TRUE
 
 	if (!free && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
-		logTheThing("admin", null, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
+		logTheThing(LOG_ADMIN, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
 	var/mob/picked = pick(candidates)
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing("admin", picked.key, null, "respawned as a Flocktrace under [src.real_name].")
+	logTheThing(LOG_ADMIN, picked.key, "respawned as a Flocktrace under [src.real_name].")
 
 	picked.make_flocktrace(get_turf(src), src.flock, free)
 
@@ -180,5 +180,5 @@
 	if(winner) // probably a paranoid check
 		var/mob/living/trace = winner.make_flocktrace(get_turf(src), src.flock)
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		logTheThing("admin", src, trace, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
+		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)

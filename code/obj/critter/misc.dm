@@ -743,7 +743,7 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		logTheThing("combat", src, null, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
 		src.reagents.smoke_start(12)
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(5 SECONDS)
@@ -1170,7 +1170,7 @@
 				return
 
 			src.visible_message("<span class='combat'><b>In a whirling flurry of tendrils, [src] rends down [src.target]! Holy shit!</b></span>")
-			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
 			doomedMob.ghostize()
 			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)

@@ -233,7 +233,7 @@
 			if(src.disposed) return
 			L = src.lifeprocesses?[thing]
 			if(!L)
-				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				logTheThing(LOG_DEBUG, src, "had lifeprocess [thing] removed during Life() probably.")
 				continue
 			L.Process(environment)
 

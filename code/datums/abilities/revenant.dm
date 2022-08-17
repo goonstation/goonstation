@@ -28,7 +28,7 @@
 		if (!relay.usesPoints)
 			return 1
 		if (relay.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
 			relay.points = 0
 		if (cost > relay.points)
 			boutput(owner, relay.notEnoughPointsMessage)
@@ -136,7 +136,7 @@
 		W.abilityHolder.topBarRendered = 0
 
 		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, usr, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -162,7 +162,7 @@
 
 		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
 		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, usr, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
@@ -549,7 +549,7 @@
 					H.emote("scream")
 				if (iterations > 12 && prob((iterations - 12) * 5))
 					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
-					logTheThing("combat", holder.owner, H, "gibs [constructTarget(H,"combat")] with the Revenant crush ability at [log_loc(holder.owner)].")
+					logTheThing(LOG_COMBAT, holder.owner, "gibs [constructTarget(H,"combat")] with the Revenant crush ability at [log_loc(holder.owner)].")
 					H.gib()
 					return
 				sleep(0.7 SECONDS)

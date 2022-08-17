@@ -1877,7 +1877,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
 				if(!istype(src.material, /datum/material/metal/steel))
-					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -1999,7 +1999,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/obj/item/martianSeed/S = C
 		if(S)
 			S.plant(src)
-			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 
 	//also in turf.dm. Put this here for lowest priority.
