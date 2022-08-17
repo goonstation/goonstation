@@ -783,7 +783,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
 		var/failed = cloud_put( "antag_tokens", antag_tokens )
 		if( failed )
-			logTheThing( "debug", src, null, "Failed to store antag tokens in the ~cloud~: [failed]" )
+			logTheThing("debug", src, null, "Failed to store antag tokens in the ~cloud~: [failed]")
 		else
 			AT[ckey] << null
 
@@ -819,11 +819,11 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	//else
 	//	persistent_bank = bank
 	if( !persistent_bank && cloud_available() )
-		logTheThing( "debug", src, null, "first cloud_get failed but cloud is available!" )
+		logTheThing("debug", src, null, "first cloud_get failed but cloud is available!")
 		persistent_bank += text2num( cloud_get( "persistent_bank" ) || "0" )
 		var/failed = cloud_put( "persistent_bank", persistent_bank )
 		if( failed )
-			logTheThing( "debug", src, null, "Failed to store persistent cash in the ~cloud~: [failed]" )
+			logTheThing("debug", src, null, "Failed to store persistent cash in the ~cloud~: [failed]")
 		//else
 		//	PB[ckey] << null
 
@@ -833,7 +833,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		persistent_bank_item = cloud_get( "persistent_bank_item" )
 		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
 		if( failed )
-			logTheThing( "debug", src, null, "Failed to store persistent bank item in the ~cloud~: [failed]" )
+			logTheThing("debug", src, null, "Failed to store persistent bank item in the ~cloud~: [failed]")
 
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
