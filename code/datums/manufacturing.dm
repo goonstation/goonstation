@@ -46,11 +46,11 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/sanity_check()
 		if (item_paths.len != item_amounts.len || !isnull(item_names) && (item_paths.len != item_names.len || item_names.len != item_amounts.len))
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
 			qdel(src)
 			return
 		if (!item_outputs.len)
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
 			qdel(src)
 			return
 

@@ -207,7 +207,7 @@ var/list/genetek_hair_styles = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 

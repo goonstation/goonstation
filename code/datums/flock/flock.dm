@@ -398,7 +398,7 @@ var/flock_signal_unleashed = FALSE
 				src.active_names[name] = TRUE
 		tries++
 	if (!name_found && tries == max_tries)
-		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
 	return name
 

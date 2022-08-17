@@ -346,9 +346,9 @@
 
 		// Added (Convair880).
 		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, null, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
-			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing(LOG_BOMBING, src.fingerprintslast, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
 		if (istype(src.loc,/obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = src.loc

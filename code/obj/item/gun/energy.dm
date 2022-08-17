@@ -69,7 +69,7 @@
 			return
 
 		if (!(src in processing_items))
-			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
 			processing_items.Add(src)
 			return
 		if (!src.cell)
@@ -1451,7 +1451,7 @@
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
-					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
+					logTheThing(LOG_COMBAT, src, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)

@@ -225,7 +225,7 @@
 	src.UpdateDamageIcon()
 
 /mob/living/carbon/human/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
@@ -397,7 +397,7 @@
 		try
 			E = src.organs[zone]
 		catch
-			logTheThing("debug", null, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
+			logTheThing(LOG_DEBUG, null, "<b>ORGAN/INDEX_DMG</b> Invalid index: [zone]")
 			return 0
 		if (isitem(E))
 			if (E.take_damage(brute, burn, 0/*tox*/, damage_type))

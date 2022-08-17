@@ -356,9 +356,9 @@ mob/new_player
 				character.mind.join_time = world.time
 				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
-					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
+					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
-				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
+				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
@@ -614,7 +614,7 @@ a.latejoin-card:hover {
 			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
-			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1 && !(jobban_isbanned(new_character, "Syndicate")))
@@ -626,7 +626,7 @@ a.latejoin-card:hover {
 								continue
 
 							livingtraitor = 1
-							logTheThing("debug", null, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
+							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
 							break
 
 					var/bad_type = null
@@ -649,7 +649,7 @@ a.latejoin-card:hover {
 					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
 						makebad(new_character, bad_type)
 						new_character.mind.late_special_role = 1
-						logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+						logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 
 
