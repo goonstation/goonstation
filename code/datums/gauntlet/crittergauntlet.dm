@@ -1214,7 +1214,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])
-		logTheThing("<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
 		for (var/userkey in data["keys"])
 			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
 			var/matches = data[userkey]

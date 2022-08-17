@@ -528,7 +528,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			var/pnum = input(usr, "Enter amount to print:", "Print Amount", 1) as null|num
 			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
-			logTheThing("speech", usr, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
+			logTheThing(LOG_STATION, usr, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
 			for (var/i = clamp(pnum, 1, src.papers), i>0, i--)
 				if (src.papers <= 0)
 					break
@@ -541,7 +541,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["name"] = ptext
-			logTheThing("speech", usr, "edited wanted poster's name: [ptext]")
+			logTheThing(LOG_STATION, usr, "edited wanted poster's name: [ptext]")
 
 		else if (href_list["selectphoto"])
 			var/ptext = scrubbed_input(usr, "Enter name or ID of crew to search for:", "Locate File Photo", src.plist["name"])
@@ -571,7 +571,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["wanted"] = ptext
-			logTheThing("speech", usr, "edited wanted poster's wanted: [ptext]")
+			logTheThing(LOG_STATION, usr, "edited wanted poster's wanted: [ptext]")
 
 		else if (href_list["enterreward"])
 			var/pnum = input(usr, "Enter reward amount:", "Reward", src.plist["reward"]) as null|num
@@ -584,14 +584,14 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["for"] = ptext
-			logTheThing("speech", usr, "edited wanted poster's for: [ptext]")
+			logTheThing(LOG_STATION, usr, "edited wanted poster's for: [ptext]")
 
 		else if (href_list["enternotes"])
 			var/ptext = scrubbed_input(usr, "Enter notes:", "Notes", src.plist["notes"])
 			if (isnull(ptext) || !length(ptext) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["notes"] = ptext
-			logTheThing("speech", usr, "edited wanted poster's notes: [ptext]")
+			logTheThing(LOG_STATION, usr, "edited wanted poster's notes: [ptext]")
 
 		else
 			return
