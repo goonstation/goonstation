@@ -91,7 +91,7 @@ proc/check_blinds_switches()
 	var/list/invalid_blinds_ids = list()
 	for_by_tcl(blinds, /obj/window_blinds)
 		if(isnull(blinds.mySwitch))
-			invalid_blinds_ids |= (blinds.id || "null")
+			invalid_blinds_ids += "[blinds.id || \"null\"] on [blinds.x], [blinds.y], [blinds.z] in [T.loc]"
 	if(length(invalid_blinds_ids))
 		CRASH("Blinds IDs without switches:\n" + jointext(invalid_blinds_ids, "\n"))
 
