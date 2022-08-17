@@ -951,7 +951,7 @@ datum
 				..()
 				return
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					. = 0
@@ -988,15 +988,6 @@ datum
 						return
 
 					var/damage2deal = clamp(volume / 6, 0, 10)
-
-					//INTERIM FUNCTIONALITY SECTION
-					//if chemprot becomes globally applied, this section should be reworked considerably
-					var/chem_adjust = GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT)
-					if(chem_adjust >= 100)
-						return
-					chem_adjust = 1 - (chem_adjust / 100)
-					damage2deal *= chem_adjust
-					//END INTERIM FUNCTIONALITY SECTION
 
 					//var for message and emote, apply cooldown to this to make screams less often
 					var/do_an_ouch = TRUE
