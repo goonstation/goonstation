@@ -408,7 +408,7 @@ CONTAINS:
 		if(!src.hasStatus("defib_charged"))
 			user.visible_message("<span class='alert'>[user] rubs the paddles of [src] together.</span>", "<span class='notice'>You rub the paddles of [src] together.</span>", "<span class='alert'>You hear an electrical whine.</span>")
 			playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, 0)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
 		src.setStatus("defib_charged", 3 SECONDS)
