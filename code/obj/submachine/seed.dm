@@ -584,7 +584,7 @@
 					else
 						splice_chance += S.splice_mod
 
-			splice_chance = clamp(splice_chance, 0, 100)
+			return clamp(splice_chance, 0, 100)
 
 	proc/SpliceMK2(var/allele1,var/allele2,var/value1,var/value2)
 		var/dominance = allele1 - allele2
