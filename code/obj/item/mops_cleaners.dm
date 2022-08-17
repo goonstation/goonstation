@@ -634,11 +634,7 @@ WET FLOOR SIGN
 				JOB_XP(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
-				if((target.color != initial(target.color)) || (target.icon != initial(target.icon))) //if painted, un-paint
-					target.color = initial(target.color)
-					target.icon = initial(target.icon)
-					if(target.material)
-						target.setMaterialAppearance(target.material)
+				target.remove_filter(list("paint_color", "paint_pattern"))
 				playsound(src, 'sound/items/sponge.ogg', 20, 1)
 				if (ismob(target))
 					animate_smush(target)
