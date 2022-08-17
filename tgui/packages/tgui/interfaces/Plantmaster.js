@@ -13,6 +13,7 @@ import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { TableCell, TableRow } from "../components/Table";
 import { clamp } from 'common/math';
 import { capitalize } from './common/stringUtils';
+import { truncate } from '../format';
 
 export const Plantmaster = (props, context) => {
   const { act, data } = useBackend(context);
@@ -34,7 +35,7 @@ export const Plantmaster = (props, context) => {
     <Window
       resizable
       title="Plantmaster Mk4"
-      width={1000}
+      width={1100}
       height={450}>
       <Window.Content>
         <Tabs>
@@ -77,22 +78,17 @@ export const Plantmaster = (props, context) => {
     </Window>
   );
 };
-const stringCompare = function (strA, strB) {
-  const minlen = Math.min(length(strA), length(strB));
-  for (let i = 0; i < minlen; i++) {
-    if (strA < strB) {
-      return -1;
-    }
-    if (strA > strB) {
-      return 1;
-    }
-  }
-  return 0;
-};
+
 const compare = function (a, b, sortBy, sortAsc) {
-  if (sortBy === "name")
+  if (sortBy === "name" || sortBy === "species")
   {
-    return (sortAsc * -1) * (''+a[sortBy]).localeCompare(b[sortBy]);
+    if (sortAsc) {
+      return (''+a[sortBy]).localeCompare(b[sortBy]);
+    }
+    else
+    {
+      return (''+b[sortBy]).localeCompare(a[sortBy]);
+    }
   }
   if (sortAsc) {
     return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
@@ -151,8 +147,8 @@ const PlantOverview = (props, context) => {
 const TitleRow = (props, context) => {
   const { act } = useBackend(context);
   const { show_damage, sortBy, sortAsc } = props;
-  const headings = ["name", "damage", "genome", "generation", "maturity rate", "production rate", "lifespan", "yield", "potency", "endurance", "controls"];
-  const sortname = ["name", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];
+  const headings = ["name", "species", "damage", "genome", "generation", "maturity rate", "production rate", "lifespan", "yield", "potency", "endurance", "controls"];
+  const sortname = ["name", "species", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];
   return (
     <TableRow>
       {headings.map((heading, index) => (show_damage || heading !== "damage") && (
@@ -174,8 +170,22 @@ const PlantRow = (props, context) => {
   return (
     <Fragment key={extractable.ref[1]}>
       <TableRow>
-        <TableCell textAlign="center">
-          {extractable.name[0]}
+        <TableCell width="100px" textAlign="center">
+          <Button.Input
+            width="100px"
+            tooltip="Click to rename"
+            color="transparent"
+            textColor="#FFFFFF"
+            content={truncate(extractable.name[0], 10)}
+            defaultValue={extractable.name[0]}
+            currentValue={extractable.name[0]}
+            onCommit={(e, new_name) => act('label', {
+              label_ref: extractable.ref[0],
+              label_new: new_name,
+            })} />
+        </TableCell>
+        <TableCell width="100px" textAlign="center" bold={extractable.species[1]} backgroundColor={extractable.species[1] ? "#333333" : ""}>
+          {extractable.species[0]}
         </TableCell>
         { show_damage && (
           <TableCell textAlign="center" bold={extractable.damage[1]} backgroundColor={extractable.damage[1] ? "#333333" : ""}>
@@ -323,7 +333,9 @@ const PlantSeeds = (props, context) => {
               }>
               <Table>
                 <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
-                {splice_seeds.map((extractable, index) => (
+                {splice_seeds.filter((x) => (x !== null)).sort(
+                  (a, b) => (compare(a, b, sortBy, sortAsc))
+                ).map((extractable, index) => (
                   (extractable === null) ? "" : <PlantRow extractable={extractable} key={extractable.ref[1]} show_damage infuse splice />
                 ))}
               </Table>

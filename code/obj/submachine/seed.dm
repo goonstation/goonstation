@@ -31,30 +31,7 @@
 		var/splice2_geneout
 
 		if (src.splicing1 && src.splicing2)
-			var/datum/plant/P1 = src.splicing1.planttype
-			var/datum/plant/P2 = src.splicing2.planttype
-
-			var/genome_difference = abs(P1.genome - P2.genome)
-			splice_chance -= genome_difference * 10
-
-			splice_chance -= src.splicing1.seeddamage
-			splice_chance -= src.splicing2.seeddamage
-
-			if (src.splicing1.plantgenes.commuts)
-				for (var/datum/plant_gene_strain/splicing/S in src.splicing1.plantgenes.commuts)
-					if (S.negative)
-						splice_chance -= S.splice_mod
-					else
-						splice_chance += S.splice_mod
-
-			if (src.splicing2.plantgenes.commuts)
-				for (var/datum/plant_gene_strain/splicing/S in src.splicing2.plantgenes.commuts)
-					if (S.negative)
-						splice_chance -= S.splice_mod
-					else
-						splice_chance += S.splice_mod
-
-			splice_chance = clamp(splice_chance, 0, 100)
+			splice_chance = src.SpliceChance(src.splicing1, src.splicing2)
 
 		switch(src.mode)
 			if("extractables")
@@ -199,12 +176,11 @@
 				if(I == src.splicing2)
 					src.splicing2 = null
 				I.set_loc(src.loc)
-				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+				ui.user.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 				tgui_process.update_uis(src)
 
 
 			if("sort")
-				boutput(world,params["asc"])
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
 				tgui_process.update_uis(src)
@@ -216,21 +192,29 @@
 				if (istype(I,/obj/item/seed/))
 					var/obj/item/seed/S = I
 					if (!istype(S.planttype,/datum/plant/) || !istype(S.plantgenes,/datum/plantgenes/))
-						boutput(usr, "<span class='alert'>Genetic structure of seed corrupted. Cannot scan.</span>")
+						boutput(ui.user, "<span class='alert'>Genetic structure of seed corrupted. Cannot scan.</span>")
 					else
-						HYPgeneticanalysis(usr,S,S.planttype,S.plantgenes)
+						HYPgeneticanalysis(ui.user,S,S.planttype,S.plantgenes)
 
 				else if (istype(I,/obj/item/reagent_containers/food/snacks/plant/))
 					var/obj/item/reagent_containers/food/snacks/plant/P = I
 					if (!istype(P.planttype,/datum/plant/) || !istype(P.plantgenes,/datum/plantgenes/))
-						boutput(usr, "<span class='alert'>Genetic structure of item corrupted. Cannot scan.</span>")
+						boutput(ui.user, "<span class='alert'>Genetic structure of item corrupted. Cannot scan.</span>")
 					else
-						HYPgeneticanalysis(usr,P,P.planttype,P.plantgenes)
+						HYPgeneticanalysis(ui.user,P,P.planttype,P.plantgenes)
 				else
-					boutput(usr, "<span class='alert'>Item cannot be scanned.</span>")
+					boutput(ui.user, "<span class='alert'>Item cannot be scanned.</span>")
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
+				tgui_process.update_uis(src)
+
+			if("label")
+				var/obj/item/I = locate(params["label_ref"]) in src
+				var/newname = sanitize(strip_html(params["label_new"]))
+				if(istype(I) && I.name != newname)
+					phrase_log.log_phrase("seed", newname, TRUE)
+					I.name = newname
 				tgui_process.update_uis(src)
 
 			if("extract")
@@ -249,9 +233,9 @@
 						give = 0
 
 					if (!give)
-						boutput(usr, "<span class='alert'>No viable seeds found in [I].</span>")
+						boutput(ui.user, "<span class='alert'>No viable seeds found in [I].</span>")
 					else
-						boutput(usr, "<span class='notice'>Extracted [give] seeds from [I].</span>")
+						boutput(ui.user, "<span class='notice'>Extracted [give] seeds from [I].</span>")
 						while (give > 0)
 							var/obj/item/seed/S
 							if (stored.unique_seed) S = new stored.unique_seed(src)
@@ -290,7 +274,7 @@
 					qdel(I)
 					tgui_process.update_uis(src)
 				else
-					boutput(usr, "<span class='alert'>This item is not viable extraction produce.</span>")
+					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
 
 			if("splice_select")
 				playsound(src, "sound/machines/keypress.ogg", 50, 1)
@@ -314,37 +298,49 @@
 				if (!istype(S))
 					return
 				if (!src.inserted)
-					boutput(usr, "<span class='alert'>No reagent container available for infusions.</span>")
+					boutput(ui.user, "<span class='alert'>No reagent container available for infusions.</span>")
 				else
 					if (src.inserted.reagents.total_volume < 10)
-						boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
+						boutput(ui.user, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 					else
 						var/list/usable_reagents = list()
-						var/datum/reagent/R = null
+						var/list/usable_reagents_names = list()
+						usable_reagents_names += "All"
+
 						for(var/current_id in src.inserted.reagents.reagent_list)
 							var/datum/reagent/current_reagent = src.inserted.reagents.reagent_list[current_id]
-							if (current_reagent.volume >= 10) usable_reagents += current_reagent
+							if (current_reagent.volume >= 10)
+								usable_reagents += current_reagent
+								usable_reagents_names += capitalize(current_reagent.name)
 
-						if (!usable_reagents.len)
-							boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
+						if (length(usable_reagents) < 1)
+							boutput(ui.user, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 						else
-							R = input(usr, "Use which reagent to infuse the seed?", "[src.name]", 0) in usable_reagents
-							if (!R || !S)
+							var/requested = "All"
+							if(length(usable_reagents > 1))
+								requested = tgui_input_list(ui.user, "Use which reagent to infuse the seed?", "[src.name]", usable_reagents_names)
+							if (!requested || !S)
 								return
-							switch(S.HYPinfusionS(R.id,src))
-								if (1)
-									playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
-									boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
-								if (2)
-									playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
-									boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
-								if (3)
-									playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
-									boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
-								else
-									playsound(src, "sound/effects/zzzt.ogg", 50, 1)
-									boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
-							src.inserted.reagents.remove_reagent(R.id,10)
+							if(requested != "All")
+								//if not all, pull all but the chosen one out of the list
+								for(var/datum/reagent/R in usable_reagents)
+									if(lowertext(R.name) != lowertext(requested))
+										usable_reagents -= R
+							for(var/datum/reagent/R in usable_reagents)
+								switch(S.HYPinfusionS(R.id,src))
+									if (1)
+										playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+										boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+									if (2)
+										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+										boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+									if (3)
+										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+										boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+									else
+										playsound(src, "sound/effects/zzzt.ogg", 50, 1)
+										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
+								src.inserted.reagents.remove_reagent(R.id,10)
 					tgui_process.update_uis(src)
 
 			if("splice")
@@ -364,30 +360,7 @@
 				// Sanity check - if something's wrong, just fail the splice and be done with it
 				if (!P1 || !P2) splice_chance = 0
 				else
-					// Seeds from different families aren't easy to splice
-					var/genome_difference = abs(P1.genome - P2.genome)
-					splice_chance -= genome_difference * 10
-
-					// Deduct chances if the seeds are damaged from infusing or w/e else
-					splice_chance -= seed1.seeddamage
-					splice_chance -= seed2.seeddamage
-
-					if (seed1.plantgenes.commuts)
-						for (var/datum/plant_gene_strain/splicing/S in seed1.plantgenes.commuts)
-							if (S.negative)
-								splice_chance -= S.splice_mod
-							else
-								splice_chance += S.splice_mod
-
-					if (seed2.plantgenes.commuts)
-						for (var/datum/plant_gene_strain/splicing/S in seed2.plantgenes.commuts)
-							if (S.negative)
-								splice_chance -= S.splice_mod
-							else
-								splice_chance += S.splice_mod
-
-				// Cap probability between 0 and 100
-				splice_chance = clamp(splice_chance, 0, 100)
+					splice_chance = src.SpliceChance(src.splicing1, src.splicing2)
 				if (prob(splice_chance)) // We're good, so start splicing!
 					var/datum/plantgenes/P1DNA = seed1.plantgenes
 					var/datum/plantgenes/P2DNA = seed2.plantgenes
@@ -422,14 +395,6 @@
 					P.hybrid = 1
 					S.generation = max(seed1.generation, seed2.generation) + 1
 
-					// Set up the base variables first
-					/*
-					if (!dominantspecies.hybrid)
-						P.name = "Hybrid [dominantspecies.name]"
-					else
-						// Just making sure we dont get hybrid hybrid hybrid tomato seed or w/e
-						P.name = "[dominantspecies.name]"
-						*/
 					if (dominantspecies.name != submissivespecies.name)
 						var/part1 = copytext(dominantspecies.name, 1, round(length(dominantspecies.name) * 0.65 + 1.5))
 						var/part2 = copytext(submissivespecies.name, round(length(submissivespecies.name) * 0.45 + 1), 0)
@@ -568,26 +533,58 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!O || !user)
 			return
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!isliving(user) || isintangible(user) || !in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
 			return
 		if (!isitem(O))
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/) || istype(O, /obj/item/reagent_containers/food/drinks/) || istype(O,/obj/item/satchel/hydro))
 			return src.Attackby(O, user)
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/seed/))
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O.name] into [src]!</span>")
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+			var/itemtype = O.type
 			var/staystill = user.loc
 			for(var/obj/item/P in view(1,user))
-				sleep(0.2 SECONDS)
-				if (!P) continue
 				if (user.loc != staystill) break
-				if (P.type == O.type)
-					if (istype(O, /obj/item/seed/)) src.seeds.Add(P)
-					else src.extractables.Add(P)
-					P.set_loc(src)
-				else continue
-			boutput(user, "<span class='notice'>You finish stuffing items into [src]!</span>")
+				if (P.type != itemtype) continue
+				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				if (istype(O, /obj/item/seed/))
+					src.seeds.Add(P)
+				else
+					src.extractables.Add(P)
+				if (P.loc == user)
+					user.u_equip(P)
+					P.dropped(user)
+				P.set_loc(src)
+				sleep(0.3 SECONDS)
+			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		else ..()
+
+	proc/SpliceChance(var/obj/item/seed/seed1, var/obj/item/seed/seed2)
+		if (seed1 && seed2)
+			var/datum/plant/P1 = seed1.planttype
+			var/datum/plant/P2 = seed2.planttype
+			var/splice_chance = 0
+			var/genome_difference = abs(P1.genome - P2.genome)
+			splice_chance -= genome_difference * 10
+
+			splice_chance -= seed1.seeddamage
+			splice_chance -= seed2.seeddamage
+
+			if (seed1.plantgenes.commuts)
+				for (var/datum/plant_gene_strain/splicing/S in seed1.plantgenes.commuts)
+					if (S.negative)
+						splice_chance -= S.splice_mod
+					else
+						splice_chance += S.splice_mod
+
+			if (seed2.plantgenes.commuts)
+				for (var/datum/plant_gene_strain/splicing/S in seed2.plantgenes.commuts)
+					if (S.negative)
+						splice_chance -= S.splice_mod
+					else
+						splice_chance += S.splice_mod
+
+			splice_chance = clamp(splice_chance, 0, 100)
 
 	proc/SpliceMK2(var/allele1,var/allele2,var/value1,var/value2)
 		var/dominance = allele1 - allele2
@@ -616,7 +613,8 @@
 
 		var/result = list()
 		//list of attributes and their dominance flag
-		result["name"] = list(P.name, DNA.d_species)
+		result["name"] = list(scanned.name, FALSE)
+		result["species"] = list(P.name, DNA.d_species)
 		result["genome"] = list(P.genome, FALSE) //genome is always averaged
 		result["generation"] = list(generation, FALSE)
 		result["growtime"] = list(DNA.growtime, DNA.d_growtime)
