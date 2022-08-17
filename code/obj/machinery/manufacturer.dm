@@ -2171,6 +2171,7 @@
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
+		/datum/manufacture/floppydisk,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,

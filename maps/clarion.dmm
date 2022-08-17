@@ -43748,7 +43748,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -44474,7 +44474,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "eml" = (
 /obj/machinery/light{
 	dir = 4;
@@ -45565,7 +45565,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "gOV" = (
 /obj/machinery/recharger/wall{
 	dir = 1;
@@ -45790,7 +45790,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "hpd" = (
 /obj/cable{
 	d1 = 2;
@@ -46060,7 +46060,9 @@
 	icon_state = "1-4"
 	},
 /obj/blind_switch/area/north{
-	pixel_y = 28
+	pixel_y = 28;
+	pixel_x = 22;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -46385,7 +46387,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -46755,7 +46757,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "jUC" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -50570,7 +50572,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "tKo" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -81192,7 +81194,7 @@ aQR
 euS
 bfd
 bgo
-bhl
+aQR
 biA
 bjP
 bjR
@@ -82220,7 +82222,7 @@ aQR
 nYD
 uOr
 sVF
-bhl
+aQR
 stU
 rcS
 bld
@@ -82477,7 +82479,7 @@ nXC
 oaj
 etG
 qNC
-bhl
+csQ
 pms
 wMt
 flb

@@ -1123,6 +1123,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/floppydisk //Cloning disks
+	name = "Floppy Disk"
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/disk/data/floppy)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame

@@ -41868,13 +41868,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"cxk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	req_access_txt = null
-	},
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/owlery/staffhall)
 "cxl" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -68519,6 +68512,12 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"eWY" = (
+/obj/blind_switch/area/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eXz" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor/orange,
@@ -70450,6 +70449,10 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
+"jiS" = (
+/obj/blind_switch/area/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "jiZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -92611,7 +92614,7 @@ aBY
 aBY
 aBY
 aBY
-cxk
+aBY
 aBY
 aBY
 cyF
@@ -153982,7 +153985,7 @@ aES
 aES
 aES
 sWb
-dLh
+jiS
 dMj
 dMM
 dMM
@@ -155857,7 +155860,7 @@ dRD
 dEQ
 vij
 wel
-dvW
+eWY
 dvW
 dFj
 wel
