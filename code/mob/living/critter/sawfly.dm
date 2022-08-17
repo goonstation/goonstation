@@ -18,7 +18,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	var/isdisabled = FALSE //only used in reusable grenade- stops life() from doing anything
+	var/isdisabled = FALSE //stops life() from doing anything when in grenade form
 	speechverb_say = "whirrs"
 	speechverb_exclaim = "buzzes"
 	speechverb_ask = "hums"
@@ -29,6 +29,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16) //for the manual attack_hand retaliation
 
 	//mob variables
+	health_deficiency_adjustment = -200000 //prevents them from having movespeed slowdown when injured
 	custom_gib_handler = /proc/robogibs
 	isFlying = 1
 	can_grab = FALSE

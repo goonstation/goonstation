@@ -68,11 +68,11 @@
 			if(src.found_path)
 				walk_rand(src,4)
 				holder.move_to_with_path(holder.target, src.found_path, 1)
-				if(GET_DIST(owncritter, holder.target) > target_range)
+				if(in_interact_range(owncritter, holder.target))
 					owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
 					owncritter.hand_attack(holder.target, dummy_params)
 		else
-			if(GET_DIST(owncritter, holder.target) > target_range)
+			if(in_interact_range(owncritter, holder.target))
 				owncritter.set_dir(get_dir(owncritter, holder.target))
 				owncritter.hand_attack(holder.target, dummy_params)
 

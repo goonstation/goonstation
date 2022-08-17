@@ -1666,14 +1666,13 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return .
 
 	var/health_deficiency = 0
-	if(!istype(src, /mob/living/critter/robotic/sawfly)) //disables pain slowdown for sawflies- consider upgrading to all robots later
-		if (src.max_health > 0)
-			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
-		else
-			health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+	if (src.max_health > 0)
+		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+	else
+		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-		if (health_deficiency >= 30)
-			. += (health_deficiency / 35)
+	if (health_deficiency >= 30)
+		. += (health_deficiency / 35)
 
 	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 
