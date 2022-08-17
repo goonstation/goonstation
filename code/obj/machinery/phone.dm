@@ -130,7 +130,7 @@
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -140,7 +140,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1

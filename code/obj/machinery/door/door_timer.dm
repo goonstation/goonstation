@@ -285,7 +285,7 @@
 			var/previous_time = src.time
 			src.time = clamp(0, round(params["time"]), src.max_time)
 			if (params["finish"])
-				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 
 			return TRUE
 
@@ -306,7 +306,7 @@
 						break
 
 			src.timing = !src.timing
-			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
 
 			src.add_fingerprint(usr)
 			src.UpdateIcon()
@@ -321,7 +321,7 @@
 					if (GET_COOLDOWN(F, "flash"))
 						return
 					F.flash()
-					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 		if ("toggle-flusher")
@@ -334,10 +334,10 @@
 						return
 					if (FF.open != 1)
 						FF.openup()
-						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
 					else
 						FF.closeup()
-						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 /obj/machinery/door_timer/attack_ai(mob/user)

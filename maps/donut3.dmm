@@ -7506,7 +7506,6 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light_switch/east,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -72303,7 +72302,7 @@
 /area/station/security/detectives_office)
 "uEH" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker{
+/obj/machinery/coffeemaker/engineering{
 	pixel_y = 3
 	},
 /obj/machinery/light_switch/north,

@@ -368,7 +368,7 @@
 /area/prefab/sequestered_cloner)
 "xI" = (
 /obj/cable,
-/obj/machinery/power/apc/puzzle_apc{
+/obj/machinery/power/apc/puzzle_apc/nopoweralert{
 	autoname_on_spawn = 0;
 	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
 	name = "Engine Test APC";

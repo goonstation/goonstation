@@ -139,7 +139,7 @@
 	P.target = target
 	ready = 0
 	warp_autopilot = 0
-	logTheThing("station", usr, null, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
+	logTheThing(LOG_STATION, usr, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
 	ready()
 
 
