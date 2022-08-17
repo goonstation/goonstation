@@ -441,7 +441,7 @@
 
 		var/damage = 0
 		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (damage <= 0 && P.proj_data.ks_ratio <= 0) //make stun weapons do some damage
+		if (damage <= 10 && P.proj_data.ks_ratio <= 0.1) //make stun weapons do some damage
 			damage = round(P.power, 1.0)
 
 		var/hitsound = null
