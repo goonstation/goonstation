@@ -92,7 +92,7 @@
 
 			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
-			logTheThing("station", user, null, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
+			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
 			// send the damn icon and gently nudge the page into refreshing it
 			send_the_damn_icon(user)
@@ -151,7 +151,7 @@
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		artists[ckey(usr.ckey)]++
 		pixel_artists[pixel_id] = usr.ckey
-		logTheThing("station", usr, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
+		logTheThing(LOG_STATION, usr, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
 

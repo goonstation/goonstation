@@ -44,5 +44,5 @@
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		L.contract_disease(/datum/ailment/malady/flatline, null, null, 1) // path, name, strain, bypass resist
 
-		logTheThing("combat", M, L, "uses the murder ability to induce cardiac arrest on [constructTarget(L,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses the murder ability to induce cardiac arrest on [constructTarget(L,"combat")] at [log_loc(M)].")
 		return 0

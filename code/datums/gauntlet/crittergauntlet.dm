@@ -222,7 +222,7 @@
 				moblist_names += thename
 				if (M.client)
 					moblist_names += " ([M.client.key])"
-			logTheThing("debug", null, null, "<b>Marquesas/Critter Gauntlet</b>: Starting arena game with players: [moblist_names]")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Critter Gauntlet</b>: Starting arena game with players: [moblist_names]")
 		announceAll("The Critter Gauntlet Arena game is now in progress. The first level will begin soon.")
 		next_level_at = ticker.round_elapsed_ticks + 300
 
@@ -407,7 +407,7 @@
 
 
 		var/points = 2.5 + (round(current_level * 0.1) * 1.5) + ((current_level % 10) / 20)
-		logTheThing("debug", null, null, "<b>Marquesas/Critter Gauntlet:</b> On level [current_level]. Spending [points] points, composed of 1 base, [round(current_level * 0.1) * 1.5] major and [(current_level % 10) / 20] minor.")
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Critter Gauntlet:</b> On level [current_level]. Spending [points] points, composed of 1 base, [round(current_level * 0.1) * 1.5] major and [(current_level % 10) / 20] minor.")
 
 		var/datum/gauntletEvent/candidate = pick(possible_events)
 		if (current_level >= candidate.minimum_level && points > candidate.point_cost && prob(candidate.probability))
@@ -973,7 +973,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
 			if (!T)
-				logTheThing("debug", null, null, "Gauntlet event Lightning Strikes failed setup.")
+				logTheThing(LOG_DEBUG, null, "Gauntlet event Lightning Strikes failed setup.")
 			D1 = new(T)
 			D2 = new()
 
@@ -1214,16 +1214,16 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])
-		logTheThing("<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
 		for (var/userkey in data["keys"])
-			logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
 			var/matches = data[userkey]
-			logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
 			var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[userkey]") in world
 			if (G && istype(G))
 				G.SetMatchCount(text2num(matches))
 			else
-				logTheThing("debug", null, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
+				logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
 				return 1
 
 	else

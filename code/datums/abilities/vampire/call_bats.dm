@@ -67,7 +67,7 @@
 
 		playsound(M.loc, 'sound/effects/gust.ogg', 60, 1)
 
-		logTheThing("combat", M, null, "uses call bats at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
 		return 0
 
 
@@ -115,5 +115,5 @@
 			return 1 // No cooldown here, though.
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, null, "uses call bats at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
 		return 0

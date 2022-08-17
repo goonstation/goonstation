@@ -117,7 +117,7 @@
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 

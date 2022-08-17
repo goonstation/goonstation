@@ -139,7 +139,7 @@
 		tgui_process.close_uis(src)
 		if(src.air_contents.check_if_dangerous())
 			message_admins("[src] [alert_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
-		logTheThing("station", null, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
+		logTheThing(LOG_STATION, null, "[src] [log_atmos(src)] was destructively opened[user ? " by [key_name(user)]" : ""], emptying contents at [log_loc(src)].")
 
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
@@ -350,7 +350,7 @@
 				src.det = Det
 				src.det.attachedTo = src
 				src.det.builtBy = user
-				logTheThing("bombing", user, null, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
+				logTheThing(LOG_BOMBING, user, "builds a canister bomb [log_atmos(src)] at [log_loc(src)].")
 				if(src.air_contents.check_if_dangerous())
 					message_admins("[key_name(user)] builds a canister bomb [alert_atmos(src)] at [log_loc(src)].")
 				tgui_process.update_uis(src)
@@ -376,7 +376,7 @@
 		attack_particle(user,src)
 		hit_twitch(src)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-		logTheThing("combat", user, null, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "attacked [src] [log_atmos(src)] with [W] at [log_loc(src)].")
 		src.health -= W.force
 		healthcheck(user)
 	..()
@@ -504,7 +504,7 @@
 
 	src.valve_open = !(src.valve_open)
 	if (!src.holding && !src.connected_port)
-		logTheThing("station", usr, null, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "[valve_open ? "opened [src] into" : "closed [src] from"] the air [log_atmos(src)] at [log_loc(src)].")
 		playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
 		if (src.valve_open)
 			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)

@@ -17,7 +17,7 @@
 
 	total_chem_reactions = sortList(total_chem_reactions)
 
-	logTheThing("debug", null, null, "<B>SpyGuy/chem_struct</B> Finished building reaction structure. Took [(world.timeofday - startTime)/10] seconds.")
+	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/chem_struct</B> Finished building reaction structure. Took [(world.timeofday - startTime)/10] seconds.")
 
 /proc/build_reagent_cache()
 	var/startTime = world.timeofday
@@ -27,7 +27,7 @@
 		//If R is not a datum/reagent then I don't think anything I can do will help here.
 		reagents_cache[Rinstance.id] = Rinstance
 
-	logTheThing("debug", null, null, "<B>SpyGuy/reagents_cache</B> Finished building reagents cache. Took [(world.timeofday - startTime)/10] seconds.")
+	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/reagents_cache</B> Finished building reagents cache. Took [(world.timeofday - startTime)/10] seconds.")
 
 //Things that will handle the possible options in reagents
 
