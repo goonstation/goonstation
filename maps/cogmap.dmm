@@ -56317,7 +56317,8 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "kPG" = (
 /obj/window/reinforced{
