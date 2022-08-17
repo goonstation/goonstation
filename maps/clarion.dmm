@@ -44395,15 +44395,6 @@
 	icon_state = "wooden"
 	},
 /area/station/science/research_director)
-"ebk" = (
-/obj/blind_switch/area/south{
-	pixel_x = -13;
-	pixel_y = -31
-	},
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/main)
 "edf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -80681,7 +80672,7 @@ gSK
 bgp
 uhp
 aWB
-ebk
+kLn
 aZc
 xfP
 wFe
