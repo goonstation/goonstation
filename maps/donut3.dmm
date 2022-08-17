@@ -7506,7 +7506,6 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light_switch/east,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)

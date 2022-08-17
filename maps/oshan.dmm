@@ -42816,7 +42816,9 @@
 /turf/space/fluid,
 /area/space)
 "cho" = (
-/obj/item/poster/titled_photo/bee,
+/obj/item/poster/titled_photo/bee{
+	anchored = 1
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/dining)
 "chp" = (

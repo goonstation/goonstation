@@ -8833,7 +8833,7 @@
 /obj/cable,
 /obj/decal/poster/wallsign/gym,
 /obj/wingrille_spawn/auto,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/fitness)
 "aJO" = (
 /obj/cable{
