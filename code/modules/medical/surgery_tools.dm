@@ -354,15 +354,13 @@ CONTAINS:
 	flags = FPRINT | TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	icon_state = "defib-on"
+	icon_state = "defib-off"
 	item_state = "defib"
 	pickup_sfx = "sound/items/pickup_defib.ogg"
 	var/icon_base = "defib"
-	var/charged = 1
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
-	var/talk2me = 1
 	var/obj/item/cell/cell = null
 	mats = 10
 
@@ -397,43 +395,40 @@ CONTAINS:
 			return ..()
 		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
-			src.charged = 0
+			src.delStatus("defib_charged")
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 				var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 				cryo.shock_icon()
-			set_icon_state("[src.icon_base]-shock")
-			SPAWN(1 SECOND)
-				set_icon_state("[src.icon_base]-off")
-			SPAWN(src.charge_time)
-				src.charged = 1
-				set_icon_state("[src.icon_base]-on")
-				playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
+			flick("[src.icon_base]-shock", src)
 
 	attack_self(mob/user as mob)
-		user.show_text("You [talk2me ? "disable" : "enable"] the [src]'s verbal alert system.")
-		src.talk2me = !src.talk2me
+		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
+			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
+			return
+		if(!src.hasStatus("defib_charged"))
+			user.visible_message("<span class='alert'>[user] rubs the paddles of [src] together.</span>", "<span class='notice'>You rub the paddles of [src] together.</span>", "<span class='alert'>You hear an electrical whine.</span>")
+			playsound(user.loc, "sound/items/defib_charge.ogg", 90, 0)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
+
+	proc/charge(mob/user)
+		if(prob(1))
+			user.say("CLEAR!")
+		src.setStatus("defib_charged", 3 SECONDS)
 
 	proc/do_the_shocky_thing(mob/user as mob)
-		if (src.charged == 0)
-			user.show_text("[src] is still charging!", "red")
+		if (!src.hasStatus("defib_charged"))
+			user.show_text("[src] needs to be primed first!", "red")
 			return 0
 		playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 75, 1, pitch = 0.92)
-		src.charged = 0
+		src.delStatus("defib_charged")
 		if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = src.loc
 			cryo.shock_icon()
-		set_icon_state("[src.icon_base]-shock")
-		SPAWN(1 SECOND)
-			set_icon_state("[src.icon_base]-off")
-		SPAWN(src.charge_time)
-			src.charged = 1
-			set_icon_state("[src.icon_base]-on")
-			playsound(src.loc, "sound/items/defib_charge.ogg", 90, 0)
+		flick("[src.icon_base]-shock", src)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		if (src.talk2me)
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 
 	disposing()
 		..()
