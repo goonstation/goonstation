@@ -18,7 +18,7 @@
 (e)|
 (+)Removed the broken pod colosseum
 (u)ZeWaka
-(e)Stickers now have fingerprints
+(+)Stickers now have fingerprints
 (t)mon aug 15 22
 (u)zjdtmkhzt
 (p)10144
