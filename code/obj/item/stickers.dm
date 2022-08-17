@@ -39,11 +39,11 @@
 				pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 				poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 				DEBUG_MESSAGE("pox [pox] poy [poy]")
-		src.stick_to(A, pox, poy)
+		src.stick_to(A, pox, poy, user)
 		user.u_equip(src)
 		return 1
 
-	proc/stick_to(var/atom/A, var/pox, var/poy)
+	proc/stick_to(var/atom/A, var/pox, var/poy, user)
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
@@ -69,6 +69,8 @@
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		add_fingerprint(user)
+		logTheThing("station", user, null, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
