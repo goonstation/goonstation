@@ -1,4 +1,9 @@
 
+(t)wed aug 17 22
+(u)LeahTheTech
+(p)10186
+(e)|
+(+)Flockdrones now do ~40 damage per shot to pods, up from 4 (yes really)
 (t)tue aug 16 22
 (u)Jan.antilles
 (p)10282
