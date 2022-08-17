@@ -1,5 +1,9 @@
 
 (t)wed aug 17 22
+(u)Kubius
+(p)9904
+(e)|
+(*)Chem protection on gear now properly factors into most chemical touch effects. Menders and patches are exempt.
 (u)LeahTheTech
 (p)10186
 (e)|
