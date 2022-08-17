@@ -68519,6 +68519,12 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"eWY" = (
+/obj/blind_switch/area/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "eXz" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor/orange,
@@ -70450,6 +70456,10 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base/underground)
+"jiS" = (
+/obj/blind_switch/area/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "jiZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -153982,7 +153992,7 @@ aES
 aES
 aES
 sWb
-dLh
+jiS
 dMj
 dMM
 dMM
@@ -155857,7 +155867,7 @@ dRD
 dEQ
 vij
 wel
-dvW
+eWY
 dvW
 dFj
 wel
