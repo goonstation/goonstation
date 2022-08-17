@@ -1711,6 +1711,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	. *= multiplier
 
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. = max(., base_speed)
+
 	if (next_step_delay)
 		. += next_step_delay
 		next_step_delay = 0
