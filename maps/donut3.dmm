@@ -33342,15 +33342,6 @@
 	},
 /area/station/security/detectives_office)
 "jtV" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -33363,8 +33354,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/circuit,
+/turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/AIsat)
 "jtX" = (
 /obj/item/device/radio/intercom/medical{
