@@ -133,7 +133,7 @@
 
 		SPAWN(1 SECOND)
 			if (!ispath(src.contained_weapon))
-				logTheThing("debug", src, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
 			src.update()

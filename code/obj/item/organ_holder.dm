@@ -500,10 +500,10 @@
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing("debug", null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.key)
-							logTheThing("debug", null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
@@ -511,7 +511,7 @@
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.key)
-						logTheThing("debug", null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
@@ -1410,11 +1410,11 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
-			logTheThing("combat", holder.owner, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam

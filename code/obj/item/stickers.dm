@@ -70,7 +70,7 @@
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 		add_fingerprint(user)
-		logTheThing("station", user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
+		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -175,7 +175,7 @@
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
@@ -473,7 +473,7 @@
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
-		logTheThing("combat", user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 

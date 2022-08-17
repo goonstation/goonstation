@@ -512,7 +512,7 @@ datum
 				// this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
-					logTheThing("pathology", M, "is splashed with [src] containing pathogen [P].")
+					logTheThing(LOG_PATHOLOGY, M, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))

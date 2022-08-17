@@ -535,7 +535,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
-						logTheThing("station", usr, "ordered a [P.name] at [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -564,7 +564,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
-							logTheThing("station", usr, "ordered a [P.name] at [log_loc(src)].")
+							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -851,7 +851,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			for(var/datum/commodity/cartcom in T.shopping_cart)
 				total_stuff_in_cart += cartcom.amount
@@ -989,7 +989,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
 				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")

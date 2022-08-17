@@ -44,7 +44,7 @@
 					var/datum/human_limbs/HL = H.limbs
 					HL.sever("both_arms", user)
 				else
-					logTheThing("user", user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 					user.gib()
 				icon_state = "crevice1"
 				desc = "The crevice has closed"

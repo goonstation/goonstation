@@ -289,7 +289,7 @@
 		src.on = 1
 		src.UpdateIcon()
 		src.pick_poison()
-		logTheThing("station", user, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 

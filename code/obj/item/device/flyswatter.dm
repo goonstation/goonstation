@@ -24,7 +24,7 @@
 				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 					return
 				smack_bug(M, user)
-				logTheThing("combat", user, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
+				logTheThing(LOG_COMBAT, user, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
 				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, 20)
 				return
 		return ..()

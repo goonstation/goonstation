@@ -147,13 +147,13 @@
 					ammo.amount_left -= may_load
 					src.m_w_system.remaining_ammunition += may_load
 					boutput(user, "<span class='notice'>You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
-					logTheThing("combat", user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
+					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
 					return
 				else
 					src.m_w_system.remaining_ammunition += ammo.amount_left
 					ammo.amount_left = 0
 					boutput(user, "<span class='notice'>You load [ammo] into [m_w_system].</span>")
-					logTheThing("combat", user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
+					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
 					qdel(ammo)
 					return
 			else
@@ -367,7 +367,7 @@
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
-					logTheThing("vehicle", usr, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
 					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s air supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
@@ -378,7 +378,7 @@
 
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
-					logTheThing("vehicle", usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
 					atmostank.set_loc(src.loc)
 					atmostank = null
 					src.updateDialog()
@@ -392,7 +392,7 @@
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
-					logTheThing("vehicle", usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
 					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s fuel supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
@@ -404,7 +404,7 @@
 
 			else if (href_list["takefueltank"])
 				if (src.fueltank)
-					logTheThing("vehicle", usr, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
@@ -598,7 +598,7 @@
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing("combat", src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -612,7 +612,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -644,7 +644,7 @@
 					var/obj/machinery/portable_atmospherics/canister/C = O
 					C.health -= power
 					C.healthcheck()
-				logTheThing("combat", src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
@@ -912,7 +912,7 @@
 
 
 
-	logTheThing("vehicle", ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
@@ -1024,7 +1024,7 @@
 
 	boutput(M, "<span class='hint'>You can also use the Space Bar to fire!</span>")
 
-	logTheThing("vehicle", M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
@@ -1177,7 +1177,7 @@
 /obj/machinery/vehicle/proc/handle_occupants_shipdeath()
 	for(var/mob/M in src)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
-		logTheThing("vehicle", M, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
+		logTheThing(LOG_VEHICLE, M, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		M.set_loc(get_turf(src))
 		var/atom/target = get_edge_cheap(M, src.dir)
@@ -1945,7 +1945,7 @@
 			P.target = T
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
-			logTheThing("station", src, "creates an escape portal at [log_loc(src)].")
+			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
 
 	proc/fail()

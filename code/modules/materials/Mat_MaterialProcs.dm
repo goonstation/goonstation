@@ -644,7 +644,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				if (istype(owner, /turf/simulated/wall))
 					var/turf/simulated/wall/wall_owner = owner
 					owner.visible_message("<span class='alert'>[owner] shears apart under the force of [attackobj]! </span>","<span class='alert'>You hear a crumpling sound.</span>")
-					logTheThing("station", attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
 					wall_owner.dismantle_wall(1, 0)
 
 				else if (istype(owner, /turf/simulated/floor))
@@ -679,7 +679,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcment off [owner].</span>","You cut the reinforcement off [owner].","The sound of cutting cardboard stops.")
 			else
 				attacker.visible_message("<span class='alert'>[attacker] cuts apart the outer cover of [owner]</span>.","<span class='notice'>You cut apart the outer cover of [owner]</span>.","The sound of cutting cardboard stops.")
-				logTheThing("station", attacker, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 			wall_owner.dismantle_wall(0, 0)
 		else if (istype(owner, /turf/simulated/floor))
 			var/turf/simulated/floor/floor_owner = owner
@@ -702,7 +702,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (!floor_owner.intact)
 				var/atom/A = new /obj/item/tile(src)
 				A.setMaterial(owner.material)
-				logTheThing("station", attacker, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return

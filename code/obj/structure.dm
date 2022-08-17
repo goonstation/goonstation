@@ -54,7 +54,7 @@ obj/structure/ex_act(severity)
 					shake_camera(N, 4, 1, 8)
 		if (prob(80))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
-			logTheThing("combat", user, "uses hulk to smash a girder at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a girder at [log_loc(src)].")
 			if (istype(src, /obj/structure/girder/reinforced))
 				var/atom/A = new /obj/structure/girder(src)
 				if (src.material)
@@ -224,7 +224,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 			if (GIRDER_PLATE)
 				verbens = "finishes plating"
-				logTheThing("station", owner, "builds a Wall in [owner.loc.loc] ([log_loc(owner)])")
+				logTheThing(LOG_STATION, owner, "builds a Wall in [owner.loc.loc] ([log_loc(owner)])")
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
@@ -254,7 +254,7 @@ obj/structure/ex_act(severity)
 					shake_camera(N, 4, 1, 8)
 		if (prob(70))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
-			logTheThing("combat", user, "uses hulk to smash a girder at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a girder at [log_loc(src)].")
 			qdel(src)
 			return
 		else
@@ -296,7 +296,7 @@ obj/structure/ex_act(severity)
 		FW.known_by += user
 		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
-		logTheThing("station", user, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")
 		qdel(src)
 		return
 

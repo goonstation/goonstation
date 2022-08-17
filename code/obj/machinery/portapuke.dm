@@ -151,7 +151,7 @@
 
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
-			logTheThing("combat", user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.UpdateIcon()
 			qdel(G)

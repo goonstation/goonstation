@@ -116,8 +116,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
 
-	logTheThing("station", user, "toggled the ship alert to \"[alertWord]\"")
-	logTheThing("diary", user, "toggled the ship alert to \"[alertWord]\"", "station")
+	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
+	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
 	src.working = 0
 
 /obj/item/tinyhammer

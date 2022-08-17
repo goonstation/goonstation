@@ -1430,7 +1430,7 @@
 		else if (href_list["shock"])
 			if (src.buckled_guy)
 				// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
-				logTheThing("combat", usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
 			shock(lethal)
 
 		src.control_interface(usr)

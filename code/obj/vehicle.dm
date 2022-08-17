@@ -509,7 +509,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
 
-			//logTheThing("combat", R, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
+			//logTheThing(LOG_COMBAT, R, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
 
 			if (S) // they were on a segway, diiiiis-MOUNT!
 				S.eject_rider(2)
@@ -638,11 +638,11 @@ ABSTRACT_TYPE(/obj/vehicle)
 	switch (action)
 		if ("impact")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", rider, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, rider, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
 
 		if ("shoved_off")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", other_dude, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, other_dude, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
 
@@ -792,7 +792,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			boutput(user, "<span class='alert'>The [src.name]'s holding tank is full!</span>")
 			return
 
-		logTheThing("combat", user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
+		logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
 		var/trans = W.reagents.trans_to(src, W.reagents.total_volume)
 		boutput(user, "<span class='notice'>You empty [trans] units of the solution into the [src.name]'s holding tank.</span>")
 		return
@@ -948,7 +948,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	if (!src || !rider || !ismob(rider))
 		return
 
-	logTheThing("vehicle", rider, "[mount_or_dismount == 0 ? "mounts" : "dismounts"] \a [src.name] [log_reagents(src)] at [log_loc(src)].")
+	logTheThing(LOG_VEHICLE, rider, "[mount_or_dismount == 0 ? "mounts" : "dismounts"] \a [src.name] [log_reagents(src)] at [log_loc(src)].")
 	return
 
 /obj/ability_button/fbuffer_toggle
@@ -1311,12 +1311,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	switch (action)
 		if ("rider_enter", "rider_exit")
 			if (rider && ismob(rider))
-				logTheThing("vehicle", rider, "[action == "rider_enter" ? "starts driving" : "stops driving"] [src.name] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, rider, "[action == "rider_enter" ? "starts driving" : "stops driving"] [src.name] at [log_loc(src)].")
 
 		if ("pax_enter", "pax_exit")
 			if (pax && ismob(pax))
 				var/logtarget = (rider && ismob(rider) ? rider : null)
-				logTheThing("vehicle", pax, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, pax, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
 

@@ -954,7 +954,7 @@
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
 					// how about some more feedback for what went wrong? :)
 					var/reason = ""
@@ -1104,7 +1104,7 @@
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
 			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
-			logTheThing("pathology", user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
 		else

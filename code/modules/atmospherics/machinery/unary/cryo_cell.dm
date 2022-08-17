@@ -197,7 +197,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing("combat", user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
 			src.add_fingerprint(user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
@@ -205,7 +205,7 @@
 				qdel(G)
 		else if (istype(I, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing("combat", user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
 			if (!src.beaker)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return
@@ -367,7 +367,7 @@
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
 
-		logTheThing("combat", user, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
 		target.remove_pulling()
 		src.occupant = target
 		src.occupant.set_loc(src)

@@ -150,7 +150,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 // recharge the cell
@@ -159,7 +159,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 /obj/item/cell/process()
@@ -189,11 +189,11 @@
 		if (S.reagents.has_reagent("plasma", 1))
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				logTheThing("combat", user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				logTheThing("combat", user, "rigged [src] to explode at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
 		S.reagents.clear_reagents()

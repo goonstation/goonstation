@@ -153,7 +153,7 @@
 		lastvend = world.time + 2
 		var/datum/data/vending_product/R = throw_item()
 		if(R?.logged_on_vend)
-			logTheThing("station", usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
@@ -161,7 +161,7 @@
 		lastvend = world.time + 5 //Make it slower to vend by name?
 		var/datum/data/vending_product/R = throw_item(inp.signal)
 		if(R?.logged_on_vend)
-			logTheThing("station", usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -681,9 +681,9 @@
 			src.generate_HTML(1)
 
 			if(R.logged_on_vend)
-				logTheThing("station", usr, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
 			if(player_list)
-				logTheThing("station", usr, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
 		if (href_list["logout"])
 			src.scan = null
 			src.generate_HTML(1)
@@ -810,7 +810,7 @@
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 5 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
-		logTheThing("combat", src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
+		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
 		if (src.layer < victim.layer)
@@ -1857,7 +1857,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, "<span class='notice'>You connect the screen.</span>")
 			var/obj/machinery/vending/B = new vendingtype(src.loc)
-			logTheThing("station", user, "assembles [B] [log_loc(B)]")
+			logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 			qdel(src)
 		else if (ispryingtool(target))
 			if (glassed)
@@ -2011,7 +2011,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if (label) itemEntry.label = label
-			logTheThing("station", user, "added player product ([target.name]) to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
 
 	power_change()

@@ -71,7 +71,7 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
 
@@ -314,7 +314,7 @@
 				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
 				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
@@ -387,7 +387,7 @@
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
 		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
-		logTheThing("combat", user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
 		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
 		purge.dir = ship.facing
 		if(!is_cardinal(purge.dir))

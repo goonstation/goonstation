@@ -1486,7 +1486,7 @@ datum/achievementReward/ai_dwaine
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
 		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
-		logTheThing("combat", activator, "Activated the blood flood gib reward thing (Original Sin)")
+		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)

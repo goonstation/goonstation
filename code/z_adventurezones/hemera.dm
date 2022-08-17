@@ -324,7 +324,7 @@ Obsidian Crown
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)
@@ -433,7 +433,7 @@ Obsidian Crown
 					M.visible_message("<span class='combat'>[M] is warped away!</span>")
 					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
 					M.set_loc(pick(randomturfs))
-					logTheThing("combat", M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 
 		if (armor_paired != -1 && prob(50) && host.max_health > 10)
 			host.max_health--

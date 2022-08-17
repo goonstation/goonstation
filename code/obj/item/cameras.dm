@@ -152,7 +152,7 @@
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
-		logTheThing("combat", user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
 

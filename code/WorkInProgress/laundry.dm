@@ -189,7 +189,7 @@
 		if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
 			user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
 			src.add_fingerprint(user)
-			logTheThing("combat", user, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
 			W.affecting.set_loc(src)
 			src.open = 0
 			src.on = 1

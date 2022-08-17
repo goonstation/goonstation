@@ -157,7 +157,7 @@
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		phrase_log.log_phrase("plushie", message)
-		logTheThing("say", user, "makes [src] say, \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)

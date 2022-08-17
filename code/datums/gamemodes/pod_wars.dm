@@ -551,7 +551,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team = pw_team
 	//error handling...
 	else
-		logTheThing("debug", null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
+		logTheThing(LOG_DEBUG, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 

@@ -7,8 +7,8 @@
 
 	// no fake admins
 	if (src.tempmin)
-		logTheThing("admin", src.owner, "tried to change the login notice of [constructTarget(target_key,"admin")]")
-		logTheThing("diary", src.owner, "tried to change the login notice of [constructTarget(target_key,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, src.owner, "tried to change the login notice of [constructTarget(target_key,"admin")]")
+		logTheThing(LOG_DIARY, src.owner, "tried to change the login notice of [constructTarget(target_key,"diary")]", "admin")
 		alert("You need to be an actual admin to view login notices.")
 		return
 

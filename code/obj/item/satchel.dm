@@ -41,7 +41,7 @@
 	attack_self(var/mob/user as mob)
 		if (length(src.contents))
 			var/turf/T = user.loc
-			logTheThing("station", user, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
+			logTheThing(LOG_STATION, user, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)

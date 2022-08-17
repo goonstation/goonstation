@@ -23,7 +23,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", src, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")

@@ -352,7 +352,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 #endif
 
 	if(phrase_log.is_uncool(message) && !wasUncool)
-		logTheThing("admin", H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
+		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
 

@@ -1631,7 +1631,7 @@ datum/computer/file/embedded_program/maintpanel
 
 			var/obj/controlTarget = locate(setupEntry)
 			if (!controlTarget)
-				logTheThing("debug", null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
+				logTheThing(LOG_DEBUG, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
 				continue
 
 			if (istype(controlTarget, /obj/machinery/door/airlock))

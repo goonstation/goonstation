@@ -353,7 +353,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
+					logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
 					var/area/A = get_area(src.law_rack_connection)
 					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -560,7 +560,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
-		logTheThing("combat", user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
 		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
@@ -664,7 +664,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
-				logTheThing("combat", user, "kicks [constructTarget(src,"combat")]")
+				logTheThing(LOG_COMBAT, user, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
@@ -762,7 +762,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		src.post_status(termid, "command","term_message","data",t)
 
 		//Might as well log what they said too!
-		logTheThing("diary", src, ": [t]", "say")
+		logTheThing(LOG_DIARY, src, ": [t]", "say")
 		src.messageLog += "\[[formattedShiftTime(TRUE)]\] <i>Replied to </i><b>[termid]</b><i> with:</i><br>[t]<hr>"
 
 	if (href_list["mute"])
@@ -888,7 +888,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.update_appearance()
 	src.ghostize()
 
-	logTheThing("combat", src, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+	logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
 	for(var/target in src.terminals)
 		src.terminals.Remove(target)
@@ -915,7 +915,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	if (!( cancel ))
 		boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 		SPAWN( 300 )
-			logTheThing("diary", null, "Rebooting because of no live players", "game")
+			logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 			Reboot_server()
 			return
 #endif
@@ -1252,7 +1252,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			return
 
 	if ((message && isalive(src)))
-		logTheThing("say", src, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1359,7 +1359,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			if(src.client)
 				boutput(message_mob, "<span class='alert'><B>Killswitch Process Complete!</B></span>")
 			killswitch = 0
-			logTheThing("combat", src, "has died to the killswitch robot self destruct protocol")
+			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
 			src.eject_brain()
 
@@ -2371,8 +2371,8 @@ proc/get_mobs_trackable_by_AI()
 	var/output = vox_play(message, src)
 	if(output)
 		last_vox = world.time
-		logTheThing("say", src, "has created an intercom announcement: \"[output]\", input: \"[message_in]\"")
-		logTheThing("diary", src, "has created an intercom announcement: [output]", "say")
+		logTheThing(LOG_SAY, src, "has created an intercom announcement: \"[output]\", input: \"[message_in]\"")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output]", "say")
 		message_admins("[key_name(src)] has created an AI intercom announcement: \"[output]\"")
 
 
@@ -2408,8 +2408,8 @@ proc/get_mobs_trackable_by_AI()
 
 	last_announcement = world.time
 
-	logTheThing("say", usr, "created a command report: [message]")
-	logTheThing("diary", usr, "created a command report: [message]", "say")
+	logTheThing(LOG_SAY, usr, "created a command report: [message]")
+	logTheThing(LOG_DIARY, usr, "created a command report: [message]", "say")
 
 
 /mob/living/silicon/ai/proc/ai_vox_help()

@@ -145,7 +145,7 @@
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing(LOG_DIARY, user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -796,7 +796,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

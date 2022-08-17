@@ -94,7 +94,7 @@
 			for (amt, amt>0, amt--)
 				new thing(src)
 		if (total_amt > slots)
-			logTheThing("debug", null, "STORAGE ITEM: [src] has more than [slots] items in it!")
+			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
 		total_amt = null
 		return 1
 

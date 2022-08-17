@@ -38,7 +38,7 @@ if there are any violations).
 /datum/New()
 	..()
 	if(IS_ABSTRACT(src.type))
-		logTheThing("debug", src, "Attempt to instantiate abstract type '[src.type]'.")
+		logTheThing(LOG_DEBUG, src, "Attempt to instantiate abstract type '[src.type]'.")
 #endif
 
 var/global/list/cached_concrete_types

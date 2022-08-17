@@ -170,7 +170,7 @@
 		if (choice == "Launch")
 			boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 			emergency_shuttle.settimeleft( 10 )
-			logTheThing("admin", user, "shortens Emergency Shuttle launch time to 10 seconds.")
+			logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
 	else
 		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
@@ -579,7 +579,7 @@
 			for(var/x in end_location)
 				if(isliving(x) && !isintangible(x))
 					var/mob/living/M = x
-					logTheThing("combat", M, "was gibbed by an arriving shuttle at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by an arriving shuttle at [log_loc(M)].")
 					M.gib(1)
 				if(istype(x, /obj/storage))
 					var/obj/storage/S = x
@@ -655,7 +655,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
-					logTheThing("combat", L, "was gibbed by an elevator at [log_loc(L)].")
+					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
@@ -726,7 +726,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
-					logTheThing("combat", L, "was gibbed by an elevator at [log_loc(L)].")
+					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 			bioele_accident()
 		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)

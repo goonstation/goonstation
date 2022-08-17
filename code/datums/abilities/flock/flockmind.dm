@@ -332,7 +332,7 @@
 				R = M.find_in_equipment(/obj/item/device/radio)
 		if(R)
 			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
-			logTheThing("say", usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
+			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
 			var/mob/living/intangible/flock/F = holder.owner
@@ -347,7 +347,7 @@
 	else if(istype(target, /obj/item/device/radio))
 		R = target
 		message = html_encode(input("What would you like to broadcast to [R]?", "Transmission", "") as text)
-		logTheThing("say", usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
+		logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		//set up message

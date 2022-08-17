@@ -349,4 +349,4 @@
 				playsound(O.loc, src.voice_other, 50, 0, -1)
 
 		var/log_target = constructTarget(target,"combat")
-		logTheThing("combat", holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")
+		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

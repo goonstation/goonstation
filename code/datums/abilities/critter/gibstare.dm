@@ -50,7 +50,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
-			logTheThing("combat", owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
 			if (target == owner)

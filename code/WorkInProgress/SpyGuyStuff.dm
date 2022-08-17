@@ -271,7 +271,7 @@ proc/Create_Tommyname()
 				if(reagents_cache[RID])
 					output = analyze_single(output, RID)
 				else
-					logTheThing("debug", null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
+					logTheThing(LOG_DEBUG, null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
 
 			return output
 
@@ -1069,8 +1069,8 @@ proc/Create_Tommyname()
 /proc/trigger_anti_cheat(var/mob/M, var/message, var/external_alert = 1)
 	if(M)
 		message_admins("[key_name(M)] [message].")
-		logTheThing("admin", M, message)
-		logTheThing("diary", M, message, "admin")
+		logTheThing(LOG_ADMIN, M, message)
+		logTheThing(LOG_DIARY, M, message, "admin")
 
 		if(external_alert)
 			//IRCbot alert, for fun

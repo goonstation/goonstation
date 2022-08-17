@@ -139,7 +139,7 @@
 						tm_amt += 5000
 						tg_amt += 1000
 				qdel(O)
-			logTheThing("combat", M, "is ground up in a crusher at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, M, "is ground up in a crusher at [log_loc(owner)].")
 			M.gib()
 		else if(istype(AM, /obj))
 			var/obj/B = AM

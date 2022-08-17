@@ -208,7 +208,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -1022,7 +1022,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			logTheThing("admin", usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
@@ -1069,7 +1069,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing("admin", usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)

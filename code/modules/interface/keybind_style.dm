@@ -34,7 +34,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	for (var/datum/keybind_style/found_style as anything in keybind_styles)
 		if (initial(found_style.name) == style_name)
 			return found_style
-	logTheThing("debug", null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
+	logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> No keybind style found with the name [style_name].")
 
 /** apply_keys: Takes a keybind_style to apply to the src client
  *	Internal use only.
@@ -44,7 +44,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	PROTECTED_PROC(TRUE)
 
 	if (initial(style.name) in applied_keybind_styles)
-		logTheThing("debug", null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
+		logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to apply [initial(style.name)] to [src] when already present.")
 		return
 	src.applied_keybind_styles.Add(initial(style.name))
 	var/datum/keybind_style/init_style = new style //Can't do static referencing for merge, press F to pay respekts

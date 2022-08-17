@@ -199,7 +199,7 @@
 	dirty_cameras |= referrers
 	camnet_needs_rebuild = 1
 
-	//logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Camera destroyed. Camera network needs a rebuild! Number of dirty cameras: [dirty_cameras.len]")
+	//logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera destroyed. Camera network needs a rebuild! Number of dirty cameras: [dirty_cameras.len]")
 	//connect_camera_list(referrers)
 
 
@@ -271,7 +271,7 @@
 	updateCoverage()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
-		logTheThing("station", null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
+		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
 
 /obj/machinery/camera/proc/repair_camera(mob/user)
@@ -310,14 +310,14 @@
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
 				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-				logTheThing("station", user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
 						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
-						logTheThing("station", user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
 //or null if none
@@ -445,7 +445,7 @@
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
 	if(!length(camlist))  return 1
 
-	logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
+	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
 	for(var/obj/machinery/camera/C as anything in camlist)
 		if(QDELETED(C) || !isturf(C.loc)) //This is one of those weird internal cameras, or it's been deleted and hasn't had the decency to go away yet
@@ -459,9 +459,9 @@
 		count++
 
 		if(!(C.c_north || C.c_east || C.c_south || C.c_west))
-			logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] failed to receive cardinal directions during initialization.")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] failed to receive cardinal directions during initialization.")
 
-	logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Done. Connected [count] cameras.")
+	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Done. Connected [count] cameras.")
 
 	return 0
 
@@ -490,7 +490,7 @@
 		candidate = getCameraMove(C, direction)
 		/*
 		if(!candidate)
-			logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] didn't get a candidate when heading [dir2text(direction)].")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] didn't get a candidate when heading [dir2text(direction)].")
 			return
 		*/
 		if(candidate && C.z == candidate.z && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
@@ -502,9 +502,9 @@
 				C.addToReferrers(candidate)
 /*
 		else
-			logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
 	else
-		logTheThing("debug", null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
+		logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
 		*/
 
 

@@ -86,7 +86,7 @@
 			died_already = true
 			SPAWN(5 SECONDS)
 				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", "sound/misc/announcement_1.ogg")
-				logTheThing("combat", src, "has been defeated.")
+				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
 			playsound(src, "sound/effects/ship_engage.ogg", 100, 1)
@@ -618,7 +618,7 @@
 			for (var/mob/living/M in get_center())
 				if (isintangible(M) || IS_ARRIVALS(get_area(M))) continue
 				if(prob(69))								//Nice.
-					logTheThing("user", M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib()
 				else
 					random_brute_damage(M, 120)

@@ -60,7 +60,7 @@
 				if (1)
 					return
 
-			logTheThing("combat", ow, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
+			logTheThing(LOG_COMBAT, ow, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
 
 		else if (ismob(target))
 			var/mob/M = target
@@ -87,5 +87,5 @@
 				M.throw_at(T, 5, 2)
 				M.changeStatus("stunned", 1 SECOND)
 
-			logTheThing("combat", M, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

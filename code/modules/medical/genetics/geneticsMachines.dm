@@ -234,14 +234,14 @@
 	if (!src || !M || !ismob(M) || !action)
 		return
 
-	logTheThing("station", usr, "uses [src.name] on [constructTarget(M,"station")][M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
+	logTheThing(LOG_STATION, usr, "uses [src.name] on [constructTarget(M,"station")][M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
 	return
 
 /obj/machinery/computer/genetics/proc/log_maybe_cheater(var/who, var/action = "")
 	// this is used repeatedly so let's just make it a proc and stop repeating ourselves 50 times
 	message_admins("[key_name(who)] [action] (failed validation, maybe cheating)")
-	logTheThing("debug", who, "[action] but failed validation.")
-	logTheThing("diary", who, "[action] but failed validation.", "debug")
+	logTheThing(LOG_DEBUG, who, "[action] but failed validation.")
+	logTheThing(LOG_DIARY, who, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)

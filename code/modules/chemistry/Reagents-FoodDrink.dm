@@ -650,7 +650,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
-						logTheThing("combat", src, "was gibbed by the reagent [name].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -1129,7 +1129,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -4124,7 +4124,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 

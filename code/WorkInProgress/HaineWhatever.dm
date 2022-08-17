@@ -122,8 +122,8 @@
 	if (!wagesystem)
 		return
 	wagesystem.clones_for_cash = !(wagesystem.clones_for_cash)
-	logTheThing("admin", usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
-	logTheThing("diary", usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"]")
 	boutput(world, "<b>Cloning now [wagesystem.clones_for_cash ? "requires" : "does not require"] money.</b>")
 
@@ -1283,7 +1283,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing("combat", user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1

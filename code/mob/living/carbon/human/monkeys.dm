@@ -533,7 +533,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
+		logTheThing(LOG_COMBAT, source, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
@@ -554,7 +554,7 @@
 			return
 
 		if(I.handle_other_remove(source, target))
-			logTheThing("combat", source, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
+			logTheThing(LOG_COMBAT, source, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
 			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
 			else

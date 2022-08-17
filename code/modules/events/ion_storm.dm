@@ -134,16 +134,16 @@
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
-			logTheThing("admin", null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
-			logTheThing("admin", null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
-		logTheThing("admin", null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
-		logTheThing("diary", null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
+		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
+		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
 		SPAWN(message_delay * stage_delay)
 
@@ -205,7 +205,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 				apc.environ = 0
 				apc.equipment = 0
 				apc.lighting = 0
-		logTheThing("station", null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
 		if (prob(50))
 			apc.aidisabled = TRUE
 		apc.update()
@@ -227,18 +227,18 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
-				logTheThing("station", null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
 				door.locked = 1
 				door.UpdateIcon()
-				logTheThing("station", null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
-					logTheThing("station", null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
+					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
 					door.close()
-					logTheThing("station", null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
+					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 
 /datum/ion_category/lights
@@ -257,13 +257,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 		switch(light_diceroll)
 			if(1)
 				light.broken()
-				logTheThing("station", null, "Ion storm overloaded lighting at [log_loc(light)]")
+				logTheThing(LOG_STATION, null, "Ion storm overloaded lighting at [log_loc(light)]")
 			if(2)
 				light.light.set_color(rand(1,100) / 100, rand(1,100) / 100, rand(1,100) / 100)
 				light.brightness = rand(4,32) / 10
 			if(3)
 				light.on = 0
-				logTheThing("station", null, "Ion storm turned off the lighting at [log_loc(light)]")
+				logTheThing(LOG_STATION, null, "Ion storm turned off the lighting at [log_loc(light)]")
 
 		light.update()
 
@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/manufacturer/manufacturer)
 		manufacturer.pulse(pick(list(1,2,3,4)))
-		logTheThing("station", null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [manufacturer.name] at [log_loc(manufacturer)]")
 
 /datum/ion_category/venders
 	amount = 5
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/vending/vender)
 		vender.pulse(pick(list(1,2,3,4)))
-		logTheThing("station", null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
+		logTheThing(LOG_STATION, null, "Ion storm interfered with [vender.name] at [log_loc(vender)]")
 
 /datum/ion_category/fire_alarms
 	amount = 3

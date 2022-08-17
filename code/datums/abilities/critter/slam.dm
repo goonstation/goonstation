@@ -83,7 +83,7 @@
 			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 			boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 			boutput(M, "<span class='alert'><b>[charger] slams into you!</b></span>")
-			logTheThing("combat", charger, "slams [constructTarget(M,"combat")].")
+			logTheThing(LOG_COMBAT, charger, "slams [constructTarget(M,"combat")].")
 			var/kbdir = angle_to_dir(angle)
 			step(M, kbdir, 2)
 			M.changeStatus("weakened", 4 SECONDS)

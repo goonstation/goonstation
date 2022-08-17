@@ -48,7 +48,7 @@
 		if(_health <= 0)
 			_health = 0
 			if (isnull(P))
-				logTheThing("combat", src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
 			else
 				var/shooter_data = null
 				var/vehicle
@@ -64,9 +64,9 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			break_open()
 
 	proc/break_open()

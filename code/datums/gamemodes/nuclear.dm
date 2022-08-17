@@ -116,7 +116,7 @@
 	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
-		logTheThing("debug", null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
+		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 
 
@@ -141,7 +141,7 @@
 		token_players.Remove(tplayer)
 		num_synds--
 		num_synds = max(num_synds, 0)
-		logTheThing("admin", tplayer.current, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_syndicates = antagWeighter.choose(pool = possible_syndicates, role = ROLE_NUKEOP, amount = num_synds, recordChosen = 1)

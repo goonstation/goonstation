@@ -55,7 +55,7 @@
 		. = ..()
 
 	was_deconstructed_to_frame(mob/user)
-		logTheThing("station", user, "<b>deconstructed</b> rack [constructName(src)]")
+		logTheThing(LOG_STATION, user, "<b>deconstructed</b> rack [constructName(src)]")
 		ticker?.ai_law_rack_manager.unregister_rack(src)
 		src.drop_all_modules()
 		UpdateIcon()
@@ -65,7 +65,7 @@
 	was_built_from_frame(mob/user, newly_built)
 		if(isrestrictedz(src.z) || !issimulatedturf(src.loc))
 			boutput(user, "Something about this area prevents you from constructing the [src]!")
-			logTheThing("station", user, "tried to construct a [src] in restricted area [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "tried to construct a [src] in restricted area [log_loc(src)]")
 			var/obj/item/electronics/frame/F = new
 			var/turf/target_loc = get_turf(src.loc)
 			F.name = "[src.name] frame"
@@ -81,7 +81,7 @@
 		//this should always be hard to deconstruct, even if player built
 		src.deconstruct_flags = initial(src.deconstruct_flags)
 		ticker?.ai_law_rack_manager.register_new_rack(src)
-		logTheThing("station", user, "constructed a new rack [constructName(src)] from frame")
+		logTheThing(LOG_STATION, user, "constructed a new rack [constructName(src)] from frame")
 		. = ..()
 
 	changeHealth(change,var/causer=null) //override so I can pass causer down the chain. Gross.
@@ -96,7 +96,7 @@
 			causer = "Unknown"
 
 		if(_health <= 0)
-			logTheThing("station", causer, "[causer] <b>destroyed</b> the [constructName(src)] causing a law update")
+			logTheThing(LOG_STATION, causer, "[causer] <b>destroyed</b> the [constructName(src)] causing a law update")
 			src.visible_message("<span class='alert'><b>The [src] collapses completely!</b></span>")
 			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 			for(var/turf/T in range(src,0))
@@ -145,7 +145,7 @@
 			src.visible_message("<span class='alert'><b>Some of the [src]'s shelves collapse!</b></span>")
 
 		if(law_update_needed)
-			logTheThing("station", causer, "[causer] damaged the [constructName(src)] causing a law update")
+			logTheThing(LOG_STATION, causer, "[causer] damaged the [constructName(src)] causing a law update")
 			UpdateIcon()
 			UpdateLaws()
 
@@ -602,7 +602,7 @@
 		var/list/mobtextlist = list()
 		for(var/mob/living/M in affected_mobs)
 			mobtextlist += constructName(M, "admin")
-		logTheThing("station", src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
+		logTheThing(LOG_STATION, src, "Law Update:<br> [src.format_for_logs()]<br>The law update affects the following mobs: "+mobtextlist.Join(", "))
 		update_last_laws()
 
 	proc/toggle_welded_callback(var/slot_number,var/mob/user)
@@ -636,14 +636,14 @@
 		else if(istype(equipped,/obj/item/aiModule/ability_expansion))
 			var/obj/item/aiModule/ability_expansion/expansion = equipped
 			src.ai_abilities |= expansion.ai_abilities
-		logTheThing("station", user, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> law module into rack([constructName(src)]): [equipped]:[equipped.get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] added a new law to rack at [log_loc(src)]: [equipped], with text '[equipped.get_law_text()]' at slot [slotNum]")
 		UpdateIcon()
 		UpdateLaws()
 
 	proc/remove_module_callback(var/slotNum,var/mob/user)
 		//add circuit to hand
-		logTheThing("station", user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> law module from rack([constructName(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		message_admins("[key_name(user)] removed a law from rack at ([log_loc(src)]): [src.law_circuits[slotNum]]:[src.law_circuits[slotNum].get_law_text()] at slot [slotNum]")
 		playsound(src, "sound/machines/law_remove.ogg", 80)
 		user.visible_message("<span class='alert'>[user] slides a module out of the law rack</span>", "<span class='alert'>You slide the module out of the rack.</span>")

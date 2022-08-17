@@ -178,7 +178,7 @@
 		if (iscarbon(target))
 			var/mob/living/carbon/C = target
 			if (isdead(C))
-				logTheThing("combat", user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i=0, i<3, i++)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)

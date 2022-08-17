@@ -169,13 +169,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 				if (objective.check_completion())
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, "completed objective: [objective.explanation_text]")
+						logTheThing(LOG_DIARY, owner, "completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(owner.current))
 							owner.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='alert'><b>Failure!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, "failed objective: [objective.explanation_text]. Womp womp.")
+						logTheThing(LOG_DIARY, owner, "failed objective: [objective.explanation_text]. Womp womp.")
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"

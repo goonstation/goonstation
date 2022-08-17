@@ -355,7 +355,7 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing("say", user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
 				make_books()
 				return
 

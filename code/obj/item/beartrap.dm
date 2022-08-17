@@ -65,7 +65,7 @@
 
 	proc/arm(mob/M)
 		if (!src.armed)
-			logTheThing("combat", src, "armed a beartrap at [src.loc]")
+			logTheThing(LOG_COMBAT, src, "armed a beartrap at [src.loc]")
 			set_icon_state("bear_trap-open")
 			M.drop_item(src)
 			src.armed = TRUE
@@ -87,7 +87,7 @@
 
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			logTheThing("combat", H, "stood on a [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, H, "stood on a [src] at [log_loc(src)].")
 			H.changeStatus("stunned", 4 SECONDS)
 			H.force_laydown_standup()
 			random_brute_damage(H, 50, 0)
@@ -99,5 +99,5 @@
 			set_icon_state("bear_trap-close")
 			src.armed = FALSE
 			src.anchored = FALSE
-			logTheThing("combat", target, "triggers [src] at [log_loc(src)]")
+			logTheThing(LOG_COMBAT, target, "triggers [src] at [log_loc(src)]")
 		return

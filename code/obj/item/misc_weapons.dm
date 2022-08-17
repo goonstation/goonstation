@@ -746,7 +746,7 @@
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
-				logTheThing("combat", user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i in 0 to 2)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)

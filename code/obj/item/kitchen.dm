@@ -466,7 +466,7 @@ TRAYS
 		..()
 		SPAWN(1 SECOND)
 			if(!ispath(src.contained_food))
-				logTheThing("debug", src, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
 
@@ -684,7 +684,7 @@ TRAYS
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 
 			unique_attack_garbage_fuck(M, user)
 
@@ -712,7 +712,7 @@ TRAYS
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			playsound(src, src.hit_sound, 30, 1)
-			logTheThing("combat", user, "taps [constructTarget(M,"combat")] over the head with [src].")
+			logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	dropped(mob/user)
 		..()

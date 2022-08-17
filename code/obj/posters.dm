@@ -92,7 +92,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				np.line_b3 = p_l3
 			np.generate_poster()
 
-		logTheThing("admin", usr, "created a poster[print_or_place == "Print" ? " at all printers" : null]")
+		logTheThing(LOG_ADMIN, usr, "created a poster[print_or_place == "Print" ? " at all printers" : null]")
 		message_admins("[key_name(usr)] created a poster[print_or_place == "Print" ? " at all printers" : null]")
 
 // admin wanted poster gen
@@ -195,7 +195,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				wp.line_b3 = w_notes
 			wp.generate_poster()
 
-		logTheThing("admin", usr, "created a wanted poster targeting [w_name][print_or_place == "Print" ? " at all printers" : null]")
+		logTheThing(LOG_ADMIN, usr, "created a wanted poster targeting [w_name][print_or_place == "Print" ? " at all printers" : null]")
 		message_admins("[key_name(usr)] created a wanted poster targeting [w_name][print_or_place == "Print" ? " at all printers" : null]")
 
 /mob/proc/build_flat_icon(var/direction)

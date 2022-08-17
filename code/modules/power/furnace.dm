@@ -86,14 +86,14 @@
 					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
 					return
 				user.visible_message("<span class='alert'>[user] starts to shove [target] into the furnace!</span>")
-				logTheThing("combat", user, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
 				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
 				if(grab?.affecting && src.active && in_interact_range(src, user)) //ZeWaka: Fix for null.affecting
 					var/mob/M = grab.affecting
 					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
-					logTheThing("combat", user, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
+					logTheThing(LOG_COMBAT, user, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
 					M.death(TRUE)
 					if (M.mind)

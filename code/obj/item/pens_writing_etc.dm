@@ -109,7 +109,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
-		logTheThing("station", user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -505,7 +505,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing("station", user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -648,7 +648,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing("station", user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -738,7 +738,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", user, "sets a hand labeler label to \"[str]\".")
+		logTheThing(LOG_COMBAT, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -774,9 +774,9 @@
 			A.UpdateName()
 		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
-			logTheThing("combat", user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
-			logTheThing("combat", A, "has a label applied to them, \"[src.label]\"")
+			logTheThing(LOG_COMBAT, A, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
 
 	custom_suicide = 1
@@ -1060,7 +1060,7 @@
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == user || (src.loc && src.loc.loc == user)) && isalive(user)))
 			src.name = "booklet[n_name ? "- '[n_name]'" : null]"
-			logTheThing("say", user, "labels a paper booklet: [n_name]")
+			logTheThing(LOG_SAY, user, "labels a paper booklet: [n_name]")
 		src.add_fingerprint(user)
 		return
 

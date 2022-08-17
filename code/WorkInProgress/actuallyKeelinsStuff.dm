@@ -2685,8 +2685,8 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
-			logTheThing("diary", usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
+			logTheThing(LOG_ADMIN, usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
+			logTheThing(LOG_DIARY, usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
@@ -2766,7 +2766,7 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
-				logTheThing("combat", AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+				logTheThing(LOG_COMBAT, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")

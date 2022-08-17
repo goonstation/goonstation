@@ -67,7 +67,7 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		logTheThing("combat", user, "plays instrument [src]")
+		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		if(ON_COOLDOWN(user, "instrument_play", src.note_time)) // on user because not just clients do music

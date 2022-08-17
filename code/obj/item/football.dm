@@ -128,7 +128,7 @@
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)
 		M.throw_at(throw_at, 10, 2)
 		playsound(src.loc, "swing_hit", 40, 1)
-		logTheThing("station", src, "tackles [target] using football gear [log_loc(src)].")
+		logTheThing(LOG_STATION, src, "tackles [target] using football gear [log_loc(src)].")
 	else if(isturf(target))
 		if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 			return
@@ -136,12 +136,12 @@
 			var/turf/simulated/wall/T = target
 			T.dismantle_wall(1)
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-		logTheThing("combat", src, "tackles [target] using football gear [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
 	else if (isobj(target))
 		var/obj/O = target
 		var/adjective = pick("hard", "strong", "powerful", "rough", "driven", "beefy", "big", "tough")
 		src.visible_message("<span class='alert'><B>[src] smashes into [target] with a [adjective] shoulder!</B></span>")
-		logTheThing("combat", src, "tackles [target] using football gear [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
 		switch (src.smash_through(O, list("window", "grille", "table"), 0))
 			if (0)
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)

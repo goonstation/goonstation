@@ -242,7 +242,7 @@
 
 	var/mob/living/carbon/human/H = src
 
-	logTheThing("combat", src, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
 		target.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
@@ -542,7 +542,7 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
@@ -803,7 +803,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing("combat", user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -887,12 +887,12 @@
 	proc/flush(var/suppress = 0)
 		if (!target)
 			clear(null)
-			logTheThing("debug", owner, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
+			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
 			return
 
 		if (!affecting)
 			clear(null)
-			logTheThing("debug", owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
+			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
 			return
 
 		if (!msg_group)
@@ -941,10 +941,10 @@
 				// message_admins("[owner] just committed friendly fire against [target]!")
 
 			for (var/message in logs)
-				logTheThing("combat", owner, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
 #else
 			for (var/message in logs)
-				logTheThing("combat", owner, "[message] at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "[message] at [log_loc(owner)].")
 #endif
 
 		if (stamina_self)

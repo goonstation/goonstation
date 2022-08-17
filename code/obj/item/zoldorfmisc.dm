@@ -294,7 +294,7 @@
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
-				logTheThing("combat", user, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
 				user.gib(1)
 			if("Geneticist")
 				var/list/effectpool = list("xray","hulk","breathless","thermal_resist","regenerator","detox")
@@ -427,7 +427,7 @@
 					return
 				if(isrestrictedz(user.z))
 					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
-					logTheThing("user", user, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
 				var/list/randomturfs = new/list()

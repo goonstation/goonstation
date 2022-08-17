@@ -1014,7 +1014,7 @@ datum/projectile/snowball
 	ry = P.yo - dn * ny
 
 	if (rx == ry && rx == 0)
-		logTheThing("debug", null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		logTheThing(LOG_DEBUG, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing

@@ -759,7 +759,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s liver with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s liver with [src].")
 					patient.organHolder.drop_organ("liver")
 
 					return 1
@@ -785,7 +785,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s intestines with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s intestines with [src].")
 					patient.organHolder.drop_organ("intestines")
 
 					return 1
@@ -834,7 +834,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-						logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s spleen with [src].")
+						logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s spleen with [src].")
 						patient.organHolder.drop_organ("spleen")
 
 						return 1
@@ -993,7 +993,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				if (patient.organHolder.brain)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head and brain with [src].")
 					patient.death()
 				patient.organHolder.drop_organ("head")
 				return 1
@@ -1051,7 +1051,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-				logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s brain with [src].")
+				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s brain with [src].")
 				patient.death()
 				patient.organHolder.head.scalp_op_stage = 4
 				return 1
@@ -1130,7 +1130,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				patient.butt_op_stage = 4
-				logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s butt with [src].")
+				logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s butt with [src].")
 				patient.organHolder.drop_organ("butt")
 				return 1
 
@@ -1188,7 +1188,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					if (patient.organHolder.tail)
-						logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s tail with [src].")
+						logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s tail with [src].")
 					patient.organHolder.drop_organ("tail")
 					return 1
 
@@ -1249,7 +1249,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s heart with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s heart with [src].")
 					//patient.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 
 					patient.organHolder.drop_organ("heart")
@@ -1703,7 +1703,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 			patient.TakeDamage("head", damage_low, 0)
 			take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-			logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [src].")
+			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] eye with [src].")
 
 			if (target_eye == patient.organHolder.right_eye)
 				patient.organHolder.drop_organ("right_eye")
@@ -1828,7 +1828,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] lung with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] lung with [src].")
 
 					if (target_organ == patient.organHolder.left_lung)
 						patient.organHolder.drop_organ("left_lung")
@@ -1859,7 +1859,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s appendix with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s appendix with [src].")
 					patient.organHolder.drop_organ("appendix")
 					return 1
 
@@ -1885,7 +1885,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s stomach with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s stomach with [src].")
 					patient.organHolder.drop_organ("stomach")
 
 					return 1
@@ -1934,7 +1934,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s pancreas with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s pancreas with [src].")
 					patient.organHolder.drop_organ("pancreas")
 
 					return 1
@@ -1969,7 +1969,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
-					logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] kidney with [src].")
+					logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [target_side] kidney with [src].")
 
 					if (target_organ == patient.organHolder.left_kidney)
 						patient.organHolder.drop_organ("left_kidney")
@@ -2024,7 +2024,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			"<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
 			"<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
 		if (patient.organHolder.tail)
-			logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
+			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s skeleton tail with [src].")
 		patient.organHolder.drop_organ("tail")
 		return TRUE
 
@@ -2069,7 +2069,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			patient.organHolder.drop_organ("head", get_turf(patient))
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
-			logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s head with [src].")
+			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head with [src].")
 			return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
@@ -2085,7 +2085,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			limb.remove(FALSE)
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
 			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
-			logTheThing("combat", surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
+			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 
 #undef CREATE_BLOOD_SPLOOSH

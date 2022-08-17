@@ -39,7 +39,7 @@
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
-		logTheThing("debug", null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
+		logTheThing(LOG_DEBUG, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
 		qdel(src) // wipes itself out since if it's processing it'd be calling procs it can't use again and again
 		return 0 // uh oh, we've got a poorly set up artifact and now we need to stop the proc that called it!
 	else
@@ -329,7 +329,7 @@
 			if (BOUNDS_DIST(src.loc, M.loc) > 0)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, A, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
@@ -574,7 +574,7 @@
 	var/datum/artifact/A = O.artifact
 
 	if ((target && ismob(target)) && type_of_action == "weapon")
-		logTheThing("combat", user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
 		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 

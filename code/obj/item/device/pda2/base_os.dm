@@ -445,7 +445,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing(LOG_PDAMSG, usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -1063,7 +1063,7 @@
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
 			src.message_last = world.time
 
-			logTheThing("pdamsg", null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)

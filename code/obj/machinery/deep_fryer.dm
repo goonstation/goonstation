@@ -41,7 +41,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("combat", user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
@@ -58,14 +58,14 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
 				src.start_frying(G.affecting)
 				G.affecting.death(FALSE)
 				qdel(W)
 				return
 
-			logTheThing("combat", user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 

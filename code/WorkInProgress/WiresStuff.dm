@@ -132,8 +132,8 @@ var/global/deathConfettiActive = 0
 
 	deathConfettiActive = !deathConfettiActive
 
-	logTheThing("admin", src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
-	logTheThing("diary", src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]", "admin")
+	logTheThing(LOG_ADMIN, src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
+	logTheThing(LOG_DIARY, src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]", "admin")
 	message_admins("[key_name(src)] toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
 
 
@@ -208,8 +208,8 @@ var/global/deathConfettiActive = 0
 		if (L.client && !isghostdrone(L))
 			droneize(L, 0)
 
-	logTheThing("admin", src, "made everyone a ghostdrone!")
-	logTheThing("diary", src, "made everyone a ghostdrone!", "admin")
+	logTheThing(LOG_ADMIN, src, "made everyone a ghostdrone!")
+	logTheThing(LOG_DIARY, src, "made everyone a ghostdrone!", "admin")
 	message_admins("[key_name(src)] made everyone a ghostdrone!")
 
 
@@ -234,8 +234,8 @@ var/global/deathConfettiActive = 0
 	else
 		return
 
-	logTheThing("debug", src, logMessage)
-	logTheThing("diary", src, logMessage, "admin")
+	logTheThing(LOG_DEBUG, src, logMessage)
+	logTheThing(LOG_DIARY, src, logMessage, "admin")
 	message_admins("[key_name(src)] [logMessage]")
 
 	var/ircmsg[] = new()

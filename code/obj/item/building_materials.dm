@@ -840,7 +840,7 @@ MATERIAL
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					src.change_stack_amount(-2)
-					logTheThing("station", user, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
 					G.add_fingerprint(user)
 		src.add_fingerprint(user)
 		return
@@ -1155,7 +1155,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing("station", usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)

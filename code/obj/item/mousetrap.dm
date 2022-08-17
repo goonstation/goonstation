@@ -107,7 +107,7 @@
 
 				if(CG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
-				logTheThing("bombing", user, "rigs [src] with [CG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
@@ -125,7 +125,7 @@
 
 				if(OG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
-				logTheThing("bombing", user, "rigs [src] with [OG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/pipebomb/bomb/PB = C
@@ -142,7 +142,7 @@
 				src.w_class = max(src.w_class, C.w_class)
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
-				logTheThing("bombing", user, "rigs [src] with [PB] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
@@ -158,7 +158,7 @@
 			src.w_class = max(src.w_class, C.w_class)
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
-			logTheThing("bombing", user, "rigs [src] with [S] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/frame))
 			var/obj/item/pipebomb/frame/PF = C
@@ -213,7 +213,7 @@
 			src.w_class = max(src.w_class, C.w_class)
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
-			logTheThing("bombing", user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
@@ -350,29 +350,29 @@
 		src.armed = 0
 
 		if (src.grenade)
-			logTheThing("bombing", target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
-			logTheThing("bombing", target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
 			src.grenade_old.prime()
 			src.grenade_old = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
-			logTheThing("bombing", target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
 		else if (src.signaler)
-			logTheThing("bombing", target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
 			src.signaler.send_signal("ACTIVATE")
 
 		else if (src.pie && src.arm)
-			logTheThing("bombing", target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
 			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
@@ -488,7 +488,7 @@
 
 		user.visible_message("<span class='alert'>[user] starts up the [src.name].</span>", "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
-		logTheThing("bombing", user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
 		src.armed = 1
 		if (!(src.mousetrap?.armed))

@@ -109,7 +109,7 @@
 		if (!src || !istype(src) || !user|| !target)
 			return
 
-		logTheThing("combat", user, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
 		return
 
 /* ============================================================ */

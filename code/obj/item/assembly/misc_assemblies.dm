@@ -162,7 +162,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -176,7 +176,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -381,7 +381,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -395,7 +395,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -559,7 +559,7 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
@@ -573,7 +573,7 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")

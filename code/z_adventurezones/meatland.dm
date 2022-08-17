@@ -1481,7 +1481,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				logTheThing("combat", L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"

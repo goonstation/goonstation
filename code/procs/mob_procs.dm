@@ -1021,7 +1021,7 @@
 
 
 	if (can_see.len > 0)
-		//logTheThing("debug", src, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
+		//logTheThing(LOG_DEBUG, src, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Overlay parameters for [src]: all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Added [can_see.len] overlays to [src].")
 		src.client.images.Add(can_see)

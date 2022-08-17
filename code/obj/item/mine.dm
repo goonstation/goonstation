@@ -73,7 +73,7 @@
 			src.armed = FALSE
 			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
-			logTheThing("bombing", user, "has disarmed the [src.name] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
 			src.our_timer.attack_self(user)
@@ -183,7 +183,7 @@
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"

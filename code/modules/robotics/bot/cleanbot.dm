@@ -113,7 +113,7 @@
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(src.reagent_emagged, 50)
 
-			logTheThing("station", src.emagger, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
 			return 1
 
 		return 0

@@ -71,7 +71,7 @@
 			break
 		leaders += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
@@ -431,7 +431,7 @@
 			top_gang = G
 
 	if (!top_gang)
-		logTheThing("debug", null, "No winning gang chosen for kidnapping event. Something's broken.")
+		logTheThing(LOG_DEBUG, null, "No winning gang chosen for kidnapping event. Something's broken.")
 		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
 		return 0
 
@@ -442,7 +442,7 @@
 			potential_targets += H
 
 	if (!potential_targets.len)
-		logTheThing("debug", null, "No players found to be kidnapping targets.")
+		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
 		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
 		return 0
 

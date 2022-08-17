@@ -243,7 +243,7 @@
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
 		else
-			logTheThing("debug", null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
+			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 		if (istype(oldabilities))
 			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
@@ -306,7 +306,7 @@
 		if ((mindref) && (istype(mindref))) //Move that mind over!!
 			mindref.transfer_to(src.occupant)
 		else //welp
-			logTheThing("debug", null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
+			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
 			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
@@ -320,7 +320,7 @@
 
 		// -- End mode specific stuff
 
-		logTheThing("combat", usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
 			qdel(ghost) //Don't leave ghosts everywhere!!
@@ -564,7 +564,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing("combat", src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -580,7 +580,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing("combat", src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -591,7 +591,7 @@
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing("combat", src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user
 			light.enable()
@@ -908,7 +908,7 @@
 		if (!src.emagged)
 			if (user)
 				boutput(user, "<span class='notice'>You override the reclaimer's safety mechanism.</span>")
-			logTheThing("combat", user, "emagged [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
 			emagged = 1
 			return 1
 		else
@@ -942,7 +942,7 @@
 
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
-			logTheThing("combat", user, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 			if (!isdead(src.occupant) && !isnpcmonkey(src.occupant))
 				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] (alive) inside at [log_loc(src)].")
 		src.start_cycle()
@@ -1177,7 +1177,7 @@
 		if (grinder.occupant)
 			return
 		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
-		logTheThing("combat", owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+		logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (!isdead(target) && !isnpcmonkey(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)

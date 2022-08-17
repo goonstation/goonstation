@@ -396,7 +396,7 @@
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
 					H.death()
-					logTheThing("combat", usr, "died from the sims fun motive at [log_loc(H)].")
+					logTheThing(LOG_COMBAT, usr, "died from the sims fun motive at [log_loc(H)].")
 
 		onLife()
 			if (value < 10)
@@ -585,7 +585,7 @@
 
 	proc/set_global_sims_var(var/datum/simsMotive/M, var/var_name, var/new_value) //Change one value on every simsHolder
 		if(!(var_name in M.vars))
-			logTheThing("debug", null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
 			return
 		for(var/datum/simsMotive/SM in simsMotives)
 			if(SM.type == M.type)

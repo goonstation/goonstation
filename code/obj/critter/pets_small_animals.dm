@@ -642,7 +642,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN(1 SECOND)
 				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
-				logTheThing("combat", M, "was deleted by using a void crown on [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, M, "was deleted by using a void crown on [src] at [log_loc(src)].")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -1357,7 +1357,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	proc/apply_species(var/new_species = null)
 		if (!(istext(new_species) || ispath(new_species)) || !islist(parrot_species)) // farrrrrtttt
-			logTheThing("debug", null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
+			logTheThing(LOG_DEBUG, null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
 			return
 
 		var/datum/species_info/parrot/info = ispath(new_species) ? new_species : parrot_species[new_species]
