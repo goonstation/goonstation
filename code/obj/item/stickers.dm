@@ -69,6 +69,7 @@
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		add_fingerprint(user)
 		logTheThing("station", user, null, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
