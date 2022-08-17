@@ -331,12 +331,15 @@
 									if (1)
 										playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
+										break
 									if (2)
 										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
+										break
 									if (3)
 										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
+										break
 									else
 										playsound(src, "sound/effects/zzzt.ogg", 50, 1)
 										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
