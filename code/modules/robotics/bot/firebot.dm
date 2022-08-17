@@ -42,8 +42,8 @@
 	name = "toolbox/robot arm assembly"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -117,7 +117,7 @@
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -336,10 +336,10 @@
 
 /obj/machinery/bot/firebot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()

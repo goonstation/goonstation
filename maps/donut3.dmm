@@ -2685,7 +2685,7 @@
 /area/station/maintenance/inner/east)
 "azV" = (
 /obj/table/auto,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/east)
 "azX" = (
 /obj/cable{
@@ -7506,7 +7506,6 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/light_switch/east,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
@@ -9045,7 +9044,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrsmuggles"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "cql" = (
 /obj/machinery/light/incandescent/warm{
@@ -10905,7 +10904,7 @@
 	icon_state = "1-2"
 	},
 /obj/access_spawn,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "cTz" = (
 /obj/item/device/radio/beacon,
@@ -13350,7 +13349,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "dEN" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -14957,7 +14956,6 @@
 	pixel_x = 9;
 	pixel_y = -1
 	},
-/obj/item/device/detective_scanner,
 /obj/item/pen{
 	pixel_x = -7;
 	pixel_y = -2
@@ -22917,7 +22915,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "goQ" = (
 /obj/cable{
@@ -23479,7 +23477,7 @@
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/east)
 "gxy" = (
 /turf/simulated/floor/carpet,
@@ -23704,7 +23702,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "gAU" = (
 /obj/disposalpipe/segment/morgue{
@@ -24116,7 +24114,7 @@
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/circuitboards/four,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "gIj" = (
 /turf/simulated/floor/specialroom/chapel{
@@ -24382,6 +24380,12 @@
 "gMT" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "gMZ" = (
@@ -26216,6 +26220,12 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
 "hpt" = (
@@ -26782,7 +26792,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hwV" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/east)
 "hxc" = (
 /obj/disposalpipe/segment/mail{
@@ -29327,7 +29337,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "iij" = (
 /obj/disposalpipe/segment/morgue{
@@ -31990,7 +32000,7 @@
 /area/station/maintenance/outer/west)
 "iYL" = (
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "iZc" = (
 /obj/disposalpipe/segment{
@@ -32888,7 +32898,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "jmA" = (
 /obj/decal/tile_edge/line/black{
@@ -33549,7 +33559,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jwX" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "jxq" = (
 /obj/grille/catwalk/jen/side{
@@ -35423,7 +35433,7 @@
 /area/station/maintenance/inner/sw)
 "jZO" = (
 /obj/machinery/vending/cola/red,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "kaf" = (
 /obj/cable{
@@ -35805,7 +35815,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "kgo" = (
 /obj/table/reinforced/auto,
@@ -37894,7 +37904,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "kOd" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -38611,7 +38621,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "kZq" = (
 /obj/table/reinforced/bar/auto,
@@ -39046,7 +39056,7 @@
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lfO" = (
 /obj/machinery/light/incandescent/warm{
@@ -39183,7 +39193,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/three,
 /obj/disposalpipe/segment,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "lhS" = (
 /obj/decal/tile_edge/line/green{
@@ -39199,7 +39209,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/computer3/terminal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lie" = (
 /obj/machinery/light/incandescent/netural,
@@ -39544,7 +39554,7 @@
 "lnT" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lnW" = (
 /obj/storage/crate{
@@ -40159,7 +40169,7 @@
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lwq" = (
 /obj/wingrille_spawn/auto/tuff,
@@ -41098,7 +41108,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "lJy" = (
 /obj/cable{
@@ -41700,7 +41710,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "lQN" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lQS" = (
 /obj/decal/tile_edge/line/green{
@@ -42796,7 +42806,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "mgy" = (
 /turf/simulated/floor/black,
@@ -45517,7 +45527,7 @@
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/maintenance/inner/east)
 "mYu" = (
 /obj/railing/orange/reinforced{
@@ -45821,6 +45831,12 @@
 /area/station/engine/gas)
 "ncS" = (
 /obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "ncZ" = (
@@ -46011,7 +46027,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ngg" = (
 /obj/disposalpipe/segment/mail{
@@ -46976,7 +46992,7 @@
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ntX" = (
 /obj/machinery/microwave,
@@ -47886,7 +47902,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "nIN" = (
 /obj/disposalpipe/segment/mail{
@@ -49978,7 +49994,7 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "onh" = (
 /turf/simulated/floor/purpleblack{
@@ -52159,7 +52175,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "oSS" = (
 /obj/railing/orange{
@@ -53760,7 +53776,7 @@
 "psg" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "psA" = (
 /obj/machinery/power/apc/autoname_north,
@@ -54683,6 +54699,16 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"pDt" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "pDF" = (
 /obj/cable{
 	d1 = 1;
@@ -54944,7 +54970,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "pHz" = (
 /obj/item/clothing/suit/bedsheet/red,
@@ -55476,7 +55502,7 @@
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "pQm" = (
 /obj/table/auto,
@@ -55813,6 +55839,21 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
+"pVh" = (
+/obj/wingrille_spawn/auto/tuff,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "pVv" = (
 /obj/cable{
 	d1 = 4;
@@ -59394,7 +59435,7 @@
 	pixel_x = -3;
 	pixel_y = 5
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "qRg" = (
 /obj/lattice{
@@ -65774,7 +65815,7 @@
 /obj/item/light/bulb,
 /obj/item/light/tube,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "sIK" = (
 /turf/space,
@@ -66027,7 +66068,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "sMz" = (
 /obj/cable{
@@ -66769,7 +66810,7 @@
 /obj/machinery/computer/stockexchange{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "sYV" = (
 /obj/pool/perspective{
@@ -68790,7 +68831,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/wreckage{
 	name = "Restricted Area"
 	})
@@ -70520,7 +70561,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
 "ucN" = (
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -70661,7 +70702,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ufe" = (
 /obj/storage/secure/closet/medical/medkit,
@@ -72261,7 +72302,7 @@
 /area/station/security/detectives_office)
 "uEH" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker{
+/obj/machinery/coffeemaker/engineering{
 	pixel_y = 3
 	},
 /obj/machinery/light_switch/north,
@@ -73544,7 +73585,7 @@
 /area/station/medical/medbay/pharmacy)
 "uUY" = (
 /obj/machinery/vending/snack,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "uVi" = (
 /obj/cable{
@@ -75366,21 +75407,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
-"vwG" = (
-/obj/wingrille_spawn/auto/tuff,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/bridge)
 "vwH" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
@@ -75476,9 +75502,6 @@
 	pixel_x = -5;
 	pixel_y = 13
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 6
-	},
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
@@ -75505,7 +75528,7 @@
 "vyj" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "vyo" = (
 /obj/table/auto,
@@ -76989,7 +77012,7 @@
 /obj/machinery/computer/stockexchange{
 	dir = 8
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "vSP" = (
 /obj/submachine/chef_oven{
@@ -80372,7 +80395,7 @@
 	pixel_x = -11;
 	pixel_y = 5
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/stockex)
 "wPF" = (
 /obj/grille/catwalk/jen/side{
@@ -84118,7 +84141,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "xRU" = (
 /obj/machinery/manufacturer/gas,
@@ -85509,7 +85532,7 @@
 /area/station/turret_protected/armory_outside)
 "yld" = (
 /obj/machinery/drone_recharger/factory,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "yli" = (
 /turf/space,
@@ -116265,13 +116288,13 @@ hvl
 whF
 mxw
 rdj
-vwG
+pVh
 bCJ
 vyE
 abv
 fwb
 svq
-vwG
+pVh
 rdj
 dVe
 dVe
@@ -125086,7 +125109,7 @@ rGo
 nxf
 wVP
 aGD
-uBi
+pDt
 oNe
 iJg
 iFU
@@ -125388,7 +125411,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 kgu
 gIT
 lCT
@@ -125690,7 +125713,7 @@ rGo
 iVW
 wVP
 aGD
-uBi
+pDt
 tbu
 iJg
 iFU
@@ -126897,7 +126920,7 @@ hAg
 hAg
 dKA
 tQs
-uBi
+pDt
 qDC
 fDw
 oOH

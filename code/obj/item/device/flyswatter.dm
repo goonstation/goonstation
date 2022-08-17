@@ -3,7 +3,7 @@
 	desc = "It's one of those fancy electric types, so you can hear that satisfying zap, zap, <i>zap</i>!"
 	icon_state = "flyswatter"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
+	force = 10
 	hit_type = DAMAGE_BURN
 	w_class = W_CLASS_BULKY
 	throwforce = 12
@@ -24,7 +24,7 @@
 				if (SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
 					return
 				smack_bug(M, user)
-				logTheThing("combat", user, M, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
+				logTheThing(LOG_COMBAT, user, "kills [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]).")
 				SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, 20)
 				return
 		return ..()

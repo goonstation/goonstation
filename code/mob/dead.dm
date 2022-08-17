@@ -28,7 +28,7 @@
 	if (targeting_ability)
 		..()
 	else
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
@@ -50,7 +50,7 @@
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
-	logTheThing("diary", src, null, "(GHOST): [message]", "say")
+	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
@@ -174,7 +174,7 @@
 			GH.change_points(5)
 
 #endif
-		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
+		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
 		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

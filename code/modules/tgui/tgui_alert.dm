@@ -23,6 +23,8 @@
 			user = client.mob
 		else
 			return
+	if (!user.client) // No NPCs or they hang Mob AI process
+		return
 	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
 	alert.ui_interact(user)
 	UNTIL(alert.choice || alert.closed)

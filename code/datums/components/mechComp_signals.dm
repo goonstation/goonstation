@@ -248,7 +248,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
 				return
 
-	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
+	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
@@ -307,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 

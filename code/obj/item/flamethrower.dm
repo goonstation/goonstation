@@ -31,8 +31,8 @@ A Flamethrower in various states of assembly
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -81,7 +81,7 @@ A Flamethrower in various states of assembly
 			return TRUE
 
 	log_shoot(mob/user, turf/T, obj/projectile/P)
-		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
@@ -167,7 +167,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.25
 			if(FLAMER_MODE_SINGLE)
 				P_special_data["speed_mult"] = 1
-				P_special_data["chem_pct_app_tile"] = 0.10
+				P_special_data["chem_pct_app_tile"] = 0.1
 			else //default to backtank??
 				P_special_data["speed_mult"] = 0.6
 				P_special_data["chem_pct_app_tile"] = 0.15
@@ -180,8 +180,8 @@ A Flamethrower in various states of assembly
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -213,13 +213,27 @@ A Flamethrower in various states of assembly
 	equipped(mob/user, slot)
 		..()
 		inventory_counter?.show_count()
-		
+
 	examine()
 		. = ..()
 		if(linkedflamer && (linkedflamer in src.contents))
 			. += "<br>\A [linkedflamer] is stowed away neatly in a compartment."
 
 	attackby(obj/item/W, mob/user)
+		if (src.loc == user && W != linkedflamer && istype(W, /obj/item/gun/flamethrower/backtank))
+			if (linkedflamer && (linkedflamer in src.contents))
+				boutput(user, "<span class='notice'>There already a flamethrower stowed in your [src.name].</span>")
+			else
+				var/obj/item/gun/flamethrower/backtank/flamer = W
+				if (flamer.fueltank != null)
+					var/obj/item/tank/jetpack/backtank/B = flamer.fueltank
+					B.linkedflamer = null
+				if (linkedflamer != null)
+					linkedflamer.gastank = null
+					linkedflamer.fueltank = null
+				linkedflamer = flamer
+				flamer.gastank = src
+				flamer.fueltank = src
 		if(src.loc == user && linkedflamer && W == linkedflamer)
 			boutput(user, "<span class='notice'>You stow [W] into your [src.name].</span>")
 			user.u_equip(W)
@@ -361,8 +375,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/rods/rod = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -382,8 +396,8 @@ A Flamethrower in various states of assembly
 	var/obj/item/device/igniter/igniter = null
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL

@@ -46,7 +46,7 @@
 	name = "Tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
-	icon_state = "tree" // changed from 0.0
+	icon_state = "tree" // changed from 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -232,7 +232,7 @@
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
-				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
@@ -357,6 +357,7 @@
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
+		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
@@ -1282,8 +1283,8 @@ obj/decoration/gibberBroken
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "table_parts"
 	density = 1
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL

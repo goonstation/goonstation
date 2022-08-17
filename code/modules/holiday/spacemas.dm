@@ -127,7 +127,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		krampus_spawned = 1
 
 	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.key] at [log_loc(L)].")
-	logTheThing("admin", L, null, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
+	logTheThing(LOG_ADMIN, L, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
 	xmas_respawn_lock = 0
 	return
 
@@ -258,7 +258,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	cost = 25
 	dissipation_rate = 2
 	dissipation_delay = 4
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "stun"
 	shot_sound = 'sound/effects/pop.ogg'
 	shot_number = 1
@@ -622,7 +622,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	New()
 		..()
 		light = new /datum/light/point
-		light.set_color(0.20, 0.60, 0.90)
+		light.set_color(0.2, 0.6, 0.9)
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()

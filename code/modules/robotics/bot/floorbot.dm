@@ -6,8 +6,8 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -18,8 +18,8 @@
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL

@@ -137,9 +137,9 @@ var/global/cloning_with_records = TRUE
 		new /obj/item/cloneModule/genepowermodule(src.loc)
 		src.BE = null
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
@@ -167,7 +167,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -177,7 +177,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -190,7 +190,7 @@ var/global/cloning_with_records = TRUE
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing("combat", src, user, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 
@@ -425,7 +425,7 @@ proc/find_ghost_by_key(var/find_key)
 	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -545,7 +545,7 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user))
+		if (!isalive(user) || iswraith(user) || isintangible(user))
 			return
 		src.go_out()
 		add_fingerprint(user)
@@ -719,7 +719,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("station", usr, null, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null
@@ -864,13 +864,13 @@ proc/find_ghost_by_key(var/find_key)
 		"geneticAnalysis" = src.gen_analysis,
 		"podNames" = list(),
 		"meatLevels" = list(),
-		"cloneSlave" = list(),
+		"cloneHack" = list(),
 		"completion" = list(),
 	)
 	for (var/obj/machinery/clonepod/P in src.linked_pods)
 		.["podNames"] += P.name
 		.["meatLevels"] += P.meat_level
-		.["cloneSlave"] += P.cloneslave
+		.["cloneHack"] += P.clonehack
 		.["completion"] += P.get_progress()
 	if(!isnull(src.scanner))
 		. += list(

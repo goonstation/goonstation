@@ -271,6 +271,7 @@ var/global
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
@@ -316,35 +317,35 @@ var/global
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
 
-	///////////////
+	//
 	//cyberorgan damage thresholds for emagging without emag
 	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
-	///////////////
-	list/logs = list ( //Loooooooooogs
-		"admin_help" = list (  ),
-		"speech" = list (  ),
-		"ooc" = list (  ),
-		"combat" = list (  ),
-		"station" = list (  ),
-		"pdamsg" = list (  ),
-		"admin" = list (  ),
-		"mentor_help" = list (  ),
-		"telepathy" = list (  ),
-		"bombing" = list (  ),
-		"signalers" = list (  ),
-		"atmos" = list (  ),
-		"debug" = list (  ),
-		"pathology" = list (  ),
-		"deleted" = list (  ),
-		"vehicle" = list (  ),
-		"tgui" = list (), //me 2
-		"computers" = list(),
-		"audit" = list()//im a rebel, i refuse to add that gross SPACING
+	/// Loooooooooogs
+	list/logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_PDAMSG		=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_SIGNALERS	=	list(),
+		LOG_STATION		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_VEHICLE		=	list(),
 	)
-	savefile/compid_file 	//The file holding computer ID information
-	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
+	/// The file holding computer ID information
+	savefile/compid_file
+
+	/// Should we be analysing the comp IDs of new clients?
+	do_compid_analysis = 1
+
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
@@ -357,6 +358,7 @@ var/global
 	// Controllers
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
 	datum/sun/sun = null
@@ -422,15 +424,15 @@ var/global
 	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
 	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
 	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindslave = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave")
-	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave_master")
+	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
+	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
 	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
 	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyslave = image('icons/mob/antag_overlays.dmi', icon_state = "spyslave")
+	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
 	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
 	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")

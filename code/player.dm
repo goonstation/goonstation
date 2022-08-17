@@ -228,12 +228,12 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", target, null, "failed to have their cloud data loaded: Couldn't reach Goonhub")
+			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: Couldn't reach Goonhub")
 			return
 
 		var/list/ret = json_decode(response.body)
 		if(ret["status"] == "error")
-			logTheThing( "debug", target, null, "failed to have their cloud data loaded: [ret["error"]["error"]]" )
+			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: [ret["error"]["error"]]")
 			return
 		else
 			return ret

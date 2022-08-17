@@ -28,7 +28,7 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through

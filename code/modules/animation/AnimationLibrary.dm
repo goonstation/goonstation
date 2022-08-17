@@ -17,46 +17,70 @@
 	animate(A, alpha = 0,  transform = M2, time = 10, easing = LINEAR_EASING)
 
 /proc/animate_fade_grayscale(var/atom/A, var/time=5)
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
-	animate(A, color=list(0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0, 0, 0, 1), time=time, easing=SINE_EASING)
-	return
+	var/start = COLOR_MATRIX_IDENTITY
+	var/end = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_grayscale(var/atom/A, var/time=5)
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0.33, 0.33, 0.33, 0, 0, 0, 0, 1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0.33,0.33,0.33,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_1(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_1 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_from_drug_2(var/atom/A, var/time=5) //This smoothly fades from animated_fade_drug_inbetween_2 to normal colors
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = COLOR_MATRIX_IDENTITY
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_1(var/atom/A, var/time=5) //This fades from red being green, green being blue and blue being red to red being blue, green being red and blue being green
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1)
-	animate(A, color=list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_fade_drug_inbetween_2(var/atom/A, var/time=5) //This fades from rred being blue, green being red and blue being green to red being green, green being blue and blue being red
-	if (!istype(A) && !isclient(A))
-		return
-	A.color = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1)
-	animate(A, color=list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1), time=time, easing=SINE_EASING)
-	return
+	var/start = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	var/end = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	if (isclient(A))
+		var/client/C = A
+		C.set_color(start)
+		C.animate_color(end, time=time, easing=SINE_EASING)
+	else
+		A.color = start
+		animate(A, color=end, time=time, easing=SINE_EASING)
 
 /proc/animate_melt_pixel(var/atom/A)
 	if (!istype(A))
@@ -1513,7 +1537,10 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_turf_slidein(turf/T, new_turf_type, dir, time)
 	var/obj/overlay/tile_effect/sliding_turf/slide = new(T)
 	var/had_fullbright = T.fullbright
-	T.ReplaceWith(new_turf_type)
+	if(station_repair.station_generator && T.z == Z_LEVEL_STATION)
+		station_repair.repair_turfs(list(T))
+	else
+		T.ReplaceWith(new_turf_type)
 	T.layer -= 2
 	var/list/tr
 	switch(dir)

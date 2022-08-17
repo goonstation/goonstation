@@ -12,8 +12,8 @@ var/global/debug_messages = 0
 	ADMIN_ONLY
 
 	debug_messages = !(debug_messages)
-	logTheThing("admin", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled debug messages [debug_messages ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled debug messages [debug_messages ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled debug messages [debug_messages ? "on" : "off"]")
 
 /client/proc/debug_deletions()
@@ -212,8 +212,8 @@ var/global/debug_messages = 0
 
 		boutput(usr, "<span class='notice'>'[procname]' called on [length(results)] instances of '[thetype]'</span>")
 		message_admins("<span class='alert'>Admin [key_name(src)] called '[procname]' on all instances of '[thetype]'</span>")
-		logTheThing("admin", src, null, "called [procname] on all instances of [thetype]")
-		logTheThing("diary", src, null, "called [procname] on all instances of [thetype]")
+		logTheThing(LOG_ADMIN, src, "called [procname] on all instances of [thetype]")
+		logTheThing(LOG_DIARY, src, "called [procname] on all instances of [thetype]")
 	else
 		boutput(usr, "No type matches for [typename]")
 		return
@@ -323,8 +323,8 @@ var/global/debug_messages = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M))
-		logTheThing("admin", src, M, "has mobile-AIized [constructTarget(M,"admin")]")
-		logTheThing("diary", src, M, "has mobile-AIized [constructTarget(M,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, src, "has mobile-AIized [constructTarget(M,"admin")]")
+		logTheThing(LOG_DIARY, src, "has mobile-AIized [constructTarget(M,"diary")]", "admin")
 		SPAWN(1 SECOND)
 			M:AIize(1)
 
@@ -348,8 +348,8 @@ var/global/debug_messages = 0
 			M.set_loc(new_loc)
 			M.buckled = null
 		message_admins("<span class='alert'>Admin [key_name(src)] AIized [key_name(M)]!</span>")
-		logTheThing("admin", src, M, "AIized [constructTarget(M,"admin")]")
-		logTheThing("diary", src, M, "AIized [constructTarget(M,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, src, "AIized [constructTarget(M,"admin")]")
+		logTheThing(LOG_DIARY, src, "AIized [constructTarget(M,"diary")]", "admin")
 		return H.AIize()
 
 	else
@@ -393,8 +393,8 @@ var/global/debug_messages = 0
 		alert("Wait until the game starts")
 		return
 	if(ishuman(M) && M.mind != null)
-		logTheThing("admin", src, M, "has made [constructTarget(M,"admin")] a changeling.")
-		logTheThing("diary", src, M, "has made [constructTarget(M,"diary")] a changeling.", "admin")
+		logTheThing(LOG_ADMIN, src, "has made [constructTarget(M,"admin")] a changeling.")
+		logTheThing(LOG_DIARY, src, "has made [constructTarget(M,"diary")] a changeling.", "admin")
 		SPAWN(1 SECOND)
 			M.mind.absorbed_dna[M.bioHolder] = M.real_name
 			M.make_changeling()
@@ -435,8 +435,8 @@ var/global/debug_messages = 0
 
 		if(numdeleted == 0) boutput(usr, "No instances of [hsbitem] found!")
 		else boutput(usr, "Deleted [numdeleted] instances of [hsbitem]!")
-		logTheThing("admin", src, null, "has deleted [numdeleted] instances of [hsbitem].")
-		logTheThing("diary", src, null, "has deleted [numdeleted] instances of [hsbitem].", "admin")
+		logTheThing(LOG_ADMIN, src, "has deleted [numdeleted] instances of [hsbitem].")
+		logTheThing(LOG_DIARY, src, "has deleted [numdeleted] instances of [hsbitem].", "admin")
 		message_admins("[key_name(src)] has deleted [numdeleted] instances of [hsbitem].")
 		src.verbs -= /client/proc/cmd_debug_del_all_cancel
 		src.verbs -= /client/proc/cmd_debug_del_all_check
@@ -478,8 +478,8 @@ var/global/debug_messages = 0
 
 		if(numtotal == 0) boutput(usr, "No instances of [hsbitem] found!")
 		else boutput(usr, "Deleted [numdeleted]/[numtotal] instances of [hsbitem]!")
-		logTheThing("admin", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
-		logTheThing("diary", src, null, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].", "admin")
+		logTheThing(LOG_ADMIN, src, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
+		logTheThing(LOG_DIARY, src, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].", "admin")
 		message_admins("[key_name(src)] has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
 		src.verbs -= /client/proc/cmd_debug_del_all_cancel
 		src.verbs -= /client/proc/cmd_debug_del_all_check
@@ -514,8 +514,8 @@ var/global/debug_messages = 0
 	var/width = input("Enter WIDTH of Explosion\nLeave it on 360 if you have no idea what this does.", "Width", 360) as num
 	var/turf_safe = alert("Do you want to make the explosion safe for turfs?", "Turf safe?", "Yes", "No") == "Yes"
 
-	logTheThing("admin", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
-	logTheThing("diary", src, null, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
+	logTheThing(LOG_ADMIN, src, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
+	logTheThing(LOG_DIARY, src, "created an explosion (power [esize], brisance [bris]) at [log_loc(T)].", "admin")
 	message_admins("[key_name(src)] has created an explosion (power [esize], brisance [bris]) at [log_loc(T)].")
 
 	explosion_new(null, T, esize, bris, angle, width, turf_safe=turf_safe)
@@ -830,8 +830,8 @@ var/global/debug_camera_paths = 0
 		remove_camera_paths()
 
 	message_admins("[key_name(usr)] [debug_camera_paths ? "displayed" : "hid"] all camera connections!")
-	logTheThing("admin", usr, null, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!")
-	logTheThing("diary", usr, null, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!", "admin")
+	logTheThing(LOG_ADMIN, usr, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!")
+	logTheThing(LOG_DIARY, usr, "[debug_camera_paths ? "displayed" : "hid"] all camera connections!", "admin")
 
 proc/display_camera_paths()
 	remove_camera_paths() //Clean up any old ones laying around before displaying this
@@ -868,8 +868,8 @@ proc/display_camera_paths()
 
 	camera_network_reciprocity = !camera_network_reciprocity
 	boutput(usr, "<span class='notice'>Toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]</span>")
-	logTheThing("admin", usr, null, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
-	logTheThing("diary", usr, null, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
+	logTheThing(LOG_DIARY, usr, "toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]", "admin")
 	message_admins("[key_name(usr)] toggled camera network reciprocity [camera_network_reciprocity ? "on" : "off"]")
 
 	//Force a complete rebuild
@@ -897,8 +897,8 @@ proc/display_camera_paths()
 	if (!ishuman(src.mob))
 		return boutput(usr, "<span class='alert'>Error: client mob is invalid type or does not exist</span>")
 	randomize_look(src.mob)
-	logTheThing("admin", usr, null, "randomized their appearance")
-	logTheThing("diary", usr, null, "randomized their appearance", "admin")
+	logTheThing(LOG_ADMIN, usr, "randomized their appearance")
+	logTheThing(LOG_DIARY, usr, "randomized their appearance", "admin")
 
 /client/proc/cmd_randomize_handwriting()
 	set name = "Randomize Handwriting"
@@ -909,8 +909,8 @@ proc/display_camera_paths()
 	if (src.mob && src.mob.mind)
 		src.mob.mind.handwriting = pick(handwriting_styles)
 		boutput(usr, "<span class='notice'>Handwriting style is now: [src.mob.mind.handwriting]</span>")
-		logTheThing("admin", usr, null, "randomized their handwriting style: [src.mob.mind.handwriting]")
-		logTheThing("diary", usr, null, "randomized their handwriting style: [src.mob.mind.handwriting]", "admin")
+		logTheThing(LOG_ADMIN, usr, "randomized their handwriting style: [src.mob.mind.handwriting]")
+		logTheThing(LOG_DIARY, usr, "randomized their handwriting style: [src.mob.mind.handwriting]", "admin")
 
 #ifdef MACHINE_PROCESSING_DEBUG
 /client/proc/cmd_display_detailed_machine_stats()
@@ -1065,8 +1065,8 @@ proc/display_camera_paths()
 		return
 	if (alert("Create: \"[new_style_name]\" with icon [new_style]?", "Confirmation", "Yes", "No") == "Yes")
 		hud_style_selection[new_style_name] = new_style
-		logTheThing("admin", usr, null, "added a new HUD style with the name \"[new_style_name]\"")
-		logTheThing("diary", usr, null, "added a new HUD style with the name \"[new_style_name]\"", "admin")
+		logTheThing(LOG_ADMIN, usr, "added a new HUD style with the name \"[new_style_name]\"")
+		logTheThing(LOG_DIARY, usr, "added a new HUD style with the name \"[new_style_name]\"", "admin")
 		message_admins("[key_name(usr)] added a new HUD style with the name \"[new_style_name]\"")
 
 
@@ -1077,11 +1077,11 @@ proc/display_camera_paths()
 	ADMIN_ONLY
 
 	if(!islist(usr.client.color))
-		usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+		src.set_color()
 
 	var/list/newColorMatrix = generate_random_value_list(2, 20)
+	src.animate_color(newColorMatrix)
 
-	animate(usr.client, color=newColorMatrix, time=5, easing=SINE_EASING)
 	var/matrixTable = "<table>"
 	var/isBigMatrix = (newColorMatrix.len == 20)
 	var/rows = isBigMatrix ? 5 : 4
@@ -1108,8 +1108,8 @@ proc/display_camera_paths()
 	ADMIN_ONLY
 
 	if(alert("This will IRREVERSIBLY FUCK UP THE STATION and might be laggy, do not use this live. Are you sure?","Misclick Prevention","Yes","No") == "Yes")
-		logTheThing("admin", usr, null, "started a mass flocktile conversion at [log_loc(usr)]")
-		logTheThing("diary", usr, null, "started a mass flocktile conversion at [log_loc(usr)]", "admin")
+		logTheThing(LOG_ADMIN, usr, "started a mass flocktile conversion at [log_loc(usr)]")
+		logTheThing(LOG_DIARY, usr, "started a mass flocktile conversion at [log_loc(usr)]", "admin")
 		message_admins("[key_name(usr)] started a mass flocktile conversion at [log_loc(usr)]")
 		mass_flock_convert_turf(get_turf(usr))
 
@@ -1133,8 +1133,8 @@ var/datum/flock/testflock
 	if(alert("Really clear the string cache?","Invalidate String Cache","OK","Cancel") == "OK")
 		var/length = length(string_cache)
 		string_cache = new
-		logTheThing("admin", usr, null, "cleared the string cache, clearing [length] existing list(s).")
-		logTheThing("diary", usr, null, "cleared the string cache, clearing [length] existing list(s).", "admin")
+		logTheThing(LOG_ADMIN, usr, "cleared the string cache, clearing [length] existing list(s).")
+		logTheThing(LOG_DIARY, usr, "cleared the string cache, clearing [length] existing list(s).", "admin")
 		boutput(src, "String cache invalidated. [length] list(s) cleared.")
 
 /client/proc/edit_color_matrix()
@@ -1178,12 +1178,12 @@ var/datum/flock/testflock
 
 	Topic(href, href_list)
 		if(!islist(usr.client.color))
-			usr.client.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1)
+			usr.client.set_color()
 
 		// as somepotato pointed out this form is very insecure, so let's do some serverside verification that we got what we wanted
 		var/sanitised = sanitize(strip_html(href_list["matrix"]))
 		var/list/matrixStrings = splittext(sanitised, ",")
-		// we are expecting 12 strings, so abort if we don't have that many
+		// we are expecting 20 strings, so abort if we don't have that many
 		if(matrixStrings.len != 20)
 			return
 
@@ -1196,15 +1196,15 @@ var/datum/flock/testflock
 
 			if(href_list["animate"] == "y")
 				for(var/client/c)
-					animate(c, color=matrix, time=5, easing=SINE_EASING)
+					c.animate_color(matrix)
 			else
 				for(var/client/c)
-					c.color = matrix
+					c.set_color(matrix)
 		else
 			if(href_list["animate"] == "y")
-				animate(usr.client, color=matrix, time=5, easing=SINE_EASING)
+				usr.client.animate_color(matrix)
 			else
-				usr.client.color = matrix
+				usr.client.set_color(matrix)
 
 	proc/callJsFunc(var/client, var/funcName, var/list/params)
 		var/paramsJS = list2params(params)
@@ -1294,8 +1294,8 @@ var/datum/flock/testflock
 		boutput(usr, "Deletion of profiling logs aborted.")
 		return
 	fdel("data/logs/profiling/")
-	logTheThing("admin", usr, null, "deleted profiling logs.")
-	logTheThing("diary", usr, null, "deleted profiling logs.")
+	logTheThing(LOG_ADMIN, usr, "deleted profiling logs.")
+	logTheThing(LOG_DIARY, usr, "deleted profiling logs.")
 	message_admins("[key_name(usr)] deleted profiling logs.")
 	ircbot.export_async("admin_debug", list("key"=usr.ckey, "msg"="deleted profiling logs for this server."))
 
@@ -1308,7 +1308,7 @@ var/datum/flock/testflock
 	if(alert("Are you sure you want to cause lag?","Why would you do this?","Yes","No") != "Yes")
 		return
 
-	logTheThing("admin", usr, null, "decided to cause lag with parameters of [a] and [b]")
+	logTheThing(LOG_ADMIN, usr, "decided to cause lag with parameters of [a] and [b]")
 
 	var/x = 0
 	boutput(src, "lag start [world.time] [TIME] (x=[x])")
@@ -1326,7 +1326,7 @@ var/datum/flock/testflock
 	if(alert("Are you sure you want to set persistent lag to [cpu_usage]?","Why would you do this?","Yes","No") != "Yes")
 		return
 
-	logTheThing("admin", usr, null, "decided to set persistent lag to [cpu_usage]%.")
+	logTheThing(LOG_ADMIN, usr, "decided to set persistent lag to [cpu_usage]%.")
 
 	var/static/target_lag = null
 	target_lag = cpu_usage

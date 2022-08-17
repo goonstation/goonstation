@@ -619,7 +619,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
-						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -682,7 +682,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
-							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
+							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -1740,7 +1740,7 @@
 								animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 							//TACTICOOL FLOPOUT
 							if (src.traitHolder.hasTrait("matrixflopout") && src.stance != "dodge")
-								src.remove_stamina(STAMINA_FLIP_COST * 2.0)
+								src.remove_stamina(STAMINA_FLIP_COST * 2)
 								message = "<B>[src]</B> does a tactical flip!"
 								src.stance = "dodge"
 								SPAWN(0.2 SECONDS) //I'm sorry for my transgressions there's probably a way better way to do this
@@ -1822,7 +1822,7 @@
 											src.stamina_stun()
 										combatflipped |= M
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
+										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -1899,7 +1899,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1915,7 +1915,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1940,7 +1940,7 @@
 									message = "<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet."
 								else
 									message = "<B>[src]</B> pees in the toilet."
-								toilet.clogged += 0.10
+								toilet.clogged += 0.1
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
@@ -1973,7 +1973,7 @@
 								for (var/obj/item/storage/toilet/T in src.loc)
 									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
 									src.urine = 0
-									T.clogged += 0.10
+									T.clogged += 0.1
 									break
 							else
 								message = "<B>[src]</B> unzips [his_or_her(src)] pants but, try as [he_or_she(src)] might, [he_or_she(src)] can't pee in the toilet!"
@@ -2237,7 +2237,7 @@
 							I.bump_up(chat_text.measured_height)
 
 			if (message)
-				logTheThing("say", src, null, "EMOTE: [message]")
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
@@ -2254,7 +2254,7 @@
 	else
 
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			act = lowertext(act)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
@@ -2361,7 +2361,7 @@
 
 	src.emote("scream")
 	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-	logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))

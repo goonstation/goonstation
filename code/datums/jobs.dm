@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	receives_implant = /obj/item/implant/health/security/anti_mindslave
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	items_in_backpack = list(/obj/item/device/flash)
 
 
@@ -1383,14 +1383,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
 
-/datum/job/special/musician
-	name = "Musician"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-	slot_head = list(/obj/item/clothing/head/flatcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+///datum/job/special/musician
+//	name = "Musician"
+//	wages = PAY_UNTRAINED
+//	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+//	slot_head = list(/obj/item/clothing/head/flatcap)
+//	slot_foot = list(/obj/item/clothing/shoes/brown)
+//	slot_ears = list(/obj/item/device/radio/headset/civilian)
+//	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 // randomizd gimmick jobs
 
@@ -1461,9 +1461,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return
@@ -1596,9 +1596,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return
@@ -2685,15 +2685,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
 			M.set_mutantrace(morph)
 
-/datum/job/daily/saturday
-	name = "Musician"
-	limit = 3
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-	slot_head = list(/obj/item/clothing/head/flatcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+///datum/job/daily/saturday
+//	name = "Musician"
+//	limit = 3
+//	wages = PAY_UNTRAINED
+//	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+//	slot_head = list(/obj/item/clothing/head/flatcap)
+//	slot_foot = list(/obj/item/clothing/shoes/brown)
+//	slot_ears = list(/obj/item/device/radio/headset/civilian)
+//	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/battler
 	name = "Battler"

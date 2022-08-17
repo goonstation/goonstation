@@ -36,7 +36,7 @@
 		if (iscarbon(user) || ismobcritter(user))
 			user.visible_message("[user] swallows [src].",\
 			"<span class='notice'>You swallow [src].</span>")
-			logTheThing("combat", user, null, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
 			if (reagents.total_volume)
 				reagents.reaction(user, INGEST)
 				sleep(0.1 SECONDS)
@@ -61,7 +61,7 @@
 			else
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
 				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing("combat", user, M, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
 				actions.start(new/datum/action/bar/icon/pill(M, src, src.icon, src.icon_state), user)
 			return 1
 
@@ -97,7 +97,7 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing("combat", user, null, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)

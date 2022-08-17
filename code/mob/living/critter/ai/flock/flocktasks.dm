@@ -82,7 +82,7 @@ stare
 //this whole AI thing was built for flock, and even so, flock just has to be special
 /datum/aiTask/succeedable/move/flock/succeeded()
 	if(move_target)
-		. = (get_dist(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) == 0)
 		if(.)
 			var/mob/living/critter/flock/drone/F = holder.owner
 			if(istype(F) && F.floorrunning)
@@ -798,7 +798,7 @@ stare
 			holder.interrupt()
 			return
 
-		var/dist = get_dist(owncritter, holder.target)
+		var/dist = GET_DIST(owncritter, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
@@ -825,21 +825,23 @@ stare
 	if(!F?.flock)
 		return
 
-	for(var/atom/T in F.flock.enemies)
-		if(istype(T.loc, /obj/flock_structure/cage))
+	var/list/surroundings = view(holder.owner, target_range)
+
+	for(var/atom/A as anything in F.flock.enemies)
+		if(istype(A.loc, /obj/flock_structure/cage))
 			continue
-		if (isvehicle(T.loc))
-			if(T.loc in view(holder.owner, target_range))
-				F.flock.updateEnemy(T)
-				F.flock.updateEnemy(T.loc)
-				. += T.loc
-		else if(T in view(holder.owner,target_range))
-			F.flock.updateEnemy(T)
-			if(isliving(T))
-				var/mob/living/M = T
+		if (isvehicle(A.loc))
+			if(A.loc in surroundings)
+				F.flock.updateEnemy(A)
+				F.flock.updateEnemy(A.loc)
+				. += A.loc
+		else if(A in surroundings)
+			F.flock.updateEnemy(A)
+			if(isliving(A))
+				var/mob/living/M = A
 				if(is_incapacitated(M))
 					continue
-			. += T
+			. += A
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1030,7 +1032,7 @@ stare
 		return TRUE
 	if(!F.can_afford(FLOCK_BARRICADE_COST))
 		return TRUE
-	if(get_dist(F, holder.target) > 1) // drone moved away
+	if(GET_DIST(F, holder.target) > 1) // drone moved away
 		return TRUE
 
 /datum/aiTask/succeedable/barricade/succeeded()
@@ -1041,7 +1043,7 @@ stare
 		var/mob/living/critter/flock/drone/drone = holder.owner
 		if(drone.floorrunning)
 			drone.end_floorrunning(TRUE)
-		var/dist = get_dist(drone, holder.target)
+		var/dist = GET_DIST(drone, holder.target)
 		if(dist > 1)
 			holder.interrupt() //this should basically never happen, but sanity check just in case
 			return

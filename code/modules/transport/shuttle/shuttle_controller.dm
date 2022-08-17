@@ -310,7 +310,7 @@ datum/shuttle_controller
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
 						playsound_global(world, "sound/misc/shuttle_centcom.ogg", 100)
-						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
+						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
 
 						location = SHUTTLE_LOC_RETURNED
@@ -332,7 +332,7 @@ datum/shuttle_controller
 							if (istype(O, transit_turf))
 								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
 						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
-						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
+						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
 						return 1
 				else

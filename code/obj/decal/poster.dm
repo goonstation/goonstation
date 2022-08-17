@@ -715,8 +715,8 @@
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
 					if("contest-other2")
-						src.name = "Mindslaver Device Poster"
-						src.icon_state = "mindslaver"
+						src.name = "Mindhacker Device Poster"
+						src.icon_state = "mindhacker"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -1113,7 +1113,7 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 				if(istype(W,/obj/item/pen/crayon/rainbow))
 					var/obj/item/pen/crayon/rainbow/R = W

@@ -6,6 +6,7 @@
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/CluwneGrim.ogg"
@@ -55,13 +56,13 @@
 	onStart()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
@@ -82,7 +83,7 @@
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-		logTheThing("combat", M, target, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 			target.take_brain_damage(50)

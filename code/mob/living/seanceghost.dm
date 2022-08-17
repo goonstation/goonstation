@@ -104,7 +104,7 @@
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
 
-		logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")

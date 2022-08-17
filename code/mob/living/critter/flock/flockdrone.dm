@@ -71,7 +71,7 @@
 			continue
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
@@ -116,7 +116,7 @@
 
 /mob/living/critter/flock/drone/Login()
 	..()
-	src.client?.color = null
+	src.client?.set_color()
 	if(isnull(controller))
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
@@ -158,7 +158,7 @@
 
 	pilot.set_loc(src)
 	controller = pilot
-	src.client?.color = null
+	src.client?.set_color()
 	//hack to make night vision apply instantly
 	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
 	sight_process?.Process()
@@ -314,6 +314,8 @@
 	flock_speak(src, "No tasks in queue. Allocating higher functions to compute generation.", src.flock)
 	src.is_npc = FALSE
 	src.compute = FLOCK_DRONE_COMPUTE_HIBERNATE
+	src.flock.total_compute += src.compute - FLOCK_DRONE_COMPUTE
+	src.flock.update_computes()
 	src.flock.hideAnnotations(src)
 	src.visible_message("<span class='notice'><b>[src]</b> goes dim and settles on the floor.</span>")
 
@@ -321,6 +323,8 @@
 	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
+	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
+	src.flock.update_computes()
 	src.ai_paused = FALSE
 	src.anchored = FALSE
 	src.wander_count = 0
@@ -451,11 +455,11 @@
 				return "<b>[src]</b> stares intently[(param ? " at [param]." : ".")]"
 		if ("whistle", "beep", "burp")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_beep[pick("1","2","3","4")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> [act]s[(param ? " at [param]." : ".")]"
 		if ("scream", "growl", "abeep", "grump")
 			if (src.emote_check(voluntary, 50))
-				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1)
+				playsound(src, "sound/misc/flockmind/flockdrone_grump[pick("1","2","3")].ogg", 30, 1, extrarange = (voluntary ? 0 : -10))
 				return "<b>[src]</b> beeps grumpily[(param? " at [param]!" : "!")]"
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
@@ -535,7 +539,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
@@ -558,7 +562,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 50, 1, -3)
+	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
@@ -764,7 +768,7 @@
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 50, 1)
+	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 30, 1, extrarange = -10)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -782,6 +786,7 @@
 	say("\[System notification: drone diffracting.\]")
 	if(src.controller)
 		src.release_control()
+	var/datum/flock/F = src.flock
 	src.flock?.removeDrone(src)
 
 	var/turf/T = get_turf(src)
@@ -797,8 +802,7 @@
 
 	var/mob/living/critter/flock/bit/B
 	for(var/i=1 to num_bits)
-		B = new(T, src.flock)
-		src.flock?.registerUnit(B)
+		B = new(T, F)
 		SPAWN(0.2 SECONDS)
 			B.set_loc(pick(candidate_turfs))
 
@@ -1179,7 +1183,7 @@
 		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
-				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 50, 1)
+				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 30, 1, extrarange = -10)
 		if (I.health > 0)
 			return
 		if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
@@ -1190,7 +1194,7 @@
 			I.change_stack_amount(-1)
 			return
 
-	playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 30, 1, extrarange = -10)
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE

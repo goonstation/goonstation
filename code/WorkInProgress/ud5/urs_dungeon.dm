@@ -213,7 +213,7 @@
 			H.emote("scream")
 			playsound(H.loc, "sound/weapons/flashbang.ogg", 25, 1)
 			for (var/mob/N in viewers(src, null))
-				if (get_dist(N, src) <= 6)
+				if (GET_DIST(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
 					shake_camera(N, 6, 32)
@@ -281,7 +281,7 @@
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 
 		for (var/mob/N in viewers(H, null))
-			if (get_dist(N, src) <= 6)
+			if (GET_DIST(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
 				shake_camera(N, 6, 32)
@@ -535,9 +535,9 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/ursium = 0
-	var/s_time = 1.0
+	var/s_time = 1
 	var/content = null
 
 /obj/item/ursium/proc/convert2energy(var/M)

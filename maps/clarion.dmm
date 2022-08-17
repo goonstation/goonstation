@@ -14273,6 +14273,18 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"aCE" = (
+/obj/decal/poster/wallsign/hazard_exheat{
+	pixel_y = 32
+	},
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/space,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "aCG" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
@@ -16169,7 +16181,7 @@
 	icon_state = "dwaine";
 	name = "old mainframe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aHa" = (
 /obj/table/reinforced/chemistry/auto,
@@ -16294,7 +16306,7 @@
 	icon_state = "tapedrive-p";
 	name = "downed server"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aHk" = (
 /turf/simulated/floor/carpet{
@@ -16636,7 +16648,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/computer3/terminal,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aIc" = (
 /obj/machinery/light{
@@ -17106,7 +17118,7 @@
 "aJk" = (
 /obj/table/wood/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aJl" = (
 /obj/table/wood/auto,
@@ -17118,7 +17130,7 @@
 	info = "They won't tell us how exactly this factory works, but I swear every once and a while I feel a faint breeze on me. There's something fishy about this place. James and I are probably going to ditch this place. Backwater assignment anyways, nobody will notice.";
 	name = "Scrawled Note"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aJm" = (
 /obj/storage/closet/biohazard,
@@ -17633,7 +17645,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aKE" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aKF" = (
 /obj/machinery/light_switch/west{
@@ -18035,7 +18047,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aLy" = (
 /obj/securearea{
@@ -20763,7 +20775,7 @@
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aQY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -36169,7 +36181,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bxK" = (
 /obj/storage/closet/office,
@@ -36856,7 +36868,7 @@
 /obj/table/wood/auto,
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bzb" = (
 /obj/cable{
@@ -36901,7 +36913,7 @@
 "bze" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bzf" = (
 /obj/cable{
@@ -40008,7 +40020,7 @@
 /obj/table/wood/auto,
 /obj/item/wrench,
 /obj/item/paper/book/from_file/the_trial,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bFS" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -42616,7 +42628,7 @@
 /area/ghostdrone_factory)
 "bMq" = (
 /obj/machinery/drone_recharger/factory,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMr" = (
 /obj/disposalpipe/block_sensing_outlet{
@@ -42656,7 +42668,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMy" = (
 /obj/disposalpipe/segment{
@@ -42679,7 +42691,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMB" = (
 /obj/disposalpipe/segment{
@@ -42687,7 +42699,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMC" = (
 /obj/disposalpipe/segment{
@@ -42740,7 +42752,7 @@
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMH" = (
 /obj/table/auto,
@@ -42750,7 +42762,7 @@
 /obj/item/light/bulb,
 /obj/item/light/tube,
 /obj/item/light/tube,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMI" = (
 /obj/table/auto,
@@ -42785,7 +42797,7 @@
 /obj/item/sheet/steel/fullstack,
 /obj/item/light/bulb,
 /obj/item/light/bulb,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "bMS" = (
 /obj/machinery/drainage/big,
@@ -43180,11 +43192,11 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "bNy" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
 /obj/decal/poster/wallsign/hazard_exheat{
 	pixel_y = 32
+	},
+/obj/grille/catwalk/cross{
+	dir = 6
 	},
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -43736,7 +43748,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "csQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -44143,10 +44155,6 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/item/device/detective_scanner{
-	pixel_x = 10;
-	pixel_y = 10
-	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "dxC" = (
@@ -44466,7 +44474,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "eml" = (
 /obj/machinery/light{
 	dir = 4;
@@ -45557,7 +45565,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "gOV" = (
 /obj/machinery/recharger/wall{
 	dir = 1;
@@ -45782,7 +45790,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "hpd" = (
 /obj/cable{
 	d1 = 2;
@@ -46052,7 +46060,9 @@
 	icon_state = "1-4"
 	},
 /obj/blind_switch/area/north{
-	pixel_y = 28
+	pixel_y = 28;
+	pixel_x = 22;
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -46377,7 +46387,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "iMu" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -46747,7 +46757,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "jUC" = (
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -47187,9 +47197,6 @@
 /obj/item/device/prisoner_scanner{
 	pixel_x = -8;
 	pixel_y = 7
-	},
-/obj/item/device/detective_scanner{
-	pixel_x = 12
 	},
 /obj/disposalpipe/segment/food,
 /obj/machinery/camera{
@@ -47655,10 +47662,6 @@
 	dir = 2
 	},
 /obj/item/paper_bin,
-/obj/item/device/detective_scanner{
-	pixel_x = -10;
-	pixel_y = 9
-	},
 /obj/item/pen,
 /obj/item/storage/box/evidence{
 	pixel_x = 5;
@@ -50569,7 +50572,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "tKo" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -80192,7 +80195,7 @@ bHh
 bHM
 bIe
 bIw
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80449,7 +80452,7 @@ bHY
 gtd
 bIt
 bIx
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80706,7 +80709,7 @@ bHZ
 bIg
 bJl
 bIx
-aaH
+aaa
 aay
 aaa
 aaa
@@ -80963,7 +80966,7 @@ bHk
 bHP
 bIh
 bIC
-aaH
+aaa
 aay
 aaa
 aaa
@@ -81191,7 +81194,7 @@ aQR
 euS
 bfd
 bgo
-bhl
+aQR
 biA
 bjP
 bjR
@@ -81220,7 +81223,7 @@ dQp
 jCk
 jCk
 jCk
-bNy
+aCE
 aay
 aaa
 aaa
@@ -82219,7 +82222,7 @@ aQR
 nYD
 uOr
 sVF
-bhl
+aQR
 stU
 rcS
 bld
@@ -82476,7 +82479,7 @@ nXC
 oaj
 etG
 qNC
-bhl
+csQ
 pms
 wMt
 flb

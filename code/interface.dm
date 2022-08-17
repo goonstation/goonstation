@@ -71,18 +71,6 @@
 			set hidden = 1
 			src << link("https://forum.ss13.co")
 
-		savetraits()
-			set hidden = 1
-			set name = ".savetraits"
-			set instant = 1
-
-			if(preferences)
-				if(preferences.traitPreferences.isValid())
-					preferences.ShowChoices(usr)
-				else
-					tgui_alert(usr, "Invalid trait setup. Please make sure you have 0 or more points available.", "Error")
-					preferences.traitPreferences.showTraits(usr)
-
 	proc
 		set_macro(name)
 			winset(src, "mainwindow", "macro=\"[name]\"")

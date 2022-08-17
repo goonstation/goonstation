@@ -125,7 +125,7 @@
 		user = E.mainframe
 	else
 		user = AI
-	if (!isAI(user) || (user.current && get_dist(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
+	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
 		var/font_junk = ""
 		for (var/i in src.fonts)
 			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
@@ -201,7 +201,7 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+				logTheThing(LOG_DEBUG, src, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
@@ -538,7 +538,7 @@ ASC: Aux. Solar Control<BR>
 	icon_state = "flag_neutral"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
@@ -1058,7 +1058,7 @@ as it may become compromised.
 /obj/item/paper/photograph
 	name = "photo"
 	icon_state = "photo"
-	var/photo_id = 0.0
+	var/photo_id = 0
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -1151,7 +1151,7 @@ as it may become compromised.
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
 	uses_multiple_icon_states = 1
-	amount = 10.0
+	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -1243,7 +1243,7 @@ as it may become compromised.
 
 /obj/item/stamp
 	name = "rubber stamp"
-	desc = "A rubber stamp for stamping important documents."
+	desc = "A no-nonsense National Notary rubber stamp for stamping important documents. It has a simple acrylic handle."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
@@ -1330,91 +1330,91 @@ as it may become compromised.
 /obj/item/stamp // static staff stamps
 	cap
 		name = "\improper captain's rubber stamp"
-		desc = "The Captain's rubber stamp for stamping important documents."
+		desc = "The Captain's rubber stamp for stamping important documents. Ooh, it's the really fancy National Notary 'Congressional' model with the fine ebony handle."
 		icon_state = "stamp-cap"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
 	hop
 		name = "\improper head of personnel's rubber stamp"
-		desc = "The Head of Personnel's rubber stamp for stamping important documents."
+		desc = "The Head of Personnel's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
 		icon_state = "stamp-hop"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
 	hos
 		name = "\improper head of security's rubber stamp"
-		desc = "The Head of Security's rubber stamp for stamping important documents."
+		desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 		icon_state = "stamp-hos"
 		special_mode = "Head of Security"
 		is_reassignable = 0
 		assignment = "stamp-hos"
 	ce
 		name = "\improper chief engineer's rubber stamp"
-		desc = "The Chief Engineer's rubber stamp for stamping important documents."
+		desc = "The Chief Engineer's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Mary' models with the ironwood handle."
 		icon_state = "stamp-ce"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
 	md
 		name = "\improper medical director's rubber stamp"
-		desc = "The Medical Director's rubber stamp for stamping important documents."
+		desc = "The Medical Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 		icon_state = "stamp-md"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
 	rd
 		name = "\improper research director's rubber stamp"
-		desc = "The Research Director's rubber stamp for stamping important documents."
+		desc = "The Research Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. John' models with the purpleheart handle."
 		icon_state = "stamp-rd"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
 	clown
 		name = "\improper clown's rubber stamp"
-		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-honk"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
 	centcom
-		name = "\improper centcom rubber stamp"
-		desc = "Some bureaucrat from Centcom probably lost this."
+		name = "\improper centcom executive rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 		icon_state = "stamp-centcom"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
 	mime
 		name = "\improper mime's rubber stamp"
-		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-mime"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
 	chap
 		name = "\improper chaplain's rubber stamp"
-		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the National Notary 'Chesapeake' model in varnished oak."
 		icon_state = "stamp-chap"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
 	qm
 		name = "\improper quartermaster's rubber stamp"
-		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
 	syndicate
 		name = "\improper syndicate rubber stamp"
-		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on. Surprisingly, it's also a National Notary 'Continental'. Not many choices out here."
 		icon_state = "stamp-syndicate"
 		special_mode = "Syndicate"
 		is_reassignable = 0
 		assignment = "stamp-syndicate"
 	law
 		name = "\improper security's rubber stamp"
-		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the rugged National Notary 'Severn' model with the rock maple handle."
 		icon_state = "stamp-syndicate"
 		special_mode = "Security"
 		is_reassignable = 0
@@ -1918,3 +1918,31 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 	New()
 		..()
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+
+obj/item/paper/donut2smesinstructions
+	name = "Donut 2 SMES Units and YOU"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	Donut 2 SMES Units and YOU<br><br>
+
+	A full guide to ensuring the station is powered up properly<br>
+	----------------------------------------<br><br>
+	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
+
+	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
+	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
+
+	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
+	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
+	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
+
+	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
+
+	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
+	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
+	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
+
+	Keep that power flowing,<br>
+	S.L.
+	"}

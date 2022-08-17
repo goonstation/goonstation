@@ -179,7 +179,7 @@ var/global
 		if (json_decode_crasher.Find(cookie))
 			if (src.owner)
 				message_admins("[src.owner] just attempted to crash the server using at least 5 '\['s in a row.")
-				logTheThing("admin", src.owner, null, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
+				logTheThing(LOG_ADMIN, src.owner, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
 
 				//Irc message too
 				var/ircmsg[] = new()
@@ -205,8 +205,8 @@ var/global
 			if (found.len > 0 && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("debug", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("diary", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
+				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
 
 				//Irc message too
 				if(owner)
@@ -273,7 +273,7 @@ var/global
 			src.owner.addBanDialog(targetMob)
 		if ("gib")
 			src.owner.cmd_admin_gib(targetMob)
-			logTheThing("admin", src.owner, targetMob, "gibbed [constructTarget(targetMob,"admin")].")
+			logTheThing(LOG_ADMIN, src.owner, "gibbed [constructTarget(targetMob,"admin")].")
 		if ("popt")
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
@@ -370,7 +370,7 @@ var/global
 			var/list/partial = splittext(iconData, "{")
 
 			if (length(partial) < 2)
-				logTheThing("debug", null, null, "Got invalid savefile data for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Got invalid savefile data for: [obj]")
 				return
 
 			baseData = copytext(partial[2], 3, -5)
@@ -379,7 +379,7 @@ var/global
 			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
 
 			if (!icon)
-				logTheThing("debug", null, null, "Unable to create output icon for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
 				return
 
 			baseData = icon2base64(icon, iconKey)
@@ -414,6 +414,10 @@ var/global
 			C = target
 		else if (ismob(target))
 			C = target:client
+			if(istype(target, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = target
+				if(AI.deployed_to_eyecam)
+					C = AI.eyecam?.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
 

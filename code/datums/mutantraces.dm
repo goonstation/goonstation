@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindslave_status(src.mob)
+				remove_mindhack_status(src.mob)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1140,6 +1140,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
+		// if the head was previous linked to someone else
 		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
@@ -1147,6 +1148,12 @@ TYPEINFO(/datum/mutantrace)
 				H.set_eye(null)
 			S.head_tracker = null
 			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		// if we were previously linked to another head
+		if (src.head_tracker)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
+			src.head_tracker.linked_human = null
 		head_tracker = head
 		head_tracker.linked_human = src.mob
 
@@ -2110,7 +2117,7 @@ TYPEINFO(/datum/mutantrace)
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
 				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
-				T.clogged += 0.10
+				T.clogged += 0.1
 				break
 		else if (beaker)
 			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")

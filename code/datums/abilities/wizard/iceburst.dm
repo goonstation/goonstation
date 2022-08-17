@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
 	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
@@ -69,7 +70,7 @@
 							SPAWN(20 SECONDS)
 								qdel (B)
 					step_to(A,M,0)
-					if (get_dist(A,M) == 0)
+					if (GET_DIST(A,M) == 0)
 						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
 						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
