@@ -56309,16 +56309,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/circuit,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
 "kPG" = (
 /obj/window/reinforced{
