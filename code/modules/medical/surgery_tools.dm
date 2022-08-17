@@ -411,6 +411,8 @@ CONTAINS:
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
+		if(prob(1))
+			user.say("CLEAR!")
 		src.setStatus("defib_charged", 3 SECONDS)
 
 	proc/do_the_shocky_thing(mob/user as mob)
