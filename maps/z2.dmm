@@ -50215,6 +50215,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -50903,6 +50908,11 @@
 "cSU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "cSV" = (
