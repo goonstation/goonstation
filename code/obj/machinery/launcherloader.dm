@@ -482,7 +482,7 @@
 						pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 						poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
-				src.stick_to(target, pox, poy)
+				src.stick_to(target, pox, poy, user)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -495,4 +495,4 @@
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
 		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y)
+		src.stick_to(target, src.pixel_x, src.pixel_y, usr)
