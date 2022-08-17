@@ -44350,10 +44350,6 @@
 	dir = 1
 	},
 /obj/machinery/networked/nuclear_charge,
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
