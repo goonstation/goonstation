@@ -317,7 +317,7 @@
 							boutput(ui.user, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 						else
 							var/requested = "All"
-							if(length(usable_reagents > 1))
+							if(length(usable_reagents) > 1)
 								requested = tgui_input_list(ui.user, "Use which reagent to infuse the seed?", "[src.name]", usable_reagents_names)
 							if (!requested || !S)
 								return
