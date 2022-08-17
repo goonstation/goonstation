@@ -169,6 +169,8 @@
 		var/datum/abilityHolder/wraith/W = src.abilityHolder
 		if(istype(W))
 			W.corpsecount = 0
+			var/datum/targetable/wraithAbility/absorbCorpse/absorb = W.getAbility(/datum/targetable/wraithAbility/absorbCorpse)
+			absorb.doCooldown()
 		src.abilityHolder.points = 0
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard

@@ -163,7 +163,7 @@ Broken RCD + Effects
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
+			if (!restricted_materials || (R?.material?.mat_id in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)

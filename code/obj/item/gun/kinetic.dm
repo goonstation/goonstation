@@ -106,6 +106,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/ammo/bullets/b, mob/user)
 		if(istype(b, /obj/item/ammo/bullets))
+			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
+				return
 			switch (src.ammo.loadammo(b,src))
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
@@ -151,6 +153,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		if ((src.loc == user) && user.find_in_hand(src)) // Make sure it's not on the belt or in a backpack.
 			src.add_fingerprint(user)
+			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
+				return
 			if (src.sanitycheck(0, 1) == 0)
 				user.show_text("You can't unload this gun.", "red")
 				return
