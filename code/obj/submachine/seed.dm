@@ -90,8 +90,21 @@
 					finalColor = "#000000"
 				)
 
+				var/list/contents = thisContainerData["contents"]
 				if(istype(R) && R.reagent_list.len>0)
 					thisContainerData["finalColor"] = R.get_average_rgb()
+					// Reagent data
+					for(var/reagent_id in R.reagent_list)
+						var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+						contents.Add(list(list(
+							name = reagents_cache[reagent_id],
+							id = reagent_id,
+							colorR = current_reagent.fluid_r,
+							colorG = current_reagent.fluid_g,
+							colorB = current_reagent.fluid_b,
+							volume = current_reagent.volume
+						)))
 
 		if(src.splicing1)
 			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
@@ -161,8 +174,6 @@
 					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
 					tgui_process.update_uis(src)
 
-
-
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
 					src.seeds.Remove(S)
@@ -193,17 +204,9 @@
 
 
 			if("sort")
+				boutput(world,params["asc"])
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
-
-			if("label")
-				var/obj/item/I = locate(params["label_ref"]) in src
-				if (istype(I) && !isghostdrone(usr) && !isghostcritter(usr))
-					var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
-					if(newName && newName != I.name)
-						phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
-					if (newName && I && GET_DIST(src, usr) < 2)
-						I.name = newName
 				tgui_process.update_uis(src)
 
 			if("analyze")
@@ -304,14 +307,6 @@
 				else if(!src.splicing2)
 					src.splicing2 = I
 
-				tgui_process.update_uis(src)
-
-
-			if("splice_cancel")
-				playsound(src, "sound/machines/keypress.ogg", 50, 1)
-				src.splicing1 = null
-				src.splicing2 = null
-				src.mode = "seedlist"
 				tgui_process.update_uis(src)
 
 			if("infuse")

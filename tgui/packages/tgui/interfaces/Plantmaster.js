@@ -28,6 +28,7 @@ export const Plantmaster = (props, context) => {
     show_splicing,
     splice_seeds,
     sortBy,
+    sortAsc,
   } = data;
   return (
     <Window
@@ -70,25 +71,41 @@ export const Plantmaster = (props, context) => {
 
 
         {category === 'overview' && <PlantOverview cat_lens={category_lengths} container={inserted ? inserted_container : null} seedoutput={seedoutput} />}
-        {category === 'extractables' && <PlantExtractables seedoutput={seedoutput} produce={extractables} sortBy={sortBy} />}
-        {category === 'seedlist' && <PlantSeeds seeds={seeds} seedoutput={seedoutput} splicing={show_splicing} splice_chance={splice_chance} splice_seeds={splice_seeds} sortBy={sortBy} />}
+        {category === 'extractables' && <PlantExtractables seedoutput={seedoutput} produce={extractables} sortBy={sortBy} sortAsc={sortAsc} />}
+        {category === 'seedlist' && <PlantSeeds seeds={seeds} seedoutput={seedoutput} splicing={show_splicing} splice_chance={splice_chance} splice_seeds={splice_seeds} sortBy={sortBy} sortAsc={sortAsc} />}
       </Window.Content>
     </Window>
   );
 };
-
-const compare = function (a, b, sortBy) {
-  if (!isNaN(a[sortBy]) && !isNaN(b[sortBy])) {
-    return b[sortBy] - a[sortBy];
+const stringCompare = function (strA, strB) {
+  const minlen = Math.min(length(strA), length(strB));
+  for (let i = 0; i < minlen; i++) {
+    if (strA < strB) {
+      return -1;
+    }
+    if (strA > strB) {
+      return 1;
+    }
   }
-  return ('' + a[sortBy]).localeCompare(b[sortBy]);
+  return 0;
+};
+const compare = function (a, b, sortBy, sortAsc) {
+  if (sortBy === "name")
+  {
+    return (sortAsc * -1) * (''+a[sortBy]).localeCompare(b[sortBy]);
+  }
+  if (sortAsc) {
+    return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
+  }
+  else
+  {
+    return parseFloat(b[sortBy]) - parseFloat(a[sortBy]);
+  }
 };
 
 const ReagentDisplay = (props, context) => {
   const { act } = useBackend(context);
-  const { insertable } = props;
   const container = props.container || NoContainer;
-  const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
 
   return (
     <SectionEx
@@ -138,12 +155,12 @@ const TitleRow = (props, context) => {
   const sortname = ["name", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];
   return (
     <TableRow>
-      {headings.map((heading, index) => (show_damage || heading !== "Damage") && (
+      {headings.map((heading, index) => (show_damage || heading !== "damage") && (
         <TableCell key={heading} textAlign="center" >
           <Button
             color="transparent"
-            icon={sortBy === heading ? (sortAsc ? "angle-up" : "angle-down") : ""}
-            onClick={() => act('sort', { sortBy: heading, asc: sortBy === heading ? !sortAsc : sortAsc })}>
+            icon={sortBy === sortname[index] ? (sortAsc ? "angle-up" : "angle-down") : ""}
+            onClick={() => act('sort', { sortBy: sortname[index], asc: (sortBy === sortname[index] ? !sortAsc : sortAsc) })}>
             <b>{capitalize(heading)}</b>
           </Button>
         </TableCell>
@@ -236,7 +253,7 @@ const PlantSeeds = (props, context) => {
   const { act } = useBackend(context);
   const { seedoutput, seeds, splicing, splice_seeds, splice_chance, sortBy, sortAsc } = props;
   const extractables = (seeds || []).sort(
-    (a, b) => (compare(a, b, sortBy))
+    (a, b) => (compare(a, b, sortBy, sortAsc))
   );
   const extractablesPerPage = splicing ? 7 : 10;
   const [page, setPage] = useLocalState(context, 'page', 1);
@@ -250,6 +267,12 @@ const PlantSeeds = (props, context) => {
       title="Seeds"
       buttons={(
         <Flex.Item textAlign="center" basis={1.5}>
+          <Button
+            icon="eject"
+            tooltip="All seeds will be ejected from the Plantmaster"
+            onClick={() => act('ejectseeds')}>
+            Eject All
+          </Button>
           <Button
             icon="caret-left"
             title="Previous Page"
@@ -294,7 +317,7 @@ const PlantSeeds = (props, context) => {
               title="Splicing"
               buttons={
                 <Flex.Item textAlign="center" basis={1.5}>
-                  Splice Chance: {splice_chance}%
+                  Splice Chance: {splice_chance}%&nbsp;
                   <Button onClick={() => act('splice')}>Splice</Button>
                 </Flex.Item>
               }>
@@ -316,7 +339,7 @@ const PlantExtractables = (props, context) => {
   const { act } = useBackend(context);
   const { seedoutput, produce, sortBy, sortAsc } = props;
   const extractables = (produce || []).sort(
-    (a, b) => (compare(a, b, sortBy))
+    (a, b) => (compare(a, b, sortBy, sortAsc))
   );
   const extractablesPerPage = 10;
   const [page, setPage] = useLocalState(context, 'page', 1);
@@ -330,6 +353,12 @@ const PlantExtractables = (props, context) => {
       title="Extractable Items"
       buttons={(
         <Flex.Item textAlign="center" basis={1.5}>
+          <Button
+            icon="eject"
+            tooltip="All produce will be ejected from the Plantmaster"
+            onClick={() => act('ejectextractables')}>
+            Eject All
+          </Button>
           <Button
             icon="caret-left"
             title="Previous Page"
