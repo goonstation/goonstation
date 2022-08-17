@@ -33363,7 +33363,8 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/wall/auto/reinforced/jen/blue,
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "jtX" = (
 /obj/item/device/radio/intercom/medical{
@@ -44349,6 +44350,11 @@
 	dir = 1
 	},
 /obj/machinery/networked/nuclear_charge,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "mFg" = (
@@ -61839,6 +61845,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"rzh" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/blind_switch/area/west,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "rzm" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -129547,7 +129562,7 @@ ero
 pFQ
 qMj
 sMk
-sMk
+rzh
 nRR
 leu
 ltD
