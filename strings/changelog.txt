@@ -1,5 +1,7 @@
 
 (t)wed aug 17 22
+(u)tarmunora
+(*)Defibs must now be primed (used in-hand) before being used, and will discharge themselves 3 seconds after being primed.
 (u)LeahTheTech
 (p)10186
 (e)|
