@@ -48300,10 +48300,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"cem" = (
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/southeast)
 "cen" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/mail/bent/north,
@@ -77137,7 +77133,7 @@
 /area/shuttle/research/outpost)
 "jNp" = (
 /obj/item/paper/book/from_file/monster_manual_revised,
-/turf/simulated/wall/auto/asteroid,
+/turf/space,
 /area/space)
 "jNE" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -87906,7 +87902,7 @@ aaa
 aaa
 aab
 jNp
-aaa
+aab
 aaa
 aaa
 aaa
@@ -139453,7 +139449,7 @@ cdC
 cyX
 cAb
 aaa
-cem
+ceb
 tjt
 ceX
 cib
