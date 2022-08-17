@@ -105,13 +105,13 @@ datum
 				holder?.del_reagent(id)
 				return
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
+						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * raw_volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
 					return 0
@@ -135,7 +135,7 @@ datum
 				id = "syndicate_napalm"
 				description = "Extra sticky, extra burny"
 
-				reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 					. = ..()
 					if(method == TOUCH)
 						var/mob/living/L = M
@@ -399,10 +399,12 @@ datum
 					var/radius = min((volume - 3) * 0.15, 3)
 					fireflash_sm(T, radius, 4500 + volume * 500, 350)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH || method == INGEST)
 					var/mob/living/L = M
+					if(method == TOUCH)
+						volume = raw_volume
 					if(istype(L))
 						if (volume <= 1)
 							L.update_burning(10)
@@ -774,9 +776,9 @@ datum
 						if(!D.reagents) D.create_reagents(10)
 						D.reagents.add_reagent("blackpowder", 5, null)
 				return
-			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/living/carbon/human/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
-				if (ishuman(M) && volume >= 10)
+				if (ishuman(M) && raw_volume >= 10)
 					M.gunshot_residue = 1
 				return
 

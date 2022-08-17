@@ -2,6 +2,10 @@
 (t)wed aug 17 22
 (u)tarmunora
 (*)Defibs must now be primed (used in-hand) before being used, and will discharge themselves 3 seconds after being primed.
+(u)Kubius
+(p)9904
+(e)|
+(*)Chem protection on gear now properly factors into most chemical touch effects. Menders and patches are exempt.
 (u)LeahTheTech
 (p)10186
 (e)|
