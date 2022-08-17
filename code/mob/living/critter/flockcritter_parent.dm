@@ -556,6 +556,7 @@
 		var/mob/living/critter/flock/F = owner
 		if(F && target && in_interact_range(owner, target) && istype(target.loc, /turf))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+			logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
 
