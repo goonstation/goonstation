@@ -29,7 +29,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16) //for the manual attack_hand retaliation
 
 	//mob variables
-	health_deficiency_adjustment = -200000 //prevents them from having movespeed slowdown when injured
+	health_deficiency_adjustment = -INFINITY //prevents them from having movespeed slowdown when injured
 	custom_gib_handler = /proc/robogibs
 	isFlying = 1
 	can_grab = FALSE
