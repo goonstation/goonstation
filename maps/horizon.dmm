@@ -36024,6 +36024,9 @@
 /area/station/security/main)
 "bNV" = (
 /obj/machinery/vending/security,
+/obj/decal/poster/wallsign/disks{
+	pixel_y = 32
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bNW" = (

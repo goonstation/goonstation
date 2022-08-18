@@ -65449,6 +65449,10 @@
 /area/station/hallway/secondary/exit)
 "sDs" = (
 /obj/machinery/light/incandescent/warm,
+/obj/decal/poster/wallsign/disks{
+	pixel_x = -3;
+	pixel_y = -32
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "sDu" = (

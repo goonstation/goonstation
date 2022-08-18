@@ -595,6 +595,12 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_mining"
 
+		disks
+			name = "disk poster"
+			desc = "A poster which seems to highlight the importance of data disks..."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "disks"
+
 		portrait_scientist
 			name = "portrait"
 			desc = "It's a portrait of a rather famous plasma scientist, Sawa Hiromi."

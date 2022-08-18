@@ -58352,6 +58352,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
+"oav" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/disks{
+	pixel_x = -9;
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "red2"
+	},
+/area/station/security/main)
 "oct" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -60041,8 +60053,8 @@
 	pixel_x = -26
 	},
 /obj/machinery/coffeemaker/engineering{
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
@@ -96442,7 +96454,7 @@ aKl
 aLx
 lYi
 aNW
-aOX
+oav
 awK
 aRb
 imT
