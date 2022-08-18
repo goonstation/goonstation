@@ -117,7 +117,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		else
 			src.foldself()
 
-
 	Cross(atom/movable/mover) //code that ensures projectiles hit them when they're alive, but won't when they're dead
 		if(istype(mover, /obj/projectile))
 			return !isalive(src)
@@ -188,7 +187,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 
-		if(isalive(src)) // if they get EMP'd, they don't *actually* die, we we'll want to fix that
+		if(isalive(src)) // if they get EMP'd, they don't *actually* die, so we'll want to fix that
 			qdel(src)
 
 	attack_hand(var/mob/user as mob)
@@ -196,7 +195,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				if(isalive(src))
 					src.is_npc = FALSE
-					ghostize() // should any admins have any funny ideas, prevent crashing
 					boutput(user, "You collapse [src].")
 					src.foldself()
 		else
