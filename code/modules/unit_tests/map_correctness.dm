@@ -1,6 +1,6 @@
 /// Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-// #ifdef RUNTIME_CHECKING
+#ifdef RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()
@@ -88,12 +88,12 @@ proc/check_networked_data_terminals()
 		CRASH("Terminal-less machinery:\n" + jointext(log_lines, "\n"))
 
 proc/check_blinds_switches()
-	var/list/invalid_blinds_ids = list()
+	var/list/blinds_without_switches = list()
 	for_by_tcl(blinds, /obj/window_blinds)
 		if(isnull(blinds.mySwitch))
-			invalid_blinds_ids += "Blind with ID `[blinds.id]` on [blinds.x], [blinds.y], [blinds.z] in [blinds.loc]"
-	if(length(invalid_blinds_ids))
-		CRASH("Blinds IDs without switches:\n" + jointext(invalid_blinds_ids, "\n"))
+			blinds_without_switches += "Blind at [blinds.x], [blinds.y], [blinds.z] in [get_area(blinds)]"
+	if(length(blinds_without_switches))
+		CRASH("Blinds without switches:\n" + jointext(blinds_without_switches, "\n"))
 
 proc/check_apcless_station_areas()
 	var/list/log_lines = list()
@@ -127,4 +127,4 @@ proc/check_unsimulated_station_turfs()
 	if(length(log_lines))
 		CRASH("Unsimulated station turfs:\n" + jointext(log_lines, "\n"))
 
-// #endif
+#endif
