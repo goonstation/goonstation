@@ -339,6 +339,7 @@ var/global
 		LOG_STATION		=	list(),
 		LOG_TELEPATHY	=	list(),
 		LOG_VEHICLE		=	list(),
+		LOG_TOPIC		=	list(),
 	)
 	/// The file holding computer ID information
 	savefile/compid_file

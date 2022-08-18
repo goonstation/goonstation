@@ -1799,6 +1799,52 @@ var/datum/action_controller/actions
 		if (!isnull(S) && syringe_mode == S.mode)
 			S.syringe_action(owner, target)
 
+/datum/action/bar/icon/pill
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	var/mob/mob_owner
+	var/mob/target
+	var/obj/item/reagent_containers/pill/P
+
+	New(var/mob/target, var/item, var/icon, var/icon_state)
+		..()
+		src.target = target
+		if (istype(item, /obj/item/reagent_containers/pill))
+			P = item
+			duration = round(clamp(P.reagents.total_volume, 30, 90) / 3 + 20)
+		else
+			logTheThing("debug", src, null, "/datum/action/bar/icon/pill called with invalid type [item].")
+		src.icon = icon
+		src.icon_state = icon_state
+
+
+	onStart()
+		if (!ismob(owner))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.mob_owner = owner
+
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != P)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (!isnull(P))
+			P.pill_action(owner, target)
+
+
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
