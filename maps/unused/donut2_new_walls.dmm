@@ -9068,6 +9068,7 @@
 /area/station/maintenance/inner/central)
 "aEj" = (
 /obj/machinery/door/airlock/pyro/glass,
+/obj/firedoor_spawn,
 /turf/simulated/floor/arrival{
 	dir = 2
 	},
@@ -12297,6 +12298,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
@@ -14269,11 +14271,6 @@
 /area/station/crew_quarters/fitness)
 "aUn" = (
 /turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
-"aUo" = (
-/obj/machinery/light/incandescent,
-/obj/fitness/speedbag/clown,
-/turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "aUq" = (
 /obj/machinery/camera{
@@ -28039,6 +28036,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"dek" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "dfk" = (
 /obj/machinery/launcher_loader/west{
 	id = "outpostla"
@@ -28681,6 +28688,17 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/hangar/engine)
+"dPY" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 64;
+	text = "NF";
+	pixel_x = 32
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "dQM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32911,6 +32929,11 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
+/obj/item/clothing/head/NTberet{
+	pixel_y = -1;
+	pixel_x = 6;
+	desc = "This one smells like medbay, eugh."
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "igC" = (
@@ -33681,6 +33704,23 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iXG" = (
+/obj/decal/stage_edge/alt,
+/obj/stool/chair{
+	desc = "";
+	icon_state = "chair_pool"
+	},
+/obj/item/clothing/glasses/sunglasses/tanning,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "iXI" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -33766,6 +33806,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jeb" = (
@@ -34258,6 +34299,8 @@
 	dir = 4;
 	pixel_y = 0
 	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "jEI" = (
@@ -34313,6 +34356,11 @@
 /area/station/hallway/primary/west)
 "jHJ" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/machinery/light_switch{
+	name = "W light switch";
+	on = 0;
+	pixel_x = -24
+	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
@@ -34767,6 +34815,11 @@
 "kiD" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_x = -7;
+	pixel_y = 24
+	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "kiY" = (
@@ -35473,6 +35526,10 @@
 /area/station/hydroponics/bay)
 "kUu" = (
 /obj/loudspeaker,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kUH" = (
@@ -37284,6 +37341,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/maintenance/inner/central)
 "mPI" = (
@@ -38359,6 +38417,10 @@
 	pixel_y = 18;
 	tag = ""
 	},
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "nUH" = (
@@ -38911,6 +38973,11 @@
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
@@ -40949,6 +41016,11 @@
 	},
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 25;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -47722,6 +47794,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
 /turf/simulated/floor/carpet/arcade,
 /area/station/maintenance/inner/central)
 "xHg" = (
@@ -81407,7 +81481,7 @@ aDp
 aEk
 kiD
 tEO
-aGE
+iXG
 aLi
 aLf
 rql
@@ -83527,7 +83601,7 @@ mOL
 mOL
 mOL
 sWx
-mOL
+dek
 mOL
 jcS
 oJW
@@ -85956,7 +86030,7 @@ ptj
 qup
 ohS
 koB
-aUo
+vJC
 aPr
 uSn
 mmb
@@ -86552,7 +86626,7 @@ aJC
 aJC
 aNr
 wOT
-hEQ
+dPY
 pBy
 mTi
 hEQ
