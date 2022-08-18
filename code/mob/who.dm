@@ -82,8 +82,8 @@
 	boutput(usr, rendered)
 
 	if (!usr.client.holder)
-		logTheThing("admin", usr, null, "used Who and saw [whoAdmins.len] admins.")
-		logTheThing("diary", usr, null, "used Who and saw [whoAdmins.len] admins.", "admin")
+		logTheThing(LOG_ADMIN, usr, "used Who and saw [whoAdmins.len] admins.")
+		logTheThing(LOG_DIARY, usr, "used Who and saw [whoAdmins.len] admins.", "admin")
 		if (whoAdmins.len < 1)
 			for (var/client/C in clients)
 				if (C.holder && C.holder.adminwho_alerts && !C.player_mode)
@@ -124,8 +124,8 @@
 	boutput(usr, rendered)
 
 	if(!usr.client.holder)
-		logTheThing("admin", usr, null, "used adminwho and saw [adwnum] admins.")
-		logTheThing("diary", usr, null, "used adminwho and saw [adwnum] admins.", "admin")
+		logTheThing(LOG_ADMIN, usr, "used adminwho and saw [adwnum] admins.")
+		logTheThing(LOG_DIARY, usr, "used adminwho and saw [adwnum] admins.", "admin")
 		for(var/client/C in clients)
 			if(C.holder && C.holder.adminwho_alerts && !C.player_mode)
 				boutput(C,"<span class='admin'>ADMIN LOG: [key_name(usr)] used adminwho and saw [adwnum] admins.</span>")

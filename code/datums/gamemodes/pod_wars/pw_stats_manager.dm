@@ -197,7 +197,7 @@ Player Stats
 	//returns html text
 	proc/build_rewards_text(var/list/L)
 		if (!islist(L) || !length(L))
-			logTheThing("debug", null, null, "Something trying to write one of the lists for stats...")
+			logTheThing(LOG_DEBUG, null, "Something trying to write one of the lists for stats...")
 			return
 
 		var/cr_stats_NT = ""

@@ -448,7 +448,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
-	logTheThing("combat", user, null, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
+	logTheThing(LOG_COMBAT, user, "fires \a [src] from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, projectile: <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", [P.proj_data.type]" : null]")
 
 /obj/item/gun/examine()
 	if (src.artifact)
@@ -467,11 +467,11 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return
 
 	else if (istype(G, /obj/item/gun/kinetic) && istype(A, /obj/item/ammo/bullets))
-		logTheThing("combat", user, null, "reloads [G] (<b>Ammo type:</b> <i>[G.current_projectile.type]</i>) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "reloads [G] (<b>Ammo type:</b> <i>[G.current_projectile.type]</i>) at [log_loc(user)].")
 		return
 
 	else if (istype(G, /obj/item/gun/energy) && istype(A, /obj/item/ammo/power_cell))
-		logTheThing("combat", user, null, "reloads [G] (<b>Cell type:</b> <i>[A.type]</i>) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "reloads [G] (<b>Cell type:</b> <i>[A.type]</i>) at [log_loc(user)].")
 		return
 
 	else return

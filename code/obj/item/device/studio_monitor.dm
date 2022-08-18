@@ -308,7 +308,7 @@
 
 					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
-			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
+			logTheThing(LOG_COMBAT, src.the_mob, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
 
 	// Songs

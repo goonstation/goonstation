@@ -113,7 +113,7 @@
 
 				playsound(cam, "sound/machines/mixer.ogg", 50, 1)
 
-				logTheThing("combat", holder.owner, null, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
+				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
 				var/obj/foam = new reagent_capsule(get_turf(cam))
 				foam.throw_at(target, 10, 1)
@@ -199,7 +199,7 @@
 				cam.add_filter("charge_outline", 0, outline_filter(size=0, color=charge_color))
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
-					logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
+					logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
 					shoot_projectile_ST(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
@@ -489,7 +489,7 @@
 				C = cam
 
 		if(C)
-			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
+			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
 			playsound(C, "sound/weapons/flash.ogg", 100, 1)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))

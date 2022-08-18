@@ -77,7 +77,7 @@
 
 /mob/living/silicon/hivebot/death(gibbed)
 	if (src.mainframe)
-		logTheThing("combat", src, null, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+		logTheThing(LOG_COMBAT, src, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 		src.mainframe.return_to(src)
 	if (src.camera)
 		src.camera.set_camera_status(FALSE)
@@ -389,7 +389,7 @@
 			return
 
 	if ((message && isalive(src)))
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='emote'>[message]</span>", m_type)

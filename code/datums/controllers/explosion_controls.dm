@@ -187,11 +187,11 @@ var/datum/explosion_controller/explosions
 				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
 				if (source?.fingerprintslast)
-					logTheThing("bombing", source.fingerprintslast, null, logmsg)
-					logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
+					logTheThing(LOG_BOMBING, source.fingerprintslast, logmsg)
+					logTheThing(LOG_DIARY, source.fingerprintslast, logmsg, "combat")
 				else
-					logTheThing("bombing", user, null, logmsg)
-					logTheThing("diary", user, null, logmsg, "combat")
+					logTheThing(LOG_BOMBING, user, logmsg)
+					logTheThing(LOG_DIARY, user, logmsg, "combat")
 
 	proc/explode()
 		logMe(power)

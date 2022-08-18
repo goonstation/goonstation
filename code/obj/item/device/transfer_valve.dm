@@ -66,7 +66,7 @@
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing("bombing", user, null, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, user, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
@@ -93,7 +93,7 @@
 					extra = "n <font color='red'>active</font>"
 
 
-			logTheThing("bombing", user, null, "made a bomb using a[extra] [item.name] and a transfer valve.")
+			logTheThing(LOG_BOMBING, user, "made a bomb using a[extra] [item.name] and a transfer valve.")
 			message_admins("[key_name(user)] made a bomb using a[extra] [item.name] and a transfer valve.")
 			*/
 			attacher = user
@@ -153,11 +153,11 @@
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing("bombing", usr, null, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
@@ -293,7 +293,7 @@
 				signalled = FALSE
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
-				logTheThing("bombing", null, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 				return
 
 			if(valve_open && (istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt))) //lol
@@ -348,7 +348,7 @@
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				if(!A.dont_log_combat)
-					logTheThing("bombing", null, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					logTheThing(LOG_BOMBING, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
