@@ -215,7 +215,7 @@
 
 	name = "Tovarich Yuri is Have Good Deals and Militarily Trade Depot"
 	icon = 'icons/obj/vending.dmi'
-	icon_state = "weapon"
+	icon_state = "weapon-surplus"
 	desc = "An incredibly poorly-translated trading interface with a private auctioneer."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
@@ -658,7 +658,7 @@
 			var/reubelamount
 			name = "Prepaid check"
 			desc = "A written check."
-			icon_state = "req-token"
+			icon_state = "req-token-surplus"
 			New()
 				..()
 				reubelamount = rand(3200, 49999)
@@ -668,7 +668,7 @@
 			var/reubelamount
 			name = "Reubels"
 			desc = "Some change, from a space russian trader. It should be enough to afford you another utility credit."
-			icon_state = "req-token"
+			icon_state = "req-token-surplusutil"
 			New()
 				..()
 				reubelamount = rand(5000, 9000)
