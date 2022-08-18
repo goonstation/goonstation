@@ -21,7 +21,7 @@
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] spits acid towards [target]!</b></span>")
-		logTheThing("combat", holder.owner, MT, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")

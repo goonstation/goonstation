@@ -90,5 +90,5 @@
 		SPAWN(src.duration)
 			if (H) H.locked = 0
 
-		logTheThing("combat", M, null, "uses mist form at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses mist form at [log_loc(M)].")
 		return 0

@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
-			if(istype(tool, /obj/item/scalpel) || istype(tool, /obj/item/raw_material/shard) || istype(tool, /obj/item/kitchen/utensil/knife))
+			if(iscuttingtool(tool))
 				remove_stage++
 			else
 				wrong_tool = 1
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			switch(remove_stage)
 				if(0)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
-					logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+					logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>")
 				if(2)
@@ -116,7 +116,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 							src.remove(0)
 				if(3)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>")
-					logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name].")
+					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
 			if(!isdead(holder))
@@ -897,7 +897,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		if(!emagged)
 			emagged = 1
 			if (user)
-				logTheThing("station", user, null, "emags a robot frame at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "emags a robot frame at [log_loc(user)].")
 				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
 			return 1
 		else if(user)

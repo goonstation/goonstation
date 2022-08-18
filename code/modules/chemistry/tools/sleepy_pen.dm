@@ -29,7 +29,7 @@
 				return
 
 			boutput(user, "<span class='alert'>You stab [M] with the pen.</span>")
-			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(M, 50)
 
 		else
@@ -71,12 +71,12 @@
 			var/luck = pick(1,2,3)
 			if(luck==1)
 				boutput(user, "<span class='alert'>You stab [M == user ? "yourself" : "[M]"] with the correct end of this greasy sleepy pen[M == user ? ", gross!" : "."]</span>")
-				logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.trans_to(M, 30)
 			if(luck==2)
 				if(src.reagents.total_volume)
 					boutput(user, "<span class='alert'>You poke [M == user ? "yourself" : "[M]"] but the greasy pen leaks quite badly!</span>")
-					logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
 					src.reagents.reaction(get_turf(src), TOUCH, min(30, src.reagents.total_volume))
 					src.reagents.remove_any(30)
 					if(user != M)
@@ -84,7 +84,7 @@
 				else
 			if(luck==3)
 				boutput(user, "<span class='alert'>You stab yourself with the pointy end of the greasy sleepy pen.")
-				logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")
 				src.reagents.trans_to(user, 30)
 
 		else
