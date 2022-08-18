@@ -341,7 +341,7 @@ const PlantSeeds = (props, context) => {
                 {splice_seeds.filter((x) => (x !== null)).sort(
                   (a, b) => (compare(a, b, sortBy, sortAsc))
                 ).map((extractable, index) => (
-                  (extractable === null) ? "" : <PlantRow extractable={extractable} key={extractable.ref[1]} show_damage infuse splice />
+                  <PlantRow extractable={extractable} key={extractable.ref[1]} show_damage infuse splice />
                 ))}
               </Table>
             </Section>
