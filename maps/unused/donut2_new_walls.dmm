@@ -3820,6 +3820,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"anb" = (
+/obj/item/inner_tube/flamingo,
+/turf/simulated/pool/no_animate,
+/area/station/crew_quarters/pool)
 "ani" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -7733,6 +7737,9 @@
 "aAl" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt2,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aAm" = (
@@ -9058,16 +9065,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"aEi" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/north)
 "aEj" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/arrival{
 	dir = 2
 	},
-/area/station/hallway/primary/north)
+/area/station/crew_quarters/pool)
 "aEk" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
@@ -9356,7 +9359,9 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aFe" = (
-/obj/machinery/traymachine/locking/tanning,
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon,
+/obj/item/reagent_containers/food/drinks/water,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aFf" = (
@@ -9635,7 +9640,7 @@
 	pixel_y = 0
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/pool)
 "aFT" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
@@ -9864,7 +9869,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aGI" = (
 /obj/disposalpipe/segment/mail,
@@ -10064,14 +10069,17 @@
 	dir = 8;
 	tag = "icon-pool (WEST)"
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aHx" = (
 /obj/machinery/camera{
 	c_tag = "Pool";
 	dir = 8
 	},
-/turf/simulated/floor/auto/sand,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aHz" = (
 /obj/stool/chair/comfy/shuttle/green{
@@ -10258,7 +10266,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aIb" = (
 /turf/simulated/pool/no_animate,
@@ -10268,7 +10276,7 @@
 	dir = 5;
 	tag = "icon-pool (NORTHEAST)"
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aIe" = (
 /obj/cable{
@@ -10567,7 +10575,7 @@
 	tag = "icon-pool (EAST)"
 	},
 /obj/item/rubberduck,
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aIS" = (
 /obj/cable{
@@ -10784,10 +10792,14 @@
 	tag = "icon-pool (EAST)"
 	},
 /obj/pool_springboard,
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aJy" = (
-/turf/simulated/floor/auto/sand/rough,
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aJz" = (
 /obj/disposalpipe/segment/mail{
@@ -11002,7 +11014,7 @@
 /area/station/maintenance/inner/central)
 "aKo" = (
 /obj/fluid_spawner{
-	amount = 2100
+	amount = 3600
 	},
 /turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -11280,28 +11292,22 @@
 	dir = 10;
 	tag = "icon-pool (SOUTHWEST)"
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aLe" = (
 /obj/pool/perspective,
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aLf" = (
 /obj/pool/perspective{
 	dir = 9;
 	tag = "icon-pool (NORTHWEST)"
 	},
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/pool)
-"aLh" = (
-/obj/pool/perspective{
-	dir = 4;
-	tag = "icon-pool (EAST)"
-	},
-/turf/simulated/floor/auto/sand,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aLi" = (
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aLj" = (
 /turf/simulated/wall/auto/supernorn,
@@ -11852,8 +11858,10 @@
 	density = 1;
 	pixel_y = 2
 	},
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/arcade)
+/turf/simulated/floor/wood{
+	icon_state = "0,6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aMF" = (
 /obj/pool/perspective,
 /obj/table/reinforced/bar/auto,
@@ -11861,8 +11869,10 @@
 	pixel_x = 1;
 	pixel_y = 11
 	},
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/arcade)
+/turf/simulated/floor/wood{
+	icon_state = "0,6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aMG" = (
 /obj/pool/perspective,
 /obj/table/reinforced/bar/auto,
@@ -11878,13 +11888,15 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/arcade)
+/turf/simulated/floor/wood{
+	icon_state = "0,6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aMH" = (
 /obj/pool/perspective,
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aMI" = (
 /obj/pool/perspective{
 	dir = 6;
@@ -11902,6 +11914,10 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aMM" = (
@@ -12124,7 +12140,7 @@
 "aNI" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aNJ" = (
 /obj/cable{
@@ -12262,20 +12278,26 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aNR" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aNS" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aNT" = (
 /obj/table/reinforced,
 /obj/item/paper_bin,
@@ -12300,10 +12322,12 @@
 /area/station/bridge)
 "aNV" = (
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "1-2"
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -12558,18 +12582,14 @@
 /area/station/hallway/primary/west)
 "aOE" = (
 /obj/submachine/ice_cream_dispenser,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "aOH" = (
-/obj/machinery/power/apc{
-	areastring = "Arcade";
-	dir = 2;
-	name = "Arcade APC";
-	pixel_y = -24
-	},
 /obj/cable,
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aOJ" = (
@@ -13139,24 +13159,20 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/west,
 /area/station/medical/medbay/treatment2)
 "aQJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light/small{
 	dir = 4;
 	icon_state = "bulb1"
 	},
 /obj/decal/cleanable/dirt/dirt2,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aQK" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"aQL" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "aQM" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/red/side{
@@ -26897,7 +26913,7 @@
 /area/station/maintenance/scidisposal)
 "bLC" = (
 /turf/simulated/wall/false_wall,
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "bMx" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -27430,6 +27446,13 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
+"cvs" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "cvC" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	icon_state = "on";
@@ -27517,7 +27540,7 @@
 /obj/channel{
 	required_to_pass = 210
 	},
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "cBp" = (
 /obj/disposalpipe/segment{
@@ -28020,8 +28043,8 @@
 	dir = 4;
 	tag = "icon-pool (EAST)"
 	},
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/arcade)
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "dgc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -28160,10 +28183,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"doj" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "doJ" = (
 /obj/machinery/light/incandescent,
 /obj/storage/closet/wardrobe/black,
@@ -28216,6 +28235,10 @@
 /obj/item/clothing/suit/monkey,
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"dqU" = (
+/obj/machinery/computer/tanning,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/pool)
 "dqY" = (
 /obj/lattice{
 	dir = 2;
@@ -28469,6 +28492,16 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
+"dFk" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "dFs" = (
 /obj/machinery/power/pt_laser{
 	dir = 8
@@ -28695,6 +28728,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"dTr" = (
+/turf/simulated/floor/stairs/wood2/wide,
+/area/station/crew_quarters/fitness)
 "dUF" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
@@ -28937,10 +28973,13 @@
 	dir = 8;
 	pixel_x = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "ejB" = (
 /obj/grille/catwalk/cross{
 	dir = 6
@@ -28966,7 +29005,8 @@
 	dir = 8;
 	tag = "icon-pool (WEST)"
 	},
-/turf/simulated/floor/auto/sand,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "ekx" = (
 /obj/stool/chair/red{
@@ -29325,6 +29365,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "eyO" = (
@@ -29956,6 +29997,15 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"fcg" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
+"fck" = (
+/turf/simulated/floor/wood{
+	icon_state = "0,6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "fco" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical{
@@ -32146,6 +32196,15 @@
 	dir = 8
 	},
 /area/station/bridge)
+"hvh" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/pool/no_animate,
+/area/station/crew_quarters/pool)
+"hvO" = (
+/obj/critter/sealpup,
+/obj/machinery/light/small/floor,
+/turf/simulated/pool/no_animate,
+/area/station/crew_quarters/pool)
 "hxT" = (
 /obj/item/device/prox_sensor{
 	pixel_x = -8;
@@ -32774,6 +32833,19 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"ikc" = (
+/obj/stool/bar,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "ike" = (
 /obj/machinery/hydro_mister,
 /turf/simulated/floor/grey,
@@ -33142,11 +33214,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"iFP" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/computer/tanning,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/pool)
 "iFY" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -33569,6 +33636,9 @@
 /area/station/crew_quarters/quarters)
 "jcS" = (
 /obj/machinery/door/unpowered/wood/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jeb" = (
@@ -33676,6 +33746,12 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"jhz" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "jhA" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/airless,
@@ -34096,7 +34172,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "jIf" = (
 /obj/machinery/optable,
 /obj/machinery/drainage,
@@ -36153,6 +36229,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"lWw" = (
+/turf/simulated/floor/stairs/wood2/wide{
+	dir = 6
+	},
+/area/station/crew_quarters/fitness)
 "lXX" = (
 /obj/disposalpipe/junction{
 	dir = 8
@@ -36414,9 +36495,6 @@
 	},
 /area/station/hydroponics/bay)
 "mlI" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/sim/vr_bed{
 	dir = 8;
 	name = "VR simulation pod";
@@ -36707,6 +36785,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"mDa" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "mDg" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -36978,8 +37062,11 @@
 	},
 /area/station/hallway/primary/south)
 "mOL" = (
-/turf/simulated/floor/auto/sand,
-/area/station/crew_quarters/arcade)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "mPf" = (
 /obj/decal/cleanable/fungus{
 	pixel_y = 32
@@ -37721,6 +37808,18 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"nBH" = (
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "0,6"
+	},
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "nBY" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -37760,6 +37859,10 @@
 /area/station/hallway/primary/east)
 "nDk" = (
 /obj/stool/bar,
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "nDp" = (
@@ -38022,6 +38125,12 @@
 /area/station/hangar/sec)
 "nTV" = (
 /obj/machinery/computer/tetris,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname  - SS13";
+	pixel_y = 18;
+	tag = ""
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "nUH" = (
@@ -38118,7 +38227,7 @@
 /obj/decal/stage_edge/alt,
 /obj/table/glass/auto,
 /obj/towelbin,
-/turf/simulated/floor/auto/sand/rough,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "nZu" = (
 /obj/machinery/neosmelter,
@@ -38400,6 +38509,15 @@
 "opL" = (
 /turf/simulated/floor/carpet/green,
 /area/station/crew_quarters/courtroom)
+"opR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "ora" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -38524,10 +38642,16 @@
 /area/station/crew_quarters/kitchen)
 "ouI" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
 	},
-/area/station/crew_quarters/arcade)
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "owD" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
@@ -39526,6 +39650,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"pyM" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "pyR" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -39582,6 +39712,9 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "pBP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/stairs/medical/wide,
 /area/station/crew_quarters/pool)
 "pCd" = (
@@ -40684,6 +40817,19 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters)
+"qQn" = (
+/obj/pool/perspective{
+	dir = 8;
+	tag = "icon-pool (WEST)"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "qQM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41063,6 +41209,13 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"rql" = (
+/obj/pool/perspective{
+	dir = 8;
+	tag = "icon-pool (WEST)"
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "rqV" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -41244,12 +41397,6 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"ryB" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/inner/central)
 "rze" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -41731,6 +41878,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"sdt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "sdA" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -42052,6 +42205,16 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"soU" = (
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname  - SS13";
+	pixel_y = 18;
+	tag = ""
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/crew_quarters/pool)
 "spf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42570,7 +42733,7 @@
 /obj/table/glass/auto,
 /obj/item/inner_tube/random,
 /obj/item/clothing/gloves/water_wings,
-/turf/simulated/floor/auto/sand,
+/turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "sMr" = (
 /obj/cable,
@@ -43455,6 +43618,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"tEO" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "tFy" = (
 /obj/storage/secure/closet/civilian/bartender,
 /obj/item/gun/russianrevolver,
@@ -44156,8 +44327,13 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"uvh" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "uvr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45585,9 +45761,6 @@
 /obj/stool/chair,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"vZG" = (
-/turf/simulated/pool/no_animate,
-/area/station/crew_quarters/arcade)
 "vZH" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -45892,6 +46065,9 @@
 /obj/machinery/computer/tetris,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
+"wqR" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "wsO" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grasstodirt{
@@ -46777,6 +46953,12 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"xnD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/dojo/sand,
+/area/station/crew_quarters/pool)
 "xnK" = (
 /obj/disposalpipe/segment/vertical,
 /turf/space,
@@ -47091,8 +47273,11 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
+/area/station/maintenance/inner/central)
 "xHg" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/purplewhite,
@@ -80441,17 +80626,17 @@ ayW
 aJQ
 ayW
 ayW
-aCy
+aEk
 aFQ
-aCy
-aCy
+aEk
+aEk
 jEl
-aCy
-aCy
+aEk
+aEk
 aEl
 aEl
 aEl
-aCy
+aEk
 aFs
 azU
 azU
@@ -80743,17 +80928,17 @@ aBb
 ayZ
 aCG
 aDp
-ayR
+aEk
 kiD
-aFT
+tEO
 aGE
 aLi
 aLf
-eka
-eka
-eka
+rql
+qQn
+rql
 aLd
-aCy
+aEk
 aMD
 azU
 azU
@@ -81045,22 +81230,22 @@ aye
 aye
 aCH
 axS
-aEi
+aEl
 eyx
-aFT
+sdt
 nZe
-aJy
+aLi
 aIa
-aPX
+hvO
 aIb
 aIb
 aLe
+aEk
+wqR
 aCy
-aLj
-aCy
-aLj
-aLj
-aLj
+wqR
+wqR
+wqR
 azU
 aEn
 aCy
@@ -81349,9 +81534,9 @@ axc
 axS
 aEj
 aFb
-aFT
+jhz
 pBP
-aLi
+pyM
 cBj
 aIb
 aJw
@@ -81362,7 +81547,7 @@ aME
 jHJ
 ouI
 aNQ
-aLj
+wqR
 aFq
 aEn
 aCy
@@ -81653,18 +81838,18 @@ aEj
 iDy
 aFT
 mjN
-aLi
+xnD
 aIa
-aIb
+anb
 aIb
 aIb
 aIb
 aIb
 aMF
-aNR
-aNR
+fck
+fck
 aOE
-aLj
+wqR
 aEn
 azU
 lpG
@@ -81951,19 +82136,19 @@ jnM
 aIJ
 axc
 axS
-aEi
+aEl
 uuM
-doj
+aFT
 aNI
-aLi
+xnD
 aIa
 aPX
 aIb
 aKo
-aIb
+hvh
 aPX
 aMG
-aNR
+nBH
 ejp
 aNR
 bLC
@@ -82253,23 +82438,23 @@ jnM
 spH
 axc
 axR
-aEk
+dqU
 nVD
 aFT
 aGE
-aJy
+xnD
 aIa
+hvh
 aIb
 aIb
 aIb
 aIb
-vZG
 aMH
-aLj
-aLj
+wqR
+wqR
 aNS
-aLj
-azU
+wqR
+fcg
 azU
 lpG
 bQH
@@ -82555,21 +82740,21 @@ jnM
 aIJ
 axc
 axS
-iFP
-iDy
+aEl
+soU
 aFT
 sMn
-aLi
+xnD
 aIc
 aIR
 aJx
-aLh
-aLh
+dfn
+dfn
 dfn
 aMI
 wTK
-aMe
-aMe
+ikc
+mDa
 aLj
 azU
 aFq
@@ -82862,19 +83047,19 @@ aFe
 aFT
 aGE
 aHx
-aLi
+mOL
+mOL
 aJy
-aJy
-aLi
-aLi
+mOL
+mOL
 mOL
 jcS
-aMe
-aMe
-aMe
+aMd
+opR
+dFk
 xFa
-azU
-azU
+elW
+aXf
 lpG
 vJw
 sBZ
@@ -83172,8 +83357,8 @@ aLj
 aMK
 aMK
 aMe
-aMe
-aMe
+mDa
+uvh
 aLj
 azk
 aAl
@@ -83478,7 +83663,7 @@ aNV
 aOH
 aLj
 aQb
-aEn
+cvs
 azU
 azU
 azU
@@ -83772,14 +83957,14 @@ aIf
 aIf
 aJz
 aJC
-aQL
+aMK
 nTV
 nDk
 qIt
 aNW
 mlI
-ryB
-aAt
+aLj
+aEn
 aQJ
 elW
 aAt
@@ -84074,9 +84259,9 @@ aIg
 aIT
 aJA
 aJC
-aQL
-aXV
-aXV
+aMK
+aLj
+aLj
 aPr
 aPr
 aPr
@@ -84377,7 +84562,7 @@ aIU
 aJB
 aIf
 aJz
-aJC
+bhx
 aJC
 aNr
 aUn
@@ -84386,7 +84571,7 @@ hMH
 hMH
 hMH
 lQh
-aPr
+aNr
 aOm
 aTE
 aUm
@@ -84688,7 +84873,7 @@ aPt
 aPt
 aPt
 aQK
-aPr
+aNr
 aUn
 aUn
 aUn
@@ -84990,7 +85175,7 @@ aPt
 aPt
 aPt
 aQK
-aPr
+aNr
 aUn
 aUn
 aUn
@@ -85292,7 +85477,7 @@ aPt
 aPt
 aPt
 aQK
-aPr
+aNr
 aUn
 aUn
 aUo
@@ -85594,7 +85779,7 @@ mIj
 mIj
 mIj
 qiW
-aPr
+aNr
 aUn
 aUn
 aUn
@@ -85896,7 +86081,7 @@ aUn
 aUn
 aUn
 aUn
-aUn
+dTr
 aUn
 aUn
 aUn
@@ -86198,7 +86383,7 @@ aNY
 sDr
 aUn
 aUn
-aUn
+lWw
 aTa
 aTI
 aUn
