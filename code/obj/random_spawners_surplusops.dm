@@ -89,11 +89,11 @@
 		/obj/item/gun/kinetic/slamgun, //lol
 		/obj/item/gun/kinetic/zipgun, //lmao, even
 		/obj/item/gun/kinetic/detectiverevolver,
-		/obj/item/gun/kinetic/colt_saa/detective
+		/obj/item/gun/kinetic/colt_saa/detective,
 		/obj/item/gun/kinetic/derringer,
 		/obj/item/gun/energy/laser_gun,
 		/obj/item/gun/energy/phaser_gun,
-		/obj/item/gun/reagent/syringe, //while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
+		/obj/item/gun/reagent/syringe //while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
 
 	///obj/item/gun/energy/blaster_pod_wars/syndicate
 	)
