@@ -39,6 +39,8 @@ proc/buildRandomRooms()
 	icon = 'icons/effects/mapeditor.dmi'
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
+	opacity = 1
+	invisibility = 0 // To see landmarks if NO_RANDOM_ROOM is defined
 
 	New()
 		..()
