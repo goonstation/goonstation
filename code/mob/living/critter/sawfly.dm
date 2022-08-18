@@ -29,7 +29,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/list/dummy_params = list("icon-x" = 16, "icon-y" = 16) //for the manual attack_hand retaliation
 
 	//mob variables
-	health_deficiency_adjustment = -INFINITY //prevents them from having movespeed slowdown when injured
 	custom_gib_handler = /proc/robogibs
 	isFlying = 1
 	can_grab = FALSE
@@ -56,6 +55,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		deathtimer = rand(1, 5)
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
 	setup_hands()
