@@ -219,7 +219,7 @@ var/list/globalPropList = null
 		tooltipImg = "conduct.png"
 		defaultValue = 0.1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal * 100]% [propVal <= 0.2 ? "(Safe)":""]"
+			return "[propVal * 100]% [propVal <= 0.3 ? "(Safe)":""]"
 
 	stammax
 		name = "Max. Stamina"
