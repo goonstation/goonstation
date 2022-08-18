@@ -367,7 +367,7 @@
 	if (!R)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>That isn't a valid target.</span>")
 		return TRUE
-	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrobeam transmission on [constructTarget(R)] with message [message] at [log_loc(src.holder.owner)].")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrowbeam transmission on radio [constructTarget(R)][ismob(target) ? " worn by [constructTarget(target)]" : ""] with message [message] at [log_loc(src.holder.owner)].")
 
 /////////////////////////////////////////
 
