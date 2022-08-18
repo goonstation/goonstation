@@ -15,6 +15,9 @@ import { clamp } from 'common/math';
 import { capitalize } from './common/stringUtils';
 import { truncate } from '../format';
 
+const headings = ["name", "species", "damage", "genome", "generation", "maturity rate", "production rate", "lifespan", "yield", "potency", "endurance", "controls"];
+const sortname = ["name", "species", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];
+
 export const Plantmaster = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -81,11 +84,11 @@ export const Plantmaster = (props, context) => {
 const compare = function (a, b, sortBy, sortAsc) {
   if (sortBy === "name" || sortBy === "species") {
     if (sortAsc) {
-      return (''+a[sortBy]).localeCompare(b[sortBy]);
+      return (a[sortBy] ?? '').localeCompare(b[sortBy] ?? '');
     }
     else
     {
-      return (''+b[sortBy]).localeCompare(a[sortBy]);
+      return (b[sortBy] ?? '').localeCompare(a[sortBy] ?? '');
     }
   }
   if (sortAsc) {
@@ -144,8 +147,7 @@ const PlantOverview = (props, context) => {
 const TitleRow = (props, context) => {
   const { act } = useBackend(context);
   const { show_damage, sortBy, sortAsc } = props;
-  const headings = ["name", "species", "damage", "genome", "generation", "maturity rate", "production rate", "lifespan", "yield", "potency", "endurance", "controls"];
-  const sortname = ["name", "species", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];
+
   return (
     <TableRow>
       {headings.map((heading, index) => (show_damage || heading !== "damage") && (
@@ -313,13 +315,13 @@ const PlantSeeds = (props, context) => {
           <Table>
             <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
             {extractablesOnPage.map((extractable, index) => (
-              <PlantRow 
-                extractable={extractable} 
+              <PlantRow
+                extractable={extractable}
                 key={extractable.ref[1]}
-                show_damage 
-                infuse 
-                splice 
-                splice_disable={splice_disable} 
+                show_damage
+                infuse
+                splice
+                splice_disable={splice_disable}
               />
             ))}
           </Table>
