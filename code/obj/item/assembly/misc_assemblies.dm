@@ -882,29 +882,43 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/thingsneeded = null
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
+	var/craftname = null
+	var/obj/item/material = null
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+
 		if (istype(craftingitem, accepteditem)) //success! items match
 			src.thingsneeded --
+			if (craftingitem.amount > 1)//it's a little weird but it's one of the lesser messy ways
+				material = craftingitem.split_stack(1)
+			else
+				material = craftingitem
+			//material.set_loc(get_turf(src))//toss it on the ground for now
 			if (thingsneeded > 0)//craft successful, but they'll need more
-				boutput(user, "<span class='notice'>You add the [craftingitem] to the [frame]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
+				boutput(user, "<span class='notice'>You add a [material] to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
 
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
 				user.put_in_hand_or_drop(shot)
 				qdel(frame)
 
+			//consume material
+			qdel(material)
 
-			qdel(craftingitem)
+
+
 
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
 	accepteditem = /obj/item/raw_material/scrap_metal
+	craftname = "scrap chunk"
+
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/glass/
 	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
 
 /obj/item/assembly/makeshiftshell
 	name = "filled pipe hulls"
