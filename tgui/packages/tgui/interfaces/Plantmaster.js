@@ -51,14 +51,14 @@ export const Plantmaster = (props, context) => {
             onClick={() => {
               act('change_tab', { 'tab': 'extractables' });
             }}>
-            Seed Extraction {`(${category_lengths[0]})`}
+            Seed Extraction ({category_lengths[0]})
           </Tabs.Tab>
           <Tabs.Tab
             selected={category === 'seedlist'}
             onClick={() => {
               act('change_tab', { 'tab': 'seedlist' });
             }}>
-            Seeds {`(${category_lengths[1]})`}
+            Seeds ({category_lengths[1]})
           </Tabs.Tab>
           <Tabs.Tab
             backgroundColor={inserted_container !== null ? "green" : "blue"}
@@ -70,7 +70,6 @@ export const Plantmaster = (props, context) => {
           </Tabs.Tab>
         </Tabs>
 
-
         {category === 'overview' && <PlantOverview cat_lens={category_lengths} container={inserted ? inserted_container : null} seedoutput={seedoutput} />}
         {category === 'extractables' && <PlantExtractables seedoutput={seedoutput} produce={extractables} sortBy={sortBy} sortAsc={sortAsc} />}
         {category === 'seedlist' && <PlantSeeds seeds={seeds} seedoutput={seedoutput} splicing={show_splicing} splice_chance={splice_chance} splice_seeds={splice_seeds} sortBy={sortBy} sortAsc={sortAsc} />}
@@ -80,8 +79,7 @@ export const Plantmaster = (props, context) => {
 };
 
 const compare = function (a, b, sortBy, sortAsc) {
-  if (sortBy === "name" || sortBy === "species")
-  {
+  if (sortBy === "name" || sortBy === "species") {
     if (sortAsc) {
       return (''+a[sortBy]).localeCompare(b[sortBy]);
     }
@@ -93,8 +91,7 @@ const compare = function (a, b, sortBy, sortAsc) {
   if (sortAsc) {
     return parseFloat(a[sortBy]) - parseFloat(b[sortBy]);
   }
-  else
-  {
+  else {
     return parseFloat(b[sortBy]) - parseFloat(a[sortBy]);
   }
 };
@@ -187,7 +184,7 @@ const PlantRow = (props, context) => {
         <TableCell width="100px" textAlign="center" bold={extractable.species[1]} backgroundColor={extractable.species[1] ? "#333333" : ""}>
           {extractable.species[0]}
         </TableCell>
-        { show_damage && (
+        {show_damage && (
           <TableCell textAlign="center" bold={extractable.damage[1]} backgroundColor={extractable.damage[1] ? "#333333" : ""}>
             {extractable.damage[0]}%
           </TableCell>
@@ -316,8 +313,14 @@ const PlantSeeds = (props, context) => {
           <Table>
             <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
             {extractablesOnPage.map((extractable, index) => (
-              <PlantRow extractable={extractable} key={extractable.ref[1]}
-                show_damage infuse splice splice_disable={splice_disable} />
+              <PlantRow 
+                extractable={extractable} 
+                key={extractable.ref[1]}
+                show_damage 
+                infuse 
+                splice 
+                splice_disable={splice_disable} 
+              />
             ))}
           </Table>
         </Flex.Item>

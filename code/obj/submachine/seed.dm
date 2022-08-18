@@ -94,15 +94,15 @@
 			splice2_geneout["splicing"] = list("splicing", TRUE)
 			splice2_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 
-		return list(\
-			"extractables" = exlist,\
-			"seeds" = seedlist,\
-			"category" = src.mode,\
-			"category_lengths" = list(length(src.extractables),length(src.seeds)),\
-			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",\
-			"inserted_container" = thisContainerData,\
-			"seedoutput" = src.seedoutput,\
-			"splice_chance" = splice_chance,\
+		return list(
+			"extractables" = exlist,
+			"seeds" = seedlist,
+			"category" = src.mode,
+			"category_lengths" = list(length(src.extractables),length(src.seeds)),
+			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
+			"inserted_container" = thisContainerData,
+			"seedoutput" = src.seedoutput,
+			"splice_chance" = splice_chance,
 			"show_splicing" = src.splicing1 || src.splicing2,
 			"splice_seeds" = list(splice1_geneout, splice2_geneout),
 			"sortBy" = src.sort,
@@ -149,7 +149,7 @@
 					ui.user.drop_item()
 					inserting.set_loc(src)
 					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
-					tgui_process.update_uis(src)
+					return TRUE
 
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
@@ -177,13 +177,13 @@
 					src.splicing2 = null
 				I.set_loc(src.loc)
 				ui.user.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				tgui_process.update_uis(src)
+				return TRUE
 
 
 			if("sort")
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
-				tgui_process.update_uis(src)
+				return TRUE
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -207,7 +207,7 @@
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
-				tgui_process.update_uis(src)
+				return TRUE
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -215,7 +215,7 @@
 				if(istype(I) && I.name != newname)
 					phrase_log.log_phrase("seed", newname, TRUE)
 					I.name = newname
-				tgui_process.update_uis(src)
+				return TRUE
 
 			if("extract")
 				var/obj/item/I = locate(params["extract_ref"]) in src
@@ -272,7 +272,7 @@
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)
-					tgui_process.update_uis(src)
+					return TRUE
 				else
 					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
 
@@ -291,7 +291,7 @@
 				else if(!src.splicing2)
 					src.splicing2 = I
 
-				tgui_process.update_uis(src)
+				return TRUE
 
 			if("infuse")
 				var/obj/item/seed/S = locate(params["infuse_ref"]) in src
@@ -344,7 +344,7 @@
 										playsound(src, "sound/effects/zzzt.ogg", 50, 1)
 										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 								src.inserted.reagents.remove_reagent(R.id,10)
-					tgui_process.update_uis(src)
+					return TRUE
 
 			if("splice")
 				// Get the seeds being spliced first
@@ -483,7 +483,7 @@
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-				tgui_process.update_uis(src)
+				return TRUE
 
 
 
