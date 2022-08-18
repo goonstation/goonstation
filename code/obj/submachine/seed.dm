@@ -117,8 +117,8 @@
 
 	ui_act(action, list/params, datum/tgui/ui)
 		. = ..()
-        if(.)
-            return
+		if(.)
+			return
 		switch(action)
 			if("change_tab")
 				src.mode = params["tab"]
@@ -569,7 +569,7 @@
 		if (seed1 && seed2)
 			var/datum/plant/P1 = seed1.planttype
 			var/datum/plant/P2 = seed2.planttype
-			var/splice_chance = 0
+			var/splice_chance = 100
 			var/genome_difference = abs(P1.genome - P2.genome)
 			splice_chance -= genome_difference * 10
 

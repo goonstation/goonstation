@@ -84,11 +84,11 @@ export const Plantmaster = (props, context) => {
 const compare = function (a, b, sortBy, sortAsc) {
   if (sortBy === "name" || sortBy === "species") {
     if (sortAsc) {
-      return (a[sortBy] ?? '').localeCompare(b[sortBy] ?? '');
+      return (a[sortBy] ?? '').toString().localeCompare(b[sortBy] ?? '');
     }
     else
     {
-      return (b[sortBy] ?? '').localeCompare(a[sortBy] ?? '');
+      return (b[sortBy] ?? '').toString().localeCompare(a[sortBy] ?? '');
     }
   }
   if (sortAsc) {
