@@ -1362,3 +1362,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	vomit()
 		return
+
+	isBlindImmune()
+		return TRUE
