@@ -32,17 +32,8 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
-
-		if (iscarbon(user) || ismobcritter(user))
-			user.visible_message("[user] swallows [src].",\
-			"<span class='notice'>You swallow [src].</span>")
-			logTheThing(LOG_COMBAT, user, "swallows a [src.name] [log_reagents(src)] at [log_loc(user)].")
-			if (reagents.total_volume)
-				reagents.reaction(user, INGEST)
-				sleep(0.1 SECONDS)
-				reagents.trans_to(user, reagents.total_volume)
-			user.u_equip(src)
-			qdel(src)
+		
+		src.pill_action(user, user)
 		return
 
 	attack(mob/M, mob/user, def_zone)
@@ -52,9 +43,7 @@
 
 		if (iscarbon(M) || ismobcritter(M))
 			if (M == user)
-				//boutput(M, "<span class='notice'>You swallow [src].</span>")
-				user.visible_message("[user] swallows [src].",\
-				"<span class='notice'>You swallow [src].</span>")
+				src.pill_action(M, user)
 			else if(check_target_immunity(M))
 				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but can't!</span>")
 				return
@@ -117,14 +106,14 @@
 				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
 				"<span class='alert'>You force [target] to swallow [src].</span>")
 
-		logTheThing("combat", user, target, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
-		
-		if (reagents.total_volume)
-			reagents.reaction(target, INGEST)
-			sleep(0.1 SECONDS)
-			reagents.trans_to(target, reagents.total_volume)
-		user.u_equip(src)
-		qdel(src)
+			logTheThing("combat", user, target, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+
+			if (src.reagents.total_volume)
+				src.reagents.reaction(target, INGEST)
+				sleep(0.1 SECONDS)
+				reagents.trans_to(target, src.reagents.total_volume)
+			user.u_equip(src)
+			qdel(src)
 
 
 
