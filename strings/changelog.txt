@@ -1,4 +1,9 @@
 
+(t)thu aug 18 22
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
 (t)wed aug 17 22
 (u)MylieDaniels
 (p)9902
