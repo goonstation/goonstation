@@ -223,6 +223,8 @@
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 
+	var/not_in_mobs_list = FALSE
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -247,11 +249,12 @@
 
 	var/turf/T = get_turf(src)
 	var/area/AR = get_area(src)
-	if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+	if((isnull(T) || T.z <= Z_LEVEL_STATION || AR.active) && !src.not_in_mobs_list)
 		mobs.Add(src)
 	else if(!(src.mob_flags & LIGHTWEIGHT_AI_MOB) && (!src.ai || !src.ai.exclude_from_mobs_list))
 		skipped_mobs_list |= SKIPPED_MOBS_LIST
-		LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
+		if (AR)
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
@@ -432,7 +435,7 @@
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
-	if(src.skipped_mobs_list & SKIPPED_MOBS_LIST && !(src.mob_flags & LIGHTWEIGHT_AI_MOB))
+	if(src.skipped_mobs_list & SKIPPED_MOBS_LIST && !(src.mob_flags & LIGHTWEIGHT_AI_MOB) && !src.not_in_mobs_list)
 		skipped_mobs_list &= ~SKIPPED_MOBS_LIST
 		global.mobs |= src
 	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
