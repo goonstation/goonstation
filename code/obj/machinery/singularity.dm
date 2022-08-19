@@ -396,8 +396,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				return
 			// remaining eye(s) meson cybereyes?
 			else if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) && (!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
-					M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
-					return
+				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
+				return
 		M.changeStatus("stunned", 7 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
