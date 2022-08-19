@@ -395,8 +395,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
 			else // if you have eyes, they could be meson eyes
-				if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) &&
-					(!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
+				if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) && (!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
 					M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
 					return
 		M.changeStatus("stunned", 7 SECONDS)
