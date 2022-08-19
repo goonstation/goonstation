@@ -683,7 +683,7 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
-	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -705,7 +705,7 @@
 
 	if (reverse_mode) message = reverse_text(message)
 
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 #ifdef DATALOGGER
 	// Jewel's attempted fix for: null.ScanText()
@@ -754,15 +754,6 @@
 		if (H.oxyloss > 10 || H.losebreath >= 4 || H.hasStatus("muted") || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
 			H.whisper(message, forced=TRUE)
 			return
-
-	//Pod coloseum is broken - disable this unnecessary istype
-	/*
-	if (istype(loc, /obj/machinery/colosseum_putt))
-		var/obj/machinery/colosseum_putt/C = loc
-		logTheThing("say", src, null, "<i>broadcasted between Colosseum Putts:</i> \"[message]\"")
-		C.broadcast(message)
-		return
-	*/
 
 	message = trim(message)
 
@@ -1050,8 +1041,6 @@
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, messages, null, src.real_name, lang_id)
-			for (var/obj/colosseum_radio/M in hearers(1, src))
-				M.hear_talk(src, messages, real_name, lang_id)
 
 			message_range = 1
 			italics = 1

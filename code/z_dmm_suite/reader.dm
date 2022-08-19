@@ -92,12 +92,12 @@ dmm_suite
 			var yMax = yLines.len+(coordY-1)
 			if(world.maxy < yMax)
 				world.maxy = yMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (Y) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (Y) during prefab placement")
 			var exampleLine = pick(yLines)
 			var xMax = length(exampleLine)/key_len+(coordX-1)
 			if(world.maxx < xMax)
 				world.maxx = xMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (X) during prefab placement")
 
 			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax

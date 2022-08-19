@@ -56,3 +56,8 @@
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
+
+/obj/flock_structure/rift/disposing()
+	if (!src.flock?.flockmind?.started)
+		src.flock?.flockmind?.death()
+	..()

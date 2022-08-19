@@ -1891,6 +1891,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/nano-blade-3.ogg" = 'sound/weapons/nano-blade-3.ogg',\
  	"sound/weapons/nano-blade-4.ogg" = 'sound/weapons/nano-blade-4.ogg',\
  	"sound/weapons/nano-blade-5.ogg" = 'sound/weapons/nano-blade-5.ogg',\
+ 	"sound/weapons/optio.ogg" = 'sound/weapons/optio.ogg',\
  	"sound/weapons/pindrop.ogg" = 'sound/weapons/pindrop.ogg',\
  	"sound/weapons/plasma_gun.ogg" = 'sound/weapons/plasma_gun.ogg',\
  	"sound/weapons/pulse.ogg" = 'sound/weapons/pulse.ogg',\

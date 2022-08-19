@@ -7815,7 +7815,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -8832,7 +8833,7 @@
 /obj/cable,
 /obj/decal/poster/wallsign/gym,
 /obj/wingrille_spawn/auto,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/fitness)
 "aJO" = (
 /obj/cable{
@@ -18442,7 +18443,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
-	name = "Cloning"
+	name = "Cloning";
+	id = "Cloning"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -30561,7 +30563,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -42026,7 +42029,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Psychiatrist's Office"
+	name = "Psychiatrist's Office";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -44028,7 +44032,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -46190,7 +46195,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -52593,7 +52599,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -53097,7 +53104,8 @@
 "uiW" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,

@@ -58,10 +58,11 @@
 
 	wizard_mob.set_clothing_icon_dirty()
 
+	wizard_mob.equip_sensory_items()
+
 	boutput(wizard_mob, "You're a wizard now. You have a few starting spells; use the [SB] to choose the rest!")
 	if (!vr)
 		wizard_mob.show_antag_popup("wizard")
-	return
 
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
 
@@ -348,4 +349,4 @@
 				playsound(O.loc, src.voice_other, 50, 0, -1)
 
 		var/log_target = constructTarget(target,"combat")
-		logTheThing("combat", holder.owner, target, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")
+		logTheThing(LOG_COMBAT, holder.owner, "casts [src.name] from [log_loc(holder.owner)][targeted ? ", at [log_target]" : ""].")

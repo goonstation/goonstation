@@ -253,8 +253,12 @@
 			var/obj/item/I = src.inserted
 			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				I.set_loc(src.loc) // causes Exited proc to be called
-				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+				if (I.cant_drop) // cyborg/item arms
+					src.inserted = null
+					src.updateUsrDialog()
+				else
+					I.set_loc(src.loc) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 
 		else if(href_list["ejectseeds"])
 			for (var/obj/item/seed/S in src.seeds)

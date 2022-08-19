@@ -81,11 +81,7 @@
 				if(ROLE_GRINCH) num_grinches++
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
-				if(ROLE_ARCFIEND)
-					if(num_arcfiends < 2)
-						num_arcfiends++
-					else
-						num_traitors++
+				if(ROLE_ARCFIEND) num_arcfiends++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -136,7 +132,7 @@
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
 
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	if(num_wizards)

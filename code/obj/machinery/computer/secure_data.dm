@@ -607,7 +607,7 @@
 						if ("arrest")
 							src.active_record_security["criminal"] = "*Arrest*"
 							if (usr && src.active_record_general["name"])
-								logTheThing("station", usr, null, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("incarcerated")
 							src.active_record_security["criminal"] = "Incarcerated"
 						if ("parolled")

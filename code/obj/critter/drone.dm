@@ -91,19 +91,6 @@
 	seek_target()
 		src.anchored = 0
 
-		var/area/AR = get_area(src)
-		if (AR == colosseum_controller.colosseum)
-			var/list/targets = list()
-			for (var/obj/machinery/colosseum_putt/C in colosseum_controller.colosseum)
-				if (C.dying) continue
-				targets += C
-			for (var/mob/living/carbon/human/H in colosseum_controller.colosseum)
-				if (isdead(H)) continue
-				targets += H
-			if (targets.len)
-				select_target(pick(targets))
-			return
-
 		if(smashes_shit)
 			//There be shit near us what can block our way.
 			for (var/obj/O in oview(1,src))
@@ -237,7 +224,7 @@
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN(2 SECONDS)
-			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
+			if (must_drop_loot)
 				if (prob(25))
 					new /obj/item/device/prox_sensor(src.loc)
 
@@ -282,26 +269,11 @@
 						waking = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		waking = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					waking = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		waking = 1
-			//		break
-
-
-			if (!waking)
-				if (get_area(src) == colosseum_controller.colosseum)
-					waking = 1
 
 			if(waking)
 				task = "thinking"
@@ -320,21 +292,11 @@
 						stay_awake = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		stay_awake = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					stay_awake = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		stay_awake = 1
-			//		break
 
 			if(!stay_awake)
 				sleeping = 5
@@ -615,9 +577,6 @@
 					for(var/turf/T in src_turf)
 						if(T == O) continue
 						T.meteorhit(O)
-					for(var/obj/machinery/colosseum_putt/A in src_turf)
-						if (A == O || A == user) continue
-						A.meteorhit(O)
 					for (var/obj/machinery/cruiser/C in src_turf)
 						if (C == O || C == user) continue
 						C.meteorhit(O)
@@ -1050,12 +1009,6 @@
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
-			poorPod.ex_act(3)
-
-		for (var/obj/machinery/colosseum_putt/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)

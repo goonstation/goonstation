@@ -127,7 +127,7 @@ var/global/awarded_xp = 0
 /proc/award_archived_round_xp()
 	if (awarded_xp)
 		message_admins("Tried to award job exp for the round more than once. Probably some fuckery is going on.")
-		logTheThing("debug", null, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		logTheThing(LOG_DEBUG, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
 		return
 	if (!islist(xp_archive))
 		return
