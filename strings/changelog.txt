@@ -1,4 +1,21 @@
 
+(t)thu aug 18 22
+(u)Roddy
+(p)10340
+(e)|
+(*)Updated the Donut 2 Pool/Arcade/Gym area.
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
+(u)Cogwerks
+(e)|
+(*)Added orderable crates for the Micro and Macro Phasers
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open
+(+)Updated naming scheme and descriptions for rad crossbow and phasers.
 (t)wed aug 17 22
 (u)MylieDaniels
 (p)9902
