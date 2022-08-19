@@ -13,7 +13,7 @@
 	var/list/seeds = list()
 	var/seedoutput = FALSE
 	var/sort = "name"
-	var/sortAsc = TRUE
+	var/sortAsc = FALSE
 	var/obj/item/seed/splicing1 = null
 	var/obj/item/seed/splicing2 = null
 	var/list/extractables = list()
