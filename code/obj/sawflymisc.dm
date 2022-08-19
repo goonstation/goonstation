@@ -53,7 +53,7 @@
 		if (T)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.isdisabled = FALSE
+			heldfly.isgrenade = FALSE
 		if(!playercontrolled)
 			if(istraitor(currentuser) || isnukeop(currentuser) || isspythief(currentuser) || isnukeopgunbot(currentuser))
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
@@ -233,6 +233,7 @@
 // ---------------limb---------------
 /datum/limb/sawfly_blades
 
+
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 0.8 SECONDS))
@@ -248,4 +249,30 @@
 		if (ismob(target))
 			..()
 		..()
+
+/datum/targetable/critter/sawflydeploy
+	name = "(Un)deploy"
+	desc = "Toggle your flying/item state! Cannot be used in containers"
+	icon_state = "mentordisappear"
+	cooldown = 0
+
+
+	cast(mob/target)
+
+		var/mob/living/critter/robotic/sawfly/M = holder.owner
+
+		if(istype(M.loc, /obj/item/storage))
+			return //bad!
+
+
+
+		if(M.isgrenade) //we're in a grenade, time to un-grenade ourselfes!
+			if(istype(M.loc, /obj/item/old_grenade/sawfly))
+				var/obj/item/old_grenade/sawfly/ourgrenade = M.loc
+				ourgrenade.visible_message("<span class='combat'>[ourgrenade] suddenly springs open as its engine purrs to a start!</span>")
+				ourgrenade.prime()
+				//M.playsound(M, pick(M.beeps), 40, 1)
+
+
+
 
