@@ -154,7 +154,7 @@ const TitleRow = (props, context) => {
         <TableCell key={heading} textAlign="center" >
           <Button
             color="transparent"
-            icon={sortBy === sortname[index] ? (sortAsc ? "angle-up" : "angle-down") : ""}
+            icon={sortBy !== "" && sortBy === sortname[index] ? (sortAsc ? "angle-up" : "angle-down") : ""}
             onClick={() => act('sort', { sortBy: sortname[index], asc: (sortBy === sortname[index] ? !sortAsc : sortAsc) })}>
             <b>{capitalize(heading)}</b>
           </Button>
