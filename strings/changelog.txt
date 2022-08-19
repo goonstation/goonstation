@@ -1,4 +1,326 @@
 
+(t)thu aug 18 22
+(u)Roddy
+(p)10340
+(e)|
+(*)Updated the Donut 2 Pool/Arcade/Gym area.
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
+(u)Cogwerks
+(e)|
+(*)Added orderable crates for the Micro and Macro Phasers
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open
+(+)Updated naming scheme and descriptions for rad crossbow and phasers.
+(t)wed aug 17 22
+(u)MylieDaniels
+(p)9902
+(e)|
+(*)Forcefeeding pills has an action bar, and time to forcefeed scales with size of pill, from 3 seconds at 30u to 5 seconds at 90u.
+(u)tarmunora
+(*)Defibs must now be primed (used in-hand) before being used, and will discharge themselves 3 seconds after being primed.
+(u)Kubius
+(p)9904
+(e)|
+(*)Chem protection on gear now properly factors into most chemical touch effects. Menders and patches are exempt.
+(u)LeahTheTech
+(p)10186
+(e)|
+(+)Flockdrones now do ~40 damage per shot to pods, up from 4 (yes really)
+(t)tue aug 16 22
+(u)Jan.antilles
+(p)10282
+(e)|
+(*)Resprited and rebalanced lunchboxes.
+(u)LeahTheTech
+(p)10163
+(e)|
+(+)Vampire bite action bars are now only visible to the vampire, and biting a victim will now cause a little of their blood to drip to the floor at your feet.
+(u)Amylizzle
+(p)10234
+(e)|
+(+)Removed the broken pod colosseum
+(u)ZeWaka
+(+)Stickers now have fingerprints
+(t)mon aug 15 22
+(u)zjdtmkhzt
+(p)10144
+(e)|
+(+)Lost your tray of artifact forms in a terrible accident? You can now make a new one at the Science Fabricator!
+(u)Roddy
+(p)10136
+(e)|
+(*)Updates Donut 2 Crew Quarters
+(u)Roddy
+(p)10260
+(e)|
+(+)Moved several Cog2 pest starts.
+(u)Gannets
+(p)10262
+(e)|
+(+)Redrew the syndicate combat knife & amended the description to mention it's throw-stun utility.
+(t)sun aug 14 22
+(u)Roddy
+(p)10259
+(e)|
+(+)Moved some pest spawns on Oshan.
+(u)Amylizzle
+(p)10185
+(e)|
+(+)Non-hostile flock actions are now much quieter, and can be heard from less far away.
+(u)ZWRh3
+(p)10081
+(e)|
+(+)Cyborg teleport upgrade no longer works while stunned
+(u)glowbold
+(p)10226
+(e)|
+(+)Engineering cyborgs can no longer insert their material stacks into a reclaimer.
+(u)Amylizze
+(p)10237
+(e)|
+(+)You can now clean up paint with a wet sponge.
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
+(t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
+(u)NightmarechaMillian
+(p)9794
+(e)🎨⚖|sprites, balance
+(+)Glass pipeshot now requires 2 shards instead of 1.
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
+(t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
+(u)Wisemonster
+(p)9958
+(e)⚖|balance
+(+)The fire orb no longer gives fire damage immunity.
+(+)The fire jewel's heat protection has been reduced to 50%, down from 100%.
+(u)Ikea
+(p)9835
+(e)⚖|balance
+(*)Upon being converted through counterrev implants or beatings, you now gain 5 seconds of additional melee protection.
+(u)Munien & Avimour
+(p)9892
+(e)🆕🎨|feature, sprites
+(*)Added a new Rose mutation: Holo-Roses. Give one to your favourite silicons today!
+(u)Hans
+(p)9856
+(e)⚖|balance
+(+)You can now shoot rattlesnakes, scorpions have a longer special ability delay, and viper venom's bleeding isn't as RNG dependant and can't hit as hard as fast now.
+(u)Ilysen
+(p)9966
+(e)|
+(*)Arcfiends and mid-round/mixed gamemode traitors have been moved onto the new system. Please keep an eye out for bugs and report them on GitHub if something comes up!
+(t)mon aug 01 22
+(u)Flourish
+(e)🔄|rework
+(*)The "time until payday" countdown has been removed from the status panel. Now, every payday you get a PDA message informing you how much has been deposited into your account and how many credits you have total. (You may block PAYROLL-MAILBOT if you wish.)
+(u)Flourish
+(e)🆕|feature
+(+)Clowns can now stow a single tiny item in their clown towel. This is compatible with eating and vomiting back out the towel.
+(t)sun jul 31 22
+(u)Roddy
+(p)9982
+(e)🗺|mapping
+(*)Updates Donut2 civilian sector (bar, kitchen, botany) to modern standards.
+(u)LeahTheTech
+(p)9790
+(e)🐛📄|bug, tgui
+(+)Timers and proximity sensors now use TGUI
+(u)Amylizzle
+(p)9986
+(e)🐛⚖📄|bug, balance, tgui
+(+)Genetics reclaimer can now only reclaim active genes.
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
+(t)fri jul 29 22
+(u)DisturbHerb
+(p)9770
+(e)🎨|sprites
+(+)Chemical bottles have been resprited.
+(u)NightmareChamillian
+(p)9350
+(e)🐛|bug
+(+)Sawflies have had their targeting AI reworked, and should be much more responsive now! Ping me if this breaks anything.
+(u)Blackrep
+(p)9776
+(e)📄|tgui
+(+)Safes have a fancy new UI
+(t)thu jul 28 22
+(u)Flourish
+(p)9868
+(e)🆕⚖|feature, balance
+(*)"Mindslave" implants and cloning modules have now been renamed to "mindhack". Additionally, when you are mindhacked, you now receive a special status effect that tells you your mindhacker's name and how long you are mindhacked for.
+(u)Roddy
+(p)9727
+(e)🆕|feature
+(*)Added in five new drink recipes for the bartender; Iced Coconut Milk Espresso, Iced Pineapple Matcha, Thai Iced Coffee, Peppermint Hot Chocolate, and Mexican Hot Chocolate!
+(u)Garash
+(p)9875
+(e)🆕🗺🎨📄|feature, mapping, sprites, tgui
+(+)Vapo-Matics and Injector belts have a new UI menu, go ask the HoP to transfer tens of thousands of credit into your account to buy one and check them out!
+(t)wed jul 27 22
+(u)TemThrush
+(p)9834
+(e)🆕|feature
+(*)Added three hairstyles, Combed Front, Combed Front Short, and Longfront.
+(u)ZWRh3
+(p)9903
+(e)🐛⚖|bug, balance
+(+)Most wizard spells have no longer work while phase shifting.
+(u)Ikea
+(p)9833
+(e)|
+(+)You can no longer plate implants with the arc electroplater.
+(u)Luxizzle
+(p)9758
+(e)🆕|feature
+(+)Silicons can now surround parts of their messages with ` to display it in a monospace font.
+(u)LeahTheTech
+(p)9785
+(e)🐛📄|bug, tgui
+(+)Remote signalers are now tgui
+(u)ZWRh3
+(p)9877
+(e)🐛⚖|bug, balance
+(*)Fire no longer clips trough walls
+(u)Zonespace
+(p)9848
+(e)⚖|balance
+(+)Nukeop laser designator now fires faster and has a more powerful explosion
+(u)maybeserendipitous
+(p)9759
+(e)🆕|feature
+(*)Synthorgan max health and failure threshold increase with Endurance.
+(u)Moberry
+(p)9682
+(e)⚖|balance
+(+)Changed the blob recycling ability to cost 0 biopoints. Increased the cooldown to five seconds.
+(t)tue jul 26 22
+(u)Amylizzle
+(p)9720
+(e)🆕📄|feature, tgui
+(+)Flockdrones with nothing to do will now hibernate, providing 5 extra compute. They will wake from hibernation when given orders or an enemy is detected.
+(u)Gannets
+(p)9852
+(e)⚖|balance
+(+)Added high-capacity fire extinguisher to Nuclear Operative Field Medic class crate.
+(t)mon jul 25 22
+(u)Ikea
+(p)9850
+(e)|
+(+)The medborg inventory has been shuffled around a bit.
+(u)Flourish
+(+)Reduced number of loot crate spawners in the debris field. Increased frequency of loot crates while mining asteroids (including mineral magnet).
+(u)Luxizzle
+(p)9842
+(e)🐛🗺|bug, mapping
+(+)Artifact paper dispensers now act like paper bins. You can pick them up and put artifact papers back in.
+(u)Luxizzle
+(p)9841
+(e)🐛🗺|bug, mapping
+(+)Cogmap2's Artifact Lab now includes a thinktape.
+(t)sat jul 23 22
+(u)Flaborized
+(p)9718
+(e)🆕|feature
+(+)Wizard incantations are now a bit more magical looking.
+(t)fri jul 22 22
+(u)NightmarechaMillian
+(p)9579
+(e)|
+(*)Clicking a disposal chute with a storage object (toolbox, backpack, boxes, etc) will now place the object in if it's empty and dump contents if it's full. To place the full object in, use non-help intent.
+(u)ZWRh3
+(p)9793
+(e)⚖|balance
+(+)Clown cars now make people who they run over fall to the ground instantly.
+(u)Kubius
+(p)9546
+(e)🆕|feature
+(*)Aid contracts in the quartermasters' requisitions market now last for a fixed amount of cycles, instead of having a chance to rotate out.
+(u)Amylizzle
+(p)9743
+(e)|
+(+)Walls are made of materials now.
+(u)ZWRh3
+(p)9745
+(e)|
+(+)Cyborgs now get XL fire extinguishers.
+(u)Roddy
+(p)9749
+(e)🆕|feature
+(+)Creaca's Fruit Milk has outsourced production. Local vending machines now contain 10 new flavors of fruit milk; try one today.
+(u)Skorps
+(p)9796
+(e)🎨|sprites
+(+)Resprited the sterile mask icon.
+(t)thu jul 21 22
+(u)Luxizzle
+(p)9719
+(e)🆕📄|feature, tgui
+(+)You can now set a preferred cyborg name in your character profile
+(u)DimWhat
+(p)9547
+(e)|
+(+)Reworked how opening and closing labcoats works, report any unusual things with them.
+(t)wed jul 20 22
+(u)glowbold
+(p)9581
+(e)|
+(+)The mining cyborg module now includes the cargo appraisal and material analysis tools.
+(u)NightmarechaMillian
+(p)9726
+(e)🆕🎨⚖|feature, sprites, balance
+(*)Added craftable slamgun shells to the game.
+(u)CodeJester
+(p)8835
+(e)🆕📄|feature, tgui
+(+)The Rockbox now has a tweakable default price for new ore entries, and an auto-sell feature for automatically marking new ore entries for sale. "Please use it." -Mechanics and Roboticists
+(t)mon jul 18 22
+(u)Kubius
+(p)9476
+(e)🆕🔄|feature, rework
+(*)Window disassembly now involves action bars, with more reinforced windows requiring more disassembly time.
+(u)Munien
+(p)9507
+(e)🆕|feature
+(+)Rose names now pull from the names of player mobs. Give someone a rose today!
 (t)sun jul 17 22
 (u)Roddy
 (p)9678
@@ -87,7 +409,7 @@
 (u)Moberry
 (p)9376
 (e)⚖⛔|balance, removal
-(+)Changes QM Ore values and removes the electronics commodity.
+(+)Changed QM Ore values and removed the electronics commodity.
 (u)TTerc
 (e)🗺|mapping
 (+)Changed the layout of Donut 3 QM pipeline. The pipes should no longer break each time a welderbomb goes off in the tool storage.
@@ -249,7 +571,7 @@
 (u)Moberry
 (p)9377
 (e)⚖|balance
-(*)Changes the shipping market timer from 12-9 minutes to 10-5 minutes.
+(*)Changed the shipping market timer from 12-9 minutes to 10-5 minutes.
 (+)Artifact Resupply is now a flat one minute delay.
 (u)ZWRh3
 (p)9409

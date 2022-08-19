@@ -11,7 +11,7 @@
 	icon = 'icons/misc/critter.dmi'
 	var/living_state = null
 	var/dead_state = null
-	layer = 5.0
+	layer = 5
 	density = 1
 	anchored = 0
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
@@ -123,16 +123,12 @@
 			report_state = 1
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.increaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.increaseCritters(src)
 
 	proc/report_death()
 		if (report_state == 1)
 			report_state = 0
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.decreaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -225,7 +221,7 @@
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
-				if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+				if (issawingtool(W) || iscuttingtool(W) || issnippingtool(W))
 
 					for(var/i, i<rand(1, max_skins), i++)
 						new src.skinresult (src.loc)
@@ -459,12 +455,12 @@
 		on_damaged()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -499,16 +495,16 @@
 			return
 
 		if (src.loc == followed_path_retry_target)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
 			followed_path = null
 			followed_path_retries = 0
 			followed_path_retry_target = null
 		else if (!followed_path)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
 			task = "thinking"
 		else if (!followed_path.len)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
 			task = "thinking"
 		else
 			var/turf/nextturf = followed_path[1]
@@ -524,10 +520,10 @@
 				if (!followed_path_retry_target)
 					task = "thinking"
 				else if (followed_path_retries > 10)
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
 					task = "thinking"
 				else
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
 					followed_path = findPath(src.loc, followed_path_retry_target)
 					return
 			else
@@ -548,15 +544,6 @@
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
-
-		if (!waking)
-			if (get_area(src) == colosseum_controller.colosseum)
-				waking = 1
 
 		if(waking)
 			hibernate_check = 20
@@ -648,7 +635,7 @@
 					current_target = src.food_target
 
 				if (current_target)
-					if (get_dist(src, current_target) <= src.attack_range)
+					if (GET_DIST(src, current_target) <= src.attack_range)
 						if (current_target == src.corpse_target)
 							src.task = "scavenging"
 						else if (current_target == src.food_target)
@@ -661,15 +648,15 @@
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
-							var/turf/olddist = get_dist(src, current_target)
+							var/turf/olddist = GET_DIST(src, current_target)
 							walk_to(src, current_target,1,4)
-							if ((get_dist(src, current_target)) >= (olddist))
+							if ((GET_DIST(src, current_target)) >= (olddist))
 								src.frustration++
 								step_towards(src, current_target, 4)
 							else
 								src.frustration = 0
 						else
-							if (get_dist(src, current_target) > attack_range)
+							if (GET_DIST(src, current_target) > attack_range)
 								src.frustration++
 							else
 								src.frustration = 0
@@ -680,21 +667,21 @@
 
 				if (!src.chases_food || src.food_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.food_target) <= src.attack_range)
+				else if (GET_DIST(src, src.food_target) <= src.attack_range)
 					src.task = "eating"
 				else if (src.mobile)
 					walk_to(src, src.food_target,1,4)
 
 			if ("eating")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.task = "eating2"
 
 			if ("eating2")
 
-				if (get_dist(src, src.food_target) > src.attack_range)
+				if (GET_DIST(src, src.food_target) > src.attack_range)
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
@@ -715,7 +702,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				else if (get_dist(src, src.corpse_target) <= src.attack_range)
+				else if (GET_DIST(src, src.corpse_target) <= src.attack_range)
 					src.task = "scavenging"
 				else if (src.mobile)
 					walk_to(src, src.corpse_target,1,4)
@@ -724,7 +711,7 @@
 
 				if (!src.scavenger || src.corpse_target == null)
 					src.task = "thinking"
-				if (get_dist(src, src.corpse_target) > src.attack_range)
+				if (GET_DIST(src, src.corpse_target) > src.attack_range)
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
@@ -747,11 +734,11 @@
 			if ("attacking")
 
 				// see if he got away
-				if ((get_dist(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
+				if ((GET_DIST(src, src.target) > src.attack_range) || ((src.target:loc != src.target_lastloc)))
 					src.anchored = initial(src.anchored)
 					src.task = "chasing"
 				else
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (!src.attacking)
 							if(ATTACK_CHECK(src.target))
@@ -1016,7 +1003,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
-			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
+			logTheThing(LOG_DEBUG, user, "names a critter egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
@@ -1056,6 +1043,7 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
@@ -1082,7 +1070,7 @@
 				if (istext(critter_type))
 					critter_type = text2path(critter_type)
 				else
-					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					logTheThing(LOG_DEBUG, null, "EGG: [src] has invalid critter path!")
 					src.visible_message("Looks like there wasn't anything inside of [src]!")
 					qdel(src)
 					return
@@ -1121,7 +1109,7 @@
 		C.set_density(initial(C.density))
 		C.on_revive()
 		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else
 		boutput(src, "[C] isn't dead, you goof!")
@@ -1137,7 +1125,7 @@
 	if (C.alive)
 		C.health = 0
 		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "killed [C] (critter).")
 		message_admins("[key_name(src)] killed [C] (critter)!")
 	else
 		boutput(src, "[C] isn't alive, you goof!")

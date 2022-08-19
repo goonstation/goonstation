@@ -77,7 +77,7 @@
 		if (..())
 			return 1
 
-		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
+		if (href_list["dipsw"] && src.panel_open && GET_DIST(usr, src) < 2)
 			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1
@@ -2641,14 +2641,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
@@ -2732,7 +2732,7 @@
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2788,7 +2788,7 @@
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -3150,15 +3150,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
@@ -3211,7 +3211,7 @@
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	var/datum/light/light
 
@@ -3622,15 +3622,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()

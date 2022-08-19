@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
 	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
@@ -13,6 +14,7 @@
 	var/datum/projectile/big_missile = new/datum/projectile/special/homing/magicmissile
 	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
 	var/datum/projectile/the_missile
+	maptext_colors = list("#f57382", "#f8aaaa", "#f7e0e3", "#f8aaaa")
 
 	cast()
 		if(!holder)
@@ -24,7 +26,7 @@
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!</span>")
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
@@ -33,7 +35,7 @@
 			missile_targets += M
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("ICEE BEEYEM") // EHM-EYEARRVEE
+			holder.owner.say("ICEE BEEYEM", FALSE, maptext_style, maptext_colors) // EHM-EYEARRVEE
 		..()
 
 		var/num_shots = src.base_shots

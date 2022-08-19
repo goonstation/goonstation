@@ -7,6 +7,7 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
+	maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
 
 	cast()
 		if (!holder)
@@ -139,7 +140,7 @@
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
-			src.say("SCYAR NILA [uppertext(A)]")
+			src.say("SCYAR NILA [uppertext(A)]", FALSE, spell.maptext_style, spell.maptext_colors)
 			if(ishuman(src))
 				var/mob/living/carbon/human/O = src
 				if(istype(O.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(O.head, /obj/item/clothing/head/wizard/necro))
@@ -166,7 +167,7 @@
 				L += T3
 
 	var/turf/destination = pick(L)
-	logTheThing("combat", src, null, "teleported from [log_loc(src)] to [log_loc(destination)].")
+	logTheThing(LOG_COMBAT, src, "teleported from [log_loc(src)] to [log_loc(destination)].")
 	if (effect)
 		animate_teleport_wiz(src)
 		sleep(2 SECONDS) // Animation.

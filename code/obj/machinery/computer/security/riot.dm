@@ -3,7 +3,7 @@
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized
 	var/list/authorized_registered = null
 	var/net_id = null
@@ -109,7 +109,7 @@
 		if(src.authed)
 			return
 
-		logTheThing("station", usr, null, "authorized armory access")
+		logTheThing(LOG_STATION, usr, "authorized armory access")
 		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
@@ -137,7 +137,7 @@
 	proc/unauthorize()
 		if(src.authed)
 
-			logTheThing("station", usr, null, "unauthorized armory access")
+			logTheThing(LOG_STATION, usr, "unauthorized armory access")
 			authed = 0
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"

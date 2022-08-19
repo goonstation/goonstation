@@ -120,7 +120,7 @@
 						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
 
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
-				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 				rigged = TRUE
 				rigger = user
 
@@ -202,9 +202,9 @@
 			enter_shell()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= shell_count ? 75 : 200
-			if(2.0)
+			if(2)
 				src.health -= shell_count ? 25 : 75
 			else
 				src.health -= shell_count ? 0 : 25
@@ -250,7 +250,7 @@
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
 				for (var/mob/M in mobs)
-					if (M.job == "Clown" && get_dist(src, M) < 7)
+					if (M.job == "Clown" && GET_DIST(src, M) < 7)
 						target = M
 						attack = 1
 						task = "chasing"

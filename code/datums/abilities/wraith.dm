@@ -147,7 +147,7 @@
 		if (!M && error)
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
-		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
+		logTheThing(LOG_COMBAT, usr, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 		//Make the corpse all grody and skeleton-y
 		M.decomp_stage = 4
@@ -157,7 +157,7 @@
 		M.set_body_icon_dirty()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
 
-		holder.regenRate *= 2.0
+		holder.regenRate *= 2
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
@@ -589,7 +589,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
+				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
 					return 1
@@ -641,7 +641,7 @@
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [t]")
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
@@ -695,7 +695,7 @@
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
-			logTheThing("admin", null, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, "No spirits responded. The portal closes.")
 				qdel(marker)
@@ -718,7 +718,7 @@
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
+		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")

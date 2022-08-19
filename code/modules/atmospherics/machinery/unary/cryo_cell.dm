@@ -4,7 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = TRUE
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
 	var/on = FALSE //! Whether the cell is turned on or not
@@ -177,6 +177,8 @@
 			if (href_list["reagent_scan_active"])
 				reagent_scan_active = !reagent_scan_active
 			if (href_list["defib"])
+				if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
+					src.defib.setStatus("defib_charged", 3 SECONDS)
 				src.defib.attack(src.occupant, usr)
 			if (href_list["eject_occupant"])
 				go_out()
@@ -197,7 +199,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing("combat", user, null, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].")
 			src.add_fingerprint(user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
@@ -205,7 +207,7 @@
 				qdel(G)
 		else if (istype(I, /obj/item/reagent_containers/syringe))
 			//this is in syringe.dm
-			logTheThing("combat", user, null, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "injects [log_reagents(I)] to [src] at [log_loc(src)].")
 			if (!src.beaker)
 				boutput(user, "<span class='alert'>There is no beaker in [src] for you to inject reagents.</span>")
 				return
@@ -231,13 +233,17 @@
 			if (src.defib)
 				boutput(user, "<span class='alert'>[src] already has a Defibrillator installed.</span>")
 			else
+				if (I.cant_drop)
+					boutput(user, "<span class='alert'>You can't put that in [src] while it's attached to you!")
+					return
 				src.defib = I
 				boutput(user, "<span class='notice'>Defibrillator installed into [src].</span>")
 				playsound(src.loc, "sound/items/Deconstruct.ogg", 80, 0)
 				user.u_equip(I)
 				I.set_loc(src)
+				build_icon()
 				src.UpdateIcon()
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (!src.defib)
 				boutput(user, "<span class='alert'>[src] does not have a Defibrillator installed.</span>")
 			else
@@ -363,7 +369,7 @@
 			user.show_text("The cryo tube is already occupied.", "red")
 			return
 
-		logTheThing("combat", user, target, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "shoves [user == target ? "themselves" : constructTarget(target,"combat")] into [src] containing [src.beaker ? log_reagents(src.beaker) : "(no beaker)"] at [log_loc(src)].")
 		target.remove_pulling()
 		src.occupant = target
 		src.occupant.set_loc(src)

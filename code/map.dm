@@ -21,9 +21,9 @@ var/global/list/mapNames = list(
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
-	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = FALSE),
+	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = TRUE),
+	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = FALSE),
 	"Crash" = 			list("id" = "CRASH", 		"settings" = "horizon/crash", 		"playerPickable" = FALSE),
 	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = FALSE),
@@ -32,7 +32,6 @@ var/global/list/mapNames = list(
 	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = FALSE),
-	"Icarus" = 			list("id" = "ICARUS",		"settings" = "icarus",				"playerPickable" = FALSE),
 	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = TRUE,				"MaxPlayersAllowed" = 30),
 	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = FALSE,				"MaxPlayersAllowed" = 80),
@@ -103,6 +102,7 @@ var/global/list/mapNames = list(
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space
+	var/space_turf_replacement = null
 
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
@@ -208,6 +208,15 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
+
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the public market" = list(/area/station/crew_quarters/market),
+		"the stock exchange" = list(/area/station/crew_quarters/stockex),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters),
+		"the main brig area" = list(/area/station/security/brig),
+		"the main station pod bay" = list(/area/station/hangar/main))
 
 /datum/map_settings/donut3
 	name = "DONUT3"
@@ -748,43 +757,6 @@ var/global/list/mapNames = list(
 		"the Dionysus primary zone" = list(/area/station/crew_quarters/cafeteria),
 		"the Maru primary zone" = list(/area/station/engine/engineering),
 		"the Hammer primary zone" = list(/area/station/security/main))
-
-/datum/map_settings/icarus
-	name = "ICARUS"
-	display_name = "Icarus"
-	style = "ship"
-	goonhub_map = "https://i.imgur.com/SiI3RC9.png"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
-	arrivals_type = MAP_SPAWN_CRYO
-	dir_fore = NORTH
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-
-	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-	valid_nuke_targets = list("the gymnasium" = list(/area/station/crew_quarters/fitness),
-		"the vessel's power core" = list(/area/station/engine/engineering),
-		"the monkey dome" = list(/area/station/medical/dome),
-		"the jazz lounge" = list(/area/station/crew_quarters/jazz),
-		"the quartermasters front office" = list(/area/station/quartermaster/office))
 
 /datum/map_settings/density // I just copied cog2 for now, ok????
 	name = "density"

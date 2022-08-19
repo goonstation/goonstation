@@ -12,7 +12,7 @@
 	var/desc = {"
 ### Labels
 
-[jointext(labels, " ")]
+\[BUG\][jointext(labels, " ")]
 
 ### Description
 

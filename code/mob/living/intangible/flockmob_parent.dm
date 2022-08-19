@@ -129,7 +129,7 @@
 		..()
 		return
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		set_dir(get_dir(src, target))
 
 	if (abilityHolder.click(target, params)) //check the abilityholder
@@ -173,7 +173,7 @@
 		return src.say_dead(message)
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	message = prefixAndMessage[2]
@@ -202,7 +202,7 @@
 				playsound(src, "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)

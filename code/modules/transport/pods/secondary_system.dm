@@ -126,7 +126,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
-	desc = "Allows the ship to load crates and transport them."
+	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
 	var/list/load = list() //Current crates inside
 	var/maxcap = 3 //how many crates it can hold
 	var/list/acceptable = list(/obj/storage/crate,
@@ -800,7 +800,7 @@
 
 	activate()
 		if (crashable == 0) // To avoid spam. SEEDs can't be deactivated (Convair880).
-			logTheThing("vehicle", usr, null, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
+			logTheThing(LOG_VEHICLE, usr, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
 		crashable = 1
 		return
 

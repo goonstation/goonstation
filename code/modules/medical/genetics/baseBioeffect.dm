@@ -387,11 +387,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "used the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "used the [linked_power.name] power.")
+			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power.")
 		return 0
 
 	proc/cast_misfire(atom/target)
@@ -400,11 +400,11 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!linked_power)
 			return 1
 		if (ismob(target))
-			logTheThing("combat", owner, target, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power on [target].")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [target].")
 		else
-			logTheThing("combat", owner, null, "misfired the [linked_power.name] power.")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power.")
 		return 0
 
 	afterCast()

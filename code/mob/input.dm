@@ -11,11 +11,21 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				for (var/mob/M as anything in mobs)
+					M.name_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.mob_hovered_over)
+				var/mob/M = src.mob_hovered_over
+				M.name_tag?.show_images(src.client, FALSE, TRUE)
 		else
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				for (var/mob/M as anything in mobs)
+					M.name_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.mob_hovered_over)
+				var/mob/M = src.mob_hovered_over
+				M.name_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -261,7 +271,7 @@
 							pulling += G.affecting
 
 						for (var/atom/movable/A in pulling)
-							if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 								continue
 							if (A == src || A == pushing)
 								continue

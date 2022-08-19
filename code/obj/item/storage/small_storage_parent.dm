@@ -28,6 +28,7 @@
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -93,7 +94,7 @@
 			for (amt, amt>0, amt--)
 				new thing(src)
 		if (total_amt > slots)
-			logTheThing("debug", null, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
+			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
 		total_amt = null
 		return 1
 
@@ -345,6 +346,7 @@
 			return ..()
 
 /obj/item/storage/box/starter // the one you get in your backpack
+	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath)
 	make_my_stuff()
 		..()
@@ -375,7 +377,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY

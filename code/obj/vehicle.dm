@@ -32,6 +32,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/booster_upgrade = 0 //do we go through space?
 	var/booster_image = null //what overlay icon do we use for the booster upgrade? (we have to initialize this in new)
 	var/emagged = FALSE
+	var/health = null
+	var/health_max = null
 
 	New()
 		. = ..()
@@ -69,6 +71,31 @@ ABSTRACT_TYPE(/obj/vehicle)
 			eject_rider()
 		else
 			..()
+			var/obj/projectile/P = flag
+			if (health_max != null)
+				var/damage_unscaled = P.power * P.proj_data.ks_ratio //stam component does nothing- can't tase a grille
+				switch(P.proj_data.damage_type)
+					if (D_PIERCING)
+						src.take_damage(damage_unscaled)
+						playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+					if (D_BURNING)
+						src.take_damage(damage_unscaled / 2)
+					if (D_KINETIC)
+						src.take_damage(damage_unscaled / 2)
+					if (D_ENERGY)
+						src.take_damage(damage_unscaled / 4)
+					if (D_SPECIAL) //random guessing
+						src.take_damage(damage_unscaled / 4)
+						src.take_damage(damage_unscaled / 8)
+
+	proc/take_damage(var/amount)
+		if (!isnum(amount) || amount <= 0)
+			return
+
+		src.health = clamp(src.health - amount, 0, src.health_max)
+		if (src.health == 0)
+			robogibs(src.loc)
+			qdel(src)
 
 	meteorhit()
 		if (src.rider && ismob(src.rider))
@@ -78,20 +105,20 @@ ABSTRACT_TYPE(/obj/vehicle)
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				for(var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				qdel(src)
 
-			if(2.0)
+			if(2)
 				if (prob(50))
 					for(var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
 						A.ex_act(severity)
 					qdel(src)
 
-			if(3.0)
+			if(3)
 				if (prob(25))
 					for(var/atom/movable/A as mob|obj in src)
 						A.set_loc(src.loc)
@@ -248,6 +275,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 	var/image/image_under = null
 	layer = MOB_LAYER + 1
 	mats = 8
+	health = 30
+	health_max = 30
 	var/weeoo_in_progress = 0
 	var/icon_weeoo_state = 2
 	soundproofing = 0
@@ -480,7 +509,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			msgs.logc("jousts [constructTarget(T,"combat")] with a [joustingTool]")
 			msgs.damage_type = DAMAGE_BLUNT
 
-			//logTheThing("combat", R, T, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
+			//logTheThing(LOG_COMBAT, R, " jousts [constructTarget(src,"diary")] with a [joustingTool]")
 
 			if (S) // they were on a segway, diiiiis-MOUNT!
 				S.eject_rider(2)
@@ -609,11 +638,11 @@ ABSTRACT_TYPE(/obj/vehicle)
 	switch (action)
 		if ("impact")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", rider, other_dude, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, rider, "driving [src] crashes into [constructTarget(other_dude,"vehicle")][immune_to_impact != 0 ? " (immune to impact)" : ""] at [log_loc(src)].")
 
 		if ("shoved_off")
 			if (ismob(rider) && ismob(other_dude))
-				logTheThing("vehicle", other_dude, rider, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, other_dude, "shoves [constructTarget(rider,"vehicle")] off of a [src] at [log_loc(src)].")
 
 	return
 
@@ -634,6 +663,8 @@ ABSTRACT_TYPE(/obj/vehicle)
 	layer = MOB_LAYER + 1
 	is_syndicate = 1
 	mats = 8
+	health = 80
+	health_max = 80
 	var/low_reagents_warning = 0
 	var/zamboni = 0
 	var/sprayer_active = 0
@@ -761,7 +792,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			boutput(user, "<span class='alert'>The [src.name]'s holding tank is full!</span>")
 			return
 
-		logTheThing("combat", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
+		logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for floor buffers (Convair880).
 		var/trans = W.reagents.trans_to(src, W.reagents.total_volume)
 		boutput(user, "<span class='notice'>You empty [trans] units of the solution into the [src.name]'s holding tank.</span>")
 		return
@@ -917,7 +948,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	if (!src || !rider || !ismob(rider))
 		return
 
-	logTheThing("vehicle", rider, null, "[mount_or_dismount == 0 ? "mounts" : "dismounts"] \a [src.name] [log_reagents(src)] at [log_loc(src)].")
+	logTheThing(LOG_VEHICLE, rider, "[mount_or_dismount == 0 ? "mounts" : "dismounts"] \a [src.name] [log_reagents(src)] at [log_loc(src)].")
 	return
 
 /obj/ability_button/fbuffer_toggle
@@ -1175,6 +1206,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			C.show_message("<span class='alert'><B>[rider] crashes into [M] with the [src]!</B></span>", 1)
 		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
+		M.force_laydown_standup()
 		playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
 
 /obj/vehicle/clowncar/bullet_act(flag, A as obj)
@@ -1279,12 +1311,12 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	switch (action)
 		if ("rider_enter", "rider_exit")
 			if (rider && ismob(rider))
-				logTheThing("vehicle", rider, null, "[action == "rider_enter" ? "starts driving" : "stops driving"] [src.name] at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, rider, "[action == "rider_enter" ? "starts driving" : "stops driving"] [src.name] at [log_loc(src)].")
 
 		if ("pax_enter", "pax_exit")
 			if (pax && ismob(pax))
 				var/logtarget = (rider && ismob(rider) ? rider : null)
-				logTheThing("vehicle", pax, logtarget, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
+				logTheThing(LOG_VEHICLE, pax, "[action == "pax_enter" ? "is stuffed into" : "is ejected from"] [src.name] ([forced_in == 1 ? "Forced by" : "Driven by"]: [rider && ismob(rider) ? "[constructTarget(logtarget,"vehicle")]" : "N/A or unknown"]) at [log_loc(src)].")
 
 	return
 
@@ -2157,6 +2189,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 	icon_state = "forklift"
 	anchored = 1
 	mats = 12
+	health = 80
+	health_max = 80
 	var/list/helditems = list()	//Items being held by the forklift
 	var/helditems_maximum = 3
 	var/openpanel = 0			//1 when the back panel is opened

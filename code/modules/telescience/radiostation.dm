@@ -128,7 +128,7 @@
 	desc = "A large and complicated audio mixing desk. Complete with fancy displays, dials, knobs and automated faders."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-2"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	flags = TGUI_INTERACTIVE
 	var/static/list/accents
@@ -226,7 +226,7 @@
 			if(!isnull(accent_id))
 				var/datum/bioEffect/speech/accent = src.accents[accent_id]
 				message = accent.OnSpeak(message)
-			logTheThing("say", usr, name, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
+			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
 			var/original_name = usr.real_name
 			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
 			usr.say(message)
@@ -239,7 +239,7 @@
 	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-3"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/has_record = 0
 	var/is_playing = 0
@@ -261,7 +261,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			var/R = html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text)
+			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
@@ -310,7 +310,7 @@
 	var/record_name = ""
 	var/add_overlay = 1
 	w_class = W_CLASS_NORMAL
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 3
 	throw_range = 8
 	force = 2
@@ -328,7 +328,7 @@
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
@@ -339,7 +339,7 @@
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+		logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 ABSTRACT_TYPE(/obj/item/record/random)
 
@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	desc = "A large standalone reel-to-reel tape deck."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tapedeck"
-	anchored = 1.0
+	anchored = 1
 	density = 1
 	var/has_tape = 0
 	var/is_playing = 0

@@ -23,16 +23,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
-"j" = (
-/obj/machinery/deep_fryer,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.2;
-	color_g = 0.45;
-	color_r = 0.5;
-	invisibility = 101;
-	name = "glow - YELLOW"
-	},
+"i" = (
+/obj/decal/cleanable/blood,
+/obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "l" = (
@@ -151,8 +144,15 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/decal/cleanable/blood,
-/obj/item/kitchen/utensil/knife,
+/obj/machinery/deep_fryer,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.2;
+	color_g = 0.45;
+	color_r = 0.5;
+	invisibility = 101;
+	name = "glow - YELLOW"
+	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
@@ -167,9 +167,9 @@ L
 A
 "}
 (3,1,1) = {"
-j
-Z
 D
+Z
+i
 "}
 (4,1,1) = {"
 E

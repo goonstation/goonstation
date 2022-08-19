@@ -308,8 +308,8 @@
 						T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
-				for(var/mob/living/HH in range(8, src))
-					var/checkdist = get_dist(HH.loc, T)
+				for(var/mob/living/HH in hearers(8, T))
+					var/checkdist = GET_DIST(HH.loc, T)
 
 					// Reduced sonic boom effect with increased misstep from shockwave
 					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)

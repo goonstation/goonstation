@@ -392,7 +392,7 @@ obj/item/gnomechompski/elf
 			src.shotsLeft--
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[user] points the gun at \his head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
+					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
 					playsound(user, "sound/vox/wonk.ogg", 70, 1)
 
 			return 0
@@ -510,7 +510,7 @@ obj/item/gnomechompski/elf
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
-				logTheThing("combat", affected_mob, null, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
+				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob.gib()
 
 /obj/item/reagent_containers/food/snacks/candy/butterscotch
@@ -580,7 +580,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -589,7 +589,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -598,7 +598,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -628,7 +628,7 @@ obj/item/gnomechompski/elf
 	power = 10
 	cost = 20
 	dissipation_rate = 1
-	ks_ratio = 0.0
+	ks_ratio = 0
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
 	shot_number = 1
@@ -661,7 +661,7 @@ obj/item/gnomechompski/elf
 	name = "Prototype W.0-NK Laser Rifle"
 	desc = "Wonk!"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "bullpup"
 	rechargeable = 0
 	custom_cell_max_capacity = 100
@@ -1148,7 +1148,7 @@ obj/critter/madnessowl/switchblade
 				src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-				logTheThing("combat", src, BORG, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
 				BORG.gib()
 				src.target = null
 				src.boredom_countdown = 0
@@ -1369,8 +1369,8 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		return
 
 	M.verbs -= /proc/owl_slam
-
-	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
+	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
@@ -1410,13 +1410,14 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.channel = 5
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Owl Slam!</span>")
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
 		SPAWN(0)
 		M1.owlgib()
 	for(var/mob/living/carbon/human/M2 in range(50, M))
 		SPAWN(0)
-			if (!(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
+			if (!QDELETED(M2) && !(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
 				for(var/obj/item/clothing/O in M2)
 					M2.u_equip(O)
 					if (O)
