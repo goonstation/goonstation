@@ -11,10 +11,11 @@
 (u)Cogwerks
 (e)|
 (+)Added orderable crates for the Micro and Macro Phasers
-(*)All three classes of phasers are encouraged for use in Player vs Environment adventures
-(*)Ask security to open the crates if you wanna use them for telesci or space exploration
-(*)Added Egun-Jr. Heads of Personnel, check your closet. 
-(*)Updated naming scheme and descriptions for rad crossbow and phasers. 
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun 
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open 
+(+)Updated naming scheme and descriptions for rad crossbow and phasers. 
 (t)wed aug 17 22
 (u)MylieDaniels
 (p)9902

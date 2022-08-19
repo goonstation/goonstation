@@ -518,15 +518,24 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_securitylockers
 
 /datum/supply_packs/weapons4
-	name = "Weapons Crate - Macro Phaser (Cardlocked \[Security Equipment])"
+	name = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	desc = "x1 Macro Phaser Gun"
 	category = "Security Department"
 	contains = list(/obj/item/gun/energy/phaser_huge = 1)
 	cost = 10000
 	containertype = /obj/storage/secure/crate/weapon
-	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Security Equipment])"
-	access = access_securitylockers
+	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
+	access = access_armory
 
+/datum/supply_packs/weapons5
+	name = "Weapons Crate - Egun Juniors (Cardlocked \[Armory Equipment])"
+	desc = "x2 Egun Jr"
+	category = "Security Department"
+	contains = list(/obj/item/gun/energy/egun_jr = 2)
+	cost = 6000
+	containertype = /obj/storage/secure/crate/weapon
+	containername = "Weapons Crate - Egun Juniors (Cardlocked \[Armory Equipment])"
+	access = access_armory
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
