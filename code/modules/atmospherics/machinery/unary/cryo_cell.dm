@@ -405,7 +405,7 @@
 			if (AM == src.beaker || AM == src.defib)
 				continue
 			AM.set_loc(get_turf(src))
-		exiter.force_laydown_standup()
+		exiter?.force_laydown_standup()
 		src.occupant = null
 		src.UpdateIcon()
 

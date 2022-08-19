@@ -39,7 +39,7 @@
 				max_sound_range = MAX_SOUND_RANGE_OVERLOADED
 			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
 				schedule_interval = 6.5 SECONDS
-				footstep_extrarange = 0
+				footstep_extrarange = -5
 				max_sound_range = MAX_SOUND_RANGE_NORMAL
 			else if (clients_num <= FAST_LIFE_PLAYERCOUNT)
 				schedule_interval = 2 SECONDS
