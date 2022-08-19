@@ -362,6 +362,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 				/obj/item/gun/kinetic/riotgun = /obj/item/ammo/bullets/abg,\
 				/obj/item/gun/energy/taser_gun,\
 				/obj/item/gun/energy/phaser_gun,\
+				/obj/item/gun/energy/phaser_small,\
 				/obj/item/gun/energy/laser_gun,\
 				/obj/item/device/key/random,\
 				/obj/item/paper/IOU)
