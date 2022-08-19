@@ -159,14 +159,14 @@
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
-					return TRUE
+				return TRUE
 
 			if("ejectextractables")
 				for (var/obj/item/I in src.extractables)
 					src.extractables.Remove(I)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-					return TRUE
+				return TRUE
 
 			if("eject")
 				var/obj/item/I = locate(params["eject_ref"]) in src
