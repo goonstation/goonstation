@@ -290,7 +290,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				SPAWN(0.2 SECONDS)
 					if(user.l_hand != second_gun) return
 					if (BOUNDS_DIST(user, target) == 0)
-						second_gun.shoot_point_blank(target,user,second_shot = 11)
+						second_gun.shoot_point_blank(target,user,second_shot = 1)
 					else
 						second_gun.shoot(target_turf,get_turf(user), user, rand(-5,5), rand(-5,5), is_dual_wield)
 

@@ -28,7 +28,7 @@
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(atom/target, mob/user)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		if (canshoot())
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
@@ -39,7 +39,7 @@
 
 					return
 			else
-				return ..(target, user)
+				return ..(target, user, second_shot)
 
 	disposing()
 		indicator_display = null
