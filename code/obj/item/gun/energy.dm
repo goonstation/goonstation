@@ -429,14 +429,14 @@
 	item_state = "egun-jr"
 	force = 3
 	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
-	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
+	can_swap_cell = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
-		RegisterSignal(src, COMSIG_ATOM_ANALYZE, .proc/noreward)
 		..()
+
 	update_icon()
 		..()
 		var/list/ret = list()
@@ -459,11 +459,6 @@
 		..()
 		UpdateIcon()
 		M.update_inhands()
-
-	proc/noreward()
-		src.nojobreward = 1
-
-
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
