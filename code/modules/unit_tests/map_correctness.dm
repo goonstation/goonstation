@@ -77,7 +77,7 @@ proc/check_window_turfs()
 
 proc/check_networked_data_terminals()
 	var/list/log_lines = list()
-	for(var/obj/machinery/networked/networked in world)
+	for(var/obj/machinery/networked/networked in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 		if(!(locate(/obj/machinery/power/data_terminal) in networked.loc))
 			var/turf/T = networked.loc
 			log_lines += "[networked] [networked.type] on [T.x], [T.y], [T.z] in [T.loc]"
