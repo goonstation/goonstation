@@ -5179,6 +5179,10 @@
 /area/station/hangar/sec)
 "ajx" = (
 /obj/storage/secure/closet/security/equipment,
+/obj/blind_switch/area/north{
+	pixel_y = 25;
+	pixel_x = -7
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -11458,6 +11462,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
