@@ -413,11 +413,15 @@ var/global
 		if (isclient(target))
 			C = target
 		else if (ismob(target))
-			C = target:client
-			if(istype(target, /mob/living/silicon/ai))
-				var/mob/living/silicon/ai/AI = target
+			var/mob/M = target
+			if (M.boutput_relay_mob)
+				boutput(M.boutput_relay_mob, message, group, forceScroll)
+			else if(istype(M, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = M
 				if(AI.deployed_to_eyecam)
 					C = AI.eyecam?.client
+			else
+				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
