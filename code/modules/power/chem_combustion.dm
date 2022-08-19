@@ -11,7 +11,7 @@
 	var/active = 0
 	var/fuel_drain_rate = 0.3
 	var/atmos_drain_rate = 0.02
-	var/standard_power_output = 5000 // around how much the generator will output running normally
+	var/output_multiplier = 1 // for bigger generators?
 	var/last_output
 
 	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank
@@ -54,7 +54,6 @@
 	was_deconstructed_to_frame(mob/user)
 		. = ..()
 		src.stop_engine()
-
 
 	attack_hand(var/mob/user, params)
 		if (..(user, params))
@@ -205,8 +204,8 @@
 		src.updateUsrDialog()
 		return
 
-#define FUEL_QUALITY_VERY_HIGH 8
-#define FUEL_QUALITY_HIGH 5
+#define FUEL_QUALITY_VERY_HIGH 10
+#define FUEL_QUALITY_HIGH 6
 #define FUEL_QUALITY_AVERAGE 3
 #define FUEL_QUALITY_LOW 2
 #define FUEL_QUALITY_VERY_LOW 1
@@ -234,9 +233,9 @@
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		src.last_output = src.standard_power_output * ((average_volatility / FUEL_QUALITY_AVERAGE) * (available_oxygen * 5))
+		src.last_output = ((average_volatility * (available_oxygen * 5)) * src.output_multiplier) KILO WATTS
 		var/datum/powernet/P = C.get_powernet()
-		P.newavail += src.last_output WATTS
+		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
