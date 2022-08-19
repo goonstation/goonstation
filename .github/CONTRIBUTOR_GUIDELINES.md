@@ -14,7 +14,7 @@ Here's the general criteria for people to apply:
 * Have demonstrated themselves to be polite and welcoming representatives of the project.
 * Are comfortable with following the [Triage Team Guidelines](https://github.com/goonstation/goonstation/blob/master/.github/TRIAGE_GUIDELINES.md).
 
-If you think these apply to (likely so if you're reading this), feel free to fill out the [Triage Application](https://dyno.gg/form/323aa72b).
+If you think these apply to (likely so if you're reading this), feel free to fill out the [Triage Team Form](https://bit.ly/goontriageform).
 It's __very very basic__, and we accept basically anyone who asks, so don't hesitate if you are interested!
 
 ## Making PRs (read before making a PR)
