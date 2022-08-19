@@ -1,4 +1,9 @@
 
+(t)fri aug 19 22
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
 (t)thu aug 18 22
 (u)Roddy
 (p)10340
