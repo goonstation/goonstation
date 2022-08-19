@@ -2043,20 +2043,21 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M) || ismobcritter(M))
+					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/mob/living/critter/C = M
-						if((issmokeimmune(H) && H.glasses?.c_flags & COVERSEYES) || isrobocritter(C) || istype(C, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
+						if((issmokeimmune(H) && H.glasses?.c_flags & COVERSEYES))
 							return
-						else
-							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-							if(prob(50))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-								M.take_eye_damage(1, 1)
-							M.change_eye_blurry(3)
-							M.changeStatus("stunned", 2 SECONDS)
-							M.change_misstep_chance(10)
+					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
+						return
+					else
+						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							M.take_eye_damage(1, 1)
+						M.change_eye_blurry(3)
+						M.changeStatus("stunned", 2 SECONDS)
+						M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
