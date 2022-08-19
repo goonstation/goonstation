@@ -222,6 +222,7 @@ const PlantRow = (props, context) => {
                 <Button
                   icon="fill-drip"
                   title="Infuse"
+                  fontSize={1.1}
                   disabled={!extractable.allow_infusion[1]}
                   onClick={() => act('infuse', { infuse_ref: extractable.ref[0] })}
                 />)}
@@ -229,6 +230,7 @@ const PlantRow = (props, context) => {
                 <Button
                   icon="seedling"
                   title="Extract Seeds"
+                  fontSize={1.1}
                   onClick={() => act('extract', { extract_ref: extractable.ref[0] })}
                 />)}
               {splice && (
@@ -237,16 +239,19 @@ const PlantRow = (props, context) => {
                   icon={extractable.splicing[1] ? "window-close" : "code-branch"}
                   color={extractable.splicing[1] ? "red" : ""}
                   title={extractable.splicing[1] ? "Cancel Splice" : "Splice"}
+                  fontSize={1.1}
                   onClick={() => act('splice_select', { splice_select_ref: extractable.ref[0] })}
                 />)}
               <Button
                 icon="search"
                 title="Analyze"
+                fontSize={1.1}
                 onClick={() => act('analyze', { analyze_ref: extractable.ref[0] })}
               />
               <Button
                 icon="eject"
                 title="Eject"
+                fontSize={1.1}
                 onClick={() => act('eject', { eject_ref: extractable.ref[0] })}
               />
             </Flex.Item>
