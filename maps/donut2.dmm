@@ -1773,7 +1773,6 @@
 /turf/space,
 /area/shuttle/research/outpost)
 "afX" = (
-/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8;
 	icon_state = "shuttlecock"
