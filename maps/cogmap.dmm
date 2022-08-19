@@ -19853,10 +19853,10 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/crew_quarters/jazz)
 "bas" = (
-/obj/submachine/ATM{
-	pixel_x = 32
-	},
 /obj/machinery/door/window/southright,
+/obj/submachine/ATM{
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bat" = (
@@ -35919,15 +35919,13 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bQB" = (
-/obj/machinery/door/window/northleft{
-	name = "Cargo Office";
-	req_access_txt = null
-	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/mining,
 /obj/access_spawn/cargo,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/supplylobby)
 "bQE" = (
