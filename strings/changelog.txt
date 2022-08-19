@@ -1,5 +1,9 @@
 
 (t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
 (u)Wisemonster
 (p)9792
 (e)|
