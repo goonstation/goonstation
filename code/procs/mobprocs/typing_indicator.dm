@@ -97,7 +97,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		return
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
-		/// This check prevents the removal of a typing indicator. Without the check, if you begin to speak again before your speech bubble disappears, your typing indicator gets deleted instead.
+		// This check prevents the removal of a typing indicator. Without the check, if you begin to speak again before your speech bubble disappears, your typing indicator gets deleted instead.
 		if (src.has_typing_indicator == FALSE)
 			src.UpdateOverlays(null, "speech_bubble")
 
