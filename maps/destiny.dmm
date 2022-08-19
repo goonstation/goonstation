@@ -16314,9 +16314,6 @@
 /turf/space,
 /turf/simulated/wall/auto/asteroid,
 /area/space)
-"bBv" = (
-/turf/simulated/floor/plating/airless,
-/area/space)
 "bBw" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -61854,11 +61851,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (3,1,1) = {"
@@ -62158,7 +62155,7 @@ aaa
 aaa
 aaa
 aaa
-bBv
+aaa
 aaa
 aaa
 aaa
@@ -62458,11 +62455,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (5,1,1) = {"
@@ -63062,11 +63059,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
 aaa
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (7,1,1) = {"
@@ -63666,11 +63663,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
 aaa
-bBv
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (9,1,1) = {"
