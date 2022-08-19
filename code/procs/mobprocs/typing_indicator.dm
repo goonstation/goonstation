@@ -112,7 +112,8 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 /obj/item/organ/head/proc/speech_bubble(datum/source, speech_bubble)
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
-		src.UpdateOverlays(null, "speech_bubble")
+		if (src.has_typing_indicator == FALSE)
+			src.UpdateOverlays(null, "speech_bubble")
 	return TRUE
 
 #undef TYPING_OVERLAY_KEY
