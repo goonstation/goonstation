@@ -17,6 +17,8 @@ Here's the general criteria for people to apply:
 If you think these apply to (likely so if you're reading this), feel free to fill out the [Triage Team Form](https://bit.ly/goontriageform).
 It's __very very basic__, and we accept basically anyone who asks, so don't hesitate if you are interested!
 
+Note: If you don't use Discord, contact a dev about being added, as the form requires a Discord account.
+
 ## Making PRs (read before making a PR)
 Aside from the actual changes to the repo that you make, opening a PR has some required sections in the initial PR comment. Here are the general guidelines for filling out each section.
 
