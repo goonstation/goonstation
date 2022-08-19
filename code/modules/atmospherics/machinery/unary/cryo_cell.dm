@@ -177,6 +177,8 @@
 			if (href_list["reagent_scan_active"])
 				reagent_scan_active = !reagent_scan_active
 			if (href_list["defib"])
+				if(!ON_COOLDOWN(src.defib, "defib_cooldown", 10 SECONDS))
+					src.defib.setStatus("defib_charged", 3 SECONDS)
 				src.defib.attack(src.occupant, usr)
 			if (href_list["eject_occupant"])
 				go_out()

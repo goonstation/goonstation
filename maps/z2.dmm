@@ -49392,7 +49392,8 @@
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "grimy vent";
-	tag = ""
+	tag = "";
+	layer = 2
 	},
 /obj/map/light/dimreddish,
 /obj/storage/crate{
