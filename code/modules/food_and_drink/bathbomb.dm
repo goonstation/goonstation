@@ -19,7 +19,7 @@
 			return
 
 		var/turf/T = get_turf(src)
-		T.fluid_react(reagents,reagents.total_volume)
+		T?.fluid_react(reagents,reagents.total_volume)
 		qdel(src)
 
 	attack(mob/M, mob/user, def_zone)
