@@ -9050,7 +9050,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/item/device/radio/intercom{
-	pixel_y = -1
+	pixel_y = 24
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
