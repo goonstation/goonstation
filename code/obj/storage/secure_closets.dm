@@ -248,7 +248,6 @@
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
-	/obj/item/gun/energy/egun_jr,
 	/obj/item/clipboard,
 	/obj/item/clothing/suit/hopjacket)
 
