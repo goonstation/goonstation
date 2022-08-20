@@ -580,7 +580,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if ((src in usr.contents || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
