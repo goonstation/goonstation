@@ -101,7 +101,7 @@
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-		toggle(null)
+		toggle(user)
 
 /obj/machinery/light_switch/power_change()
 

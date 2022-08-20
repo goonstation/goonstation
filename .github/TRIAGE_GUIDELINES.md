@@ -1,5 +1,5 @@
 Here's just the basic conduct we require. 
-1. Be courteous and polite on Github.(or anywhere your role in triage is visible)
+1. Be courteous and polite on Github (or anywhere your role in triage is visible).
 2. Use your best judgement when applying labels, closing issues, and requesting reviewers. 
 3. Offer constructive criticism where appropriate.
 

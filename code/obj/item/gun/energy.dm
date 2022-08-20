@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "An energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -283,7 +283,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 4
-	desc = "A diminutive sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
+	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -309,7 +309,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 10
-	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/higherish_power
 	shoot_delay = 10
@@ -337,8 +337,8 @@
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
-	name = "mini rad-poison-crossbow"
-	desc = "A weapon favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell."
+	name = "\improper Wenshen mini rad-poison-crossbow"
+	desc = "The XIANG|GEISEL Wenshen (瘟神) crossbow favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Geisel Radiofabrik."
 	icon_state = "crossbow"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
@@ -418,6 +418,47 @@
 
 	proc/noreward()
 		src.nojobreward = 1
+
+
+/obj/item/gun/energy/egun_jr
+	name = "energy gun junior"
+	icon_state = "egun-jr"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell
+	desc = "A smaller sidearm version of the energy gun, with dual modes for stun and kill."
+	item_state = "egun-jr"
+	force = 3
+	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
+	muzzle_flash = "muzzle_flash_elec"
+	can_swap_cell = FALSE
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt)
+		projectiles = list(current_projectile,new/datum/projectile/laser)
+		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt)
+				src.item_state = "egun-jrstun"
+				src.icon_state = "egun-jrstun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+			else if (current_projectile.type == /datum/projectile/laser)
+				src.item_state = "egun-jrkill"
+				src.icon_state = "egun-jrkill[ratio]"
+				muzzle_flash = "muzzle_flash_laser"
+			else
+				src.item_state = "egun-jr"
+				src.icon_state = "egun-jr[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
