@@ -10,7 +10,7 @@
 #define LOG_COMBAT "combat"
 #define LOG_DEBUG "debug"
 #define LOG_DIARY "diary"		// diary
-#define LOG_GAME "game"			// diary only
+#define LOG_GAMEMODE "gamemode"
 #define LOG_MHELP "mhelp"		// used for diary too
 #define LOG_OOC "ooc"
 #define LOG_PATHOLOGY "pathology"

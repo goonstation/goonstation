@@ -20,7 +20,7 @@
 	var/log_access = 0					// log login/logout
 	var/log_say = 0						// log client say
 	var/log_admin = 0					// log admin actions
-	var/log_game = 0					// log game events
+	var/log_gamemode = 0				// log gamemode events
 	var/log_whisper = 0					// log client whisper
 	var/log_ahelp = 0					// log admin helps
 	var/log_mhelp = 0					// log mentor helps
@@ -173,8 +173,8 @@
 			if ("log_admin")
 				config.log_admin = 1
 
-			if ("log_game")
-				config.log_game = 1
+			if ("log_gamemode")
+				config.log_gamemode = 1
 
 
 			if ("log_whisper")
