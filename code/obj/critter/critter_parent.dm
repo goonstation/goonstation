@@ -123,16 +123,12 @@
 			report_state = 1
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.increaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.increaseCritters(src)
 
 	proc/report_death()
 		if (report_state == 1)
 			report_state = 0
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.decreaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -225,7 +221,7 @@
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
-				if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+				if (issawingtool(W) || iscuttingtool(W) || issnippingtool(W))
 
 					for(var/i, i<rand(1, max_skins), i++)
 						new src.skinresult (src.loc)
@@ -499,16 +495,16 @@
 			return
 
 		if (src.loc == followed_path_retry_target)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
 			followed_path = null
 			followed_path_retries = 0
 			followed_path_retry_target = null
 		else if (!followed_path)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
 			task = "thinking"
 		else if (!followed_path.len)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
 			task = "thinking"
 		else
 			var/turf/nextturf = followed_path[1]
@@ -524,10 +520,10 @@
 				if (!followed_path_retry_target)
 					task = "thinking"
 				else if (followed_path_retries > 10)
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
 					task = "thinking"
 				else
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
 					followed_path = findPath(src.loc, followed_path_retry_target)
 					return
 			else
@@ -548,15 +544,6 @@
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
-
-		if (!waking)
-			if (get_area(src) == colosseum_controller.colosseum)
-				waking = 1
 
 		if(waking)
 			hibernate_check = 20
@@ -1016,7 +1003,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
-			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
+			logTheThing(LOG_DEBUG, user, "names a critter egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
@@ -1056,6 +1043,7 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
@@ -1082,7 +1070,7 @@
 				if (istext(critter_type))
 					critter_type = text2path(critter_type)
 				else
-					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					logTheThing(LOG_DEBUG, null, "EGG: [src] has invalid critter path!")
 					src.visible_message("Looks like there wasn't anything inside of [src]!")
 					qdel(src)
 					return
@@ -1121,7 +1109,7 @@
 		C.set_density(initial(C.density))
 		C.on_revive()
 		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else
 		boutput(src, "[C] isn't dead, you goof!")
@@ -1137,7 +1125,7 @@
 	if (C.alive)
 		C.health = 0
 		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "killed [C] (critter).")
 		message_admins("[key_name(src)] killed [C] (critter)!")
 	else
 		boutput(src, "[C] isn't alive, you goof!")

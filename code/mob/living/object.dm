@@ -187,7 +187,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
-		logTheThing("combat", src, null, "is hit by a blob")
+		logTheThing(LOG_COMBAT, src, "is hit by a blob")
 		if (isdead(src) || src.nodamage)
 			return
 

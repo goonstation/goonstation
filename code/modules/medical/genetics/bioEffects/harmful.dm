@@ -488,7 +488,7 @@
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
-				logTheThing("combat", L, null, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
 				L.set_loc(pick(destination))
 
 //////////////

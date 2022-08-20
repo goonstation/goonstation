@@ -120,7 +120,7 @@
 						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
 
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
-				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 				rigged = TRUE
 				rigger = user
 

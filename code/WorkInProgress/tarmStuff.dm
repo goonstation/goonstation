@@ -84,6 +84,7 @@
 	hit_type = DAMAGE_BURN
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
+	implanted = null
 	armor_ignored = 0.66
 	impact_image_state = "bhole"
 	shot_volume = 66

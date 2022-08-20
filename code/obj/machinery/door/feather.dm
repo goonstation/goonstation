@@ -125,11 +125,11 @@
 	if (src.broken)
 		return FALSE
 	if (..())
-		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 30, 1, extrarange = -10)
 
 /obj/machinery/door/feather/close()
 	if(..())
-		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 50, 1)
+		playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 30, 1, extrarange = -10)
 
 /obj/machinery/door/feather/isblocked()
 	return FALSE // this door will not lock or be inaccessible to flockdrones

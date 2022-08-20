@@ -9,6 +9,7 @@
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
+	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -502,7 +503,7 @@
 
 /mob/Logout()
 
-	//logTheThing("diary", src, null, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
+	//logTheThing(LOG_DIARY, src, "logged out", "access") <- sometimes shits itself and has been known to out traitors. Disabling for now.
 	SEND_SIGNAL(src, COMSIG_MOB_LOGOUT)
 
 	tgui_process?.on_logout(src)
@@ -670,9 +671,9 @@
 				tmob.set_loc(oldloc)
 
 				if (istype(tmob.loc, /turf/space))
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
+					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into space.")
 				else if (locate(/obj/hotspot) in tmob.loc)
-					logTheThing("combat", src, tmob, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
+					logTheThing(LOG_COMBAT, src, "trades places with (Help Intent) [constructTarget(tmob,"combat")], pushing them into a fire.")
 				deliver_move_trigger("swap")
 				tmob.deliver_move_trigger("swap")
 				tmob.update_grab_loc()
@@ -703,9 +704,9 @@
 			if (victim.buckled && !victim.buckled.anchored)
 				step(victim.buckled, t)
 			if (!was_in_space && istype(victim.loc, /turf/space))
-				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into space.")
+				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into space.")
 			else if (!was_in_fire && (locate(/obj/hotspot) in victim.loc))
-				logTheThing("combat", src, victim, "pushes [constructTarget(victim,"combat")] into a fire.")
+				logTheThing(LOG_COMBAT, src, "pushes [constructTarget(victim,"combat")] into a fire.")
 
 		step(src,t)
 		AM.OnMove(src)
@@ -742,7 +743,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
-	logTheThing("combat", src, null, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
+	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
 /mob/proc/projCanHit(datum/projectile/P)
@@ -1433,7 +1434,7 @@
 
 		src.mind.set_miranda(new_rights)
 
-		logTheThing("telepathy", src, null, "has set their miranda rights quote to: [src.mind.miranda]")
+		logTheThing(LOG_TELEPATHY, src, "has set their miranda rights quote to: [src.mind.miranda]")
 		src.show_text("Miranda rights set to \"[src.mind.miranda]\"", "blue")
 
 /mob/verb/abandon_mob()
@@ -1446,7 +1447,7 @@
 		boutput(usr, "<span class='notice'><B>You must be a ghost to use this!</B></span>")
 		return
 
-	logTheThing("diary", usr, null, "used abandon mob.", "game")
+	logTheThing(LOG_DIARY, usr, "used abandon mob.", "game")
 
 	var/mob/new_player/M = new()
 
@@ -1474,7 +1475,7 @@
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
-		logTheThing("combat", src, null, "succumbs")
+		logTheThing(LOG_COMBAT, src, "succumbs")
 
 /mob/verb/cancel_camera()
 	set name = "Cancel Camera View"
@@ -1589,7 +1590,7 @@
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
 		if (src.health < 0 && !src.incrit)
 			src.incrit = 1
-			logTheThing("combat", src, null, "goes into crit [log_health(src)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "goes into crit [log_health(src)] at [log_loc(src)].")
 		else if (src.incrit && src.health >= 0)
 			src.incrit = 0
 	else
@@ -1686,7 +1687,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -1774,7 +1775,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is electric-gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is electric-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -1820,7 +1821,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is fire-gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is fire-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -1860,7 +1861,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is party-gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is party-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -1906,7 +1907,7 @@
 	game_stats.Increment("violence")
 #endif
 	var/transfer_mind_to_owl = prob(control_chance)
-	logTheThing("combat", src, null, "is owl-gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is owl-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -1960,7 +1961,7 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	logTheThing("combat", src, null, "is vaporized at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is vaporized at [log_loc(src)].")
 
 	if (ishuman(src))
 		animation = new(src.loc)
@@ -1991,7 +1992,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "imploded at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "imploded at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
@@ -2022,7 +2023,7 @@
 	#ifdef DATALOGGER
 		game_stats.Increment("violence")
 	#endif
-		logTheThing("combat", src, null, "is taken by the floor cluwne at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "is taken by the floor cluwne at [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
 		src.anchored = 1
@@ -2089,7 +2090,7 @@
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
-	logTheThing("combat", src, null, "is butt-gibbed at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is butt-gibbed at [log_loc(src)].")
 	var/atom/movable/overlay/gibs/animation = null
 	src.transforming = 1
 	src.canmove = 0
@@ -2949,7 +2950,7 @@
 	var/duration = 30
 
 	SPAWN(0) //multisatan
-		logTheThing("combat", src, null, "is damned to hell from [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "is damned to hell from [log_loc(src)].")
 		src.transforming = 1
 		src.canmove = 0
 		src.anchored = 1
