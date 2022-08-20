@@ -49392,7 +49392,8 @@
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "grimy vent";
-	tag = ""
+	tag = "";
+	layer = 2
 	},
 /obj/map/light/dimreddish,
 /obj/storage/crate{
@@ -132541,9 +132542,9 @@ dmw
 dmw
 dmw
 dmw
+dmw
+dmw
 hrN
-dmw
-dmw
 dmw
 dmw
 dmw
@@ -135243,7 +135244,7 @@ aES
 gcn
 oYO
 dny
-dmu
+ixU
 gcn
 sbF
 sbF
@@ -135847,7 +135848,7 @@ aES
 gcn
 dkX
 dny
-ixU
+dmu
 gcn
 sbF
 sbF
@@ -140695,9 +140696,9 @@ dms
 dms
 dms
 dms
+dms
+dms
 hIz
-dms
-dms
 dms
 dms
 hIz

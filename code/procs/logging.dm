@@ -73,6 +73,7 @@ var/global/logLength = 0
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
 			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
+			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
 			if (LOG_DIARY)
 				diaryLogging = should_diary_log(diaryType)
 

@@ -10,7 +10,7 @@
 		Self-use is instantaneous, but burns you badly."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
-	pointCost = 500
+	pointCost = 200
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -42,7 +42,7 @@
 		H.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
-	duration = 18 SECONDS
+	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
 	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'

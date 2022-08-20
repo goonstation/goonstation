@@ -4368,6 +4368,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log'>Topic Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log_string'><small>(Search)</small></A><br>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
 			"}
@@ -4438,7 +4440,7 @@ var/global/noir = 0
 	set name = "Restart"
 	set desc= "Restarts the world"
 
-	var/confirm = tgui_alert(usr,"Restart the game world?", "Restart", list("Yes", "Cancel"))
+	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")

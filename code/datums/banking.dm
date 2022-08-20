@@ -43,13 +43,13 @@
 				continue
 
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
 		for(var/occupation in assistant_occupations)
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
@@ -580,7 +580,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null

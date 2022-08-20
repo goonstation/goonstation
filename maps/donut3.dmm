@@ -33341,15 +33341,6 @@
 	},
 /area/station/security/detectives_office)
 "jtV" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -44348,6 +44339,7 @@
 	dir = 1
 	},
 /obj/machinery/networked/nuclear_charge,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "mFg" = (
@@ -61838,6 +61830,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"rzh" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/blind_switch/area/west,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "rzm" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -129546,7 +129547,7 @@ ero
 pFQ
 qMj
 sMk
-sMk
+rzh
 nRR
 leu
 ltD
