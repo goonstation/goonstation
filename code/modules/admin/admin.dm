@@ -1803,7 +1803,7 @@ var/global/noir = 0
 		if ("managetraits_remove")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				if (!M || !trait) return
 				message_admins("[key_name(usr)] removed trait [trait.name] from [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "removed trait [trait.name] from [constructTarget(M,"admin")].")
@@ -1814,7 +1814,7 @@ var/global/noir = 0
 
 		if ("managetraits_debug_vars")
 			if (src.level >= LEVEL_PA)
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				usr.client.debug_variables(trait)
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
@@ -1827,9 +1827,9 @@ var/global/noir = 0
 				if (!M.traitHolder)
 					tgui_alert(usr,"No trait holder detected.")
 					return
-				var/list/obj/trait/all_traits = list()
+				var/list/datum/trait/all_traits = list()
 				var/list/traits_by_name = list()
-				for(var/obj/trait/trait as anything in traitList)
+				for(var/datum/trait/trait as anything in traitList)
 					all_traits[traitList[trait].name] = traitList[trait].id
 					traits_by_name.Add(traitList[trait].name)
 
@@ -1858,7 +1858,7 @@ var/global/noir = 0
 				var/list/traits = list()
 
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
@@ -1871,7 +1871,7 @@ var/global/noir = 0
 
 				// get the id of the selected trait
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					if(trait_obj.name == trait_to_remove_name)
 						M.traitHolder.removeTrait(trait_obj.id)
 						message_admins("[key_name(usr)] removed the trait [trait_to_remove_name] from [key_name(M)].")
@@ -2873,7 +2873,7 @@ var/global/noir = 0
 					if("traitlist_help")
 						var/tl_string = "<b>All Traits and their descriptions</b><hr>"
 						for(var/trait in traitList)
-							var/obj/trait/trait_obj = traitList[trait]
+							var/datum/trait/trait_obj = traitList[trait]
 							tl_string += "[trait_obj.name] - [trait_obj.desc]<br><br>"
 						usr.Browse(tl_string,"window=traitlist_help;size=500x600")
 
@@ -5283,10 +5283,10 @@ var/global/noir = 0
 		return
 	var/list/traits = list()
 	for(var/trait in M.traitHolder.traits)
-		var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+		var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 		traits.Add(trait_obj)
 
-	for (var/obj/trait/trait as anything in traits)
+	for (var/datum/trait/trait as anything in traits)
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=managetraits_remove;target=\ref[M];trait=\ref[trait];origin=managetraits'>remove</a></td>
