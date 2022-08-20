@@ -284,6 +284,9 @@ var/list/cached_colors = new/list()
 		if(uses <= 0) overlays = null
 
 		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
 		return TRUE
 
 	proc/generate_icon()
@@ -341,14 +344,16 @@ var/list/cached_colors = new/list()
 		src.paint_color = colorlist[currentcolor]
 		..()
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
 		if(!..()) return
-		src.currentcolor += 1
-		if (src.currentcolor > length(src.colorlist))
-			src.currentcolor = 1
 
-		src.paint_color = colorlist[currentcolor]
-		src.generate_icon()
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
+
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
 		return TRUE
 
 /obj/item/paint_can/rainbow/plaid
@@ -365,14 +370,28 @@ var/list/cached_colors = new/list()
 
 		currentpattern = rand(1, length(src.patternlist))
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(!..()) return
+
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
+		if(!..(target, user, FALSE)) return
 		var/matrix/scale_transform = matrix()
 		var/icon/I = new(target.icon) //isn't DM great?
 		scale_transform.Scale(I.Width()/32, I.Height()/32)
 		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, transform=scale_transform, blend_mode=BLEND_MULTIPLY))
 
-		src.currentpattern += 1
-		if (src.currentpattern > length(src.patternlist))
-			src.currentpattern = 1
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
+
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
+
+			src.currentpattern += 1
+			if (src.currentpattern > length(src.patternlist))
+				src.currentpattern = 1
+
+
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
 		return TRUE
