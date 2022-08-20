@@ -30,7 +30,7 @@
 	desc = "A breach in the spatial fabric. Extremely difficult to pass."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "spat-h"
-	anchored = 1.0
+	anchored = 1
 	opacity = 1
 	density = 1
 	var/stabilized = 0
@@ -163,4 +163,4 @@
 		ownerMob.show_text("You take some damage from pushing through the tear.", "red")
 		ownerMob.TakeDamage("chest", rand(4,6), 0, 0, DAMAGE_BLUNT)
 		playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_3.ogg', 20, 1, -1)
-		logTheThing("combat", ownerMob, spatialtear, "pushes through [spatialtear].")
+		logTheThing(LOG_COMBAT, ownerMob, "pushes through [spatialtear].")

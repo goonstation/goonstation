@@ -231,7 +231,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			src.icon_state = "[initial(src.icon_state)]-attack"
 			src.opacity = 0
 			if (target)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -239,7 +239,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0
@@ -309,7 +309,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
-				if (get_dist(src, src.target) <= src.attack_range)
+				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
@@ -317,7 +317,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 						src.anchored = 1
 						src.target_lastloc = M.loc
 				else
-					if ((get_dist(src, src.target)) >= src.attack_range)
+					if ((GET_DIST(src, src.target)) >= src.attack_range)
 						src.frustration++
 					else
 						src.frustration = 0
@@ -1481,7 +1481,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
 				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"

@@ -10,7 +10,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
-			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
+			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
 			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client

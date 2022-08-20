@@ -16,9 +16,9 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	item_state = "electronic"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_SMALL
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 15
 	mats = 10
@@ -392,7 +392,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	name = "AI Law Module - 'NT 9000'"
 	highlight_color = rgb(255, 255, 255, 166)
 	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
-  
+
 /******************** Hologram Expansions ********************/
 
 ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)

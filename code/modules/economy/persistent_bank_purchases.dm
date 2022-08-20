@@ -516,7 +516,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
-				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
+				logTheThing(LOG_STATION, M, "named their adopted frog [froggo.real_name]")
 				froggo.name = froggo.real_name
 			return 1
 

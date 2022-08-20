@@ -370,7 +370,7 @@ var/flock_signal_unleashed = FALSE
 	get_image_group(src).add_mob(M)
 
 /datum/flock/proc/hideAnnotations(var/mob/M)
-	get_image_group(src).remove_mob(M)
+	get_image_group(src).remove_mob(M, TRUE)
 
 // naming
 
@@ -398,7 +398,7 @@ var/flock_signal_unleashed = FALSE
 				src.active_names[name] = TRUE
 		tries++
 	if (!name_found && tries == max_tries)
-		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
 	return name
 
@@ -531,13 +531,13 @@ var/flock_signal_unleashed = FALSE
 // DEATH
 
 /datum/flock/proc/perish()
-	if(src.flockmind)
-		hideAnnotations(src.flockmind)
-	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		T.death()
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
+	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		T.death()
+	if (src.flockmind)
+		hideAnnotations(src.flockmind)
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
 	qdel(get_image_group(src))
@@ -635,7 +635,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, "sound/items/Deconstruct.ogg", 40, 1)
+	playsound(T, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
@@ -658,7 +658,7 @@ var/flock_signal_unleashed = FALSE
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
 /var/list/flock_conversion_paths = list(
-	/obj/grille/steel = /obj/grille/flock,
+	/obj/grille = /obj/grille/flock,
 	/obj/window = /obj/window/auto/feather,
 	/obj/machinery/door = /obj/machinery/door/feather,
 	/obj/stool = /obj/stool/chair/comfy/flock,
@@ -678,7 +678,7 @@ var/flock_signal_unleashed = FALSE
 	if(!T)
 		return
 
-	if(istype(T, /turf/simulated/floor))
+	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 

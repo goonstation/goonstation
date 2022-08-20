@@ -55,7 +55,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -69,7 +69,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (get_dist(M, HH) > 7)
+		if (GET_DIST(M, HH) > 7)
 			boutput(M, "<span class='alert'>That target is too far away!</span>")
 			return
 
@@ -96,10 +96,10 @@
 		if (prob(25))
 			boutput(HH, "<span class='alert'>Some blood is forced right out of your body!</span>")
 
-		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()

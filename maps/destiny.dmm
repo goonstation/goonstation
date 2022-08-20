@@ -4252,7 +4252,6 @@
 "are" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/device/detective_scanner,
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
@@ -7816,7 +7815,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -8833,7 +8833,7 @@
 /obj/cable,
 /obj/decal/poster/wallsign/gym,
 /obj/wingrille_spawn/auto,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/fitness)
 "aJO" = (
 /obj/cable{
@@ -16314,9 +16314,6 @@
 /turf/space,
 /turf/simulated/wall/auto/asteroid,
 /area/space)
-"bBv" = (
-/turf/simulated/floor/plating/airless,
-/area/space)
 "bBw" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light{
@@ -18443,7 +18440,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
-	name = "Cloning"
+	name = "Cloning";
+	id = "Cloning"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -19615,7 +19613,6 @@
 	},
 /obj/item/device/radio/headset/security,
 /obj/item/device/prisoner_scanner,
-/obj/item/device/detective_scanner,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/firealarm{
 	dir = 8;
@@ -30563,7 +30560,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -42028,7 +42026,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Psychiatrist's Office"
+	name = "Psychiatrist's Office";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -44030,7 +44029,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -46192,7 +46192,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -52595,7 +52596,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay"
+	name = "Medbay";
+	id = "medbay_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -53099,7 +53101,8 @@
 "uiW" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay"
+	name = "Medbay";
+	id = "hallway_door"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -60793,7 +60796,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "xZr" = (
@@ -61102,7 +61104,6 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
-/obj/item/device/detective_scanner,
 /turf/simulated/floor/red/checker{
 	dir = 4
 	},
@@ -61850,11 +61851,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (3,1,1) = {"
@@ -62154,7 +62155,7 @@ aaa
 aaa
 aaa
 aaa
-bBv
+aaa
 aaa
 aaa
 aaa
@@ -62454,11 +62455,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (5,1,1) = {"
@@ -63058,11 +63059,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
 aaa
-bBv
-bBv
-bBv
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (7,1,1) = {"
@@ -63662,11 +63663,11 @@ aaa
 aaa
 aaa
 aaa
-bBv
-bBv
-bBv
 aaa
-bBv
+aaa
+aaa
+aaa
+aaa
 aaa
 "}
 (9,1,1) = {"

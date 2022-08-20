@@ -1824,7 +1824,7 @@
 	light_type = /obj/item/light/tube/yellowish;
 	pixel_y = 21
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "eE" = (
 /obj/machinery/arc_electroplater,
@@ -2223,14 +2223,14 @@
 	pixel_y = 28
 	},
 /obj/storage/secure/closet/civilian/chaplain,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "fK" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "fL" = (
 /obj/cable{
@@ -2241,7 +2241,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "fM" = (
 /obj/plasticflaps,
@@ -4394,6 +4394,10 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 15
+	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "lq" = (
@@ -4412,10 +4416,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lr" = (
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -15548,11 +15548,11 @@
 /area/ghostdrone_factory)
 "Mh" = (
 /obj/decal/cleanable/robot_debris/gib,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mi" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mj" = (
 /obj/disposalpipe/segment{
@@ -15561,7 +15561,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mk" = (
 /obj/disposalpipe/segment{
@@ -15592,10 +15592,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mp" = (
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mq" = (
 /obj/grille/catwalk,
@@ -15610,7 +15610,7 @@
 /area/ghostdrone_factory)
 "Ms" = (
 /obj/storage/crate/packing,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mt" = (
 /obj/disposalpipe/segment{
@@ -15618,7 +15618,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mu" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -15630,13 +15630,13 @@
 	name = "factory pipe"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mw" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -15647,7 +15647,7 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mx" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -15657,7 +15657,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "My" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -15668,11 +15668,11 @@
 	icon_state = "pipe-c";
 	name = "factory pipe"
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "Mz" = (
 /obj/item/ghostboard,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MA" = (
 /obj/machinery/shuttle/engine/heater{
@@ -15682,12 +15682,12 @@
 /area/ghostdrone_factory)
 "MB" = (
 /obj/storage/secure/filing_cabinet,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MC" = (
 /obj/table/auto,
 /obj/computer3frame/desktop,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MD" = (
 /obj/table/auto,
@@ -15695,11 +15695,11 @@
 /obj/item/paper,
 /obj/item/pen/pencil,
 /obj/decal/cleanable/dirt,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "ME" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MF" = (
 /obj/table/auto,
@@ -15707,7 +15707,7 @@
 /obj/item/cigpacket,
 /obj/item/clothing/mask/cigarette,
 /obj/item/decoration/ashtray,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MG" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -15720,18 +15720,18 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MI" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/spider/baby,
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MJ" = (
 /obj/stool/chair/office/red{
 	dir = 1
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "MK" = (
 /obj/grille/steel,
@@ -18143,7 +18143,7 @@
 	pixel_x = 23;
 	pixel_y = 2
 	},
-/turf/simulated/grimycarpet,
+/turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "SA" = (
 /obj/disposalpipe/segment,

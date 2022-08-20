@@ -7,8 +7,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/syndieturret.dmi'
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				src.target_list[C] = distance
 
 			else
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0

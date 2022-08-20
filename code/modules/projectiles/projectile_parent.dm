@@ -57,6 +57,7 @@
 	var/reflectcount = 0
 	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
 	var/is_detonating = 0//to start modeling fuses
+	var/has_died = FALSE // for disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
 
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
@@ -101,6 +102,7 @@
 	proc/collide(atom/A as mob|obj|turf|area, first = 1)
 		if (!A) return // you never know ok??
 		if (QDELETED(src)) return // if disposed = true, QDELETED(src) or set for garbage collection and shouldn't process bumps
+		if (has_died) return
 		if (!proj_data) return // this apparently happens sometimes!! (more than you think!)
 		if (proj_data?.on_pre_hit(A, src.angle, src))
 			return // Our bullet doesnt want to hit this
@@ -202,6 +204,7 @@
 
 
 	proc/die()
+		has_died = TRUE
 		if (proj_data)
 			proj_data.on_end(src)
 		qdel(src)
@@ -1011,7 +1014,7 @@ datum/projectile/snowball
 	ry = P.yo - dn * ny
 
 	if (rx == ry && rx == 0)
-		logTheThing("debug", null, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
+		logTheThing(LOG_DEBUG, null, "<b>Reflecting Projectiles</b>: Reflection failed for [P.name] (incidence: [P.incidence], direction: [P.xo];[P.yo]).")
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing

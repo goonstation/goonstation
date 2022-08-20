@@ -2,9 +2,9 @@
 	name = "multitool"
 	icon_state = "multitool"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_SMALL
-	throwforce = 5.0
+	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
 	desc = "An electrical multitool. It can generate small electrical pulses and read the wattage of power cables. It is most commonly used when interfacing with airlock and APC systems on the station."

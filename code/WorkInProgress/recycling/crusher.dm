@@ -5,7 +5,7 @@
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1.0
+	anchored = 1
 	mats = 20
 	is_syndicate = 1
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
@@ -139,7 +139,7 @@
 						tm_amt += 5000
 						tg_amt += 1000
 				qdel(O)
-			logTheThing("combat", M, null, "is ground up in a crusher at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, M, "is ground up in a crusher at [log_loc(owner)].")
 			M.gib()
 		else if(istype(AM, /obj))
 			var/obj/B = AM

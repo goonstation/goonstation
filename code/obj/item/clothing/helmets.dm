@@ -19,7 +19,7 @@
 	name = "space helmet"
 	icon_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	seal_hair = 1
@@ -46,7 +46,7 @@
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 	item_state = "s_helmet"
 	var/on = 0
 
@@ -123,53 +123,55 @@
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
-
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
 
-	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi' // inhand shit
-	item_state = "s_helmet"
-
-	icon = 'icons/obj/clothing/item_hats.dmi'
-	var/datum/material/visr_material = null
-	var/image/fabrImg = null
-	var/image/visrImg = null
+	var/image/fabrItemImg = null
+	var/image/fabrWornImg = null
+	var/image/visrItemImg = null
+	var/image/visrWornImg = null
 
 	New()
 		..()
+		// Prep the item overlays
+		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
+		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
+		// Prep the worn overlays
+		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
+		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
 
-		visrImg = SafeGetOverlayImage("visor", src.icon, "spacemat-vis") // prep the world icon_state for building, is made later
-		fabrImg = SafeGetOverlayImage("helmet", src.icon, "spacemat")
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
+		src.setMaterial(
+			helmMat,
+			FALSE, // We want to purely rely on the overlay colours
+		)
+		name = "[visrMat]-visored [helmMat] helmet"
 
-	proc/setupVisorMat(var/datum/material/V)
-		visr_material = copyMaterial(V) // in 99% of all calls this is redundant but just in case
-		if (visr_material)
+		// Setup the clothing stats based on material properties
+		var/prot = max(0, (5 - visrMat.getProperty("thermal")) * 5)
+		setProperty("coldprot", 10+prot)
+		setProperty("heatprot", 2+round(prot/2))
+		// All crystals (assuming default chem value) will give 20 chemprot, same as normal helm
+		prot =  clamp(((visrMat.getProperty("chemical") - 4) * 10), 0, 35)
+		setProperty("chemprot", prot)
+		 // Even if soft visor, still gives some value
+		prot = max(0, visrMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot_head", 3 + prot)
 
-			var/prot = max(0, (5 - visr_material.getProperty("thermal")) * 5)
-			setProperty("coldprot", 10+prot)
-			setProperty("heatprot", 2+round(prot/2))
-
-			prot =  clamp(((visr_material.getProperty("chemical") - 4) * 10), 0, 35) // All crystals (assuming default chem value) will give 20 chemprot, same as normal helm.
-			setProperty("chemprot", prot)
-
-			prot = max(0, visr_material.getProperty("density") - 3) / 2
-			setProperty("meleeprot_head", 3 + prot) // even if soft visor, still gives some value
-
-		// overlay stuff
-
-		fabrImg.color = src.material
-		UpdateOverlays(fabrImg, "helmet")
-
-		visrImg.color = visr_material.color
-		UpdateOverlays(visrImg, "visor")
-
-
-	UpdateName()
-		if (visr_material && src.material)
-			name = "[visr_material]-visored [src.material] helmet"
-		else if (visr_material)
-			name = " [src.material] helmet"
+		// Setup item overlays
+		fabrItemImg.color = helmMat.color
+		visrItemImg.color = visrMat.color
+		UpdateOverlays(visrItemImg, "item-visor")
+		UpdateOverlays(fabrItemImg, "item-helmet")
+		// Setup worn overlays
+		fabrWornImg.color = helmMat.color
+		visrWornImg.color = visrMat.color
+		src.wear_image.overlays += fabrWornImg
+		src.wear_image.overlays += visrWornImg
+		// Add back the helmet texture since we overide the material apparance
+		if (helmMat.texture)
+			src.setTexture(helmMat.texture, helmMat.texture_blend, "material")
 
 // Sealab helmets
 
@@ -345,7 +347,7 @@
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = 0.0
+			see_face = 0
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -811,7 +813,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0.0
+	see_face = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 8)

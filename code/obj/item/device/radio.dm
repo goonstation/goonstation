@@ -13,7 +13,7 @@
 	var/list/secure_colors = list()
 	var/list/secure_classes = list(RADIOCL_STANDARD) // respects dark mode, gets overriden by secure_colors
 	var/protected_radio = 0 // Cannot be picked up by radio_brain bioeffect.
-	var/traitor_frequency = 0.0
+	var/traitor_frequency = 0
 	var/obj/item/device/radio/patch_link = null
 	var/obj/item/uplink/integrated/radio/traitorradio = null
 	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
@@ -732,9 +732,9 @@ var/list/headset_channel_lookup
 	name = "\improper Electropack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "electropack0"
-	var/code = 2.0
-	var/on = 0.0
-//	var/e_pads = 0.0
+	var/code = 2
+	var/on = 0
+//	var/e_pads = 0
 	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
@@ -826,7 +826,7 @@ var/list/headset_channel_lookup
 		var/mob/M = src.loc
 		if (src == M.back)
 			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
-			logTheThing("signalers", usr, M, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
+			logTheThing(LOG_SIGNALERS, usr, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if((M.mind in ticker.mode:revolutionaries) && !(M.mind in ticker.mode:head_revolutionaries) && prob(20))
 					ticker.mode:remove_revolutionary(M.mind)
@@ -882,7 +882,7 @@ Code:
 	name = "\improper Remote Signaling Device"
 	icon_state = "signaller"
 	item_state = "signaler"
-	var/code = 30.0
+	var/code = 30
 	w_class = W_CLASS_TINY
 	frequency = FREQ_SIGNALER
 	has_microphone = FALSE
@@ -951,17 +951,17 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if(src.master && (src.wires & WIRE_SIGNAL))
 		var/turf/T = get_turf(src.master)
 		if (src.master && istype(src.master, /obj/item/device/transfer_valve))
-			logTheThing("bombing", usr, null, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a transfer valve at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if (src.master && istype(src.master, /obj/item/assembly/rad_ignite)) //Radio-detonated beaker assemblies
 			var/obj/item/assembly/rad_ignite/RI = src.master
-			logTheThing("bombing", usr, null, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a radio-igniter assembly at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"]. Contents: [log_reagents(RI.part3)]")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 
 		else if(src.master && istype(src.master, /obj/item/assembly/radio_bomb))	//Radio-detonated single-tank bombs
-			logTheThing("bombing", usr, null, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
+			logTheThing(LOG_BOMBING, usr, "signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			message_admins("[key_name(usr)] signalled a radio on a single-tank bomb at [T ? "[log_loc(T)]" : "horrible no-loc nowhere void"].")
 			SEND_SIGNAL(src.master, COMSIG_ITEM_BOMB_SIGNAL_START)
 		SPAWN(0)
@@ -980,7 +980,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	if (!( src.wires & WIRE_TRANSMIT ))
 		return
 
-	logTheThing("signalers", !usr && src.master ? src.master.fingerprintslast : usr, null, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
+	logTheThing(LOG_SIGNALERS, !usr && src.master ? src.master.fingerprintslast : usr, null, "used remote signaller[src.master ? " (connected to [src.master.name])" : ""] at [src.master ? "[log_loc(src.master)]" : "[log_loc(src)]"]. Frequency: [format_frequency(frequency)]/[code].")
 
 	var/datum/signal/signal = get_free_signal()
 	signal.source = src
@@ -1009,7 +1009,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 	name = "Loudspeaker Transmitter"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "transmitter"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 0
 	mats = 0
 	chat_class = RADIOCL_INTERCOM
@@ -1052,7 +1052,7 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 /obj/item/device/radio/intercom/loudspeaker/speaker
 	name = "Loudspeaker"
 	icon_state = "loudspeaker"
-	anchored = 1.0
+	anchored = 1
 	speaker_range = 7
 	mats = 0
 	broadcasting = 1
@@ -1105,3 +1105,21 @@ obj/item/device/radio/signaler/attackby(obj/item/W, mob/user)
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/attack_hand(mob/user)
 	return
+
+// Lol better dont use these while conspiracy is active. Has an extra frequency for commentators to cooperate over.
+/obj/item/device/radio/commentator
+	name = "commentator radio"
+	icon_state = "radio"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator Radio"
+
+/obj/item/device/radio/headset/commentator
+	name = "commentator headset"
+	icon_state = "command headset"
+	icon_override = "commentator"
+	chat_class = RADIOCL_COMMAND
+	locked_frequency = TRUE
+	icon_tooltip = "Commentator"
+	secure_frequencies = list("z" = 555)
+	secure_classes = list("z" = RADIOCL_SYNDICATE)

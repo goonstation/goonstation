@@ -83,11 +83,11 @@ datum
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -111,11 +111,11 @@ datum
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -141,11 +141,11 @@ datum
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -169,11 +169,11 @@ datum
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -197,11 +197,11 @@ datum
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -2698,11 +2698,6 @@ datum
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
-
-
-
-
-// Don't forget to update Reagents-ExplosiveFire.dm too, we have duplicate code for sonic and flash powder there (Convair880).
 
 		sonic_powder
 			name = "Hootingium"

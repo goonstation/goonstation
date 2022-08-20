@@ -196,8 +196,8 @@ var/datum/job_controller/job_controls
 				return
 			JOB.limit = newcap
 			message_admins("Admin [key_name(usr)] altered [JOB.name] job cap to [newcap]")
-			logTheThing("admin", usr, null, "altered [JOB.name] job cap to [newcap]")
-			logTheThing("diary", usr, null, "altered [JOB.name] job cap to [newcap]", "admin")
+			logTheThing(LOG_ADMIN, usr, "altered [JOB.name] job cap to [newcap]")
+			logTheThing(LOG_DIARY, usr, "altered [JOB.name] job cap to [newcap]", "admin")
 			src.job_config()
 
 		if(href_list["RemoveJob"])
@@ -207,16 +207,16 @@ var/datum/job_controller/job_controls
 				boutput(usr, "<span class='alert'><b>Removing integral jobs is not allowed. Bad for business, y'know.</b></span>")
 				return
 			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
-			logTheThing("admin", usr, null, "removed special job [JOB.name]")
-			logTheThing("diary", usr, null, "removed special job [JOB.name]", "admin")
+			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
+			logTheThing(LOG_DIARY, usr, "removed special job [JOB.name]", "admin")
 			src.special_jobs -= JOB
 			src.job_config()
 
 		if(href_list["SpecialToggle"])
 			src.allow_special_jobs = !src.allow_special_jobs
 			message_admins("Admin [key_name(usr)] toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing("admin", usr, null, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
-			logTheThing("diary", usr, null, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
+			logTheThing(LOG_ADMIN, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]")
+			logTheThing(LOG_DIARY, usr, "toggled Special Jobs [src.allow_special_jobs ? "On" : "Off"]", "admin")
 			src.job_config()
 
 		if(href_list["JobCreator"])
@@ -954,8 +954,8 @@ var/datum/job_controller/job_controls
 				JOB.spawn_id = src.job_creator.spawn_id
 				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
 				message_admins("Admin [key_name(usr)] created special job [JOB.name]")
-				logTheThing("admin", usr, null, "created special job [JOB.name]")
-				logTheThing("diary", usr, null, "created special job [JOB.name]", "admin")
+				logTheThing(LOG_ADMIN, usr, "created special job [JOB.name]")
+				logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 
 			src.job_creator()
 
@@ -988,7 +988,7 @@ var/datum/job_controller/job_controls
 
 /proc/find_job_in_controller_by_string(var/string,var/staple_only = 0)
 	if (!string || !istext(string))
-		logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
+		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker")
@@ -1007,12 +1007,12 @@ var/datum/job_controller/job_controls
 		for (var/datum/job/J in job_controls.hidden_jobs)
 			if (J.name == string || (string in J.alias_names))
 				return J
-	logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
+	logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job by string \"[string]\" in controller failed")
 	return null
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))
-		logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job with bad path in controller detected")
+		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad path in controller detected")
 		return null
 	for (var/datum/job/J in job_controls.staple_jobs)
 		if (J.type == path)
@@ -1020,7 +1020,7 @@ var/datum/job_controller/job_controls
 	for (var/datum/job/J in job_controls.special_jobs)
 		if (J.type == path)
 			return J
-	logTheThing("debug", null, null, "<b>Job Controller:</b> Attempt to find job by path \"[path]\" in controller failed")
+	logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job by path \"[path]\" in controller failed")
 	return null
 
 /client/proc/cmd_job_controls()

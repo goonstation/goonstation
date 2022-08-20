@@ -88,13 +88,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onStart()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
@@ -126,7 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
-			logTheThing("combat", M, target, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
+			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = 1 // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C

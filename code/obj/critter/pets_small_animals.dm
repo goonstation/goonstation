@@ -141,7 +141,7 @@
 
 	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
-			if (istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+			if (iscuttingtool(W) || issawingtool(W) || issnippingtool(W))
 				src.on_revive()
 				. = ..()
 		else
@@ -642,7 +642,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			src.visible_message("<span class='combat'><B>[src]</B> stares at [M], channeling its newfound power!</span>")
 			SPAWN(1 SECOND)
 				boutput(M, "<span class='alert'><BIG><B>[voidSpeak("WELP, GUESS YOU SHOULDN'T BELIEVE EVERYTHING YOU READ!")]</B></BIG></span>")
-				logTheThing("combat", M, null, "was deleted by using a void crown on [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, M, "was deleted by using a void crown on [src] at [log_loc(src)].")
 				var/mob/dead/observer/O = M.ghostize()
 				if(O)
 					O.set_loc(M.loc)
@@ -961,7 +961,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 				walk_to(src, 0)
 				return
 			else if (src.new_treasure.loc == src.treasure_loc)
-				if (get_dist(src, src.treasure_loc) > 4 || src.impatience > 8)
+				if (GET_DIST(src, src.treasure_loc) > 4 || src.impatience > 8)
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -972,7 +972,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 					src.impatience ++
 
 			else if (src.new_treasure.loc != src.treasure_loc)
-				if (get_dist(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
+				if (GET_DIST(src.new_treasure, src) > 4 || src.impatience > 8 || !isturf(src.new_treasure.loc))
 					src.new_treasure = null
 					src.treasure_loc = null
 					src.impatience = 0
@@ -1126,7 +1126,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 			M.changeStatus("weakened", 2 SECONDS)
 
 	attack_ai(mob/user as mob)
-		if (get_dist(user, src) < 2)
+		if (GET_DIST(user, src) < 2)
 			return attack_hand(user)
 		else
 			return ..()
@@ -1319,7 +1319,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 						src.wanderer = initial(src.wanderer)
 						src.being_offered_treasure = 0
 						if (src.alive && !src.sleeping && user && W && user.find_in_hand(W)) // we have to do so many checks for such a short wait
-							if (get_dist(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
+							if (GET_DIST(user, T) > 2 || (src.treasure && prob(80)) || prob(50) || (src.loc != T && !step_to(src,T))) // too far, already has a thing and doesn't wanna switch, just doesn't like the thing offered, or we can't get to where we need to be
 								src.visible_message("<span class='combat'>[src] doesn't take [W] from [user]!</span>")
 								return
 							else
@@ -1357,7 +1357,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 	proc/apply_species(var/new_species = null)
 		if (!(istext(new_species) || ispath(new_species)) || !islist(parrot_species)) // farrrrrtttt
-			logTheThing("debug", null, null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
+			logTheThing(LOG_DEBUG, null, "One of haine's stupid parrot things is broken, go whine at her until she fixes it (deets: type = [src.type], new_species = [isnull(new_species) ? "null" : new_species], parrot_species = [islist(parrot_species) ? "list" : "not list"])")
 			return
 
 		var/datum/species_info/parrot/info = ispath(new_species) ? new_species : parrot_species[new_species]

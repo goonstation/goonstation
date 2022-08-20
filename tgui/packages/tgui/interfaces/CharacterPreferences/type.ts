@@ -71,7 +71,28 @@ export interface CharacterPreferencesData {
   useWasd: BooleanLike;
   useAzerty: BooleanLike;
   preferredMap: string;
+  traitsData: Record<string, CharacterPreferencesTraitStaticData>
+  traitsAvailable: CharacterPreferencesTraitData[];
+  traitsMax: number;
+  traitsPointsTotal: number;
 }
+
+export interface CharacterPreferencesTraitStaticData {
+  id: string;
+  name: string;
+  desc: string;
+  category?: string[];
+  img: string;
+  points: number;
+}
+
+export interface CharacterPreferencesTraitData {
+  id: string;
+  selected?: BooleanLike;
+  available: BooleanLike;
+}
+
+export type CharacterPreferencesTrait = CharacterPreferencesTraitData & CharacterPreferencesTraitStaticData
 
 export interface CharacterPreferencesProfile {
   active: boolean;
@@ -82,6 +103,7 @@ export enum CharacterPreferencesTabKeys {
   Saves,
   General,
   Character,
+  Traits,
   GameSettings,
 }
 

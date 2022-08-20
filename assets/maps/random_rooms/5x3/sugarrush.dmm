@@ -1,0 +1,98 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/rack/lunar,
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = -6;
+	pixel_y = -1;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = 5;
+	pixel_y = -6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = 5;
+	pixel_y = 10;
+	rand_pos = 0
+	},
+/turf/simulated/floor/wood/four,
+/area/space)
+"s" = (
+/turf/simulated/floor/wood/four,
+/area/space)
+"w" = (
+/obj/rack/lunar,
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = -6;
+	pixel_y = -9;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = -6;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = 5;
+	pixel_y = 2;
+	rand_pos = 0
+	},
+/turf/simulated/floor/wood/four,
+/area/space)
+"F" = (
+/obj/table/wood/round/auto,
+/obj/item/storage/goodybag{
+	rand_pos = 1
+	},
+/turf/simulated/floor/wood/four,
+/area/space)
+"N" = (
+/obj/rack/lunar,
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = 5;
+	pixel_y = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = -6;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor{
+	pixel_x = -6;
+	pixel_y = -9;
+	rand_pos = 0
+	},
+/turf/simulated/floor/wood/four,
+/area/space)
+"W" = (
+/obj/machinery/light/small/floor/cool/very,
+/turf/simulated/floor/wood/four,
+/area/space)
+
+(1,1,1) = {"
+F
+s
+s
+"}
+(2,1,1) = {"
+a
+W
+N
+"}
+(3,1,1) = {"
+s
+s
+s
+"}
+(4,1,1) = {"
+w
+W
+a
+"}
+(5,1,1) = {"
+s
+s
+F
+"}

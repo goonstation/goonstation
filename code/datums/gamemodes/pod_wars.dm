@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/ore_cluster)
 
 /datum/game_mode/pod_wars/proc/handle_point_change(var/datum/pod_wars_team/team)
 	var/fraction = round (team.points/team.max_points, 0.01)
-	fraction = clamp(fraction, 0.00, 0.99)
+	fraction = clamp(fraction, 0, 0.99)
 
 
 	var/matrix/M1 = matrix()
@@ -551,7 +551,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team = pw_team
 	//error handling...
 	else
-		logTheThing("debug", null, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
+		logTheThing(LOG_DEBUG, null, "Something went wrong trying to play a sound for a team=[team]|[pw_team].!!!")
 		message_admins("Something went wrong trying to play a sound for a team")
 		return 0
 
@@ -945,7 +945,7 @@ proc/setup_pw_crate_lists()
 	name = "Generic Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 
@@ -953,7 +953,7 @@ proc/setup_pw_crate_lists()
 	name = "Nanotrasen Mission Log"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 

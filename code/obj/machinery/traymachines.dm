@@ -108,11 +108,11 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/ex_act(severity)
 	var/chance //This switch was just the same loop with different probabilities 3 times and fuck that
 	switch(severity)
-		if(1.0)
+		if(1)
 			chance = 100
-		if(2.0)
+		if(2)
 			chance = 50
-		if(3.0)
+		if(3)
 			chance = 5
 	if (prob(chance))
 		for(var/atom/movable/A in src) //The reason for this loop here (when there's a similar one in disposing) is contents also get exploded
@@ -342,7 +342,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 					if (prob(10))
 						W.set_loc(L.loc)
 
-				logTheThing("combat", user, L, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				L.remove()
 				ashes += 1
 
@@ -664,14 +664,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		if (href_list["toggle"])
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["timer"])
 			sleep (10 SECONDS)
 			if (linked && !linked.locked && find_tray_tube() && linked.my_tray.loc == linked)
 				playsound(src.loc, "sound/machines/bweep.ogg", 20, 1)
-				logTheThing("station", usr, null, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "activated the tanning bed at [usr.loc.loc] ([log_loc(usr)])")
 				linked.cremate()
 
 		else if (href_list["settime"])

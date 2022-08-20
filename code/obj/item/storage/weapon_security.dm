@@ -348,6 +348,7 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)

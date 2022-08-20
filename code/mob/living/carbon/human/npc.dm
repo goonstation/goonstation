@@ -303,7 +303,7 @@
 				ai_findtarget_new()
 		if(AI_ANGERING)	//WHATS THAT?
 
-			if (get_dist(src,ai_target) > 6)
+			if (GET_DIST(src,ai_target) > 6)
 				ai_target = null
 				ai_state = AI_PASSIVE
 				ai_threatened = 0
@@ -329,7 +329,7 @@
 				return
 
 			var/valid = ai_validpath()
-			var/distance = get_dist(src,ai_target)
+			var/distance = GET_DIST(src,ai_target)
 
 			ai_obstacle(0)
 			ai_openclosets()
@@ -641,7 +641,7 @@
 			ai_obstacle() //Remove.
 		else
 			//step_towards(src, ai_target)
-			var/dist = get_dist(src,ai_target)
+			var/dist = GET_DIST(src,ai_target)
 			if(ai_target && dist > 2) //We're in fast approach mode
 				walk_towards(src,ai_target, ai_movedelay)
 			else if (dist > 1)

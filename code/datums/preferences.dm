@@ -120,6 +120,27 @@ datum/preferences
 			qdel(src.preview)
 			src.preview = null
 
+	ui_static_data(mob/user)
+		var/list/traits = list()
+		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits[trait.id] = list(
+				"id" = trait.id,
+				"name" = trait.name,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+			)
+
+		. = list(
+			"traitsData" = traits
+		)
+
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
@@ -146,6 +167,20 @@ datum/preferences
 				cloud_saves += name
 
 		sanitize_null_values()
+
+		var/list/traits = list()
+		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -212,6 +247,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -257,11 +295,6 @@ datum/preferences
 
 			if ("open-occupation-window")
 				src.SetChoices(usr)
-				ui.close()
-				return TRUE
-
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
 				ui.close()
 				return TRUE
 
@@ -541,7 +574,7 @@ datum/preferences
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
 					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 					if (!(src.pda_ringtone_index in selectable_ringtones))
@@ -879,6 +912,19 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("reset")
 				src.profile_modified = TRUE
 
@@ -971,7 +1017,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -1001,7 +1047,7 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null
@@ -1545,10 +1591,6 @@ datum/preferences
 
 		if (link_tags["jobswindow"])
 			src.SetChoices(user)
-			return
-
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
 			return
 
 		if (link_tags["closejobswindow"])
