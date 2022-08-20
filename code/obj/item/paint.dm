@@ -367,8 +367,10 @@ var/list/cached_colors = new/list()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
 		if(!..()) return
-
-		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, blend_mode=BLEND_MULTIPLY))
+		var/matrix/scale_transform = matrix()
+		var/icon/I = new(target.icon) //isn't DM great?
+		scale_transform.Scale(I.Width()/32, I.Height()/32)
+		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, transform=scale_transform, blend_mode=BLEND_MULTIPLY))
 
 		src.currentpattern += 1
 		if (src.currentpattern > length(src.patternlist))
