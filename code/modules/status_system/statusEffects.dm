@@ -499,7 +499,7 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
-			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+			logTheThing(LOG_COMBAT, owner, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -1667,14 +1667,7 @@
 
 	onAdd(optional)
 		. = ..()
-		var/color2 = list(
-			0.5, 0, 0,
-			0, 0.5, 0,
-			0, 0, 0.5,
-			0.5, 0.25, 0.0625)
-		var/oldcol = owner.color
-		owner.color = color2
-		owner.onVarChanged("color", oldcol, color2)
+		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
 
@@ -2167,3 +2160,22 @@
 			remove_mindhack_status(M, "mindhack", "expired")
 		else if (M.mind?.master)
 			remove_mindhack_status(M, "otherhack", "expired")
+
+/datum/statusEffect/defib_charged
+	id = "defib_charged"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-on")
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-off")
+		if(duration <= 0)//timed out
+			playsound(owner, "sparks", 50, 1, -10)
