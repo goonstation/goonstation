@@ -284,6 +284,9 @@ var/list/cached_colors = new/list()
 		if(uses <= 0) overlays = null
 
 		target.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix(src.actual_paint_color)))
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
 		return TRUE
 
 	proc/generate_icon()
@@ -369,7 +372,9 @@ var/list/cached_colors = new/list()
 		if(!..()) return
 
 		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, blend_mode=BLEND_MULTIPLY))
-
+		if(ismob(target.loc))
+			var/mob/M = target.loc
+			M.update_clothing() //trigger an update if this is worn clothing
 		src.currentpattern += 1
 		if (src.currentpattern > length(src.patternlist))
 			src.currentpattern = 1
