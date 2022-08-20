@@ -19,7 +19,6 @@ mob/new_player
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
-	not_in_mobs_list = TRUE
 
 	var/datum/spend_spacebux/bank_menu
 
