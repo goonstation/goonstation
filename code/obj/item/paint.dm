@@ -344,14 +344,16 @@ var/list/cached_colors = new/list()
 		src.paint_color = colorlist[currentcolor]
 		..()
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
 		if(!..()) return
-		src.currentcolor += 1
-		if (src.currentcolor > length(src.colorlist))
-			src.currentcolor = 1
 
-		src.paint_color = colorlist[currentcolor]
-		src.generate_icon()
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
+
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
 		return TRUE
 
 /obj/item/paint_can/rainbow/plaid
@@ -368,14 +370,23 @@ var/list/cached_colors = new/list()
 
 		currentpattern = rand(1, length(src.patternlist))
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(!..()) return
+	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
+		if(!..(target, user, FALSE)) return
 
 		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, blend_mode=BLEND_MULTIPLY))
 		if(ismob(target.loc))
 			var/mob/M = target.loc
 			M.update_clothing() //trigger an update if this is worn clothing
-		src.currentpattern += 1
-		if (src.currentpattern > length(src.patternlist))
-			src.currentpattern = 1
+
+		if(change_color)
+			src.currentcolor += 1
+			if (src.currentcolor > length(src.colorlist))
+				src.currentcolor = 1
+
+			src.currentpattern += 1
+			if (src.currentpattern > length(src.patternlist))
+				src.currentpattern = 1
+
+			src.paint_color = colorlist[currentcolor]
+			src.generate_icon()
 		return TRUE
