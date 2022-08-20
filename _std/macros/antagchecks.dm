@@ -14,6 +14,7 @@
 #define iswraith(x) istype(x, /mob/wraith)
 #define ispoltergeist(x) istype(x, /mob/wraith/poltergeist)
 #define isarcfiend(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/arcfiend) != null)
+#define issawflybuddy(x) ((istraitor(x)) || isnukeop(x) || isspythief(x) || isnukeopgunbot(x))
 
 #define isblob(x) istype(x, /mob/living/intangible/blob_overmind)
 #define isspythief(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_SPY_THIEF)

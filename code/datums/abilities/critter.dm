@@ -4,8 +4,6 @@
 			return
 		if (!owner.holder)
 			return
-		if (!isturf(usr.loc))
-			return
 		..()
 
 /datum/abilityHolder/critter
@@ -28,6 +26,7 @@
 	var/disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
+	var/cast_in_storage = FALSE
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()
@@ -73,6 +72,9 @@
 			return 0
 		if (disabled)
 			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
+			return 0
+		if (!isturf(usr.loc) && !src.cast_in_storage)
+			boutput(holder.owner, ("You cannot use that ability in here."))
 			return 0
 		return 1
 

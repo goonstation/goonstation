@@ -55,10 +55,10 @@
 			heldfly.is_npc = TRUE
 			heldfly.isgrenade = FALSE
 		if(!playercontrolled)
-			if(istraitor(currentuser) || isnukeop(currentuser) || isspythief(currentuser) || isnukeopgunbot(currentuser))
+			if(issawflybuddy(currentuser))
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 			else
-				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //give them pet AI
+				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //todo: give them pet AI
 		qdel(src)
 
 	attackby(obj/item/W, mob/user)
@@ -77,13 +77,13 @@
 		//var/success = TRUE
 		//	boutput(user, "You insert the [brain] into the [sawflygrenade]. Please wait a maximum of 20 seconds for the [heldfly]'s systems to initalize.")
 		src.currentbrain = brain
-		var/ghost_delay = 200
+		var/ghost_delay = 100
 		var/list/text_messages = list()
 		var/place = get_turf(src)
 		var/mob/living/critter/robotic/sawfly/oursawfly = null
 
-		text_messages.Add("Would you like to be ressurected as a traitor's Sawfly? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be ressurected as a traitor's Sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to be resurrected as a traitor's Sawfly? You may be randomly selected from the list of candidates.")
+		text_messages.Add("You are eligible to be resurrected as a traitor's Sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
 		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
@@ -135,6 +135,14 @@
 			currentbrain.set_loc(get_turf(src))
 			src.playercontrolled = FALSE
 
+/obj/item/old_grenade/sawfly/firsttime //IMPORTANT- spawn this in or the sawfly grenade will NOT work
+	New()
+
+		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+		heldfly.ourgrenade = src
+		heldfly.set_loc(src)
+		..()
+
 /datum/random_event/major/antag/sawflytest
 	name = "SAWFLY TEST"
 	required_elapsed_round_time = 26.6 MINUTES
@@ -158,12 +166,7 @@
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
-/obj/item/old_grenade/sawfly/firsttime
-	New()
-		//if(fresh)
-		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
-		heldfly.set_loc(src)
-		..()
+
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
@@ -209,16 +212,16 @@
 				S.foldself()
 
 		for(var/obj/item/old_grenade/S in range(get_turf(src), 4)) // unfolds passive sawflies
-			if (S.issawfly == TRUE)
+			if (S.issawfly == TRUE) //check if we're allowed to prime the grenade
 				if (istype(S, /obj/item/old_grenade/sawfly))
-					S.visible_message("<span class='combat'>[S] suddenly springs open as its engine purrs to a start!</span>")
+					S.visible_message("<span class='alert'>[S] suddenly springs open as its engine purrs to a start!</span>")
 					S.icon_state = "sawflyunfolding"
 					SPAWN(S.det_time)
 						if(S)
 							S.prime()
 
 				if (istype(S, /obj/item/old_grenade/spawner/sawflycluster))
-					S.visible_message("<span class='combat'>The [S] suddenly begins beeping as it is primed!</span>")
+					S.visible_message("<span class='alert'>The [S] suddenly begins beeping as it is primed!</span>")
 					if (S.icon_state=="clusterflyA")
 						S.icon_state = "clusterflyA1"
 					else
@@ -249,29 +252,38 @@
 		if (ismob(target))
 			..()
 		..()
-
+//sawfly abilities
 /datum/targetable/critter/sawflydeploy
 	name = "(Un)deploy"
 	desc = "Toggle your flying/item state! Cannot be used in containers"
-	icon_state = "mentordisappear"
+	icon_state = "sawfly-deploy"
 	cooldown = 0
-
+	cast_in_storage = TRUE
 
 	cast(mob/target)
 
 		var/mob/living/critter/robotic/sawfly/M = holder.owner
-
+		//boutput(M, "Casting!")
 		if(istype(M.loc, /obj/item/storage))
 			return //bad!
+			// to work on: make it take a looong ass time if it's in a storage container so they can escape if their master dies
+		//boutput(M, "Starting grenade logic!!")
+		if(M.isgrenade == TRUE) //we're in a grenade, time to un-grenade ourselfes!
+		//	boutput(M, "Attempting to unfold self!")
+			M.visible_message("<span class='alert'>[M] suddenly springs open as its engine purrs to a start!</span>")
+			playsound(M, pick(M.beeps), 40, 1)
+			if(get_turf(M))
+				M.ourgrenade.prime()
+				M.isgrenade = FALSE //for some reason priming it doesn't work, so we'll have to do things the manual way
+				M.set_loc(get_turf(M))
+				//qdel(M.ourgrenade)
 
 
 
-		if(M.isgrenade) //we're in a grenade, time to un-grenade ourselfes!
-			if(istype(M.loc, /obj/item/old_grenade/sawfly))
-				var/obj/item/old_grenade/sawfly/ourgrenade = M.loc
-				ourgrenade.visible_message("<span class='combat'>[ourgrenade] suddenly springs open as its engine purrs to a start!</span>")
-				ourgrenade.prime()
-				//M.playsound(M, pick(M.beeps), 40, 1)
+		else
+		//	boutput(M, "Attempting to fold self!")
+			M.foldself()
+	//	boutput(M, "Finished grenade if else!")
 
 
 

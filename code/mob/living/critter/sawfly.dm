@@ -20,6 +20,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
 	var/isgrenade = TRUE // these two will be enabled and disabled at the grenade's leisure.
+	var/obj/item/old_grenade/sawfly/ourgrenade = null
 	is_npc = FALSE
 	var/isplayercontrolled = FALSE //don't mess with this unless you know what you're doing
 
@@ -59,7 +60,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		deathtimer = rand(1, 5)
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
+		abilityHolder.addAbility(/datum/targetable/critter/sawflydeploy)
 		START_TRACKING
+
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
@@ -96,6 +99,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			//N.tempname = src.name
 			src.is_npc = FALSE
 			src.isgrenade = TRUE
+			src.ourgrenade = N
 			N.heldfly = src
 			src.set_loc(N)
 
@@ -129,7 +133,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 //note: due to the AIholder's timed nature, they can still priority attack you if you're already targeted, but it's incredibly rare. Frankly I think it adds to the challenge.
 //doublenote: the absolute agony that was trying to get this to function in any way that wasn't incredibly obtuse and hacky without going back to the projectile.
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(!(istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends)) || (user.health < 40))//are you an eligible target: nonantag or healthy enough?
+		if(!(issawflybuddy(user) || (user in src.friends)) || (user.health < 40))//are you an eligible target: nonantag or healthy enough?
 			if(prob(15) && isalive(src))//now that you're eligible, are WE eligible?
 				if(ai)
 					if((ai.target != user))
@@ -195,7 +199,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			qdel(src)
 
 	attack_hand(var/mob/user as mob)
-		if (istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends))
+		if (issawflybuddy(user) || (user in src.friends))
 			if (user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB)
 				if(isalive(src))
 					src.is_npc = FALSE
@@ -222,4 +226,5 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.is_npc = TRUE
+		src.isgrenade = FALSE
 		src.ai = new /datum/aiHolder/sawfly(src)
