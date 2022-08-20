@@ -223,7 +223,7 @@
 	/// stores total accumulated radiation dose
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
-	var/radiation_dose_decay = 0.03 //at this rate, it will take ~220 seconds to decay from 10Sv, and ~70 seconds to decay from 1Sv
+	var/radiation_dose_decay = 0.01 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 
@@ -3164,15 +3164,11 @@
 	if(Sv > 0)
 		var/radres_mult = (tanh(0.02*rad_res)**2)
 		src.radiation_dose += (1.0-radres_mult)*Sv
-		if((1.0-radres_mult)*Sv > 0.1)
-			src.TakeDamage("All",0,20*clamp(((1.0-radres_mult)*Sv)/2, 0, 1)) //a 2Sv dose all at once will badly burn you
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
 		if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
-	//put a cap on radiation dose - no more than 10Sv
-	src.radiation_dose = min(10 SIEVERTS, src.radiation_dose)
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
 /mob/proc/observeMob(mob/target)

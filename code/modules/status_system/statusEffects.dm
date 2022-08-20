@@ -405,7 +405,7 @@
 
 			stage = get_stage(M.radiation_dose)
 			switch(stage)
-				if(0) //within normal dose for daily living in space
+				if(0)
 					howMuch = ""
 					damage_tox = 0
 					damage_burn = 0
@@ -433,12 +433,6 @@
 					howMuch = "totally " // you are literally dying in seconds
 					damage_tox = rand(2,5)
 					damage_burn = rand(1,4)
-
-			//70/30 split for tox/burn damage
-			var/damage_total = min(5*(M.radiation_dose + 0.25 * M.radiation_dose ** 2), 10)
-			damage_tox = 0.7 * rand() * damage_total
-			damage_burn = 0.3 * rand() * damage_total
-
 			if(stage > 0)
 				visible = TRUE
 			else
