@@ -46,7 +46,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "wine"
-	desc = "Not to be confused with pubbie tears."
+	desc = "Not to be confused with high-pitched crying."
 	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
