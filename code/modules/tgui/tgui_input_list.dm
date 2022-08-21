@@ -14,10 +14,11 @@
  * * message - The content of the input box, shown in the body of the TGUI window.
  * * title - The title of the input box, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
+ * * default - If an option is already preselected on the UI. Current values, etc.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list(mob/user, message, title, list/items, timeout = 0, allowIllegal = FALSE)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -28,7 +29,7 @@
 			user = client.mob
 	if (!user)
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, items, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 	UNTIL(input.choice || input.closed)
 	if (input)
@@ -44,11 +45,12 @@
  * * message - The content of the input box, shown in the body of the TGUI window.
  * * title - The title of the input box, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
+ * * default - If an option is already preselected on the UI. Current values, etc.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
  * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list_async(mob/user, message, title, list/items, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
+/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -59,7 +61,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, callback, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 
 /**
@@ -71,10 +73,14 @@
 /datum/tgui_modal/list_input
 	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
 	var/list/items_map
+	/// The default button to be selected
+	var/default
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+	. = ..()
 	src.items = list()
 	src.items_map = list()
+	src.default = default
 
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
@@ -85,15 +91,16 @@
 		src.items += string_key
 		src.items_map[string_key] = i
 
-	. = ..()
-
-
 /datum/tgui_modal/list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ListInputModal")
 		ui.set_autoupdate(FALSE)
 		ui.open()
+
+/datum/tgui_modal/list_input/ui_static_data(mob/user)
+	. = ..()
+	.["init_value"] = default || items[1],
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
@@ -120,8 +127,8 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
-	..(user, title, message, items, timeout, copyButtons, allowIllegal)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout)
+	..(user, message, title, items, default, timeout)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)
