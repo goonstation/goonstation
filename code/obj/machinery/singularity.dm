@@ -376,7 +376,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/Toxmob()
 
 	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		M.changeStatus("radiation", 6*(radius+1) SECONDS)
+		M.changeStatus("radiation", 5*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
