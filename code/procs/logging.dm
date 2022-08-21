@@ -93,6 +93,7 @@ var/global/logLength = 0
 		if (LOG_ADMIN) if (config.log_admin) return TRUE
 		if (LOG_AHELP) if (config.log_say) return TRUE
 		if (LOG_MHELP) if (config.log_say) return TRUE
+		if (LOG_GAME) if (config.log_game) return TRUE
 		if (LOG_ACCESS) if (config.log_access) return TRUE
 
 		if (LOG_SAY) if (config.log_say) return TRUE
