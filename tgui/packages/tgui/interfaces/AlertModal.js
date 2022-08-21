@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { clamp01 } from 'common/math';
+import { Loader } from "./common/Loader";
 import { useBackend } from '../backend';
 import { Component, createRef } from 'inferno';
 import { Box, Flex, Section } from '../components';
@@ -27,27 +27,29 @@ export class AlertModal extends Component {
 
   componentDidMount() {
     const { data } = useBackend(this.context);
-    const { buttons } = data;
+    const { items, autofocus } = data;
     const { current } = this.state;
     const button = this.buttonRefs[current].current;
 
-    // Fill ref array with refs for other buttons
-    for (let i = 1; i < buttons.length; i++) {
+    // Fill ref array with refs for other items
+    for (let i = 1; i < items.length; i++) {
       this.buttonRefs.push(createRef());
     }
 
-    setTimeout(() => button.focus(), 1);
+    if (autofocus) {
+      setTimeout(() => button.focus(), 1);
+    }
   }
 
   setCurrent(current, isArrowKey) {
     const { data } = useBackend(this.context);
-    const { buttons } = data;
+    const { items } = data;
 
     // Mimic alert() behavior for tabs and arrow keys
-    if (current >= buttons.length) {
+    if (current >= items.length) {
       current = isArrowKey ? current - 1 : 0;
     } else if (current < 0) {
-      current = isArrowKey ? 0 : buttons.length - 1;
+      current = isArrowKey ? 0 : items.length - 1;
     }
 
     const button = this.buttonRefs[current].current;
@@ -62,7 +64,7 @@ export class AlertModal extends Component {
 
   render() {
     const { act, data } = useBackend(this.context);
-    const { title, message, buttons, timeout } = data;
+    const { title, message, items, timeout } = data;
     const { current } = this.state;
     const focusCurrentButton = () => this.setCurrent(current, false);
 
@@ -91,7 +93,7 @@ export class AlertModal extends Component {
               </Flex.Item>
               <Flex.Item my={8}>
                 <Flex className="AlertModal__Buttons">
-                  {buttons.map((button, buttonIndex) => (
+                  {items.map((button, buttonIndex) => (
                     <Flex.Item key={buttonIndex} mx={1}>
                       <div
                         ref={this.buttonRefs[buttonIndex]}
@@ -132,15 +134,3 @@ export class AlertModal extends Component {
   }
 
 }
-
-export const Loader = props => {
-  const { value } = props;
-
-  return (
-    <div className="AlertModal__Loader">
-      <Box
-        className="AlertModal__LoaderProgress"
-        style={{ width: clamp01(value) * 100 + '%' }} />
-    </div>
-  );
-};
