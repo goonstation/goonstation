@@ -85,7 +85,7 @@
 /datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus = TRUE, autofocus)
 	src.title = title
 	src.message = message
-	src.buttons = buttons.Copy()
+	src.items = items.Copy()
 	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
