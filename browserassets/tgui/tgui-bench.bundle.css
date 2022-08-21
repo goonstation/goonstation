@@ -2169,6 +2169,8 @@ td, th {
   position: relative;
   width: 100%;
   padding: 0 0.5em;
+  border-width: 0.0833333333em !important;
+  border-style: solid !important;
   border-radius: 0.16em;
   background-color: rgba(0, 0, 0, 0);
   transition: border-color 900ms ease-out;
@@ -2201,7 +2203,7 @@ td, th {
 }
 
 .ProgressBar--color--black {
-  border: 0.0833333333em solid black !important;
+  border-color: black !important;
 }
 
 .ProgressBar--color--black .ProgressBar__fill {
@@ -2209,7 +2211,7 @@ td, th {
 }
 
 .ProgressBar--color--white {
-  border: 0.0833333333em solid #d9d9d9 !important;
+  border-color: #d9d9d9 !important;
 }
 
 .ProgressBar--color--white .ProgressBar__fill {
@@ -2217,7 +2219,7 @@ td, th {
 }
 
 .ProgressBar--color--red {
-  border: 0.0833333333em solid #bd2020 !important;
+  border-color: #bd2020 !important;
 }
 
 .ProgressBar--color--red .ProgressBar__fill {
@@ -2225,7 +2227,7 @@ td, th {
 }
 
 .ProgressBar--color--orange {
-  border: 0.0833333333em solid #d95e0c !important;
+  border-color: #d95e0c !important;
 }
 
 .ProgressBar--color--orange .ProgressBar__fill {
@@ -2233,7 +2235,7 @@ td, th {
 }
 
 .ProgressBar--color--yellow {
-  border: 0.0833333333em solid #d9b804 !important;
+  border-color: #d9b804 !important;
 }
 
 .ProgressBar--color--yellow .ProgressBar__fill {
@@ -2241,7 +2243,7 @@ td, th {
 }
 
 .ProgressBar--color--olive {
-  border: 0.0833333333em solid #9aad14 !important;
+  border-color: #9aad14 !important;
 }
 
 .ProgressBar--color--olive .ProgressBar__fill {
@@ -2249,7 +2251,7 @@ td, th {
 }
 
 .ProgressBar--color--green {
-  border: 0.0833333333em solid #1b9638 !important;
+  border-color: #1b9638 !important;
 }
 
 .ProgressBar--color--green .ProgressBar__fill {
@@ -2257,7 +2259,7 @@ td, th {
 }
 
 .ProgressBar--color--teal {
-  border: 0.0833333333em solid #009a93 !important;
+  border-color: #009a93 !important;
 }
 
 .ProgressBar--color--teal .ProgressBar__fill {
@@ -2265,7 +2267,7 @@ td, th {
 }
 
 .ProgressBar--color--blue {
-  border: 0.0833333333em solid #1c71b1 !important;
+  border-color: #1c71b1 !important;
 }
 
 .ProgressBar--color--blue .ProgressBar__fill {
@@ -2273,7 +2275,7 @@ td, th {
 }
 
 .ProgressBar--color--violet {
-  border: 0.0833333333em solid #552dab !important;
+  border-color: #552dab !important;
 }
 
 .ProgressBar--color--violet .ProgressBar__fill {
@@ -2281,7 +2283,7 @@ td, th {
 }
 
 .ProgressBar--color--purple {
-  border: 0.0833333333em solid #8b2baa !important;
+  border-color: #8b2baa !important;
 }
 
 .ProgressBar--color--purple .ProgressBar__fill {
@@ -2289,7 +2291,7 @@ td, th {
 }
 
 .ProgressBar--color--pink {
-  border: 0.0833333333em solid #cf2082 !important;
+  border-color: #cf2082 !important;
 }
 
 .ProgressBar--color--pink .ProgressBar__fill {
@@ -2297,7 +2299,7 @@ td, th {
 }
 
 .ProgressBar--color--brown {
-  border: 0.0833333333em solid #8c5836 !important;
+  border-color: #8c5836 !important;
 }
 
 .ProgressBar--color--brown .ProgressBar__fill {
@@ -2305,7 +2307,7 @@ td, th {
 }
 
 .ProgressBar--color--grey {
-  border: 0.0833333333em solid #646464 !important;
+  border-color: #646464 !important;
 }
 
 .ProgressBar--color--grey .ProgressBar__fill {
@@ -2313,7 +2315,7 @@ td, th {
 }
 
 .ProgressBar--color--good {
-  border: 0.0833333333em solid #4d9121 !important;
+  border-color: #4d9121 !important;
 }
 
 .ProgressBar--color--good .ProgressBar__fill {
@@ -2321,7 +2323,7 @@ td, th {
 }
 
 .ProgressBar--color--average {
-  border: 0.0833333333em solid #cd7a0d !important;
+  border-color: #cd7a0d !important;
 }
 
 .ProgressBar--color--average .ProgressBar__fill {
@@ -2329,7 +2331,7 @@ td, th {
 }
 
 .ProgressBar--color--bad {
-  border: 0.0833333333em solid #bd2020 !important;
+  border-color: #bd2020 !important;
 }
 
 .ProgressBar--color--bad .ProgressBar__fill {
@@ -2337,7 +2339,7 @@ td, th {
 }
 
 .ProgressBar--color--label {
-  border: 0.0833333333em solid #657a94 !important;
+  border-color: #657a94 !important;
 }
 
 .ProgressBar--color--label .ProgressBar__fill {
@@ -2714,6 +2716,33 @@ td, th {
 
 .Section .Section .Section .Section__titleText {
   font-size: 1em;
+}
+
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+.SectionEx .Section__title {
+  display: flex;
+}
+
+.SectionEx .Section__titleText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: auto;
+}
+
+.SectionEx .Section__buttons {
+  position: inherit;
+  right: inherit;
+  flex: none;
+}
+
+.SectionEx__capitalize .Section__titleText {
+  text-transform: capitalize;
 }
 
 /**
@@ -4614,6 +4643,644 @@ td, th {
   background-color: #59da78;
 }
 
+/**
+ * @file
+ * @copyright 2021
+ * @author Zonespace (https://github.com/Zonespace27)
+ * @license MIT
+ */
+.ComUplink .Button--color--Main {
+  transition: color 50ms, background-color 50ms;
+  background-color: #db2828;
+  color: white;
+}
+
+.ComUplink .Button--color--Main:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.ComUplink .Button--color--Main:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.ComUplink .Button--color--Main:hover, .ComUplink .Button--color--Main:focus {
+  background-color: #e66b6b;
+  color: white;
+}
+
+.ComUplink .Button--color--Main:active {
+  background-color: #f1acac;
+}
+
+.ComUplink__Points--Main {
+  color: #db2828;
+}
+
+.ComUplink__Row:not(:last-child) {
+  border-bottom: 2px solid #3e6189;
+}
+
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+.Button {
+  position: relative;
+  display: inline-block;
+  line-height: 1.667em;
+  padding: 0 0.5em;
+  margin-right: 0.1666666667em;
+  white-space: nowrap;
+  outline: 0;
+  border-radius: 0.16em;
+  margin-bottom: 0.1666666667em;
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.Button:last-child {
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.Button .fa, .Button .fas, .Button .far {
+  margin-left: -0.25em;
+  margin-right: -0.25em;
+  min-width: 1.333em;
+  text-align: center;
+}
+
+.Button--hasContent .fa, .Button--hasContent .fas, .Button--hasContent .far {
+  margin-right: 0.25em;
+}
+
+.Button--ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Button--fluid {
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.Button--circular {
+  border-radius: 50%;
+}
+
+.Button--compact {
+  padding: 0 0.25em;
+  line-height: 1.333em;
+}
+
+.Button--color--black {
+  transition: color 50ms, background-color 50ms;
+  background-color: black;
+  color: white;
+}
+
+.Button--color--black:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--black:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--black:hover, .Button--color--black:focus {
+  background-color: #131313;
+  color: white;
+}
+
+.Button--color--black:active {
+  background-color: #262626;
+}
+
+.Button--color--white {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9d9d9;
+  color: black;
+}
+
+.Button--color--white:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--white:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--white:hover, .Button--color--white:focus {
+  background-color: #f8f8f8;
+  color: black;
+}
+
+.Button--color--white:active {
+  background-color: #fbfbfb;
+}
+
+.Button--color--red {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--red:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--red:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--red:hover, .Button--color--red:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--red:active {
+  background-color: #e78484;
+}
+
+.Button--color--orange {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d95e0c;
+  color: white;
+}
+
+.Button--color--orange:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--orange:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--orange:hover, .Button--color--orange:focus {
+  background-color: #f0853f;
+  color: white;
+}
+
+.Button--color--orange:active {
+  background-color: #f5b082;
+}
+
+.Button--color--yellow {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9b804;
+  color: black;
+}
+
+.Button--color--yellow:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--yellow:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--yellow:hover, .Button--color--yellow:focus {
+  background-color: #f5d72e;
+  color: black;
+}
+
+.Button--color--yellow:active {
+  background-color: #f9e572;
+}
+
+.Button--color--olive {
+  transition: color 50ms, background-color 50ms;
+  background-color: #9aad14;
+  color: white;
+}
+
+.Button--color--olive:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--olive:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--olive:hover, .Button--color--olive:focus {
+  background-color: #c4da2b;
+  color: white;
+}
+
+.Button--color--olive:active {
+  background-color: #d6e761;
+}
+
+.Button--color--green {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1b9638;
+  color: white;
+}
+
+.Button--color--green:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--green:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--green:hover, .Button--color--green:focus {
+  background-color: #32c154;
+  color: white;
+}
+
+.Button--color--green:active {
+  background-color: #59da78;
+}
+
+.Button--color--teal {
+  transition: color 50ms, background-color 50ms;
+  background-color: #009a93;
+  color: white;
+}
+
+.Button--color--teal:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--teal:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--teal:hover, .Button--color--teal:focus {
+  background-color: #13c4bc;
+  color: white;
+}
+
+.Button--color--teal:active {
+  background-color: #26eee5;
+}
+
+.Button--color--blue {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1c71b1;
+  color: white;
+}
+
+.Button--color--blue:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--blue:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--blue:hover, .Button--color--blue:focus {
+  background-color: #3a95d9;
+  color: white;
+}
+
+.Button--color--blue:active {
+  background-color: #73b3e5;
+}
+
+.Button--color--violet {
+  transition: color 50ms, background-color 50ms;
+  background-color: #552dab;
+  color: white;
+}
+
+.Button--color--violet:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--violet:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--violet:hover, .Button--color--violet:focus {
+  background-color: #7953cc;
+  color: white;
+}
+
+.Button--color--violet:active {
+  background-color: #a389dd;
+}
+
+.Button--color--purple {
+  transition: color 50ms, background-color 50ms;
+  background-color: #8b2baa;
+  color: white;
+}
+
+.Button--color--purple:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--purple:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--purple:hover, .Button--color--purple:focus {
+  background-color: #ad4fcd;
+  color: white;
+}
+
+.Button--color--purple:active {
+  background-color: #c785dd;
+}
+
+.Button--color--pink {
+  transition: color 50ms, background-color 50ms;
+  background-color: #cf2082;
+  color: white;
+}
+
+.Button--color--pink:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--pink:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--pink:hover, .Button--color--pink:focus {
+  background-color: #e257a5;
+  color: white;
+}
+
+.Button--color--pink:active {
+  background-color: #ee96c7;
+}
+
+.Button--color--brown {
+  transition: color 50ms, background-color 50ms;
+  background-color: #8c5836;
+  color: white;
+}
+
+.Button--color--brown:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--brown:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--brown:hover, .Button--color--brown:focus {
+  background-color: #b47851;
+  color: white;
+}
+
+.Button--color--brown:active {
+  background-color: #ca9c7e;
+}
+
+.Button--color--grey {
+  transition: color 50ms, background-color 50ms;
+  background-color: #646464;
+  color: white;
+}
+
+.Button--color--grey:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--grey:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--grey:hover, .Button--color--grey:focus {
+  background-color: #868686;
+  color: white;
+}
+
+.Button--color--grey:active {
+  background-color: #a8a8a8;
+}
+
+.Button--color--good {
+  transition: color 50ms, background-color 50ms;
+  background-color: #4d9121;
+  color: white;
+}
+
+.Button--color--good:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--good:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--good:hover, .Button--color--good:focus {
+  background-color: #6cba39;
+  color: white;
+}
+
+.Button--color--good:active {
+  background-color: #8ed55f;
+}
+
+.Button--color--average {
+  transition: color 50ms, background-color 50ms;
+  background-color: #cd7a0d;
+  color: white;
+}
+
+.Button--color--average:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--average:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--average:hover, .Button--color--average:focus {
+  background-color: #ed9d35;
+  color: white;
+}
+
+.Button--color--average:active {
+  background-color: #f3bd76;
+}
+
+.Button--color--bad {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--bad:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--bad:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--bad:hover, .Button--color--bad:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--bad:active {
+  background-color: #e78484;
+}
+
+.Button--color--label {
+  transition: color 50ms, background-color 50ms;
+  background-color: #657a94;
+  color: white;
+}
+
+.Button--color--label:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--label:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--label:hover, .Button--color--label:focus {
+  background-color: #91a1b3;
+  color: white;
+}
+
+.Button--color--label:active {
+  background-color: #bec7d3;
+}
+
+.Button--color--default {
+  transition: color 50ms, background-color 50ms;
+  background-color: #3e6189;
+  color: white;
+}
+
+.Button--color--default:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--default:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--default:hover, .Button--color--default:focus {
+  background-color: #5c83b0;
+  color: white;
+}
+
+.Button--color--default:active {
+  background-color: #89a6c6;
+}
+
+.Button--color--caution {
+  transition: color 50ms, background-color 50ms;
+  background-color: #d9b804;
+  color: black;
+}
+
+.Button--color--caution:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--caution:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--caution:hover, .Button--color--caution:focus {
+  background-color: #f5d72e;
+  color: black;
+}
+
+.Button--color--caution:active {
+  background-color: #f9e572;
+}
+
+.Button--color--danger {
+  transition: color 50ms, background-color 50ms;
+  background-color: #bd2020;
+  color: white;
+}
+
+.Button--color--danger:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--danger:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--danger:hover, .Button--color--danger:focus {
+  background-color: #dc4848;
+  color: white;
+}
+
+.Button--color--danger:active {
+  background-color: #e78484;
+}
+
+.Button--color--transparent {
+  transition: color 50ms, background-color 50ms;
+  background-color: #252525;
+  color: white;
+  background-color: rgba(37, 37, 37, 0);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.Button--color--transparent:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--color--transparent:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--color--transparent:hover, .Button--color--transparent:focus {
+  background-color: #3e3e3e;
+  color: white;
+}
+
+.Button--color--transparent:active {
+  background-color: #565656;
+}
+
+.Button--disabled {
+  background-color: #999999 !important;
+}
+
+.Button--selected {
+  transition: color 50ms, background-color 50ms;
+  background-color: #1b9638;
+  color: white;
+}
+
+.Button--selected:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.Button--selected:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.Button--selected:hover, .Button--selected:focus {
+  background-color: #32c154;
+  color: white;
+}
+
+.Button--selected:active {
+  background-color: #59da78;
+}
+
 .chem-dispenser__buttons {
   text-transform: capitalize;
 }
@@ -4633,6 +5300,76 @@ td, th {
 }
 
 /**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+/**
+ * @file
+ * @copyright 2022
+ * @author CodeJester (https://github.com/codeJester27)
+ * @license ISC
+ */
+@keyframes ChemHeater__heating {
+  to {
+    box-shadow: 0 0 15px 0 #f2711c;
+    border-color: #f2711c;
+  }
+}
+@keyframes ChemHeater__cooling {
+  to {
+    box-shadow: 0 0 15px 0 #2185d0;
+    border-color: #2185d0;
+  }
+}
+@keyframes ChemHeater__heating_fill {
+  to {
+    color: #f2711c;
+  }
+}
+@keyframes ChemHeater__cooling_fill {
+  to {
+    color: #2185d0;
+  }
+}
+.ChemHeater__TemperatureNumber {
+  transition: color 500ms ease-out;
+}
+
+.ChemHeater__TemperatureArrow {
+  color: #AAAAAA;
+  transition: transform 500ms ease-out;
+}
+
+.ChemHeater__TemperatureArrow__heating {
+  animation: ChemHeater__heating_fill 2s ease infinite alternate;
+}
+
+.ChemHeater__TemperatureArrow__cooling {
+  animation: ChemHeater__cooling_fill 2s ease infinite alternate;
+}
+
+.ChemHeater__TemperatureBox {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0);
+  border-color: #AAAAAA;
+  border-style: solid;
+  border-radius: 4px;
+  height: 3em;
+  text-align: center;
+}
+
+.ChemHeater__TemperatureBox__heating {
+  animation: ChemHeater__heating 2s ease infinite alternate;
+}
+
+.ChemHeater__TemperatureBox__cooling {
+  animation: ChemHeater__cooling 2s ease infinite alternate;
+}
+
+/**
 * @file
 * @copyright 2020
 * @author ThePotato97 (https://github.com/ThePotato97)
@@ -4644,7 +5381,6 @@ td, th {
   display: flex;
   overflow: none;
   width: 100vw;
-  height: 270px;
   /* Text Styling */
   flex-direction: column;
 }
@@ -5471,6 +6207,29 @@ td, th {
   background-color: #99c9ee;
 }
 
+.WeaponVendor .Button--color--ammo {
+  transition: color 50ms, background-color 50ms;
+  background-color: #f2711c;
+  color: white;
+}
+
+.WeaponVendor .Button--color--ammo:hover {
+  transition: color 0ms, background-color 0ms;
+}
+
+.WeaponVendor .Button--color--ammo:focus {
+  transition: color 100ms, background-color 100ms;
+}
+
+.WeaponVendor .Button--color--ammo:hover, .WeaponVendor .Button--color--ammo:focus {
+  background-color: #f6a067;
+  color: white;
+}
+
+.WeaponVendor .Button--color--ammo:active {
+  background-color: #fbceb1;
+}
+
 .WeaponVendor .Button--color--assistant {
   transition: color 50ms, background-color 50ms;
   background-color: #767676;
@@ -5504,6 +6263,10 @@ td, th {
 
 .WeaponVendor__Credits--utility {
   color: #2185d0;
+}
+
+.WeaponVendor__Credits--ammo {
+  color: #f2711c;
 }
 
 .WeaponVendor__Credits--assistant {
@@ -5788,7 +6551,7 @@ td, th {
 }
 
 .Layout__content {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4wIiB2aWV3Qm94PSIwIDAgNDI1IDIwMCIgb3BhY2l0eT0iLjEiPg0KICA8cGF0aCBkPSJtIDE3OC4wMDM5OSwwLjAzODY5IC03MS4yMDM5MywwIGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCAtNi43NjEzNCw2LjAyNTU1IGwgMCwxODcuODcxNDcgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzQsNi4wMjU1NCBsIDUzLjEwNzIsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNi43NjEzNSwtNi4wMjU1NCBsIDAsLTEwMS41NDQwMTggNzIuMjE2MjgsMTA0LjY5OTM5OCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNS43NjAxNSwyLjg3MDE2IGwgNzMuNTU0ODcsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgNi43NjEzNSwtNi4wMjU1NCBsIDAsLTE4Ny44NzE0NyBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzUsLTYuMDI1NTUgbCAtNTQuNzE2NDQsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzMsNi4wMjU1NSBsIDAsMTAyLjYxOTM1IEwgMTgzLjc2NDEzLDIuOTA4ODYgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC01Ljc2MDE0LC0yLjg3MDE3IHoiIC8+DQogIDxwYXRoIGQ9Ik0gNC44NDQ2MzMzLDIyLjEwODc1IEEgMTMuNDEyMDM5LDEyLjUwMTg0MiAwIDAgMSAxMy40Nzc1ODgsMC4wMzkyNCBsIDY2LjExODMxNSwwIGEgNS4zNjQ4MTU4LDUuMDAwNzM3IDAgMCAxIDUuMzY0ODIzLDUuMDAwNzMgbCAwLDc5Ljg3OTMxIHoiIC8+DQogIDxwYXRoIGQ9Im0gNDIwLjE1NTM1LDE3Ny44OTExOSBhIDEzLjQxMjAzOCwxMi41MDE4NDIgMCAwIDEgLTguNjMyOTUsMjIuMDY5NTEgbCAtNjYuMTE4MzIsMCBhIDUuMzY0ODE1Miw1LjAwMDczNyAwIDAgMSAtNS4zNjQ4MiwtNS4wMDA3NCBsIDAsLTc5Ljg3OTMxIHoiIC8+DQo8L3N2Zz4NCjwhLS0gVGhpcyB3b3JrIGlzIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1TaGFyZUFsaWtlIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2UuIC0tPg0KPCEtLSBodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9saWNlbnNlcy9ieS1zYS80LjAvIC0tPg0K);
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjAiIHZpZXdCb3g9IjAgMCA0MjUgMjAwIiBvcGFjaXR5PSIuMSI+CiAgPHBhdGggZD0ibSAxNzguMDAzOTksMC4wMzg2OSAtNzEuMjAzOTMsMCBhIDYuNzYxMzQyMiw2LjAyNTU0OTUgMCAwIDAgLTYuNzYxMzQsNi4wMjU1NSBsIDAsMTg3Ljg3MTQ3IGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCA2Ljc2MTM0LDYuMDI1NTQgbCA1My4xMDcyLDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzUsLTYuMDI1NTQgbCAwLC0xMDEuNTQ0MDE4IDcyLjIxNjI4LDEwNC42OTkzOTggYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDUuNzYwMTUsMi44NzAxNiBsIDczLjU1NDg3LDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIDYuNzYxMzUsLTYuMDI1NTQgbCAwLC0xODcuODcxNDcgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC02Ljc2MTM1LC02LjAyNTU1IGwgLTU0LjcxNjQ0LDAgYSA2Ljc2MTM0MjIsNi4wMjU1NDk1IDAgMCAwIC02Ljc2MTMzLDYuMDI1NTUgbCAwLDEwMi42MTkzNSBMIDE4My43NjQxMywyLjkwODg2IGEgNi43NjEzNDIyLDYuMDI1NTQ5NSAwIDAgMCAtNS43NjAxNCwtMi44NzAxNyB6IiAvPgogIDxwYXRoIGQ9Ik0gNC44NDQ2MzMzLDIyLjEwODc1IEEgMTMuNDEyMDM5LDEyLjUwMTg0MiAwIDAgMSAxMy40Nzc1ODgsMC4wMzkyNCBsIDY2LjExODMxNSwwIGEgNS4zNjQ4MTU4LDUuMDAwNzM3IDAgMCAxIDUuMzY0ODIzLDUuMDAwNzMgbCAwLDc5Ljg3OTMxIHoiIC8+CiAgPHBhdGggZD0ibSA0MjAuMTU1MzUsMTc3Ljg5MTE5IGEgMTMuNDEyMDM4LDEyLjUwMTg0MiAwIDAgMSAtOC42MzI5NSwyMi4wNjk1MSBsIC02Ni4xMTgzMiwwIGEgNS4zNjQ4MTUyLDUuMDAwNzM3IDAgMCAxIC01LjM2NDgyLC01LjAwMDc0IGwgMCwtNzkuODc5MzEgeiIgLz4KPC9zdmc+CjwhLS0gVGhpcyB3b3JrIGlzIGxpY2Vuc2VkIHVuZGVyIGEgQ3JlYXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbi1TaGFyZUFsaWtlIDQuMCBJbnRlcm5hdGlvbmFsIExpY2Vuc2UuIC0tPgo8IS0tIGh0dHA6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LXNhLzQuMC8gLS0+Cg==);
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;

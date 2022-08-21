@@ -655,7 +655,7 @@ exports.KEY_QUOTE = KEY_QUOTE;
 
 
 exports.__esModule = true;
-exports.keyOfMatchingRange = exports.inRange = exports.toFixed = exports.round = exports.scale = exports.clamp01 = exports.clamp = void 0;
+exports.numberOfDecimalDigits = exports.keyOfMatchingRange = exports.inRange = exports.toFixed = exports.round = exports.scale = exports.clamp01 = exports.clamp = void 0;
 
 /**
  * @file
@@ -772,8 +772,22 @@ var keyOfMatchingRange = function keyOfMatchingRange(value, ranges) {
     }
   }
 };
+/**
+ * Get number of digits following the decimal point in a number
+ */
+
 
 exports.keyOfMatchingRange = keyOfMatchingRange;
+
+var numberOfDecimalDigits = function numberOfDecimalDigits(value) {
+  if (Math.floor(value) !== value) {
+    return value.toString().split('.')[1].length || 0;
+  }
+
+  return 0;
+};
+
+exports.numberOfDecimalDigits = numberOfDecimalDigits;
 
 /***/ }),
 
@@ -10469,11 +10483,24 @@ var NumberInput = /*#__PURE__*/function (_Component) {
           }
         }), 2), contentElement, (0, _inferno.createVNode)(64, "input", "NumberInput__input", null, 1, {
           "style": {
-            display: !editing ? 'none' : undefined,
+            opacity: !editing ? 0 : undefined,
             height: height,
             'line-height': lineHeight,
             'font-size': fontSize
           },
+          "onFocus": function () {
+            function onFocus(e) {
+              _this2.setState({
+                editing: true
+              });
+
+              if (onChange) {
+                onChange(e, value);
+              }
+            }
+
+            return onFocus;
+          }(),
           "onBlur": function () {
             function onBlur(e) {
               if (!editing) {
@@ -10713,6 +10740,8 @@ var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts
 
 var _Box = __webpack_require__(/*! ./Box */ "./packages/tgui/components/Box.tsx");
 
+var _constants = __webpack_require__(/*! ../constants */ "./packages/tgui/constants.js");
+
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 var ProgressBar = function ProgressBar(props) {
@@ -10730,12 +10759,27 @@ var ProgressBar = function ProgressBar(props) {
 
   var scaledValue = (0, _math.scale)(value, minValue, maxValue);
   var hasContent = children !== undefined;
-  var effectiveColor = color || (0, _math.keyOfMatchingRange)(value, ranges) || 'default';
-  return (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(['ProgressBar', 'ProgressBar--color--' + effectiveColor, className, (0, _Box.computeBoxClassName)(rest)]), [(0, _inferno.createVNode)(1, "div", "ProgressBar__fill ProgressBar__fill--animated", null, 1, {
-    "style": {
-      width: (0, _math.clamp01)(scaledValue) * 100 + '%'
-    }
-  }), (0, _inferno.createVNode)(1, "div", "ProgressBar__content", hasContent ? children : (0, _math.toFixed)(scaledValue * 100) + '%', 0)], 4, Object.assign({}, (0, _Box.computeBoxProps)(rest))));
+  var effectiveColor = color || (0, _math.keyOfMatchingRange)(value, ranges) || 'default'; // We permit colors to be in hex format, rgb()/rgba() format,
+  // a name for a color-<name> class, or a base CSS class.
+
+  var outerProps = (0, _Box.computeBoxProps)(rest);
+  var outerClasses = ['ProgressBar', className, (0, _Box.computeBoxClassName)(rest)];
+  var fillStyles = {
+    'width': (0, _math.clamp01)(scaledValue) * 100 + '%'
+  };
+
+  if (_constants.CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
+    // If the color is a color-<name> class, just use that.
+    outerClasses.push('ProgressBar--color--' + effectiveColor);
+  } else {
+    // Otherwise, set styles directly.
+    outerProps.style = (outerProps.style || "") + ("border-color: " + effectiveColor + ";");
+    fillStyles['background-color'] = effectiveColor;
+  }
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createVNode)(1, "div", (0, _react.classes)(outerClasses), [(0, _inferno.createVNode)(1, "div", "ProgressBar__fill ProgressBar__fill--animated", null, 1, {
+    "style": fillStyles
+  }), (0, _inferno.createVNode)(1, "div", "ProgressBar__content", hasContent ? children : (0, _math.toFixed)(scaledValue * 100) + '%', 0)], 4, Object.assign({}, outerProps)));
 };
 
 exports.ProgressBar = ProgressBar;
@@ -11787,6 +11831,42 @@ exports.Placeholder = Placeholder;
 
 /***/ }),
 
+/***/ "./packages/tgui/components/goonstation/SectionEx.js":
+/*!***********************************************************!*\
+  !*** ./packages/tgui/components/goonstation/SectionEx.js ***!
+  \***********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.SectionEx = void 0;
+
+var _inferno = __webpack_require__(/*! inferno */ "./.yarn/cache/inferno-npm-7.4.8-f828cb79a7-dd2af1493c.zip/node_modules/inferno/index.esm.js");
+
+var _react = __webpack_require__(/*! common/react */ "./packages/common/react.ts");
+
+var _Box = __webpack_require__(/*! ../Box */ "./packages/tgui/components/Box.tsx");
+
+var _Section = __webpack_require__(/*! ../Section */ "./packages/tgui/components/Section.tsx");
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+var SectionEx = function SectionEx(props) {
+  var className = props.className,
+      capitalize = props.capitalize,
+      rest = _objectWithoutPropertiesLoose(props, ["className", "capitalize"]);
+
+  return (0, _inferno.normalizeProps)((0, _inferno.createComponentVNode)(2, _Section.Section, Object.assign({
+    "className": (0, _react.classes)(['SectionEx', capitalize && 'SectionEx__capitalize', className, (0, _Box.computeBoxClassName)(rest)])
+  }, rest)));
+};
+
+exports.SectionEx = SectionEx;
+
+/***/ }),
+
 /***/ "./packages/tgui/components/index.js":
 /*!*******************************************!*\
   !*** ./packages/tgui/components/index.js ***!
@@ -11797,7 +11877,7 @@ exports.Placeholder = Placeholder;
 
 
 exports.__esModule = true;
-exports.Tooltip = exports.TimeDisplay = exports.TextArea = exports.Tabs = exports.Table = exports.Stack = exports.Slider = exports.Section = exports.RoundGauge = exports.Popper = exports.ProgressBar = exports.Placeholder = exports.NumberInput = exports.NoticeBox = exports.Modal = exports.LabeledList = exports.LabeledControls = exports.Knob = exports.Input = exports.Image = exports.Icon = exports.Grid = exports.Flex = exports.Dropdown = exports.DraggableControl = exports.Divider = exports.Dimmer = exports.ColorButton = exports.ColorBox = exports.Collapsible = exports.Chart = exports.ByondUi = exports.Button = exports.Box = exports.BlockQuote = exports.Blink = exports.AnimatedNumber = void 0;
+exports.Tooltip = exports.TimeDisplay = exports.TextArea = exports.Tabs = exports.Table = exports.Stack = exports.Slider = exports.SectionEx = exports.Section = exports.RoundGauge = exports.Popper = exports.ProgressBar = exports.Placeholder = exports.NumberInput = exports.NoticeBox = exports.Modal = exports.LabeledList = exports.LabeledControls = exports.Knob = exports.Input = exports.Image = exports.Icon = exports.Grid = exports.Flex = exports.Dropdown = exports.DraggableControl = exports.Divider = exports.Dimmer = exports.ColorButton = exports.ColorBox = exports.Collapsible = exports.Chart = exports.ByondUi = exports.Button = exports.Box = exports.BlockQuote = exports.Blink = exports.AnimatedNumber = void 0;
 
 var _AnimatedNumber = __webpack_require__(/*! ./AnimatedNumber */ "./packages/tgui/components/AnimatedNumber.js");
 
@@ -11918,6 +11998,10 @@ exports.RoundGauge = _RoundGauge.RoundGauge;
 var _Section = __webpack_require__(/*! ./Section */ "./packages/tgui/components/Section.tsx");
 
 exports.Section = _Section.Section;
+
+var _SectionEx = __webpack_require__(/*! ./goonstation/SectionEx */ "./packages/tgui/components/goonstation/SectionEx.js");
+
+exports.SectionEx = _SectionEx.SectionEx;
 
 var _Slider = __webpack_require__(/*! ./Slider */ "./packages/tgui/components/Slider.js");
 
