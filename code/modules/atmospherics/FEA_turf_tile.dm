@@ -17,7 +17,7 @@ atom/movable/proc/experience_pressure_difference(pressure_difference, direction)
 	else if(!anchored)
 		if(pressure_difference > pressure_resistance)
 			last_forced_movement = air_master.current_cycle
-			SPAWN_DBG(0)
+			SPAWN(0)
 				step(src, direction) // ZEWAKA-ATMOS: HIGH PRESSURE DIFFERENTIAL HERE
 		return 1
 
@@ -106,11 +106,9 @@ turf
 				#ifdef ALPHA_GAS_OVERLAYS
 				mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-				mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 				#else
 				mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 				mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-				mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 				#endif
 			)
 
@@ -174,7 +172,7 @@ turf
 		New()
 			..()
 
-			if(!blocks_air)
+			if(!gas_impermeable)
 				air = new /datum/gas_mixture
 
 				#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
@@ -209,10 +207,10 @@ turf
 					active_hotspot = null
 			if(being_superconductive)
 				air_master.active_super_conductivity.Remove(src)
-			if(blocks_air)
+			if(gas_impermeable)
 				for(var/direction in cardinal)
 					var/turf/simulated/tile = get_step(src,direction)
-					if(air_master && istype(tile) && !tile.blocks_air)
+					if(air_master && istype(tile) && !tile.gas_impermeable)
 						air_master.tiles_to_update |= tile
 			qdel(air)
 			if (gas_icon_overlay)
@@ -289,7 +287,7 @@ turf
 
 			for(var/direction in cardinal)
 				LAGCHECK(LAG_REALTIME)
-				if(CanPass(null, get_step(src,direction), 0, 0))
+				if(gas_cross(get_step(src,direction)))
 					air_check_directions |= direction
 
 			if(parent)
@@ -413,7 +411,7 @@ turf
 
 		super_conduct()
 			var/conductivity_directions = 0
-			if(blocks_air)
+			if(gas_impermeable)
 				//Does not participate in air exchange, so will conduct heat across all four borders at this time
 				conductivity_directions = NORTH|SOUTH|EAST|WEST
 

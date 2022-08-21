@@ -45,5 +45,5 @@
 			src.underlays += O
 			O.set_loc(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> kicks [src], but it doesn't budge.</span>", "<span class='alert'>You kick [src], but it doesn't budge.</span>")

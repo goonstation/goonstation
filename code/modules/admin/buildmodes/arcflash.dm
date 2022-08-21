@@ -6,7 +6,7 @@ Left Mouse Button on turf/mob/obj      = SHOCK!<br>
 ***********************************************************"}
 	icon_state = "buildmode_zap"
 	var/wattage = 5000
-	var/obj/dummy
+	var/tmp/obj/dummy
 
 	New()
 		dummy = new()

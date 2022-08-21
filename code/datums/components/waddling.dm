@@ -1,6 +1,9 @@
 /datum/component/waddling
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
+TYPEINFO(/datum/component/waddling)
+	initialization_args = list()
+
 /datum/component/waddling/Initialize()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE

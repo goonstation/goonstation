@@ -46,7 +46,7 @@
 			src.setMaterial(material_cache["steel"])
 		..()
 		START_TRACKING
-		src.updateicon()
+		src.UpdateIcon()
 
 	disposing()
 		STOP_TRACKING
@@ -60,7 +60,7 @@
 		deployed_fields = list()
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
@@ -86,7 +86,7 @@
 		else
 			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
@@ -117,7 +117,7 @@
 			..()
 
 
-/obj/machinery/interdictor/proc/updateicon()
+/obj/machinery/interdictor/update_icon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
 	ratio = round(ratio, 0.33) * 100
 	var/image/I_chrg = SafeGetOverlayImage("charge", 'icons/obj/machines/interdictor.dmi', "idx-charge-[ratio]")
@@ -155,7 +155,7 @@
 		status |= BROKEN
 		doupdateicon = 0
 		src.stop_interdicting()
-		message_admins("Interdictor at ([showCoords(src.x, src.y, src.z)]) is missing a power cell. This is not supposed to happen, yell at kubius")
+		message_admins("Interdictor at ([log_loc(src)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(anchored)
 		if(intcap.charge < intcap.maxcharge && powered())
@@ -179,7 +179,7 @@
 			playsound(src.loc, src.sound_interdict_run, 30, 0)
 
 	if(doupdateicon)
-		src.updateicon()
+		src.UpdateIcon()
 
 
 
@@ -203,20 +203,20 @@
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
 	for(var/turf/T in orange(src.interdict_range,src))
-		if (get_dist(T,src) != src.interdict_range)
+		if (GET_DIST(T,src) != src.interdict_range)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
 		src.deployed_fields += YEE
 
 	src.canInterdict = 1
 	playsound(src.loc, src.sound_interdict_on, 40, 0)
-	SPAWN_DBG(rand(30,40)) //after it's been on for a little bit, check for tears
+	SPAWN(rand(30,40)) //after it's been on for a little bit, check for tears
 		if(src.canInterdict)
 			for (var/obj/forcefield/event/tear in by_type[/obj/forcefield/event])
-				SPAWN_DBG(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
+				SPAWN(rand(8,22)) //stagger stabilizations, since it's getting stabilized post-formation
 					if (!tear.stabilized && IN_RANGE(src,tear,src.interdict_range) && src.expend_interdict(800))
 						tear.stabilize()
-	src.updateicon()
+	src.UpdateIcon()
 
 
 //ceases interdiction
@@ -227,7 +227,7 @@
 
 	src.canInterdict = 0
 	playsound(src.loc, src.sound_interdict_off, 40, 1)
-	src.updateicon()
+	src.UpdateIcon()
 
 
 /obj/interdict_edge
@@ -283,6 +283,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	mats = 6
+	health = 6
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
@@ -316,7 +317,7 @@
 			boutput(user, "<span class='notice'>You empty the box of parts onto the floor.</span>")
 			var/obj/O = new /obj/interdictor_frame( get_turf(user) )
 			O.fingerprints = src.fingerprints
-			O.fingerprintshidden = src.fingerprintshidden
+			O.fingerprints_full = src.fingerprints_full
 			qdel(src)
 
 /obj/interdictor_frame
@@ -329,7 +330,7 @@
 	var/obj/intcap = null
 	var/obj/introd = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
@@ -342,7 +343,7 @@
 			return
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(0)
 				if (iswrenchingtool(I))
@@ -434,7 +435,7 @@
 
 	onUpdate()
 		..()
-		if (itdr == null || the_tool == null || owner == null || get_dist(owner, itdr) > 1)
+		if (itdr == null || the_tool == null || owner == null || BOUNDS_DIST(owner, itdr) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

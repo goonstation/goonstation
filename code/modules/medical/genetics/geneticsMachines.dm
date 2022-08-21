@@ -8,8 +8,8 @@
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "scanner"
-	req_access = list(access_heads) //Only used for record deletion right now.
-	object_flags = CAN_REPROGRAM_ACCESS
+	req_access = list(access_medlab)
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
@@ -42,7 +42,7 @@
 /obj/machinery/computer/genetics/New()
 	..()
 	START_TRACKING
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		connection_scan()
 
 /obj/machinery/computer/genetics/connection_scan()
@@ -52,7 +52,7 @@
 	STOP_TRACKING
 	..()
 
-/obj/machinery/computer/genetics/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/computer/genetics/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/genetics_injector/dna_activator))
 		var/obj/item/genetics_injector/dna_activator/DNA = W
 		if (DNA.expended_properly)
@@ -74,11 +74,11 @@
 		var/obj/item/card/id/ID = W
 		if (istype(ID))
 			registered_id = ID.registered
-			user.show_text("You swipe the ID on [src]. You will now recieve a cut from gene booth sales.", "blue")
+			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
 			return
 
 		..()
-	return
+
 
 /obj/machinery/computer/genetics/proc/activated_bonus(mob/user as mob)
 	if (genResearch.time_discount < 0.75)
@@ -234,26 +234,28 @@
 	if (!src || !M || !ismob(M) || !action)
 		return
 
-	logTheThing("station", usr, M, "uses [src.name] on [constructTarget(M,"station")][M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
+	logTheThing(LOG_STATION, usr, "uses [src.name] on [constructTarget(M,"station")][M.bioHolder ? " (Genetic stability: [M.bioHolder.genetic_stability])" : ""] at [log_loc(src)]. Action: [action][BE && istype(BE, /datum/bioEffect/) ? ". Gene: [BE] (Stability impact: [BE.stability_loss])" : ""]")
 	return
 
 /obj/machinery/computer/genetics/proc/log_maybe_cheater(var/who, var/action = "")
 	// this is used repeatedly so let's just make it a proc and stop repeating ourselves 50 times
 	message_admins("[key_name(who)] [action] (failed validation, maybe cheating)")
-	logTheThing("debug", who, null, "[action] but failed validation.")
-	logTheThing("diary", who, null, "[action] but failed validation.", "debug")
+	logTheThing(LOG_DEBUG, who, "[action] but failed validation.")
+	logTheThing(LOG_DIARY, who, "[action] but failed validation.", "debug")
 
 /obj/machinery/computer/genetics/ui_status(mob/user)
 	if (user in src.scanner)
 		return UI_UPDATE
-	return ..()
+	. = ..()
+	if (!src.allowed(user))
+		. = min(., UI_UPDATE)
 
 /obj/machinery/computer/genetics/proc/on_ui_interacted(mob/user, minor = FALSE)
 	src.add_fingerprint(user)
 	playsound(src.loc, 'sound/machines/keypress.ogg', minor ? 25 : 50, 1, -15)
 
 /obj/machinery/computer/genetics/proc/play_emitter_sound()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/i = 0, i < 15 && (i < 3 || prob(genResearch.emitter_radiation)), i++)
 			switch (genResearch.emitter_radiation)
 				if(1 to 15)
@@ -509,6 +511,10 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
+			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
+				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
+				return
 			if (isnull(BE))
 				if (!isnull(H.mutantrace))
 					src.log_me(H, "mutantrace removed")
@@ -600,7 +606,7 @@
 			if (!E.can_make_injector)
 				return
 			genResearch.researchMaterial -= price
-			var/booth_effect_cost = text2num(params["price"])
+			var/booth_effect_cost = text2num_safe(params["price"])
 			booth_effect_cost = clamp(booth_effect_cost, 0, 999999)
 			var/booth_effect_desc = params["desc"]
 			booth_effect_desc = strip_html(booth_effect_desc, 280)
@@ -700,7 +706,11 @@
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial].")
-				subject.bioHolder.RemovePoolEffect(E)
+				subject.bioHolder.RemoveEffect(E.id)
+				E.owner = null
+				E.holder = null
+				saved_mutations -= E
+				qdel(E)
 			playsound(src, "sound/machines/pc_process.ogg", 50, 1)
 			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
 		if("save")
@@ -912,10 +922,11 @@
 		"savedChromosomes" = list(),
 		"combining" = list(),
 		"unlock" = null,
+		"allowed" = src.allowed(user),
 	)
 
-	for(var/datum/data/record/R as anything in data_core.medical)
-		var/datum/computer/file/genetics_scan/S = R.fields["dnasample"]
+	for(var/datum/db_record/R as anything in data_core.medical.records)
+		var/datum/computer/file/genetics_scan/S = R["dnasample"]
 		if (!istype(S))
 			continue
 		.["samples"] += list(list(
@@ -1006,7 +1017,7 @@
 		.["subject"] = null
 
 	for(var/R as anything in genResearch.researchTreeTiered)
-		if (text2num(R) == 0)
+		if (text2num_safe(R) == 0)
 			continue
 		var/list/availTier = list()
 		var/list/finishedTier = list()
@@ -1033,8 +1044,8 @@
 					"ref" = "\ref[C]",
 				))
 
-		.["availableResearch"][text2num(R)] = availTier
-		.["finishedResearch"][text2num(R)] = finishedTier
+		.["availableResearch"][text2num_safe(R)] = availTier
+		.["finishedResearch"][text2num_safe(R)] = finishedTier
 
 	for(var/datum/geneticsResearchEntry/R as anything in genResearch.currentResearch)
 		.["currentResearch"] += list(list(

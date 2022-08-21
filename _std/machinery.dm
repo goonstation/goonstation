@@ -6,10 +6,6 @@
 
 #define MACHINE_PROC_INTERVAL (0.4 SECONDS)
 
-//communications stuff
-#define TRANSMISSION_WIRE	0
-#define TRANSMISSION_RADIO	1
-
 //lighting stuff
 #define LIGHT_OK 0
 #define LIGHT_EMPTY 1
@@ -32,12 +28,17 @@
 #define REQ_PHYSICAL_ACCESS (1<<6) //! Can only be interacted with if adjacent and physical
 
 //recharger stuff
-#define CELLRATE 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
+#define CELLRATE 0.002  // multiplier for watts per tick != cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
 #define CHARGELEVEL 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
 
 //red smashy button stuff
 #define SHIP_ALERT_GOOD 0
 #define SHIP_ALERT_BAD 1
+
+//conveyor belt operating modes
+#define CONVEYOR_FORWARD 1
+#define CONVEYOR_REVERSE -1
+#define CONVEYOR_STOPPED 0
 
 #define DATA_TERMINAL_IS_VALID_MASTER(terminal, master) (master && (get_turf(master) == terminal.loc))
 

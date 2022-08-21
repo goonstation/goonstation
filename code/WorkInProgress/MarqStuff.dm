@@ -426,7 +426,7 @@
 			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
-				var/obj/item/implant/projectile/arrow/A = new
+				var/obj/item/implant/projectile/body_visible/arrow/A = new
 				A.material = fusedmaterial
 				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
 				A.arrow = src
@@ -451,21 +451,13 @@
 					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
-					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
+					logTheThing(LOG_COMBAT, user, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
 					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 
-/obj/item/arrowhead
-	name = "arrowhead"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "arrowhead"
-
-	examine()
-		. = ..()
-		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
-
-/obj/item/implant/projectile/arrow
+/obj/item/implant/projectile/body_visible/arrow
 	name = "arrow"
+	pull_out_name = "arrow"
 	icon = null
 	icon_state = null
 	desc = "An arrow."
@@ -487,7 +479,7 @@
 	name = "quiver"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "quiver-0"
-	wear_image_icon = 'icons/mob/back.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
 	flags = FPRINT | TABLEPASS | ONBACK | ONBELT
 	move_triggered = 1
@@ -517,7 +509,7 @@
 				return contents[1]
 			else return null
 
-	proc/updateApperance()
+	proc/updateAppearance()
 		if (contents.len)
 			maptext = "[contents.len]"
 		else
@@ -530,11 +522,11 @@
 			var/obj/item/arrow/I = getArrow(user)
 			if(I)
 				user.put_in_hand(I, user.hand)
-				updateApperance()
+				updateAppearance()
 			return
 		..()
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		var/atom/movable/screen/hud/S = over_object
 		if (istype(S))
@@ -581,14 +573,14 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1.0
-	icon_turf_hit = "bhole"
+	ks_ratio = 1
+	impact_image_state = "bhole"
 	icon_state = "arrow"
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
 		if (ismob(A))
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, 1)
-			var/obj/item/implant/projectile/arrow/B = P.implanted
+			var/obj/item/implant/projectile/body_visible/arrow/B = P.implanted
 			if (istype(B))
 				if (B.material)
 					B.material.triggerOnAttack(B, null, A)
@@ -625,7 +617,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 			if(istype(H.belt, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
@@ -633,7 +625,7 @@
 					loaded = I
 					I.set_loc(src)
 					overlays += I
-					Q.updateApperance()
+					Q.updateAppearance()
 		return
 
 	attack_hand(var/mob/user)
@@ -662,7 +654,7 @@
 	//absolutely useless as an attack but removing it causes bugs, replaced fire point blank which had issues with the way arrow damage is calculated.
 		if(isliving(target))
 			if(loaded)
-				if(loaded.afterattack(target,user,1))
+				if(loaded.AfterAttack(target,user,1))
 					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
 			else
 				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
@@ -697,7 +689,7 @@
 			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
 			return 0
 		overlays.len = 0
-		var/obj/item/implant/projectile/arrow/A = new
+		var/obj/item/implant/projectile/body_visible/arrow/A = new
 		A.setMaterial(loaded.head_material, appearance = 0, setname = 0)
 		A.arrow = loaded
 		A.name = loaded.name
@@ -708,7 +700,7 @@
 		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
+				current_projectile.power = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
 			else
 				current_projectile.power = default_power
 		else
@@ -743,12 +735,13 @@
 		else
 			var/spread_base = 40
 			if(src.material)
-				if(src.material.hasProperty("density"))
-					var/mod = src.material.getProperty("density")
-					mod -= 50
-					mod /= 2
-					mod = mod * (-1)
-					spread_base += mod
+				if(src.material.getProperty("density") <= 2)
+					spread_base *= 1.5
+				else if (src.material.getProperty("density") >= 5)
+					spread_base *= 0.75
+
+				else if (src.material.getProperty("density") >= 7)
+					spread_base *= 0.5
 
 			spread_angle = spread_base
 			if (aim)

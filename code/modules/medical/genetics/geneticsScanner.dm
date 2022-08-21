@@ -11,30 +11,20 @@ var/list/genetek_hair_styles = list()
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
-	var/frequency = 1149
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
 
 	New()
 		..()
-		SPAWN_DBG(0.8 SECONDS)
-			if(radio_controller)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-			if(!src.net_id)
-				src.net_id = generate_net_id(src)
-				genescanner_addresses += src.net_id
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+			genescanner_addresses += src.net_id
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	disposing()
-		if (radio_controller)
-			radio_controller.remove_object(src, "[frequency]")
-		radio_connection = null
 		if (src.net_id)
 			genescanner_addresses -= src.net_id
 		if(occupant)
@@ -72,18 +62,18 @@ var/list/genetek_hair_styles = list()
 		if (!istype(target) || isAI(user))
 			return
 
-		if (get_dist(src,user) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
 		if (target == user)
 			move_mob_inside(target)
 		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
-			user.a_intent = INTENT_GRAB
+			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
-			user.a_intent = previous_user_intent
-			SPAWN_DBG(user.combat_click_delay + 2)
+			user.set_a_intent(previous_user_intent)
+			SPAWN(user.combat_click_delay + 2)
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
@@ -92,7 +82,7 @@ var/list/genetek_hair_styles = list()
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
 			return 0
-		if (get_dist(src,M) > 1)
+		if (BOUNDS_DIST(src, M) > 0)
 			return 0
 		if (M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened"))
 			return 0
@@ -131,13 +121,12 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		move_mob_inside(usr)
-		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
-	MouseDrop(mob/user as mob)
+	mouse_drop(mob/user as mob)
 		if (can_operate(user))
 			eject_occupant(user)
 		else
@@ -149,11 +138,10 @@ var/list/genetek_hair_styles = list()
 		set category = "Local"
 
 		eject_occupant(usr)
-		return
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user))
+		if (!isalive(user) || iswraith(user))
 			return
 		if (src.locked)
 			boutput(user, "<span class='alert'><b>The scanner door is locked!</b></span>")
@@ -162,11 +150,8 @@ var/list/genetek_hair_styles = list()
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
-		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
-			return
-		if (!isliving(user))
-			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
+	attackby(var/obj/item/grab/G, user)
+		if (!istype(G))
 			return
 
 		if (src.occupant)
@@ -193,7 +178,6 @@ var/list/genetek_hair_styles = list()
 
 		src.add_fingerprint(user)
 		qdel(G)
-		return
 
 	verb/lock()
 		set name = "Scanner Lock"
@@ -223,7 +207,7 @@ var/list/genetek_hair_styles = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 
@@ -255,7 +239,7 @@ var/list/genetek_hair_styles = list()
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -267,10 +251,6 @@ var/list/genetek_hair_styles = list()
 		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if (air_group || (height==0))
-			return 1
-		..()
 
 	proc/update_occupant()
 		var/mob/living/carbon/human/H = src.occupant
@@ -280,6 +260,9 @@ var/list/genetek_hair_styles = list()
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -18,7 +18,7 @@ var/sword_summoned_before = false
 	stamina_cost = 0
 	stamina_crit_chance = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (build_stage >= 4)														//If build_stage is 4 or higher, which shouldn't be possible, alert the player to in turt alert coders.
 			user.show_message("<span class='notice'>Uh oh, it seems you broke it!</span>", 1)
 			desc = "This doodad is broken. Call a coder."
@@ -99,7 +99,7 @@ var/sword_summoned_before = false
 							tooltip_rebuild = 1
 							is_exploding = true
 							spawn(2 SECONDS)
-								logTheThing("combat", user, null, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
+								logTheThing(LOG_COMBAT, user, "has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								message_admins("[key_name(user)] has summoned the Syndicate Weapon: Orion Retribution Device. It will become active in about 1 minute.")
 								elecflash(src.loc)
 								qdel(src)
@@ -119,7 +119,7 @@ var/sword_summoned_before = false
 			return
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/factionrep/ntboard) && !is_exploding)	//If a Syndicate Circuit Board is used on this item, turn the former into it's fried version and fill a metadata node.
 			if (metadata < 8)
 				qdel(W)
@@ -147,13 +147,13 @@ var/sword_summoned_before = false
 				playsound(src.loc, "sound/misc/flockmind/flockdrone_beep2.ogg", 60, 0)
 				playsound(src.loc, "sound/effects/sparks4.ogg", 100, 0)
 				was_emagged = true
+				. = TRUE
 			if(metadata >= 8)
 				desc = "This device has a menacing aura around it. All 8 nodes of metadata are filled. The signal is ready to be sent."
 				tooltip_rebuild = 1
 			set_icon_state("metadata_[metadata]")
 		else
 			user.show_message("<span class='notice'>This device has been emagged already!</span>", 1)
-		return
 
 /obj/item/makeshift_syndicate_signaller/proc/metadata_increase(source, dying_drone)
 	if (metadata >= 8)

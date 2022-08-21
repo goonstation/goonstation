@@ -11,7 +11,7 @@
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
 	icon_state = "wall-monitor"
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 30
 	layer = OBJ_LAYER+1
 	appearance_flags = KEEP_TOGETHER
@@ -26,7 +26,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			video_screen = new(src.loc, owner = src)
 			video_screen.fov = fov
 
@@ -55,7 +55,7 @@
 		use_power(power_usage)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!active)
 			detect_cameras()
 			current_camera = cameras["HUD1"]
@@ -91,7 +91,7 @@
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = 0
 	// layer = MOB_LAYER+1
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	var/fov = 2
 	var/obj/machinery/security_monitor/owner
 	var/image/blank

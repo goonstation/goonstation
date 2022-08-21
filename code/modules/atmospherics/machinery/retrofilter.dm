@@ -13,7 +13,7 @@ obj/machinery/atmospherics/retrofilter
 	initialize_directions = SOUTH|NORTH|WEST
 
 	req_access = list(access_engineering_atmos)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	var/datum/gas_mixture/air_in
 	var/datum/gas_mixture/air_out1
@@ -28,7 +28,7 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through
@@ -41,17 +41,6 @@ obj/machinery/atmospherics/retrofilter
 	var/open = 0
 	var/hacked = 0
 	var/emagged = 0
-
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-	var/net_id = null
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	New()
 		..()
@@ -77,8 +66,6 @@ obj/machinery/atmospherics/retrofilter
 		air_out2.volume = 200
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -135,7 +122,7 @@ obj/machinery/atmospherics/retrofilter
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			user.Browse(null, "window=pipefilter")
 			src.remove_dialog(user)
@@ -192,7 +179,7 @@ obj/machinery/atmospherics/retrofilter
 			var/gasToToggle = text2num(href_list["toggle_gas"])
 			if (!gasToToggle)
 				return
-			gasToToggle = max(1, min(gasToToggle, 16))
+			gasToToggle = clamp(gasToToggle, 1, 16)
 			if (filter_mode & gasToToggle)
 				filter_mode &= ~gasToToggle
 			else
@@ -327,7 +314,7 @@ obj/machinery/atmospherics/retrofilter
 		src.update_overlays()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -390,7 +377,7 @@ obj/machinery/atmospherics/retrofilter
 		if( powered(ENVIRON) )
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 
 		src.update_overlays()
@@ -441,9 +428,7 @@ obj/machinery/atmospherics/retrofilter
 				node_in = target
 				break
 
-		update_icon()
-
-		set_frequency(frequency)
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

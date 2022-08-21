@@ -21,6 +21,8 @@
 
 	proc/get_join_other()
 		RETURN_TYPE(/atom/movable/screen/join_other)
+		if(src.master.client?.holder && !src.master.client?.player_mode)
+			return
 		var/datum/game_server/buddy = global.game_servers.get_buddy()
 		if(isnull(buddy))
 			return null
@@ -36,6 +38,9 @@
 			return
 
 		for(var/obj/ability_button/B in master.client.screen)
+			master.client.screen -= B
+
+		for(var/atom/movable/screen/ability/B in master.client.screen)
 			master.client.screen -= B
 
 		if (master.abilityHolder) //abilities come first. no overlap from the upcoming buttons!

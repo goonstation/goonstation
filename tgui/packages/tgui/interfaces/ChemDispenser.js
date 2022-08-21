@@ -1,3 +1,9 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
 
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";

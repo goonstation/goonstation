@@ -93,6 +93,13 @@
 	proc/getTooltip()
 		. = desc
 
+/**
+ 	* Used to generate text specifically for the chef examining food. Otherwise fallbacks to getTooltip().
+ 	*/
+	proc/getChefHint()
+		. = getTooltip()
+
+
 	/**
 		* Information that should show up when an object has this effect and is examined.
 		*/
@@ -118,10 +125,12 @@
 		icon_state = "heart+"
 		unique = 1
 		maxDuration = 12 SECONDS // Just slightly longer than a defib's charge cycle
-
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
-
+		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
+			..()
+			var/mob/M = owner
+			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
 	staminaregen
 		id = "staminaregen"
 		name = ""
@@ -135,12 +144,12 @@
 		onAdd(optional=null)
 			..()
 			var/mob/M = owner
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id, change)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, id, change)
 
 		onRemove()
 			..()
 			var/mob/M = owner
-			REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, id)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, id)
 
 	maxhealth
 		id = "maxhealth"
@@ -223,25 +232,34 @@
 		var/filter
 		var/leave_cleanable = 0
 		var/mob_owner = null
+		var/do_color = TRUE
+		var/message = " melts."
 
 		onAdd(optional=null)
 			. = ..()
 			var/list/statusargs = optional
-			owner.filters += filter(type="displace", icon=icon('icons/effects/distort.dmi', "acid"), size=0)
-			src.filter = owner.filters[length(owner.filters)]
+			owner.add_filter("acid_displace", 0, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "acid"), size=0))
+			src.filter = owner.get_filter("acid_displace")
 			if(length(statusargs))
-				src.leave_cleanable = statusargs["leave_cleanable"]
-				src.mob_owner = statusargs["mob_owner"]
-			owner.color = list(0.8, 0, 0,\
-								0, 0.8, 0,\
-								0, 0, 0.8,\
-								0.1, 0.4, 0.1)
+				if("leave_cleanable" in statusargs)
+					src.leave_cleanable = statusargs["leave_cleanable"]
+				if("mob_owner" in statusargs)
+					src.mob_owner = statusargs["mob_owner"]
+				if("do_color" in statusargs)
+					src.do_color = statusargs["do_color"]
+				if("message" in statusargs)
+					src.message = statusargs["message"]
+			if(do_color)
+				owner.color = list(0.8, 0, 0,\
+									0, 0.8, 0,\
+									0, 0, 0.8,\
+									0.1, 0.4, 0.1)
 
 			animate(filter, size=8, time=duration, easing=SINE_EASING)
 
 		onRemove()
 			. = ..()
-			owner.filters -= filter
+			owner.remove_filter("acid_displace")
 			filter = null
 			if(src.leave_cleanable)
 				var/obj/decal/cleanable/molten_item/I = make_cleanable(/obj/decal/cleanable/molten_item,get_turf(owner))
@@ -252,8 +270,10 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			for(var/mob/M in AIviewers(5, owner))
-				boutput(M, "<span class='alert'>\the [owner] melts.</span>")
+			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			if (ismob(owner))
+				var/mob/fucko = owner
+				fucko.ghostize()
 			qdel(owner)
 
 	simplehot/stimulants
@@ -273,9 +293,10 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims", 500)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims", 500)
 				M.add_stam_mod_max("stims", 500)
-				M.add_stun_resist_mod("stims", 1000)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims", 100)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims", 100)
 				var/datum/statusEffect/simpledot/stimulant_withdrawl/SW = owner.hasStatus("stimulant_withdrawl")
 				if(istype(SW))
 					tickspassed += SW.tickspassed
@@ -286,9 +307,10 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stims")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stims")
 				M.remove_stam_mod_max("stims")
-				M.remove_stun_resist_mod("stims")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "stims")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "stims")
 
 			owner.changeStatus("stimulant_withdrawl", tickspassed/(3), optional = tickspassed)
 
@@ -338,6 +360,8 @@
 		damage_tox = 0
 		damage_type = DAMAGE_BURN
 
+		maxDuration = 4 MINUTES
+
 		var/howMuch = ""
 		var/stage = 1
 
@@ -347,7 +371,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -383,7 +407,7 @@
 			if(ismob(owner))
 				M = owner
 			if(!ismobcritter(M))
-				damage_tox = (sqrt(duration/20 + 5) - 1)
+				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
 			stage = get_stage(duration)
 			switch(stage)
 				if(1)
@@ -406,7 +430,7 @@
 				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -428,6 +452,8 @@
 		damage_tox = 2
 		damage_brute = 2
 		damage_type = DAMAGE_STAB | DAMAGE_BURN
+
+		maxDuration = 4 MINUTES
 
 		var/howMuch = ""
 		var/stage = 1
@@ -459,7 +485,7 @@
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
 				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = GET_MOB_PROPERTY(M, PROP_RADPROT)
+				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -491,7 +517,7 @@
 				M = owner
 
 
-			damage_tox = (sqrt(duration/20 + 5) - 0.5)
+			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
 			damage_brute = damage_tox/2
 
 			stage = get_stage(duration)
@@ -516,7 +542,7 @@
 				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
 					M.changeStatus("weakened", 5 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
@@ -565,7 +591,7 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
-			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+			logTheThing(LOG_COMBAT, owner, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -629,12 +655,16 @@
 			switchStage(getStage())
 
 			var/prot = 1
+			if (isliving(owner))
+				var/mob/living/L = owner
+				if(L.is_heat_resistant())
+					prot = 0
+				else
+					prot = (1 - (L.get_heat_protection() / 100))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				prot = (1 - (H.get_heat_protection() / 100))
-
-			if(ismob(owner) && owner:is_heat_resistant())
-				prot = 0
+				if (H.traitHolder?.hasTrait("burning")) //trait 'burning' is human torch
+					duration += timePassed										//this makes the fire counter not increment on its own
 
 			switch(stage)
 				if(1)
@@ -668,7 +698,7 @@
 			tickspassed = optional
 			if(ismob(owner))
 				var/mob/M = owner
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl", -5)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl", -5)
 				M.jitteriness = 0
 
 		onUpdate(timePassed)
@@ -682,7 +712,7 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "stim_withdrawl")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "stim_withdrawl")
 
 	stuns
 		modify_change(change)
@@ -690,7 +720,7 @@
 
 			if (owner && ismob(owner) && change > 0)
 				var/mob/M = owner
-				var/percent_protection = M.get_stun_resist_mod()
+				var/percent_protection = clamp(M.get_stun_resist_mod(), 0, 100)
 				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
 				. *= percent_protection
 
@@ -719,12 +749,12 @@
 				. = ..()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 
 			onRemove()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
 		weakened
@@ -739,12 +769,12 @@
 				. = ..()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 
 			onRemove()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
 			pinned
@@ -796,12 +826,12 @@
 				. = ..()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					APPLY_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 
 			onRemove()
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
-					REMOVE_MOB_PROPERTY(mob_owner, PROP_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
 		dormant
@@ -1051,6 +1081,64 @@
 		clicked(list/params)
 			H.resist()
 
+	incorporeal
+		id = "incorporeal"
+		name = "Incorporeal"
+		desc = "You are incorporeal.<br>You cannot use your hands. Become corporeal again to interact with the world."
+		icon_state = "incorporeal"
+		unique = TRUE
+		duration = INFINITE_STATUS
+		maxDuration = null
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessing
+		id = "possessing"
+		name = "Possessing"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be temporarily transferred into their body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	possessed
+		id = "possessed"
+		name = "Possessed"
+		desc = "You are possessing someone.<br>Once the status effect ends, you will be transferred back into your body."
+		icon_state = "possess"
+		unique = TRUE
+		maxDuration = 45 SECONDS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
+	soulstolen
+		id = "soulstolen"
+		name = "soulstolen"
+		desc = "The Slasher has stolen your soul!"
+		icon_state = "incorporeal"
+		unique = TRUE
+		visible = FALSE
+		maxDuration = INFINITE_STATUS
+		var/mob/living/carbon/human/H
+
+		onAdd(optional=null)
+			. = ..()
+			if (ishuman(owner))
+				H = owner
+
 	buckled
 		id = "buckled"
 		name = "Buckled"
@@ -1059,31 +1147,31 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
-		var/mob/living/carbon/human/H
+		var/mob/living/L
 		var/sleepcount = 5 SECONDS
 
 		onAdd(optional=null)
 			. = ..()
-			if (ishuman(owner))
-				H = owner
+			if (isliving(owner))
+				L = owner
 				sleepcount = 5 SECONDS
 			else
 				owner.delStatus("buckled")
 
 		clicked(list/params)
-			if(H.buckled)
-				H.buckled.Attackhand(H)
+			if(L.buckled)
+				L.buckled.Attackhand(L)
 
 		onUpdate(timePassed)
-			if (H && !H.buckled)
+			if (L && !L.buckled)
 				owner.delStatus("buckled")
 			else
 				if (sleepcount > 0)
 					sleepcount -= timePassed
 					if (sleepcount <= 0)
-						if (H.hasStatus("resting") && istype(H.buckled,/obj/stool/bed))
-							var/obj/stool/bed/B = H.buckled
-							B.sleep_in(H)
+						if (L.hasStatus("resting") && istype(L.buckled,/obj/stool/bed))
+							var/obj/stool/bed/B = L.buckled
+							B.sleep_in(L)
 						else
 							sleepcount = 3 SECONDS
 
@@ -1097,13 +1185,19 @@
 		unique = 1
 		duration = INFINITE_STATUS
 		maxDuration = null
+		var/do_slow = FALSE
 		var/mob/living/L
 
 		onAdd(optional=null)
 			. = ..()
-			ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 			if (isliving(owner))
 				L = owner
+				L.force_laydown_standup()
+				if(QDELETED(src))
+					return
+				do_slow = TRUE
+
+				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
 					if (!actions.hasAction(L, "fire_roll"))
 						L.last_resist = world.time + 25
@@ -1115,7 +1209,8 @@
 
 		onRemove()
 			. = ..()
-			ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
+			if(do_slow)
+				ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
 			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -1150,7 +1245,7 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen", regen_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_regen", regen_stam)
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
@@ -1161,7 +1256,7 @@
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("ganger_max")
-			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "ganger_regen")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_regen")
 			gang = null
 
 		onUpdate(timePassed)
@@ -1170,7 +1265,7 @@
 				on_turf = 1
 
 				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
 				if (buff_mult <=0)
 					buff_mult = 0.1
 
@@ -1213,7 +1308,8 @@
 			if(ismob(owner))
 				owner.delStatus("janktank_withdrawl")
 				var/mob/M = owner
-				M.add_stun_resist_mod("janktank", 40)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "janktank", 40)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "janktank", 40)
 			else
 				owner.delStatus("janktank")
 
@@ -1221,7 +1317,8 @@
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
-				M.remove_stun_resist_mod("janktank")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "janktank")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "janktank")
 				owner.changeStatus("janktank_withdrawl", 10 MINUTES)
 
 		onUpdate(timePassed)
@@ -1288,14 +1385,14 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("mutiny_max", max_stam)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen", regen_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "mutiny_regen", regen_stam)
 
 		onRemove()
 			. = ..()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("mutiny_max")
-			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "mutiny_regen")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "mutiny_regen")
 
 		getTooltip()
 			. = "Your max health, max stamina, and stamina regen have been increased because of your bossy attitude."
@@ -1322,17 +1419,38 @@
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("revspirit_max", max_stam)
-			APPLY_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen", regen_stam)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "revspirit_regen", regen_stam)
 
 		onRemove()
 			. = ..()
 			H.max_health -= max_health
 			health_update_queue |= H
 			H.remove_stam_mod_max("revspirit_max")
-			REMOVE_MOB_PROPERTY(H, PROP_STAMINA_REGEN_BONUS, "revspirit_regen")
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "revspirit_regen")
 
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
+
+	newcause
+		id = "newcause"
+		name = "Newfound cause"
+		desc = "Your newfound purpose in life has encouraged you to toughen up a little!"
+		icon_state = "revspirit"
+		unique = 1
+		maxDuration = 5 SECONDS
+		onAdd(optional = 8)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 	patho_oxy_speed
 		id = "patho_oxy_speed"
@@ -1482,6 +1600,29 @@
 	duration = 0.5 SECONDS
 	visible = 0
 
+/datum/statusEffect/cornicened
+	id = "cornicened"
+	name = "Cornicened"
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	icon_state = null
+	visible = FALSE
+	var/stacks = 1
+	maxDuration = 2 SECONDS
+
+	onChange(optional)
+		. = ..()
+
+		stacks++
+		if(stacks >= 3)
+			owner.setStatus("cornicened2")
+
+/datum/statusEffect/cornicened2
+	id = "cornicened2"
+	name = "Cornicened2"
+	visible = FALSE
+	desc = "A Cornicen spreader bolt has put you off-balance! Also you should never be seeing this!"
+	maxDuration = 2 SECONDS
+
 /datum/statusEffect/shivering
 	id = "shivering"
 	name = "Shivering"
@@ -1564,30 +1705,23 @@
 				tox = 0.05
 			if(3)
 				puke_prob = 0.5
-				tox = 0.20
+				tox = 0.2
 			if(4)
 				puke_prob = 1
 				tox = 0.45
 			if(5)
 				puke_prob = 2
-				tox = 0.70
+				tox = 0.7
 		if(ismobcritter(L))
 			var/mob/living/critter/critter = L
 			if(critter.ghost_spawned)
-				tox = 0.00
+				tox = 0
 				weighted_average = 0
 		L.take_toxin_damage(tox * mult)
 		if(weighted_average > 4)
 			weighted_average = 0
-			#ifdef CREATE_PATHOGENS
-			if(!isdead(L))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				wrap_pathogen(L.reagents, P, 10)
-			#endif
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over \himself.</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			L.vomit()
 		return ..(timePassed)
 
@@ -1615,10 +1749,6 @@
 				. += " Your ghostly essence makes you immune to its poison."
 			else
 				. += " You will take toxic damage."
-				#ifdef CREATE_PATHOGENS
-				if(how_miasma > 4)
-					. += " You might get sick."
-				#endif
 
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"
@@ -1629,14 +1759,7 @@
 
 	onAdd(optional)
 		. = ..()
-		var/color2 = list(
-			0.5, 0, 0,
-			0, 0.5, 0,
-			0, 0, 0.5,
-			0.5, 0.25, 0.0625)
-		var/oldcol = owner.color
-		owner.color = color2
-		owner.onVarChanged("color", oldcol, color2)
+		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
 
@@ -1678,7 +1801,7 @@
 		if (!ismob(owner)) return
 		var/mob/M = owner
 		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				M.delStatus("magnetized")
 			return
 		if (optional)
@@ -1689,7 +1812,7 @@
 
 	onRemove()
 		. = ..()
-		if (!ismob(owner)) return
+		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
 
@@ -1888,6 +2011,13 @@
 			return
 		return ..(timePassed)
 
+/datum/statusEffect/muted
+	id = "muted"
+	name = "Muted"
+	icon_state = "muted"
+	desc = "You don't have the strength to say anything louder than a whisper!"
+	maxDuration = 30 SECONDS
+
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
 	id = "drowsy"
@@ -1923,3 +2053,221 @@
 			M.changeStatus("paralysis", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
+
+/datum/statusEffect/poisoned
+	id = "poisoned"
+	name = "Poisoned"
+	desc = "Something <i>really</i> didn't sit well with you."
+	icon_state = "poisoned"
+	movement_modifier = /datum/movement_modifier/poisoned //bit less punishing than regular slowed
+
+	onAdd()
+		..()
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+
+	onRemove()
+		..()
+		UnregisterSignal(owner, COMSIG_MOB_VOMIT)
+
+	onUpdate(var/timePassed)
+		var/mob/living/L = owner
+		var/tox = 0
+		var/puke_prob = 0
+		switch(timePassed)
+			if(0 to 20 SECONDS)
+				tox = 0.1
+				puke_prob = 0.5
+			if(20 SECONDS to 60 SECONDS)
+				tox = 0.4
+				puke_prob = 1
+			if(60 SECONDS to INFINITY)
+				tox = 1
+				puke_prob = 2
+		L.take_toxin_damage(tox)
+		if(prob(2))
+			L.emote(pick("groan", "moan", "shudder"))
+		if(prob(2))
+			L.change_eye_blurry(rand(5,10))
+		if(prob(puke_prob))
+			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
+			L.vomit()
+
+	//firstly: sorry
+	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
+	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
+		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
+		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
+
+///APC status that locks lighting circuit offline
+/datum/statusEffect/lights_out
+	id = "lightsout"
+	visible = 0
+	var/oldstate
+
+	onAdd(optional)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			oldstate = APC.lighting
+			APC.lighting = 0
+			APC.UpdateIcon()
+			APC.update()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC) && APC.lighting != 0)
+			APC.lighting = 0
+			APC.UpdateIcon()
+			APC.update()
+
+
+	onRemove()
+		. = ..()
+		var/obj/machinery/power/apc/APC = owner
+		if(istype(APC))
+			APC.lighting = oldstate
+			APC.UpdateIcon()
+			APC.update()
+
+/datum/statusEffect/filthy
+	id = "filthy"
+	name = "Filthy"
+	desc = "You're absolutely filthy."
+	icon_state = "filthy"
+	maxDuration = 3 MINUTES
+	var/mob/living/carbon/human/H
+
+	onAdd(optional)
+		. = ..()
+		if(ishuman(owner))
+			H = owner
+
+	onUpdate(timePassed)
+		. = ..()
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+			H.delStatus("filthy")
+
+
+	onRemove()
+		. = ..()
+		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
+			H.setStatus("rancid", null)
+
+/datum/statusEffect/rancid
+	id = "rancid"
+	name = "Rancid"
+	desc = "You smell like spoiled milk."
+	icon_state = "rancid"
+
+	onAdd(optional)
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder.AddEffect("sims_stinky")
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			M.bioHolder.RemoveEffect("sims_stinky")
+
+/datum/statusEffect/flock_absorb
+	id = "flock_absorbing"
+	name = "Absorbing"
+	desc = "Please call 1800-CODER"
+	visible = FALSE
+	unique = TRUE
+
+	onRemove()
+		var/mob/living/critter/flock/drone/drone = owner
+		if (istype(drone) && drone.absorber.item)
+			drone.changeStatus("flock_absorbing", drone.absorber.item.health/drone.health_absorb_rate SECONDS, drone.absorber.item)
+		..()
+
+	onUpdate(timePassed)
+		var/mob/living/critter/flock/drone/drone = owner
+		if (!istype(drone) || !drone.absorber.item)
+			owner.delStatus(src.id)
+			return
+		drone.absorber.tick(timePassed/10)
+
+/datum/statusEffect/gnesis_glow
+	id = "gnesis_glow"
+	name = "Gnesis glow"
+	desc = "The gnesis in your veins envelops you in a strange teal glow."
+	visible = FALSE
+	unique = TRUE
+
+	onAdd()
+		. = ..()
+		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
+		owner.simple_light.alpha = 0
+		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		animate(owner.simple_light, time = src.duration/2, alpha = 255)
+		animate(time = src.duration/2, alpha = 0)
+
+	onRemove()
+		owner.remove_simple_light("gnesis_glow")
+		..()
+
+/datum/statusEffect/spry
+	id = "spry"
+	name = "Spry"
+	desc = "You have a spring in your step."
+	icon_state = "spry"
+	maxDuration = 3 MINUTES
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/spry
+
+/datum/statusEffect/mindhack
+	id = "mindhack"
+	name = "Mindhack"
+	desc = "You've been mindhacked."
+	icon_state = "mindhack"
+	unique = TRUE
+
+	onAdd(mob/hacker, custom_orders)
+		. = ..()
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
+		var/mob/M = owner
+		if (M.mind && ticker.mode)
+			if (!M.mind.special_role)
+				M.mind.special_role = ROLE_MINDHACK
+			if (!(M.mind in ticker.mode.Agimmicks))
+				ticker.mode.Agimmicks += M.mind
+			M.mind.master = hacker.ckey
+
+		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
+		M.show_antag_popup("mindhack")
+
+		if (custom_orders)
+			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (M.mind?.special_role == ROLE_MINDHACK)
+			remove_mindhack_status(M, "mindhack", "expired")
+		else if (M.mind?.master)
+			remove_mindhack_status(M, "otherhack", "expired")
+
+/datum/statusEffect/defib_charged
+	id = "defib_charged"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-on")
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-off")
+		if(duration <= 0)//timed out
+			playsound(owner, "sparks", 50, 1, -10)

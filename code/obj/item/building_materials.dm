@@ -40,7 +40,7 @@ MATERIAL
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -48,13 +48,14 @@ MATERIAL
 	stamina_damage = 42
 	stamina_cost = 23
 	stamina_crit_chance = 10
+	material_amt = 0.1
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
 		BLOCK_SETUP(BLOCK_ALL)
@@ -116,10 +117,10 @@ MATERIAL
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(src.loc != user)
+			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
 				return
 			splitnum = round(clamp(splitnum, 0, src.amount))
 			if(amount == 0)
@@ -133,6 +134,13 @@ MATERIAL
 			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
+
+	split_stack(toRemove)
+		. = ..()
+		if(src.reinforcement)
+			var/obj/item/sheet/S = .
+			S.set_reinforcement(src.reinforcement)
+			. = S
 
 	attackby(obj/item/W, mob/user as mob)
 		if (istype(W, /obj/item/sheet))
@@ -186,11 +194,11 @@ MATERIAL
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
 				var/makesheets = min(min(R.amount,src.amount),50)
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
-				if (sheetsinput < 1)
+				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
 					return
 				sheetsinput = min(sheetsinput,makesheets)
 
-				if (!R) //Wire note: Fix for Cannot read null.material (the rods are getting destroyed during the input())
+				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
 
 				var/obj/item/sheet/S = new /obj/item/sheet(get_turf(user))
@@ -329,8 +337,11 @@ MATERIAL
 				if("rods")
 					var/makerods = min(src.amount,25)
 					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
-					if (rodsinput < 1) return
+					if (rodsinput < 1 || !isnum_safe(rodsinput)) return
 					rodsinput = min(rodsinput,makerods)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
 
 					a_type = /obj/item/rods
 					a_amount = rodsinput * 2
@@ -342,8 +353,11 @@ MATERIAL
 				if("fl_tiles")
 					var/maketiles = min(src.amount,20)
 					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
-					if (tileinput < 1) return
+					if (tileinput < 1 || !isnum_safe(tileinput)) return
 					tileinput = min(tileinput,maketiles)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
 
 					a_type = /obj/item/tile
 					a_amount = tileinput * 4
@@ -574,8 +588,12 @@ MATERIAL
 				if("remetal")
 					// what the fuck is this
 					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
-					if (input < 1) return
+					if (input < 1 || !isnum_safe(input)) return
 					input = min(input,src.amount)
+
+					if (!in_interact_range(src, usr)) //no walking away
+						return
+
 					var/obj/item/sheet/C = new /obj/item/sheet(usr.loc)
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					if(src.material)
@@ -650,8 +668,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -661,10 +679,11 @@ MATERIAL
 	stamina_crit_chance = 30
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	material_amt = 0.05
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -704,9 +723,13 @@ MATERIAL
 		. = ..()
 		. += "There are [src.amount] rod\s on this stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
+
+			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
+				return
+
 			var/obj/item/rods/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
 				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
@@ -717,7 +740,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(src.amount < 2)
 				boutput(user, "<span class='alert'>You need at least two rods to make a material sheet.</span>")
@@ -737,6 +760,10 @@ MATERIAL
 				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets do you want to make?","Welding",1) as num
 				makemetal = round(src.amount / 2) // could have changed during input()
+
+				if (!in_interact_range(src, user) || !isnum_safe(weldinput)) //no walking away
+					return
+
 				if (weldinput < 1) return
 				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
@@ -794,7 +821,7 @@ MATERIAL
 					G.health = G.health_max
 					G.set_density(1)
 					G.ruined = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
 					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
@@ -808,12 +835,13 @@ MATERIAL
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
 			var/turf/T = user.loc
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					src.change_stack_amount(-2)
-					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					G.add_fingerprint(user)
 		src.add_fingerprint(user)
 		return
 
@@ -830,12 +858,12 @@ MATERIAL
 
 	New()
 		..()
-		SPAWN_DBG(0) //wait for the head to be added
+		SPAWN(0) //wait for the head to be added
 			update()
 
-	attack_hand(mob/user as mob)
-		if(heads.len)
-			var/obj/item/organ/head/head = heads[heads.len]
+	attack_hand(mob/user)
+		if(length(heads))
+			var/obj/item/organ/head/head = heads[length(heads)]
 
 			user.visible_message("<span class='alert'><B>[user.name] pulls [head.name] off of the spike!</B></span>")
 			head.set_loc(user.loc)
@@ -845,7 +873,7 @@ MATERIAL
 			head.pixel_y = rand(-8,8)
 			heads -= head
 
-			if(!heads.len)
+			if(!length(heads))
 				head_offset = 0
 			else
 				head_offset++
@@ -854,7 +882,7 @@ MATERIAL
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!src.anchored && !istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/unsimulated/floor))
 				boutput(user, "<span class='alert'>There's nothing to weld that to.</span>")
@@ -874,7 +902,7 @@ MATERIAL
 				boutput(user, "<span class='alert'>There isn't room on that spike for another head.</span>")
 				return
 
-			if(!heads.len) user.visible_message("<span class='alert'><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
+			if(!length(heads)) user.visible_message("<span class='alert'><B>[user.name] impales a [W.name] on the [src.name]!</B></span>")
 			else user.visible_message("<span class='alert'><B>[user.name] adds a [W.name] to the spike!</B></span>")
 
 			if(head_offset > 0) head_offset--
@@ -890,10 +918,10 @@ MATERIAL
 	proc/update()
 		src.overlays = null
 
-		if((heads.len < 3 && head_offset > 0) || heads.len == 0)
+		if((length(heads) < 3 && head_offset > 0) || length(heads) == 0)
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_blood")
 
-		switch(heads.len) //fuck it
+		switch(length(heads)) //fuck it
 			if(0)
 				src.name = "bloody spike"
 				src.desc = "A bloody spike."
@@ -907,7 +935,7 @@ MATERIAL
 				src.name = "heads on a spike"
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
-				src.desc = "The heads of [head1.donor] and [head2.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original] and [head2.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor] and [heads[2]:donor] impaled on a spike."*/
 			if(3)
@@ -915,13 +943,13 @@ MATERIAL
 				var/obj/item/organ/head/head1 = heads[1]
 				var/obj/item/organ/head/head2 = heads[2]
 				var/obj/item/organ/head/head3 = heads[3]
-				src.desc = "The heads of [head1.donor], [head2.donor] and [head3.donor] impaled on a spike."
+				src.desc = "The heads of [head1.donor_original], [head2.donor_original] and [head3.donor_original] impaled on a spike."
 				/*	This shit doesn't work ugh
 				src.desc = "The heads of [heads[1]:donor], [heads[2]:donor] and [heads[3]:donor] impaled on a spike."*/
 
 
-		if(heads.len > 0)
-			var/pixely = 8 - 8*head_offset - length(8*heads)
+		if(length(heads) > 0)
+			var/pixely = 8 - 8*head_offset - 8*length(heads)
 			for(var/obj/item/organ/head/H in heads)
 				H.pixel_x = 0
 				H.pixel_y = pixely
@@ -934,11 +962,9 @@ MATERIAL
 		if(anchored)
 			src.overlays += image('icons/obj/metal.dmi',"head_spike_weld")
 
-		return
-
 
 	proc/has_space()
-		if(heads.len < 3) return 1
+		if(length(heads) < 3) return 1
 
 		return 0
 
@@ -955,7 +981,7 @@ MATERIAL
 		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
 		if(prob(40)) user.emote("scream")
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.visible_message("<span class='alert'><b>[user] tears [his_or_her(user)] body away from the spike, leaving [his_or_her(user)] head behind!</b></span>")
 			var/obj/head = user.organHolder.drop_organ("head")
 			head.set_loc(src)
@@ -964,7 +990,7 @@ MATERIAL
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
 			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 
@@ -987,24 +1013,26 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile_5"
 	item_state = "tile"
+	health = 2
 	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20
-	force = 6.0
-	throwforce = 5.0
+	force = 6
+	throwforce = 5
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 15
 	stamina_crit_chance = 15
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
+	material_amt = 0.025
 
 	New(make_amount = 0)
 		..()
 		src.pixel_x = rand(0, 14)
 		src.pixel_y = rand(0, 14)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			update_stack_appearance()
 			src.inventory_counter?.update_number(amount)
 		return
@@ -1041,7 +1069,7 @@ MATERIAL
 		if (dist <= 3)
 			. += "<br>There are [src.amount] tile[s_es(src.amount)] left on the stack."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -1081,20 +1109,21 @@ MATERIAL
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
+		var/inMagtractor = istype(W.loc, /obj/item/magtractor)
 		var/success = stack_item(W)
 		if (!success)
 			boutput(user, "<span class='alert'>You can't put any more tiles in this stack!</span>")
 			return
-		if(!user.is_in_hands(src))
+		if(!(user.is_in_hands(src) || inMagtractor))
 			user.put_in_hand(src)
-		if(isrobot(user))
+		if(issilicon(user))
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
@@ -1126,7 +1155,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
@@ -1138,6 +1167,15 @@ MATERIAL
 	New()
 		..()
 		var/datum/material/M = getMaterial("steel")
+		src.setMaterial(M)
+
+/obj/item/tile/cardboard // for drones
+	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	force = 0
+	New()
+		..()
+		var/datum/material/M = getMaterial("cardboard")
+
 		src.setMaterial(M)
 
 /obj/item/sheet/electrum
@@ -1169,3 +1207,5 @@ MATERIAL
 	amount = 50
 /obj/item/tile/steel/fullstack
 	amount = 80
+/obj/item/tile/cardboard/fullstack
+	amount = 100

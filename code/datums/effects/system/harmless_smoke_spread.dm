@@ -11,8 +11,9 @@
 	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
+	var/color
 
-/datum/effects/system/harmless_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct)
+/datum/effects/system/harmless_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct, color)
 	if(n > 10)
 		n = 10
 	number = n
@@ -23,6 +24,8 @@
 		location = get_turf(loca)
 	if(direct)
 		direction = direct
+	if(color)
+		src.color = color
 
 
 /datum/effects/system/harmless_smoke_spread/proc/attach(atom/atom)
@@ -33,11 +36,13 @@
 	for(i=0, i<src.number, i++)
 		if(src.total_smoke > 20)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
 			var/obj/effects/harmless_smoke/smoke = new /obj/effects/harmless_smoke
 			smoke.set_loc(src.location)
+			if(color)
+				smoke.color = color
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)

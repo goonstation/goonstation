@@ -4,8 +4,8 @@
 		return
 
 	if(src.tempmin)
-		logTheThing("admin", usr, player, "tried to access the notes of [constructTarget(player,"admin")]")
-		logTheThing("diary", usr, player, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the notes of [constructTarget(player,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the notes of [constructTarget(player,"diary")]", "admin")
 		alert("You need to be an actual admin to view player notes.")
 		return
 
@@ -27,7 +27,7 @@
 	var/datum/http_response/response = request.into_response()
 
 	if (response.errored || !response.body)
-		logTheThing("debug", null, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
+		logTheThing(LOG_DEBUG, null, "viewPlayerNotes: Failed to fetch notes of player: [player].")
 		return
 
 	var/content = response.body
@@ -37,7 +37,15 @@
 	var/regex/R = new("!!ID(\\d+)", "g")
 	content = R.Replace(content, "[deletelinkpre]$1[deletelinkpost]")
 
-	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><A href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A><br><HR>"
+	var/datum/player/pdatum = make_player(player)
+	pdatum.cloud_fetch()
+	var/noticelink = ""
+	if (pdatum.cloud_available() && pdatum.cloud_get("login_notice"))
+		noticelink = {" style="color: red; font-weight: bold;">Login Notice Set"}
+	else
+		noticelink = {">Add Login Notice"}
+
+	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a><hr>"
 	dat += replacetext(content, "\n", "<br>")
 	usr.Browse(dat, "window=notesp;size=875x400;title=Notes for [player]")
 

@@ -2,7 +2,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "dsay"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 	if (!src.mob)
 		return
 	if (src.ismuted())
@@ -10,8 +10,8 @@
 		return
 
 	msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "DSAY: [msg]")
-	logTheThing("diary", src, null, "DSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "DSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "DSAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -29,6 +29,8 @@
 		if (M.client && M.client.deadchatoff)
 			continue
 		if (istype(M,/mob/dead/target_observer/hivemind_observer))
+			continue
+		if (istype(M,/mob/dead/target_observer/slasher_ghost))
 			continue
 
 		//admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above

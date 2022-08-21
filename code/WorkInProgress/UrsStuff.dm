@@ -1,11 +1,15 @@
 // Dummies so they can be put on the public maps
 /obj/submachine/chicken_incubator
+	name = "\improper Chicken Egg Incubator"
 
 /obj/submachine/ranch_feed_grinder
+	name = "feed grinder"
 
 /obj/chicken_nesting_box
+	name = "nesting box"
 
 /obj/item/chicken_carrier
+	name = "chicken carrier"
 
 /mob/living/critter/small_animal/ranch_base/chicken
 
@@ -41,5 +45,6 @@
 /obj/decal/fakeobjects/dreambeach/mercury
 
 /obj/item/storage/box/knitting
+	name = "\improper Knitting Supplies"
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled

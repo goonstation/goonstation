@@ -1,14 +1,20 @@
 /mob/dead
 	stat = 2
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	///Our corpse, if one exists
+	var/mob/living/corpse
 
 // dead
+/mob/dead/New()
+	..()
+	src.flags |= UNCRUSHABLE
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
 	return
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/Cross(atom/movable/mover)
 	return 1
 
 /mob/dead/say_understands()
@@ -22,7 +28,7 @@
 	if (targeting_ability)
 		..()
 	else
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			src.set_dir(get_dir(src, target))
 		src.examine_verb(target)
 
@@ -44,7 +50,7 @@
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
-	logTheThing("diary", src, null, "(GHOST): [message]", "say")
+	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
@@ -144,7 +150,7 @@
 				message = "<B>[src]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
 				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
 #ifdef HALLOWEEN
 				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
@@ -168,7 +174,7 @@
 			GH.change_points(5)
 
 #endif
-		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
+		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
 		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0

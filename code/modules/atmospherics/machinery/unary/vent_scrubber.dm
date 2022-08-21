@@ -9,7 +9,6 @@
 
 	var/id = null
 	var/frequency = "1439"
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
@@ -18,22 +17,15 @@
 	#undef _DEF_SCRUBBER_VAR
 
 	var/volume_rate = 120
-//
+
+	New()
+		..()
+		if(frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
-		update_icon()
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, "[frequency]")
-		frequency = new_frequency
-		if(frequency)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
+		UpdateIcon()
 
 	update_icon()
 		if(on&&node)
@@ -132,7 +124,7 @@
 			if("set_scrubbing")
 				scrubbing = 1
 
-		update_icon()
+		UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
 	scrub_oxygen = 0

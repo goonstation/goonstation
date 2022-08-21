@@ -2,9 +2,9 @@
 	name = "smoke"
 	icon_state = "smoke"
 	opacity = 1
-	anchored = 0.0
+	anchored = 0
 	mouse_opacity = 0
-	var/amount = 6.0
+	var/amount = 6
 	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
@@ -13,12 +13,12 @@
 /*
 /obj/effects/harmless_smoke/New()
 	..()
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		qdel(src)
 	return
 */
 /obj/effects/harmless_smoke/proc/kill(var/time)
-	SPAWN_DBG(time)
+	SPAWN(time)
 		qdel(src)
 
 

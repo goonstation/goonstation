@@ -12,14 +12,14 @@
 	icon_state = "left"
 	var/base_state = "left"
 	visible = 0
-	flags = ON_BORDER
+	flags = FPRINT | ON_BORDER
 	health = 500
 	health_max = 500
 	opacity = 0
 	brainloss_stumble = 1
 	autoclose = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT | USE_CANPASS
-	object_flags = CAN_REPROGRAM_ACCESS
+	event_handler_flags = USE_FLUID_ENTER
+	object_flags = CAN_REPROGRAM_ACCESS | BOTS_DIRBLOCK | HAS_DIRECTIONAL_BLOCKING
 
 	New()
 		..()
@@ -29,14 +29,17 @@
 			src.base_state = src.icon_state
 		return
 
-	attack_hand(mob/user as mob)
+	xmasify()
+		return
+
+	attack_hand(mob/user)
 		if (issilicon(user) && src.hardened == 1)
 			user.show_text("You cannot control this door.", "red")
 			return
 		else
 			return src.Attackby(null, user)
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
 			return
 		if (src.isblocked() == 1)
@@ -74,7 +77,7 @@
 		if (prob(40))
 			if (src.secondsElectrified == 0)
 				src.secondsElectrified = -1
-				SPAWN_DBG(30 SECONDS)
+				SPAWN(30 SECONDS)
 					if (src)
 						src.secondsElectrified = 0
 		return
@@ -82,7 +85,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (src.density && src.cant_emag != 1 && src.isblocked() != 1)
 			flick(text("[]spark", src.base_state), src)
-			SPAWN_DBG(0.6 SECONDS)
+			SPAWN(0.6 SECONDS)
 				if (src)
 					src.open(1)
 			return 1
@@ -97,13 +100,13 @@
 		close()
 		return 1
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
 				return 1
 
-		if (get_dir(loc, target) == dir) // Check for appropriate border.
+		if (get_dir(loc, mover) & dir) // Check for appropriate border.
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
@@ -115,23 +118,31 @@
 		else
 			return 1
 
-	CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
+	gas_cross(turf/target)
+		if(get_dir(loc, target) & dir)
+			return !density
+		else
+			return TRUE
+
+	Uncross(atom/movable/mover, do_bump = TRUE)
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (P.proj_data.window_pass)
-				return 1
-
-		if (get_dir(loc, target) == dir)
+				return TRUE
+		if (get_dir(loc, mover.movement_newloc) & dir)
 			if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 				if (ismob(mover) && mover:pulling && src.bumpopen(mover))
 					// If they're pulling something and the door would open anyway,
 					// just let the door open instead.
-					return 0
+					. = FALSE
+					UNCROSS_BUMP_CHECK(mover)
+					return
 				animate_door_squeeze(mover)
-				return 1 // they can pass through a closed door
-			return !density
+				return TRUE // they can pass through a closed door
+			. = !density
 		else
-			return 1
+			. = TRUE
+		UNCROSS_BUMP_CHECK(mover)
 
 	update_nearby_tiles(need_rebuild)
 		if (!air_master) return 0
@@ -171,7 +182,7 @@
 		playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
 		src.icon_state = text("[]open", src.base_state)
 
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if (src)
 				src.set_density(0)
 				if (ignore_light_or_cam_opacity)
@@ -184,7 +195,7 @@
 				else
 					src.operating = 0
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			if (src && !src.operating && !src.density && src.autoclose == 1)
 				src.close()
 
@@ -209,7 +220,7 @@
 				src.RL_SetOpacity(1)
 		src.update_nearby_tiles()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src)
 				src.operating = 0
 
@@ -241,7 +252,7 @@
 			src.autoclose = 0
 		else
 			src.autoclose = 1
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				if (src && !src.density)
 					src.close()
 
@@ -255,12 +266,20 @@
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "leftsecure"
 	base_state = "leftsecure"
-	var/id = 1.0
+	var/id = 1
 	req_access_txt = "2"
 	autoclose = 0 //brig doors close only when the cell timer starts
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		..()
+		STOP_TRACKING
+
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/flasher (flasher.dm)

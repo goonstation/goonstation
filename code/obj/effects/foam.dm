@@ -11,7 +11,7 @@
 	layer = OBJ_LAYER + 0.9
 	plane = PLANE_NOSHADOW_BELOW
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED | USE_CANPASS
+
 	var/foamcolor
 	var/amount = 3
 	var/expand = 1
@@ -26,8 +26,7 @@
 
 */
 
-/obj/effects/foam/proc/update_icon()
-
+/obj/effects/foam/update_icon()
 	src.overlays.len = 0
 	icon_state = metal ? "mfoam" : "foam"
 	if(src.reagents && !metal)
@@ -46,20 +45,20 @@
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
 	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
 
-	update_icon()
+	UpdateIcon()
 	if(metal)
 		if(istype(loc, /turf/space))
 			loc:ReplaceWithMetalFoam(metal)
-	SPAWN_DBG(3 + metal*3)
+	SPAWN(3 + metal*3)
 		process()
-	SPAWN_DBG(12 SECONDS)
+	SPAWN(12 SECONDS)
 		expand = 0 // stop expanding
 		sleep(3 SECONDS)
 
 		if(metal)
 			var/obj/foamedmetal/M = new(src.loc)
 			M.metal = metal
-			M.updateicon()
+			M.UpdateIcon()
 
 		if(metal)
 			flick("mfoam-disolve", src)
@@ -81,7 +80,7 @@
 				continue
 			if(isliving(A))
 				var/mob/living/L = A
-				logTheThing("combat", L, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, L, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			if (reagents)
 				reagents.reaction(A, TOUCH, 5, 0)
 		if (reagents)
@@ -102,6 +101,13 @@
 				continue
 
 			if(T.loc:sanctuary || !T.Enter(src))
+				continue
+			var/skip = FALSE
+			for(var/atom/movable/AM in T)
+				if(!AM.Cross(src))
+					skip = TRUE
+					break
+			if(skip)
 				continue
 
 			//if(istype(T, /turf/space))
@@ -134,7 +140,7 @@
 					if(current_reagent)
 						F.reagents.add_reagent(reagent_id,min(current_reagent.volume, 3), current_reagent.data, src.reagents.total_temperature)
 
-				F.update_icon()
+				F.UpdateIcon()
 
 		sleep(1.5 SECONDS)
 
@@ -144,12 +150,13 @@
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("foam-disolve", src)
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			die()
 			expand = 0
 
 
-/obj/effects/foam/HasEntered(var/atom/movable/AM)
+/obj/effects/foam/Crossed(atom/movable/AM)
+	..()
 	if (metal) //If we've transferred our contents then there's another foam tile that can do it thing.
 		return
 
@@ -157,12 +164,31 @@
 		var/mob/living/carbon/human/M = AM
 
 		if (M.slip())
-			logTheThing("combat", M, null, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 			reagents.reaction(M, TOUCH, 5)
 
 			M.show_text("You slip on the foam!", "red")
 
-/obj/effects/foam/CanPass(atom/movable/mover, turf/target)
-	if (src.metal && !mover)
-		return 0 // completely opaque to air
-	return 1
+
+/obj/effects/foam/gas_cross(turf/target)
+	if(src.metal)
+		return 0 //opaque to air
+
+//This should probably be reworked to be a subtype of /obj/effects/foam
+/obj/fire_foam
+	name = "Fire fighting foam"
+	desc = "It's foam."
+	opacity = 0
+	density = 0
+	anchored = 1
+	icon = 'icons/effects/fire.dmi'
+	icon_state = "foam"
+	animate_movement = SLIDE_STEPS
+	mouse_opacity = 0
+	var/my_dir = null
+
+	Move(NewLoc,Dir=0)
+		. = ..(NewLoc,Dir)
+		if(isnull(my_dir))
+			my_dir = pick(alldirs)
+		src.set_dir(my_dir)

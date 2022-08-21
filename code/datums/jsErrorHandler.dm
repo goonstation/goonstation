@@ -73,7 +73,7 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	set name = "Delete JS Logfile"
 	set desc = "Delete a logfile for JS error reporting. Be sure you want to do this!"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (!fileName) return
 
@@ -83,8 +83,8 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 		out(src, "<span style='color: blue;'>[e]</span>")
 		return
 
-	logTheThing("admin", src, null, "deleted the '[fileName]' JS logfile")
-	logTheThing("diary", src, null, "deleted the '[fileName]' JS logfile", "admin")
+	logTheThing(LOG_ADMIN, src, "deleted the '[fileName]' JS logfile")
+	logTheThing(LOG_DIARY, src, "deleted the '[fileName]' JS logfile", "admin")
 	message_admins("[key_name(src)] deleted the '[fileName]' JS logfile")
 
 /client/proc/deleteAllJsLogFiles()
@@ -92,7 +92,7 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	set name = "Delete All JS Logfiles"
 	set desc = "Delete all logfiles for JS error reporting. Be extra sure you want to do this!"
 	set popup_menu = 0
-	admin_only
+	ADMIN_ONLY
 
 	if (alert("Are you really sure you want to delete every single JS logfile?", "No", "Yes") == "No")
 		return
@@ -100,6 +100,6 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	var/list/summary = debugFileOutput.clearAll()
 	var/friendlySummary = summary.Join(", ")
 
-	logTheThing("admin", src, null, "deleted every JS logfile! ([friendlySummary])")
-	logTheThing("diary", src, null, "deleted every JS logfile! ([friendlySummary])", "admin")
+	logTheThing(LOG_ADMIN, src, "deleted every JS logfile! ([friendlySummary])")
+	logTheThing(LOG_DIARY, src, "deleted every JS logfile! ([friendlySummary])", "admin")
 	message_admins("[key_name(src)] deleted every JS logfile! ([friendlySummary])")

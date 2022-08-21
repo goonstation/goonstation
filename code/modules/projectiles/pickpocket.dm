@@ -12,7 +12,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "pickpocket"
 //file location for the sound you want it to play
@@ -50,7 +50,10 @@
 				if ("l_leg")
 					stolenItem = M.l_store ? M.l_store : M.r_store ? M.r_store : null
 			if (stolenItem) // Found a thing to steal, hurrah
-				logTheThing("combat", linkedGun, null, " successfully steals \a [stolenItem]")
+				if (stolenItem.cant_other_remove)
+					M.throw_at(linkedGun, 3, 0.5)
+					return
+				logTheThing(LOG_COMBAT, linkedGun, " successfully steals \a [stolenItem]")
 				M.u_equip(stolenItem)
 				linkedGun.heldItem = stolenItem
 				stolenItem.set_loc(linkedGun)
@@ -62,7 +65,7 @@
 		if (linkedGun.heldItem) // Stupidity check for stripping item out of gun while projectile was in flight
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				logTheThing("combat", linkedGun, M, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, linkedGun, " attempts to plant [linkedGun.heldItem] on [constructTarget(M,"combat")]")
 				switch (targetZone)
 					if ("chest")
 						if (M.wear_id || !M.equip_if_possible(linkedGun.heldItem, M.slot_wear_id)) // If already wearing ID or attempt to equip failed
@@ -98,10 +101,10 @@
 			else
 				var/turf/T = get_turf(hit)
 				if(isrestrictedz(T.z) || istype(T, /turf/unsimulated))
-					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [showCoords(T.x, T.y, T.z)].")
+					message_admins("[key_name(src.firer)] is a nerd and tried to fire a pickpocket gun on an unsimulated turf at [log_loc(T)].")
 					T.visible_message("The [linkedGun.name] jams!")
 					return
-				logTheThing("combat", linkedGun, null, " plants [linkedGun.heldItem] at [showCoords(hit.x, hit.y, hit.z)]")
+				logTheThing(LOG_COMBAT, linkedGun, " plants [linkedGun.heldItem] at [log_loc(hit)]")
 				linkedGun.heldItem.set_loc(get_turf(hit))
 			linkedGun.heldItem = null // One wayor another it's somewhere else now
 

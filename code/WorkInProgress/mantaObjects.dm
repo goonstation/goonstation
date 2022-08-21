@@ -66,7 +66,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	New()
 		mantaLever = src
-		updateIcon()
+		UpdateIcon()
 		..()
 //This crap is here so nothing can destroy it.
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
@@ -82,7 +82,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	damage_slashing()
 	damage_blunt()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/diff = world.timeofday - lastuse
 		if(diff < 0) diff += 864000 //Wrapping protection.
 
@@ -99,16 +99,16 @@ var/obj/manta_speed_lever/mantaLever = null
 			if(on)
 				user.show_text("<span class='notice'><b>You turn off the propellers.</b></span>")
 				on = 0
-				updateIcon()
-				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer")
+				UpdateIcon()
+				command_alert("Attention, NSS Manta is slowing down to a halt. Shutting down propellers.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			else
 				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
 				on = 1
 				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
 				sleep(7 SECONDS)
-				updateIcon()
-				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer")
+				UpdateIcon()
+				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
 				mantaSetMove(on)
 			return
 		else
@@ -118,14 +118,14 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istype(W, /obj/item/card/id))
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
-				updateIcon()
+				UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
@@ -133,7 +133,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 		return
 
-	proc/updateIcon()
+	update_icon()
 		if (locked == 1 && on == 1)
 			icon_state = "lever1-locked"
 		if (locked == 1 && on == 0)
@@ -181,7 +181,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/mantapropulsion
 	name = "propeller"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "sea_propulsion"
 	var/stateOn = ""
 	var/stateOff = ""
@@ -215,7 +215,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(repairstate)
 			if (0)
 				if (important == 1)
@@ -259,10 +259,10 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
@@ -270,7 +270,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if(health == 0)
 			setOn(0)
 			repairstate = 1
@@ -324,7 +324,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/machinery/power/seaheater
 	name = "heater"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 	icon_state = "heater"
 	anchored = 2
 	density = 1
@@ -388,13 +388,13 @@ var/obj/manta_speed_lever/mantaLever = null
 	New()
 		START_TRACKING
 		. = ..()
-		update_icon()
+		UpdateIcon()
 
 	disposing()
 		STOP_TRACKING
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isAI(user))
 			boutput(user, "<span class='alert'>You'd touch the door, if only you had hands.</span>")
 			return
@@ -402,14 +402,14 @@ var/obj/manta_speed_lever/mantaLever = null
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		if (!src.open)
 			src.open = 1
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You open junction box's outer door.</b></span>")
 		else
 			src.open = 0
-			update_icon()
+			UpdateIcon()
 			user.show_text("<span class='notice'><b>You close junction box's outer door.</b></span>")
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (broken == 1 && open == 1)
 			user.shock(src, rand(5000, 15000), "chest", 1)
 		switch(repairstate)
@@ -448,7 +448,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		src.broken = 0
 		src.repairstate = 0
 
-	proc/update_icon()
+	update_icon()
 		if (src.open == 1)
 			src.icon_state = src.iconopen
 
@@ -510,17 +510,17 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)
@@ -530,7 +530,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			return
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -555,17 +555,17 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				change_health(-maxhealth)
 				return
-			if(2.0)
+			if(2)
 				change_health(-50)
 				return
 			if(3 to INFINITY)
 				change_health(-35)
 				return
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		user.lastattacked = src
 		..()
 		if (broken == 0)
@@ -600,7 +600,7 @@ var/obj/manta_speed_lever/mantaLever = null
 							actions.start(new /datum/action/bar/icon/magnettether_fix(src, I, 30), user)
 
 	proc/change_health(var/change = 0)
-		health = max(min(maxhealth, health+change), 0)
+		health = clamp(health+change, 0, maxhealth)
 		if (broken == 1)
 			return
 		if(health == 0)
@@ -610,7 +610,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
 			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
-			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged")
+			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged", alert_origin = ALERT_STATION)
 
 /obj/miningteleporter
 	name = "Experimental long-range mining teleporter"
@@ -639,16 +639,16 @@ var/obj/manta_speed_lever/mantaLever = null
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		add_fingerprint(user)
 		busy = 1
 		flick("englrt1", src)
 		playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 		animate_teleport(user)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
 
@@ -662,7 +662,7 @@ var/obj/manta_speed_lever/mantaLever = null
 					src.recharging = 1
 					user.set_loc(S.loc)
 					showswirl(user.loc)
-					SPAWN_DBG(recharge)
+					SPAWN(recharge)
 						S.recharging = 0
 						src.recharging = 0
 				return
@@ -707,8 +707,8 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "construction cone"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "cone"
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -740,7 +740,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -765,7 +765,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return ..()
 
 
-/obj/sea_plant_manta/HasExited(atom/movable/A as mob|obj)
+/obj/sea_plant_manta/Uncrossed(atom/movable/A as mob|obj)
 	..()
 	if (ismob(A))
 		if (A.dir & SOUTH) //If mob exiting south, dont break perspective
@@ -932,7 +932,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (propeller == null || the_tool == null || owner == null || get_dist(owner, propeller) > 1)
+		if (propeller == null || the_tool == null || owner == null || BOUNDS_DIST(owner, propeller) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1070,7 +1070,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (box == null || the_tool == null || owner == null || get_dist(owner, box) > 1)
+		if (box == null || the_tool == null || owner == null || BOUNDS_DIST(owner, box) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1161,7 +1161,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 	onUpdate()
 		..()
-		if (magnet == null || the_tool == null || owner == null || get_dist(owner, magnet) > 1)
+		if (magnet == null || the_tool == null || owner == null || BOUNDS_DIST(owner, magnet) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1220,7 +1220,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			MagneticTether = 1
 			magnet.health = 100
 			magnet.desc = "A rather delicate magnetic tether array. It allows people to safely explore the ocean around NSS Manta while carrying a magnetic attachment point."
-			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired")
+			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired", alert_origin = ALERT_STATION)
 			return
 
 #ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
@@ -1230,7 +1230,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	event_effect(var/source)
 		..()
 		if (random_events.announce_events)
-			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction")
+			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
 			playsound_global(world, "sound/effects/commsdown.ogg", 100)
 			sleep(rand(80,100))
 			signal_loss += 100
@@ -1238,7 +1238,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			signal_loss -= 100
 
 			if (random_events.announce_events)
-				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored")
+				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored", alert_origin = ALERT_STATION)
 			else
 				message_admins("<span class='internal'>Manta Comms event ceasing.</span>")
 
@@ -1252,7 +1252,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		if (J.broken)
 			return
 		J.Breakdown()
-		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction")
+		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction", alert_origin = ALERT_STATION)
 
 /datum/random_event/special/namepending
 	name = "Name Pending"
@@ -1450,7 +1450,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 
-/obj/machinery/handscanner/attack_hand(mob/user as mob)
+/obj/machinery/handscanner/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	playsound(src.loc, "sound/effects/handscan.ogg", 50, 1)
 	if (used == 0)
@@ -1504,7 +1504,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
 	item_state = "energy"
-	force = 5.0
+	force = 5
 
 /obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
@@ -1513,7 +1513,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "blackbox"
 	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
-	force = 5.0
+	force = 5
 
 /turf/unsimulated/floor/polarispit
 	name = "deep abyss"

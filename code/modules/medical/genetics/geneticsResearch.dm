@@ -387,12 +387,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 /datum/geneticsResearchEntry/bio_rad_dampers
 	name = "Biotic Radiation Dampeners"
-	desc = "Applies genetic research to completley eliminate all harmful radiation from the emitters."
+	desc = "Applies genetic research to completely eliminate all harmful radiation from the emitters."
 	researchTime = 2500
 	researchCost = 100
 	tier = 3
 	requiredResearch = list(/datum/geneticsResearchEntry/rad_dampers)
-	requiredMutRes = list("food_rad_resist","radioactive")
+	requiredMutRes = list("rad_resist","radioactive")
 
 	onFinish()
 		genResearch.emitter_radiation -= 30

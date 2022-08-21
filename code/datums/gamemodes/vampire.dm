@@ -3,12 +3,12 @@
 	config_tag = "vampire"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_VAMPIRE)
-	traitor_types = list(ROLE_VAMPIRE)
+	traitor_types = list(ROLE_VAMPIRE = 1)
 
 
 	has_wizards = 0
 	has_werewolves = 0
-	has_blobs = 0
+	major_threats = list(ROLE_WRAITH)
 
 	num_enemies_divisor = 20
 

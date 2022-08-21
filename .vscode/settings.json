@@ -13,20 +13,24 @@
 		"source.fixAll.eslint": true
 	},
 	"[javascript]": {
-		"editor.rulers": [120]
+		"editor.rulers": [
+			120
+		]
 	},
 	"[typescript]": {
-		"editor.rulers": [120]
+		"editor.rulers": [
+			120
+		]
 	},
 	"[scss]": {
-		"editor.rulers": [120]
+		"editor.rulers": [
+			120
+		]
 	},
 	"[dm]": {
-		"editor.rulers": [150]
-	},
-	// Lets you preview .dmi files in the editor
-	"workbench.editorAssociations": {
-		"*.dmi": "imagePreview.previewEditor"
+		"editor.rulers": [
+			150
+		]
 	},
 	// Ignore whitespace for blame
 	"gitlens.advanced.blame.customArguments": [
@@ -40,7 +44,7 @@
 		"info"
 	],
 	"tgstationTestExplorer.project.DMEName": "goonstation.dme",
-    "tgstationTestExplorer.project.defines": [
-        "#define UNIT_TESTS"
-    ]
+	"tgstationTestExplorer.project.defines": [
+		"#define UNIT_TESTS"
+	]
 }

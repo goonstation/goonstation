@@ -84,7 +84,7 @@
 						var/D = range + 1
 						var/mob/living/M = null
 						for (var/mob/living/C in view(src.range))
-							var/dist = get_dist(src, C)
+							var/dist = GET_DIST(src, C)
 							if (dist < D)
 								M = C
 								D = dist
@@ -152,7 +152,7 @@
 		..()
 		src.flags |= TABLEPASS
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		var/turf/T = get_turf(A)
 		if (T)
 			set_loc(T)
@@ -161,7 +161,7 @@
 	proc/launch()
 		if (!target)
 			qdel(src)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (loc != get_turf(target))
 				if (exploding)
 					return

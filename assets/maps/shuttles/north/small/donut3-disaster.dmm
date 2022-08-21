@@ -1,0 +1,1028 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
+"ak" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"ar" = (
+/obj/item/storage/wall/medical{
+	dir = 4;
+	pixel_x = -32;
+	pixel_z = -1
+	},
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"aA" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"cH" = (
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"dc" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"dq" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body7"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"eO" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"fK" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/shuttle/escape/centcom)
+"fM" = (
+/obj/machinery/light,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"fW" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"gp" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 1
+	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"gS" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"he" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"hP" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"iq" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"iz" = (
+/obj/machinery/door/airlock/pyro/medical/alt,
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"iJ" = (
+/obj/machinery/door/airlock/pyro/security,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"iU" = (
+/obj/item/storage/wall/emergency{
+	pixel_y = 32
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"jm" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"jK" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"kJ" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"lC" = (
+/obj/decal/cleanable/machine_debris,
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"lD" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"lS" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"lT" = (
+/obj/machinery/light/small/floor,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"lX" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"nf" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"nz" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"nT" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"pE" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"ql" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"qS" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"ra" = (
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"ri" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"rt" = (
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"rX" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"sm" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	icon_state = "7"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"tJ" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/floor/plating/airless,
+/area/shuttle/escape/centcom)
+"uh" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body3";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"uD" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"vl" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"vs" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"wQ" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"wZ" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"xC" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of some poor cosmonaut fellow.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body9";
+	name = "corpse"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"xK" = (
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"yh" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"yW" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "8"
+	},
+/area/shuttle/escape/centcom)
+"zi" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"zx" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/floor/plating/airless,
+/area/shuttle/escape/centcom)
+"zY" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood/splatter,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"AF" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/obj/decal/cleanable/oil,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Be" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Cb" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"Ce" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Cg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom)
+"Cu" = (
+/obj/table/auto,
+/obj/drink_rack/mug{
+	pixel_x = -26;
+	pixel_y = 4
+	},
+/obj/machinery/coffeemaker{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"DH" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"DN" = (
+/turf/unsimulated/floor/plating/damaged2,
+/area/shuttle/escape/centcom)
+"DS" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Et" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Ez" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Fh" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "4"
+	},
+/area/shuttle/escape/centcom)
+"Fq" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/blood/splatter,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"FE" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"FS" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"Gf" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating/damaged2,
+/area/shuttle/escape/centcom)
+"HB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	icon_state = "7"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"HR" = (
+/obj/machinery/computer/announcement,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"If" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"Ix" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"IW" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Jq" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"JW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Kb" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/obj/decal/fakeobjects/skeleton,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Kc" = (
+/obj/machinery/computer/shuttle,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"Lb" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 1
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"Lh" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"LF" = (
+/obj/critter/crunched,
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"LR" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"LS" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"Nh" = (
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"Nr" = (
+/obj/stool/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"NW" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom)
+"Og" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating/damaged2,
+/area/shuttle/escape/centcom)
+"Oi" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/plating/damaged2,
+/area/shuttle/escape/centcom)
+"OX" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "Eugh, the stench is horrible!";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body8";
+	name = "decomposed corpse"
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+"OZ" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Qy" = (
+/obj/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/floor/plating/airless,
+/area/shuttle/escape/centcom)
+"QT" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"Rg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"RB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/escape/centcom)
+"Sk" = (
+/obj/item/storage/wall/fire{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"Ss" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Sx" = (
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"SS" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box,
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"TP" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"UW" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/turf/unsimulated/floor/plating/damaged3,
+/area/shuttle/escape/centcom)
+"VV" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"VW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Wb" = (
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"Xb" = (
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"Xf" = (
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
+	desc = "IT HIM, IT REALLY HIM";
+	name = "smol donut";
+	doants = 0
+	},
+/obj/reagent_dispensers/cleanable/ants,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"XE" = (
+/obj/stool/chair/comfy/shuttle,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/plating/damaged2,
+/area/shuttle/escape/centcom)
+"Yh" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/unsimulated/floor/plating/scorched,
+/area/shuttle/escape/centcom)
+"YN" = (
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"YQ" = (
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
+"Zf" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/unsimulated/floor/void,
+/area/shuttle/escape/centcom)
+"Zi" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/machinery/light,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/unsimulated/floor/plating/damaged1,
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+RB
+DS
+DS
+Ez
+Ez
+DS
+DS
+Xb
+Xb
+Xb
+ql
+sm
+Nh
+he
+Wb
+"}
+(2,1,1) = {"
+Cb
+Cb
+qS
+RB
+VW
+wQ
+jm
+OX
+nT
+Lh
+Et
+Xb
+Xb
+Xb
+Og
+JW
+aa
+QT
+Wb
+"}
+(3,1,1) = {"
+Wb
+Wb
+Wb
+vs
+Be
+xK
+Yh
+xK
+Gf
+Xb
+Zf
+Xb
+Xb
+Xb
+Xb
+aA
+JW
+tJ
+he
+"}
+(4,1,1) = {"
+qS
+RB
+DS
+Rg
+UW
+VV
+DH
+cH
+Xb
+LF
+DN
+nz
+iJ
+Xb
+jK
+If
+IW
+Qy
+he
+"}
+(5,1,1) = {"
+RB
+VW
+zi
+yW
+xC
+DH
+Xb
+Xb
+Xb
+Xb
+jK
+hP
+Fh
+Gf
+wZ
+Ss
+eO
+zx
+he
+"}
+(6,1,1) = {"
+DS
+XE
+lX
+ak
+YQ
+FS
+DS
+DS
+DS
+Xb
+Xb
+lS
+Cg
+ql
+ql
+ql
+HB
+ri
+Wb
+"}
+(7,1,1) = {"
+DS
+HR
+gp
+Fh
+Sk
+Lb
+DS
+Xf
+Wb
+Xb
+Xb
+DN
+yh
+ra
+lD
+Cu
+vs
+Wb
+Wb
+"}
+(8,1,1) = {"
+DS
+Kc
+zY
+yW
+iU
+Ce
+DS
+Wb
+Wb
+Xb
+Xb
+cH
+Xb
+Xb
+Sx
+SS
+vs
+Wb
+Wb
+"}
+(9,1,1) = {"
+DS
+Nr
+LR
+AF
+lC
+fM
+DS
+DS
+DS
+DS
+Oi
+Xb
+LF
+ql
+ql
+ql
+NW
+QT
+Wb
+"}
+(10,1,1) = {"
+dc
+TP
+OZ
+Fh
+rX
+LS
+jm
+uh
+iq
+jm
+Xb
+Xb
+Xb
+Xb
+ar
+ra
+Zi
+tJ
+he
+"}
+(11,1,1) = {"
+qS
+dc
+DS
+Rg
+kJ
+If
+lT
+YQ
+xK
+Xb
+Xb
+Xb
+iz
+Xb
+Xb
+dq
+pE
+Qy
+he
+"}
+(12,1,1) = {"
+Wb
+Wb
+Wb
+vs
+rX
+vl
+jK
+Ix
+Fq
+Xb
+FE
+FE
+Fh
+Xb
+Gf
+Kb
+uD
+fK
+he
+"}
+(13,1,1) = {"
+Cb
+Cb
+qS
+dc
+TP
+Jq
+FE
+gS
+rt
+FE
+fW
+FE
+vs
+YN
+nf
+uD
+NW
+ri
+Wb
+"}
+(14,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+dc
+DS
+DS
+Ez
+Ez
+DS
+DS
+ql
+NW
+ql
+ql
+NW
+Nh
+he
+Wb
+"}

@@ -46,6 +46,7 @@
 /datum/artifact/container
 	associated_object = /obj/artifact/container
 	type_name = "Container"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -62,7 +63,7 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		for(var/obj/I in O.contents)
+		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(O.loc)
 		for(var/mob/N in viewers(O, null))
 			N.flash(3 SECONDS)

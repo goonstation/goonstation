@@ -33,8 +33,8 @@
 		/obj/item/device/light/flashlight,
 		/obj/item/kitchen/utensil/knife,
 		/obj/item/staple_gun,
-		/obj/item/old_grenade/banana/cheese_sandwich,
-		/obj/item/old_grenade/banana/banana_corndog,
+		/obj/item/old_grenade/spawner/cheese_sandwich,
+		/obj/item/old_grenade/spawner/banana_corndog,
 		/obj/item/rubberduck,
 		/obj/item/clothing/gloves/yellow/unsulated
 	)
@@ -61,7 +61,7 @@
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/wendigo, // have fun!
+		/obj/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)
@@ -120,6 +120,7 @@
 		if (src.scan)
 			src.scan.set_loc(src.loc)
 		qdel(src)
+		return TRUE
 
 // Misc props
 

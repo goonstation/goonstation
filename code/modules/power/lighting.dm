@@ -11,6 +11,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
 	mats = 4
+	material_amt = 0.2
 
 	var/installed_icon_state = "tube-empty"
 	var/installed_base_state = "tube"
@@ -56,6 +57,7 @@
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
+	anchored = 2
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -132,7 +134,7 @@
 	proc/autoposition(setdir = null)
 		//auto position these lights so i don't have to mess with dirs in the map editor that's annoying!!!
 		if (nostick == 0) // unless nostick is set to true in which case... dont
-			SPAWN_DBG(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
+			SPAWN(1 DECI SECOND) //wait for the wingrille spawners to complete when map is loading (ugly i am sorry)
 				var/turf/T = null
 				var/list/directions = null
 				if (setdir)
@@ -337,7 +339,7 @@
 	light_type = /obj/item/light/bulb/emergency
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 0
-	removable_bulb = 0
+	removable_bulb = 1
 
 	exitsign
 		name = "illuminated exit sign"
@@ -402,7 +404,7 @@
 		if (issilicon(user))
 			return
 
-		if (istype(W, /obj/item/wrench))
+		if (iswrenchingtool(W))
 
 			add_fingerprint(user)
 			src.anchored = !src.anchored
@@ -433,28 +435,60 @@
 // the desk lamp
 /obj/machinery/light/lamp
 	name = "desk lamp"
-	icon_state = "lamp1"
-	base_state = "lamp"
-	fitting = "bulb"
 	brightness = 1
-	desc = "A desk lamp"
+	wallmounted = FALSE
+	fitting = "bulb"
+	desc = "A desk lamp. For lighting desks."
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
-	wallmounted = 0
 	deconstruct_flags = DECON_SIMPLE
+	layer = ABOVE_OBJ_LAYER
 	plane = PLANE_DEFAULT
+	var/switchon = FALSE		// independent switching for lamps - not controlled by area lightswitch
 
-	var/switchon = 0		// independent switching for lamps - not controlled by area lightswitch
+// if attack with hand, only "grab" attacks are an attempt to remove bulb
+// otherwise, switch the lamp on/off
+
+/obj/machinery/light/lamp/attack_hand(mob/user)
+
+	if(user.a_intent == INTENT_GRAB)
+		..()	// do standard hand attack
+	else
+		switchon = !switchon
+		boutput(user, "You switch [switchon ? "on" : "off"] the [name].")
+		seton(switchon && powered(LIGHT))
+
+// called when area power state changes
+// override since lamp does not use area lightswitch
+
+/obj/machinery/light/lamp/power_change()
+	var/area/A = get_area(src)
+	seton(switchon && A.power_light)
+
+// returns whether this lamp has power
+// true if area has power and lamp switch is on
+
+/obj/machinery/light/lamp/has_power()
+	var/area/A = get_area(src)
+	return switchon && A.power_light
+
+/obj/machinery/light/lamp/black
+	icon_state = "lamp1"
+	base_state = "lamp"
+
+	New()
+		..()
+		src.UpdateOverlays(image('icons/obj/lighting.dmi', "lamp-base", layer = 2.99), "lamp base") // Just needs to be under the head of the lamp
 
 	bright
 		brightness = 1.8
-		switchon = 1
+		switchon = TRUE
 
 // green-shaded desk lamp
 /obj/machinery/light/lamp/green
 	icon_state = "green1"
 	base_state = "green"
-	desc = "A green-shaded desk lamp"
+	desc = "A green-shaded desk lamp."
 
 	New()
 		..()
@@ -507,6 +541,12 @@
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/tube/harsh/very
 
+	broken
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 	small
 		icon_state = "bulb1"
 		base_state = "bulb"
@@ -524,7 +564,7 @@
 	light.set_color(initial(src.light_type.color_r), initial(src.light_type.color_g), initial(src.light_type.color_b))
 	light.set_height(2.4)
 	light.attach(src)
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		update()
 
 // update the icon_state and luminosity of the light depending on its state
@@ -551,13 +591,13 @@
 	else
 		light.disable()
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		// now check to see if the bulb is burned out
 		if(current_lamp.light_status == LIGHT_OK)
 			if(on && current_lamp.rigged)
 				if (current_lamp.rigger)
-					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", current_lamp.rigger, null, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 				explode()
 			if(on && prob(current_lamp.breakprob))
 				current_lamp.light_status = LIGHT_BURNED
@@ -565,7 +605,7 @@
 				on = 0
 				light.disable()
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([showCoords(src.x, src.y, src.z)])")
+				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
 
 // attempt to set the light's on/off status
@@ -716,7 +756,7 @@
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
-			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -788,6 +828,8 @@
 		if (prot > 0 || user.is_heat_resistant())
 			boutput(user, "You remove the light [fitting].")
 		else
+			if(ON_COOLDOWN(src, "burn_hands", 1 SECOND))
+				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
 			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
@@ -807,11 +849,11 @@
 
 	if(!nospark)
 		if(on)
-			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([showCoords(src.x, src.y, src.z)])")
+			logTheThing(LOG_STATION, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		update()
 
 // explosion effect
@@ -819,13 +861,13 @@
 
 /obj/machinery/light/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(75))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(50))
 				broken()
 	return
@@ -846,15 +888,15 @@
 		if(rigged)
 			if(prob(1))
 				if (rigger)
-					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
 				explode()
 				rigged = 0
 				rigger = null
 			else if(prob(2))
 				if (rigger)
-					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [showCoords(src.x, src.y, src.z)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([showCoords(src.x, src.y, src.z)])")
+					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [log_loc(src)].")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
 				rigged = 0
 				rigger = null
 */
@@ -879,7 +921,7 @@
 
 /obj/machinery/light/proc/explode()
 	var/turf/T = get_turf(src.loc)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		broken()	// break it first to give a warning
 		sleep(0.2 SECONDS)
 		explosion(src, T, 0, 1, 2, 2)
@@ -896,40 +938,6 @@
 	if (A)
 		var/state = !A.power_light || shipAlertState == SHIP_ALERT_BAD
 		seton(state)
-
-
-// special handling for desk lamps
-
-
-// if attack with hand, only "grab" attacks are an attempt to remove bulb
-// otherwise, switch the lamp on/off
-
-/obj/machinery/light/lamp/attack_hand(mob/user)
-
-	if(user.a_intent == INTENT_GRAB)
-		..()	// do standard hand attack
-	else
-		switchon = !switchon
-		boutput(user, "You switch [switchon ? "on" : "off"] the [name].")
-		seton(switchon && powered(LIGHT))
-
-// called when area power state changes
-// override since lamp does not use area lightswitch
-
-/obj/machinery/light/lamp/power_change()
-	var/area/A = get_area(src)
-	seton(switchon && A.power_light)
-
-// returns whether this lamp has power
-// true if area has power and lamp switch is on
-
-/obj/machinery/light/lamp/has_power()
-	var/area/A = get_area(src)
-	return switchon && A.power_light
-
-
-
-
 
 
 // the light item
@@ -1092,7 +1100,7 @@
 		icon_state = "itube-purple"
 		base_state = "itube-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool
@@ -1258,7 +1266,7 @@
 		icon_state = "ibulb-purple"
 		base_state = "ibulb-purple"
 		color_r = 0.42
-		color_g = 0.20
+		color_g = 0.2
 		color_b = 0.58
 
 	cool
@@ -1335,8 +1343,7 @@
 		boutput(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 1))
-			message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [showCoords(user.x, user.y, user.z)].")
-			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+			logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 			rigged = 1
 			rigger = user
 

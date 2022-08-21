@@ -80,12 +80,12 @@
 				overlays.Cut()
 			desc = "A display case for antique possessions. It has been destroyed."
 			playsound(src, "shatter", 70, 1)
-			update_icon()
+			UpdateIcon()
 	else
 		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
 	return
 
-/obj/displaycase/proc/update_icon()
+/obj/displaycase/update_icon()
 	if(src.destroyed)
 		src.icon_state = "glassboxb0"
 	else
@@ -93,7 +93,7 @@
 	return
 
 
-/obj/displaycase/attackby(obj/item/W as obj, mob/user as mob)
+/obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = 1
@@ -125,7 +125,7 @@
 			src.set_density(1)
 			src.destroyed = 0
 			src.health = 30
-			update_icon()
+			UpdateIcon()
 			desc = "A display case for antique possessions."
 		return
 	else if (displayed == null && !(destroyed)) // To put items inside when not broken
@@ -152,7 +152,7 @@
 	..()
 	return
 
-/obj/displaycase/attack_hand(mob/user as mob)
+/obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
 		user.lastattacked = src
@@ -170,7 +170,7 @@
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "gun"
-	force = 1.0
+	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
 	var/stability = 10
 
@@ -238,7 +238,7 @@
 	6 Power cell
 	7 Screwdriver
 	*/
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (isscrewingtool(O))
 			if (src.repair_stage == 0)
 				user.show_text("You open the maintenance panel.", "blue")
@@ -253,7 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				AddComponent(/datum/component/cell_holder, our_cell)
+				L.AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2021
+ * @author Luxizzle (https://github.com/Luxizzle)
+ * @license MIT
+ */
+
 import { useBackend } from '../../backend';
 import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';

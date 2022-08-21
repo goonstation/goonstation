@@ -52,7 +52,6 @@
 					var/turf/B = T
 					var/datum/puzzlewizard/save/this = src
 					A = null
-					src = null
 					boutput(user, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()
@@ -61,7 +60,7 @@
 					sandbox.context["max_y"] = max(AS.y, B.y)
 					sandbox.context["min_y"] = min(AS.y, B.y)
 					sandbox.context["z"] = AS.z
-					SPAWN_DBG(0)
+					SPAWN(0)
 						user.client.Export()
 						var/savefile/F = new /savefile(fname)
 						// fuck you

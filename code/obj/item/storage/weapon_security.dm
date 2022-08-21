@@ -27,14 +27,14 @@
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains four morphine autoinjectors, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+	desc = "Contains six morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
-/obj/item/storage/box/robustdonuts
-	name = "robust donuts box"
-	icon_state = "box"
-	desc = "Contains two robust donuts and two robusted donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
+/obj/item/storage/lunchbox/robustdonuts
+	name = "robust donuts lunchbox"
+	icon_state = "lunchbox"
+	desc = "Contains a robust donut and a robusted donut, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -180,7 +180,7 @@
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
@@ -214,13 +214,19 @@
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
 
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"
 	desc = "A box of crowd dispersal grenades"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
+
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
 
 /* -------------------- Traitor Gear -------------------- */
 
@@ -262,7 +268,7 @@
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -271,7 +277,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.cloaked == 1)
 			..()
 		else
@@ -342,6 +348,11 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/boomerang,
+	/obj/item/clothing/under,
+	/obj/item/ammo/bullets/tranq_darts)
+
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

@@ -12,7 +12,7 @@
 	var/working = 0
 	var/obj/item/card/id/scan = null
 	var/icon_base = "slots"
-	var/datum/data/record/accessed_record = null
+	var/datum/db_record/accessed_record = null
 	var/available_funds = 0
 	var/emagged = 0
 	///break-even point for slots when this is set to 2500. make lower to make slots pay out better, or higher to give the house an edge
@@ -24,9 +24,12 @@
 		..()
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
-	. = ..()
+	if (src.emagged)
+		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1
+	return TRUE
 
 /* INTERFACE */
 
@@ -41,7 +44,7 @@
 		"busy" = working,
 		"scannedCard" = src.scan,
 		"money" = available_funds,
-		"account_funds" = src.accessed_record?.fields["current_money"],
+		"account_funds" = src.accessed_record?["current_money"],
 		"plays" = plays,
 		"wager" = wager,
 	)
@@ -80,23 +83,23 @@
 			playsound(src, "sound/machines/ding.ogg", 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
-			SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 				money_roll(wager)
 				src.working = 0
 				src.icon_state = "[icon_base]-off"
 
 		if("eject")
 			usr.put_in_hand_or_eject(src.scan)
-			src.available_funds = 0
 			src.scan = null
-			src.accessed_record = null
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			if(!src.accessed_record)
 				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
+			src.accessed_record["current_money"] += src.available_funds
+			src.available_funds = 0
+			src.accessed_record = null
 			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
-			src.accessed_record.fields["current_money"] += src.available_funds
 			. = TRUE
 
 		if("cashin")
@@ -104,13 +107,13 @@
 				boutput(usr, "<span class='alert'>No account connected.</span>")
 				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
-			transfer_amount = clamp(transfer_amount,0,src.accessed_record.fields["current_money"])
-			src.accessed_record.fields["current_money"] -= transfer_amount
+			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
+			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
 		if("cashout")
-			src.accessed_record.fields["current_money"] += src.available_funds
+			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
@@ -122,30 +125,30 @@
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
-/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, user as mob)
+/obj/submachine/slot_machine/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
 			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
 		else
 			var/obj/item/card/id/idcard = I
 			boutput(user, "<span class='notice'>You insert your ID card.</span>")
-			usr.drop_item()
+			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(usr, "<span class='alert'>No account data found!</span>")
-				usr.put_in_hand_or_eject(I)
+				boutput(user, "<span class='alert'>No account data found!</span>")
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			var/enterpin = input(user, "Please enter your PIN number.", "Enter PIN", 0) as null|num
+			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
 				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
 				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
-				usr.put_in_hand_or_eject(I)
+				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			boutput(user, "<span class='notice'>Card authorized.</span>")
@@ -171,12 +174,12 @@
 		win_sound = "sound/misc/airraid_loop_short.ogg"
 		exclamation = "JACKPOT! "
 		amount = 300 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 5) //4 - 400
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "
@@ -207,7 +210,7 @@
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -226,13 +229,13 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				/*if (src.money < 0)
@@ -248,7 +251,7 @@
 				var/roll = rand(1,101)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS)
+				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
@@ -286,7 +289,7 @@
 	icon_state = "slots-off"
 	var/play_money = 0
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/spacecash/))
 			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
@@ -298,7 +301,7 @@
 			I.amount = 0
 			qdel(I)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -319,13 +322,13 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
 
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Play
 				if(src.working) return
 				if (src.play_money < 20)
@@ -346,7 +349,7 @@
 				var/roll = rand(1,1350)
 
 				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
-				SPAWN_DBG(2.5 SECONDS) // why was this at ten seconds, christ
+				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)

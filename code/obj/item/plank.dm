@@ -3,7 +3,7 @@
 	desc = "My best friend plank!"
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "plank"
-	force = 4.0
+	force = 4
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1500
@@ -41,7 +41,7 @@
 			if (user)
 				newWall.add_fingerprint(user)
 				newWall.builtby = user.real_name
-				logTheThing("station", user, null, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return
@@ -58,7 +58,7 @@
 		else
 			return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_build_door(C, src, 30), user)
 
@@ -79,7 +79,7 @@
 			if (user)
 				newWall.add_fingerprint(user)
 				newWall.builtby = user.real_name
-				logTheThing("station", user, null, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newWall] (<b>Material:</b> [newWall.material && newWall.material.mat_id ? "[newWall.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return
@@ -110,7 +110,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || get_dist(owner, plank) > 1)
+		if (plank == null || owner == null || BOUNDS_DIST(owner, plank) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -150,7 +150,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || otherplank == null || get_dist(owner, plank) > 1 || get_dist(owner, otherplank) > 1)
+		if (plank == null || owner == null || otherplank == null || BOUNDS_DIST(owner, plank) > 0 || BOUNDS_DIST(owner, otherplank) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -196,7 +196,7 @@
 
 	onUpdate()
 		..()
-		if (plank == null || owner == null || get_dist(owner, wall) > 1)
+		if (plank == null || owner == null || BOUNDS_DIST(owner, wall) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner

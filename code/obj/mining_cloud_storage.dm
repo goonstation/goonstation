@@ -2,6 +2,7 @@
 	var/amount
 	var/price
 	var/for_sale
+	var/stats
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -13,6 +14,8 @@
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/ores = list()
+	var/default_price = 20
+	var/autosell = TRUE
 
 	var/health = 100
 	var/broken = 0
@@ -28,16 +31,16 @@
 		. = ..()
 		STOP_TRACKING
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -83,7 +86,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!IN_RANGE(O, user, 1))
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -155,9 +158,12 @@
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
+			if (!scoop?.satchel)
+				boutput(user, "<span class='alert'>No ore satchel to unload from [W].</span>")
+				return
 			W = scoop.satchel
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
@@ -177,10 +183,11 @@
 					continue
 				src.load_item(R, user)
 				amtload++
-			satchel.satchel_updateicon()
-			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
-			else boutput(user, "<span class='alert'>[satchel] is empty!</span>")
-
+			satchel.UpdateIcon()
+			if (amtload)
+				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
+			else
+				boutput(user, "<span class='alert'>[satchel] is empty!</span>")
 		else
 			src.health = max(src.health-W.force,0)
 			src.check_health()
@@ -201,7 +208,7 @@
 			amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 		else if(R.amount>1)
 			R.set_loc(src)
 			for(R.amount,R.amount > 0, R.amount--)
@@ -210,9 +217,10 @@
 				amount_loaded++
 			if (user && R)
 				user.u_equip(R)
-				R.dropped()
+				R.dropped(user)
 			qdel(R)
-		update_ore_amount(R.material_name,amount_loaded)
+		update_ore_amount(R.material_name,amount_loaded,R)
+		tgui_process.update_uis(src)
 
 
 	proc/accept_loading(var/mob/user,var/allow_silicon = 0)
@@ -229,7 +237,7 @@
 			return 0
 		return 1
 
-	proc/update_ore_amount(var/material_name,var/delta)
+	proc/update_ore_amount(var/material_name,var/delta,var/obj/item/raw_material/ore)
 		if(ores[material_name])
 			var/datum/ore_cloud_data/OCD = ores[material_name]
 			OCD.amount += delta
@@ -237,9 +245,20 @@
 		else if (delta > 0)
 			var/datum/ore_cloud_data/OCD = new /datum/ore_cloud_data
 			OCD.amount += delta
-			OCD.for_sale = 0
-			OCD.price = 0
+			OCD.for_sale = autosell
+			OCD.price = default_price
+			OCD.stats = get_ore_properties(ore)
 			ores[material_name] = OCD
+
+	proc/get_ore_properties(var/obj/item/raw_material/ore)
+		if (!ore?.material)
+			return
+		if (istype(ore, /obj/item/raw_material/gemstone)) return "varied levels of hardness and density"
+		var/list/stat_list = list()
+		for(var/datum/material_property/stat in ore.material.properties)
+			stat_list += stat.getAdjective(ore.material)
+		if (!stat_list.len) return "no properties"
+		return stat_list.Join(", ")
 
 	proc/update_ore_for_sale(var/material_name,var/new_for_sale)
 		if(ores[material_name])
@@ -256,81 +275,12 @@
 			OCD.price = max(0,new_price)
 		return
 
-	attack_hand(var/mob/user as mob)
-
-		src.add_dialog(user)
-
-		if (status & BROKEN || status & NOPOWER)
-			var/dat = "The screen is blank."
-			user.Browse(dat, "window=mining_dropbox;size=400x500")
-			onclose(user, "mining_dropbox")
-			return
-
-		var/list/dat = list({"<B>[src.name]</B>
-			<br><HR>
-			<B>Rockbox™ Ore Cloud Storage Service Settings:</B>
-			<br><small>
-			<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our Premium Service to remove this fee!)" : ""]<BR>
-			<B>Client Quartermaster Transaction Fee:</B> [rockbox_globals.rockbox_client_fee_pct]%<BR>
-			<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> $[rockbox_globals.rockbox_client_fee_min]<BR>
-			</small><HR>"})
-
-		if(ores.len)
-			for(var/ore in ores)
-				var/sellable = 0
-				var/price = 0
-				var/datum/ore_cloud_data/OCD = ores[ore]
-				price = OCD.price
-				sellable = OCD.for_sale
-				dat += "<B>[ore]:</B> [OCD.amount] (<A href='?src=\ref[src];sellable=[ore]'>[sellable ? "For Sale" : "Not For Sale"]</A>) (<A href='?src=\ref[src];price=[ore]'>$[price] per ore</A>) (<A href='?src=\ref[src];eject=[ore]'>Eject</A>)<br>"
-		else
-			dat += "No ores currently loaded.<br>"
-
-		user.Browse(dat.Join(), "window=mining_dropbox;size=500x500")
-		onclose(user, "mining_dropbox")
-
-
-
-	Topic(href, href_list)
-
-		if(status & BROKEN || status & NOPOWER)
-			return
-
-		if(usr.stat || usr.restrained())
-			return
-
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
-			src.add_dialog(usr)
-
-			if (href_list["eject"])
-				var/ore = href_list["eject"]
-				src.eject_ores(ore,null,0,0,usr)
-
-			if (href_list["price"])
-				var/ore = href_list["price"]
-				var/new_price = null
-				new_price = input(usr,"What price would you like to set? (Min 0)","Set Sale Price",null) as num
-				update_ore_price(ore,new_price)
-
-			if (href_list["sellable"])
-				var/ore = href_list["sellable"]
-				update_ore_for_sale(ore)
-
-			src.updateUsrDialog()
-		return
-
 	proc/eject_ores(var/ore, var/eject_location, var/ejectamt, var/transmit = 0, var/user as mob)
 		var/amount_ejected = 0
 		if(!eject_location)
 			eject_location = get_output_location()
 		for(var/obj/item/raw_material/R in src.contents)
 			if (R.material_name == ore)
-				if (!ejectamt)
-					ejectamt = input(usr,"How many ores do you want to eject?","Eject Ores") as num
-				if ((ejectamt <= 0 || get_dist(src, user) > 1) && !transmit)
-					break
-				if (!eject_location)
-					break
 				R.set_loc(eject_location)
 				ejectamt--
 				amount_ejected++
@@ -347,7 +297,7 @@
 		if (!src.output_target)
 			return src.loc
 
-		if (get_dist(src.output_target,src) > 1)
+		if (BOUNDS_DIST(src.output_target, src) > 0)
 			src.output_target = null
 			return src.loc
 
@@ -376,3 +326,53 @@
 			return src.output_target
 
 		return src.loc
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Rockbox")
+			ui.open()
+
+	ui_data(mob/user)
+		var/ore_list = list()
+		for(var/O as anything in ores)
+			var/datum/ore_cloud_data/OCD = ores[O]
+
+			ore_list += list(list(
+				"name" = O,
+				"amount" = OCD.amount,
+				"price" = OCD.price,
+				"forSale" = OCD.for_sale,
+				"stats" = OCD.stats
+			))
+
+		. = list(
+			"ores" = ore_list,
+			"default_price" = src.default_price,
+			"autosell" = src.autosell
+		)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("dispense-ore")
+				eject_ores(params["ore"], null, params["take"])
+				. = TRUE
+			if("toggle-ore-sell-status")
+				var/ore = params["ore"]
+				update_ore_for_sale(ore)
+				. = TRUE
+			if("set-default-price")
+				var/price = params["newPrice"]
+				default_price = max(price, 0)
+				. = TRUE
+			if("toggle-auto-sell")
+				autosell = !autosell
+				. = TRUE
+			if("set-ore-price")
+				var/ore = params["ore"]
+				var/price = params["newPrice"]
+				update_ore_price(ore, price)
+				. = TRUE
+

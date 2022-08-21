@@ -58,6 +58,7 @@
 	var/trigger_count = 1
 
 	Crossed(atom/movable/O)
+		..()
 		if (isliving(O) && trigger_count)
 			if (trigger_count > 0)
 				trigger_count--

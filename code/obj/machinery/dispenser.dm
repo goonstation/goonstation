@@ -1,8 +1,13 @@
 /*
 		Oxygen and plasma tank dispenser
 */
+
+//This stuff is kinda ugly/hard to parse on its own
+#define TOTAL_O2_TANKS (o2tanks + length(inserted_o2))
+#define TOTAL_PL_TANKS (pltanks + length(inserted_pl))
+
 /obj/machinery/dispenser
-	desc = "A simple yet bulky one-way storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
+	desc = "A storage device for gas tanks. Holds 10 plasma and 10 oxygen tanks."
 	name = "Tank Storage Unit"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "dispenser-empty"
@@ -10,71 +15,120 @@
 	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
-	anchored = 1.0
+	anchored = 1
 	mats = 24
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
+	//These keep track of tanks that people have inserted back into the machine (for shenanigans!)
+	var/list/inserted_o2 = list()
+	var/list/inserted_pl = list()
+
 /obj/machinery/dispenser/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
-				while(src.o2tanks > 0)
-					new /obj/item/tank/oxygen( src.loc )
-					src.o2tanks--
-				while(src.pltanks > 0)
-					new /obj/item/tank/plasma( src.loc )
-					src.pltanks--
+				while(TOTAL_O2_TANKS > 0)
+					pop_o2()
+				while(TOTAL_PL_TANKS > 0)
+					pop_pl()
 		else
 	return
 
 /obj/machinery/dispenser/blob_act(var/power)
 	if (prob(25 * power / 20))
-		while(src.o2tanks > 0)
-			new /obj/item/tank/oxygen( src.loc )
-			src.o2tanks--
-		while(src.pltanks > 0)
-			new /obj/item/tank/plasma( src.loc )
-			src.pltanks--
+		while(TOTAL_O2_TANKS > 0)
+			pop_o2()
+		while(TOTAL_PL_TANKS > 0)
+			pop_pl()
 		qdel(src)
 
 /obj/machinery/dispenser/meteorhit()
-	while(src.o2tanks > 0)
-		new /obj/item/tank/oxygen( src.loc )
-		src.o2tanks--
-	while(src.pltanks > 0)
-		new /obj/item/tank/plasma( src.loc )
-		src.pltanks--
+	while(TOTAL_O2_TANKS > 0)
+		pop_o2()
+	while(TOTAL_PL_TANKS > 0)
+		pop_pl()
 	qdel(src)
 	return
 
 /obj/machinery/dispenser/New()
 	..()
 	UnsubscribeProcess()
-	update_icon()
+	UpdateIcon()
 
 /obj/machinery/dispenser/process()
 	return
 
+/obj/machinery/dispenser/disposing()
+	for (var/obj/tank as anything in inserted_o2)
+		qdel(tank)
+	for (var/obj/tank as anything in inserted_pl)
+		qdel(tank)
+	inserted_o2 = null
+	inserted_pl = null
+	..()
+
 /obj/machinery/dispenser/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
+/obj/machinery/dispenser/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/tank/oxygen))
+		if (TOTAL_O2_TANKS < initial(src.o2tanks))
+			inserted_o2 += W
+			user.u_equip(W)
+			W.set_loc(src)
+			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
+			UpdateIcon()
+			return
+	else if (istype(W, /obj/item/tank/plasma))
+		if (TOTAL_PL_TANKS < initial(src.pltanks))
+			inserted_pl += W
+			user.u_equip(W)
+			W.set_loc(src)
+			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
+			UpdateIcon()
+			return
+	..()
 
-/obj/machinery/dispenser/proc/update_icon()
-	if (o2tanks > 0 && pltanks > 0)
+/obj/machinery/dispenser/update_icon()
+	if (TOTAL_O2_TANKS > 0 && TOTAL_PL_TANKS > 0)
 		icon_state = "dispenser-both"
 	else
 		icon_state = "dispenser-empty"
-		if (o2tanks > 0)
+		if (TOTAL_O2_TANKS > 0)
 			icon_state = "dispenser-oxygen"
-		if (pltanks > 0)
+		if (TOTAL_PL_TANKS > 0)
 			icon_state = "dispenser-plasma"
+
+///Return an inserted oxy tank if avaiable, otherwise a new one if available, null if there's neither
+/obj/machinery/dispenser/proc/pop_o2()
+	var/obj/item/tank/oxygen/a_tank = null
+	if (length(inserted_o2))
+		a_tank = inserted_o2[length(inserted_o2)] //LIFO (hopefully)
+		inserted_o2.Remove(a_tank)
+		a_tank.set_loc(src.loc) //to match behaviour of spawning a new tank
+	else if (o2tanks > 0)
+		a_tank = new /obj/item/tank/oxygen( src.loc )
+		src.o2tanks--
+	return a_tank
+
+///Return an inserted plasma tank if avaiable, otherwise a new one if available, null if there's neither
+/obj/machinery/dispenser/proc/pop_pl()
+	var/obj/item/tank/plasma/a_tank = null
+	if (length(inserted_pl))
+		a_tank = inserted_pl[length(inserted_pl)] //LIFO (hopefully)
+		inserted_pl.Remove(a_tank)
+		a_tank.set_loc(src.loc)
+	else if (pltanks > 0)
+		a_tank = new /obj/item/tank/plasma( src.loc )
+		src.pltanks--
+	return a_tank
 
 /* INTERFACE */
 
@@ -86,8 +140,8 @@
 
 /obj/machinery/dispenser/ui_data(mob/user)
 	. = list(
-		"oxygen" = o2tanks,
-		"plasma" = pltanks,
+		"oxygen" = TOTAL_O2_TANKS,
+		"plasma" = TOTAL_PL_TANKS,
 	)
 
 /obj/machinery/dispenser/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -96,17 +150,18 @@
 		return
 	switch(action)
 		if("dispense-plasma")
-			if(pltanks > 0)
+			var/newtank = pop_pl()
+			if (newtank)
 				use_power(5)
-				var/newtank = new /obj/item/tank/plasma(src.loc)
 				usr.put_in_hand_or_eject(newtank)
-				src.pltanks--
 			. = TRUE
 		if("dispense-oxygen")
-			if (o2tanks > 0)
+			var/newtank = pop_o2()
+			if (newtank)
 				use_power(5)
-				var/newtank = new /obj/item/tank/oxygen(src.loc)
 				usr.put_in_hand_or_eject(newtank)
-				src.o2tanks--
 			. = TRUE
-	update_icon()
+	UpdateIcon()
+
+#undef TOTAL_O2_TANKS
+#undef TOTAL_PL_TANKS

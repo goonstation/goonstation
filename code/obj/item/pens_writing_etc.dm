@@ -15,7 +15,7 @@
 /* =============== PENS =============== */
 
 /obj/item/pen
-	desc = "It's a normal black ink pen."
+	desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -77,10 +77,10 @@
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
-				SPAWN_DBG((src.spam_timer * 5))
+				SPAWN((src.spam_timer * 5))
 					if (src)
 						src.spam_flag_message = 0
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag_sound = 0
 
@@ -89,27 +89,27 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notify'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
 				src.removeMaterial()
 			return TRUE
 		return FALSE
 
 	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1 || isghostdrone(user))
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0 || isghostdrone(user))
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -147,7 +147,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		qdel(src)
@@ -155,8 +155,9 @@
 
 /obj/item/pen/fancy
 	name = "fancy pen"
-	desc = "A pretty swag pen."
+	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
 	icon_state = "pen_fancy"
+	item_state = "pen_fancy"
 	font_color = "blue"
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
@@ -164,7 +165,7 @@
 
 /obj/item/pen/odd
 	name = "odd pen"
-	desc = "There's something strange about this pen."
+	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
 	font = "Wingdings"
 
 /obj/item/pen/red // we didn't have one of these already??
@@ -192,7 +193,7 @@
 
 /obj/item/pen/marker
 	name = "felt marker"
-	desc = "Try not to sniff it too much. Weirdo."
+	desc = "It's the National Notary 'Edgewater' waterproof marker. Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
 	font = "'Permanent Marker', cursive"
@@ -347,7 +348,7 @@
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M as mob, mob/user as mob, def_zone)
+			attack(mob/M, mob/user, def_zone)
 				if (M == user)
 					src.color = random_color()
 					src.font_color = src.color
@@ -373,7 +374,7 @@
 		New()
 			..()
 			if (!ticker) // trying to avoid pre-game-start runtime bullshit
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					src.font_color = random_saturated_hex_color(1)
 					src.color_name = hex2color_name(src.font_color)
 			else
@@ -382,7 +383,7 @@
 				src.color = src.font_color
 
 		write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-			if (!T || !user || src.in_use || get_dist(T, user) > 1)
+			if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 				return
 			src.font_color = random_saturated_hex_color(1)
 			src.color_name = hex2color_name(src.font_color)
@@ -394,12 +395,12 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] jams [src] up [his_or_her(user)] nose!</b></span>")
-		SPAWN_DBG(0.5 SECONDS) // so we get a moment to think before we die
+		SPAWN(0.5 SECONDS) // so we get a moment to think before we die
 			user.take_brain_damage(120)
 		user.u_equip(src)
 		src.set_loc(user) // SHOULD be redundant but you never know.
 		health_update_queue |= user
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -420,7 +421,7 @@
 				else
 					return pick(src.c_default)
 		src.in_use = 1
-		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
+		. = tgui_input_list(user, "What do you want to write?", "Write something", (isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
 			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
 			inp = uppertext(inp)
@@ -464,7 +465,7 @@
 
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 
 		var/t // t is for what we're tdrawing
@@ -487,7 +488,7 @@
 				t = t[1]
 			update_inventory_counter()
 
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			return
 
 		if(t == " ")
@@ -503,7 +504,8 @@
 			G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -600,7 +602,7 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
 			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
@@ -614,11 +616,11 @@
 
 	suicide(var/mob/user as mob)
 		user.visible_message("<span class='alert'><b>[user] crushes \the [src] into a powder and then [he_or_she(user)] snorts it all! That can't be good for [his_or_her(user)] lungs!</b></span>")
-		SPAWN_DBG(5 DECI SECONDS) // so we get a moment to think before we die
+		SPAWN(5 DECI SECONDS) // so we get a moment to think before we die
 			user.take_oxygen_deprivation(175)
 		user.u_equip(src)
 		src.set_loc(user) //yes i did this dont ask why i cant literally think of anything better to do
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			if (user)
 				user.suiciding = 0
 		qdel(src)
@@ -633,20 +635,20 @@
 	font_color = "#D20040"
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use || get_dist(T, user) > 1)
+		if (!T || !user || src.in_use || BOUNDS_DIST(T, user) > 0)
 			return
 		if(!user.literate)
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
 		var/t = input(user, "What do you want to write?", null, null) as null|text
-		if (!t || get_dist(T, user) > 1)
+		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -679,7 +681,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ONBELT
 	rand_pos = 1
 
 	get_desc()
@@ -688,7 +690,7 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		/* lol vvv
 		if (!ismob(M)) // do this via afterattack()
 			return
@@ -736,7 +738,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
+		logTheThing(LOG_COMBAT, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -754,7 +756,7 @@
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
 		var/obj/machinery/power/apc/apc = A
 		if(istype(A,/obj/machinery/power/apc) && apc.area.type == /area/built_zone)
-			if(alert("Would you like to name this area, or just label the APC?", "Area Naming", "Label the APC", "Name the Area") == "Name the Area")
+			if(tgui_alert(user, "Would you like to name this area, or just label the APC?", "Area Naming", list("Label the APC", "Name the Area")) == "Name the Area")
 				var/area/built_zone/ba = apc.area
 				ba.SetName(src.label)
 				return
@@ -772,9 +774,9 @@
 			A.UpdateName()
 		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
-			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
-			logTheThing("combat", A, null, "has a label applied to them, \"[src.label]\"")
+			logTheThing(LOG_COMBAT, A, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
 
 	custom_suicide = 1
@@ -786,7 +788,7 @@
 		Label(user,user,1)
 
 		user.TakeDamage("chest", 300, 0) //they have to die fast or it'd make even less sense
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -796,7 +798,7 @@
 /obj/item/clipboard
 	name = "clipboard"
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "clipboard00"
+	icon_state = "clipboard"
 	var/obj/item/pen/pen = null
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "clipboard0"
@@ -808,10 +810,14 @@
 	stamina_damage = 10
 	stamina_cost = 1
 	stamina_crit_chance = 5
+	var/tmp/list/image/overlay_images = null
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+		src.overlay_images = list()
+		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
+		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
 
 	attack_self(mob/user as mob)
 		var/dat = "<B>Clipboard</B><BR>"
@@ -893,7 +899,7 @@
 		src.updateSelfDialog()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.equipped() && (user.l_hand == src || user.r_hand == src))
 			var/obj/item/paper/P = locate() in src
 			if (P)
@@ -903,7 +909,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
 			if (src.contents.len < 15)
@@ -921,15 +927,21 @@
 				return
 		src.update()
 		user.update_inhands()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			attack_self(user)
 			return
 		return
 
 	proc/update()
-		src.icon_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"][src.pen ? "1" : "0"]"
+		if (locate(/obj/item/paper) in src)
+			src.UpdateOverlays(src.overlay_images["paper"], "paper")
+		else
+			src.ClearSpecificOverlays("paper")
+		if (src.pen)
+			src.UpdateOverlays(src.overlay_images["pen"], "pen")
+		else
+			src.ClearSpecificOverlays("pen")
 		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
-		return
 
 /obj/item/clipboard/with_pen
 	New()
@@ -937,6 +949,24 @@
 		src.pen = new /obj/item/pen(src)
 		src.update()
 		return
+
+/obj/item/clipboard/with_pen/inspector
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "clipboard_inspector"
+	name = "inspector's clipboard"
+	desc = "An official Nanotrasen Inspector's clipboard."
+	var/inspector_name = null
+	New()
+		..()
+		src.inhand_color = "#3F3F3F"
+		START_TRACKING
+	proc/set_owner(var/mob/living/carbon/human/M)
+		inspector_name = M.real_name
+		src.name = "Inspector [inspector_name]'s clipboard"
+	disposing()
+		STOP_TRACKING
+		..()
+
 
 /* =============== FOLDERS (wip) =============== */
 
@@ -954,7 +984,7 @@
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
 			if (src.contents.len < 10)
 				boutput(user, "You cram the paper into the folder.")
@@ -967,7 +997,7 @@
 		show_window(user)
 
 	Topic(var/href, var/href_list)
-		if (get_dist(src, usr) > 1 || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr))
 			return
@@ -1030,7 +1060,7 @@
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == user || (src.loc && src.loc.loc == user)) && isalive(user)))
 			src.name = "booklet[n_name ? "- '[n_name]'" : null]"
-			logTheThing("say", user, null, "labels a paper booklet: [n_name]")
+			logTheThing(LOG_SAY, user, "labels a paper booklet: [n_name]")
 		src.add_fingerprint(user)
 		return
 
@@ -1079,7 +1109,7 @@
 	Topic(href, href_list)
 		..()
 
-		if ((usr.stat || usr.restrained()) || (get_dist(src, usr) > 1))
+		if ((usr.stat || usr.restrained()) || (BOUNDS_DIST(src, usr) > 0))
 			return
 
 		var/page_num = text2num(href_list["page"])
@@ -1104,7 +1134,7 @@
 			if ("last_page")
 				src.display_booklet_contents(usr,pages.len)
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
 			if (S?.ammo)
@@ -1176,7 +1206,7 @@
 /* ============== PRINTERS & TYPEWRITERS ================= */
 
 /obj/item/pen/typewriter
-	name = "integrated typewriter pen"
+	name = "National Notary 'Turbot Landing' experimental integrated typewriter pen"
 	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
 	font = "Monospace"
 	clicknoise = FALSE
@@ -1213,7 +1243,7 @@
 				return
 			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
-			src.update_icon()
+			src.UpdateIcon()
 			src.stored_paper.Attackby(src.pen, user)
 		else
 			src.stored_paper.Attackby(src.pen, user)
@@ -1226,7 +1256,7 @@
 		else
 			. = ..()
 
-	proc/update_icon()
+	update_icon()
 		if(src.stored_paper)
 			src.icon_state = "portable_typewriter-full"
 		else
@@ -1241,7 +1271,7 @@
 			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null
-		src.update_icon()
+		src.UpdateIcon()
 		return TRUE
 
 	attackby(obj/item/W, mob/user, params)
@@ -1249,7 +1279,7 @@
 			user.drop_item(W)
 			W.set_loc(src)
 			src.stored_paper = W
-			src.update_icon()
+			src.UpdateIcon()
 		else
 			. = ..()
 
@@ -1261,7 +1291,7 @@
 				paper.set_loc(src)
 				src.stored_paper = paper
 				user.visible_message("<span class='notice'>[user] sucks up \the [paper] into \the [src].</span>", "<span class='notice'>You suck up \the [paper] into \the [src].</span>")
-				src.update_icon()
+				src.UpdateIcon()
 			else
 				boutput(user, "<span class='alert'>\The [src] already has a paper in it.</span>")
 		else if(isfloor(target) || istype(target, /obj/table))
@@ -1271,6 +1301,5 @@
 /obj/item/portable_typewriter/borg
 	name = "integrated typewriter"
 	desc = "A built-in typewriter that can even create its own paper, whoa!"
-	cant_drop = TRUE
 	paper_creation_cooldown = 10 SECONDS
 	can_create_paper = TRUE

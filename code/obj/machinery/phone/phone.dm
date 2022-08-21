@@ -79,7 +79,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob,var/cellmode = 0)
+	attack_hand(mob/living/user,var/cellmode = 0)
 		..(user)
 		if(cellmode)
 			return
@@ -120,7 +120,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
@@ -130,7 +130,7 @@
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -140,7 +140,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
@@ -211,7 +211,7 @@
 		// Dial the number
 		src.dialing = 1
 		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
@@ -298,7 +298,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
+		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -307,7 +307,7 @@
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(get_dist(src,holder) > 0 || !src.parent.linked) // Guess they dropped it? *shrug
+		if(GET_DIST(src,holder) > 0 || !src.parent.linked) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
@@ -322,7 +322,7 @@
 		// Dial the number
 		src.dialing = 1
 		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
 				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)

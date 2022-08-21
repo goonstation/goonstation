@@ -19,6 +19,7 @@
 	#endif
 
 	area = /area/space
+	movement_mode = TILE_MOVEMENT_MODE
 
 	view = "15x15"
 
@@ -64,94 +65,32 @@ var/global/mob/twitch_mob = 0
 	if (!fexists(path))
 		return null
 
-	var/savefile/F = new /savefile(path, -1)
+	var/savefile/F = new /savefile(path, 10)
+	if (!F)
+		logTheThing(LOG_DEBUG, null, "Failed to load intra round value \"[field]\". Save file exists but may be locked by another process.")
+		return
 	F["[field]"] >> .
 
 /world/proc/save_intra_round_value(var/field, var/value)
 	if (!field || isnull(value))
 		return -1
 
-	var/savefile/F = new /savefile("data/intra_round.sav", -1)
-	F.Lock(-1)
-
-	F["[field]"] << value
-	return 0
+	var/savefile/F = new /savefile("data/intra_round.sav", 10)
+	if (!F)
+		logTheThing(LOG_DEBUG, null, "Unable to save intra round value to field \"[field]\". Save file may be locked by another process.")
+		return
+	if (F.Lock(10))
+		F["[field]"] << value
+		return 0
+	else
+		logTheThing(LOG_DEBUG, null, "Unable to save intra round value to field \"[field]\". Failed to obtain an exclusive save file lock.")
 
 /world/proc/load_motd()
 	join_motd = grabResource("html/motd.html")
 
 /world/proc/load_rules()
-	//rules = file2text("config/rules.html")
-	/*SPAWN_DBG(0)
-		rules = world.Export("http://wiki.ss13.co/api.php?action=parse&page=Rules&format=json")
-		if(rules && rules["CONTENT"])
-			rules = json_decode(file2text(rules["CONTENT"]))
-			if(rules && rules["parse"] && rules["parse"]["text"] && rules["parse"]["text"]["*"])
-				rules = rules["parse"]["text"]["*"]
-			else
-				rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
-		else*/
 	rules = {"<meta http-equiv="refresh" content="0; url=http://wiki.ss13.co/Rules">"}
-	//if (!rules)
-	//	rules = "<html><head><title>Rules</title><body>There are no rules! Go nuts!</body></html>"
 
-/world/proc/load_admins()
-	set background = 1
-	var/text = file2text("config/admins.txt")
-	if (!text)
-		logDiary("Failed to load config/admins.txt\n")
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			var/pos = findtext(line, " - ", 1, null)
-			if (pos)
-				var/m_key = copytext(line, 1, pos)
-				var/a_lev = copytext(line, pos + 3, length(line) + 1)
-				admins[m_key] = a_lev
-				logDiary("ADMIN: [m_key] = [a_lev]")
-
-/world/proc/load_whitelist(fileName = null)
-	set background = 1
-	if(isnull(fileName))
-		fileName = config.whitelist_path
-	var/text = file2text(fileName)
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			whitelistCkeys += line
-			logDiary("WHITELIST: [line]")
-
-
-/world/proc/load_playercap_bypass()
-	set background = 1
-	var/text = file2text("+secret/strings/allow_thru_cap.txt")
-	if (!text)
-		return
-	else
-		var/list/lines = splittext(text, "\n")
-		for(var/line in lines)
-			if (!line)
-				continue
-
-			if (copytext(line, 1, 2) == "#")
-				continue
-
-			bypassCapCkeys += line
-			logDiary("WHITELIST: [line]")
 
 // dsingh for faster create panel loads
 /world/proc/precache_create_txt()
@@ -193,7 +132,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 /proc/buildMaterialCache()
 	//material_cache
-	var/materialList = childrentypesof(/datum/material)
+	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
 		material_cache.Add(M.mat_id)
@@ -203,6 +142,9 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef LIVE_SERVER
+		world.log = file("data/errors.log")
+#endif
 		enable_auxtools_debugger()
 #ifdef REFERENCE_TRACKING
 		enable_reference_tracking()
@@ -227,6 +169,9 @@ var/f_color_selector_handler/F_Color_Selector
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "  radio")
+		radio_controller = new /datum/controller/radio()
+
 		Z_LOG_DEBUG("Preload", "Loading config...")
 		config = new /datum/configuration()
 		config.load("config/config.txt")
@@ -243,6 +188,7 @@ var/f_color_selector_handler/F_Color_Selector
 			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
+			logLength += 4
 
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
@@ -254,12 +200,18 @@ var/f_color_selector_handler/F_Color_Selector
 			Z_LOG_DEBUG("Preload", "Loading local browserassets...")
 			recursiveFileLoader("browserassets/")
 
+		Z_LOG_DEBUG("Preload", "Z-level datums...")
+		init_zlevel_datums()
+
 		Z_LOG_DEBUG("Preload", "Adding overlays...")
 		var/overlayList = childrentypesof(/datum/overlayComposition)
 		for(var/over in overlayList)
 			var/datum/overlayComposition/E = new over()
 			screenOverlayLibrary.Add(over)
 			screenOverlayLibrary[over] = E
+
+		url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
+		full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\w]+\.)+[\l]+(\/\S+)*\/?)","ig")
 
 		Z_LOG_DEBUG("Preload", "initLimiter() (whatever the fuck that does)")
 		initLimiter()
@@ -271,10 +223,10 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
 
-		Z_LOG_DEBUG("Preload", "Starting controllers")
-		Z_LOG_DEBUG("Preload", "  radio")
+		// no log because this is functionally instant
+		global_signal_holder = new
 
-		radio_controller = new /datum/controller/radio()
+		Z_LOG_DEBUG("Preload", "Starting controllers")
 
 		Z_LOG_DEBUG("Preload", "  data_core")
 		data_core = new /datum/datacore()
@@ -311,6 +263,8 @@ var/f_color_selector_handler/F_Color_Selector
 		ghost_notifier = new /datum/ghost_notification_controller()
 		Z_LOG_DEBUG("Preload", "  respawn_controller")
 		respawn_controller = new /datum/respawn_controls()
+		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
+		cargo_pad_manager = new /datum/cargo_pad_manager()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -328,11 +282,6 @@ var/f_color_selector_handler/F_Color_Selector
 				if initial(foobar.variable) == Arg
 					do_thing
 		*/
-
-		Z_LOG_DEBUG("Preload", "  /datum/generatorPrefab")
-		for(var/A in childrentypesof(/datum/generatorPrefab))
-			var/datum/generatorPrefab/R = new A()
-			miningModifiers.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/faction")
 		for(var/A in childrentypesof(/datum/faction))
@@ -360,18 +309,18 @@ var/f_color_selector_handler/F_Color_Selector
 			xpRewardButtons[R] = B
 
 		Z_LOG_DEBUG("Preload", "  /datum/material_recipe")
-		for(var/A in childrentypesof(/datum/material_recipe)) //Caching material recipes.
+		for(var/A in concrete_typesof(/datum/material_recipe)) //Caching material recipes.
 			var/datum/material_recipe/R = new A()
 			materialRecipes.Add(R)
 
 		Z_LOG_DEBUG("Preload", "  /datum/achievementReward")
-		for(var/A in childrentypesof(/datum/achievementReward)) //Caching reward datums.
+		for(var/A in concrete_typesof(/datum/achievementReward)) //Caching reward datums.
 			var/datum/achievementReward/R = new A()
 			rewardDB.Add(R.type)
 			rewardDB[R.type] = R
 
 		Z_LOG_DEBUG("Preload", "  /obj/trait")
-		for(var/A in childrentypesof(/obj/trait)) //Creating trait objects. I hate this.
+		for(var/A in concrete_typesof(/obj/trait)) //Creating trait objects. I hate this.
 			var/obj/trait/T = new A( )							//Sentiment shared -G
 			traitList.Add(T.id)
 			traitList[T.id] = T
@@ -388,19 +337,18 @@ var/f_color_selector_handler/F_Color_Selector
 		Z_LOG_DEBUG("Preload", "  zoldorf")
 		zoldorfsetup()
 
+		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
+		fluid_turf_setup(first_time=TRUE)
+
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
 		..()
 
 /world/New()
+	current_state = GAME_STATE_WORLD_NEW
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
-
-	// Load in the current commit SHA from TGS if avail, by MCterra10
-	if(TgsAvailable())
-		var/datum/tgs_revision_information/rev = TgsRevision()
-		vcs_revision = rev.commit
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
@@ -437,7 +385,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	Z_LOG_DEBUG("World/New", "New() complete, running world.init()")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		init()
 
 #ifdef UNIT_TESTS
@@ -457,11 +405,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
 	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	src.load_admins()//UGH
+	load_admins()//UGH
 	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	src.load_whitelist() //WHY ARE WE UGH-ING
+	load_whitelist() //WHY ARE WE UGH-ING
 	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
-	src.load_playercap_bypass()
+	load_playercap_bypass()
 
 	Z_LOG_DEBUG("World/Init", "Starting input loop")
 	start_input_loop()
@@ -533,9 +481,6 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/area/Ar in world)
 			Ar.build_sims_score()
 
-	url_regex = new("(https?|byond|www)(\\.|:\\/\\/)", "i")
-	full_url_regex = new(@"(https?:\/\/)?((www\.)?([-\d\l]+\.)+[\d\l]+(\/\S+)*\/?)","ig")
-
 	UPDATE_TITLE_STATUS("Updating status")
 	Z_LOG_DEBUG("World/Init", "Updating status...")
 	src.update_status()
@@ -567,10 +512,6 @@ var/f_color_selector_handler/F_Color_Selector
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Lighting up")
-	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
-	RL_Start()
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -581,13 +522,10 @@ var/f_color_selector_handler/F_Color_Selector
 	build_camera_network()
 	build_manufacturer_icons()
 	clothingbooth_setup()
+	initialize_biomes()
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
-
-#if ASS_JAM
-	ass_jam_init()
-#endif
 
 	//QM Categories by ZeWaka
 	build_qm_categories()
@@ -598,9 +536,16 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
-	UPDATE_TITLE_STATUS("Initializing biomes")
-	Z_LOG_DEBUG("World/Init", "Setting up biomes...")
-	initialize_biomes()
+	UPDATE_TITLE_STATUS("Lighting up")
+	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
+	RL_Start()
+
+	#ifndef NO_RANDOM_ROOMS
+	UPDATE_TITLE_STATUS("Building random station rooms")
+	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
+	buildRandomRooms()
+	makepowernets()
+	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
@@ -609,8 +554,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	aiDirty = 2
-	world.updateCameraVisibility()
+	world.updateCameraVisibility(TRUE)
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
@@ -627,13 +571,23 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
-	Z_LOG_DEBUG("World/Init", "Initialize prefab shuttle datums...")
-	var/datum/prefab_shuttle/D = new
-	D.inialize_prefabs()
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
+	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
+	if(length(global.region_allocator.free_nodes) == 0)
+		global.region_allocator.add_z_level()
+	#endif
+
+	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
+	ai_station_map = new
 
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
+
+	#ifndef LIVE_SERVER
+	for (var/thing in by_cat[TR_CAT_DELETE_ME])
+		qdel(thing)
+	#endif
 
 #ifdef MOVING_SUB_MAP
 	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
@@ -654,16 +608,20 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_load_stats()
 	bioele_shifts_since_accident++
 	bioele_save_stats()
+
+	AuxSort(by_type[/area], /proc/compareName)
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
 #ifdef RUNTIME_CHECKING
 	populate_station()
-	SPAWN_DBG(10 SECONDS)
+	check_map_correctness()
+	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
-#ifdef UNIT_TESTS
-	SPAWN_DBG(10 SECONDS)
+#if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
+	SPAWN(10 SECONDS)
 		Reboot_server()
 #endif
 
@@ -672,20 +630,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 //Crispy fullban
 /proc/Reboot_server(var/retry)
-	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
-	if (mapSwitcher.locked)
-		//we're already holding and in the reboot retry loop, do nothing
-		if (mapSwitcher.holdingReboot && !retry) return
-
-		out(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
-		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
-
-		mapSwitcher.holdingReboot = 1
-		SPAWN_DBG(mapSwitcher.rebootRetryDelay)
-			mapSwitcher.attemptReboot()
-
-		return
-
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round
@@ -707,7 +651,12 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	global.save_noticeboards()
+	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+		canvas.save()
 	global.phrase_log.save()
+	for_by_tcl(P, /datum/player)
+		P.on_round_end()
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
@@ -715,7 +664,7 @@ var/f_color_selector_handler/F_Color_Selector
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
-	logTheThing("diary", null, "Shutting down after testing for runtimes.", "admin")
+	logTheThing(LOG_DIARY, null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
 		text2file("Runtime checking failed due to missing runtimeDetails global list", "errors.log")
 	else if (length(runtimeDetails) > 0)
@@ -735,7 +684,7 @@ var/f_color_selector_handler/F_Color_Selector
 	shutdown()
 #endif
 
-	SPAWN_DBG(world.tick_lag)
+	SPAWN(world.tick_lag)
 		for (var/client/C)
 			if (C.mob)
 				if (prob(40))
@@ -744,7 +693,7 @@ var/f_color_selector_handler/F_Color_Selector
 					C.mob << sound('sound/misc/NewRound.ogg')
 
 #ifdef DATALOGGER
-	SPAWN_DBG(world.tick_lag*2)
+	SPAWN(world.tick_lag*2)
 		var/playercount = 0
 		var/admincount = 0
 		for(var/client/C in clients)
@@ -768,7 +717,7 @@ var/f_color_selector_handler/F_Color_Selector
 		for (var/client/C in clients)
 			ehjax.send(C, "browseroutput", "hardrestart")
 
-		logTheThing("diary", null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
+		logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
 		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
 
 		fdel("data/hard-reboot")
@@ -788,26 +737,30 @@ var/f_color_selector_handler/F_Color_Selector
 /world/proc/update_status()
 	Z_LOG_DEBUG("World/Status", "Updating status")
 
-	//we start off with an animated bee gif because, well, this is who we are.
-	var/s = "<img src=\"http://goonhub.com/bee.gif\"/>"
+	var/list/statsus = list()
 
 	if (config?.server_name)
-		s += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
+		statsus += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
 	else
-		s += "<b>SERVER NAME HERE</b> &#8212; "
+		statsus += "<b>SERVER NAME HERE</b> &#8212; "
 
-	s += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
+	statsus += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
+
+	if(ticker?.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
+		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b><br>"
+	else if (current_state == GAME_STATE_FINISHED)
+		statsus += "Time: <b>RESTARTING</b><br>"
+	else if(!ticker)
+		statsus += "Time: <b>STARTING</b><br>"
 
 	if (map_settings)
 		var/map_name = istext(map_settings.display_name) ? "[map_settings.display_name]" : "[map_settings.name]"
 		//var/map_link_str = map_settings.goonhub_map ? "<a href=\"[map_settings.goonhub_map]\">[map_name]</a>" : "[map_name]"
-		s += "Map: <b>[map_name]</b><br>"
+		statsus += "Map: <b>[map_name]</b><br>"
 
 	var/list/features = list()
 
-	if (!ticker)
-		features += "<b>STARTING</b>"
-	else if (ticker && master_mode)
+	if(ticker && master_mode)
 		if (ticker.hide_mode)
 			features += "Mode: <b>secret</b>"
 		else
@@ -819,41 +772,44 @@ var/f_color_selector_handler/F_Color_Selector
 	if (abandon_allowed)
 		features += "respawn allowed"
 
-#if ASS_JAM
-	features += "Ass Jam"
-#endif
-
 	if(features)
-		s += "[jointext(features, ", ")]"
+		statsus += "[jointext(features, ", ")]"
 
 	/* does this help? I do not know */
-	if (src.status != s)
-		src.status = s
+	statsus = statsus.Join()
+	if (src.status != statsus)
+		src.status = statsus
 
 	Z_LOG_DEBUG("World/Status", "Status update complete")
 
 /world/proc/installUpdate()
 	// Simple check to see if a new dmb exists in the update folder
-	logTheThing("diary", null, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
+	logTheThing(LOG_DIARY, null, "Checking for updated [config.dmb_filename].dmb...", "admin")
 	if(fexists("update/[config.dmb_filename].dmb"))
-		logTheThing("diary", null, null, "Updated [config.dmb_filename].dmb found. Updating...", "admin")
+		logTheThing(LOG_DIARY, null, "Updated [config.dmb_filename].dmb found. Updating...", "admin")
 		for(var/f in flist("update/"))
-			logTheThing("diary", null, null, "\tMoving [f]...", "admin")
+			if (IS_DIR_FNAME("update/[f]"))
+				logTheThing(LOG_DIARY, null, "\tClearing [f]...", "admin")
+				fdel(f)
+
+			logTheThing(LOG_DIARY, null, "\tMoving [f]...", "admin")
 			fcopy("update/[f]", "[f]")
 			fdel("update/[f]")
 
 		// Delete .dyn.rsc so that stupid shit doesn't happen
 		fdel("[config.dmb_filename].dyn.rsc")
 
-		logTheThing("diary", null, null, "Update complete.", "admin")
+		logTheThing(LOG_DIARY, null, "Update complete.", "admin")
 	else
-		logTheThing("diary", null, null, "No update found. Skipping update process.", "admin")
+		logTheThing(LOG_DIARY, null, "No update found. Skipping update process.", "admin")
 
 /// world Topic. This is where external shit comes into byond and does shit.
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC	// logging for these is done in TGS
-	logDiary("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
-	Z_LOG_DEBUG("World", "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
+
+	var/cleanT = replacetext(T, regex(@"auth=[a-zA-Z0-9]*(;|&|$)"), "auth=***$1")
+	logDiary("TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
+	Z_LOG_DEBUG("World", "TOPIC: \"[cleanT]\", from:[addr], master:[master], key:[key]")
 
 	if (T == "ping")
 		var/x = 1
@@ -964,7 +920,7 @@ var/f_color_selector_handler/F_Color_Selector
 								if(SOUTHWEST)
 									twitch_mob.keys_changed(KEY_BACKWARD|KEY_LEFT, KEY_BACKWARD|KEY_LEFT)
 
-							SPAWN_DBG(1 DECI SECOND)
+							SPAWN(1 DECI SECOND)
 								twitch_mob.keys_changed(0,0xFFFF)
 
 							return 1
@@ -976,7 +932,7 @@ var/f_color_selector_handler/F_Color_Selector
 							msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
-								twitch_mob.a_intent = lowertext(msg)
+								twitch_mob.set_a_intent(lowertext(msg))
 								if (ishuman(twitch_mob))
 									var/mob/living/carbon/human/H = twitch_mob
 									H.hud.update_intent()
@@ -1005,7 +961,7 @@ var/f_color_selector_handler/F_Color_Selector
 								var/mob/living/carbon/human/H = twitch_mob
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
-									twitch_mob.a_intent = INTENT_HARM
+									twitch_mob.set_a_intent(INTENT_HARM)
 									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
@@ -1197,6 +1153,8 @@ var/f_color_selector_handler/F_Color_Selector
 		if (addr != config.ircbot_ip && addr != config.goonhub_api_ip && addr != config.goonhub2_hostname)
 			return 0 //ip filtering
 
+		var/list/plist = params2list(T)
+
 		if (T == "admins")
 			var/list/s = list()
 			var/n = 0
@@ -1216,7 +1174,6 @@ var/f_color_selector_handler/F_Color_Selector
 			s["mentors"] = n
 			return list2params(s)
 
-		var/list/plist = params2list(T)
 		switch(plist["type"])
 			if("irc")
 				if (!plist["nick"] || !plist["msg"]) return 0
@@ -1226,7 +1183,7 @@ var/f_color_selector_handler/F_Color_Selector
 				msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
 				msg = discord_emojify(msg)
 
-				logTheThing("ooc", null, null, "Discord OOC: [nick]: [msg]")
+				logTheThing(LOG_OOC, null, "Discord OOC: [nick]: [msg]")
 
 				if (nick == "buttbot")
 					for (var/obj/machinery/bot/buttbot/B in machine_registry[MACHINES_BOTS])
@@ -1254,8 +1211,8 @@ var/f_color_selector_handler/F_Color_Selector
 
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 				msg = discord_emojify(msg)
-				logTheThing("ooc", nick, null, "OOC: [msg]")
-				logTheThing("diary", nick, null, ": [msg]", "ooc")
+				logTheThing(LOG_OOC, nick, "OOC: [msg]")
+				logTheThing(LOG_DIARY, nick, ": [msg]", "ooc")
 				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
 
 				for (var/client/C in clients)
@@ -1284,8 +1241,8 @@ var/f_color_selector_handler/F_Color_Selector
 				msg = linkify(msg)
 				msg = discord_emojify(msg)
 
-				logTheThing("admin", null, null, "Discord ASAY: [nick]: [msg]")
-				logTheThing("diary", null, null, "Discord ASAY: [nick]: [msg]", "admin")
+				logTheThing(LOG_ADMIN, null, "Discord ASAY: [nick]: [msg]")
+				logTheThing(LOG_DIARY, null, "Discord ASAY: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
@@ -1305,8 +1262,8 @@ var/f_color_selector_handler/F_Color_Selector
 				var/msg = plist["msg"]
 				msg = trim(copytext(sanitize(msg), 1, MAX_MESSAGE_LEN))
 
-				logTheThing("admin", null, null, "[server_name] PM: [nick]: [msg]")
-				logTheThing("diary", null, null, "[server_name] PM: [nick]: [msg]", "admin")
+				logTheThing(LOG_ADMIN, null, "[server_name] PM: [nick]: [msg]")
+				logTheThing(LOG_DIARY, null, "[server_name] PM: [nick]: [msg]", "admin")
 				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
 
 				for (var/client/C)
@@ -1331,7 +1288,7 @@ var/f_color_selector_handler/F_Color_Selector
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				if (M?.client)
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
@@ -1345,10 +1302,11 @@ var/f_color_selector_handler/F_Color_Selector
 								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
-						"})
+						"}, forceScroll=TRUE)
 					M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-					logTheThing("admin_help", null, M, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
-					logTheThing("diary", null, M, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					logTheThing(LOG_AHELP, null, "Discord: [nick] PM'd [constructTarget(M,"admin_help")]: [msg]")
+					logTheThing(LOG_DIARY, null, "Discord: [nick] PM'd [constructTarget(M,"diary")]: [msg]", "ahelp")
+					M.client.make_sure_chat_is_open()
 					for (var/client/C)
 						if (C.holder && C.key != M.key)
 							if (C.player_mode && !C.player_mode_ahelp)
@@ -1372,15 +1330,15 @@ var/f_color_selector_handler/F_Color_Selector
 				var/nick = plist["nick"]
 				var/msg = html_encode(plist["msg"])
 				var/who = lowertext(plist["target"])
-				var/mob/M = whois_ckey_to_mob_reference(who, exact=0)
+				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
 				game_msg = discord_emojify(game_msg)
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					logTheThing("admin", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
-					logTheThing("diary", null, M, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
+					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
+					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)
 						if (C.can_see_mentor_pms() && C.key != M.key)
 							if(C.holder)
@@ -1464,8 +1422,8 @@ var/f_color_selector_handler/F_Color_Selector
 				for (var/mob/M in mobs)
 					if (M.ckey && (findtext(M.real_name, who) || findtext(M.ckey, who)))
 						M.full_heal()
-						logTheThing("admin", nick, M, "healed / revived [constructTarget(M,"admin")]")
-						logTheThing("diary", nick, M, "healed / revived [constructTarget(M,"diary")]", "admin")
+						logTheThing(LOG_ADMIN, nick, "healed / revived [constructTarget(M,"admin")]")
+						logTheThing(LOG_DIARY, nick, "healed / revived [constructTarget(M,"diary")]", "admin")
 						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
 
 						var/ircmsg[] = new()
@@ -1482,10 +1440,10 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("hubCallback")
 				//Wire note: Temp debug logging as this should always get data and proc
 				if (!plist["data"])
-					logTheThing("debug", null, null, "<b>API Error (Temp):</b> Didnt get data.")
+					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get data.")
 					return 0
 				if (!plist["proc"])
-					logTheThing("debug", null, null, "<b>API Error (Temp):</b> Didnt get proc.")
+					logTheThing(LOG_DEBUG, null, "<b>API Error (Temp):</b> Didnt get proc.")
 					return 0
 
 				if (addr != config.goonhub_api_ip) return 0 //ip filtering
@@ -1498,7 +1456,7 @@ var/f_color_selector_handler/F_Color_Selector
 				try
 					ldata = json_decode(plist["data"])
 				catch
-					logTheThing("debug", null, null, "<b>API Error:</b> Invalid JSON detected: [plist["data"]]")
+					logTheThing(LOG_DEBUG, null, "<b>API Error:</b> Invalid JSON detected: [plist["data"]]")
 					return 0
 
 				ldata["data_hub_callback"] = 1
@@ -1511,8 +1469,8 @@ var/f_color_selector_handler/F_Color_Selector
 					rVal = call(theProc)(ldata)
 
 				if (rVal)
-					logTheThing("debug", null, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "<b>[theDatum]</b> " : ""]<b>[theProc]</b> with message: <b>[rVal]</b>")
-					logTheThing("diary", null, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "[theDatum] " : ""][theProc] with message: [rVal]", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "<b>[theDatum]</b> " : ""]<b>[theProc]</b> with message: <b>[rVal]</b>")
+					logTheThing(LOG_DIARY, null, "<b>Callback Error</b> - Hub callback failed in [theDatum ? "[theDatum] " : ""][theProc] with message: [rVal]", "debug")
 					return 0
 				else
 					return 1
@@ -1550,8 +1508,9 @@ var/f_color_selector_handler/F_Color_Selector
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
-					var/list/laws = ticker.centralized_ai_laws.format_for_irc()
-					return ircbot.response(laws)
+					var/ircmsg[] = new()
+					ircmsg["laws"] = ticker.ai_law_rack_manager.format_for_logs(glue = "\n", round_end = TRUE, include_link = FALSE)
+					return ircbot.response(ircmsg)
 				else
 					return 0
 
@@ -1562,6 +1521,19 @@ var/f_color_selector_handler/F_Color_Selector
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
 				ircmsg["time"] = (world.timeofday - curtime) / 10
+				ircmsg["ticklag"] = world.tick_lag
+				ircmsg["runtimes"] = global.runtime_count
+				if(world.system_type == "UNIX")
+					try
+						var/meminfo_file = "data/meminfo.txt"
+						fcopy("/proc/meminfo", "meminfo_file")
+						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
+						if(length(memory_info) >= 3)
+							memory_info.len = 3
+							ircmsg["meminfo"] = jointext(memory_info, "\n")
+						fdel(meminfo_file)
+					catch(var/exception/e)
+						stack_trace("[e.name]\n[e.desc]")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
@@ -1588,8 +1560,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if (game_end_delayed == 0)
 					game_end_delayed = 1
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] delayed the server restart from Discord.")
-					logTheThing("diary", null, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
+					logTheThing(LOG_ADMIN, null, "[game_end_delayer] delayed the server restart from Discord.")
+					logTheThing(LOG_DIARY, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
 					message_admins("<span class='internal'>[game_end_delayer] delayed the server restart from Discord.</span>")
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
@@ -1607,8 +1579,8 @@ var/f_color_selector_handler/F_Color_Selector
 				else if (game_end_delayed == 1)
 					game_end_delayed = 0
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
+					logTheThing(LOG_ADMIN, null, "[game_end_delayer] removed the restart delay from Discord.")
+					logTheThing(LOG_DIARY, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
 					message_admins("<span class='internal'>[game_end_delayer] removed the restart delay from Discord.</span>")
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
@@ -1616,38 +1588,16 @@ var/f_color_selector_handler/F_Color_Selector
 
 				else if (game_end_delayed == 2)
 					game_end_delayer = plist["nick"]
-					logTheThing("admin", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
-					logTheThing("diary", null, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
+					logTheThing(LOG_ADMIN, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.")
+					logTheThing(LOG_DIARY, null, "[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.", "admin")
 					message_admins("<span class='internal>[game_end_delayer] removed the restart delay from Discord and triggered an immediate restart.</span>")
 					ircmsg["msg"] = "Removed the restart delay."
 
-					SPAWN_DBG(1 DECI SECOND)
+					SPAWN(1 DECI SECOND)
 						ircbot.event("roundend")
 						Reboot_server()
 
 					return ircbot.response(ircmsg)
-
-			if ("mapSwitchDone")
-				if (!plist["data"] || !mapSwitcher.locked) return 0
-
-				var/map = plist["data"]
-				var/ircmsg[] = new()
-				var/msg
-
-				var/attemptedMap = mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current
-				if (map == "FAILED")
-					msg = "Compilation of [attemptedMap] failed! Falling back to previous setting of [mapSwitcher.nextPrior ? mapSwitcher.nextPrior : mapSwitcher.current]"
-				else
-					msg = "Compilation of [attemptedMap] succeeded!"
-
-				logTheThing("admin", null, null, msg)
-				logTheThing("diary", null, null, msg, "admin")
-				message_admins(msg)
-				ircmsg["msg"] = msg
-
-				mapSwitcher.unlock(map)
-
-				return ircbot.response(ircmsg)
 
 			if ("triggerMapSwitch")
 				if (!plist["nick"] || !plist["map"])
@@ -1666,8 +1616,8 @@ var/f_color_selector_handler/F_Color_Selector
 				catch (var/exception/e)
 					ircmsg["msg"] = e.name
 
-				logTheThing("admin", nick, null, "set the next round's map to [mapName] from Discord")
-				logTheThing("diary", nick, null, "set the next round's map to [mapName] from Discord", "admin")
+				logTheThing(LOG_ADMIN, nick, "set the next round's map to [mapName] from Discord")
+				logTheThing(LOG_DIARY, nick, "set the next round's map to [mapName] from Discord", "admin")
 				message_admins("[nick] set the next round's map to [mapName] from Discord")
 
 				return ircbot.response(ircmsg)
@@ -1688,8 +1638,8 @@ var/f_color_selector_handler/F_Color_Selector
 					msg = "Entry '[ckey]' removed from whitelist"
 
 				if (msg)
-					logTheThing("admin", null, null, msg)
-					logTheThing("diary", null, null, msg, "admin")
+					logTheThing(LOG_ADMIN, null, msg)
+					logTheThing(LOG_DIARY, null, msg, "admin")
 
 				return 1
 
@@ -1749,6 +1699,65 @@ var/f_color_selector_handler/F_Color_Selector
 
 				return json_encode(response)
 
+			if("profile")
+				var/type = plist["profiler_type"]
+				if(type != "sendmaps")
+					type = null
+				if(plist["action"] == "save")
+					var/static/profilerLogID = 0
+					var/output = world.Profile(PROFILE_REFRESH, type, "json")
+					var/fname = "data/logs/profiling/[global.roundLog_date]_manual_[profilerLogID++].json"
+					rustg_file_write(output, fname)
+					return fname
+				var/action = list(
+					"stop" = PROFILE_STOP,
+					"clear" = PROFILE_CLEAR,
+					"start" = PROFILE_START,
+					"refresh" = PROFILE_REFRESH,
+					"restart" = PROFILE_RESTART
+				)[plist["action"]]
+				var/final_action = action
+				if(plist["average"])
+					final_action |= PROFILE_AVERAGE
+				if(plist["action"] == "stop")
+					lag_detection_process.manual_profiling_on = FALSE
+				else if(plist["action"] == "start")
+					lag_detection_process.manual_profiling_on = TRUE
+				var/output = world.Profile(final_action, type, "json")
+				if(plist["action"] == "refresh" || plist["action"] == "stop")
+					SPAWN(1)
+						var/n_tries = 3
+						var/datum/http_response/response = null
+						while(--n_tries > 0 && (isnull(response) || response.errored))
+							var/datum/http_request/request = new()
+							request.prepare(RUSTG_HTTP_METHOD_POST, "[config.irclog_url]/profiler_result", output, "")
+							request.begin_async()
+							UNTIL(request.is_complete())
+							response = request.into_response()
+				return 1
+
+			if("persistent_canvases")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/big_persistent)
+					response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
+
+			if("lazy_canvas_list")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
+					response += canvas.id
+				return json_encode(response)
+
+			if("lazy_canvas_get")
+				var/list/response = list()
+				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
+					if(canvas.id == plist["id"])
+						if(!canvas.initialized)
+							canvas.load_from_id(canvas.id)
+						response[canvas.id] = icon2base64(canvas.art)
+				return json_encode(response)
+
+
 /world/proc/setMaxZ(new_maxz)
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
@@ -1758,12 +1767,13 @@ var/f_color_selector_handler/F_Color_Selector
 	return src.maxz
 
 /world/proc/setupZLevel(new_zlevel)
+	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
 	init_spatial_map(new_zlevel)
 
 /// EXPERIMENTAL STUFF
 var/opt_inactive = null
 /world/proc/Optimize()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!opt_inactive) opt_inactive  = world.timeofday
 
 		if(world.timeofday - opt_inactive >= 600 || world.timeofday - opt_inactive < 0)

@@ -45,3 +45,5 @@
 #define DECON_ACCESS 256
 /// item will be saved by path instead of stored in the frame
 #define DECON_DESTRUCT 512
+// item cannot be deconstructed by cyborgs
+#define DECON_NOBORG 1024

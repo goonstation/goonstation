@@ -18,11 +18,11 @@
 
 /obj/item/storage/box/clothing/hos
 	name = "\improper Head of Security's clothing"
-	spawn_contents = list(/obj/item/clothing/under/rank/head_of_securityold,
-	/obj/item/clothing/under/rank/head_of_securityold/dress,
+	spawn_contents = list(/obj/item/clothing/under/rank/head_of_security,
+	/obj/item/clothing/under/rank/head_of_security/dress,
 	/obj/item/clothing/under/suit/hos,
 	/obj/item/clothing/under/suit/hos/dress,
-	/obj/item/clothing/under/rank/head_of_securityold/fancy,
+	/obj/item/clothing/under/rank/head_of_security/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
 
 /obj/item/storage/box/clothing/hop
@@ -81,7 +81,7 @@
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/westboot/brown/rancher,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black)
@@ -160,6 +160,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/geneticist,\
 	/obj/item/clothing/shoes/white,\
 	/obj/item/clothing/suit/labcoat/genetics,\
+	/obj/item/clothing/suit/wintercoat/genetics,\
 	/obj/item/device/radio/headset/medical,\
 	/obj/item/device/pda2/genetics)
 
@@ -188,7 +189,7 @@
 	name = "\improper Mechanic's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/mechanic,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/mechanic,\
 	/obj/item/device/pda2/mechanic,\
 	/obj/item/clothing/under/rank/orangeoveralls/yellow)
 
@@ -205,7 +206,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/overalls,\
 	/obj/item/clothing/shoes/orange,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/miner,\
 	/obj/item/device/pda2/mining)
 
 /obj/item/storage/box/clothing/qm
@@ -243,6 +244,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
+	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown
 	name = "clown costume"
@@ -291,6 +293,15 @@
 		/obj/item/clothing/shoes/black,
 	)
 
+/obj/item/storage/box/costume/jester
+	name = "jester costume"
+	desc = "A box that contains a jester's outfit"
+	spawn_contents = list(
+		/obj/item/clothing/head/jester,
+		/obj/item/clothing/mask/jester,
+		/obj/item/clothing/under/gimmick/jester,
+		/obj/item/clothing/shoes/jester,
+	)
 
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"
@@ -334,7 +345,7 @@
 
 /obj/item/storage/box/costume/crap/wonka
 	name = "victorian confectionery factory owner costume"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy/regular)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy/chocolate)
 
 	make_my_stuff()
 		..()
@@ -381,6 +392,12 @@
 		var/obj/item/clothing/head/H = new /obj/item/clothing/head/werewolf/odd(src)
 		H.color = my_color
 
+/obj/item/storage/box/costume/vampire
+	name = "vampire costume set"
+	desc = "Blah blah blah."
+	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
+	/obj/item/clothing/suit/gimmick/vampire)
+
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/abomination,
@@ -410,4 +427,20 @@
 	/obj/item/clothing/head/fthat,
 	/obj/item/clothing/gloves/handcomp,
 	/obj/item/clothing/glasses/ftscanplate)
+
+/obj/item/storage/box/costume/purpwitch
+	name = "purple witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_purple,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_purple,
+	/obj/item/device/light/glowstick/purple)
+
+/obj/item/storage/box/costume/mintwitch
+	name = "mint witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_mint,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_mint,
+	/obj/item/device/light/glowstick/cyan)
 

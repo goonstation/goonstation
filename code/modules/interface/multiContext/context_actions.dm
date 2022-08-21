@@ -199,7 +199,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_vr()
 		..()
 
@@ -212,7 +212,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_animal()
 		..()
 
@@ -228,7 +228,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_mentor_mouse()
 		..()
 
@@ -244,7 +244,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.respawn_as_admin_mouse()
 		..()
 
@@ -257,7 +257,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.enter_ghostdrone_queue()
 		..()
 
@@ -270,7 +270,7 @@
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
 			var/mob/dead/observer/ghost = user
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				ghost.go_to_deadbar()
 		..()
 
@@ -349,7 +349,6 @@
 	icon = 'icons/ui/context32x32.dmi'
 	var/datum/geneboothproduct/GBP = null
 	var/obj/machinery/genetics_booth/GB = null
-	var/spamt = 0
 
 	disposing()
 		GBP = null
@@ -363,14 +362,9 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
-		if (get_dist(target,user) <= 1 && isliving(user))
-			. = GBP && GB
-			if (GB?.occupant && world.time > spamt + 5)
-				user.show_text("[target] is currently occupied. Wait until it's done.", "blue")
-				spamt = world.time
-				. = FALSE
-			if(.)
-				GB.show_admin_panel(user)
+		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
+			. = TRUE
+			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -597,7 +591,7 @@
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.fire_main_weapon()
+			V.fire_main_weapon(user)
 
 	use_external_speaker
 		name = "Use External Speaker"
@@ -703,7 +697,7 @@
 		I.play_note(note,user)
 
 	checkRequirements(atom/target, mob/user)
-		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && get_dist(user,target)<=1 && istype(target,/obj/item/instrument))
+		. = ((user.equipped() == target) || target.density && target.loc == get_turf(target) && BOUNDS_DIST(user, target) == 0 && istype(target,/obj/item/instrument))
 
 	special
 		icon_background = "key_special"
@@ -1134,3 +1128,130 @@
 			target.addContextAction(/datum/contextAction/testfour)
 			return 0
 */
+
+/datum/contextAction/flockdrone
+	icon = 'icons/ui/context16x16.dmi'
+	icon_background = "flockbg"
+	name = "Control flockdrone"
+	desc = "You shouldn't be reading this, bug."
+	icon_state = "wrench"
+	close_clicked = TRUE
+	/// The flockdrone aiTask subtype we should switch to upon cast
+	var/task_type = null
+
+	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
+	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
+		//typecasting soup time
+		if (!istype(target) || !istype(user))
+			return
+		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
+		if (!istype(holder))
+			return
+		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
+		if (ability.targeted && user.targeting_ability == ability)
+			user.targeting_ability = null
+			user.update_cursor()
+			return
+		if (ability.targeted)
+			if (world.time < ability.last_cast)
+				return
+			ability.drone = target
+			ability.task_type = task_type
+			ability.holder.owner.targeting_ability = ability
+			ability.holder.owner.update_cursor()
+		user.closeContextActions()
+
+	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
+		return istype(target) && istype(user) && !user.targeting_ability
+
+	move
+		name = "Move"
+		desc = "Go somwhere."
+		icon_state = "flock_move"
+		task_type = /datum/aiTask/sequence/goalbased/flock/rally
+
+	convert
+		name = "Convert"
+		desc = "Convert this thing"
+		icon_state = "flock_convert"
+		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
+
+		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
+			return ..() && target.resources >= FLOCK_CONVERT_COST
+
+	capture
+		name = "Capture"
+		desc = "Capture this enemy"
+		icon_state = "flock_capture"
+		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
+
+		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
+			return ..()
+
+	barricade
+		name = "Barricade"
+		desc = "Build a barricade"
+		icon_state = "flock_barricade"
+		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
+
+		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
+			return ..() && target.resources >= FLOCK_BARRICADE_COST
+
+	shoot
+		name = "Shoot"
+		desc = "Shoot this enemy"
+		icon_state = "flock_shoot"
+		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+
+	control
+		name = "Control"
+		desc = "Assume direct control of this endpoint"
+		icon_state = "flock_control"
+
+		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
+			if(user.flock && target.flock == user.flock)
+				target.take_control(user)
+
+/datum/contextAction/rcd
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = RCD_MODE_FLOORSWALLS
+
+	execute(var/obj/item/rcd/rcd, var/mob/user)
+		if (!istype(rcd))
+			return
+		rcd.switch_mode(src.mode, user)
+
+	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		return rcd in user
+
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+
+	deconstruct
+		name = "Deconstruct"
+		icon_state = "close"
+		mode = RCD_MODE_DECONSTRUCT
+
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
+
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+
+	lighttubes
+		name = "Light tubes"
+		icon_state = "tube"
+		mode = RCD_MODE_LIGHTTUBES

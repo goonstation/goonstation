@@ -268,7 +268,7 @@
 	<div class = "omelette">
 	<li>2 Eggs
 	<li>1 Piece of Meat
-	<li>1 Cheese
+	<li>1 Slice of Cheese
 	</div>
 	<h3>Steps</h3>
 	<div class = "omelettesteps">
@@ -448,7 +448,7 @@
 	<h3>Ingredients</h3>
 	<div class = "macguffin">
 	<li>2 English Muffins
-	<li>1 Cheese
+	<li>1 Slice of Cheese
 	<li>1 egg
 	<li>1 meat
 	</div>

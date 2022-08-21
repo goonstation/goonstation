@@ -8,20 +8,22 @@
 	desc = "What does this thing even do? Is it something you need?"
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
-	var/organ_holder_required_op_stage = 0.0
+	var/organ_holder_required_op_stage = 0
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
 	flags = TABLEPASS
-	force = 1.0
+	force = 1
+	health = 4
 	w_class = W_CLASS_TINY
-	throwforce = 1.0
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
+	material_amt = 0.3
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -44,7 +46,7 @@
 	/// If our organ's been severed and reattached. Used by heads to preserve their appearance across icon updates if reattached
 	var/transplanted = FALSE
 
-	var/op_stage = 0.0
+	var/op_stage = 0
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
@@ -53,6 +55,7 @@
 	var/emagged = 0
 	var/synthetic = 0
 	var/broken = 0
+	var/unusual = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
 	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
@@ -68,7 +71,10 @@
 
 	var/made_from = "flesh" //Material this organ will produce.
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	///if the organ is currently acting as an organ in a body
+	var/in_body = FALSE
+
+	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
 			return
 
@@ -82,7 +88,7 @@
 		else // failure and attack them with the organ
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/obj/item/device/analyzer/healthanalyzer/HA = W
 
@@ -117,6 +123,7 @@
 			src.donor = nholder.donor
 		if (src.donor)
 			src.donor_original = src.donor
+			src.in_body = TRUE
 			if (src.donor.bioHolder)
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
@@ -226,6 +233,7 @@
 
 	//kyle-note come back
 	proc/on_removal()
+		SHOULD_CALL_PARENT(TRUE)
 		//all robotic organs have a stamina buff we must remove
 		if (src.donor)
 			if (failure_disease)
@@ -246,7 +254,8 @@
 			if (istype(aholder))
 				for (var/abil in src.organ_abilities)
 					src.remove_ability(aholder, abil)
-
+		src.donor = null
+		src.in_body = FALSE
 
 		return
 
@@ -359,9 +368,9 @@
 
 		if (!H.organHolder.get_organ(src.organ_holder_name) && organ_location && organ_location.op_stage == src.organ_holder_required_op_stage)
 
-			H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
-			user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
-			H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!</span>")
+			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
+				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
+				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your [src.organ_holder_location]!</span>")
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -373,24 +382,28 @@
 			return 0
 
 	proc/breakme()
-		if (!broken && islist(src.organ_abilities) && length(src.organ_abilities))// remove abilities when broken
-			var/datum/abilityHolder/aholder
-			if (src.donor && src.donor.abilityHolder)
-				aholder = src.donor.abilityHolder
-			else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
-				aholder = src.holder.donor.abilityHolder
-			if (istype(aholder))
-				for (var/abil in src.organ_abilities)
-					src.remove_ability(aholder, abil)
-		src.broken = 1
+		if (!broken)
+			if (islist(src.organ_abilities) && length(src.organ_abilities))// remove abilities when broken
+				var/datum/abilityHolder/aholder
+				if (src.donor && src.donor.abilityHolder)
+					aholder = src.donor.abilityHolder
+				else if (src.holder && src.holder.donor && src.holder.donor.abilityHolder)
+					aholder = src.holder.donor.abilityHolder
+				if (istype(aholder))
+					for (var/abil in src.organ_abilities)
+						src.remove_ability(aholder, abil)
+			src.broken = 1
+			return TRUE
 
 	proc/unbreakme()
-		if (broken && islist(src.organ_abilities) && length(src.organ_abilities)) //put them back if fixed (somehow)
-			var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
-			if (!istype(A))
-				A = donor?.add_ability_holder(/datum/abilityHolder/organ)
-			if (!A)
-				return
-			for (var/abil in src.organ_abilities)
-				src.add_ability(A, abil)
-		src.broken = 0
+		if (broken)
+			if (islist(src.organ_abilities) && length(src.organ_abilities)) //put them back if fixed (somehow)
+				var/datum/abilityHolder/organ/A = donor?.get_ability_holder(/datum/abilityHolder/organ)
+				if (!istype(A))
+					A = donor?.add_ability_holder(/datum/abilityHolder/organ)
+				if (!A)
+					return
+				for (var/abil in src.organ_abilities)
+					src.add_ability(A, abil)
+			src.broken = 0
+			return TRUE

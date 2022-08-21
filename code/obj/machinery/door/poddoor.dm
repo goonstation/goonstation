@@ -1,16 +1,16 @@
 /obj/machinery/door/poddoor
 	name = "podlock"
-	icon = 'icons/obj/doors/rapid_pdoor.dmi'
+	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
 	cant_emag = 1
-	layer = 2.8
+	layer = (GRILLE_LAYER + 0.01)
 	object_flags = 0
 
 	health = 1800
 	health_max = 1800
 
-	var/id = 1.0
+	var/id = 1
 
 	New()
 		. = ..()
@@ -19,6 +19,9 @@
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	xmasify()
+		return
 
 /obj/machinery/door/poddoor/blast/single
 	doordir = "single"
@@ -31,10 +34,10 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			open()
 
-	Bump()
+	bump()
 		return
 
 	attack_hand()
@@ -48,7 +51,7 @@
 	desc = "This door guards the passage out of the gauntlet. It will not open while there are live players inside."
 	icon = 'icons/effects/VR.dmi'
 
-	Bump()
+	bump()
 		return
 
 	attack_hand()
@@ -356,6 +359,9 @@
 
 			vertical
 				dir = EAST
+
+	// meant for use inside station, or if connected to space, not a door
+	shutters
 
 /obj/machinery/door/poddoor/blast/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -947,29 +953,27 @@
 				icon_state = "bdoorsingle1"
 				doordir = "single"
 
-/obj/machinery/door/poddoor/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
-	if (C && !ispryingtool(C))
-		if (src.density && !src.operating)
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(C.force)
-	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
-			src.operating = 1
-			flick("[icon_base]c0", src)
-			src.icon_state = "[icon_base]0"
-			sleep(1.5 SECONDS)
-			src.set_density(0)
-			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
-			else
-				src.RL_SetOpacity(0)
-			src.operating = 0
-			update_nearby_tiles()
-			return
-	return
+	if (ispryingtool(C) && src.density && (status & NOPOWER) && !( src.operating ))
+		if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+		src.operating = TRUE
+		flick("[icon_base]c0", src)
+		src.icon_state = "[icon_base]0"
+		sleep(1.5 SECONDS)
+		src.set_density(0)
+		if (ignore_light_or_cam_opacity)
+			src.opacity = 0
+		else
+			src.RL_SetOpacity(0)
+		src.operating = FALSE
+		update_nearby_tiles()
+	else if (C && src.density && !src.operating)
+		user.lastattacked = src
+		attack_particle(user,src)
+		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
+		src.take_damage(C.force)
 
 /obj/machinery/door/poddoor/bumpopen(mob/user as mob)
 	return 0
@@ -985,7 +989,7 @@
 	if(!src.operating) //in case of emag
 		src.operating = 1
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base]c0", src)
 		src.icon_state = "[icon_base]0"
 		sleep(1 SECOND)
@@ -999,7 +1003,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				autoclose()
 	return 1
 
@@ -1011,7 +1015,7 @@
 	if (linked_forcefield) //mbc : oh gosh why is this not calling door parent
 		linked_forcefield.setactive(0)
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.operating = 1
 		flick("[icon_base]1", src)
 		src.icon_state = "[icon_base]1"
@@ -1060,12 +1064,12 @@
 	if(icon_state == "[icon_base]single1")
 		doordir = "single"
 
-/obj/machinery/door/poddoor/blast/attackby(obj/item/C as obj, mob/user as mob)
+/obj/machinery/door/poddoor/blast/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
 	if (!ispryingtool(C))
 		return
 	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.operating = 1
 			flick("[icon_base][doordir]c0", src)
 			src.icon_state = "[icon_base][doordir]0"
@@ -1093,7 +1097,7 @@
 	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
 		linked_forcefield.setactive(1)
 
-	SPAWN_DBG(-1)
+	SPAWN(-1)
 		flick("[icon_base][doordir]c0", src)
 		src.icon_state = "[icon_base][doordir]0"
 		sleep(1 SECOND)
@@ -1107,7 +1111,7 @@
 		if(operating == 1) //emag again
 			src.operating = 0
 		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			SPAWN(15 SECONDS)
 				autoclose()
 	return 1
 
@@ -1118,7 +1122,7 @@
 		linked_forcefield.setactive(0)
 	src.operating = 1
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		flick("[icon_base][doordir]c1", src)
 		src.icon_state = "[icon_base][doordir]1"
 		src.set_density(1)

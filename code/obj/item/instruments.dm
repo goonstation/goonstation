@@ -19,8 +19,7 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5
-	var/next_play = 0
-	var/note_time = 100
+	var/note_time = 10 SECONDS
 	var/randomized_pitch = 1
 	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
@@ -42,7 +41,6 @@
 	New()
 		..()
 
-
 		if (!pick_random_note)
 			if(use_new_interface == 0)
 				contextLayout = new /datum/contextLayout/instrumental()
@@ -55,7 +53,7 @@
 				C.dispose()
 			src.contextActions = list()
 
-			for (var/i in 1 to sounds_instrument.len)
+			for (var/i in 1 to length(sounds_instrument))
 				var/datum/contextAction/instrument/newcontext
 
 				if (special_index && i >= special_index)
@@ -64,38 +62,37 @@
 					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
+
 				newcontext.note = i
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		if (note != clamp(note,1,sounds_instrument.len))
-			return 0
-		if (next_play > TIME)
-			return 0
-		next_play = TIME + note_time
-		//if drunk, play off pitch?
-		if (special_index && note >= special_index)
-			next_play = TIME + 200
+		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
+		if (note != clamp(note, 1, length(sounds_instrument)))
+			return FALSE
+		if(ON_COOLDOWN(user, "instrument_play", src.note_time)) // on user because not just clients do music
+			return FALSE
+
+		if (special_index && note >= special_index) // Add additional time if we just played a special note
+			user.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
 
-
-		if (prob(5) || sounds_instrument.len == 1)
+		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(G, /obj/critter/dog/george)
-					if (IN_RANGE(G, T, 6) && prob(60))
-						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+				for_by_tcl(george, /obj/critter/dog/george)
+					if (IN_RANGE(george, T, 6) && prob(60))
+						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
-						G.howl()
+						george.howl()
 
 			src.post_play_effect(user)
-
-		.= 1
+		. = TRUE
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1,sounds_instrument.len),user)
+			play_note(rand(1, length(sounds_instrument)),user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -123,18 +120,18 @@
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
 	volume = 100
-	note_time = 200
+	note_time = 20 SECONDS
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
 			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
@@ -203,6 +200,7 @@
 	'sound/musical_instruments/jukebox/ultralounge.ogg',
 	'sound/musical_instruments/jukebox/jazzpiano.ogg')
 	pick_random_note = 1
+	volume = 40
 
 	show_play_message(mob/user as mob)
 		return
@@ -214,7 +212,7 @@
 	desc = "NEVER GONNA DANCE AGAIN, GUILTY FEET HAVE GOT NO RHYTHM"
 	icon_state = "sax"
 	item_state = "sax"
-	desc_sound = list("sexy", "sensuous", "libidinous","spicy", "flirtatious", "salacious","sizzling", "carnal", "hedonistic")
+	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -231,7 +229,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-/obj/item/instrument/saxophone/attack(mob/M as mob, mob/user as mob)
+/obj/item/instrument/saxophone/attack(mob/M, mob/user)
 	if(ismob(M))
 		playsound(src, pick(sounds_punch), 50, 1, -1)
 		playsound(src, pick('sound/musical_instruments/saxbonk.ogg', 'sound/musical_instruments/saxbonk2.ogg', 'sound/musical_instruments/saxbonk3.ogg'), 50, 1, -1)
@@ -248,6 +246,7 @@
 	icon_state = "bagpipe"
 	item_state = "bagpipe"
 	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
+	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
 
@@ -263,7 +262,7 @@
 	icon_state = "guitar"
 	item_state = "guitar"
 	two_handed = 1
-	force = 10.0
+	force = 10
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -275,7 +274,7 @@
 				sounds_instrument += "sound/musical_instruments/guitar/guitar_[i].ogg"
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
 		..()
@@ -294,18 +293,18 @@
 	stamina_cost = 5
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
-	note_time = 8
+	note_time = 0.8 SECONDS
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -340,25 +339,25 @@
 			if ("process")
 				var/times = rand(1,5)
 				for (var/i = 1, i <= times, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, sound_to_play, src.volume, src.randomized_pitch)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(3*i)
+					SPAWN(3*i)
 						playsound(det.attachedTo.loc, sound_to_play, min(src.volume*10, 750), src.randomized_pitch)
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
-	desc = "SHIT FUCKING PISS COCK IT'S SO RAW"
+	desc = "SHIT FUCKING PISS IT'S SO RAW"
 	sounds_instrument = list('sound/effects/dramatic.ogg')
 	volume = 100
 	randomized_pitch = 0
 	note_time = 30
 	mats = 2
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
 			..()
 			return
@@ -378,7 +377,7 @@
 	item_state = "airhorn"
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
-	note_time = 10
+	note_time = 1 SECOND
 	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
@@ -393,7 +392,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
 	pick_random_note = 1
@@ -410,7 +409,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
 	volume = 75
 	randomized_pitch = 1
@@ -459,7 +458,7 @@
 			for (var/mob/M in hearers(user, null))
 				if (M.ears_protected_from_sound())
 					continue
-				var/ED = max(0, rand(0, 2) - get_dist(user, M))
+				var/ED = max(0, rand(0, 2) - GET_DIST(user, M))
 				M.take_ear_damage(ED)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
@@ -478,11 +477,11 @@
 				if (prob(45))
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
-						SPAWN_DBG(4*i)
+						SPAWN(4*i)
 							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
-					SPAWN_DBG(4*i)
+					SPAWN(4*i)
 						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
 
 /* -------------------- Trumpet -------------------- */
@@ -497,13 +496,18 @@
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at E3
+	key_offset = 5
 
 	New()
-		if (sounds_instrument == null)
-			sounds_instrument = list()
-			for (var/i in 1 to 12)
-				sounds_instrument += "sound/musical_instruments/trumpet/trumpet_[i].ogg"
+		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		sounds_instrument = list()
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 /* -------------------- Spooky Trumpet -------------------- */
 
@@ -515,10 +519,12 @@
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_2.ogg')
 	desc_verb = "doots"
 	desc_sound = list("spooky", "scary", "boney", "creepy", "squawking", "squeaky", "low-quality", "compressed")
+	note_time = 5 SECONDS
+	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (next_play < TIME)
+		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
@@ -537,7 +543,7 @@
 	proc/dootize(var/mob/living/carbon/human/S as mob)
 		if (!istype(S))
 			return
-		if (S.mob_flags & IS_BONER)
+		if (S.mob_flags & IS_BONEY)
 			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
 			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
 			return
@@ -583,7 +589,7 @@
 	var/charge = 0 //A certain level of UNHOLY ENERGY is required to knock out a soul, ok.
 	var/charge_required = 10
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 		playsound(src, "swing_hit", 50, 1, -1)
 		..()
@@ -609,7 +615,7 @@
 			ghost_to_toss.set_loc(soul_stuff)
 
 		soul_stuff.throw_at(T, 10, 1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (soul_stuff && ghost_to_toss)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 
@@ -665,6 +671,30 @@
 			sounds_instrument += "sound/musical_instruments/tambourine/tambourine_[i].ogg"
 		..()
 
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "Makes a nice 'twang' sound."
+	icon = 'icons/obj/instruments.dmi'
+	icon_state = "banjo"
+	item_state = "banjo"
+	two_handed = 1
+	force = 6
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = 1
+	//Start at E3
+	key_offset = 5
+
+	New()
+		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
+		sounds_instrument = list()
+		for (var/i in 1 to length(notes))
+			note = notes[i]
+			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
+		..()
+
+
 
 
 /obj/storage/crate/wooden/instruments
@@ -681,3 +711,8 @@
 	name = "wind instruments box"
 	desc = "A wooden crate labeled to contain wind instruments."
 	spawn_contents = list(/obj/item/instrument/trumpet, /obj/item/instrument/saxophone)
+
+/obj/storage/crate/wooden/banjo
+	name = "banjo box"
+	desc = "A wooden crate labeled to contain a banjo."
+	spawn_contents = list(/obj/item/instrument/banjo)

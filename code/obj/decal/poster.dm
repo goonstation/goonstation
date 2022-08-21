@@ -7,9 +7,10 @@
 	anchored = 1
 	opacity = 0
 	density = 0
+	deconstruct_flags = DECON_WIRECUTTERS
 	var/imgw = 600
 	var/imgh = 400
-	var/popup_win = 1
+	var/popup_win = 0
 	layer = EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE
 
@@ -714,8 +715,8 @@
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
 					if("contest-other2")
-						src.name = "Mindslaver Device Poster"
-						src.icon_state = "mindslaver"
+						src.name = "Mindhacker Device Poster"
+						src.icon_state = "mindhacker"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -740,6 +741,12 @@
 					if("edit_wiki")
 						user << link("https://wiki.ss13.co/")
 
+		lesb_flag //lesbeean prefab thingy - subtle environmental storytelling, you know?
+			name = "lesbian pride flag"
+			desc = "Neat!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "lesb"
+
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
 			desc = "No... it can't be... the original?! This is a vintage!!"
@@ -760,6 +767,71 @@
 			pixel_y = -4
 			layer = 3
 
+		wizard
+			desc = "A tasteful portrait of a wizard."
+			name = "Portrait"
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "picture_wizard"
+
+		teleport_sign
+			name = "Teleport Sign"
+			desc = "A sign that points to the nearest teleporter."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "wall_teleport"
+
+		escape_sign
+			name = "Escape Sign"
+			desc = "A sign that points to the station's departures wing."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "escape"
+
+		security_sign
+			name = "Security Sign"
+			desc = "A sign that points to the station's security department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "security"
+
+		engine_sign
+			name = "Engine Sign"
+			desc = "A sign that points to the station's engineering department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "engine"
+
+		research_sign
+			name = "Teleport Sign"
+			desc = "A handy sign that points to the source of all your problems."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "research"
+
+		medbay_sign
+			name = "Medbay Sign"
+			desc = "A sign that points to the station's medical department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "medbay"
+
+		botany_sign
+			name = "Botany Sign"
+			desc = "A sign that points to the station's botany department."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "botany"
+
+		customs_sign
+			name = "Customs Sign"
+			desc = "A sign that points to the station's customs desk, commonly referred to as the Head of Personnel's office even if that is not the case."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "customs"
+
+		no_smoking
+			name = "Sign"
+			desc = "No smoking in this area!"
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "nosmoking"
+
+		read_me
+			name = "Important Sign"
+			desc = "The huge header takes up most of the sign, everything else is so tiny it's illegible."
+			icon = 'icons/obj/decals/wallsigns.dmi'
+			icon_state = "read_me"
 
 		landscape
 			desc = "A beautiful painting of a landscape that is engulfed by flames."
@@ -781,6 +853,12 @@
 			icon_state = "fuq3"
 			bound_width  = 96
 			plane = -99
+
+		psa_bucket
+			desc = "<span class='alert'><i>Stuck</i></b></span> behind a mop bucket? Never fear! Just <span class='notice'><i>slide</i></span> yourself over it!"
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "bucket" // sprite by BatElite!
+
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
@@ -819,7 +897,7 @@
 							return award_text
 
 
-			attack_hand(mob/user as mob)
+			attack_hand(mob/user)
 				if (user.stat || isghostdrone(user) || !isliving(user))
 					return
 
@@ -845,7 +923,7 @@
 							src.add_fingerprint(user)
 							src.usage_state = 2
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 
@@ -883,7 +961,7 @@
 			icon_empty = "frame"
 			icon_state = "medal"
 
-			attackby(obj/item/W as obj, mob/user as mob)
+			attackby(obj/item/W, mob/user)
 				if (user.stat)
 					return
 
@@ -954,6 +1032,7 @@
 		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
+			award_type = /obj/item/mdlicense/
 			award_name = "medical license"
 			owner_job = "Medical Director"
 			icon_glass = "mdlicense1"
@@ -1034,7 +1113,7 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 				if(istype(W,/obj/item/pen/crayon/rainbow))
 					var/obj/item/pen/crayon/rainbow/R = W
@@ -1054,7 +1133,7 @@
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
 			qdel(src)
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		..()
 		if (usr.stat || usr.restrained() || !can_reach(usr, src))
 			return

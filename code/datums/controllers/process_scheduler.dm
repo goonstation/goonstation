@@ -29,8 +29,8 @@ var/global/datum/controller/processScheduler/processScheduler
 	// Process highest run time
 	var/tmp/list/datum/controller/process/highest_run_time = new
 
-	// Sleep 1 tick -- This may be too aggressive.
-	var/tmp/scheduler_sleep_interval = 1
+	// Sleep epsilon deciseconds, internally for byond this means to sleep until next tick
+	var/tmp/scheduler_sleep_interval = 0.001
 
 	// When starting more than one queued process, how many ticks apart will they be started
 	var/tmp/process_run_interval = 2
@@ -89,9 +89,11 @@ var/global/datum/controller/processScheduler/processScheduler
 		// already created and set up so just add it.
 		addProcess(process, TRUE)
 
+	global.lag_detection_process.setup()
+
 /datum/controller/processScheduler/proc/start()
 	isRunning = 1
-	SPAWN_DBG(0)
+	SPAWN(0)
 		process()
 
 /datum/controller/processScheduler/proc/process()
@@ -135,11 +137,11 @@ var/global/datum/controller/processScheduler/processScheduler
 			last_start[p] -= 36000
 
 		// If the process should be running by now, go ahead and queue it
-		if (TimeOfHour > last_start[p] + p.schedule_interval)
+		if (TimeOfHour > last_start[p] + p.schedule_interval + p.schedule_jitter)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
-	if (queued.len)
+	if (length(queued))
 		var/delay = 0
 		for (var/datum/controller/process/p as anything in queued)
 			runProcess(p, delay)
@@ -209,7 +211,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	nameToProcessMap[newProcess.name] = newProcess
 
 /datum/controller/processScheduler/proc/runProcess(var/datum/controller/process/process, var/delay)
-	SPAWN_DBG(delay)
+	SPAWN(delay)
 		process.process()
 
 /datum/controller/processScheduler/proc/processStarted(var/datum/controller/process/process)
@@ -226,6 +228,9 @@ var/global/datum/controller/processScheduler/processScheduler
 	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
+	// Do jitter adjustments since we just queued (± in the !initial! jitter range)
+	process.schedule_jitter = ((rand() * 2) - 1) * initial(process.schedule_jitter)
+
 	running -= process
 	idle -= process
 	queued |= process
@@ -306,6 +311,10 @@ var/global/datum/controller/processScheduler/processScheduler
 /datum/controller/processScheduler/proc/hasProcess(var/processName as text)
 	if (nameToProcessMap[processName])
 		return 1
+
+/datum/controller/processScheduler/proc/getProcess(var/processName as text)
+	RETURN_TYPE(/datum/controller/process)
+	. = nameToProcessMap[processName]
 
 /datum/controller/processScheduler/proc/killProcess(var/processName as text)
 	restartProcess(processName)

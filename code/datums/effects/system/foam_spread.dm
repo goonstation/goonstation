@@ -4,7 +4,7 @@
 	var/list/carried_reagents	// the IDs of reagents present when the foam was mixed
 	var/metal = 0				// 0=foam, 1=metalfoam, 2=ironfoam,
 	var/temperature = T0C
-	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
+	var/list/banned_reagents = list("smokepowder", "propellant", "pyrosium", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 
 /datum/effects/system/foam_spread/proc/set_up(amt=5, loca, var/datum/reagents/carry = null, var/metalfoam = 0, var/carry_volume = 0)
 	if (!carry)
@@ -34,7 +34,7 @@
 			carried_reagents[reagent_id] = current_reagent.volume * carrymult
 
 /datum/effects/system/foam_spread/proc/start()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/obj/effects/foam/F = locate() in location
 		if(F)
 			DEBUG_MESSAGE("Located [F] in [location]")

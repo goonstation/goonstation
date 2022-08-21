@@ -17,6 +17,42 @@
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
+	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+
+	///Takes a list of style ids to colors and generates a wig from it
+	proc/setup_wig(var/style_list)
+		if (!style_list)
+			return
+		var/actuallyHasHair = FALSE
+		for (var/style_id in style_list)
+			if (style_id == "none")
+				continue
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			h_image.color = style_list[style_id]
+			src.overlays += h_image
+			src.wear_image.overlays += h_image
+			actuallyHasHair = TRUE
+		if (!actuallyHasHair)
+			src.icon_state = "short"
+
+///A type to allow you to spawn custom wigs from the map editor
+/obj/item/clothing/head/wig/spawnable
+	icon = 'icons/mob/human_hair.dmi'
+	icon_state = "bald"
+	var/first_id = "none"
+	var/first_color = "#101010"
+	var/second_id = "none"
+	var/second_color = "#101010"
+	var/third_id = "none"
+	var/third_color = "#101010"
+
+	New()
+		..()
+		var/hair_list = list()
+		hair_list[first_id] = first_color
+		hair_list[second_id] = second_color
+		hair_list[third_id] = third_color
+		src.setup_wig(hair_list)
 
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
@@ -31,12 +67,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
-	force = 8.0
+	force = 8
+	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -50,7 +88,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.remove_bandage(M, user))
 			return 1
 		if (snip_surgery(M, user))
@@ -64,7 +102,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -75,12 +113,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
-	force = 7.0
+	force = 7
+	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -94,7 +134,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (scalpel_surgery(M, user))
 			return 1
 		..()
@@ -106,7 +146,7 @@
 		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -115,14 +155,19 @@
 	name = "hair dye bottle"
 	desc = "Used to dye hair a different color. Seems to be made of tough, unshatterable plastic."
 	icon = 'icons/obj/barber_shop.dmi'
-	icon_state = "dye-e"
+	icon_state = "dye"
 	flags = FPRINT | TABLEPASS
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = 1
+	var/hair_group = ALL_HAIR
+	var/image/dye_image
 
-	attack(mob/M as mob, mob/user as mob)
+	New()
+		dye_image = image(src.icon, "dye_color", -1)
+		..()
+
+	attack(mob/M, mob/user)
 		if(dye_hair(M, user, src))
 			return
 		else // I dunno, hit them with it?
@@ -156,6 +201,7 @@
 		reagents.add_reagent("hairgrownium", 40)
 
 	on_reagent_change()
+		..()
 		src.icon_state = "tonic[src.reagents.total_volume ? "1" : "0"]"
 
 /obj/stool/barber_chair //there shouldn't be any of these, here in case there's a secret map that has one, replace with /obj/stool/chair/comfy/barber_chair if you see one
@@ -232,7 +278,7 @@
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
-			src.icon_state= "dye-e"
+			src.ClearSpecificOverlays("dye_color")
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
@@ -262,25 +308,25 @@
 					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
 					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
 					if(user.mind.assigned_role == "Barber")
-						SPAWN_DBG(2 SECONDS)
+						SPAWN(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
 						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
-			user.tri_message(result_msg1,\
-												user, result_msg2,\
-												M,result_msg3)
+			user.tri_message(M, result_msg1,\
+												result_msg2,\
+												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0
-				src.icon_state= "dye-e"
+				src.ClearSpecificOverlays("dye_color")
 			else if(src.uses_left > 1 && is_barber && bottle.hair_group != ALL_HAIR)
 				src.uses_left --
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
 				boutput(user, "You used the whole bottle!")
 				src.uses_left = 0
-				src.icon_state= "dye-e"
+				src.ClearSpecificOverlays("dye_color")
 
 		M.update_colorful_parts()
 	return 1
@@ -294,7 +340,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dyedispenser"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
@@ -306,10 +352,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -330,7 +376,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
 		src.add_dialog(user)
@@ -375,7 +421,7 @@
 			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
 			return
 
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 			src.add_dialog(usr)
 
 			if (href_list["eject"])
@@ -390,12 +436,13 @@
 					if(new_dye)
 						bottle.customization_first_color = new_dye
 						bottle.uses_left = 3
-						bottle.icon_state = "dye-f"
+						bottle.dye_image.color = bottle.customization_first_color
+						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
 					src.updateDialog()
 			if(href_list["emptyb"])
 				if(src.bottle)
 					bottle.uses_left = 0
-					bottle.icon_state = "dye-e"
+					bottle.ClearSpecificOverlays("dye_color")
 				src.updateDialog()
 
 			src.add_fingerprint(usr)

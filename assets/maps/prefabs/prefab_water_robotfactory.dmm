@@ -26,9 +26,9 @@
 /area/prefab/replicant_lab)
 "ah" = (
 /obj/machinery/door/airlock/pyro/classic{
-	tag = "icon-old_closed (WEST)";
+	dir = 8;
 	icon_state = "old_closed";
-	dir = 8
+	tag = "icon-old_closed (WEST)"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
@@ -234,8 +234,8 @@
 "aQ" = (
 /obj/item/electronics/battery,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 8
+	dir = 8;
+	icon_state = "tracks"
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
@@ -291,12 +291,12 @@
 	},
 /obj/item/parts/robot_parts/chest/light,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 10
+	dir = 10;
+	icon_state = "tracks"
 	},
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 5
+	dir = 5;
+	icon_state = "tracks"
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
@@ -397,8 +397,8 @@
 	},
 /obj/decal/cleanable/robot_debris,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 5
+	dir = 5;
+	icon_state = "tracks"
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "smear3"
@@ -432,10 +432,6 @@
 /obj/item/device/flash,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
-"bo" = (
-/obj/decal/cleanable/robot_debris,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/prefab/replicant_lab)
 "bp" = (
 /obj/decal/fakeobjects/robot,
 /obj/decal/cleanable/robot_debris{
@@ -466,8 +462,8 @@
 	icon_state = "gib6"
 	},
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 4
+	dir = 4;
+	icon_state = "tracks"
 	},
 /obj/decal/fakeobjects/robot,
 /turf/simulated/floor/plating/scorched,
@@ -475,8 +471,8 @@
 "bt" = (
 /obj/item/parts/robot_parts/arm/right/sturdy,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 9
+	dir = 9;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
@@ -521,8 +517,8 @@
 /area/prefab/replicant_lab)
 "bB" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 1
+	dir = 1;
+	icon_state = "tracks"
 	},
 /obj/item/electronics/capacitor,
 /turf/simulated/floor/plating/scorched,
@@ -562,8 +558,8 @@
 /area/prefab/replicant_lab)
 "bH" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 1
+	dir = 1;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
@@ -605,8 +601,8 @@
 /area/prefab/replicant_lab)
 "bN" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 1
+	dir = 1;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
@@ -623,8 +619,8 @@
 /area/prefab/replicant_lab)
 "bQ" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 1
+	dir = 1;
+	icon_state = "tracks"
 	},
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib3"
@@ -638,7 +634,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "bS" = (
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/storage/crate/bin,
 /obj/item/organ/brain/synth,
 /turf/simulated/floor/shuttlebay,
@@ -696,7 +692,7 @@
 /obj/decal/cleanable/robot_debris,
 /obj/item/parts/human_parts/arm/left,
 /obj/item/parts/robot_parts/arm/left/light,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "ca" = (
@@ -726,8 +722,8 @@
 /area/prefab/replicant_lab)
 "cd" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 9
+	dir = 9;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
@@ -789,8 +785,8 @@
 "cm" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 1
+	dir = 1;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -846,8 +842,8 @@
 "cs" = (
 /obj/stool/chair,
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 9
+	dir = 9;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
@@ -855,8 +851,8 @@
 /area/prefab/replicant_lab)
 "ct" = (
 /obj/decal/cleanable/blood/tracks{
-	icon_state = "tracks";
-	dir = 8
+	dir = 8;
+	icon_state = "tracks"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
@@ -937,7 +933,7 @@
 	icon_state = "smear3"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},
@@ -1007,9 +1003,9 @@
 /area/prefab/replicant_lab)
 "cO" = (
 /obj/machinery/door/airlock/pyro/classic{
-	tag = "icon-old_closed (EAST)";
+	dir = 4;
 	icon_state = "old_closed";
-	dir = 4
+	tag = "icon-old_closed (EAST)"
 	},
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
@@ -1247,7 +1243,7 @@ aJ
 aT
 ba
 bg
-bo
+aa
 bx
 bf
 ad
