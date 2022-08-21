@@ -15,7 +15,10 @@ LOG_ADMIN
 # log client access (logon/logoff)
 LOG_ACCESS
 
-# log gamemode actions
+# log game actions (start of round, results, etc.)
+LOG_GAME
+
+# log gamemode actions (relay, nuke etc.)
 LOG_GAMEMODE
 
 # probabilities for game modes chosen in "secret" and "random" modes

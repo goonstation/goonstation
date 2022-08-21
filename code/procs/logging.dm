@@ -55,7 +55,6 @@ var/global/logLength = 0
 				diaryType = LOG_AUDIT
 				forceNonDiaryLoggingToo = TRUE
 			if (LOG_ADMIN) logs[LOG_ADMIN] += ingameLog
-			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_AHELP) logs[LOG_AHELP] += ingameLog
 			if (LOG_MHELP) logs[LOG_MHELP] += ingameLog
 			if (LOG_SAY) logs[LOG_SPEECH] += ingameLog
@@ -73,6 +72,7 @@ var/global/logLength = 0
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
 			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
+			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
 			if (LOG_DIARY)
 				diaryLogging = should_diary_log(diaryType)
@@ -93,7 +93,6 @@ var/global/logLength = 0
 		if (LOG_ADMIN) if (config.log_admin) return TRUE
 		if (LOG_AHELP) if (config.log_say) return TRUE
 		if (LOG_MHELP) if (config.log_say) return TRUE
-		if (LOG_GAMEMODE) if (config.log_gamemode) return TRUE
 		if (LOG_ACCESS) if (config.log_access) return TRUE
 
 		if (LOG_SAY) if (config.log_say) return TRUE
@@ -104,6 +103,7 @@ var/global/logLength = 0
 		if (LOG_TELEPATHY) if (config.log_telepathy) return TRUE
 		if (LOG_DEBUG) if (config.log_debug) return TRUE
 		if (LOG_VEHICLE) if (config.log_vehicles) return TRUE
+		if (LOG_GAMEMODE) if (config.log_gamemode) return TRUE
 	return FALSE
 
 /proc/logDiary(text)
