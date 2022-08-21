@@ -81,7 +81,7 @@ A Flamethrower in various states of assembly
 			return TRUE
 
 	log_shoot(mob/user, turf/T, obj/projectile/P)
-		logTheThing("combat", user, null, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
@@ -220,6 +220,20 @@ A Flamethrower in various states of assembly
 			. += "<br>\A [linkedflamer] is stowed away neatly in a compartment."
 
 	attackby(obj/item/W, mob/user)
+		if (src.loc == user && W != linkedflamer && istype(W, /obj/item/gun/flamethrower/backtank))
+			if (linkedflamer && (linkedflamer in src.contents))
+				boutput(user, "<span class='notice'>There already a flamethrower stowed in your [src.name].</span>")
+			else
+				var/obj/item/gun/flamethrower/backtank/flamer = W
+				if (flamer.fueltank != null)
+					var/obj/item/tank/jetpack/backtank/B = flamer.fueltank
+					B.linkedflamer = null
+				if (linkedflamer != null)
+					linkedflamer.gastank = null
+					linkedflamer.fueltank = null
+				linkedflamer = flamer
+				flamer.gastank = src
+				flamer.fueltank = src
 		if(src.loc == user && linkedflamer && W == linkedflamer)
 			boutput(user, "<span class='notice'>You stow [W] into your [src.name].</span>")
 			user.u_equip(W)

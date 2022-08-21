@@ -955,27 +955,25 @@
 
 /obj/machinery/door/poddoor/attackby(obj/item/C, mob/user)
 	src.add_fingerprint(user)
-	if (C && !ispryingtool(C))
-		if (src.density && !src.operating)
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(C.force)
-	if ((src.density && (status & NOPOWER) && !( src.operating )))
-		SPAWN( 0 )
-			src.operating = 1
-			flick("[icon_base]c0", src)
-			src.icon_state = "[icon_base]0"
-			sleep(1.5 SECONDS)
-			src.set_density(0)
-			if (ignore_light_or_cam_opacity)
-				src.opacity = 0
-			else
-				src.RL_SetOpacity(0)
-			src.operating = 0
-			update_nearby_tiles()
-			return
-	return
+	if (ispryingtool(C) && src.density && (status & NOPOWER) && !( src.operating ))
+		if(!ON_COOLDOWN(src, "playsound", 1.5 SECONDS))
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+		src.operating = TRUE
+		flick("[icon_base]c0", src)
+		src.icon_state = "[icon_base]0"
+		sleep(1.5 SECONDS)
+		src.set_density(0)
+		if (ignore_light_or_cam_opacity)
+			src.opacity = 0
+		else
+			src.RL_SetOpacity(0)
+		src.operating = FALSE
+		update_nearby_tiles()
+	else if (C && src.density && !src.operating)
+		user.lastattacked = src
+		attack_particle(user,src)
+		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
+		src.take_damage(C.force)
 
 /obj/machinery/door/poddoor/bumpopen(mob/user as mob)
 	return 0

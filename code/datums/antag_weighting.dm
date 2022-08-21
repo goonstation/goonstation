@@ -18,7 +18,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 	proc/debugLog(msg)
 		out(world, msg)
-		//logTheThing("debug", null, null, "<b>AntagWeighter</b> [msg]")
+		//logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> [msg]")
 
 
 	/**
@@ -193,7 +193,7 @@ var/global/datum/antagWeighter/antagWeighter
 		if (!ckeyMinds.len)
 			throw EXCEPTION("No minds with valid ckeys were given")
 
-		logTheThing("debug", null, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
+		logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
 
 		if (src.debug)
 			src.debugLog("Sending payload: [json_encode(apiPayload)]")
@@ -264,13 +264,13 @@ var/global/datum/antagWeighter/antagWeighter
 			var/list/record = list()
 			for (var/datum/mind/M in chosen)
 				record[M.ckey] = role
-				logTheThing("debug", null, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
 			for (var/datum/mind/M in pool)
 				if(!M.ckey)
 					continue
 				if(M in chosen)
 					continue
-				logTheThing("debug", null, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
 
 
 			src.recordMultiple(players = record)

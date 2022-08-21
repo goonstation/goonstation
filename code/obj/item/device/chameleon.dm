@@ -208,7 +208,7 @@
 		if (src.active)
 			if (user)
 				message_admins("[key_name(user)] triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -216,7 +216,7 @@
 	attack_hand(var/mob/user)
 		if (src.active && isturf(loc))
 			message_admins("[key_name(user)] picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
-			logTheThing("bombing", user, null, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -266,14 +266,14 @@
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			src.active = 1
 			boutput(usr, "<span class='notice'>You arm the [src].</span>")
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 	disrupt()
 		if (active)

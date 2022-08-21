@@ -2174,7 +2174,8 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ishuman(src.mob))
 			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN(0)
-				APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
+				if(src.mob) //how??
+					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
 		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)

@@ -11,7 +11,7 @@
 			if(fexists(fname))
 				event_transmissions = json_decode(file2text(fname))
 		if(!event_transmissions)
-			logTheThing("debug", src, null, "Event transmission JSON file loading failed.")
+			logTheThing(LOG_DEBUG, src, "Event transmission JSON file loading failed.")
 			return
 		var/event = pick(event_transmissions)
 		var/command_report = event["text"]
