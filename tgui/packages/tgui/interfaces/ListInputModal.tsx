@@ -6,7 +6,7 @@
  */
 
 import { Loader } from './common/Loader';
-import { InputButtons, Preferences } from './common/InputButtons';
+import { InputButtons } from './common/InputButtons';
 import { Button, Input, Section, Stack } from '../components';
 import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
 import { Window } from '../layouts';
@@ -16,15 +16,13 @@ import { useBackend, useLocalState } from '../backend';
    items: string[];
    message: string;
    init_value: string;
-   preferences: Preferences;
    timeout: number;
    title: string;
  };
 
 export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
-  const { items = [], message, init_value, preferences, timeout, title } = data;
-  const { large_buttons } = preferences;
+  const { items = [], message, init_value, timeout, title } = data;
   const [selected, setSelected] = useLocalState<number>(
     context,
     'selected',
@@ -105,7 +103,7 @@ export const ListInputModal = (_, context) => {
   );
   // Dynamically changes the window height based on the message.
   const windowHeight
-     = 325 + Math.ceil(message?.length / 3) + (large_buttons ? 5 : 0);
+     = 325 + Math.ceil(message?.length / 3);
   // Grabs the cursor when no search bar is visible.
   if (!searchBarVisible) {
     setTimeout(() => document!.getElementById(selected.toString())?.focus(), 1);
@@ -169,7 +167,7 @@ export const ListInputModal = (_, context) => {
                 selected={selected}
               />
             )}
-            <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
+            <Stack.Item>
               <InputButtons input={filteredItems[selected]} />
             </Stack.Item>
           </Stack>

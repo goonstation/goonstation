@@ -32,7 +32,7 @@
 		return
 	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout)
 	numbox.ui_interact(user)
-	UNTIL(QDELETED(numbox) || numbox.entry || numbox.closed)
+	numbox.wait()
 	if (numbox)
 		. = numbox.entry
 		qdel(numbox)
@@ -103,6 +103,14 @@
 		SPAWN(timeout)
 			qdel(src)
 	. = ..()
+
+/**
+ * Waits for a user's response to the tgui_input_number's prompt before returning. Returns early if
+ * the window was closed by the user.
+ */
+/datum/tgui_input_number/proc/wait()
+	while (!entry && !closed && !QDELETED(src))
+		sleep(1)
 
 /datum/tgui_input_number/disposing(force, ...)
 	tgui_process.close_uis(src)

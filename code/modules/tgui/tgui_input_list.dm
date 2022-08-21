@@ -100,7 +100,7 @@
 
 /datum/tgui_modal/list_input/ui_static_data(mob/user)
 	. = ..()
-	.["init_value"] = default || items[1],
+	.["init_value"] = default || items[1]
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
