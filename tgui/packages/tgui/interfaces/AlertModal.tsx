@@ -18,30 +18,30 @@ import {
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
- type AlertModalData = {
-   autofocus: boolean;
-   buttons: string[];
-   message: string;
-   timeout: number;
-   title: string;
- };
+  type AlertModalData = {
+    autofocus: boolean;
+    items: string[];
+    message: string;
+    timeout: number;
+    title: string;
+  };
 
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
 export const AlertModal = (_, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { autofocus, buttons = [], message, timeout, title } = data;
+  const { autofocus, items = [], message, timeout, title } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window dimensions
   const windowHeight
-    = 115
-    + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
-  const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
+     = 115
+     + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+  const windowWidth = 325 + (items.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
-      setSelected(buttons.length - 1);
-    } else if (selected === buttons.length - 1 && direction === KEY_INCREMENT) {
+      setSelected(items.length - 1);
+    } else if (selected === items.length - 1 && direction === KEY_INCREMENT) {
       setSelected(0);
     } else {
       setSelected(selected + direction);
@@ -55,16 +55,16 @@ export const AlertModal = (_, context) => {
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
           /**
-            * Simulate a click when pressing space or enter,
-            * allow keyboard navigation, override tab behavior
-            */
+             * Simulate a click when pressing space or enter,
+             * allow keyboard navigation, override tab behavior
+             */
           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
-            act('choose', { choice: buttons[selected] });
+            act('choose', { choice: items[selected] });
           } else if (keyCode === KEY_ESCAPE) {
             act('cancel');
           } else if (
             keyCode === KEY_LEFT
-             || (e.shiftKey && keyCode === KEY_TAB)
+              || (e.shiftKey && keyCode === KEY_TAB)
           ) {
             onKey(KEY_DECREMENT);
           } else if (keyCode === KEY_RIGHT || keyCode === KEY_TAB) {
@@ -88,13 +88,13 @@ export const AlertModal = (_, context) => {
 };
 
 /**
-  * Displays a list of buttons ordered by user prefs.
-  * Technically this handles more than 2 buttons, but you
-  * should just be using a list input in that case.
-  */
+   * Displays a list of buttons ordered by user prefs.
+   * Technically this handles more than 2 buttons, but you
+   * should just be using a list input in that case.
+   */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
-  const { buttons = [] } = data;
+  const { items = [] } = data;
   const { selected } = props;
 
   return (
@@ -104,7 +104,7 @@ const ButtonDisplay = (props, context) => {
       fill
       justify="space-around"
       wrap>
-      {buttons?.map((button, index) =>
+      {items?.map((button, index) =>
         (
           <Flex.Item key={index}>
             <AlertButton
@@ -120,8 +120,8 @@ const ButtonDisplay = (props, context) => {
 };
 
 /**
-  * Displays a button with variable sizing.
-  */
+   * Displays a button with variable sizing.
+   */
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const { button, selected } = props;

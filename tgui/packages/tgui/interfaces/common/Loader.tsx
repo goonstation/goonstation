@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author jlsnow301 (https://github.com/jlsnow301)
+ * @license ISC
+ */
 import { Box } from '../../components';
 import { clamp01 } from 'common/math';
 
