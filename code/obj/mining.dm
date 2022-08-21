@@ -395,7 +395,7 @@
 				wall_bits = target.generate_walls()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 1
+				M.set_opacity(1)
 				M.set_density(1)
 				M.invisibility = INVIS_NONE
 
@@ -435,7 +435,7 @@
 				MC.generate(target)
 			else
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-					M.opacity = 0
+					M.set_opacity(0)
 					M.set_density(0)
 					M.invisibility = INVIS_INFRA
 				active = 0
@@ -450,7 +450,7 @@
 			build_icon()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_ALWAYS
 
@@ -623,7 +623,7 @@
 
 	proc/pull_new_source(var/selectable_encounter_id = null)
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 1
+			M.set_opacity(1)
 			M.set_density(1)
 			M.invisibility = INVIS_NONE
 
@@ -677,7 +677,7 @@
 			MC.generate(null)
 		else
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_INFRA
 			active = 0
@@ -698,7 +698,7 @@
 		build_icon()
 
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 0
+			M.set_opacity(0)
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
@@ -1319,7 +1319,7 @@
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
 		src.stone_color = new_color
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
 			A.ClearAllOverlays() // i know theres probably a better way to handle this

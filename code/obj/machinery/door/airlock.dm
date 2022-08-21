@@ -1554,7 +1554,7 @@ About the new airlock wires panel:
 
 			if (!istype(src, /obj/machinery/door/airlock/glass))
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
@@ -1571,7 +1571,7 @@ About the new airlock wires panel:
 
 			if (src.visible)
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0

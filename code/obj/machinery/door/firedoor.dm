@@ -147,7 +147,7 @@
 				src.set_density(0)
 				update_nearby_tiles()
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 				src.operating = 0
@@ -163,7 +163,7 @@
 				sleep(1.5 SECONDS)
 
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 				src.operating = 0

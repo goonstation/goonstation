@@ -344,10 +344,10 @@ obj/structure/ex_act(severity)
 			return
 		else if (src.health <= 5)
 			icon_state = "woodwall4"
-			opacity = 0
+			set_opacity(0)
 		else if (src.health <= 10)
 			icon_state = "woodwall3"
-			opacity = 0
+			set_opacity(0)
 		else if (src.health <= 20)
 			icon_state = "woodwall2"
 		else

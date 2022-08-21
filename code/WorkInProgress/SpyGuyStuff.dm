@@ -807,7 +807,7 @@ proc/Create_Tommyname()
 	src.icon = initial(T.icon)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
-	src.opacity = initial(T.opacity)
+	src.set_opacity(initial(T.opacity))
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE

@@ -42,7 +42,7 @@
 		dummy.name = null
 		dummy.set_density(0)
 		dummy.anchored = 1
-		dummy.opacity = 0
+		dummy.set_opacity(0)
 		dummy.icon = null
 		dummy.overlays += charger
 		dummy.alpha = 255

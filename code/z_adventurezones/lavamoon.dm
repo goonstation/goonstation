@@ -1412,7 +1412,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			flick("ancientdoor_open",src)
 			src.icon_state = "ancientdoor_opened"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			desc = "One hell of a foreboding door. It's not entirely clear how it opened, as the seams did not exist prior..."
 			src.name = "unsealed door"
 			SPAWN(1.3 SECONDS)
@@ -1429,7 +1429,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
+			set_opacity(1)
 			flick("ancientdoor_close",src)
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)

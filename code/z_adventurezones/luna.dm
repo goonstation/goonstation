@@ -940,7 +940,7 @@ Contents:
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
-			src.opacity = 0
+			src.set_opacity(0)
 			sleep(0.6 SECONDS)
 			elecflash(src,power=2,exclude_center = 0)
 

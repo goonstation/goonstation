@@ -45,7 +45,7 @@
 		return
 	operating = 1
 	if (ignore_light_or_cam_opacity)
-		src.opacity = 0
+		src.set_opacity(0)
 	else
 		src.RL_SetOpacity(0)
 	p_open = 1
@@ -75,7 +75,7 @@
 	SPAWN(0.5 SECONDS)
 		operating = 0
 		if (ignore_light_or_cam_opacity)
-			src.opacity = 1
+			src.set_opacity(1)
 		else
 			src.RL_SetOpacity(1)
 

@@ -150,7 +150,7 @@
 			blink(src)
 			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
-			fakewall.opacity = 0
+			fakewall.set_opacity(0)
 			fakewall.RL_SetOpacity(1) //Lighting rebuild.
 			return
 
