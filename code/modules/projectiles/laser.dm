@@ -298,7 +298,7 @@ toxic - poisons
 	projectile_speed = 42
 
 	burst
-		cost = 60
+		cost = 50
 		shot_number = 3
 
 /datum/projectile/laser/precursor // for precursor traps
