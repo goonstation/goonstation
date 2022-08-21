@@ -285,7 +285,8 @@
 	force = 4
 	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -311,10 +312,12 @@
 	force = 10
 	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/higherish_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
+	force = MELEE_DMG_LARGE
+	w_class = W_CLASS_BULKY
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
@@ -330,6 +333,8 @@
 			src.icon_state = "phaser-xl[ratio]"
 			return
 
+	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+		return FALSE
 
 
 
