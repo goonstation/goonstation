@@ -125,21 +125,21 @@ toxic - poisons
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
 	icon_state = "phaser_energy"
-	power = 20
+	power = 25
 	cost = 25
 	sname = "phaser bolt"
 	dissipation_delay = 5
 	shot_sound = 'sound/weapons/laserlight.ogg'
-	color_red = 1
-	color_green = 0
-	color_blue = 0
+	color_red = 0
+	color_green = 1
+	color_blue = 0.2
 
 	tiny
-		name = "mini phaser bolt"
+		name = "micro phaser bolt"
 		icon_state = "bolt"
-		sname = "mini phaser bolt"
-		power = 10
-		cost = 25
+		sname = "micro phaser bolt"
+		power = 15
+		cost = 12.5
 		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
 		color_red = 0
 		color_green = 1
@@ -149,17 +149,21 @@ toxic - poisons
 		name = "macro phaser blast"
 		icon_state = "crescent"
 		sname = "macro phaser blast"
-		power = 55
-		cost = 100
+		power = 50
+		cost = 62.5
 		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
 		color_red = 0
 		color_green = 0.1
 		color_blue = 0.4
 
+		on_hit(atom/hit, dir, obj/projectile/P)
+			hit.ex_act(3, src, 1.5)
+			P.die()
+
 
 	mining
 		name = "mining phaser bolt"
-		power = 3
+		power = 5
 		cost = 5
 		dissipation_delay = 3
 		icon_state = "blue_spark"
@@ -187,6 +191,9 @@ toxic - poisons
 		icon_state = "red_bolt"
 		dissipation_delay = 10
 		shot_sound = 'sound/weapons/laser_b.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
 
 	split
 		dissipation_rate = 100

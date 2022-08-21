@@ -509,10 +509,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/weapons3
 	name = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
-	desc = "x2 Micro Phaser Gun"
+	desc = "x4 Micro Phaser Gun"
 	category = "Security Department"
-	contains = list(/obj/item/gun/energy/phaser_small = 2)
-	cost = 2500
+	contains = list(/obj/item/gun/energy/phaser_small = 4)
+	cost = 5000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers

@@ -370,10 +370,14 @@ var/list/cached_colors = new/list()
 
 		currentpattern = rand(1, length(src.patternlist))
 
+
 	afterattack(var/atom/target, var/mob/user, var/change_color = TRUE)
 		if(!..(target, user, FALSE)) return
+		var/matrix/scale_transform = matrix()
+		var/icon/I = new(target.icon) //isn't DM great?
+		scale_transform.Scale(I.Width()/32, I.Height()/32)
+		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, transform=scale_transform, blend_mode=BLEND_MULTIPLY))
 
-		target.add_filter("paint_pattern", 1, layering_filter(icon=src.patternlist[src.currentpattern], color=src.actual_paint_color, blend_mode=BLEND_MULTIPLY))
 		if(ismob(target.loc))
 			var/mob/M = target.loc
 			M.update_clothing() //trigger an update if this is worn clothing
@@ -386,6 +390,7 @@ var/list/cached_colors = new/list()
 			src.currentpattern += 1
 			if (src.currentpattern > length(src.patternlist))
 				src.currentpattern = 1
+
 
 			src.paint_color = colorlist[currentcolor]
 			src.generate_icon()

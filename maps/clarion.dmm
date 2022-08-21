@@ -6273,11 +6273,6 @@
 "all" = (
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
-"alm" = (
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_east"
-	},
-/area/station/hangar/sec)
 "alp" = (
 /obj/machinery/light{
 	dir = 4;
@@ -7105,6 +7100,9 @@
 	dir = 0;
 	icon_state = "2-4"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -7532,34 +7530,15 @@
 "ani" = (
 /obj/machinery/light,
 /obj/machinery/vehicle/miniputt/nanoputt/security,
-/turf/simulated/floor/engine{
-	dir = 6;
-	icon_state = "engine_caution_corners2"
-	},
-/area/station/hangar/sec)
-"anj" = (
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
-"ank" = (
-/obj/machinery/vehicle/pod_smooth/heavy/security,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0;
-	icon_state = "engine_caution_south"
-	},
-/area/station/hangar/sec)
-"anl" = (
-/turf/simulated/floor/engine{
-	dir = 1;
-	icon_state = "engine_caution_corners"
-	},
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "anm" = (
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -7791,6 +7770,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "anJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -7799,6 +7781,9 @@
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -28106,6 +28091,14 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"bhz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/hangar/sec)
 "bhB" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -46335,6 +46328,14 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"iDQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/hangar/sec)
 "iEy" = (
 /obj/pool/perspective,
 /obj/pool/perspective{
@@ -51051,9 +51052,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_east"
-	},
+/turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "uRy" = (
 /obj/disposalpipe/segment,
@@ -51643,6 +51642,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -78838,7 +78840,7 @@ alk
 all
 all
 all
-anj
+all
 anJ
 aog
 alP
@@ -79095,8 +79097,8 @@ all
 alO
 all
 all
-ank
-ajv
+alO
+bhz
 aoh
 aoN
 apn
@@ -79349,11 +79351,11 @@ ajR
 akt
 aiZ
 uQM
-alm
-alm
-alm
-anl
-ajv
+all
+all
+all
+all
+bhz
 aoi
 aiZ
 aiZ
@@ -79606,8 +79608,8 @@ ajR
 akt
 aiZ
 wpB
-alP
-alP
+iDQ
+iDQ
 amz
 anm
 anK
