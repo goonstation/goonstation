@@ -261,6 +261,7 @@
 	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
+	mats = list("MET-1" = 6, "MET-2"=3, "CON-1" = 2, "CRY-1"=4, "POW-1"=6)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light)
@@ -287,6 +288,7 @@
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell
 	w_class = W_CLASS_SMALL
+	mats = list("MET-1" = 3, "MET-2"=2, "CON-1" = 1, "CRY-1"=2, "POW-1"=15)
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -317,8 +319,8 @@
 	charge_up = 5
 	can_dual_wield = FALSE
 	force = MELEE_DMG_LARGE
-	w_class = W_CLASS_BULKY
-
+	two_handed = 1
+	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
