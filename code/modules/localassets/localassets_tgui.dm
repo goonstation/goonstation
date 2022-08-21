@@ -8,18 +8,6 @@
 		/datum/asset/basic/fontawesome
 	)
 
-/// Common tgui assets
-/datum/asset/basic/tgui_common
-	local_assets = list(
-		"tgui-common.bundle.js",
-	)
-
-	init()
-		. = ..()
-		url_map = list(
-			"tgui/tgui-common.bundle.js" = "[resource("tgui/tgui-common.bundle.js")]",
-		)
-
 /// Normal base window tgui assets
 /datum/asset/basic/tgui
 	local_assets = list(
