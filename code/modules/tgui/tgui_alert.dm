@@ -82,11 +82,10 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, copyButtons = TRUE, autofocus)
+/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus = TRUE, autofocus)
 	src.title = title
 	src.message = message
-	if (copyButtons)
-		src.items = items.Copy()
+	src.items = items.Copy()
 	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
@@ -115,8 +114,8 @@
 	. = tgui_always_state
 
 /datum/tgui_modal/ui_data(mob/user)
+	. = list()
 	if(timeout)
-		. = list()
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 
 /datum/tgui_modal/ui_static_data(mob/user)
@@ -134,10 +133,20 @@
 	switch(action)
 		if("choose")
 			if (!(params["choice"] in items))
+				logTheThing("debug", src, null, "<b>TGUI/ZeWaka</b>: [usr] entered a non-existent button choice: [params["choice"]]")
 				return
+			set_choice(params["choice"])
+			closed = TRUE
+			tgui_process.close_uis(src)
+			return TRUE
+		if("cancel")
+			closed = TRUE
 			choice = params["choice"]
 			tgui_process.close_uis(src)
 			. = TRUE
+
+/datum/tgui_modal/proc/set_choice(choice)
+	src.choice = choice
 
 /**
  * # async tgui_modal
