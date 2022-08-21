@@ -1,6 +1,7 @@
 /*
  * Copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
  * Changes: watermelon914 (https://github.com/watermelon914)
+ * Changes: jlsnow301 (https://github.com/jlsnow301)
  * Licensed under MIT to Goonstation only (https://choosealicense.com/licenses/mit/)
  */
 
@@ -12,14 +13,14 @@
  * * user - The user to show the input box to.
  * * message - The content of the input box, shown in the body of the TGUI window.
  * * title - The title of the input box, shown on the top of the TGUI window.
- * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * timeout - The timeout of the input box, after which the input box will close and qdel itself. Set to zero for no timeout.
- * * allowIllegal - Whether to allow illegal characters in buttons.
+ * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
+ * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
+ * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list(mob/user, message, title, list/buttons, timeout = 0, allowIllegal = FALSE)
+/proc/tgui_input_list(mob/user, message, title, list/items, timeout = 0, allowIllegal = FALSE)
 	if (!user)
 		user = usr
-	if(!length(buttons))
+	if(!length(items))
 		return
 	if (!istype(user))
 		if (istype(user, /client))
@@ -27,7 +28,7 @@
 			user = client.mob
 	if (!user)
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, buttons, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, items, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 	UNTIL(input.choice || input.closed)
 	if (input)
@@ -42,15 +43,15 @@
  * * user - The user to show the input box to.
  * * message - The content of the input box, shown in the body of the TGUI window.
  * * title - The title of the input box, shown on the top of the TGUI window.
- * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
+ * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
- * * allowIllegal - Whether to allow illegal characters in buttons.
+ * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list_async(mob/user, message, title, list/buttons, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
+/proc/tgui_input_list_async(mob/user, message, title, list/items, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
 	if (!user)
 		user = usr
-	if(!length(buttons))
+	if(!length(items))
 		return
 	if (!istype(user))
 		if (istype(user, /client))
@@ -58,7 +59,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, buttons, callback, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, callback, timeout, allowIllegal=allowIllegal)
 	input.ui_interact(user)
 
 /**
@@ -69,20 +70,20 @@
  */
 /datum/tgui_modal/list_input
 	/// Buttons (strings specifically) mapped to the actual value (e.g. a mob or a verb)
-	var/list/buttons_map
+	var/list/items_map
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/buttons, timeout, copyButtons = FALSE, allowIllegal = FALSE)
-	src.buttons = list()
-	src.buttons_map = list()
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+	src.items = list()
+	src.items_map = list()
 
 	// Gets rid of illegal characters
 	var/static/regex/whitelistedWords = regex(@{"([^\u0020-\u8000]+)"})
 
-	for(var/i in buttons)
+	for(var/i in items)
 		var/string_key = allowIllegal ? i : whitelistedWords.Replace("[i]", "")
 
-		src.buttons += string_key
-		src.buttons_map[string_key] = i
+		src.items += string_key
+		src.items_map[string_key] = i
 
 	. = ..()
 
@@ -90,7 +91,7 @@
 /datum/tgui_modal/list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ListInput")
+		ui = new(user, src, "ListInputModal")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
@@ -99,10 +100,10 @@
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return
 	switch(action)
-		if("choose")
-			if (!(params["choice"] in buttons))
+		if("submit")
+			if (!(params["entry"] in items))
 				return
-			choice = buttons_map[params["choice"]]
+			choice = items_map[params["entry"]]
 			tgui_process.close_uis(src)
 			. = TRUE
 		if("cancel")
@@ -119,8 +120,8 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/buttons, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
-	..(user, title, message, buttons, timeout, copyButtons, allowIllegal)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, callback, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+	..(user, title, message, items, timeout, copyButtons, allowIllegal)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)
