@@ -375,13 +375,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/Toxmob()
 
-	for (var/mob/living/carbon/M in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.wear_suit)
-				return
-		M.take_toxin_damage(12)
-		M.changeStatus("radiation", 4*(radius+1) SECONDS)
+	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+		M.changeStatus("radiation", 6*(radius+1) SECONDS)
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
