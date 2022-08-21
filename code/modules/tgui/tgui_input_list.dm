@@ -61,7 +61,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, allowIllegal)
 	input.ui_interact(user)
 
 /**
@@ -127,8 +127,8 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout)
-	..(user, message, title, items, default, timeout)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, allowIllegal = FALSE)
+	..(user, message, title, items, default, timeout, allowIllegal)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)
