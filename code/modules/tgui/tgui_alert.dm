@@ -12,10 +12,10 @@
  * * message - The content of the alert, shown in the body of the TGUI window.
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
+ * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
  * * autofocus - The bool that controls if this alert should grab window focus.
  */
-/proc/tgui_alert(mob/user, message = null, title = null, list/items = list("Ok"), timeout = 0 SECONDS, autofocus = TRUE)
+/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -24,39 +24,16 @@
 			user = client.mob
 		else
 			return
-	if (!user.client) // No NPCs or they hang Mob AI process
-		return
+	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
+	if(length(items) > 3)
+		log_tgui(user, "Error: TGUI Alert initiated with too many items. Use a list.", "TguiAlert")
+		return tgui_input_list(user, message, title, items, timeout, autofocus)
 	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus)
 	alert.ui_interact(user)
-	UNTIL(alert.choice || alert.closed)
+	alert.wait()
 	if (alert)
 		. = alert.choice
 		qdel(alert)
-
-/**
- * Creates an asynchronous TGUI alert window with an associated callback.
- *
- * This proc should be used to create alerts that invoke a callback with the user's chosen option.
- * Arguments:
- * * user - The user to show the alert to.
- * * message - The content of the alert, shown in the body of the TGUI window.
- * * title - The of the alert modal, shown on the top of the TGUI window.
- * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set otherwise.
- * * autofocus - The bool that controls if this alert should grab window focus.
- */
-/proc/tgui_alert_async(mob/user, message = null, title = null, list/items = list("Ok"), datum/callback/callback, timeout = 0 SECONDS, autofocus = TRUE)
-	if (!user)
-		user = usr
-	if (!istype(user))
-		if (istype(user, /client))
-			var/client/client = user
-			user = client.mob
-		else
-			return
-	var/datum/tgui_modal/async/alert = new(user, message, title, items, callback, timeout, autofocus)
-	alert.ui_interact(user)
 
 /**
  * # tgui_modal
@@ -83,10 +60,10 @@
 	var/closed
 
 /datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus)
+	src.autofocus = autofocus
+	src.items = items.Copy()
 	src.title = title
 	src.message = message
-	src.items = items.Copy()
-	src.autofocus = autofocus
 	if (timeout)
 		src.timeout = timeout
 		src.start_time = TIME
@@ -99,6 +76,14 @@
 	qdel(items)
 	items = null
 	. = ..()
+
+/**
+ * Waits for a user's response to the tgui_alert's prompt before returning. Returns early if
+ * the window was closed by the user.
+ */
+/datum/tgui_modal/proc/wait()
+	while (!choice && !closed && !QDELETED(src))
+		LAGCHECK(LAG_HIGH)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -133,7 +118,7 @@
 	switch(action)
 		if("choose")
 			if (!(params["choice"] in items))
-				logTheThing("debug", src, null, "<b>TGUI/ZeWaka</b>: [usr] entered a non-existent button choice: [params["choice"]]")
+				log_tgui(usr, "<b>TGUI/ZeWaka</b>: [usr] entered a non-existent button choice: [params["choice"]]")
 				return
 			set_choice(params["choice"])
 			closed = TRUE
@@ -147,32 +132,3 @@
 
 /datum/tgui_modal/proc/set_choice(choice)
 	src.choice = choice
-
-/**
- * # async tgui_modal
- *
- * An asynchronous version of tgui_modal to be used with callbacks instead of waiting on user responses.
- */
-/datum/tgui_modal/async
-	/// The callback to be invoked by the tgui_modal upon having a choice made.
-	var/datum/callback/callback
-
-/datum/tgui_modal/async/New(mob/user, message, title, list/items, callback, timeout, autofocus)
-	..(user, title, message, items, timeout, autofocus)
-	src.callback = callback
-
-/datum/tgui_modal/async/disposing(force, ...)
-	qdel(callback)
-	callback = null
-	. = ..()
-
-/datum/tgui_modal/async/ui_close(mob/user)
-	. = ..()
-	qdel(src)
-
-/datum/tgui_modal/async/ui_act(action, list/params)
-	. = ..()
-	if (!. || choice == null)
-		return
-	callback.InvokeAsync(choice)
-	qdel(src)
