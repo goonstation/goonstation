@@ -323,7 +323,7 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				logTheThing(LOG_COMBAT, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
 				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -338,7 +338,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_COMBAT, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
 			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -910,12 +910,12 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
-		else if (load_reclaim(W, user))
-			boutput(user, "You load [W] into [src].")
-			playsound(src, sound_load, 40, 1)
 		else if (W.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
+		else if (load_reclaim(W, user))
+			boutput(user, "You load [W] into [src].")
+			playsound(src, sound_load, 40, 1)
 		else
 			. = ..()
 

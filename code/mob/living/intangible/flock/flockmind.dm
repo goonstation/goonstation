@@ -140,7 +140,7 @@
 	return O
 
 
-/mob/living/intangible/flock/flockmind/proc/partition()
+/mob/living/intangible/flock/flockmind/proc/partition(free = FALSE)
 	boutput(src, "<span class='flocksay'>Partitioning initiated. Stand by.</span>")
 
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -151,31 +151,31 @@
 	text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 	message_admins("Sending Flocktrace offer to eligible ghosts. They have [ghost_confirmation_delay / 10] seconds to respond.")
-	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages)
+	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages, TRUE)
 
 	if (src.disposed)
 		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
-		logTheThing("admin", null, null, "No Flocktraces were created for [src.real_name] due to their death.")
+		logTheThing(LOG_ADMIN, null, "No Flocktraces were created for [src.real_name] due to their death.")
 		return TRUE
 
 	if (!length(candidates))
 		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
-		logTheThing("admin", null, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
+		logTheThing(LOG_ADMIN, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
 		return TRUE
 
-	if (!src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+	if (!free && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
-		logTheThing("admin", null, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
+		logTheThing(LOG_ADMIN, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
 	var/mob/picked = pick(candidates)
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing("admin", picked.key, null, "respawned as a Flocktrace under [src.real_name].")
+	logTheThing(LOG_ADMIN, picked.key, "respawned as a Flocktrace under [src.real_name].")
 
-	picked.make_flocktrace(get_turf(src), src.flock)
+	picked.make_flocktrace(get_turf(src), src.flock, free)
 
 // old code for flocktrace respawns
 /datum/ghost_notification/respawn/flockdrone
@@ -200,5 +200,5 @@
 	if(winner) // probably a paranoid check
 		var/mob/living/trace = winner.make_flocktrace(get_turf(src), src.flock)
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		logTheThing("admin", src, trace, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
+		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)

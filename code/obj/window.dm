@@ -421,7 +421,7 @@
 			var/obj/item/grab/G = W
 			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
 				G.affecting.TakeDamage("head", 5, 0)
 				src.damage_blunt(G.affecting.throwforce)
@@ -442,7 +442,7 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
 		else if(ispryingtool(W))
 			state = 1 - state
@@ -466,7 +466,7 @@
 		src.set_layer_from_settings()
 
 	proc/smash()
-		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
+		logTheThing(LOG_STATION, usr, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -987,8 +987,8 @@
 
 
 	auto
-		name = "autowindow grille spawner (will place nonreinf soon)"
-		win_path = "/obj/window/auto/reinforced"
+		name = "autowindow grille spawner"
+		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
 		icon_state = "wingrille_f"
@@ -999,8 +999,8 @@
 			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner (will place nonreinf soon)"
-			win_path = "/obj/window/auto/crystal/reinforced"
+			name = "crystal autowindow grille spawner"
+			win_path = "/obj/window/auto/crystal"
 			icon_state = "p-wingrille_f"
 
 			reinforced

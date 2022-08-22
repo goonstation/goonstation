@@ -14,7 +14,7 @@
 
 	if (!src.holder)
 		message_admins("Non-admin client [src.key] somehow tried to input some data. Huh?")
-		logTheThing("debug", src.mob, null, "somehow attempted to input data via the input_data proc.")
+		logTheThing(LOG_DEBUG, src.mob, "somehow attempted to input data via the input_data proc.")
 		return
 
 	// clear out invalid options. TODO might want to datumize these at some point

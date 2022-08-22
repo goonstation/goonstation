@@ -259,7 +259,7 @@
 			if (SD.cant_emag != 0 || SD.isblocked() != 0)
 				boutput(user, "<span class='alert'>It's shut tight!</span>")
 			else
-				SD.open(1)
+				SD.open()
 				success = 1
 
 		if (istype(src, /obj/machinery/door/airlock))
@@ -553,7 +553,7 @@
 			var/max = 50
 			for(var/atom/movable/A in get_turf(src))
 				if (istype(A,/obj/fluid) || istype(A,/obj/machinery/door) || istype(A, /obj/forcefield/energyshield)) continue //don't let some dumb puddle prevent us from closing!
-				else if(isliving(A) || A.density) //Too big, let us not crush this
+				else if((isliving(A) && !isintangible(A)) || A.density) //Too big, let us not crush this
 					close_trys += 1
 					return 1
 

@@ -8,7 +8,7 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
@@ -48,7 +48,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start
 	name = "start"
-	icon_state = "x"
+	icon_state = "player-start"
 	add_to_landmarks = FALSE
 
 	New()
@@ -63,6 +63,7 @@ var/global/list/job_start_locations = list()
 // most of these are here just for backwards compatibility
 
 /obj/landmark/start/latejoin
+	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
@@ -106,11 +107,11 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/magnet_center
 	name = LANDMARK_MAGNET_CENTER
-	icon_state = "x"
+	icon_state = "magnet-center"
 
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD
-	icon_state = "x"
+	icon_state = "magnet-shield"
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
@@ -143,7 +144,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/artifact
 	name = LANDMARK_ARTIFACT_SPAWN
-	icon_state = "x3"
+	icon_state = "artifact-spawn"
 	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
 	New()
 		src.data = src.spawnchance

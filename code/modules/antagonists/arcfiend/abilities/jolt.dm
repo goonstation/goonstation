@@ -10,7 +10,7 @@
 		Self-use is instantaneous, but burns you badly."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
-	pointCost = 500
+	pointCost = 200
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -26,7 +26,7 @@
 				self_cast(target)
 				return
 			actions.start(new/datum/action/bar/private/icon/jolt(src.holder.owner, target, src.holder, src.wattage), src.holder.owner)
-			logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else
 			return TRUE
 
@@ -42,12 +42,12 @@
 		H.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
-	duration = 18 SECONDS
+	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
 	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "jolt_icon"
-	
+
 	var/mob/living/user
 	var/mob/living/target
 	var/datum/abilityHolder/holder

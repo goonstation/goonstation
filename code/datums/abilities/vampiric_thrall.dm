@@ -106,7 +106,7 @@
 				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
 				if (V.blood_points < 0)
 					V.blood_points = 0
-					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
+					if (haine_blood_debug) logTheThing(LOG_DEBUG, M, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
 
 				if (set_null)
 					V.blood_points = 0

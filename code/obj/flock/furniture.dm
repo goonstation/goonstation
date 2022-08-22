@@ -381,7 +381,7 @@
 		. = TRUE
 
 /obj/grille/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	return !src.density || istype(mover,/mob/living/critter/flock)
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))

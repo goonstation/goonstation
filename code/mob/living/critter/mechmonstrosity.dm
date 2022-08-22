@@ -240,7 +240,7 @@
 		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
 		target.emote("shiver")
 
-		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/action/bar/icon/mechanimateAbility
@@ -277,7 +277,7 @@
 		..()
 		var/mob/ownerMob = owner
 		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "injects [constructTarget(target,"combat")]. Crawler transformation")
+			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
 			playsound(ownerMob, "sound/items/hypo.ogg", 80, 0)
@@ -361,7 +361,7 @@
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
 		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
 
-		logTheThing("combat", M, target, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/projectile/syringefilled

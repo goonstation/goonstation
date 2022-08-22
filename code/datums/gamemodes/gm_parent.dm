@@ -202,12 +202,12 @@
 					obj_count++
 					if (objective.check_completion())
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
-						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
+						logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
-						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
+						logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 
 			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
@@ -230,7 +230,7 @@
 				game_stats.Increment("traitorloss")
 	#endif
 		catch(var/exception/e)
-			logTheThing("debug", null, null, "Kyle|antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DEBUG, null, "Kyle|antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
 
 	// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
@@ -252,7 +252,7 @@
 					else
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
-			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DEBUG, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
 	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
@@ -293,7 +293,7 @@
 				unpicked_candidate_minds.Add(player.mind)
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
+		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		if(length(unpicked_candidate_minds))
 			shuffle_list(unpicked_candidate_minds)
@@ -306,7 +306,7 @@
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
 		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
-		logTheThing("debug", null, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)
 		return list()

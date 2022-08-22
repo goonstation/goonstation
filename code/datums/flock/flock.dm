@@ -399,7 +399,7 @@ var/flock_signal_unleashed = FALSE
 				src.active_names[name] = TRUE
 		tries++
 	if (!name_found && tries == max_tries)
-		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
 	return name
 
@@ -647,7 +647,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, "sound/items/Deconstruct.ogg", 40, 1)
+	playsound(T, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)

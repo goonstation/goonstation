@@ -17,20 +17,19 @@ import traceback
 from github import Github, InputGitAuthor
 
 labels_to_emoji = {
-	'ass-jam': '🍑',
-	'balance': '⚖',
-	'bug-critical': '🐛',
-	'bug-major': '🐛',
-	'bug': '🐛',
-	'bug-minor': '🐛',
-	'bug-trivial': '🐛',
-	'enhancement': '🆕',
-	'feature': '🆕',
-	'removal': '⛔',
-	'sprites': '🎨',
-	'mapping': '🗺',
-	'rework': '🔄',
-	'tgui': '📄'
+	'a-balance': '⚖',
+	'c-bug-critical': '🐛',
+	'c-bug-major': '🐛',
+	'c-bug': '🐛',
+	'c-bug-minor': '🐛',
+	'c-bug-trivial': '🐛',
+	'c-feature': '🆕',
+	'c-removal': '⛔',
+	'c-revert': '⛔',
+	'a-sprites': '🎨',
+	'a-mapping': '🗺',
+	'c-rework': '🔄',
+	'a-ui': '📄'
 }
 
 def parse_pr_changelog(pr):

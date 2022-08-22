@@ -479,7 +479,7 @@
 			..()
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/wirecutters/) && src.thorned)
+		if (issnippingtool(W) && src.thorned)
 			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
 			src.thorned = 0
 			src.desc += " Its thorns have been snipped off."

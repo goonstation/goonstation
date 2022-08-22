@@ -152,4 +152,4 @@
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
 						new /obj/grille/steel(T)
-		logTheThing("combat", W, null, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")
+		logTheThing(LOG_COMBAT, W, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")
