@@ -82,7 +82,7 @@
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = tgui_input_text(user, "Set designation", "Re-Designate Buoy")
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -207,7 +207,7 @@
 			src.deploybeacon()
 
 		else if (ispulsingtool(W) && !src.deploying)
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = tgui_input_text(user, "Set designation", "Re-Designate Buoy")
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return

@@ -132,11 +132,11 @@
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = input("Line 1", "Enter Message Text", stat_msg1) as text|null
+			stat_msg1 = tgui_input_text(usr, "Line 1", "Enter Message Text", stat_msg1)
 			stat_msg1 = copytext(adminscrub(stat_msg1), 1, MAX_MESSAGE_LEN)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = input("Line 2", "Enter Message Text", stat_msg2) as text|null
+			stat_msg2 = tgui_input_text(usr, "Line 2", "Enter Message Text", stat_msg2)
 			stat_msg2 = copytext(adminscrub(stat_msg2), 1, MAX_MESSAGE_LEN)
 			src.updateDialog()
 
@@ -316,7 +316,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	var/call_reason = input("Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", "") as text|null
+	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason")
 
 	if (isnull(call_reason)) // Cancel
 		return

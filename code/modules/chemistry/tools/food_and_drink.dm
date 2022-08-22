@@ -911,7 +911,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen) && !src.labeled)
-			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			var/t = tgui_input_text(user, "Enter label", "Label", src.name)
 			if(t && t != src.name)
 				phrase_log.log_phrase("bottle", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)

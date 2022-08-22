@@ -1800,7 +1800,7 @@
 		if (istype(W, /obj/item/pen))
 			if (!bee_name)
 				bee_name = pick_string("bee_names.txt", "beename")
-			var/t = input(user, "Enter new bee name", src.name, src.bee_name) as null|text
+			var/t = tgui_input_text(user, "Enter new bee name", src.name, src.bee_name)
 			logTheThing(LOG_DEBUG, user, "names a bee egg \"[t]\"")
 			if (!t)
 				return

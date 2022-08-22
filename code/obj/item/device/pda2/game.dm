@@ -561,7 +561,7 @@
 				src.temp = "<b>YOU LOSE!</b>"
 
 		else if (href_list["guess"])
-			var/attempt = input("Enter your guess.","CodeBreaker") as null|text
+			var/attempt = tgui_input_text(usr, "Enter your guess.", "CodeBreaker")
 			if(!attempt)
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()

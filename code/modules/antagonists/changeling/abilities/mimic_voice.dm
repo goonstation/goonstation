@@ -12,7 +12,7 @@
 	cast(atom/target)
 		if (..())
 			return 1
-		var/mimic_name = html_encode(input("Choose a name to mimic:","Mimic Target.",last_mimiced_name) as null|text)
+		var/mimic_name = html_encode(tgui_input_text(usr, "Choose a name to mimic:", "Mimic Target.", last_mimiced_name))
 
 		if (!mimic_name)
 			return 1
@@ -20,7 +20,7 @@
 			phrase_log.log_phrase("voice-mimic", mimic_name, no_duplicates=TRUE)
 		last_mimiced_name = mimic_name //A little qol, probably.
 
-		var/mimic_message = html_encode(input("Choose something to say:","Mimic Message.","") as null|text)
+		var/mimic_message = html_encode(tgui_input_text(usr, "Choose something to say:", "Mimic Message."))
 
 		if (!mimic_message)
 			return 1

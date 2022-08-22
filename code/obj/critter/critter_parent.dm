@@ -1002,7 +1002,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
-			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
+			var/t = tgui_input_text(user, "Enter new name", src.name, src.critter_name)
 			logTheThing(LOG_DEBUG, user, "names a critter egg \"[t]\"")
 			if (!t)
 				return

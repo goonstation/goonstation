@@ -150,10 +150,9 @@
 	ircmsg["msg"] = html_decode(msg)
 	ircbot.export_async("mentorhelp", ircmsg)
 
-/mob/verb/pray(msg as text)
+/mob/verb/pray()
 	set category = "Commands"
 	set name = "pray"
-	set desc = "Attempt to gain the attention of a divine being. Note that it's not necessarily the kind of attention you want."
 
 	var/client/client = src.client
 
@@ -175,8 +174,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	if(!msg)
-		msg = input("Please enter your prayer to any gods that may be listening - be careful what you wish for, as the gods may be the vengeful sort!") as null|text
+	var/msg = tgui_input_text(usr, "Please enter your prayer to any gods that may be listening - be careful what you wish for, as the gods may be the vengeful sort!", "Pray")
 
 	if(msg)
 		phrase_log.log_phrase("prayer", msg)

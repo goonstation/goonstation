@@ -23,7 +23,7 @@
         boutput(holder.owner, "<span class='alert'>You can't talk to dead brains!</span>")
         return 1
       else
-        var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
+        var/message = html_encode(tgui_input_text(usr, "What would you like to communicate to [target]?", "Telepathy"))
         logTheThing(LOG_SAY, holder.owner, "MARTIAN TELEPATHY TO [constructTarget(target,"say")]: [message]")
         message = trim(copytext(sanitize(message), 1, 255))
         var/class = "martiansay"

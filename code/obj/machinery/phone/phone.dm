@@ -144,7 +144,7 @@
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
-			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
+			var/t = tgui_input_text(user, "What do you want to name this phone?", "Name phone")
 			t = sanitize(html_encode(t))
 			if(t && length(t) > 50)
 				return

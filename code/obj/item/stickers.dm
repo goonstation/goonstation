@@ -167,7 +167,7 @@
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
-			var/t = input(user, "What do you want to write?", null, null) as null|text
+			var/t = tgui_input_text(user, "What do you want to write?", "Note")
 			if (!t)
 				pen.in_use = 0
 				return

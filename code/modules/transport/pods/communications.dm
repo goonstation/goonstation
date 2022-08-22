@@ -97,7 +97,7 @@
 		return
 
 	proc/External()
-		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
+		var/broadcast = copytext(html_encode(tgui_input_list(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
 		if(!broadcast)
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
@@ -143,7 +143,7 @@
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/open_hangar(mob/user as mob)
-		var/pass = input(user, "Please enter panel access number.", "Access Number") as text
+		var/pass = tgui_input_text(user, "Please enter panel access number.", "Access Number")
 		pass = copytext(html_encode(pass), 1, 32)
 		if(!pass)
 			return

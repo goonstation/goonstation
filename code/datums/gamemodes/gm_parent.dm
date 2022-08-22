@@ -384,7 +384,7 @@
 		if (ROLE_BLOB)
 			objective_set_path = /datum/objective_set/blob
 			SPAWN(0)
-				var/newname = input(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+				var/newname = tgui_input_text(antag.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
 
 				if (newname)
 					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)

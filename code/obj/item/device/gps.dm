@@ -163,7 +163,7 @@
 				boutput(usr, "<span class='notice'>Tracking disabled.</span>")
 				src.allowtrack = 0
 			if(href_list["changeid"])
-				var/t = strip_html(input(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier) as text)
+				var/t = strip_html(tgui_input_text(usr, "Enter new GPS identification name (must be 4 characters)", src.identifier))
 				if(length(t) > 4)
 					boutput(usr, "<span class='alert'>Input too long.</span>")
 					return

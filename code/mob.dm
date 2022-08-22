@@ -1371,16 +1371,18 @@
 
 	mind.show_memory(src)
 
-/mob/verb/add_memory(msg as message)
+/mob/verb/add_memory()
 	set name = "Add Note"
+
+	var/note = tgui_input_text(usr, "Add note:", "Note")
 
 	if (mind.last_memory_time + 10 <= world.time)
 		mind.last_memory_time = world.time
 
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = sanitize(msg)
+		note = copytext(note, 1, MAX_MESSAGE_LEN)
+		note = sanitize(note)
 
-		mind.store_memory(msg)
+		mind.store_memory(note)
 
 // please note that this store_memory() vvv
 // does not store memories in the notes
@@ -1420,7 +1422,7 @@
 
 		src.mind.show_miranda(src)
 
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda) as null|text
+		var/new_rights = tgui_input_text(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda, TRUE)
 		if (!new_rights || new_rights == src.mind.miranda)
 			src.show_text("Miranda rights not changed.", "red")
 			return
@@ -2763,7 +2765,7 @@
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name ? default_name : src.real_name) as null|text
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
 		if (!newname)
 			return
 		else

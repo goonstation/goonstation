@@ -609,7 +609,7 @@
 			boutput(recipient, "<span class='alert'>You can't seem to get through to [recipient.name] mentally.</span>")
 			return 1
 
-		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
+		var/msg = copytext(adminscrub(tgui_input_text(usr, "Message to [recipient.name]:", "Telepathy")), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
 		phrase_log.log_phrase("telepathy", msg)
@@ -653,7 +653,7 @@
 			boutput(recipient, "<span class='alert'>You can't seem to get through to [recipient.name] mentally.</span>")
 			return 1
 
-		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
+		var/msg = copytext(adminscrub(tgui_input_text(usr, "Message to [recipient.name]:", "Telepathy")), 1, MAX_MESSAGE_LEN)
 		if (!msg)
 			return 1
 		phrase_log.log_phrase("telepathy", msg)

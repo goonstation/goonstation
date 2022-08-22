@@ -532,7 +532,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						O.comment = copytext(html_encode(tgui_input_text(usr, "Comment:", "Enter comment", multiline = TRUE)), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -561,7 +561,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							O.comment = copytext(html_encode(tgui_input_list(usr, "Comment:", "Enter comment")), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")

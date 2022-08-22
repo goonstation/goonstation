@@ -1071,7 +1071,7 @@ as it may become compromised.
 
 /obj/item/paper/photograph/attack_self(mob/user as mob)
 
-	var/n_name = input(user, "What would you like to label the photo?", "Paper Labelling", null) as null|text
+	var/n_name = tgui_input_text(user, "What would you like to label the photo?", "Paper Labelling")
 	if (!n_name)
 		return
 	n_name = copytext(html_encode(n_name), 1, 32)

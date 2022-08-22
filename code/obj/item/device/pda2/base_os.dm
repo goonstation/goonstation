@@ -429,7 +429,7 @@
 							default = src.master.uplink.lock_code
 							prompt += " Your uplink code has been pre-entered for your convenience."
 
-						var/t = input(usr, prompt, src.name, default) as text
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -472,7 +472,7 @@
 						inputtext = html_decode(replacetext(src.note, "<i>", "\[i\]"))
 						inputtext = html_decode(replacetext(src.note, "</i>", "\[/i\]"))
 						inputtext = html_decode(replacetext(src.note, "<br>", "\[br\]"))
-						var/t = input(usr, "Please enter note", src.name, inputtext) as message
+						var/t = tgui_input_list(usr, "Please enter note", src.name, inputtext)
 						if (!t)
 							return
 
@@ -551,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as null|text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 
@@ -566,7 +566,7 @@
 						if(!F || !istype(F))
 							return
 
-						var/t = input(usr, "Please enter new name", src.name, F.name) as text
+						var/t = tgui_input_text(usr, "Please enter new name", src.name, F.name)
 						t = copytext(sanitize(strip_html(t)), 1, 16)
 						if (!t)
 							return
@@ -583,7 +583,7 @@
 						src.SendFile(href_list["target"], href_list["group"])
 
 					if ("mailgroup")
-						var/groupname = input(usr, "Enter group name", src.name, null) as text
+						var/groupname = tgui_input_text(usr, "Enter group name", src.name, null)
 						if (!groupname || !isalive(usr))
 							return
 						var/cleanGroupname = replacetext(groupname, ";", "")
@@ -1104,7 +1104,7 @@
 			if(!istype(file, /datum/computer/file)) return
 			var/file_passkey = passkey
 			if(!passkey)
-				file_passkey = input(usr, "Please enter a passkey", file.name, src.GenerateFilesharePasskey(3)) as text
+				file_passkey = tgui_input_text(usr, "Please enter a passkey", file.name, src.GenerateFilesharePasskey(3))
 				if (!file_passkey || !isalive(usr))
 					file_passkey = src.GenerateFilesharePasskey(3)
 				else
@@ -1118,7 +1118,7 @@
 						file_passkey = "[TIME][rand(999999999)]"
 
 			if(!msg)
-				msg = input(usr, "Please enter a message", file.name, "DOWNLOAD FREE HIGHSPEED2DAY") as text
+				msg = tgui_input_text(usr, "Please enter a message", file.name, "DOWNLOAD FREE HIGHSPEED2DAY")
 				if (!msg || !isalive(usr))
 					msg = null
 

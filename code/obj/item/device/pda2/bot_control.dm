@@ -158,7 +158,7 @@
 					src.lockdown = 1
 				else
 					src.lockdown = 0
-				var/area/guardthis = input(usr, "Please type 'Here' or the name of an area. Capitalization matters!", "GuardTron 0.0.1a", "Here") as text
+				var/area/guardthis = tgui_input_text(usr, "Please type 'Here' or the name of an area. Capitalization matters!", "GuardTron 0.0.1a", "Here")
 				if((BOUNDS_DIST(get_turf(usr), get_turf(src.master)) == 0))
 					if(guardthis == "Here")
 						guardthis = get_area(get_turf(src.master))

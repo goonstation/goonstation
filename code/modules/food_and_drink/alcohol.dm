@@ -127,7 +127,7 @@
 				src.reagents.reaction(U)
 				src.create_reagents(0)
 				src.UpdateIcon()
-			var/new_name = input(user, "Enter new name for [O]", "Rename [O]", O.name) as null|text
+			var/new_name = tgui_input_text(user, "Enter new name for [O]", "Rename [O]", O.name)
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)

@@ -126,7 +126,7 @@
 			if(src.master.host_program.hosted_files[href_list["change_passkey"]])
 				var/list/hosted = src.master.host_program.hosted_files
 				var/datum/computer/file/hostedfile = hosted[href_list["change_passkey"]]
-				var/pass = input(usr, "Please enter a passkey", hostedfile, href_list["change_passkey"]) as text
+				var/pass = tgui_input_text(usr, "Please enter a passkey", hostedfile, href_list["change_passkey"])
 				if (!pass || !isalive(usr))
 					pass = src.GenerateFilesharePasskey(3)
 				else if(pass == href_list["change_passkey"])

@@ -431,7 +431,7 @@ proc/filter_trait_hats(var/type)
 		set category = "Local"
 
 		set src in usr
-		var/n_name = input(usr, "What would you like to set the activation phrase to?", "Activation Phrase", null) as null|text
+		var/n_name = tgui_input_text(usr, "What would you like to set the activation phrase to?", "Activation Phrase")
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)

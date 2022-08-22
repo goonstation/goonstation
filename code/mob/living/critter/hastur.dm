@@ -202,7 +202,7 @@ var/HasturPresent = 0
 	cooldown = 2
 
 	cast()
-		var/msg = input("Message:", text("What would you like to whisper to everyone?")) as null|text
+		var/msg = tgui_input_text(usr, "Message:", "What would you like to whisper to everyone?")
 		msg = voidSpeak(trim(copytext(sanitize(msg), 1, 255)))
 		if (!msg)
 			return

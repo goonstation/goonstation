@@ -510,7 +510,7 @@
 					usr << browse("<HTML><HEAD><TITLE>Notes</TITLE></HEAD><BODY><TT>[aaa]</TT></BODY></HTML>", "window=Notes[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
 				if("Add Note")
 					var/note
-					note = input("Note") as null|text
+					note = tgui_input_text(usr, "Add a note", "Note")
 					if(!note)
 						return
 					note = strip_html(note,MAX_MESSAGE_LEN)

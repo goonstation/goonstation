@@ -97,7 +97,7 @@
 		src.add_dialog(usr)
 
 		if(href_list["filtid"])
-			var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
+			var/t = tgui_input_text(usr, "Please enter new filter net id", src.name, src.filter_id)
 			if (!t)
 				src.filter_id = null
 				src.updateIntDialog()

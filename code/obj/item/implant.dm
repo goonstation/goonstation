@@ -154,7 +154,7 @@ THROWING DARTS
 	attackby(obj/item/I, mob/user)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
-				var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
+				var/t = tgui_input_text(user, "What would you like the label to be?", "Label", "[src.name]")
 				if (!t)
 					return
 				if (user.equipped() != I)
@@ -1693,7 +1693,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implantcase/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/pen))
-		var/t = input(user, "What would you like the label to be?", null, "[src.name]") as null|text
+		var/t = tgui_input_text(user, "What would you like the label to be?", "Label", "[src.name]")
 		if (user.equipped() != I)
 			return
 		if ((!in_interact_range(src, user) && src.loc != user))

@@ -18,7 +18,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
-			var/new_id = input(user, "Please enter new ID", src.name, src.id) as null|text
+			var/new_id = tgui_input_text(user, "Please enter new ID", src.name, src.id)
 			if (!new_id || new_id == src.id)
 				return
 			src.id = new_id

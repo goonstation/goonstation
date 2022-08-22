@@ -95,7 +95,7 @@ ABSTRACT_TYPE(/datum/game)
 				if (text2num_safe(href_list["highscore"]) > highscore)
 					highscore = text2num_safe(href_list["highscore"])
 					highscorekey = usr.key
-					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
+					highscoreholder = html_encode(tgui_input_text(usr, "Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name))
 					src.end_game()
 		return
 

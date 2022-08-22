@@ -234,7 +234,7 @@
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
-		var/t = input(user, "What do you want to [signwrite]?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to [signwrite]?", "Photo")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if(t)
 			if(signwrite == "sign")

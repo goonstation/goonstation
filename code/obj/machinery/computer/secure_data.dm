@@ -446,21 +446,21 @@
 				switch(href_list["field"])
 					if ("name") //todo: sanitize these fucking inputs jesus christ
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Please input name:", "Security Records", src.active_record_general["name"], null) as text
+							var/t1 = tgui_input_text(usr, "Please input name:", "Security Records", src.active_record_general["name"])
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["name"] = t1
 					if ("id")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Please input id:", "Security Records", src.active_record_general["id"], null) as text
+							var/t1 = tgui_input_text(usr, "Please input id:", "Security Records", src.active_record_general["id"])
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["id"] = t1
 					if ("fingerprint")
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Please input fingerprint hash:", "Security Records", src.active_record_general["fingerprint"], null) as text
+							var/t1 = tgui_input_text(usr, "Please input fingerprint hash:", "Security Records", src.active_record_general["fingerprint"])
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
@@ -480,35 +480,35 @@
 							src.active_record_general["age"] = t1
 					if ("minor_crimes")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Minor crimes:", "Security Records", src.active_record_security["mi_crim"], null) as text
+							var/t1 = tgui_input_text(usr, "Minor crimes:", "Security Records", src.active_record_security["mi_crim"])
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security["mi_crim"] = t1
 					if ("minor_crime_details")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Minor crime details:", "Security Records", src.active_record_security["mi_crim_d"], null) as message
+							var/t1 = tgui_input_text(usr, "Minor crime details:", "Security Records", src.active_record_security["mi_crim_d"], multiline = TRUE)
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security["mi_crim_d"] = t1
 					if ("major_crimes")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Major crimes:", "Security Records", src.active_record_security["ma_crim"], null) as text
+							var/t1 = tgui_input_text(usr, "Major crimes:", "Security Records", src.active_record_security["ma_crim"])
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security["ma_crim"] = t1
 					if ("major_crime_details")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Major crime details:", "Security Records", src.active_record_security["ma_crim_d"], null) as message
+							var/t1 = tgui_input_text(usr, "Major crime details:", "Security Records", src.active_record_security["ma_crim_d"], multiline = TRUE)
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_security["ma_crim_d"] = t1
 					if ("notes")
 						if (istype(src.active_record_security, /datum/db_record))
-							var/t1 = input("Notes:", "Security Records", src.active_record_security["notes"], null) as message
+							var/t1 = tgui_input_text(usr, "Notes:", "Security Records", src.active_record_security["notes"], multiline = TRUE)
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
@@ -518,7 +518,7 @@
 						if ((istype(src.active_record_general, /datum/db_record) && L.Find(src.rank)))
 
 							if (istype(src.active_record_security, /datum/db_record))
-								var/t1 = input("Job/Rank:", "Security Records", src.active_record_security["rank"], null) as text
+								var/t1 = tgui_input_text(usr, "Job/Rank:", "Security Records", src.active_record_security["rank"])
 								t1 = adminscrub(t1)
 								if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 									return
@@ -689,7 +689,7 @@
 				if (!src.active_record_security)
 					return
 				var/current_security = src.active_record_security
-				var/t1 = input("Add Comment:", "Security Records", null, null) as message
+				var/t1 = tgui_input_text(usr, "Add Comment:", "Security Records", multiline = TRUE)
 				t1 = adminscrub(t1)
 				if (!t1 || src.validate_can_still_use(null, current_security, usr))
 					return
@@ -717,7 +717,7 @@
 
 
 			if ("search_fingerprint")
-				var/t1 = input("Search String: (Fingerprint)", "Security Records", null, null) as text
+				var/t1 = tgui_input_text(usr, "Search String: (Fingerprint)", "Security Records")
 				t1 = adminscrub(t1)
 				if (!t1 || src.validate_can_still_use(null, null, usr))
 					return
@@ -736,7 +736,7 @@
 					src.screen = SECREC_VIEW_RECORD
 
 			if ("search")
-				var/t1 = input("Search String: (Name, DNA, or ID)", "Security Records", null, null) as text
+				var/t1 = tgui_input_text(usr, "Search String: (Name, DNA, or ID)", "Security Records")
 				t1 = adminscrub(t1)
 				if (!t1 || src.validate_can_still_use(null, null, usr))
 					return

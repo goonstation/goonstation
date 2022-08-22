@@ -101,7 +101,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -641,7 +641,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -722,7 +722,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label")), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -885,7 +885,7 @@
 					return
 				var/obj/item/P = locate(href_list["title"])
 				if (P && P.loc == src)
-					var/str = copytext(html_encode(input(usr,"What do you want to title this?","Title document","") as null|text), 1, 32)
+					var/str = copytext(html_encode(tgui_input_text(usr, "What do you want to title this?", "Title document")), 1, 32)
 					if (str == null || length(str) == 0)
 						return
 					if (length(str) > 30)
@@ -1054,7 +1054,7 @@
 			src.pixel_x = rand(-9, 9)
 
 	proc/give_title(var/mob/user)
-		var/n_name = input(user, "What would you like to label the booklet?", "Booklet Labelling", null) as null|text //stolen from paper.dm
+		var/n_name = tgui_input_text(user, "What would you like to label the booklet?", "Booklet Labelling") //stolen from paper.dm
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)

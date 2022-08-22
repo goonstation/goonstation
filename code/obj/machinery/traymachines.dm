@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 /obj/machinery/traymachine/attackby(P, mob/user)
 	src.add_fingerprint(user)
 	if (istype(P, /obj/item/pen))
-		var/t = input(user, "What would you like the label to be?", src.name, null) as null|text
+		var/t = tgui_input_text(user, "What would you like the label to be?", src.name)
 		if (!t)
 			return
 		if (user.equipped() != P)

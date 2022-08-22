@@ -538,7 +538,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html(tgui_input_text(user, "Please enter current code:", "Code check"))
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -563,11 +563,11 @@
 
 	proc/setCode(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = adminscrub(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = adminscrub(tgui_input_text(user, "Please enter current code:", "Code check"))
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
-		var/inp = adminscrub(input(user,"Please enter new code:","Code setting","dosh") as text)
+		var/inp = adminscrub(tgui_input_text(user, "Please enter new code:", "Code setting", "dosh"))
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -577,12 +577,12 @@
 		return 0
 
 	proc/setThank(obj/item/W as obj, mob/user as mob)
-		thank_string = adminscrub(input(user,"Please enter string:","string","Thanks for using this mechcomp service!") as text)
+		thank_string = adminscrub(tgui_input_text(user, "Please enter string:", "Thank you string", "Thanks for using this mechcomp service!"))
 		return 1
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html(tgui_input_text(user, "Please enter current code:", "Code check"))
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -737,7 +737,7 @@
 		return
 
 	proc/setPaperName(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter name:","name setting", paper_name) as text
+		var/inp = tgui_input_text(user, "Please enter name:", "Name Setting", paper_name)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		paper_name = adminscrub(inp)
@@ -1178,7 +1178,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+		var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", "1")
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1213,7 +1213,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+		var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", "1")
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1264,7 +1264,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags",.proc/setFlags)
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Pattern:","Pattern setting", expressionpatt) as text
+		var/inp = tgui_input_text(user, "Please enter Pattern:", "Pattern setting", expressionpatt)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1282,7 +1282,7 @@
 		tooltip_rebuild = 1
 
 	proc/setReplacement(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Replacement:","Replacement setting", expressionrepl) as text
+		var/inp = tgui_input_text(user, "Please enter Replacement:", "Replacement setting", expressionrepl)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1300,7 +1300,7 @@
 		tooltip_rebuild = 1
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Flags:","Flags setting", expressionflag) as text
+		var/inp = tgui_input_text(user, "Please enter Flags:", "Flags setting", expressionflag)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1358,7 +1358,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing",.proc/toggleReplaceing)
 
 	proc/setRegex(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
+		var/inp = tgui_input_text(user, "Please enter Expression Pattern:", "Expression setting", expressionpatt)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1371,7 +1371,7 @@
 		return 0
 
 	proc/setFlags(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Expression Flags:","Expression setting", expressionflag) as text
+		var/inp = tgui_input_text(user, "Please enter Expression Flags:", "Expression setting", expressionflag)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1436,7 +1436,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Replace Signal",.proc/toggleReplace)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter String:","String setting","1") as text
+		var/inp = tgui_input_text(user, "Please enter String:", "String setting", "1")
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1537,7 +1537,7 @@
 
 	//This will get called from the component-datum when a device is being linked
 	proc/addFilter(var/comsig_target, atom/receiver, mob/user)
-		var/filter = input(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Intput Filters") as text
+		var/filter = tgui_input_text(user, "Add filters for this connection? (Comma-delimited list. Leave blank to pass all messages.)", "Input Filters")
 		if(!in_interact_range(src, user) || user.stat)
 			return
 		if (length(filter))
@@ -1594,7 +1594,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String",.proc/setEndingStringManual)
 
 	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter String:","String setting", bstr) as text
+		var/inp = tgui_input_text(user, "Please enter String:", "String setting", bstr)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		setStartingString(inp)
@@ -1612,7 +1612,7 @@
 		tooltip_rebuild = 1
 
 	proc/setEndingStringManual(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter String:","String setting", astr) as text
+		var/inp = tgui_input_text(user, "Please enter String:", "String setting", astr)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		setEndingString(inp)
@@ -1972,7 +1972,7 @@
 			current_index = 1
 			boutput(user, "Defining [numsig] Signals ...")
 			for(var/i=0, i<numsig, i++)
-				var/signew = input(user,"Content of Signal #[i]","Content:", "signal[i]") as text
+				var/signew = tgui_input_text(user, "Content of Signal #[i]", "Content:", "signal[i]")
 				signew = adminscrub(signew) //SANITIZE THAT SHIT! FUCK!!!!
 				if(length(signew))
 					signals.Add(signew)
@@ -2174,7 +2174,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal",.proc/setOffSignal)
 
 	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
+		var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", signal_on)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -2186,7 +2186,7 @@
 		return 0
 
 	proc/setOffSignal(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting",signal_off) as text
+		var/inp = tgui_input_text(user, "Please enter Signal:", "Signal setting", signal_off)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -2277,7 +2277,7 @@
 		return ..()
 
 	proc/setID(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
+		var/inp = tgui_input_text(user, "Please enter ID:", "ID setting", teleID)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -2662,8 +2662,8 @@
 			boutput(user, "<span class='alert'>There's no room to add another button - the panel is full</span>")
 			return 0
 
-		var/new_label = input(user, "Button label", "Button Panel") as text
-		var/new_signal = input(user, "Button signal", "Button Panel") as text
+		var/new_label = tgui_input_text(user, "Button label", "Button Panel")
+		var/new_signal = tgui_input_text(user, "Button signal", "Button Panel")
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(new_label) && length(new_signal))
@@ -3179,9 +3179,9 @@
 		return 1
 
 	proc/addItemManual(obj/item/W as obj, mob/user as mob)
-		var/inputKey = input(user, "Add key", "Association Component") as text
+		var/inputKey = tgui_input_text(user, "Add key", "Association Component")
 		if (isnull(inputKey)) return 0
-		var/inputValue = input(user, "Add value", "Association Component") as text
+		var/inputValue = tgui_input_text(user, "Add value", "Association Component")
 		if (isnull(inputKey)) return 0
 		if (!in_interact_range(src, user) || user.stat) return 0
 		if (mode == 0) // Mutable

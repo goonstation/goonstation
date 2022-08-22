@@ -589,7 +589,7 @@
 		onActivate(var/client/C)
 			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
-				var/X = input(C,"Please enter the password.","Sgt. Wilkins Private Computer","Password") as text
+				var/X = tgui_input_text(C, "Please enter the password.", "Sgt. Wilkins Private Computer", "Password")
 				if (X == "Icarus")
 					master.setFlag(C, "access", "granted")
 				return
@@ -813,7 +813,7 @@
 		onActivate(var/client/C)
 			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
-				var/X = input(C,"Please enter the password.","Engineering Computer","Password") as text
+				var/X = tgui_input_text(C, "Please enter the password.", "Engineering Computer", "Password")
 				if (X == "Congaline")
 					master.setFlag(C, "access", "granted")
 				return

@@ -163,7 +163,7 @@ that cannot be itched
 		switch (choice)
 			if ("Find record")
 				var/holder = src.loc
-				var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+				var/search = tgui_input_text(user, "Enter name, fingerprint or blood DNA.", "Find record")
 				if (src.loc != holder || !search || user.stat)
 					return
 				search = copytext(sanitize(search), 1, 200)
@@ -729,11 +729,11 @@ that cannot be itched
 		playsound(src, "sound/machines/keyboard3.ogg", 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
-		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
+		var/ticket_target = tgui_input_text(user, "Ticket recipient:", "Recipient", "Ticket Recipient")
 		if (!ticket_target)
 			return
 		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text
+		var/ticket_reason = tgui_input_text(user, "Ticket reason:", "Reason")
 		if (!ticket_reason)
 			return
 		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)

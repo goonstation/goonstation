@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 			boutput(user,"This module is acting strange, and cannot be modified.")
 			return
 
-		var/answer = input(user, text, title, default) as null|text
+		var/answer = tgui_input_text(user, text, title, default)
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
 	proc/update_law_text()

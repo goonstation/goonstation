@@ -287,12 +287,12 @@
 				return
 
 			if ("set book info")
-				var/name_sel = input("What do you want the title of your book to be?", "Information Control", book_name) //total information control! the patriots control the memes, snake!
+				var/name_sel = tgui_input_text(user, "What do you want the title of your book to be?", "Information Control", book_name) //total information control! the patriots control the memes, snake!
 				if (length(name_sel) > info_len_lim)
 					boutput(user, "Aborting, title too long.")
 					return
 				book_name = strip_html(name_sel)
-				var/author_sel = input("Who is the author of your book?", "Information Control", book_author)
+				var/author_sel = tgui_input_text(user, "Who is the author of your book?", "Information Control", book_author)
 				if (length(author_sel) > info_len_lim)
 					boutput(user, "Aborting, author name too long.")
 					return
@@ -301,7 +301,7 @@
 				return
 
 			if ("set book contents")
-				var/info_sel = input("What do you want your book to say?", "Content Control", book_info_raw) as null|message
+				var/info_sel = tgui_input_text(user, "What do you want your book to say?", "Content Control", book_info_raw, multiline = TRUE)
 				if (!info_sel)
 					return
 				info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low

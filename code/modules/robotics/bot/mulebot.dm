@@ -331,20 +331,20 @@
 						start_home()
 
 				if("destination")
-					var/new_dest = input("Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination) as text|null
+					var/new_dest = tgui_input_text(usr, "Enter new destination tag", "Mulebot [suffix ? "([suffix])" : ""]", destination)
 					new_dest = copytext(adminscrub(new_dest),1, MAX_MESSAGE_LEN)
 					if(new_dest)
 						set_destination(new_dest)
 
 				if("setid")
-					var/new_id = input("Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix) as text|null
+					var/new_id = tgui_input_text(usr, "Enter new bot ID", "Mulebot [suffix ? "([suffix])" : ""]", suffix)
 					new_id = copytext(adminscrub(new_id), 1, 128)
 					if(new_id)
 						suffix = new_id
 						name = "Mulebot ([suffix])"
 
 				if("sethome")
-					var/new_home = input("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination) as text|null
+					var/new_home = tgui_input_text("Enter new home tag", "Mulebot [suffix ? "([suffix])" : ""]", home_destination)
 					new_home = copytext(adminscrub(new_home),1, 128)
 					if(new_home)
 						home_destination = new_home

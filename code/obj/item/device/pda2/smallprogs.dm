@@ -112,7 +112,7 @@
 					if(!(src.holder in src.master))
 						return
 
-					message1 = input("Line 1", "Enter Message Text", message1) as text|null
+					message1 = tgui_input_text(usr, "Line 1", "Enter Message Text", message1)
 					message1 = copytext(adminscrub(message1), 1, MAX_MESSAGE_LEN)
 					src.master.updateSelfDialog()
 
@@ -123,7 +123,7 @@
 					if(!(src.holder in src.master))
 						return
 
-					message2 = input("Line 2", "Enter Message Text", message2) as text|null
+					message2 = tgui_input_text(usr, "Line 2", "Enter Message Text", message2)
 					message2 = copytext(adminscrub(message2), 1, MAX_MESSAGE_LEN)
 					src.master.updateSelfDialog()
 				else
@@ -1003,10 +1003,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
+			var/ticket_target = tgui_input_text(usr, "Ticket recipient:", src.name)
 			if(!ticket_target) return
 			ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-			var/ticket_reason = input(usr, "Ticket reason:",src.name) as text
+			var/ticket_reason = tgui_input_text(usr, "Ticket reason:", src.name)
 			if(!ticket_reason) return
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
@@ -1043,7 +1043,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
+			var/ticket_target = tgui_input_text(usr, "Fine recipient:", src.name)
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
 			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
@@ -1051,7 +1051,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
 				return
-			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
+			var/ticket_reason = tgui_input_text(usr, "Fine reason:", src.name)
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num

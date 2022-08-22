@@ -324,7 +324,7 @@
 			return
 
 		else if (istype(W, /obj/item/pen))
-			var/t = input(user, "Enter new robot name", src.name, src.created_name) as null|text
+			var/t = tgui_input_text(user, "Enter new robot name", src.name, src.created_name)
 			if (!t)
 				return
 			if(t && t != src.name && t != src.created_name)

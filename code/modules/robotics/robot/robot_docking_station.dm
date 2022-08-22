@@ -303,7 +303,7 @@
 				src.updateUsrDialog()
 				return
 			var/mob/living/silicon/robot/R = src.occupant
-			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
+			var/newname = copytext(strip_html(sanitize(tgui_input_text(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)
 			if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !newname)
 				return
 			if (url_regex?.Find(newname))

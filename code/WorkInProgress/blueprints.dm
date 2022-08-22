@@ -648,7 +648,7 @@
 				roomList.Cut()
 
 			if("Set Blueprint Name")
-				roomname = copytext(strip_html(input(user,"Set Blueprint Name:","Setup",roomname) as text), 1, 257)
+				roomname = copytext(strip_html(tgui_input_text(user, "Set Blueprint Name:", "Setup", roomname)), 1, 257)
 				boutput(user, "<span class='notice'>Name set to '[roomname]'</span>")
 
 			//if("Create Clone Blueprint")

@@ -144,7 +144,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
-			var/t = input(user, "Enter new tape label", src.name, null) as text
+			var/t = tgui_input_text(user, "Enter new tape label", src.name)
 			t = copytext(strip_html(t), 1, 36)
 			if (!in_interact_range(src, user) && src.loc != user)
 				return

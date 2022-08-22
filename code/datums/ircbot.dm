@@ -177,14 +177,11 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	return 1
 
 
-/client/verb/linkDiscord(discordCode as text)
+/client/verb/linkDiscord()
 	set name = "Link Discord"
 	set category = "Commands"
-	set desc = "Links your Byond key with your Discord account. Enter the code Medical Assistant gave you when you ran ]link."
-	set popup_menu = 0
 
-	if (!discordCode)
-		discordCode = input(src, "Please enter your Discord access code. You can get this by running ]link in Discord. Or leave the field empty if you want to receive the Discord invite.", "Link Discord") as null|text
+	var/discordCode = tgui_input_text(usr, "This will link your Byond key with your Discord account. Please enter your Discord access code after running ]link in Discord. Or leave the field empty if you want to receive the Discord invite.", "Link Discord")
 
 	if (!discordCode)
 		usr << link("https://discord.gg/zd8t6pY")

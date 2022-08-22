@@ -57,7 +57,7 @@
 		// back once again to ruin the day, it's CIRR fucking up things
 		SPAWN(0)
 			var/randomname = pick(strings("martian_names.txt", "martianname"))
-			var/newname = adminscrub(input(src,"You are a Martian. Would you like to change your name to something else?", "Name change", randomname) as text)
+			var/newname = adminscrub(tgui_input_text(src, "You are a Martian. Would you like to change your name to something else?", "Name change", randomname))
 
 			if (length(ckey(newname)) == 0)
 				newname = randomname

@@ -84,7 +84,7 @@
 		var/token = channels[choice]
 		if (!token)
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
-		var/text = input("", "Speaking over [choice] ([token])") as null|text
+		var/text = tgui_input_text(usr, "Speaking over [choice] ([token])", "Speaking")
 		if (text)
 			if (src.capitalize_speech())
 				text = capitalize(text)
@@ -132,13 +132,14 @@
 			else
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
-			var/text = input("", "Speaking to [choice] frequency") as null|text
-			if (src.capitalize_speech())
-				var/i = 1
-				while (copytext(text, i, i+1) == " ")
-					i++
-				text = capitalize(copytext(text, i))
-			src.say_verb(token + " " + text)
+			var/text = tgui_input_text(usr, "Speaking to [choice] frequency", "Speaking")
+			if (text)
+				if (src.capitalize_speech())
+					var/i = 1
+					while (copytext(text, i, i+1) == " ")
+						i++
+					text = capitalize(copytext(text, i))
+				src.say_verb(token + " " + text)
 		else
 			boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
 
@@ -623,7 +624,7 @@
 		else
 			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
 
-/mob/verb/looc(msg as text)
+/mob/verb/looc()
 	if (IsGuestKey(src.key))
 		boutput(src, "You are not authorized to communicate over these channels.")
 		return
@@ -631,7 +632,7 @@
 		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
 
-	msg = trim(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
+	var/msg = trim(copytext(html_encode(sanitize(tgui_input_text(usr, "LOOC:", "LOOC"))), 1, MAX_MESSAGE_LEN))
 	if (!msg)
 		return
 	else if (!src.client.preferences.listen_looc)

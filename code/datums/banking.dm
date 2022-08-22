@@ -616,13 +616,13 @@
 					src.screen = 1
 				else if(href_list["Fname"])
 					var/datum/db_record/R = locate(href_list["Fname"])
-					var/t1 = input("Please input name:", "Secure. records", R["name"], null)  as null|text
+					var/t1 = tgui_input_text(usr, "Please input name:", "Secure records", R["name"])
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R["name"] = t1
 				else if(href_list["Fjob"])
 					var/datum/db_record/R = locate(href_list["Fjob"])
-					var/t1 = input("Please input name:", "Secure. records", R["job"], null)  as null|text
+					var/t1 = tgui_input_text(usr, "Please input name:", "Secure records", R["job"])
 					t1 = copytext(html_encode(t1), 1, MAX_MESSAGE_LEN)
 					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
 					R["job"] = t1

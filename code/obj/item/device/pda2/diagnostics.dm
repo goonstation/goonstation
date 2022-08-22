@@ -385,7 +385,7 @@
 		else if(href_list["edit"])
 			var/codekey = href_list["code"]
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender", codekey) as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx(tgui_input_text(usr, "Enter Packet Key", "Packet Sender", codekey)), 1, 16)
 			if(!newkey)
 				return
 
@@ -396,7 +396,7 @@
 				return
 
 			var/codeval = html_decode(keyval[codekey])
-			var/newval = copytext(strip_html( input("Enter Packet Value", "Packer Sender", codeval) as text|null ), 1, 255)
+			var/newval = copytext(strip_html(tgui_input_text(usr, "Enter Packet Value", "Packer Sender", codeval)), 1, 255)
 			if(!newval)
 				newval = codekey
 				return
@@ -433,7 +433,7 @@
 			if(keyval && (keyval.len >= MAX_PACKET_KEYS))
 				return
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx(tgui_input_text(usr, "Enter Packet Key", "Packet Sender")), 1, 16)
 			if(!newkey)
 				return
 
@@ -443,7 +443,7 @@
 			if(!(src.holder in src.master))
 				return
 
-			var/newval = copytext(strip_html( input("Enter Packet Value", "Packer Sender") as text|null ), 1, 255)
+			var/newval = copytext(strip_html(tgui_input_text(usr, "Enter Packet Value", "Packer Sender")), 1, 255)
 			if(!newval)
 				newval = "1"
 				return
@@ -501,28 +501,28 @@
 				progbuild_mode = TRUE
 
 		else if (href_list["createbutton"])
-			var/button_name = copytext(strip_html( input("Enter Button Name", "Packet Sender", "Button") as text|null ), 1, 16)
+			var/button_name = copytext(strip_html(tgui_input_text(usr, "Enter Button Name", "Packet Sender", "Button")), 1, 16)
 			if(!button_name)
 				return
 			prog_buttons[button_name] = assoc_list_to_list(keyval)
 
 		else if (href_list["createarg"])
-			var/arg_name = copytext(strip_html( input("Enter Argument Name", "Packet Sender", "Argument") as text|null ), 1, 16)
+			var/arg_name = copytext(strip_html(tgui_input_text(usr, "Enter Argument Name", "Packet Sender", "Argument")), 1, 16)
 			if(!arg_name)
 				return
 
-			var/arg_replacer = copytext(ckeyEx( input("What text to replace as argument?", "Packet Sender", "arg0") as text|null ), 1, 16)
+			var/arg_replacer = copytext(ckeyEx(tgui_input_text(usr, "What text to replace as argument?", "Packet Sender", "arg0")), 1, 16)
 			if(!arg_replacer)
 				return
 
-			var/arg_default = copytext(strip_html( input("Enter Default Value", "Packet Sender", "") as text|null ), 1, 32)
+			var/arg_default = copytext(strip_html(tgui_input_text(usr, "Enter Default Value", "Packet Sender")), 1, 32)
 			if(!arg_default)
 				return
 
 			prog_args[arg_name] = list(arg_replacer,arg_default)
 
 		else if (href_list["createprog"])
-			var/programname = copytext(strip_html( input("Enter Program Name", "Packet Sender", "Unnamed") as text|null ), 1, 15)
+			var/programname = copytext(strip_html(tgui_input_text(usr, "Enter Program Name", "Packet Sender", "Unnamed")), 1, 15)
 			if(!programname)
 				return
 
@@ -614,7 +614,7 @@
 
 		if (href_list["changevar"])
 			var/key = href_list["code"]
-			var/input = copytext(strip_html( input("Enter New Value", src.name, programvariables[key][2]) as text|null ), 1, 32)
+			var/input = copytext(strip_html(tgui_input_text(usr, "Enter New Value", src.name, programvariables[key][2])), 1, 32)
 
 			if(!input)
 				return
