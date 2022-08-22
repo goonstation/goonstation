@@ -3166,10 +3166,15 @@
 		var/radres_mult = (tanh(0.02*rad_res)**2)
 		src.radiation_dose += (1.0-radres_mult)*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
-		if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+		if((1.0-radres_mult)*Sv > 0.1)
+			src.TakeDamage("All",0,20*clamp(((1.0-radres_mult)*Sv)/2, 0, 1)) //a 2Sv dose all at once will badly burn you
+			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
+				src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+		else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
 /mob/proc/observeMob(mob/target)
