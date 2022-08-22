@@ -262,8 +262,8 @@
 		if(ON_COOLDOWN(src,"move_damage",1 SECOND))
 			return
 		if(prob(75))
+			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			takeDamage("brute",1)
-		return
 
 	takeDamage(var/damageType, var/amount)
 		..(damageType,amount)
@@ -283,7 +283,7 @@
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+		user.show_text("<span class='alert'>[src] [pick("begins to splinter","cracks open slightly","becomes a little less solid","loosens around you")].</span>")
 		src.takeDamage("brute",6)
 
 	special_desc(dist, mob/user)
