@@ -883,17 +883,17 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
 	var/craftname = null
-	var/obj/item/material = null
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 
+		var/obj/item/material = null
 		if (istype(craftingitem, accepteditem)) //success! items match
-			src.thingsneeded --
-			if (craftingitem.amount > 1)//it's a little weird but it's one of the lesser messy ways
-				material = craftingitem.split_stack(1)
-			else
-				material = craftingitem
-			//material.set_loc(get_turf(src))//toss it on the ground for now
+			var/consumed = min(src.thingsneeded, craftingitem.amount)
+
+			//material = craftingitem
+			thingsneeded -= consumed
+			boutput(user, "consuming [consumed] things!")
+
 			if (thingsneeded > 0)//craft successful, but they'll need more
 				boutput(user, "<span class='notice'>You add a [material] to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
 
@@ -903,10 +903,7 @@ obj/item/assembly/radio_horn/receive_signal()
 				qdel(frame)
 
 			//consume material
-			qdel(material)
-
-
-
+			craftingitem.change_stack_amount(-consumed)
 
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
