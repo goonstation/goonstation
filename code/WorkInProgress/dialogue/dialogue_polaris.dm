@@ -766,7 +766,7 @@
 		var/taken = 0
 
 		canShow(var/client/C)
-			if(taken == 0 && istype(C.mob.equipped(), /obj/item/crowbar)) return 1
+			if(taken == 0 && ispryingtool(C.mob.equipped())) return 1
 			else return 0
 
 		onActivate(var/client/C)

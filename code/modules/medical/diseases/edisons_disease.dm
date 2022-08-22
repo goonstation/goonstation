@@ -66,7 +66,7 @@
 				affected_mob.make_jittery(1000)
 				SPAWN(rand(20, 100))
 					if (affected_mob)
-						logTheThing("combat", affected_mob, null, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
+						logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 						var/list/gibs = affected_mob.gib()
 						for(var/obj/decal/cleanable/gib in gibs)
 							update_light(gib, rand(2,6))

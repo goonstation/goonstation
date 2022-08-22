@@ -694,7 +694,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		equipment = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -717,7 +717,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		lighting = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -740,7 +740,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		environ = (val==1) ? 0 :val
 
 		UpdateIcon()
@@ -859,7 +859,7 @@ var/zapLimiter = 0
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 		message_admins("[key_name(usr)] overloaded the lights at [log_loc(src)].")
-		logTheThing("station", usr, null, "overloaded the lights at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "overloaded the lights at [log_loc(src)].")
 		src.overload_lighting()
 		return TRUE
 	else

@@ -112,7 +112,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
@@ -180,9 +180,9 @@
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
-	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
-		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
 
 	// Handle bulb wear.
 	if (src.turboflash)
@@ -228,7 +228,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)

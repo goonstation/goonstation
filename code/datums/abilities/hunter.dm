@@ -69,7 +69,7 @@
 		M.update_clothing()
 
 		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
-		logTheThing("combat", M, null, "transformed into a hunter at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "transformed into a hunter at [log_loc(M)].")
 		return 1
 
 	else
