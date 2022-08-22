@@ -384,7 +384,7 @@
 
 		var/amount = 5 + (power - 1)*5			//if power is 1, amount is 5| if power is 2, amount is 10| if power is 3, amount is 15
 		var/max_gene_amt = 25 * power			//75 at max
-		var/choice = tgui_input_list(user, "What do you want to do with this seed.", "Seed Manipulation", list("Mend Seed", "Maturation Rate", "Production Rate", "Lifespan", "Yield", "Potency", "Endurance")) || "Potency"
+		var/choice = tgui_input_list(user, "What do you want to do with this seed.", "Seed Manipulation", list("Mend Seed", "Maturation Rate", "Production Rate", "Lifespan", "Yield", "Potency", "Endurance"), "Potency")
 
 		if (isnull(choice))
 			return 1

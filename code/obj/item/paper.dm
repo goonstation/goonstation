@@ -1295,7 +1295,7 @@ as it may become compromised.
 		return
 
 /obj/item/stamp/attack_self(mob/user) // change current mode
-	var/NM = tgui_input_list(user, "Configure \the [src]?", "[src.name]", src.available_modes) || src.current_mode
+	var/NM = tgui_input_list(user, "Configure \the [src]?", "[src.name]", src.available_modes, src.current_mode)
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
 	src.current_mode = (STAMP_IDS[NM])

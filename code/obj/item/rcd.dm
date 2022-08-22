@@ -772,10 +772,10 @@ Broken RCD + Effects
 			var/door_types = get_airlock_types()
 
 			door_name = copytext(adminscrub(input("Door name", "RCD", door_name) as text), 1, 512)
-			door_access_name_cache = tgui_input_list(user, "Required access", "RCD", access_names) || door_access_name_cache
+			door_access_name_cache = tgui_input_list(user, "Required access", "RCD", access_names, door_access_name_cache)
 			if (!door_access_name_cache)
 				return
-			door_type_name_cache = tgui_input_list(user, "Door type", "Yep", door_types) || door_type_name_cache
+			door_type_name_cache = tgui_input_list(user, "Door type", "Yep", door_types, door_type_name_cache)
 			if (!door_type_name_cache)
 				return
 			if (!door_types[door_type_name_cache])

@@ -178,7 +178,7 @@
 			filter_name = null
 
 		if (href_list["action"])
-			filter_action = tgui_input_list(usr, "Door action", "Door action", list("open", "close", "lock", "unlock", "reject")) || filter_action
+			filter_action = tgui_input_list(usr, "Door action", "Door action", list("open", "close", "lock", "unlock", "reject"), filter_action)
 
 		if (href_list["action_clear"])
 			filter_action = null

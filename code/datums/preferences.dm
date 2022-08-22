@@ -509,7 +509,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-bloodType")
-				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")) || src.blType
+				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"), src.blType)
 
 				if (blTypeNew)
 					if (blTypeNew == "Random")
