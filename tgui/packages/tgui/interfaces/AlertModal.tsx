@@ -7,36 +7,36 @@
 
 import { Loader } from './common/Loader';
 import { useBackend, useLocalState } from '../backend';
-import {
-  KEY_ESCAPE,
-  KEY_ENTER,
-  KEY_LEFT,
-  KEY_RIGHT,
-  KEY_SPACE,
-  KEY_TAB,
-} from '../../common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-  type AlertModalData = {
-    autofocus: boolean;
-    items: string[];
-    message: string;
-    timeout: number;
-    title: string;
-  };
+type AlertModalData = {
+  autofocus: boolean;
+  items: string[];
+  message: string;
+  timeout: number;
+  title: string;
+};
 
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
-export const AlertModal = (_, context) => {
+export const AlertModal = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { autofocus, items = [], message, timeout, title } = data;
+  const {
+    autofocus,
+    items = [],
+    message = '',
+    timeout,
+    title,
+  } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window dimensions
   const windowHeight
      = 115
-     + (message.length > 30 ? Math.ceil(message.length / 4) : 0);
+     + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
+     + (message.length && 0);
   const windowWidth = 325 + (items.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
@@ -50,34 +50,35 @@ export const AlertModal = (_, context) => {
 
   return (
     <Window height={windowHeight} title={title} width={windowWidth}>
-      {timeout && <Loader value={timeout} />}
+      {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
           /**
-             * Simulate a click when pressing space or enter,
-             * allow keyboard navigation, override tab behavior
-             */
+            * Simulate a click when pressing space or enter,
+            * allow keyboard navigation, override tab behavior
+            */
           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
             act('choose', { choice: items[selected] });
           } else if (keyCode === KEY_ESCAPE) {
             act('cancel');
-          } else if (
-            keyCode === KEY_LEFT
-              || (e.shiftKey && keyCode === KEY_TAB)
-          ) {
+          } else if (keyCode === KEY_LEFT) {
+            e.preventDefault();
             onKey(KEY_DECREMENT);
-          } else if (keyCode === KEY_RIGHT || keyCode === KEY_TAB) {
+          } else if (keyCode === KEY_TAB || keyCode === KEY_RIGHT) {
+            e.preventDefault();
             onKey(KEY_INCREMENT);
           }
         }}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
-              <Box color="label">{message}</Box>
+              <Box color="label" overflow="hidden">
+                {message}
+              </Box>
             </Stack.Item>
             <Stack.Item>
-              {autofocus && <Autofocus />}
+              {!!autofocus && <Autofocus />}
               <ButtonDisplay selected={selected} />
             </Stack.Item>
           </Stack>
@@ -88,10 +89,10 @@ export const AlertModal = (_, context) => {
 };
 
 /**
-   * Displays a list of buttons ordered by user prefs.
-   * Technically this handles more than 2 buttons, but you
-   * should just be using a list input in that case.
-   */
+  * Displays a list of items ordered by user prefs.
+  * Technically this handles more than 2 items, but you
+  * should just be using a list input in that case.
+  */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
   const { items = [] } = data;
@@ -120,8 +121,8 @@ const ButtonDisplay = (props, context) => {
 };
 
 /**
-   * Displays a button with variable sizing.
-   */
+  * Displays a button with variable sizing.
+  */
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const { button, selected } = props;
