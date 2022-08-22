@@ -960,11 +960,9 @@
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
-	if (!isturf(src))
+	if (isturf(src.loc))
 		// Not a turf, so we must send a signal to the turf
-		var/turf/T = get_turf(src)
-		if (T)
-			SEND_SIGNAL(T, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
 // standardized damage procs
 
