@@ -541,3 +541,6 @@ proc/get_accessible_station_areas()
 	global.area_list_is_up_to_date = 1
 	global.station_areas = L
 	return L
+
+#undef STORM_REGULAR
+#undef STORM_FINAL
