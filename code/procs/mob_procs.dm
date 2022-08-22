@@ -794,6 +794,9 @@
 			see_traitors = TRUE
 		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
+		else if (src.mind && src.mind.special_role == ROLE_SAWFLY)
+			see_traitors = 1
+			see_nukeops = 1
 		else if (iswizard(src))
 			see_wizards = 1
 		else if (isvampire(src))

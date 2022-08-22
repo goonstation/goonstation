@@ -109,16 +109,17 @@
 			else
 				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
 
-			//we're through with the necessary steps and we have our mind! Time to put things together
-
-
-			/*if (lucky_dude)
+			if (lucky_dude)
 				lucky_dude.transfer_to(heldfly)
 				src.visible_message("The [src.heldfly] emits a pleasant chime as glows with sapience!")
-				// ADD POPUP HERE
+				src.heldfly.mind.special_role = ROLE_SAWFLY
+				boutput(M, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
+				heldfly.antagonist_overlay_refresh(1, 0)
+
+
 			else
 				//boutput(user, "The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
-				src.ejectbrain(currentbrain)*/
+				src.ejectbrain(currentbrain)
 
 
 
@@ -146,11 +147,6 @@
 /datum/random_event/major/antag/sawflytest
 	name = "SAWFLY TEST"
 	required_elapsed_round_time = 26.6 MINUTES
-	customization_available = 1
-	announce_to_admins = 0 // Doing it manually.
-	centcom_headline = "Biogenic Outbreak"
-	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
-	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
 	var/place = null
 	var/obj/item/old_grenade/sawfly/firsttime/baby = null
 	var/obj/item/organ/brain/latejoin/brain = null
@@ -240,6 +236,8 @@
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 0.8 SECONDS))
+			if(issawflybuddy(target))
+				return
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
 			if(prob(3))

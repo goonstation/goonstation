@@ -19,6 +19,7 @@
 #define ROLE_WRESTLER "wrestler"
 #define ROLE_EMAGGED_ROBOT "emagged robot"
 #define ROLE_SYNDICATE_ROBOT "syndicate robot"
+#define ROLE_SAWFLY "player sawfly"
 #define ROLE_POLTERGEIST "poltergeist"
 #define ROLE_HANDSPIDER "handspider"
 #define ROLE_EYESPIDER "eyespider"
