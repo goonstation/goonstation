@@ -367,7 +367,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-profileName")
-				var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
+				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
