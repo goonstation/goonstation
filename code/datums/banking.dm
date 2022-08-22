@@ -418,8 +418,8 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
-				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+				var/client/C = tgui_input_list(usr, "Who do you wish to give [amount] to?", "Spacebux Transfer", clients)
+				if(C && tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 						return
@@ -430,7 +430,7 @@
 					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
-				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
+				boutput(usr, "<span class='alert'><B>Money not transferred.</B></span>")
 
 			if("withdraw_spacebux")
 				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
@@ -643,29 +643,29 @@
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
 					var/avail = null
-					var/t2 = input("Withdraw or Deposit?", "Secure Records", null, null) in list("Withdraw", "Deposit")
-					var/t1 = input("How much?", "Secure. records", R["current_money"], null)  as null|num
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
-					if (t2 == "Withdraw")
-						if (R["name"] in FrozenAccounts)
-							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
-							return
-						avail = R["current_money"]
-						if (t1 > avail) t1 = avail
-						if (t1 < 1) return
-						R["current_money"] -= t1
-						wagesystem.station_budget += t1
-						logTheThing(LOG_STATION, usr, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
-						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
-					else if (t2 == "Deposit")
-						avail = wagesystem.station_budget
-						if (t1 > avail) t1 = avail
-						if (t1 < 1) return
-						R["current_money"] += t1
-						wagesystem.station_budget -= t1
-						logTheThing(LOG_STATION, usr, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
-						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
-					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
+					var/t2 = tgui_alert(usr, "Withdraw or Deposit?", "Secure Records", list("Withdraw", "Deposit"))
+					if (t2)
+						var/t1 = input("How much?", "Secure. records", R["current_money"], null)  as null|num
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
+						if (t2 == "Withdraw")
+							if (R["name"] in FrozenAccounts)
+								boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
+								return
+							avail = R["current_money"]
+							if (t1 > avail) t1 = avail
+							if (t1 < 1) return
+							R["current_money"] -= t1
+							wagesystem.station_budget += t1
+							logTheThing(LOG_STATION, usr, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
+							boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
+						else if (t2 == "Deposit")
+							avail = wagesystem.station_budget
+							if (t1 > avail) t1 = avail
+							if (t1 < 1) return
+							R["current_money"] += t1
+							wagesystem.station_budget -= t1
+							logTheThing(LOG_STATION, usr, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
+							boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
 				else if(href_list["payroll"])
 					if(world.time >= src.payroll_rate_limit_time)
 						src.payroll_rate_limit_time = world.time + (10 SECONDS)
@@ -954,8 +954,8 @@
 					boutput(usr, "<span class='alert'>No.</span>")
 					src.updateUsrDialog()
 					return
-				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
-				if(tgui_alert("You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
+				var/client/C = tgui_input_list(usr, "Who do you wish to give [amount] to?", "Spacebux Transfer", clients)
+				if(C && tgui_alert("You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 					if(!usr.client.bank_can_afford(amount))
 						boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 						return
@@ -966,7 +966,7 @@
 					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
-				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
+				boutput(usr, "<span class='alert'><B>Money not transferred.</B></span>")
 
 			if("withdraw_spacebux")
 				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)

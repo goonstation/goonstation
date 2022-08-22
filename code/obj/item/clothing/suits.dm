@@ -675,7 +675,7 @@
 
 	attack_self(mob/user as mob)
 		add_fingerprint(user)
-		var/choice = input(user, "What do you want to do with [src]?", "Selection") as null|anything in list("Place", "Rip up")
+		var/choice = tgui_input_list(user, "What do you want to do with [src]?", "Selection", list("Place", "Rip up"))
 		if (!choice)
 			return
 		switch (choice)
@@ -700,7 +700,7 @@
 				actions += "Cut cable"
 			else if (!src.eyeholes)
 				actions += "Cut eyeholes"
-			var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
+			var/action = tgui_input_list(user, "What do you want to do with [src]?", "Selection", actions)
 			if (!action)
 				return
 			switch (action)

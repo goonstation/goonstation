@@ -138,8 +138,10 @@ obj/item/engivac/attack_hand(mob/living/user)
 
 obj/item/engivac/attack_self(mob/user)
 	..()
-	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris",held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null)
-	var/input = input(user,"Select option:","Option") in options
+	var/list/options = list("Toggle collecting building materials", "Toggle collecting debris", held_toolbox ? "Toggle floor tile auto-placement" : null, held_toolbox ? "Remove Toolbox" : null, "Cancel")
+	var/input = tgui_input_list(user, "Select option:", "Option", options)
+	if (!input || input == "Cancel")
+		return
 	switch(input)
 		if ("Toggle collecting building materials")
 			collect_buildmats = !collect_buildmats

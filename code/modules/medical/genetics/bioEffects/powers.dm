@@ -143,22 +143,26 @@
 		var/base_path = text2path("[ME.target_path]")
 		if (!ispath(base_path))
 			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/objs = list()
 		if (ismob(owner.loc) || istype(owner.loc,/obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A,ME.target_path))
-					items += A
+					atoms += A
 
 		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		if (!length(items))
+		for (var/obj/O in atoms)
+			objs += O
+
+		if (!length(objs))
 			boutput(usr, "<span class='alert'>You can't find anything nearby to eat.</span>")
 			using = FALSE
 			return
 
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		var/obj/the_object = tgui_input_list(usr, "Which item do you want to eat?", "Matter Eater", objs)
 		if (!the_object || (!istype(the_object, /obj/the_server_ingame_whoa) && the_object.anchored))
 			using = FALSE
 			return TRUE
@@ -234,22 +238,26 @@
 		var/base_path = text2path("[ME.target_path]")
 		if (!ispath(base_path))
 			base_path = /obj/item/
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/objs = list()
 		if (ismob(owner.loc) || istype(owner.loc,/obj/))
 			for (var/atom/A in owner.loc.contents)
 				if (istype(A,ME.target_path))
-					items += A
+					atoms += A
 
 		if (linked_power.power > 1)
-			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		if (!items.len)
+		for (var/obj/O in atoms)
+			objs += O
+
+		if (!length(objs))
 			boutput(usr, "/red You can't find anything nearby to eat.")
 			using = 0
 			return
 
-		var/obj/the_object = input("Which item do you want to eat?","Matter Eater") as null|obj in items
+		var/obj/the_object = tgui_input_list(usr, "Which item do you want to eat?", "Matter Eater", objs)
 		if (!the_object)
 			using = 0
 			return 1
@@ -1254,13 +1262,18 @@
 		if (linked_power.power > 1)
 			base_path = /obj/
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
+		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/objs = list()
+
+		for (var/obj/O in atoms)
+			objs += O
+
+		if (!length(objs))
 			boutput(usr, "/red You can't find anything nearby to touch.")
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		var/obj/the_object = tgui_input_list(usr, "Which item do you want to transmute?", "Midas Touch", objs)
 		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0
@@ -1296,13 +1309,18 @@
 		if (linked_power.power > 1)
 			base_path = /obj/
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
+		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/objs = list()
+
+		for (var/obj/O in atoms)
+			objs += O
+
+		if (!length(objs))
 			boutput(usr, "/red You can't find anything nearby to touch.")
 			return 1
 
 		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+		var/obj/the_object = tgui_input_list(usr, "Which item do you want to transmute?", "Midas Touch", objs)
 		if (!the_object)
 			last_cast = 0
 			linked_power.using = 0

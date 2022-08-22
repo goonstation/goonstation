@@ -123,7 +123,9 @@
 	verb/set_pattern()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
-		var/input = input(usr,"Select cloaking pattern:","Set pattern","Noise") in list("Noise","Linear","Chaos","Cubic","Interference","Rotating")
+		var/input = tgui_input_list(usr, "Select cloaking pattern:", "Set pattern", list("Noise", "Linear", "Chaos", "Cubic", "Interference", "Rotating"))
+		if (!input)
+			return
 		switch(input)
 			if("Linear")
 				my_gen.icon_to_use = "noise1"

@@ -227,14 +227,14 @@
 		if (is_running)
 			boutput(user, "\The [src] is busy.") //machine is running
 			return
-		var/mode_sel = input("What would you like to do?", "Mode Control") as null|anything in press_modes
-		if (!mode_sel) //just in case? idk if this is necessary
+		var/mode_sel = tgui_input_list(user, "What would you like to do?", "Mode Control", press_modes)
+		if (!mode_sel)
 			return
 
 		switch (lowertext(mode_sel))
 
 			if ("choose cover")
-				var/cover_sel = input("What cover design would you like?", "Cover Control", book_cover) as null|anything in cover_designs
+				var/cover_sel = tgui_input_list(user, "What cover design would you like?", "Cover Control", cover_designs)
 				if (!cover_sel)
 					book_cover = "book0"
 				else
@@ -372,10 +372,12 @@
 					if (cover_color_sel)
 						cover_color = cover_color_sel
 
-					var/s_cat_sel = input("What type of symbol would you like?", "Cover Control") as null|anything in list("Standard", "Colorable", "Alchemical", "Alphanumeric")
+					var/s_cat_sel = tgui_input_list(user, "What type of symbol would you like?", "Cover Control", list("Standard", "Colorable", "Alchemical", "Alphanumeric"))
+					if (!s_cat_sel)
+						s_cat_sel = "standard"
 					switch (lowertext(s_cat_sel))
 						if ("standard")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in standard_symbols
+							var/symbol_sel = tgui_input_list(user, "What would you like the symbol to be?", "Cover Control", standard_symbols)
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								symbol_colorable = 0
@@ -383,7 +385,7 @@
 								cover_symbol = "none"
 
 						if ("colorable")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in colorable_symbols
+							var/symbol_sel = tgui_input_list(user, "What would you like the symbol to be?", "Cover Control", colorable_symbols)
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
@@ -394,7 +396,7 @@
 								cover_symbol = "none"
 
 						if ("alchemical")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alchemical_symbols
+							var/symbol_sel = tgui_input_list(user, "What would you like the symbol to be?", "Cover Control", alchemical_symbols)
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								symbol_colorable = 0
@@ -402,7 +404,7 @@
 								cover_symbol = "none"
 
 						if ("alphanumeric")
-							var/symbol_sel = input("What would you like the symbol to be?", "Cover Control") as null|anything in alphanumeric_symbols
+							var/symbol_sel = tgui_input_list(user, "What would you like the symbol to be?", "Cover Control", alphanumeric_symbols)
 							if (symbol_sel)
 								cover_symbol = lowertext(symbol_sel)
 								var/color_sel = input("What color would you like the symbol to be?", "Cover Control") as color
@@ -412,10 +414,12 @@
 							else
 								cover_symbol = "none"
 
-					var/f_cat_sel = input("What type of flair would you like?", "Cover Control") as null|anything in list("Standard", "Colorable")
+					var/f_cat_sel = tgui_input_list(user, "What type of flair would you like?", "Cover Control", list("Standard", "Colorable"))
+					if (!f_cat_sel)
+						f_cat_sel = "Standard"
 
 					if (f_cat_sel == "Standard")
-						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in standard_flairs
+						var/flair_sel = tgui_input_list(user, "What would you like the flair to be?", "Cover Control", standard_flairs)
 						if (flair_sel)
 							cover_flair = lowertext(flair_sel)
 							flair_colorable = 0
@@ -423,7 +427,7 @@
 							cover_flair = "none"
 
 					else if (f_cat_sel == "Colorable")
-						var/flair_sel = input("What would you like the flair to be?", "Cover Control") as null|anything in colorable_flairs
+						var/flair_sel = tgui_input_list(user, "What would you like the flair to be?", "Cover Control", colorable_flairs)
 						if (flair_sel)
 							cover_flair = lowertext(flair_sel)
 							var/color_sel = input("What color would you like the flair to be?", "Cover Control") as color

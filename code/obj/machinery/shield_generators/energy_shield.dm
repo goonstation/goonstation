@@ -67,7 +67,7 @@
 		if(length(choices) == 1)
 			input = choices[1]
 		else
-			input = input("Select a config to modify!", "Config", null) as null|anything in choices
+			input = tgui_input_list(user, "Select a config to modify!", "Config", choices)
 		if(input && (user in range(1,src)))
 			switch(input)
 				if("Set Range")

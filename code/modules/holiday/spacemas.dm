@@ -827,7 +827,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			src.verbs -= /mob/living/carbon/human/santa/verb/santa_teleport
 			var/A
-			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
+			A = tgui_input_list(usr, "Area to jump to", "TELEPORTATION", get_teleareas())
+			if (!A)
+				return TRUE
 			var/area/thearea = get_telearea(A)
 			if(thearea.teleport_blocked)
 				boutput(src, "<span class='alert'>That area is blocked from teleportation.</span>")
@@ -1069,7 +1071,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_teleport
 			var/A
-			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
+			A = tgui_input_list(usr, "Area to jump to", "TELEPORTATION", get_teleareas())
+			if (!A)
+				return
 			var/area/thearea = get_telearea(A)
 
 			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")

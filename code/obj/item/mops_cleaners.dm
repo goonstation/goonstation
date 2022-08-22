@@ -579,7 +579,7 @@ WET FLOOR SIGN
 		if (choices.len == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
 			selection = choices[1]
 		else
-			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
+			selection = tgui_input_list(user, "What do you want to do with [src]?", "Selection", choices)
 		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
 			return
 

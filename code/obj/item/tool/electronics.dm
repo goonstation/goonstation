@@ -236,7 +236,9 @@
 				boutput(user, "<span class='alert'>Incomplete Object, unable to finish!</span>")
 				return
 			if(dir_needed)
-				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
+				var/dirr = tgui_input_list(user, "Select A Direction!", "UDLR", list("Up", "Down", "Left", "Right"))
+				if (!dirr)
+					return
 				switch(dirr)
 					if("Up")
 						src.set_dir(1)

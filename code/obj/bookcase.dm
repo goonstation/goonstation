@@ -76,7 +76,7 @@
 
 /obj/bookshelf/attack_hand(mob/user)
 	if (length(src.bookshelf_contents) > 0)
-		var/book_sel = input("What book would you like to take off \the [src]?", "[src]") as null|anything in src.bookshelf_contents
+		var/book_sel = tgui_input_list(user, "What book would you like to take off \the [src]?", "[src]", src.bookshelf_contents)
 		if (!book_sel)
 			return
 		boutput(user, "You take the book off the shelf.")

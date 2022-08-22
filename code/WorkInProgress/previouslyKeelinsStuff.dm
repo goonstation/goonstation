@@ -356,7 +356,7 @@ var/reverse_mode = 0
 		else
 			if (!beingUsed) //I guess you could use this thing in-hand a lot and gain its powers repeatedly!
 				beingUsed = 1
-				switch( input(user,"What now?","???", null) in null|list("Let the relic's power flow through you", "Bend the relic's power to your will", "Use the relic's power to heal your wounds" ,"Attempt to absorb the relic's power", "Leave it alone"))
+				switch(tgui_input_list(user, "What now?", "???", list("Let the relic's power flow through you", "Bend the relic's power to your will", "Use the relic's power to heal your wounds" ,"Attempt to absorb the relic's power", "Leave it alone")))
 
 					if (null, "Leave it alone")
 						boutput(user, "You leave the relic alone.")

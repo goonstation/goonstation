@@ -536,7 +536,7 @@
 	verb/set_sticker_type()
 		if (!ishuman(usr) || !islist(src.skins))
 			return
-		var/new_skin = input(usr,"Select Sticker Type:","Spy Sticker",null) as null|anything in src.skins
+		var/new_skin = tgui_input_list(usr, "Select Sticker Type:", "Spy Sticker", src.skins)
 		if (!new_skin)
 			return
 		var/new_name = istext(src.skins[new_skin]) ? src.skins[new_skin] : null

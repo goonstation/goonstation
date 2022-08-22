@@ -261,7 +261,7 @@
 						targets[I] = I
 				LAGCHECK(LAG_LOW)
 			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			work()
 			if(!target)
 				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")
@@ -296,7 +296,7 @@
 						targets[I] = I
 
 			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			work()
 			if(!target)
 				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")

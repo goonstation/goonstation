@@ -146,7 +146,7 @@
 					names += P.name
 			if(length(names))
 				user.show_text("Something went wrong, showing backup menu...", "blue")
-				var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
+				var/name_sel = tgui_input_list(user, "Offered Products", "Selection", names)
 				if (!name_sel)
 					return
 				for (var/datum/geneboothproduct/P as anything in offered_genes)

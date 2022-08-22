@@ -107,7 +107,7 @@ TYPEINFO(/datum/component/barber)
 			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
 			"Create Wig" = ALL_HAIR)
 
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+		var/which_part = tgui_input_list(user, "Which clump of hair?", "Clump", region)
 
 		if (!which_part)
 			return
@@ -183,7 +183,7 @@ TYPEINFO(/datum/component/barber)
 			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
 			"Create Wig" = ALL_HAIR)
 
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+		var/which_part = tgui_input_list(user, "Which clump of hair?", "Clump", region)
 
 		if (!which_part)
 			return

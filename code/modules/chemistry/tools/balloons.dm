@@ -91,7 +91,10 @@
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
 
-		var/action = input(user, "What do you want to do with the balloon?") as null|anything in actions
+		var/action = tgui_input_list(user, "What do you want to do with the balloon?", "Use balloon", actions)
+
+		if (!action)
+			return
 
 		switch (action)
 			if ("Make balloon animal")
@@ -104,11 +107,11 @@
 					if (user.losebreath)
 						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
-					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
+					var/list/animal_types = list("bee", "dog", "fermid", "fish", "martian", "owl", "pie", "rockworm", "spider")
 					if (!animal_types || animal_types.len <= 0)
 						user.show_text("You can't think of anything to make with [src].", "red")
 						return
-					var/animal = input(user, "What do you want to make?") as null|anything in animal_types
+					var/animal = tgui_input_list(user, "What do you want to make?", "Make balloon animal", animal_types)
 					if (isnull(animal))
 						user.show_text("You change your mind.")
 						return

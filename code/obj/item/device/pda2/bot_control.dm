@@ -345,7 +345,7 @@
 				post_status("bot_control", cmd, "bot_status")
 			if("setdest")
 				if(beacons)
-					var/dest = input("Select Bot Destination", "Mulebot [active.suffix] Interlink", active:destination) as null|anything in beacons
+					var/dest = tgui_input_list(usr, "Select Bot Destination", "Mulebot [active.suffix] Interlink", beacons) || active:destination
 					if(dest)
 						post_status("bot_control", cmd, "target", "destination", dest)
 						post_status("bot_control", cmd, "bot_status")

@@ -303,8 +303,8 @@
 
 	///Taking items off a head
 	attack_self(mob/user as mob)
-		var/list/headwear = list(head, ears, wear_mask, glasses)
-		var/obj/selection = input("Which item do you want to remove","Looting the dead") as null|obj in headwear
+		var/list/headwear = list(head.name = head, ears.name = ears, wear_mask.name = wear_mask, glasses.name = glasses)
+		var/obj/selection = headwear[tgui_input_list(user, "Which item do you want to remove", "Looting the dead", headwear)]
 		if (!selection)
 			return
 		user.put_in_hand_or_drop(selection)

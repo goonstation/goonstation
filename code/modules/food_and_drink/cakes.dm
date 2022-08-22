@@ -118,7 +118,7 @@
 			user.show_text("The icing tube isn't full enough to frost the cake!","red")
 			return
 		var/frostingtype
-		frostingtype = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frostingstyles
+		frostingtype = tgui_input_list(user, "Which frosting style would you like?", "Frosting Style", frostingstyles)
 		if(frostingtype && (BOUNDS_DIST(src, user) == 0))
 			var/tag
 			var/datum/color/average = tube.reagents.get_average_color()

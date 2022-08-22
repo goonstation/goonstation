@@ -34,8 +34,8 @@
 
 		var/list/wishes = list("I wish to become rich!","I wish for great power!")
 
-		var/wish = input("Make a wish?","[O]") as null|anything in wishes
-		if (user.key in wish_granted)
+		var/wish = tgui_input_list(user, "Make a wish?", "[O]", wishes)
+		if (wish && (user.key in wish_granted))
 			boutput(user, "<b>[O]</b> resonates, \"<big>FOOLISH MORTAL, YOU TRY TO FOOL ME???</big>\"")
 			return
 		if (!wish)

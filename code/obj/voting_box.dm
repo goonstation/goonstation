@@ -26,7 +26,7 @@
 			if (client_vote_map)
 				hadVoted = 1
 
-			var/map = input("Your Civic Duty", "Which Map?") as null|anything in (client_vote_map ? client_vote_map : mapSwitcher.playerPickable)
+			var/map = tgui_input_list(user, "Your Civic Duty", "Which Map?", client_vote_map || mapSwitcher.playerPickable)
 			if (map)
 				map_vote_holder.special_vote(C,map)
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
@@ -66,7 +66,7 @@
 			if ((S.amount > bribeAmount) || (user.real_name == bribeJerk))
 				var/list/voted_maps = map_vote_holder.get_client_votes(C)
 				if(voted_maps.len > 0)
-					var/chosen = input("Money Talks", "Which Map?") as null|anything in voted_maps
+					var/chosen = tgui_input_list(user, "Money Talks", "Which Map?", voted_maps)
 					if (chosen)
 						if (user.real_name == bribeJerk)
 							// increase paid amount here

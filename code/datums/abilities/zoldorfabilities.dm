@@ -94,14 +94,14 @@
 		playsound(pz.loc, 'sound/machines/fortune_riff.ogg', 60, 1)
 
 		if(user.firstfortune == 1)
-			speechinput = input("Which titles would you like? (i.e. 'great and powerful')", "Adjective", null) as null|anything in fortune_adjectives
+			speechinput = tgui_input_list(usr, "Which titles would you like? (i.e. 'great and powerful')", "Adjective", fortune_adjectives)
 			if(speechinput)
 				user.fortunemessage += "The [speechinput] and "
 			else
 				user.fortunemessage = null
 				pz.ClearSpecificOverlays("fortunetelling")
 				return 1
-			speechinput = input("Which titles would you like? (i.e. 'great and powerful')", "Adjective", null) as null|anything in fortune_adjectives
+			speechinput = tgui_input_list(usr, "Which titles would you like? (i.e. 'great and powerful')", "Adjective", fortune_adjectives)
 			if(speechinput)
 				user.fortunemessage += "[speechinput]"
 			else
@@ -112,110 +112,110 @@
 
 		//add sentences to a list to support multiple lines
 		for(var/i=1,i<=maxlines,i++)
-			sentenceStructure = input("Which sentence structure would you like?", "Sentence", null) as null|anything in sentencesShort
+			sentenceStructure = tgui_input_list(usr, "Which sentence structure would you like?", "Sentence", sentencesShort)
 			if(!sentenceStructure)
 				pz.ClearSpecificOverlays("fortunetelling")
 				break
 			switch(sentenceStructure)
 				if("You shall soon...")
 					sentence += "You shall soon "
-					speechinput = input("You shall soon (verb) the (adjective) (noun).", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "You shall soon (verb) the (adjective) (noun).", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] the "
-					speechinput = input("[sentence](adjective) (noun).", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (noun).", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun).", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun).", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput]."
 				if("But beware...")
 					sentence += "But beware, lest the "
-					speechinput = input("But beware, lest the (adjective) (noun) (verb) you!", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "But beware, lest the (adjective) (noun) (verb) you!", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) (verb) you!", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) (verb) you!", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](verb) you!", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence](verb) you!", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] you!"
 				if("But take heed...")
 					sentence += "But take heed, for the "
-					speechinput = input("But take heed, for the (adjective) (noun) might (verb) you!", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "But take heed, for the (adjective) (noun) might (verb) you!", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) might (verb) you!", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) might (verb) you!", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] might "
-					speechinput = input("[sentence](verb) you!", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence](verb) you!", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] you!"
 				if("But rejoice...")
 					sentence += "But rejoice, for the "
-					speechinput = input("But rejoice, for the (adjective) (noun) shall (verb) you!", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "But rejoice, for the (adjective) (noun) shall (verb) you!", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) shall (verb) you!", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) shall (verb) you!", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] shall "
-					speechinput = input("[sentence](verb) you!", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence](verb) you!", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] you!"
 				if("Seek the...")
 					sentence += "Seek the "
-					speechinput = input("Seek the (mystical) of the (adjective) (noun) and (verb) yourself.", "Mystical", null) as null|anything in fortune_mystical
+					speechinput = tgui_input_list(usr, "Seek the (mystical) of the (adjective) (noun) and (verb) yourself.", "Mystical", fortune_mystical)
 					if(!speechinput) break
 					sentence += "[speechinput] of the "
-					speechinput = input("[sentence](adjective) (noun) and (verb) yourself.", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (noun) and (verb) yourself.", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) and (verb) yourself.", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) and (verb) yourself.", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] and "
-					speechinput = input("[sentence]and (verb) yourself.", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence]and (verb) yourself.", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] yourself."
 				if("Remember to...")
 					sentence += "Remember to "
-					speechinput = input("Remember to (verb) the (adjective) (noun) and you will surely (verb) your (adjective) (mystical).", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "Remember to (verb) the (adjective) (noun) and you will surely (verb) your (adjective) (mystical).", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] the "
-					speechinput = input("[sentence](adjective) (noun) and you will surely (verb) your (adjective) (mystical).", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (noun) and you will surely (verb) your (adjective) (mystical).", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) and you will surely (verb) your (adjective) (mystical).", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) and you will surely (verb) your (adjective) (mystical).", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] and you will surely "
-					speechinput = input("[sentence](verb) your (adjective) (mystical).", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence](verb) your (adjective) (mystical).", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] your "
-					speechinput = input("[sentence](adjective) (mystical).", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (mystical).", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](mystical).", "Mystical", null) as null|anything in fortune_mystical
+					speechinput = tgui_input_list(usr, "[sentence](mystical).", "Mystical", fortune_mystical)
 					if(!speechinput) break
 					sentence += "[speechinput]."
 				if("You must...")
 					sentence += "You must "
-					speechinput = input("You must (verb) the (adjective) (noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "You must (verb) the (adjective) (noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] the "
-					speechinput = input("[sentence](adjective) (noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) or the (noun) will surely (verb) your (adjective) (mystical).", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] or the "
-					speechinput = input("[sentence](noun) will surely (verb) your (adjective) (mystical).", "Noun", null) as null|anything in fortune_nouns
+					speechinput = tgui_input_list(usr, "[sentence](noun) will surely (verb) your (adjective) (mystical).", "Noun", fortune_nouns)
 					if(!speechinput) break
 					sentence += "[speechinput] will surely "
-					speechinput = input("[sentence](verb) your (adjective) (mystical).", "Verb", null) as null|anything in fortune_verbs
+					speechinput = tgui_input_list(usr, "[sentence](verb) your (adjective) (mystical).", "Verb", fortune_verbs)
 					if(!speechinput) break
 					sentence += "[speechinput] your "
-					speechinput = input("[sentence](adjective) (mystical).", "Adjective", null) as null|anything in fortune_adjectives
+					speechinput = tgui_input_list(usr, "[sentence](adjective) (mystical).", "Adjective", fortune_adjectives)
 					if(!speechinput) break
 					sentence += "[speechinput] "
-					speechinput = input("[sentence](mystical).", "Mystical", null) as null|anything in fortune_mystical
+					speechinput = tgui_input_list(usr, "[sentence](mystical).", "Mystical", fortune_mystical)
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
@@ -344,10 +344,10 @@
 					pz.brandlist -= pz.brandlist[i]
 					staticiterations--
 					i--
-			destination = input("Whom do you wish to observe?", "Target", null) as null|anything in pz.brandlist
+			destination = tgui_input_list(usr, "Whom do you wish to observe?", "Target", pz.brandlist)
 		else
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
-			destination = input("Whom do you wish to observe?", "Target", null) as null|anything in pz.brandlist
+			destination = tgui_input_list(usr, "Whom do you wish to observe?", "Target", pz.brandlist)
 		if((!istype(user.loc,/obj/machinery/playerzoldorf)) && (!istype(user.loc,/mob/)))
 			return
 		if(!destination)
@@ -490,7 +490,7 @@
 			var/list/selections = list("Read Notes","Add Note","Remove Note")
 			var/selection
 
-			selection = input("Choose an option", "Notes", null) as null|anything in selections
+			selection = tgui_input_list(usr, "Choose an option", "Notes", selections)
 
 			if(!selection)
 				return

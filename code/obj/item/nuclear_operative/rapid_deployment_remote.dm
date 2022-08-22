@@ -34,7 +34,7 @@
 		if(!src.landing_area)
 			choose_area(user)
 		else
-			var/choice = input(user, "Would you like to reset your area, or deploy to the assault pod?") in list("Reset", "Deploy", "Cancel")
+			var/choice = tgui_input_list(user, "Would you like to reset your area, or deploy to the assault pod?", "Select Choice", list("Reset", "Deploy", "Cancel"))
 			switch(choice)
 				if("Reset")
 					src.landing_area = null
@@ -68,7 +68,7 @@
 							return
 					else
 						return
-				if("Cancel")
+				if(null, "Cancel")
 					return
 
 

@@ -77,7 +77,7 @@
 		if (choices.len == 1)
 			choice = choices[1]
 		else
-			choice = input("", "Select Radio and Channel", null) as null|anything in choices
+			choice = tgui_input_list(usr, "Select radio channel", "Select Radio and Channel", choices)
 		if (!choice)
 			return
 
@@ -120,7 +120,7 @@
 			if (choices.len == 1)
 				choice = choices[1]
 			else
-				choice = input("", "Select Radio Channel", null) as null|anything in choices
+				choice = tgui_input_list(src, "Select radio channel", "Radio Channel", choices)
 			if (!choice)
 				return
 

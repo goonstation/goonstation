@@ -384,7 +384,7 @@
 
 		var/amount = 5 + (power - 1)*5			//if power is 1, amount is 5| if power is 2, amount is 10| if power is 3, amount is 15
 		var/max_gene_amt = 25 * power			//75 at max
-		var/choice = input("What do you want to do with this seed.", "Seed Manipulation", "Potency") in list("Mend Seed", "Maturation Rate", "Production Rate", "Lifespan", "Yield", "Potency", "Endurance")
+		var/choice = tgui_input_list(user, "What do you want to do with this seed.", "Seed Manipulation", list("Mend Seed", "Maturation Rate", "Production Rate", "Lifespan", "Yield", "Potency", "Endurance")) || "Potency"
 
 		if (isnull(choice))
 			return 1
@@ -422,13 +422,13 @@
 
 			//Yeah, I know this can look better. But I'm thinking I might throw these numbers and values out and set up a new thing for it so I'm doing this for now.
 			if (A.vending == 0 && power == 3)
-				usable += A
+				usable[A.name] += A
 			else if (A.vending == 1 && power >= 1)
-				usable += A
+				usable[A.name] += A
 			else if (A.vending == 2 && power >= 2)
-				usable += A
+				usable[A.name] += A
 
-		var/datum/plant/pick = input(holder.owner, "Which seed do you want?", "Portable Seed Fabricator", null) in usable
+		var/datum/plant/pick = usable[tgui_input_list(holder.owner, "Which seed do you want?", "Portable Seed Fabricator", usable)]
 
 		if (pick)
 			var/obj/item/seed/S

@@ -955,8 +955,8 @@
 				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
 				return
 			else
-				satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
-				if(!HYPcheck_if_harvestable() || satchelpick == "Never Mind")
+				satchelpick = tgui_input_list(user, "What do you want to harvest into the satchel?", "[src.name]", list("Everything", "Produce Only", "Seeds Only", "Never Mind"))
+				if(!HYPcheck_if_harvestable() || !satchelpick || satchelpick == "Never Mind")
 					return
 				if(satchelpick == "Everything")
 					satchelpick = null

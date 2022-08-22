@@ -70,7 +70,9 @@
 			return
 
 		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(user,"Select option:","Option") in options
+		var/input = tgui_input_list(user, "Select option:", "Option", options)
+		if (!input)
+			return
 		switch(input)
 			if("Unlock")
 				if(!locked || building) return
@@ -260,7 +262,9 @@
 
 	save.cd = "/"
 
-	var/input = input(usr,"Select save:","Blueprints") in bps
+	var/input = tgui_input_list(usr, "Select save:", "Blueprints", bps)
+	if (!input)
+		return
 	var/list/split = splittext(input, "/")
 	var/key = input
 	if(save.dir.Find("[split[1]]"))
@@ -314,7 +318,9 @@
 
 	save.cd = "/"
 
-	var/input = input(usr,"Select save:","Blueprints") in bps
+	var/input = tgui_input_list(usr, "Select save:", "Blueprints", bps)
+	if (!input)
+		return
 	var/list/split = splittext(input, "/")
 	if(save.dir.Find("[split[1]]"))
 		save.cd = "/[split[1]]"
@@ -639,7 +645,9 @@
 
 	attack_self(mob/user as mob)
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
-		var/input = input(user,"Select option:","Option") in options
+		var/input = tgui_input_list(user, "Select option:", "Option", options)
+		if (!input)
+			return
 
 		switch(input)
 			if("Reset")

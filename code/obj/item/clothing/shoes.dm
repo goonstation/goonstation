@@ -535,7 +535,7 @@
 			user.show_text("[src] has no tank attached!", "red")
 			return ..()
 
-		var/action = input(user, "What do you want to do with [src]?") as null|anything in actions
+		var/action = tgui_input_list(user, "What do you want to do with [src]?", "Selection", actions)
 
 		switch (action)
 			if ("Toggle")
@@ -547,7 +547,8 @@
 				user.put_in_hand_or_drop(src.tank)
 				src.tank = null
 				return
-		..()
+			else
+				return
 
 	proc/allow_thrust(num, mob/user as mob) // blatantly c/p from jetpacks
 		if (!src.on || !istype(src.tank))

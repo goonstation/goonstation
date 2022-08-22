@@ -667,10 +667,12 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 		possible_areas += get_areas(/area/diner)
 		possible_areas += get_areas(/area/radiostation/studio)
 		possible_areas += get_areas(/area/sim)
+		for (var/area/a as anything in possible_areas)
+			possible_areas[a.name] = a
 
 	cast(mob/target)
 		if (isalive(holder.owner) && !holder.owner.transforming)
-			var/area/A = input("Select the area to leap to: ", "Select Area", null) as null|anything in possible_areas
+			var/area/A = possible_areas[tgui_input_list(holder.owner, "Select the area to leap to: ", "Select Area", possible_areas)]
 			if (!A)
 				return
 

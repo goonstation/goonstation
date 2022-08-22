@@ -477,7 +477,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/turf/T = get_turf(target)
 		if (isturf(T))
-			var/effect = input("Which effect?", "Effect", "Random") in effects
+			var/effect = tgui_input_list(usr, "Which effect?", "Effect", effects) || "Random"
 			if (effect == "Random")
 				effect = rand(1, 6)
 			else
@@ -521,7 +521,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
 		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
 
-		var/string = input(holder.owner, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
+		var/string = tgui_input_list(holder.owner, "What do you want to write?", "Write something", c_default + c_symbol)
 
 		if (!string)
 			return 1

@@ -633,7 +633,7 @@
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
 		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
+		var/t = tgui_input_list(user, "What do you want to write?", "Blood write", c_default + c_symbol)
 
 		if (!t)
 			src.in_use = 0

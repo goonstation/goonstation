@@ -2683,7 +2683,7 @@
 		if(!length(src.active_buttons))
 			boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to remove!</span>")
 		else
-			var/to_remove = input(user, "Choose button to remove", "Button Panel") in src.active_buttons + "*CANCEL*"
+			var/to_remove = tgui_input_list(user, "Choose button to remove", "Button Panel", src.active_buttons + "*CANCEL*")
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if(!to_remove || to_remove == "*CANCEL*")
@@ -2721,7 +2721,7 @@
 	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
-				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
+				var/selected_button = tgui_input_list(user, "Press a button", "Button Panel", src.active_buttons + "*CANCEL*")
 				if (!selected_button || selected_button == "*CANCEL*" || !in_interact_range(src, user)) return
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
@@ -3031,7 +3031,9 @@
 		return 1
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
-		mode = input("Set the math mode to what?", "Mode Selector", mode) in list("add","mul","div","sub","mod","pow","rng","eq","neq","gt","lt","gte","lte")
+		mode = tgui_input_list(user, "Set the math mode to what?", "Mode Selector", list("add", "mul", "div", "sub","mod", "pow", "rng", "eq", "neq", "gt", "lt", "gte", "lte", "cancel"))
+		if (!mode || mode == "cancel")
+			return FALSE
 		tooltip_rebuild = 1
 		return 1
 
@@ -3170,7 +3172,7 @@
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
 	proc/setMode(obj/item/W as obj, mob/user as mob)
-		var/input = input(user, "Set mode", "Association Component") in list("Mutable", "Immutable", "List", "*CANCEL*")
+		var/input = tgui_input_list(user, "Set mode", "Association Component", list("Mutable", "Immutable", "List", "*CANCEL*"))
 		if (!in_interact_range(src, user) || user.stat) return 0
 		if (!input || input == "*CANCEL*") return 0
 		mode = input == "Mutable" ? 0 : input == "Immutable" ? 1 : 2
@@ -3207,7 +3209,7 @@
 		if (!length(map))
 			boutput(user, "<span class='alert'>[src] has no associations - there's nothing to remove!</span>")
 			return 0
-		var/input = input(user, "Remove association", "Association Component") in map + "*CANCEL*"
+		var/input = tgui_input_list(user, "Remove association", "Association Component", map + "*CANCEL*")
 		if (!in_interact_range(src, user) || user.stat) return 0
 		if (!input || input == "*CANCEL*") return 0
 		var/removedValue = map[input]

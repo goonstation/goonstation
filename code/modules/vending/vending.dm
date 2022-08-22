@@ -1964,7 +1964,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			productListUpdater(target, user)
 			user.visible_message("<b>[user.name]</b> loads [target] into [src].")
 			return
-		var/action = input(user, "What do you want to do with [targetContainer]?") as null|anything in list("Empty it into the vending machine","Place it in the vending machine")
+		var/action = tgui_input_list(user, "What do you want to do with [targetContainer]?", "Selection", list("Empty it into the vending machine", "Place it in the vending machine"))
 		var/cantuse
 		if (action)
 			cantuse = ((isdead(user) || !can_act(user) || !in_interact_range(src, user)))

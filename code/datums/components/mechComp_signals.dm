@@ -252,13 +252,13 @@ TYPEINFO(/datum/component/mechanics_holder)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
-	var/typesel = input(user, "Use [parent] as:", "Connection Type") in list("Trigger", "Receiver", "*CANCEL*")
+	var/typesel = tgui_input_list(user, "Use [parent] as:", "Connection Type", list("Trigger", "Receiver", "*CANCEL*"))
 	switch(typesel)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
 		if("Receiver")
 			link_devices(comsig_target, A, user) //What do you want, an invitation? No signal needed!
-		if("*CANCEL*")
+		if(null, "*CANCEL*")
 			return
 	return
 
@@ -341,7 +341,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		if(hacked_vendor.panel_open)
 			return
 	if(length(src.configs))
-		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
+		var/selected_config = tgui_input_list(user, "Select a config to modify!", "Config", src.configs)
 		if (!in_interact_range(parent, user)) return TRUE
 		if(selected_config)
 			switch(selected_config)

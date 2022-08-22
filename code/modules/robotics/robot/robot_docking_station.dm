@@ -531,7 +531,7 @@
 				return
 			switch (selection)
 				if ("chest")
-					var/mod = input("Please select a chest decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Medical Insignia", "Lab Coat")
+					var/mod = tgui_input_list(usr, "Please select a chest decoration!", "Cyborg Decoration", list("Nothing", "Medical Insignia", "Lab Coat"))
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -539,7 +539,7 @@
 					else
 						C.ches_mod = mod
 				if ("head")
-					var/mod = input("Please select a head decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Medical Mirror", "Janitor Cap", "Hard Hat", "Afro and Shades")
+					var/mod = tgui_input_list(usr, "Please select a head decoration!", "Cyborg Decoration", list("Nothing", "Medical Mirror", "Janitor Cap", "Hard Hat", "Afro and Shades"))
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -547,7 +547,7 @@
 					else
 						C.head_mod = mod
 				if ("arms")
-					var/mod = input("Please select an arms decoration!", "Cyborg Decoration", null, null) in list("Nothing")
+					var/mod = tgui_input_list(usr, "Please select an arms decoration!", "Cyborg Decoration", list("Nothing"))
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")
@@ -555,7 +555,7 @@
 					else
 						C.arms_mod = mod
 				if ("legs")
-					var/mod = input("Please select a legs decoration!", "Cyborg Decoration", null, null) in list("Nothing", "Disco Flares")
+					var/mod = tgui_input_list(usr, "Please select a legs decoration!", "Cyborg Decoration", list("Nothing", "Disco Flares"))
 					if (!mod)
 						mod = "Nothing"
 					if (mod == "Nothing")

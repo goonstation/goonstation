@@ -36,8 +36,8 @@
 	if (W.w_class < W_CLASS_BULKY)
 		if ((istool(user.l_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.l_hand != W) || (istool(user.r_hand, TOOL_CUTTING | TOOL_SNIPPING) && user.r_hand != W))
 			if(istype(W, /obj/item/c_tube) && user.client)
-				var user_choice = input(user, "Do what to the cardboard tube?", "Cardboard tube") in list("Cancel", "Wrap", "Create Hat")
-				if(user_choice == "Cancel")
+				var/user_choice = tgui_alert(user, "Do what to the cardboard tube?", "Cardboard tube", list("Wrap", "Create Hat", "Cancel"))
+				if(!user_choice || user_choice == "Cancel")
 					return
 				if(!(user_choice == "Wrap"))
 					var/a_used = 2 ** (src.w_class - 1)

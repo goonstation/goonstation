@@ -177,13 +177,13 @@
 				var/list/options = list(src.trigger)
 				options += src.attachments
 				options += "cancel"
-				var/target = input("Which device do you want to remove?", "Device to remove", "cancel") in options
+				var/target = tgui_input_list(user, "Which device do you want to remove?", "Device to remove", options)
 				if (target == src.trigger)
 					src.trigger.set_loc(user.loc)
 					src.trigger.master = null
 					src.trigger = null
 					user.show_message("<span class='notice'>You remove the triggering device from the assembly.</span>")
-				else if (target == "cancel")
+				else if (!target || target == "cancel")
 					return
 				else
 					var/obj/item/T = target

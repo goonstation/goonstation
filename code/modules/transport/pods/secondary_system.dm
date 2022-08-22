@@ -179,7 +179,7 @@
 			if (load.len == 1)
 				crate = load[1]
 			else
-				crate = input(usr, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+				crate = tgui_input_list(usr, "Choose which cargo to unload..", "Choose cargo", load)
 			if(!crate)
 				return
 			unload(crate)
@@ -221,7 +221,7 @@
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
-	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	var/crate = tgui_input_list(user, "Choose which cargo to unload..", "Choose cargo", load)
 	if(!crate)
 		return
 	unload(crate,T)
@@ -346,7 +346,7 @@
 			if(!a.anchored)
 				targets += a
 
-		target = input(usr, "Choose what to use the tractor beam on", "Choose Target")  as null|anything in targets
+		target = tgui_input_list(usr, "Choose what to use the tractor beam on", "Choose Target", targets)
 
 		if(!target)
 			deactivate()
@@ -393,7 +393,9 @@
 		return
 
 	activate()
-		var/repairmode = input(usr, "Please choose the function to use.", "Repair Mode")  as null|anything in list("Construct", "Repair", "Deconstruct")
+		var/repairmode = tgui_input_list(usr, "Please choose the function to use.", "Repair Mode", list("Construct", "Repair", "Deconstruct", "Cancel"))
+		if (!repairmode || repairmode == "Cancel")
+			return
 		switch(repairmode)
 			if("Construct")
 				if(!ammo)

@@ -1396,7 +1396,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			return
 
 		var/frosting_type = null
-		frosting_type = input("Which frosting style would you like?", "Frosting Style", null) as null|anything in frosting_styles
+		frosting_type = tgui_input_list(user, "Which frosting style would you like?", "Frosting Style", frosting_styles)
 		if(frosting_type && (BOUNDS_DIST(src, user) == 0))
 			frosting_type = src.frosting_styles[frosting_type]
 			var/datum/color/average = tube.reagents.get_average_color()
@@ -1816,19 +1816,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	initial_volume = 15
 	//initial_reagents = list("porktonium"=5)
-	var/list/cuts = list("chunks","octopus")
+	var/list/cuts = list("chunks","octopus", "cancel")
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/kitchen/utensil/knife))
 			var/inp
-			inp = input("Which cut would you like?", "Yay chopping a hotdog", null) as null|anything in cuts
+			inp = tgui_alert(user, "Which cut would you like?", "Yay chopping a hotdog", cuts)
 			var/inplayer
 			var/halfloc = get_turf(src)
 			if(src in user.contents)
 				inplayer = 1
 			else
 				inplayer = 0
-			if(inp && (user in range(1,src)))
+			if(inp && inp != "cancel" && (user in range(1,src)))
 				switch(inp)
 					if("chunks")
 						if(inplayer)

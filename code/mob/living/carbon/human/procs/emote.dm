@@ -504,7 +504,7 @@
 								if (M != src && can_act(M, TRUE))
 									possible_recipients += M
 							if (possible_recipients.len > 1)
-								H = input(src, "Who would you like to hand your [thing] to?", "Choice") as null|anything in possible_recipients
+								H = tgui_input_list(src, "Who would you like to hand your [thing] to?", "Choice", possible_recipients)
 							else if (possible_recipients.len == 1)
 								H = possible_recipients[1]
 

@@ -509,7 +509,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-bloodType")
-				var/blTypeNew = input(usr, "Please select a blood type:", "Character Generation", src.blType)  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")) || src.blType
 
 				if (blTypeNew)
 					if (blTypeNew == "Random")
@@ -700,7 +700,7 @@ datum/preferences
 						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
 						new_style = select_custom_style(customization_types, usr)
 					if ("underwear")
-						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
+						new_style = underwear_styles[tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)]
 
 				if (new_style)
 					switch(params["id"])
@@ -768,7 +768,7 @@ datum/preferences
 
 			if ("update-fartsound")
 				var/list/sound_list = list_keys(AH.fartsounds)
-				var/new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a farting sound", "Fart sound", sound_list)
 
 				if (new_sound)
 					src.AH.fartsound = new_sound
@@ -778,7 +778,7 @@ datum/preferences
 
 			if ("update-screamsound")
 				var/list/sound_list = list_keys(AH.screamsounds)
-				var/new_sound = input(usr, "Select a screaming sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a screaming sound", "Scream sound", sound_list)
 
 				if (new_sound)
 					src.AH.screamsound = new_sound
@@ -788,7 +788,7 @@ datum/preferences
 
 			if ("update-chatsound")
 				var/list/sound_list = list_keys(AH.voicetypes)
-				var/new_sound = input(usr, "Select a chatting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a chatting sound", "Chat sound", sound_list)
 
 				if (new_sound)
 					new_sound = src.AH.voicetypes[new_sound]
@@ -839,7 +839,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = input(usr, "Please select a HUD style:", "New") as null|anything in hud_style_selection
+				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
 
 				if (new_hud)
 					src.hud_style = new_hud
@@ -847,7 +847,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-targetingCursor")
-				var/new_cursor = input(usr, "Please select a cursor:", "Cursor") as null|anything in cursors_selection
+				var/new_cursor = tgui_input_list(usr, "Please select a cursor:", "Cursor", cursors_selection)
 
 				if (new_cursor)
 					src.target_cursor = new_cursor
@@ -1509,7 +1509,7 @@ datum/preferences
 				if (3) valid_actions -= "Low Priority"
 				if (4) valid_actions -= "Unwanted"
 
-			picker = input("Which bracket would you like to move this job to?","Job Preferences") as null|anything in valid_actions
+			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
 			if (!picker)
 				src.antispam = 0
 				return
@@ -1592,7 +1592,7 @@ datum/preferences
 			return
 
 		if (link_tags["resetalljobs"])
-			var/resetwhat = input("Reset all jobs to which level?","Job Preferences") as null|anything in list("Medium Priority","Low Priority","Unwanted")
+			var/resetwhat = tgui_input_list(usr, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
 			switch(resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)

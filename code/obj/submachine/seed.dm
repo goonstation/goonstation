@@ -434,7 +434,7 @@
 						boutput(usr, "<span class='alert'>You require at least ten units of a reagent to infuse a seed.</span>")
 					else
 						dialogue_open = 1
-						R = input(usr, "Use which reagent to infuse the seed?", "[src.name]", 0) in usable_reagents
+						R = tgui_input_list(usr, "Use which reagent to infuse the seed?", "[src.name]", usable_reagents)
 						if (!R || !S)
 							return
 						switch(S.HYPinfusionS(R.id,src))
@@ -651,8 +651,8 @@
 
 		else if(istype(W,/obj/item/satchel/hydro))
 			var/obj/item/satchel/S = W
-			var/select = input(user, "Load what from the satchel?", "[src.name]", 0) in list("Everything","Fruit Only","Seeds Only","Never Mind")
-			if (select != "Never Mind")
+			var/select = tgui_input_list(user, "Load what from the satchel?", "[src.name]", list("Everything", "Fruit Only", "Seeds Only", "Never Mind"))
+			if (select && select != "Never Mind")
 				var/loadcount = 0
 				for (var/obj/item/I in S.contents)
 					if (istype(I,/obj/item/seed/) && (select == "Everything" || select == "Seeds Only"))

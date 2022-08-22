@@ -311,7 +311,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				o1.icon_state = null
 				o2.icon = null
 		else
-			omencolor = input("Which omen would you like to display?", "Omens", null) as null|anything in omencolors
+			omencolor = tgui_input_list(z, "Which omen would you like to display?", "Omens", omencolors)
 			if(!omencolor)
 				return 0
 			if(omencolor == "custom")

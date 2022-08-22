@@ -58,7 +58,9 @@
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Piano Control", list("Reset Piano", "Toggle Looping", "Adjust Timing"))
+			if (!mode_sel)
+				return
 
 			switch(mode_sel)
 				if ("Reset Piano") //reset piano B)
@@ -158,7 +160,7 @@
 		if (is_busy)
 			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
+		var/mode_sel = tgui_input_list(user, "Which mode would you like?", "Mode Select", list("Choose Notes", "Play Song"))
 		if (mode_sel == "Choose Notes")
 			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
 			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy

@@ -108,7 +108,7 @@
 				satchel_contents += temp
 				satchel_contents[temp] = I
 		satchel_contents = sortList(satchel_contents)
-		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
+		var/chosenItem = tgui_input_list(user, "Select an item to pull out.", "Choose Item", satchel_contents)
 		if (!chosenItem)
 			return
 		return satchel_contents[chosenItem]

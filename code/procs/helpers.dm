@@ -2300,7 +2300,7 @@ var/global/list/allowed_restricted_z_areas
   * Given user, will proompt user to select skin color from list (or custom) and returns skin tone after blending
   */
 /proc/get_standard_skintone(var/mob/user)
-	var/new_tone = input(user, "Please select skin color.", "Character Generation")  as null|anything in standard_skintones + list("Custom...")
+	var/new_tone = tgui_input_list(user, "Please select skin color.", "Character Generation", standard_skintones + "Custom...")
 	if (new_tone == "Custom...")
 		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
 		if (!isnull(tone))

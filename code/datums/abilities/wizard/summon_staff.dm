@@ -67,7 +67,7 @@
 
 			// There could be multiple, I suppose.
 			if (2 to INFINITY)
-				var/t1 = input("Please select a staff to summon", "Target Selection", null, null) as null|anything in staves
+				var/t1 = tgui_input_list(M, "Please select a staff to summon", "Target Selection", staves)
 				if (!t1)
 					return 1
 

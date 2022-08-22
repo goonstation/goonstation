@@ -103,7 +103,7 @@
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
 		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
+			var/action = tgui_input_list(user, "What do you want to do with the satchel?", "Satchel", list("Place it in the Chute", "Empty it into the Chute", "Never Mind"))
 			if (!action || action == "Never Mind")
 				return
 			if (!in_interact_range(src, user))

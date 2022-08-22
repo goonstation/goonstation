@@ -10,7 +10,7 @@
 		var/datum/pronouns/pronouns = get_singleton(t)
 		choices[pronouns.name] = pronouns
 	choices["None"] = null
-	var/choice = input(user, message, title, default) as null|anything in choices
+	var/choice = tgui_input_list(user, message, title, choices) || default
 	if(isnull(choice))
 		return choice
 	return choices[choice]

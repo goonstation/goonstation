@@ -761,7 +761,7 @@
 		var/obj/item/I = items[1]
 		if (!sel_target)
 			if (items.len > 1)
-				I = input("Which item?", "Item", null) as null|anything in items
+				I = tgui_input_list(owner, "Which item?", "Item", items)
 		else
 			I = sel_target
 

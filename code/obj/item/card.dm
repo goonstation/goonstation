@@ -292,7 +292,7 @@ GAUNTLET CARDS
 	if(!src.registered)
 		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
 		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","blue","red","green","purple","yellow","No band")
+		var/color = tgui_input_list(user, "What color should the ID's color band be?\nClick cancel to abort the forging process.", "Pick color band", list("clown", "golden", "blue", "red", "green", "purple", "yellow", "No band"))
 		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
 		src.pronouns = pronouns
 		switch (color)

@@ -109,7 +109,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		if (src.machinerylist.len == 1)
 			t1 = src.machinerylist[1]
 		else
-			t1 = input("Please select a [src.machinery_name] to control", "Target Selection", null, null) as null|anything in src.machinerylist
+			t1 = tgui_input_list(user, "Please select a [src.machinery_name] to control", "Target Selection", src.machinerylist)
 		if (!t1)
 			return
 		if ((user.equipped() != src) || user.stat || user.restrained())

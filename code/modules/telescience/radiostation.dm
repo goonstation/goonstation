@@ -185,10 +185,10 @@
 			if(length(name) > FULLNAME_MAX)
 				name = copytext(name, 1, FULLNAME_MAX)
 			name = strip_html(name)
-			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
+			var/accent = tgui_input_list(usr, "Pick an accent:", "Accent", src.accents + "none")
 			if(accent == "none")
 				accent = null
-			src.voices += list(list("name"=name, "accent"=accent))
+			src.voices += list(list("name"=name, "accent"=accents))
 			. = TRUE
 		if("remove_voice")
 			var/id = params["id"]

@@ -151,7 +151,7 @@
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
 
-			var/which_region = input(L, "Pick which region to color", "Where to color") as null | anything in src.regions
+			var/which_region = tgui_input_list(L, "Pick which region to color", "Where to color", src.regions)
 
 			if (!which_region)
 				boutput(L, "<span class='notice'>You leave your pigmentation as-is.</span>")

@@ -33,7 +33,7 @@
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
-				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
+				var/radio_override = tgui_input_list(H, "Select a radio frequency to disguise as...", "Mimic Radio Message.", list("head", "sec", "eng", "sci", "med", "qm", "civ", "cap", "rd", "md", "ce", "hop", "hos", "clown"))
 				if (radio_override)
 					headset.icon_override = radio_override
 

@@ -144,7 +144,7 @@
 
 				// There could be multiple, i guess
 				if (2 to INFINITY)
-					var/t1 = input("Please select a machete to summon", "Target Selection", null, null) as null|anything in machetes
+					var/t1 = tgui_input_list(M, "Please select a machete to summon", "Target Selection", machetes)
 					if (!t1)
 						return TRUE
 

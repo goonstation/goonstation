@@ -610,7 +610,7 @@
 
 	proc/search(var/mob/user) //the context action proc that handles players search a group for a specific card
 		user.visible_message("<b>[user.name]</b> begins to search through the [src.name]...")
-		var/card = input(user, "Which card would you like to draw?", "[name]")  as null|anything in stored_cards
+		var/card = tgui_input_list(user, "Which card would you like to draw?", "[name]", stored_cards)
 		if(!card)
 			user.visible_message("<b>[user.name]</b> doesn't find what they're looking for.")
 			return

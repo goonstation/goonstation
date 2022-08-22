@@ -197,7 +197,7 @@
 			if(!yn)
 				yn = pick("Repeat","Cancel")
 			if(yn == "Repeat")
-				var/repeat = input(user,"Choose a card!","Choice") as anything in deck.usedcards
+				var/repeat = tgui_input_list(user, "Choose a card!", "Choice", deck.usedcards)
 				if(!deck.usedcards.len)
 					boutput(user,"<span class='alert'><b>There are no card effects to be repeated!</b></span>")
 				if(!repeat)

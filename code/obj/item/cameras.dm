@@ -233,7 +233,9 @@
 /obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
-		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
+		var/signwrite = tgui_input_list(user, "Sign or Write?", "Write", list("sign","write"))
+		if (!signwrite)
+			return
 		var/t = input(user, "What do you want to [signwrite]?", null, null) as null|text
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if(t)
