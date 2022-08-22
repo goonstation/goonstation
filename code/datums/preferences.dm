@@ -700,7 +700,7 @@ datum/preferences
 						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
 						new_style = select_custom_style(customization_types, usr)
 					if ("underwear")
-						new_style = underwear_styles[tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)]
+						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
 				if (new_style)
 					switch(params["id"])
