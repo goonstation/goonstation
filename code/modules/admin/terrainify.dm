@@ -87,7 +87,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 			for(var/turf/T in range(3,W))
 				turfs_to_fix |= T
-		clear_out_turfs(turfs_to_fix)
+		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
 
 	proc/get_mass_driver_turfs()
 		var/list/turfs_to_fix = list()
@@ -104,7 +104,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
 		clear_out_turfs(turfs_to_fix)
 
-	proc/clear_out_turfs(list/turf/to_clear)
+	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list)
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/auto/asteroid))
@@ -119,6 +119,8 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
 					continue
 				if(A.density)
+					if(A in ignore_list)
+						continue
 					qdel(A)
 
 			if(station_repair.allows_vehicles)
