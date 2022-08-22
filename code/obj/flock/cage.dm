@@ -263,6 +263,7 @@
 			return
 		if(prob(75))
 			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.playsound_local(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 			takeDamage("brute",1)
 
 	takeDamage(var/damageType, var/amount)
@@ -281,10 +282,18 @@
 		if(src.health <= 0)
 			qdel(src)
 
-	mob_flip_inside(var/mob/user)
-		..(user)
+	mob_resist_inside(var/mob/user)
+		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
+			return
+		ON_COOLDOWN(src, "move_damage", 1 SECOND)
 		user.show_text("<span class='alert'>[src] [pick("begins to splinter","cracks open slightly","becomes a little less solid","loosens around you")].</span>")
 		src.takeDamage("brute",6)
+		user.playsound_local(src, "sound/misc/flockmind/flockdrone_grump[pick(1,2,3)].ogg", 50, 1, 0, 0.5 )
+		return TRUE
+
+	mob_flip_inside(var/mob/user)
+		..(user)
+		src.mob_resist_inside(user)
 
 	special_desc(dist, mob/user)
 		if (!isflockmob(user))
