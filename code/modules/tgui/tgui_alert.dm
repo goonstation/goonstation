@@ -25,6 +25,9 @@
 		else
 			return
 	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
+	if(!length(items))
+		log_tgui(user, "Error: TGUI Alert called with no items.", "TguiAlert")
+		return
 	if(length(items) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many items. Use a list.", "TguiAlert")
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
