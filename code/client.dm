@@ -802,37 +802,23 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 
 /client/proc/load_persistent_bank()
-	//var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
-	//if (!PB)
-	//	if( cloud_available() )
-	//		persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-
-	//var/bank = 0
-	//PB[ckey] >> bank
-	//if (!bank)
-
 	persistent_bank_valid = cloud_available()
 
-	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-	//else
-	//	persistent_bank = bank
-	if( !persistent_bank && cloud_available() )
+	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
+
+	if(!persistent_bank && cloud_available())
 		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get( "persistent_bank" ) || "0" )
+		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
 		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if( failed )
+		if(failed)
 			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-		//else
-		//	PB[ckey] << null
 
-	persistent_bank_item = cloud_get( "persistent_bank_item" )
+	persistent_bank_item = cloud_get("persistent_bank_item")
 
-	if( !persistent_bank_item && cloud_available() )
-		persistent_bank_item = cloud_get( "persistent_bank_item" )
+	if(!persistent_bank_item && cloud_available())
+		persistent_bank_item = cloud_get("persistent_bank_item")
 		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if( failed )
+		if(failed)
 			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
 
 
