@@ -59,6 +59,8 @@
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 			else
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //todo: give them pet AI
+		else
+			heldfly.ai = null
 		qdel(src)
 
 	attackby(obj/item/W, mob/user)
@@ -82,8 +84,8 @@
 		var/place = get_turf(src)
 		var/mob/living/critter/robotic/sawfly/oursawfly = null
 
-		text_messages.Add("Would you like to be resurrected as a traitor's Sawfly? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be resurrected as a traitor's Sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("Would you like to be resurrected as a traitor's sawfly? You may be randomly selected from the list of candidates.")
+		text_messages.Add("You are eligible to be resurrected as a traitor's sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
 
 		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
@@ -93,32 +95,21 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		SPAWN(1) //IT'S TIME. FOR SOME FUCK SHIT!!!!!!
-			if (lucky_dude)
-				//new sawfly
+		SPAWN(1)
+
+			if (lucky_dude) //time to do some WHACKY HACKY workarounds!
 				oursawfly = new /mob/living/critter/robotic/sawfly(place)
 				lucky_dude.transfer_to(oursawfly)
 				brain.set_loc(oursawfly)
 				oursawfly.foldself()
-
-
-
-				sawflygrenade.visible_message("The [oursawfly] emits a pleasant chime as glows with sapience!")
+				src.visible_message("The [oursawfly] emits a pleasant chime as glows with sapience!")
+				lucky_dude.special_role = ROLE_SAWFLY
+				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
+				oursawfly.antagonist_overlay_refresh(1, 0)
 				qdel(src)
 
 			else
 				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
-
-			if (lucky_dude)
-				lucky_dude.transfer_to(heldfly)
-				src.visible_message("The [src.heldfly] emits a pleasant chime as glows with sapience!")
-				src.heldfly.mind.special_role = ROLE_SAWFLY
-				boutput(M, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
-				heldfly.antagonist_overlay_refresh(1, 0)
-
-
-			else
-				//boutput(user, "The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
 				src.ejectbrain(currentbrain)
 
 
@@ -130,13 +121,14 @@
 		if(currentbrain)
 			if(currentbrain.owner)
 				boutput(currentbrain.owner, "You have been booted from your sawfly and are now a disconnected ghost!")
-				heldfly.ghostize()
-				currentbrain.owner = null
+				SPAWN(1) //give them a second to read
+					heldfly.ghostize()
+					currentbrain.owner = null
 
 			currentbrain.set_loc(get_turf(src))
 			src.playercontrolled = FALSE
 
-/obj/item/old_grenade/sawfly/firsttime //IMPORTANT- spawn this in or the sawfly grenade will NOT work
+/obj/item/old_grenade/sawfly/firsttime//super important
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
@@ -250,10 +242,10 @@
 		if (ismob(target))
 			..()
 		..()
-//sawfly abilities
+//sawfly ability
 /datum/targetable/critter/sawflydeploy
 	name = "(Un)deploy"
-	desc = "Toggle your flying/item state! Cannot be used in containers"
+	desc = "Toggle your mob/item state! Can also be used to escape containers."
 	icon_state = "sawfly-deploy"
 	cooldown = 0
 	cast_in_storage = TRUE
@@ -261,28 +253,49 @@
 	cast(mob/target)
 
 		var/mob/living/critter/robotic/sawfly/M = holder.owner
-		//boutput(M, "Casting!")
-		if(istype(M.loc, /obj/item/storage))
-			return //bad!
-			// to work on: make it take a looong ass time if it's in a storage container so they can escape if their master dies
-		//boutput(M, "Starting grenade logic!!")
+
+		if(istype(M.ourgrenade.loc, /obj/item/storage))
+			actions.start(/datum/action/bar/private/icon/sawflyescape, src)
+
 		if(M.isgrenade == TRUE) //we're in a grenade, time to un-grenade ourselfes!
-		//	boutput(M, "Attempting to unfold self!")
 			M.visible_message("<span class='alert'>[M] suddenly springs open as its engine purrs to a start!</span>")
 			playsound(M, pick(M.beeps), 40, 1)
 			if(get_turf(M))
 				M.ourgrenade.prime()
-				M.isgrenade = FALSE //for some reason priming it doesn't work, so we'll have to do things the manual way
-				M.set_loc(get_turf(M))
-				//qdel(M.ourgrenade)
-
-
-
+				//M.isgrenade = FALSE
+				//M.set_loc(get_turf(M))
 		else
-		//	boutput(M, "Attempting to fold self!")
 			M.foldself()
-	//	boutput(M, "Finished grenade if else!")
 
+/datum/action/bar/private/icon/sawflyescape
+	duration = 200
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "sawflyescape"
+	icon_state = "backpack"
+	icon = 'icons/mob/inhand/hand_storage.dmi'
+	New(var/dur)
+		duration = dur
+		..()
 
+	onStart()
+		..()
 
+		var/mob/living/critter/robotic/sawfly/M = owner
+		boutput(M, "<span class='notice'>You start to make your way out of [M.loc].</span>")
 
+	onUpdate()
+		. = ..()
+		if(!owner.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onInterrupt(var/flag)
+		..()
+		boutput(owner, "<span class='alert'>Your attempt to escape was interrupted!</span>")
+		if(!(flag & INTERRUPT_ACTION))
+			src.resumable = FALSE
+
+	onEnd()
+		..()
+		var/mob/living/critter/robotic/sawfly/M = owner
+		M.ourgrenade.loc = get_turf(M.ourgrenade.loc)//thanks to the precondition for calling this, we can be sure their loc is going to be in a container
