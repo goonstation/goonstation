@@ -13,7 +13,7 @@
  * * title - The of the alert modal, shown on the top of the TGUI window.
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Set to zero for no timeout.
- * * autofocus - The bool that controls if this alert should grab window focus.
+ * * autofocus - The bool that controls if this alert should grab window focus. - BROKEN DON'T SET TO FALSE (nulls items, ask zewaka)
  */
 /proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE)
 	if (!user)
@@ -24,10 +24,10 @@
 			user = client.mob
 		else
 			return
-	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(!length(items))
 		log_tgui(user, "Error: TGUI Alert called with no items.", "TguiAlert")
 		return
+	// A gentle nudge - you should not be using TGUI alert for anything other than a simple message.
 	if(length(items) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many items. Use a list.", "TguiAlert")
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
