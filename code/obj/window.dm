@@ -143,6 +143,7 @@
 
 			name = "[reinforcement.name]-reinforced " + name
 
+
 	proc/set_reinforcement(var/datum/material/M)
 		if (!M)
 			return
@@ -278,7 +279,23 @@
 				damage_heat(volume)
 
 	get_desc()
+
+		var/healthpercent = src.health/src.health_max * 100
+
 		var/the_text = ""
+		switch(healthpercent)
+			if(90 to 99)//dont want to clog up the description unless it's actually damaged
+				the_text += "It seems to be in mostly good condition"
+			if(75 to 89)
+				the_text += "[src] is barely [pick("chipped", "cracked", "scratched")]"
+			if(50 to 74)
+				the_text += "[src] looks [pick("cracked", "damaged", "messed up", "chipped")]."
+			if(25 to 49)
+				the_text += "[src] looks [pick("quite", "pretty", "rather", "notably")] [pick("spiderwebbed", "fractured", "cracked", "busted")]."
+			if(0 to 24)
+				the_text += "[src] is barely intact!"
+
+
 		switch(src.state)
 			if(0)
 				if (!src.anchored)
@@ -290,6 +307,7 @@
 		if (opacity)
 			the_text += " ...you can't see through it at all. What kind of idiot made this?"
 		return the_text
+
 
 	Cross(atom/movable/mover)
 		if(!src.density)
