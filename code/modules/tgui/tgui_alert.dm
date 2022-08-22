@@ -82,7 +82,7 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus = TRUE, autofocus)
+/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus)
 	src.title = title
 	src.message = message
 	src.items = items.Copy()
