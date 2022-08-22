@@ -19831,9 +19831,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1
-	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
