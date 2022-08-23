@@ -28,7 +28,7 @@
 			user = client.mob
 		else
 			return
-	if(!user)
+	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
 	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout)
 	numbox.ui_interact(user)

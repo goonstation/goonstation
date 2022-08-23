@@ -58,6 +58,8 @@
 			user = client.mob
 		else
 			return
+	if (!user?.client) // No NPCs or they hang Mob AI process
+		return
 	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
 	textbox.ui_interact(user)
 
