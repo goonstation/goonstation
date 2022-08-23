@@ -360,22 +360,22 @@
 
 		// Nothing special, just a plain old laser.
 		if (src.quality_counter < src.q_threshold1)
-			src.our_projectile = /datum/projectile/laser
+			src.our_projectile = /datum/projectile/laser/glitter
 			if (user && ismob(user))
-				user.show_text("The [src.name] looks a little worn, but appears to work alright.", "blue")
+				user.show_text("The [src.name] looks a little worn, but appears to work alright, all things considered.", "blue")
 
 		// Player put some effort into it, so let's give him something a little more powerful.
 		else if (src.quality_counter >= src.q_threshold1 && src.quality_counter < src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name] seems to work better than expected thanks to above-average replacment parts.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
+			src.our_projectile = /datum/projectile/laser
 
 		// Now we're talking about top-notch stuff.
 		else if (src.quality_counter >= src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name]'s high-quality replacement parts fit together perfectly, increasing the gun's output.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
-			src.our_projectile2 = /datum/projectile/laser/old_burst
+			src.our_projectile = /datum/projectile/laser
+			src.our_projectile2 = /datum/projectile/laser/glitter/burst
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return

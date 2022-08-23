@@ -16,9 +16,10 @@
  * * items - The options that can be chosen by the user, each string is assigned a button on the UI.
  * * default - If an option is already preselected on the UI. Current values, etc.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
+ * * autofocus - The bool that controls if this alert should grab window focus.
  * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, allowIllegal = FALSE)
+/proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, autofocus = TRUE, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -27,11 +28,11 @@
 		if (istype(user, /client))
 			var/client/client = user
 			user = client.mob
-	if (!user)
+	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, allowIllegal=allowIllegal)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal)
 	input.ui_interact(user)
-	UNTIL(input.choice || input.closed)
+	UNTIL(!user.client || input.choice || input.closed)
 	if (input)
 		. = input.choice
 		qdel(input)
@@ -48,9 +49,10 @@
  * * default - If an option is already preselected on the UI. Current values, etc.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the input box, after which the menu will close and qdel itself. Set to zero for no timeout.
+ * * autofocus - The bool that controls if this alert should grab window focus.
  * * allowIllegal - Whether to allow illegal characters in items.
  */
-/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, allowIllegal = FALSE)
+/proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, autofocus = TRUE, allowIllegal = FALSE)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -61,7 +63,7 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, allowIllegal)
+	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, autofocus, allowIllegal)
 	input.ui_interact(user)
 
 /**
@@ -76,7 +78,7 @@
 	/// The default button to be selected
 	var/default
 
-/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, copyButtons = FALSE, allowIllegal = FALSE)
+/datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, autofocus = TRUE, allowIllegal = FALSE)
 	. = ..()
 	src.items = list()
 	src.items_map = list()
@@ -111,11 +113,12 @@
 			if (!(params["entry"] in items))
 				return
 			choice = items_map[params["entry"]]
+			closed = TRUE
 			tgui_process.close_uis(src)
 			. = TRUE
 		if("cancel")
-			tgui_process.close_uis(src)
 			closed = TRUE
+			tgui_process.close_uis(src)
 			. = TRUE
 
 /**
@@ -127,8 +130,8 @@
 	/// The callback to be invoked by the tgui_modal/list_input upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, allowIllegal = FALSE)
-	..(user, message, title, items, default, timeout, allowIllegal)
+/datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, autofocus = TRUE, allowIllegal = FALSE)
+	..(user, message, title, items, default, timeout, autofocus, allowIllegal)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)
