@@ -68065,8 +68065,6 @@
 	rand_pos = 0
 	},
 /obj/item/device/light/zippo/gold{
-	desc = "The shine has dulled a little, it looks well-loved.";
-	name = "weathered lighter";
 	pixel_x = 7;
 	pixel_y = 7
 	},
@@ -68698,8 +68696,6 @@
 	rand_pos = 0
 	},
 /obj/item/device/light/zippo/gold{
-	desc = "The shine has dulled a little, it looks well-loved.";
-	name = "weathered lighter";
 	pixel_x = -7;
 	pixel_y = 7
 	},
@@ -77192,8 +77188,6 @@
 	rand_pos = 0
 	},
 /obj/item/device/light/zippo/gold{
-	desc = "The shine has dulled a little, it looks well-loved.";
-	name = "weathered lighter";
 	pixel_x = -7;
 	pixel_y = 7
 	},
