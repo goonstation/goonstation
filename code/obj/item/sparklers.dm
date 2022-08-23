@@ -36,7 +36,7 @@
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
@@ -89,7 +89,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3

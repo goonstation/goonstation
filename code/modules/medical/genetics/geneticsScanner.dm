@@ -11,7 +11,7 @@ var/list/genetek_hair_styles = list()
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
@@ -207,7 +207,7 @@ var/list/genetek_hair_styles = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 

@@ -10,7 +10,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
 	w_class = W_CLASS_SMALL
-	force = 2.0
+	force = 2
 	var/stage = 0
 	var/state = 0
 	var/icon_state_armed = "grenade-chem-armed"
@@ -83,7 +83,7 @@
 			if (!S || !S:status)
 				return
 			boutput(user, "<span class='notice'>You attach the [src.name] to the [S.name]!</span>")
-			logTheThing("bombing", user, null, "made a chemical bomb with a [S.name].")
+			logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [S.name].")
 			message_admins("[key_name(user)] made a chemical bomb with a [S.name].")
 
 			var/obj/item/assembly/chem_bomb/R = new /obj/item/assembly/chem_bomb( user )
@@ -166,7 +166,7 @@
 		if(!A.dont_log_combat)
 			if(is_dangerous)
 				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing("combat", user, null, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.state = 1

@@ -4,7 +4,7 @@
 /datum/computer/file/terminal_program
 	name = "blank program"
 	extension = "TPROG"
-	//var/size = 4.0
+	//var/size = 4
 	//var/obj/item/disk/data/holder = null
 	var/obj/machinery/computer3/master = null
 	//var/active_icon = null

@@ -80,7 +80,7 @@
 		sonic_attack_environmental_effect(M, 2, list("light", "window", "r_window"))
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, null, "uses chiropteran screech at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses chiropteran screech at [log_loc(M)].")
 		return 0
 
 /datum/targetable/vampire/vampire_scream/mk2

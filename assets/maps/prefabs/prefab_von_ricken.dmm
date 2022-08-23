@@ -438,7 +438,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "pQ" = (
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-10"

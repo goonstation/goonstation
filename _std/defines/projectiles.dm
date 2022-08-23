@@ -32,9 +32,11 @@
 
 
 //ammo categories
+
 #define AMMO_SHOTGUN_LOW "shotgun_low"
 #define AMMO_SHOTGUN_HIGH "shotgun_high"
 #define AMMO_SHOTGUN_ALL AMMO_SHOTGUN_LOW, AMMO_SHOTGUN_HIGH
+
 
 #define AMMO_REVOLVER_SYNDICATE "revolver_syndicate"
 #define AMMO_REVOLVER_DETECTIVE "revolver_detective"

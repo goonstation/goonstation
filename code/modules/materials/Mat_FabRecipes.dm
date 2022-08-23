@@ -56,18 +56,16 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/custom/suit = new()
-			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
-			suit.set_loc(getOutputLocation(owner))
-			helmet.set_loc(getOutputLocation(owner))
+			var/obj/item/clothing/head/helmet/space/custom/helm = new()
 			var/obj/item/fabr = getObjectByPartName("Fabric")
 			var/obj/item/visr = getObjectByPartName("Visor")
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
-			suit.setMaterial(fabr.material) // suit stuff
-			suit.setupReinforcement(renf.material)
-			suit.UpdateName()
-			helmet.setMaterial(fabr.material) // helmet stuff
-			helmet.setupVisorMat(visr.material)// sets color to match the suit, keeps protectiveness from visor
-			helmet.UpdateName()
+
+			suit.set_custom_mats(fabr.material, renf.material)
+			helm.set_custom_mats(fabr.material, visr.material)
+
+			suit.set_loc(getOutputLocation(owner))
+			helm.set_loc(getOutputLocation(owner))
 		return
 
 /datum/matfab_recipe/mining_mod_conc
@@ -237,25 +235,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/coillarge
-	name = "Large coil"
-	desc = "A large coil used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/coil/large/newObj = new()
-			var/obj/item/source = getObjectByPartName("Coil")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spear
 	name = "Spear"
 	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
@@ -360,25 +339,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/gears
-	name = "Gears"
-	desc = "Some gears used as parts in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/gears/newObj = new()
-			var/obj/item/source = getObjectByPartName("Gears")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/tripod
 	name = "Tripod"
 	desc = "A tripod."
@@ -392,25 +352,6 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/aplates
-	name = "Armor plates"
-	desc = "Armor plates used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/aplate/newObj = new()
-			var/obj/item/source = getObjectByPartName("Armor")
 			if(source?.material)
 				newObj.setMaterial(source.material)
 
@@ -888,7 +829,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing(LOG_DEBUG, null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

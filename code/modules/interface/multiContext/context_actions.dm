@@ -1177,7 +1177,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..() && target.resources >= FLOCK_CONVERT_COST
 
 	capture
 		name = "Capture"
@@ -1186,7 +1186,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..()
 
 	barricade
 		name = "Barricade"
@@ -1195,7 +1195,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
 
 		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources > 25
+			return ..() && target.resources >= FLOCK_BARRICADE_COST
 
 	shoot
 		name = "Shoot"

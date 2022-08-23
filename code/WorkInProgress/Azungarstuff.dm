@@ -86,7 +86,7 @@
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
-				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
+				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -676,7 +676,7 @@
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 

@@ -351,20 +351,20 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/mindslave
-	name = "Mind Slave implant"
-	item = /obj/item/implanter/mindslave
+/datum/syndicate_buylist/traitor/mindhack
+	name = "Mind Hack implant"
+	item = /obj/item/implanter/mindhack
 	cost = 3
 	vr_allowed = 0
 	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/deluxe_mindslave
-	name = "Deluxe Mind Slave implant"
-	item = /obj/item/implanter/super_mindslave
+/datum/syndicate_buylist/traitor/deluxe_mindhack
+	name = "Deluxe Mind Hack implant"
+	item = /obj/item/implanter/super_mindhack
 	cost = 6
 	vr_allowed = 0
-	desc = "Place an injected victim under your complete control! Enhanced neurostimulators make this version last virtually indefinitely!"
+	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/microbomb
@@ -927,20 +927,20 @@ This is basically useless for anyone but miners.
 	br_allowed = TRUE
 	job = list("Staff Assistant","Test Subject","Geneticist","Pathologist")
 
-/datum/syndicate_buylist/traitor/mindslave_module
-	name = "Mindslave Cloning Module"
-	item = /obj/item/cloneModule/mindslave_module
+/datum/syndicate_buylist/traitor/mindhack_module
+	name = "Mindhack Cloning Module"
+	item = /obj/item/cloneModule/mindhack_module
 	cost = 6
 	vr_allowed = 0
 	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
-/datum/syndicate_buylist/traitor/deluxe_mindslave_module
-	name = "Deluxe Mindslave Cloning Module Kit"
-	item = /obj/item/storage/box/mindslave_module_kit
+/datum/syndicate_buylist/traitor/deluxe_mindhack_module
+	name = "Deluxe Mindhack Cloning Module Kit"
+	item = /obj/item/storage/box/mindhack_module_kit
 	cost = 10 //  Always leave them 1tc so they can buy the moustache. Style is key.
 	vr_allowed = 0
-	desc = "A Deluxe Mindslave Cloning Kit. Contains a mindslave cloning module and a cloning lab in a box!"
+	desc = "A Deluxe Mindhack Cloning Kit. Contains a mindhack cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
 /datum/syndicate_buylist/traitor/buddy_ammofab

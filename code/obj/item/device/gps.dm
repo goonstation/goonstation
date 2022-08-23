@@ -173,7 +173,7 @@
 				if(!t)
 					return
 				src.identifier = t
-				logTheThing("station", usr, null, "sets a GPS identification name to [t].")
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -271,7 +271,7 @@
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
-		if (get_dist(src,tracking_target) == 0)
+		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
 			icon_state = "gps"

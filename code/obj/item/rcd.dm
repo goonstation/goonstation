@@ -32,12 +32,12 @@ Broken RCD + Effects
 	item_state = "rcd" //oops
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/matter = 0
 	var/max_matter = 50
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	health = 7
@@ -163,7 +163,7 @@ Broken RCD + Effects
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
+			if (!restricted_materials || (R?.material?.mat_id in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)
@@ -562,7 +562,7 @@ Broken RCD + Effects
 		return 0
 
 	proc/log_construction(mob/user as mob, var/what)
-		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
 		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
@@ -682,7 +682,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -698,7 +698,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -729,7 +729,7 @@ Broken RCD + Effects
 						R.pass="[hangar_id]"
 						R.name="Access code: [hangar_id]"
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing(LOG_STATION, user, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
 
 		else if (mode == RCD_MODE_PODDOOR)
@@ -747,7 +747,7 @@ Broken RCD + Effects
 						B.set_dir(poddir)
 						B.autoclose = 1
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing(LOG_STATION, user, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
@@ -931,7 +931,7 @@ Broken RCD + Effects
 	item_state = "rcdammo"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	m_amt = 30000
 	g_amt = 15000
 	health = 6
@@ -969,10 +969,10 @@ Broken RCD + Effects
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -986,8 +986,8 @@ Broken RCD + Effects
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "rcd"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -1065,7 +1065,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing("combat", user, null, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)
@@ -1097,7 +1097,7 @@ Broken RCD + Effects
 
 			else if (istype(A, /obj) && (A != src))
 
-				if ((get_dist(src, A) <= 2) || prob(10))
+				if ((GET_DIST(src, A) <= 2) || prob(10))
 					A.ex_act(1)
 				else if (prob(5))
 					A.ex_act(3)

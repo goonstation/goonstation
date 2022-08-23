@@ -1291,7 +1291,7 @@
 			return
 		src.add_dialog(usr)
 		src.add_fingerprint(usr)
-		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || get_dist(usr, src) < 2))))
+		if ((href_list["power"]) && (!src.locked || (src.allowed(usr) && (issilicon(usr) || GET_DIST(usr, src) < 2))))
 			if(src.on)
 				turn_off()
 			else
@@ -1375,10 +1375,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.explode(0)
 				return
-			if(2.0)
+			if(2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode(0)
@@ -2254,7 +2254,7 @@
 			if(..())
 				return
 
-			if (get_dist(user,target) > 4)
+			if (GET_DIST(user,target) > 4)
 				return
 
 			if(src.last_use && world.time < src.last_use + 80)
@@ -2492,9 +2492,9 @@
 							master.reply_wait = 0
 							. = INFINITY
 							for (var/turf/T in src.secondary_targets)
-								if (!src.target || (. > get_dist(src.master, T)))
+								if (!src.target || (. > GET_DIST(src.master, T)))
 									src.target = T
-									. = get_dist(src.master, src.target)
+									. = GET_DIST(src.master, src.target)
 									continue
 
 							src.secondary_targets -= src.target
@@ -2771,7 +2771,7 @@
 
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
-					perp_id = perp.wear_id
+					perp_id = perp.get_id()
 
 				if(perp_id && ckey(perp_id.registered) == master.scratchpad["targetname"])
 					return 1
@@ -2806,7 +2806,7 @@
 							//master.current_movepath = "HEH"
 							return
 
-						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
+						if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < GET_DIST(hug_target,master.path[master.path.len])) )
 							if (master.mover)
 								qdel(master.mover)
 							master.moving = 0
@@ -2931,11 +2931,11 @@
 
 			// if looking for nearest beacon
 			else if(new_destination == "__nearest__")
-				var/dist = get_dist(master,signal.source.loc)
+				var/dist = GET_DIST(master,signal.source.loc)
 				if(nearest_beacon)
 
 					// note we ignore the beacon we are located at
-					if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+					if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 						nearest_beacon = recv
 						nearest_beacon_loc = signal.source.loc
 						next_destination = signal.data["next_patrol"]
@@ -3143,7 +3143,7 @@
 
 				var/obj/item/card/id/perp_id = perp.equipped()
 				if (!istype(perp_id))
-					perp_id = perp.wear_id
+					perp_id = perp.get_id()
 
 				var/has_carry_permit = 0
 				var/has_contraband_permit = 0
@@ -3265,7 +3265,7 @@
 						//master.current_movepath = "HEH"
 						return
 
-					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < get_dist(hug_target,master.path[master.path.len])) )
+					if((!(hug_target in view(7,master)) && (!master.mover || !master.moving)) || !master.path || !master.path.len || (4 < GET_DIST(hug_target,master.path[master.path.len])) )
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
@@ -3282,7 +3282,7 @@
 			var/accepted_access = access_dwaine_superuser
 
 			assess_perp(mob/living/carbon/human/perp as mob)
-				var/obj/item/card/id/the_id = perp.wear_id
+				var/obj/item/card/id/the_id = perp.get_id()
 				if (!the_id)
 					the_id = perp.equipped()
 				if(!istype(the_id) || (the_id && !(accepted_access in the_id.access)) )
@@ -3386,7 +3386,7 @@
 							master.speak(pick("Rest in peace.","Guard protocol...inactive.","I'm sorry it had to end this way.","It was an honor to serve alongside you."))
 						return
 
-					if(!master.path || !master.path.len || (3 < get_dist(protected,master.path[master.path.len])) )
+					if(!master.path || !master.path.len || (3 < GET_DIST(protected,master.path[master.path.len])) )
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
@@ -3448,9 +3448,8 @@
 						continue
 
 					var/check_name = C.name
-					if(ishuman(C) && C:wear_id)
-						check_name = C:wear_id:registered
-
+					if(ishuman(C) && C.get_id())
+						check_name = C.get_id()?.registered
 					if (ckey(check_name) == ckey(src.protected_name))
 						src.protected = C
 						src.desired_emotion = GUARDING_EMOTION
@@ -3517,8 +3516,8 @@
 					continue
 
 				var/check_name = C.name
-				if(ishuman(C) && C:wear_id)
-					check_name = C:wear_id:registered
+				if(ishuman(C) && C.get_id())
+					check_name = C.get_id()?.registered
 
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
@@ -3571,8 +3570,8 @@
 					continue
 
 				var/check_name = C.name
-				if(ishuman(C) && C:wear_id)
-					check_name = C:wear_id:registered
+				if(ishuman(C) && C.get_id())
+					check_name = C.get_id()?.registered
 
 				if (ckey(check_name) == ckey(src.protected_name))
 					src.protected = C
@@ -4811,7 +4810,7 @@
 /obj/machinery/computer/tour_console
 	name = "Tour Console"
 	desc = "A computer console, presumably one relating to tours."
-	icon_state = "old2"
+	icon_state = "tour"
 	pixel_y = 8
 	var/obj/machinery/bot/guardbot/linked_bot = null
 

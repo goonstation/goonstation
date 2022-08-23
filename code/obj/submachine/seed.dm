@@ -253,8 +253,12 @@
 			var/obj/item/I = src.inserted
 			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				I.set_loc(src.loc) // causes Exited proc to be called
-				usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
+				if (I.cant_drop) // cyborg/item arms
+					src.inserted = null
+					src.updateUsrDialog()
+				else
+					I.set_loc(src.loc) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 
 		else if(href_list["ejectseeds"])
 			for (var/obj/item/seed/S in src.seeds)
@@ -292,7 +296,7 @@
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
 				if(newName && newName != I.name)
 					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
-				if (newName && I && get_dist(src, usr) < 2)
+				if (newName && I && GET_DIST(src, usr) < 2)
 					I.name = newName
 			src.updateUsrDialog()
 

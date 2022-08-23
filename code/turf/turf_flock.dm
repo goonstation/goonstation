@@ -99,7 +99,7 @@
 		F.start_floorrunning()
 
 	if(F.floorrunning && !broken)
-		F.resources--
+		F.pay_resources(1)
 		if (F.resources < 1)
 			F.end_floorrunning()
 		else if(!on)
@@ -328,7 +328,7 @@
 		F.start_floorrunning()
 
 	if(F.floorrunning)
-		F.resources--
+		F.pay_resources(1)
 		if (F.resources < 1)
 			F.end_floorrunning()
 		else if (!src.on)

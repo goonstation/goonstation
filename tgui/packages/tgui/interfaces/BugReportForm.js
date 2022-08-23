@@ -45,10 +45,9 @@ export const BugReportForm = (props, context) => {
   const { act, data } = useBackend(context);
 
   const [isSecret, setIsSecret] = useLocalState(context, 'is_secret', false);
-  const [chosenTag, setTag] = useLocalState(context, 'tag', 'BUG');
+  const [chosenTag, setTag] = useLocalState(context, 'tag', 'MINOR');
 
   const tags = [
-    ["Unclassified", "BUG", "A bug that impacts usage of a feature."],
     ["Trivial", "TRIVIAL", "A bug that is extremely trivial, such as a spelling issue."],
     ["Minor", "MINOR", "A bug that does not impact usage of a feature. These are often visual issues."],
     ["Major", "MAJOR", "A bug that significantly impacts the usage of a feature."],

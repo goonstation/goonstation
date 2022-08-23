@@ -11,6 +11,7 @@
 	flock_id = "Entry Rift"
 	build_time = 10
 	health = 200
+	uses_health_icon = FALSE
 	var/list/eject = list()
 
 /obj/flock_structure/rift/building_specific_info()
@@ -55,3 +56,8 @@
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
+
+/obj/flock_structure/rift/disposing()
+	if (!src.flock?.flockmind?.started)
+		src.flock?.flockmind?.death()
+	..()

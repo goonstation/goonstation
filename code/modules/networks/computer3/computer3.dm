@@ -6,7 +6,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
@@ -272,8 +272,17 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN(0.4 SECONDS)
+	src.base_icon_state = src.icon_state
 
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
+	SPAWN(0.4 SECONDS)
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -313,18 +322,6 @@
 				src.active_program = os
 
 			src.hd.root.add_file(os)
-
-		src.tag = null
-
-		src.base_icon_state = src.icon_state
-
-		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
 
 		src.post_system()
 
@@ -653,10 +650,6 @@ function lineEnter (ev)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
@@ -745,14 +738,14 @@ function lineEnter (ev)
 
 /obj/machinery/computer3/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//dispose()
 			src.dispose()
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				set_broken()
 		else
@@ -980,7 +973,7 @@ function lineEnter (ev)
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY

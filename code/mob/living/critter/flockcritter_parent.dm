@@ -109,7 +109,6 @@
 
 	src.update_health_icon()
 	src.flock.removeDrone(src)
-	src.flock = null
 
 /mob/living/critter/flock/projCanHit(datum/projectile/P)
 	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
@@ -197,6 +196,11 @@
 
 // all flock bots should have the ability to rally somewhere (it's applicable to anything with flock AI)
 /mob/living/critter/flock/proc/rally(atom/movable/target)
+	if(istype(src,/mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/D = src
+		if(D.ai_paused)
+			D.wake_from_ai_pause()
+
 	if(src.is_npc)
 		// tell the npc AI to go after the target
 		if(src.ai)
@@ -255,12 +259,24 @@
 		..()
 		if(owner && target)
 			boutput(owner, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
-			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 30, 1, extrarange = -10)
 
 			var/flick_anim = "spawn-floor"
-			if(istype(target, /turf/simulated/floor) || istype(target, /turf/space))
+			if(istype(target, /turf/space))
+				var/make_floor = FALSE
+				for (var/obj/O in target)
+					if (istype(O, /obj/lattice) || istype(O, /obj/grille/catwalk))
+						make_floor = TRUE
+						src.decal = new /obj/decal/flock_build_floor
+						flick_anim = "spawn-floor"
+						break
+				if (!make_floor)
+					src.decal = new /obj/decal/flock_build_fibrenet
+					flick_anim = "spawn-fibrenet"
+			else if(istype(target, /turf/simulated/floor))
 				src.decal = new /obj/decal/flock_build_floor
-			if(istype(target, /turf/simulated/wall))
+				flick_anim = "spawn-floor"
+			else if(istype(target, /turf/simulated/wall))
 				src.decal = new /obj/decal/flock_build_wall
 				flick_anim = "spawn-wall"
 			if(src.decal)
@@ -329,12 +345,12 @@
 		if(owner && target)
 			boutput(owner, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
 			if(duration <= 30)
-				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 40, 1)
+				playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
 			else
-				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
+				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
 
-			var/flick_anim = "spawn-wall"
-			src.decal = new /obj/decal/flock_build_wall
+			var/flick_anim = "spawn-barricade"
+			src.decal = new /obj/decal/flock_build_barricade
 			if(src.decal)
 				src.decal.set_loc(target)
 				flick(flick_anim, src.decal)
@@ -353,7 +369,7 @@
 			F.pay_resources(FLOCK_BARRICADE_COST)
 			var/obj/O = new structurepath(target)
 			animate_flock_convert_complete(O)
-			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 30, 1, extrarange = -10)
 			O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
@@ -379,7 +395,7 @@
 			return
 		if(F && prob(40))
 			animate_shake(F)
-			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
+			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1, extrarange = -10)
 
 	onStart()
 		..()
@@ -394,7 +410,7 @@
 			F.canmove = TRUE
 			F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 			new /obj/flock_structure/egg(get_turf(F), F.flock)
-			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
+			playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, extrarange = -10)
 			F.pay_resources(FLOCK_LAY_EGG_COST)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -441,7 +457,7 @@
 			F.visible_message("<span class='notice'>[owner] begins spraying glowing fibers onto [target].</span>",
 				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
-		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
 
 	onEnd()
 		..()
@@ -505,7 +521,7 @@
 
 	onUpdate()
 		..()
-		if (target == null || owner == null || !in_interact_range(owner, target))
+		if (target == null || owner == null || !in_interact_range(owner, target) || !istype(target.loc, /turf))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -526,7 +542,7 @@
 				if(src.decal)
 					src.decal.set_loc(target)
 					flick("spawn-wall", src.decal)
-				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
+				playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
 
 	onInterrupt()
 		..()
@@ -538,7 +554,7 @@
 		if(src.decal)
 			qdel(src.decal)
 		var/mob/living/critter/flock/F = owner
-		if(F && target && in_interact_range(owner, target))
+		if(F && target && in_interact_range(owner, target) && istype(target.loc, /turf))
 			var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
 			cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 			playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 70, 1)
@@ -587,7 +603,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(f, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target
@@ -642,7 +658,7 @@
 
 	onStart()
 		..()
-		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
 
 	onEnd()
 		..()
@@ -652,7 +668,7 @@
 		var/difference = target.goal - target.currentmats
 		amounttopay = min(F.resources, difference, FLOCK_GHOST_DEPOSIT_AMOUNT)
 		F.pay_resources(amounttopay)
-		target.currentmats += amounttopay
+		target.add_mats(amounttopay)
 		if(F.resources)
 			src.onRestart() //restart the action akin to automenders
 

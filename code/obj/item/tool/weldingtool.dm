@@ -10,12 +10,12 @@
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null
 
-	var/welding = 0.0
+	var/welding = 0
 	var/status = 0 // flamethrower construction :shobon:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_WELDING
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 5

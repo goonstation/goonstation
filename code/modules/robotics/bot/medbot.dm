@@ -289,7 +289,7 @@
 		src.on = 1
 		src.UpdateIcon()
 		src.pick_poison()
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -766,10 +766,10 @@
 
 /obj/machinery/bot/medbot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()

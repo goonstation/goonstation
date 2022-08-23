@@ -129,7 +129,7 @@
 					boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 					boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
+			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 				var/default = M.real_name + " the " + src.name
 				var/orig_real = M.real_name
@@ -248,7 +248,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
-	receives_implant = /obj/item/implant/health/security/anti_mindslave
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	items_in_backpack = list(/obj/item/device/flash)
 
 
@@ -1027,8 +1027,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.AddComponent(/datum/component/death_confetti)
 
 		M.bioHolder.AddEffect("clumsy", magical=1)
-		if (prob(50))
-			M.bioHolder.AddEffect("accent_comic", magical=1)
+		M.bioHolder.AddEffect("accent_comic", magical=1)
 
 // AI and Cyborgs
 
@@ -1340,7 +1339,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_belt = list(/obj/item/gun/kinetic/detectiverevolver)
+	slot_belt = list(/obj/item/gun/kinetic/colt_saa)
 	slot_head = list(/obj/item/clothing/head/cowboy)
 	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
@@ -1414,7 +1413,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Medical Specialist"
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/research
 	slot_belt = list(/obj/item/device/pda2/medical_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -1461,9 +1460,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return
@@ -1596,9 +1595,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/material_piece/gold/G = new /obj/item/material_piece/gold
+			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
 			G.set_loc(B)
-			G = new /obj/item/material_piece/gold
+			G = new /obj/item/stamped_bullion
 			G.set_loc(B)
 
 		return

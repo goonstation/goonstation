@@ -715,8 +715,8 @@
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
 					if("contest-other2")
-						src.name = "Mindslaver Device Poster"
-						src.icon_state = "mindslaver"
+						src.name = "Mindhacker Device Poster"
+						src.icon_state = "mindhacker"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -1084,6 +1084,7 @@
 	icon_state = "banner_base"
 	popup_win = 0
 	var/colored = FALSE
+	var/static/image/banner_holder = image('icons/obj/decals/banners.dmi', "banner_holder")
 	var/chosen_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
 	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
@@ -1100,7 +1101,6 @@
 
 	New()
 		. = ..()
-		var/static/image/banner_holder = image(src.icon, "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR
 		src.underlays.Add(banner_holder)
 
@@ -1113,7 +1113,7 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 				if(istype(W,/obj/item/pen/crayon/rainbow))
 					var/obj/item/pen/crayon/rainbow/R = W

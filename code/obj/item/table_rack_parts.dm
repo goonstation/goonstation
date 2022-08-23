@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -308,6 +308,56 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			qdel(W)
 		else
 			..()
+
+/* ------- Single Table Parts ------- */
+
+/obj/item/furniture_parts/endtable_classic
+	name = "vintage endtable parts"
+	desc = "A collection of parts that can be used to make a vintage endtable."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtableclassic_parts"
+	furniture_type = /obj/table/endtable_classic
+	furniture_name = "vintage endtable"
+
+/obj/item/furniture_parts/endtable_gothic
+	name = "gothic endtable parts"
+	desc = "A collection of parts that can be used to make a gothic endtable."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablegothic_parts"
+	furniture_type = /obj/table/endtable_gothic
+	furniture_name = "gothic endtable"
+
+/obj/item/furniture_parts/podium_wood
+	name = "wooden podium parts"
+	desc = "A collection of parts that can be used to make a wooden podium."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood_parts"
+	furniture_type = /obj/table/podium_wood
+	furniture_name = "wooden podium"
+
+/obj/item/furniture_parts/podium_wood/nt
+	icon_state = "podiumwoodnt_parts"
+	furniture_type = /obj/table/podium_wood/nanotrasen
+
+/obj/item/furniture_parts/podium_wood/syndie
+	icon_state = "podiumwoodsnd_parts"
+	furniture_type = /obj/table/podium_wood/syndicate
+
+/obj/item/furniture_parts/podium_white
+	name = "white podium parts"
+	desc = "A collection of parts that can be used to make a white podium."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite_parts"
+	furniture_type = /obj/table/podium_white
+	furniture_name = "wooden podium"
+
+/obj/item/furniture_parts/podium_white/nt
+	icon_state = "podiumwhitent_parts"
+	furniture_type = /obj/table/podium_white/nanotrasen
+
+/obj/item/furniture_parts/podium_white/syndie
+	icon_state = "podiumwhitesnd_parts"
+	furniture_type = /obj/table/podium_white/syndicate
 
 /* ---------- Stool Parts ---------- */
 /obj/item/furniture_parts/stool

@@ -564,7 +564,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	attack(mob/target)
 		if (istype(target, /mob/living/carbon/human/machoman))
-			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src] and breathes deeply!</span>")
+			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src] and breathes deeply!</span>")
 			playsound(target.loc, "sound/voice/macho/macho_breathing02.ogg", 50, 1)
 			sleep(2.5 SECONDS)
 			playsound(target.loc, "sound/voice/macho/macho_freakout.ogg", 50, 1)
@@ -582,7 +582,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 				H.UpdateDamageIcon()
 				H.bodytemperature = H.base_body_temp
 		else
-			target.visible_message("<span class='alert'>[target] shoves \his face deep into [src]!</span>")
+			target.visible_message("<span class='alert'>[target] shoves [his_or_her(target)] face deep into [src]!</span>")
 			SPAWN(2.5 SECONDS)
 			target.visible_message("<span class='alert'>[target]'s pupils dilate.</span>")
 			target.changeStatus("stunned", 10 SECONDS)
@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 							new_turf.alpha = 0
 							arenaropes += new_turf
 					*/
-					if(get_dist(Aloc,T) == ring_radius) // boundaries
+					if(GET_DIST(Aloc,T) == ring_radius) // boundaries
 						if(abs(Aloc.x - T.x) == ring_radius && abs(Aloc.y - T.y) == ring_radius) // arena corners
 							var/obj/stool/chair/boxingrope_corner/FF = new/obj/stool/chair/boxingrope_corner(T)
 							FF.alpha = 0
@@ -1297,17 +1297,6 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
 					animate_flip(H, 3)
-					/*
-					var/icon/composite = icon(H.icon, H.icon_state, null, 1)
-					composite.Turn(180)
-					for (var/O in H.overlays)
-						var/image/I = O
-						var/icon/Ic = icon(I.icon, I.icon_state)
-						Ic.Turn(180)
-						composite.Blend(Ic, ICON_OVERLAY)
-					H.overlays = null
-					H.icon = composite
-					*/
 					holder.owner.visible_message("<span class='alert'><B>[holder.owner] grabs [H] and spins in the air!</B></span>")
 					playsound(holder.owner.loc, "sound/effects/bionic_sound.ogg", 50)
 					for (var/i = 0, i < 15, i++)
@@ -1547,7 +1536,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
 					playsound(holder.owner.loc, "sound/voice/heavenly.ogg", 75)
-					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes \his eyes in silent macho prayer!</b></span>")
+					holder.owner.visible_message("<span class='alert'><b>[holder.owner] closes [his_or_her(holder.owner)] eyes in silent macho prayer!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
 						N.flash(3 SECONDS)

@@ -14,6 +14,8 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
 	var/list/proj_impacts = list()
 	var/list/forensic_impacts = list()
@@ -36,6 +38,10 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
@@ -274,7 +280,7 @@
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
 				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-				logTheThing("combat", user, null, "uses hulk to smash a wall at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else
@@ -337,7 +343,7 @@
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
-	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
+	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
 	dismantle_wall()
 
 /turf/simulated/wall/r_wall
@@ -471,12 +477,12 @@
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 			else if((isrobot(user) && (user.loc == T)))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 
 	//More spooky halloween key

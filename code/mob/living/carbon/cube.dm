@@ -42,10 +42,10 @@
 	ex_act(severity)
 		..() // Logs.
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.gib(1)
 				return
-			if(2.0)
+			if(2)
 				if (prob(25))
 					src.gib(1)
 			else
@@ -143,7 +143,7 @@
 				else
 					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message(message, m_type)

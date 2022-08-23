@@ -44,7 +44,9 @@
 		. = TRUE
 
 /obj/table/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	if (istype(mover, /mob/living/critter/flock))
+		return TRUE
+	return ..()
 
 /obj/table/flock/auto
 	auto = TRUE
@@ -379,7 +381,7 @@
 		. = TRUE
 
 /obj/grille/flock/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	return !src.density || istype(mover,/mob/living/critter/flock)
 
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))

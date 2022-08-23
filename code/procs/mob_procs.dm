@@ -484,9 +484,6 @@
 	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
-	return 0
-
-/mob/living/carbon/human/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
@@ -964,7 +961,7 @@
 					can_see.Add(I)
 			for (var/datum/mind/M in spies)
 				if (M.current)
-					var/I = image(antag_spyslave, loc = M.current)
+					var/I = image(antag_spyminion, loc = M.current)
 					can_see.Add(I)
 
 		else if (src.mind in spies)
@@ -1024,7 +1021,7 @@
 
 
 	if (can_see.len > 0)
-		//logTheThing("debug", src, null, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
+		//logTheThing(LOG_DEBUG, src, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Overlay parameters for [src]: all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Added [can_see.len] overlays to [src].")
 		src.client.images.Add(can_see)
