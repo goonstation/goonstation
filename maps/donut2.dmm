@@ -11488,7 +11488,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/floorflusher,
+/obj/machinery/disposal{
+	name = "monkey feeder"
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -13448,6 +13450,13 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "aSe" = (
@@ -13624,6 +13633,13 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
@@ -14964,6 +14980,10 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aWH" = (
@@ -15126,10 +15146,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge)
 "aXj" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/black,
@@ -15833,6 +15849,7 @@
 /area/station/medical/research)
 "aZc" = (
 /obj/machinery/vending/port_a_nanomed,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZd" = (
@@ -16951,13 +16968,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"bcc" = (
-/obj/machinery/camera{
-	c_tag = "Bridge South";
-	dir = 10
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "bcd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -17083,7 +17093,6 @@
 /area/station/bridge)
 "bcC" = (
 /obj/table/auto,
-/obj/machinery/light/incandescent,
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor/black,
@@ -17092,6 +17101,9 @@
 /obj/table/auto,
 /obj/machinery/recharger{
 	pixel_y = 3
+	},
+/obj/machinery/camera{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -18156,7 +18168,6 @@
 /area/station/medical/morgue)
 "bge" = (
 /obj/machinery/camera{
-	c_tag = "West Hallway South";
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -18241,7 +18252,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bgy" = (
-/obj/machinery/light/incandescent,
 /obj/disposalpipe/junction{
 	dir = 8;
 	icon_state = "pipe-y"
@@ -18885,6 +18895,12 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
+/obj/blind_switch/area/west{
+	pixel_y = -6
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "biL" = (
@@ -18933,16 +18949,18 @@
 	icon_state = "chair_comfy"
 	},
 /obj/landmark/gps_waypoint,
+/obj/blind_switch/area/south{
+	pixel_x = -6
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fred2"
 	},
 /area/station/security/hos)
 "biR" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fred2"
@@ -19239,6 +19257,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bjN" = (
@@ -19253,6 +19272,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bjQ" = (
@@ -19723,6 +19743,9 @@
 	pixel_x = -32
 	},
 /obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -19912,6 +19935,9 @@
 	dir = 4
 	},
 /obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -20449,6 +20475,9 @@
 	},
 /obj/stool/chair/office/red{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/processing)
@@ -26737,6 +26766,11 @@
 "bLC" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/pool)
+"bLG" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "bMx" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26770,6 +26804,8 @@
 /obj/storage/closet/wardrobe/black/formalwear,
 /obj/item/clothing/suit/tuxedo_jacket,
 /obj/item/clothing/suit/tuxedo_jacket,
+/obj/item/storage/fanny,
+/obj/item/storage/fanny,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
 "bOY" = (
@@ -34309,6 +34345,9 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -38497,6 +38536,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"nVA" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nVD" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/macho{
@@ -42609,6 +42653,9 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/office/red,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "sih" = (
@@ -42664,7 +42711,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "skA" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/light_switch/east{
 	pixel_x = 22;
 	pixel_y = 3
@@ -64319,7 +64365,7 @@ aUb
 bWz
 fHr
 bdb
-qnC
+nVA
 bgy
 qqV
 aZc
@@ -89709,7 +89755,7 @@ ndp
 bhA
 cOs
 ekx
-ndp
+bLG
 spZ
 les
 bmC
@@ -93319,7 +93365,7 @@ aWK
 aWI
 bbd
 aVb
-bcc
+aVN
 bcW
 beA
 vef
