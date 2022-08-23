@@ -24,6 +24,8 @@
 			user = client.mob
 		else
 			return
+	if (!user?.client) // No NPCs or they hang Mob AI process
+		return
 	if(!length(items))
 		log_tgui(user, "Error: TGUI Alert called with no items.", "TguiAlert")
 		return
@@ -45,6 +47,8 @@
  * a message and has items for responses.
  */
 /datum/tgui_modal
+	/// The user of the TGUI window
+	var/mob/user
 	/// The title of the TGUI window
 	var/title
 	/// The textual body of the TGUI window
@@ -63,6 +67,7 @@
 	var/closed
 
 /datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus)
+	src.user = user
 	src.autofocus = autofocus
 	src.items = items.Copy()
 	src.title = title
@@ -85,7 +90,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	while (!choice && !closed && !QDELETED(src))
+	while (user.client && !choice && !closed && !QDELETED(src))
 		LAGCHECK(LAG_HIGH)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
