@@ -1,4 +1,9 @@
 
+(t)tue aug 23 22
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
 (t)sun aug 21 22
 (u)tarmunora
 (+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
