@@ -1,5 +1,9 @@
 
 (t)tue aug 23 22
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
 (u)LeahTheTech
 (p)10421
 (e)|
