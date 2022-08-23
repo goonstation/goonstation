@@ -1,5 +1,13 @@
 
 (t)tue aug 23 22
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
 (u)LeahTheTech
 (p)10421
 (e)|

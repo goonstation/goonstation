@@ -259,8 +259,8 @@
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 
 /datum/targetable/hunter
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "template"  // No custom sprites yet.
+	icon = 'icons/mob/hunter_abilities.dmi'
+	icon_state = "trophycount"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
