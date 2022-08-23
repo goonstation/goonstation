@@ -1,5 +1,9 @@
 
 (t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
 (u)Mr. Moriarty
 (p)10403
 (e)|
