@@ -200,8 +200,8 @@
 	if (TimeOfHour < run_start)
 		run_start -= 36000
 	var/msg = "[name] process hung at tick #[ticks]. Process was unresponsive for [(TimeOfHour - run_start) / 10] seconds and was restarted. Last task: [last_task]. Last Object Type: [lastObjType]. Last object: <a href='byond://?src=%client_ref%;Vars=\ref[lastObj]'>[lastObj]</a>"
-	logTheThing("debug", null, null, msg)
-	logTheThing("diary", null, null, msg, "debug")
+	logTheThing(LOG_DEBUG, null, msg)
+	logTheThing(LOG_DIARY, null, msg, "debug")
 	message_admins(msg)
 
 	main.restartProcess(src.name)
@@ -209,8 +209,8 @@
 /datum/controller/process/proc/kill()
 	if (!killed)
 		var/msg = "[name] process was killed at tick #[ticks]."
-		logTheThing("debug", null, null, msg)
-		logTheThing("diary", null, null, msg, "debug")
+		logTheThing(LOG_DEBUG, null, msg)
+		logTheThing(LOG_DIARY, null, msg, "debug")
 		//finished()
 
 		// Allow inheritors to clean up if needed

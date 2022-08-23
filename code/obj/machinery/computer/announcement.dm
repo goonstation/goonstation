@@ -144,8 +144,8 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 
-		logTheThing("say", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
-		logTheThing("diary", user, null, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
+		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
+		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		var/msg_sound = src.sound_to_play
 		if(ishuman(user))
@@ -190,7 +190,7 @@
 			user.show_text("The alert needs at least one $JOB token.", "red")
 			return
 		src.arrivalalert = sanitize(adminscrub(newalert, 200))
-		logTheThing("station", user, src, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
+		logTheThing(LOG_STATION, user, "sets the arrival announcement on [constructTarget(src,"station")] to \"[src.arrivalalert]\"")
 		user.show_text("Arrival alert set to '[newalert]'", "blue")
 		playsound(src.loc, "keyboard", 50, 1, -15)
 		return
@@ -215,7 +215,7 @@
 
 		var/list/messages = process_language(message)
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
-		logTheThing("station", src, null, "ANNOUNCES: [message]")
+		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return 1
 
 	proc/announce_departure(var/mob/living/person)
@@ -230,7 +230,7 @@
 
 		var/list/messages = process_language(message)
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
-		logTheThing("station", src, null, "ANNOUNCES: [message]")
+		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return 1
 
 /obj/machinery/computer/announcement/console_upper

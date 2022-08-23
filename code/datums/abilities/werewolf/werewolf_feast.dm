@@ -41,7 +41,7 @@
 			boutput(M, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
 			return 1
 
-		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0
 

@@ -295,9 +295,18 @@
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
 
+/proc/alive_player_count()
+	. = 0
+	for(var/client/C)
+		var/mob/M = C.mob
+		if(!M || istype(M, /mob/new_player))
+			continue
+		if (!isdead(M) && isliving(M))
+			.++
+
 /// returns a decimal representing the percentage of alive crew that are also antags
 /proc/get_alive_antags_percentage()
-	var/alive = 0
+	var/alive = alive_player_count()
 	var/alive_antags = ticker.mode.traitors.len + length(ticker.mode.Agimmicks)
 
 	for (var/datum/mind/antag in ticker.mode.traitors)
@@ -310,12 +319,6 @@
 		if (!M) continue
 		if (!M.client || isdead(M))
 			alive_antags--
-
-	for(var/client/C)
-		var/mob/M = C.mob
-		if(!M) continue
-		if (!isdead(M) && isliving(M))
-			alive++
 
 	if (!alive)
 		return 0

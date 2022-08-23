@@ -221,10 +221,10 @@
 
 			if (user.a_intent == "harm")
 				src.harm_slam(user, grabbed)
-				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			else
 				src.gentle_slam(user, grabbed)
-				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
+				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			qdel(W)
 			return
 
@@ -289,7 +289,7 @@
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-			logTheThing("combat", user, null, "uses hulk to smash a table at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a table at [log_loc(src)].")
 			deconstruct()
 			return
 
@@ -907,10 +907,10 @@
 			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
 
 			if (user.a_intent == "harm")
-				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a glass table")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(grabbed,"combat")] onto a glass table")
 				src.harm_slam(user, grabbed)
 			else
-				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a glass table")
+				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a glass table")
 				src.gentle_slam(user, grabbed)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
@@ -975,7 +975,7 @@
 		if (ismob(AM))
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
-				logTheThing("combat", thr.user, M, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
+				logTheThing(LOG_COMBAT, thr.user, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()
