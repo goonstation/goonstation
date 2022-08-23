@@ -262,7 +262,8 @@
 		if(ON_COOLDOWN(src,"move_damage",1 SECOND))
 			return
 		if(prob(75))
-			user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			if (!ON_COOLDOWN(src, "move_msg", 3 SECONDS))
+				user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
 			user.playsound_local(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 			takeDamage("brute",1)
 
