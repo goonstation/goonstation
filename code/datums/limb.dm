@@ -434,7 +434,6 @@
 			return
 
 		if (isobj(target))
-			user.lastattacked = target
 			switch (user.smash_through(target, list("window", "grille", "blob")))
 				if (0)
 					if (isitem(target))
@@ -445,6 +444,7 @@
 						return
 
 				if (1)
+					user.lastattacked = target
 					return
 
 		..()
@@ -692,6 +692,7 @@
 							return
 
 				if (1)
+					user.lastattacked = target
 					return
 
 		..()
@@ -1212,6 +1213,7 @@
 						C.cut(user,user.loc)
 						return
 				if (1)
+					user.lastattacked = target
 					return
 		..()
 		return
