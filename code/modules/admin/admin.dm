@@ -1912,7 +1912,7 @@ var/global/noir = 0
 					mind.objectives.len = 0
 				else
 					mind.objectives = list()
-				switch (tgui_alert(usr,"Objectives?", "Objectives", "Custom", "Random", "None"))
+				switch (tgui_alert(usr,"Objectives?", "Objectives", list("Custom", "Random", "None")))
 					if ("Custom")
 						var/WO = null
 						do
