@@ -89,7 +89,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ambient_light = rgb(255 * 1.00, 255 * 1.00, 255 * 1.00)	// uhhhhhh
 #endif
 
-
+/area/centcom/gallery
+	name = "NT Art Gallery"
+	icon_state = "green"
 
 /area/centcom/offices
 	name = "NT Offices"
