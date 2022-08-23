@@ -425,6 +425,6 @@
 	name = "cleaner bottle"
 	desc = "A bottle filled with cleaning fluid."
 	icon_state = "largebottle-labeled"
-	initial_volume = 50
+	initial_volume = 100
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10

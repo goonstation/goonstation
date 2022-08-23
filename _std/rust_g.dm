@@ -182,7 +182,7 @@
 /proc/rustg_read_toml_file(path)
 	var/list/output = rustg_raw_read_toml_file(path)
 	if (output["success"])
-		return output["content"]
+		return json_decode(output["content"])
 	else
 		CRASH(output["content"])
 
