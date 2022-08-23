@@ -129,7 +129,7 @@
 					boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 					boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
+			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 				var/default = M.real_name + " the " + src.name
 				var/orig_real = M.real_name
@@ -1340,7 +1340,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_belt = list(/obj/item/gun/kinetic/detectiverevolver)
+	slot_belt = list(/obj/item/gun/kinetic/colt_saa)
 	slot_head = list(/obj/item/clothing/head/cowboy)
 	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
@@ -1383,14 +1383,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.bioHolder.AddEffect("mute", magical=1)
 		M.bioHolder.AddEffect("blankman", magical=1)
 
-///datum/job/special/musician
-//	name = "Musician"
-//	wages = PAY_UNTRAINED
-//	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-//	slot_head = list(/obj/item/clothing/head/flatcap)
-//	slot_foot = list(/obj/item/clothing/shoes/brown)
-//	slot_ears = list(/obj/item/device/radio/headset/civilian)
-//	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+/datum/job/special/musician
+	name = "Musician"
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_head = list(/obj/item/clothing/head/flatcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 // randomizd gimmick jobs
 
@@ -2685,15 +2685,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
 			M.set_mutantrace(morph)
 
-///datum/job/daily/saturday
-//	name = "Musician"
-//	limit = 3
-//	wages = PAY_UNTRAINED
-//	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-//	slot_head = list(/obj/item/clothing/head/flatcap)
-//	slot_foot = list(/obj/item/clothing/shoes/brown)
-//	slot_ears = list(/obj/item/device/radio/headset/civilian)
-//	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+/datum/job/daily/saturday
+	name = "Musician"
+	limit = 3
+	wages = PAY_UNTRAINED
+	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_head = list(/obj/item/clothing/head/flatcap)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 /datum/job/battler
 	name = "Battler"

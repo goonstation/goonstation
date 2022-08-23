@@ -291,12 +291,14 @@
 	// and not a vr ghost
 	// and not a ghost critter
 	// and not a ghost drone
+	// and not a living object (probably soulsteel)
 	// ...then remove respawn candidate.
 	if (!isdead(src) \
 		&& !(istype(get_area(src), /area/afterlife) && !istype(get_area(src), /area/afterlife/hell)) \
 		&& !isVRghost(src) \
 		&& !isghostcritter(src) \
 		&& !isghostdrone(src) \
+		&& !islivingobject(src) \
 	)
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
@@ -683,7 +685,7 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
-	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -1723,6 +1725,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. = max(., base_speed)
 
 
 //this lets subtypes of living alter their movement delay WITHIN that big proc above - not before or after (which would fuck up the numbers greatly)
