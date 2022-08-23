@@ -58,6 +58,8 @@
 			user = client.mob
 		else
 			return
+	if (!user?.client) // No NPCs or they hang Mob AI process
+		return
 	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
 	textbox.ui_interact(user)
 
@@ -68,6 +70,8 @@
  * a message and has an input for text entry.
  */
 /datum/tgui_input_text
+	/// The user of the TGUI window
+	var/mob/user
 	/// Boolean field describing if the tgui_input_text was closed by the user.
 	var/closed
 	/// The default (or current) value, shown as a default.
@@ -89,6 +93,7 @@
 
 
 /datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, timeout)
+	src.user = user
 	src.default = default
 	src.max_length = max_length
 	src.message = message
@@ -110,7 +115,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_input_text/proc/wait()
-	while (!entry && !closed && !QDELETED(src))
+	while (user.client && !entry && !closed && !QDELETED(src))
 		sleep(1)
 
 /datum/tgui_input_text/ui_interact(mob/user, datum/tgui/ui)
