@@ -71056,6 +71056,15 @@
 "kAx" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"kCF" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = -4
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/battle)
 "kCH" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-22"
@@ -76355,6 +76364,15 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"vLC" = (
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = -4
+	},
+/obj/decal/poster/wallsign/stencil/left/x{
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/battle)
 "vMW" = (
 /obj/cable{
 	d1 = 2;
@@ -158629,29 +158647,29 @@ aaa
 aaa
 aaa
 dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -158931,7 +158949,6 @@ dkG
 xYc
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -158953,7 +158970,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -159233,7 +159251,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -159255,7 +159272,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -159535,7 +159553,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -159557,7 +159574,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -159837,7 +159855,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -159859,7 +159876,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -160139,7 +160157,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -160161,7 +160179,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -160441,7 +160459,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -160463,7 +160481,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -160743,7 +160761,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -160765,7 +160783,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -161045,7 +161063,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -161067,7 +161085,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -161347,7 +161365,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -161369,7 +161387,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -161649,7 +161667,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -161671,7 +161689,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -161951,7 +161969,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -161973,7 +161991,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -162253,7 +162271,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -162261,13 +162279,13 @@ xWi
 xWi
 xWi
 dli
-dlm
+vLC
 dlx
 dlF
 dlT
 dlF
 dmg
-dlm
+vLC
 dli
 xWi
 xWi
@@ -162275,7 +162293,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -162555,7 +162573,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -162563,13 +162581,13 @@ xWi
 xWi
 xWi
 dli
-dlm
+kCF
 dlz
 dlF
 dlV
 dlF
 dmh
-dlm
+kCF
 dli
 xWi
 xWi
@@ -162577,7 +162595,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -162857,7 +162875,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -162879,7 +162897,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -163159,7 +163177,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -163181,7 +163199,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -163461,7 +163479,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -163483,7 +163501,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -163763,7 +163781,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -163785,7 +163803,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -164065,7 +164083,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -164087,7 +164105,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -164367,7 +164385,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -164389,7 +164407,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -164669,7 +164687,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -164691,7 +164709,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -164971,7 +164989,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -164993,7 +165011,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -165273,7 +165291,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -165295,7 +165313,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -165575,7 +165593,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -165597,7 +165615,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -165877,7 +165895,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -165899,7 +165917,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -166179,7 +166197,7 @@ dkQ
 dkG
 aaa
 dkY
-dkY
+xWi
 xWi
 xWi
 xWi
@@ -166201,7 +166219,7 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
 dkY
 aaa
 kmt
@@ -166481,7 +166499,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -166503,7 +166520,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -166783,7 +166801,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -166805,7 +166822,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -167085,7 +167103,6 @@ dkQ
 dkG
 aaa
 dkY
-dkY
 xWi
 xWi
 xWi
@@ -167107,7 +167124,8 @@ xWi
 xWi
 xWi
 xWi
-dkY
+xWi
+xWi
 dkY
 aaa
 kmt
@@ -167387,29 +167405,29 @@ dkQ
 dkG
 aaa
 dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
-dkY
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
+xWi
 dkY
 aaa
 kmt
