@@ -49,7 +49,7 @@
 	icon_state = "wrench-battle" //todo: new sprites
 	item_state = "wrench-battle"
 	force = 10
-	stamina_damage = 35
+	stamina_damage = 55
 
 	New()
 		..()
