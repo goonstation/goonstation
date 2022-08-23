@@ -1539,7 +1539,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
-				new /obj/item/assembly/makeshiftshell(get_turf(src))
+				new /obj/item/assembly/pipehulls(get_turf(src))
 				qdel(src)
 
 		if(istype(W, /obj/item/cable_coil) && state == 3)

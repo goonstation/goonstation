@@ -885,17 +885,14 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/craftname = null
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
-
 		var/obj/item/material = null
+
 		if (istype(craftingitem, accepteditem)) //success! items match
 			var/consumed = min(src.thingsneeded, craftingitem.amount)
-
-			//material = craftingitem
-			thingsneeded -= consumed
-			boutput(user, "consuming [consumed] things!")
+			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
 
 			if (thingsneeded > 0)//craft successful, but they'll need more
-				boutput(user, "<span class='notice'>You add a [material] to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
+				boutput(user, "<span class='notice'>You add [consumed] [craftname] to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
 
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
@@ -904,20 +901,17 @@ obj/item/assembly/radio_horn/receive_signal()
 
 			//consume material
 			craftingitem.change_stack_amount(-consumed)
-
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
 	accepteditem = /obj/item/raw_material/scrap_metal
 	craftname = "scrap chunk"
-
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/glass/
 	accepteditem = /obj/item/raw_material/shard
 	craftname = "shard"
-
-/obj/item/assembly/makeshiftshell
+/obj/item/assembly/pipehulls
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
