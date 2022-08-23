@@ -76167,9 +76167,6 @@
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border,
 /area/centcom/gallery)
-"uti" = (
-/turf/space,
-/area/centcom/lobby)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -147620,7 +147617,7 @@ dLh
 dLh
 dMU
 dLh
-uti
+dLh
 dLe
 dKL
 dKL
