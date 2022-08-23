@@ -207,6 +207,10 @@
 			is_reinforced = 1
 			icon_state = "railing-reinforced"
 
+	velvet
+		icon = 'icons/obj/velvetrope.dmi'
+		icon_state = "velvetrope"
+		desc = "A cushy red velvet rope strewn between two golden poles."
 
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND

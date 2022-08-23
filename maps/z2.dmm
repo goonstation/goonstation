@@ -7067,7 +7067,7 @@
 /area/moon/museum)
 "awc" = (
 /obj/decoration/decorativeplant/plant6,
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/black,
 /area/centcom/gallery)
 "awd" = (
@@ -24981,11 +24981,11 @@
 	},
 /area/iomoon/base)
 "bxr" = (
-/obj/railing/red,
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_2";
 	pixel_y = 31
 	},
+/obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "bxs" = (
@@ -71787,7 +71787,7 @@
 	layer = 3;
 	pixel_y = 10
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
@@ -72616,11 +72616,11 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "nwd" = (
-/obj/railing/red,
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_1";
 	pixel_y = 31
 	},
+/obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "nwm" = (
@@ -73090,7 +73090,7 @@
 	dir = 1;
 	layer = 3
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
@@ -73318,11 +73318,11 @@
 	},
 /area/centcom/offices/varshie)
 "oJd" = (
-/obj/railing/red,
 /obj/decal/exhibit/premium{
 	exhibit_id = "ex_centcom_premium";
 	pixel_y = 31
 	},
+/obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "oKo" = (
@@ -74193,7 +74193,7 @@
 	layer = 3;
 	pixel_y = 10
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 4
 	},
@@ -74203,7 +74203,7 @@
 	dir = 8;
 	layer = 3
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "qfQ" = (
@@ -74396,7 +74396,7 @@
 	dir = 10;
 	layer = 3
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
@@ -75301,7 +75301,7 @@
 	dir = 10;
 	layer = 3
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 4
 	},
@@ -77525,7 +77525,7 @@
 	dir = 1;
 	layer = 3
 	},
-/obj/railing/red,
+/obj/railing/velvet,
 /turf/simulated/floor/marble/border_wb{
 	dir = 4
 	},
