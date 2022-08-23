@@ -68774,13 +68774,6 @@
 	dir = 4
 	},
 /area/iomoon/base)
-"fwq" = (
-/obj/table/auto,
-/obj/item/decoration/ashtray{
-	icon_state = "ashtray4"
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "fyt" = (
 /obj/cable{
 	d1 = 4;
@@ -69724,13 +69717,6 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
-"hyx" = (
-/obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_6";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "hyC" = (
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/carpet/darkcarpet/border{
@@ -72088,10 +72074,11 @@
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
 "mBa" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_3";
+	pixel_y = 31
 	},
+/turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "mCY" = (
 /obj/grille/catwalk{
@@ -72685,7 +72672,7 @@
 /area/titlescreen)
 "nyE" = (
 /obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_3";
+	exhibit_id = "ex_centcom_lowend_4";
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/wood/six,
@@ -73268,6 +73255,13 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oDT" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	icon_state = "ashtray4"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "oEX" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/lawyers,
@@ -73340,7 +73334,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "oKZ" = (
 /obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_4";
+	exhibit_id = "ex_centcom_lowend_5";
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/wood/six,
@@ -75792,7 +75786,7 @@
 /area/diner/tug)
 "tqB" = (
 /obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_5";
+	exhibit_id = "ex_centcom_lowend_6";
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/wood/six,
@@ -143147,7 +143141,7 @@ qAT
 aFL
 oXt
 nZV
-nyE
+mBa
 uXp
 gyx
 ndW
@@ -144056,7 +144050,7 @@ poV
 fkm
 tRx
 rXi
-mBa
+ndW
 aES
 dFl
 dKL
@@ -144659,7 +144653,7 @@ awc
 dae
 xSL
 xMn
-fwq
+oDT
 pnE
 luT
 aES
@@ -144959,7 +144953,7 @@ wdK
 aFL
 nwH
 nZV
-oKZ
+nyE
 uXp
 gyx
 ndW
@@ -145261,7 +145255,7 @@ ioS
 ujf
 sYw
 nZV
-tqB
+oKZ
 uXp
 vJH
 ndW
@@ -145563,7 +145557,7 @@ kJQ
 ute
 nwH
 nZV
-hyx
+tqB
 uXp
 pUu
 ndW
