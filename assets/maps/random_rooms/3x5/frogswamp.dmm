@@ -4,7 +4,7 @@
 /turf/simulated/floor/auto/grass/swamp_grass,
 /area/dmm_suite/clear_area)
 "p" = (
-/turf/unsimulated/floor/auto/grass/swamp_grass,
+/turf/simulated/floor/auto/grass/swamp_grass,
 /area/dmm_suite/clear_area)
 "r" = (
 /turf/simulated/floor/auto/grass/swamp_grass,

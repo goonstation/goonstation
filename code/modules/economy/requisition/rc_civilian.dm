@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = 90
 
 /datum/rc_entry/item/light_tube
-	name = "light bulb"
+	name = "light tube"
 	typepath = /obj/item/light/tube
 	feemod = 80
 
