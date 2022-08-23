@@ -71,7 +71,7 @@
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		var/atom/player = user || src
-		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user because not just clients do music
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
