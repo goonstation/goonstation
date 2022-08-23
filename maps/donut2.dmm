@@ -11488,7 +11488,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/floorflusher,
+/obj/machinery/disposal{
+	name = "monkey feeder"
+	},
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -13448,6 +13450,13 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "aSe" = (
@@ -13624,6 +13633,13 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
@@ -18885,6 +18901,12 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
+/obj/blind_switch/area/west{
+	pixel_y = -6
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "biL" = (
@@ -18933,16 +18955,18 @@
 	icon_state = "chair_comfy"
 	},
 /obj/landmark/gps_waypoint,
+/obj/blind_switch/area/south{
+	pixel_x = -6
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fred2"
 	},
 /area/station/security/hos)
 "biR" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fred2"
@@ -19239,6 +19263,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bjN" = (
@@ -19253,6 +19278,7 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "bjQ" = (
@@ -19723,6 +19749,9 @@
 	pixel_x = -32
 	},
 /obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -19912,6 +19941,9 @@
 	dir = 4
 	},
 /obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -20449,6 +20481,9 @@
 	},
 /obj/stool/chair/office/red{
 	dir = 1
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/black,
 /area/station/security/processing)
@@ -26737,6 +26772,11 @@
 "bLC" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/pool)
+"bLG" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2,
+/turf/simulated/floor/plating,
+/area/station/security/interrogation)
 "bMx" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26770,6 +26810,8 @@
 /obj/storage/closet/wardrobe/black/formalwear,
 /obj/item/clothing/suit/tuxedo_jacket,
 /obj/item/clothing/suit/tuxedo_jacket,
+/obj/item/storage/fanny,
+/obj/item/storage/fanny,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
 "bOY" = (
@@ -34308,6 +34350,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-s"
+	},
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -42609,6 +42654,9 @@
 	icon_state = "1-2"
 	},
 /obj/stool/chair/office/red,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "sih" = (
@@ -89709,7 +89757,7 @@ ndp
 bhA
 cOs
 ekx
-ndp
+bLG
 spZ
 les
 bmC
