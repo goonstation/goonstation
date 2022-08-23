@@ -14980,6 +14980,10 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aWH" = (
@@ -15142,10 +15146,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/bridge)
 "aXj" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/black,
@@ -15849,6 +15849,7 @@
 /area/station/medical/research)
 "aZc" = (
 /obj/machinery/vending/port_a_nanomed,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aZd" = (
@@ -16967,13 +16968,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"bcc" = (
-/obj/machinery/camera{
-	c_tag = "Bridge South";
-	dir = 10
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "bcd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -17099,7 +17093,6 @@
 /area/station/bridge)
 "bcC" = (
 /obj/table/auto,
-/obj/machinery/light/incandescent,
 /obj/item/wrapping_paper,
 /obj/item/wirecutters,
 /turf/simulated/floor/black,
@@ -17108,6 +17101,9 @@
 /obj/table/auto,
 /obj/machinery/recharger{
 	pixel_y = 3
+	},
+/obj/machinery/camera{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -18172,7 +18168,6 @@
 /area/station/medical/morgue)
 "bge" = (
 /obj/machinery/camera{
-	c_tag = "West Hallway South";
 	dir = 8
 	},
 /obj/machinery/firealarm{
@@ -18257,7 +18252,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bgy" = (
-/obj/machinery/light/incandescent,
 /obj/disposalpipe/junction{
 	dir = 8;
 	icon_state = "pipe-y"
@@ -38542,6 +38536,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"nVA" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nVD" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/macho{
@@ -42712,7 +42711,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "skA" = (
-/obj/machinery/light/incandescent,
 /obj/machinery/light_switch/east{
 	pixel_x = 22;
 	pixel_y = 3
@@ -64367,7 +64365,7 @@ aUb
 bWz
 fHr
 bdb
-qnC
+nVA
 bgy
 qqV
 aZc
@@ -93367,7 +93365,7 @@ aWK
 aWI
 bbd
 aVb
-bcc
+aVN
 bcW
 beA
 vef
