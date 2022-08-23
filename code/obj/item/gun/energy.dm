@@ -236,7 +236,7 @@
 
 	New()
 		if (!src.current_projectile)
-			src.set_current_projectile(new /datum/projectile/laser)
+			src.set_current_projectile(new /datum/projectile/laser/glitter)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
 		..()
@@ -276,7 +276,6 @@
 			src.icon_state = "phaser-new[ratio]"
 			return
 
-
 /obj/item/gun/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
@@ -285,7 +284,9 @@
 	force = 4
 	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
+	mats = 20
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -301,8 +302,6 @@
 			src.icon_state = "phaser-tiny[ratio]"
 			return
 
-
-
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
@@ -311,11 +310,13 @@
 	force = 10
 	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/higherish_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-
+	force = MELEE_DMG_LARGE
+	two_handed = 1
+	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
@@ -330,10 +331,8 @@
 			src.icon_state = "phaser-xl[ratio]"
 			return
 
-
-
-
-
+	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+		return FALSE
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
@@ -424,17 +423,19 @@
 	name = "energy gun junior"
 	icon_state = "egun-jr"
 	uses_multiple_icon_states = 1
-	cell_type = /obj/item/ammo/power_cell
-	desc = "A smaller sidearm version of the energy gun, with dual modes for stun and kill."
+	cell_type = /obj/item/ammo/power_cell/med_minus_power
+	desc = "A smaller, disposable version of the energy gun, with dual modes for stun and kill."
 	item_state = "egun-jr"
 	force = 3
 	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
 	muzzle_flash = "muzzle_flash_elec"
 	can_swap_cell = FALSE
+	rechargeable = FALSE
+	spread_angle = 10
 
 	New()
-		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile,new/datum/projectile/laser)
+		set_current_projectile(new/datum/projectile/energy_bolt/diffuse)
+		projectiles = list(current_projectile,new/datum/projectile/laser/diffuse)
 		..()
 
 	update_icon()
@@ -443,11 +444,11 @@
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			if(current_projectile.type == /datum/projectile/energy_bolt)
+			if(current_projectile.type == /datum/projectile/energy_bolt/diffuse)
 				src.item_state = "egun-jrstun"
 				src.icon_state = "egun-jrstun[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/laser)
+			else if (current_projectile.type == /datum/projectile/laser/diffuse)
 				src.item_state = "egun-jrkill"
 				src.icon_state = "egun-jrkill[ratio]"
 				muzzle_flash = "muzzle_flash_laser"
@@ -455,6 +456,7 @@
 				src.item_state = "egun-jr"
 				src.icon_state = "egun-jr[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
+
 	attack_self(var/mob/M)
 		..()
 		UpdateIcon()

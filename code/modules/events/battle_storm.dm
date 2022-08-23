@@ -1,6 +1,10 @@
+#define STORM_REGULAR 1
+#define STORM_FINAL 2
+
 // Basically a weaker radioactive blowout
 /datum/random_event/special/battlestorm
 	name = "Battle Storm"
+	customization_available = TRUE
 	required_elapsed_round_time = 0 MINUTES
 	var/space_color = "#ff4646"
 	var/list/area/safe_areas = list()
@@ -13,7 +17,23 @@
 		..()
 		safe_locations = get_accessible_station_areas()
 
-	event_effect(var/final = FALSE)
+	admin_call(var/source)
+		if (..())
+			return
+
+		if(alert("Are you sure you want to do this?","Caution!","Yes","No") == "Yes")
+			src.event_effect(STORM_REGULAR)
+		return
+
+	event_effect(var/storm_type = null)
+		// Safety check in case someone makes a button that triggers a random event...
+		if (storm_type != STORM_REGULAR && storm_type != STORM_FINAL)
+			message_admins("Error: The battlestorm event was called without a valid storm_type argument. Cancelling event")
+			logTheThing(LOG_DEBUG, null, "The battlestorm event was called without a valid storm_type argument.")
+			return
+		var/final
+		if (storm_type == STORM_FINAL)
+			final = TRUE
 		// Pick a safe area(s)
 		activations++
 		safe_area_names = list()
@@ -133,3 +153,6 @@ proc/get_battle_area_names(var/list/strings)
 	for(var/i = 1, i < strings.len; i++)
 		. += strings[i] + ", "
 	. += "or [strings[strings.len]]"
+
+#undef STORM_REGULAR
+#undef STORM_FINAL
