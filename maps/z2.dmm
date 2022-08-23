@@ -24981,10 +24981,13 @@
 	},
 /area/iomoon/base)
 "bxr" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
+/obj/railing/red,
+/obj/decal/exhibit/highend{
+	exhibit_id = "ex_centcom_highend_2";
+	pixel_y = 31
 	},
-/area/centcom/outside)
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "bxs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -68771,6 +68774,13 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"fwq" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	icon_state = "ashtray4"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "fyt" = (
 /obj/cable{
 	d1 = 4;
@@ -69714,6 +69724,13 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"hyx" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_6";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "hyC" = (
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/carpet/darkcarpet/border{
@@ -70127,13 +70144,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/offices/flaborized)
-"irT" = (
-/obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_4";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "isk" = (
 /obj/table/wood/auto/desk,
 /obj/item/storage/photo_album{
@@ -70478,14 +70488,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"iZA" = (
-/obj/railing/red,
-/obj/decal/exhibit/highend{
-	exhibit_id = "ex_centcom_highend_2";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/marble/black,
-/area/centcom/gallery)
 "iZR" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/sand,
@@ -71803,7 +71805,7 @@
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
-/area/centcom/outside)
+/area/centcom/gallery)
 "lPg" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -72682,14 +72684,12 @@
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
 "nyE" = (
-/obj/machinery/light/small/floor,
-/turf/unsimulated/wall{
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_old = null;
-	icon_state = "leadwall"
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_3";
+	pixel_y = 31
 	},
-/area/centcom/outside)
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "nyQ" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -73075,6 +73075,9 @@
 /area/centcom/offices/walpvrgis)
 "oeH" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 7
+	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "ogV" = (
@@ -73161,13 +73164,6 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
-"onr" = (
-/obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_6";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "onw" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -73334,7 +73330,7 @@
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/marble/black,
-/area/centcom/outside)
+/area/centcom/gallery)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -73343,8 +73339,12 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "oKZ" = (
-/turf/unsimulated/wall/setpieces/leadwall,
-/area/centcom/outside)
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_4";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "oLy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -74203,7 +74203,7 @@
 /turf/simulated/floor/marble/border_wb{
 	dir = 4
 	},
-/area/centcom/outside)
+/area/centcom/gallery)
 "qfG" = (
 /obj/shrub{
 	dir = 8;
@@ -74297,13 +74297,6 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
-"qpC" = (
-/obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_5";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "qrC" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -74929,13 +74922,6 @@
 	name = "Fireplace"
 	},
 /area/centcom/offices/flaborized)
-"rAG" = (
-/obj/decal/exhibit/lowend{
-	exhibit_id = "ex_centcom_lowend_3";
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/wood/six,
-/area/centcom/gallery)
 "rAS" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -75437,6 +75423,11 @@
 	},
 /area/wizard_station)
 "srC" = (
+/obj/admin_plaque{
+	desc = "A nameplate signifying the name of the art gallery.";
+	name = "Nanotrasen Applied Paints ";
+	pixel_y = 31
+	},
 /turf/unsimulated/floor/stairs/wood/wide{
 	dir = 4
 	},
@@ -75800,10 +75791,12 @@
 	},
 /area/diner/tug)
 "tqB" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_5";
+	pixel_y = 31
 	},
-/area/centcom/outside)
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "trs" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton{
@@ -76036,7 +76029,7 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 9
 	},
-/area/centcom/outside)
+/area/centcom/gallery)
 "tUJ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
@@ -142840,7 +142833,7 @@ wLo
 wLo
 aES
 aES
-aES
+dFl
 aES
 qTn
 nwd
@@ -143142,7 +143135,7 @@ jvG
 wLo
 aES
 aES
-dFl
+aES
 aES
 ndW
 qHX
@@ -143154,7 +143147,7 @@ qAT
 aFL
 oXt
 nZV
-rAG
+nyE
 uXp
 gyx
 ndW
@@ -143445,7 +143438,7 @@ wLo
 aES
 aES
 tRB
-oKZ
+pUH
 uti
 lEM
 rUx
@@ -143746,7 +143739,7 @@ jMC
 wLo
 aES
 aES
-tqB
+ndW
 qeA
 gSd
 pXL
@@ -144048,7 +144041,7 @@ gbA
 wLo
 aES
 aES
-nyE
+qTn
 oJd
 kBI
 sdU
@@ -144350,7 +144343,7 @@ wLo
 wLo
 aES
 aES
-tqB
+ndW
 lPc
 hgp
 wux
@@ -144652,8 +144645,8 @@ dFT
 wLo
 aES
 aES
-bxr
-oKZ
+kbq
+pUH
 ycl
 lEM
 rUx
@@ -144666,7 +144659,7 @@ awc
 dae
 xSL
 xMn
-oeH
+fwq
 pnE
 luT
 aES
@@ -144955,7 +144948,7 @@ wLo
 aES
 aES
 aES
-dFl
+aES
 ndW
 sgo
 obl
@@ -144966,7 +144959,7 @@ wdK
 aFL
 nwH
 nZV
-irT
+oKZ
 uXp
 gyx
 ndW
@@ -145256,10 +145249,10 @@ qJO
 wLo
 aES
 aES
-aES
+dFl
 aES
 qTn
-iZA
+bxr
 nPf
 nwt
 lDQ
@@ -145268,7 +145261,7 @@ ioS
 ujf
 sYw
 nZV
-qpC
+tqB
 uXp
 vJH
 ndW
@@ -145570,7 +145563,7 @@ kJQ
 ute
 nwH
 nZV
-onr
+hyx
 uXp
 pUu
 ndW
@@ -146167,14 +146160,14 @@ aES
 aES
 dRx
 aES
-aES
+iCR
 aES
 aES
 dRx
 xXj
 aES
 aES
-dFl
+aES
 aES
 aES
 aES
@@ -146475,7 +146468,7 @@ aES
 dqf
 aES
 aES
-aES
+dFl
 aES
 aES
 aES
