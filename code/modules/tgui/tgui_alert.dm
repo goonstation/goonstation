@@ -24,6 +24,8 @@
 			user = client.mob
 		else
 			return
+	if (!user?.client) // No NPCs or they hang Mob AI process
+		return
 	if(!length(items))
 		log_tgui(user, "Error: TGUI Alert called with no items.", "TguiAlert")
 		return
