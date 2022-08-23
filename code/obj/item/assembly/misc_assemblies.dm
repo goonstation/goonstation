@@ -885,7 +885,6 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/craftname = null
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
-		var/obj/item/material = null
 
 		if (istype(craftingitem, accepteditem)) //success! items match
 			var/consumed = min(src.thingsneeded, craftingitem.amount)
@@ -924,7 +923,7 @@ obj/item/assembly/radio_horn/receive_signal()
 				recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
 				recipe = new/datum/pipeshotrecipe/scrap
-		if(recipe) //probably a better way to do this but my feverish brain is not coming up with it
+		if(recipe) //probably a better way, but it works well enough
 			recipe.craftwith(W, src, user)
 		..()
 
