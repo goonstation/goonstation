@@ -4817,6 +4817,7 @@
 	icon_state = "coil1"
 	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
 "alt" = (
@@ -5416,16 +5417,6 @@
 	icon_state = "pipe-c"
 	},
 /obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/quartersB)
-"amM" = (
-/obj/stool/bed,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/clothing/suit/bedsheet,
-/obj/machinery/light_switch/east,
 /obj/item/item_box/swedish_bag{
 	icon_state = "swedishfisk-open";
 	item_amount = 4;
@@ -48207,23 +48198,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"ced" = (
+"cee" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
-"cee" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4;
-	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -48456,6 +48439,11 @@
 /area/station/maintenance/inner/central)
 "ceP" = (
 /obj/disposalpipe/segment/transport,
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "ceQ" = (
@@ -119827,7 +119815,7 @@ aij
 aff
 akm
 als
-amM
+alr
 anT
 aoY
 asu
@@ -120128,8 +120116,8 @@ aha
 aik
 afd
 afd
-alt
 afd
+alt
 anR
 aoZ
 aoZ
@@ -133791,7 +133779,7 @@ bgK
 bgK
 bgK
 bgK
-bgK
+bhI
 biz
 bgK
 aaF
@@ -134089,11 +134077,11 @@ bVP
 bXj
 bYy
 bZN
-bgK
 bhI
 bhI
 jKo
 bgK
+bhI
 biz
 bgK
 aaB
@@ -134391,11 +134379,11 @@ bVQ
 bXk
 bYz
 bZN
-bgK
 bhI
 bhI
 bhI
 tXw
+bhI
 biz
 bgK
 aaa
@@ -134693,11 +134681,11 @@ bVR
 bXl
 bYA
 bZP
-bgK
 bhI
 bhI
 bhI
 bgK
+bhI
 biz
 bgK
 aaa
@@ -135905,8 +135893,8 @@ cba
 cci
 ccZ
 bkt
-ced
-ceh
+bkt
+biz
 bgK
 aaF
 cyV
