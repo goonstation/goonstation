@@ -7068,7 +7068,7 @@
 "awc" = (
 /obj/decoration/decorativeplant/plant6,
 /obj/railing/velvet,
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "awd" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -9847,9 +9847,6 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
-"aFL" = (
-/turf/simulated/floor/marble/black,
-/area/centcom/gallery)
 "aFN" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -34315,7 +34312,7 @@
 /turf/unsimulated/floor,
 /area/sim/tdome/tdome1)
 "cbS" = (
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 6
 	},
 /area/centcom/gallery)
@@ -69377,7 +69374,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
@@ -70101,7 +70098,7 @@
 	exhibit_id = "ex_centcom_midrange_5";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "iqu" = (
 /turf/unsimulated/floor/grass/leafy,
@@ -70854,7 +70851,7 @@
 	icon_state = "blue"
 	})
 "jRz" = (
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 10
 	},
 /area/centcom/gallery)
@@ -71215,7 +71212,7 @@
 	exhibit_id = "ex_centcom_midrange_6";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 5
 	},
 /area/centcom/gallery)
@@ -71298,7 +71295,7 @@
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
 "kTR" = (
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 5
 	},
 /area/centcom/gallery)
@@ -72635,7 +72632,7 @@
 	anchored = 1;
 	dir = 1
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 6
 	},
 /area/centcom/gallery)
@@ -73461,7 +73458,7 @@
 	anchored = 1;
 	dir = 1
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 10
 	},
 /area/centcom/gallery)
@@ -74339,7 +74336,7 @@
 	exhibit_id = "ex_centcom_midrange_3";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 9
 	},
 /area/centcom/gallery)
@@ -74409,7 +74406,7 @@
 	exhibit_id = "ex_centcom_midrange_2";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "qJM" = (
 /obj/noticeboard/persistent{
@@ -75657,7 +75654,7 @@
 "sYw" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement,
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "sZf" = (
 /turf/unsimulated/floor/black/corner{
@@ -76222,7 +76219,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/marble/black,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
 "uti" = (
 /turf/unsimulated/wall/setpieces/leadwall/junction{
@@ -77011,7 +77008,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
 "wdl" = (
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 9
 	},
 /area/centcom/gallery)
@@ -77020,7 +77017,7 @@
 	exhibit_id = "ex_centcom_midrange_4";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 5
 	},
 /area/centcom/gallery)
@@ -78093,7 +78090,7 @@
 	exhibit_id = "ex_centcom_midrange_1";
 	pixel_y = 31
 	},
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 9
 	},
 /area/centcom/gallery)
@@ -143132,7 +143129,7 @@ ydb
 flI
 nZV
 qAT
-aFL
+oZo
 oXt
 nZV
 mBa
@@ -143433,7 +143430,7 @@ rUx
 oZo
 qfG
 fKl
-aFL
+oZo
 ujf
 awc
 rUZ
@@ -143736,7 +143733,7 @@ oZo
 oZo
 xqq
 wdl
-aFL
+oZo
 jRz
 xqq
 fkm
@@ -144037,9 +144034,9 @@ fKz
 oZo
 oZo
 poV
-aFL
+oZo
 ujf
-aFL
+oZo
 poV
 fkm
 tRx
@@ -144340,7 +144337,7 @@ oZo
 oZo
 tFG
 kTR
-aFL
+oZo
 cbS
 tFG
 fkm
@@ -144641,7 +144638,7 @@ rUx
 oZo
 qfG
 fKl
-aFL
+oZo
 ujf
 awc
 dae
@@ -144944,7 +144941,7 @@ mEy
 ebw
 nZV
 wdK
-aFL
+oZo
 nwH
 nZV
 nyE
