@@ -41,17 +41,26 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 
 	RegisterSignal(parent, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
 
+	// If our parent is not on a turf but on an atom instead, update when their
+	// location is changed. This is necessary due to the many cases of a
+	// /obj/machinery/camera being placed on another atom to create a camera
+	// coverage around them. See cyborgs or small bots for examples. These should
+	// slowly be migrated after a solution is made for the camera network that an
+	// /obj/machinery/camera creates.
+	if (!isturf(parent_atom.loc) && isatom(parent_atom.loc))
+		RegisterSignal(parent_atom.loc, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/on_move)
+
 /datum/component/camera_coverage_emitter/proc/on_move(atom/target, new_loc, previous_loc, direction)
 	src.turf = get_turf(new_loc)
 
 	camera_coverage_controller.update_emitter(src)
 
 /**
- * Returns everything this emitter can see, including non-turfs. If the parent is not on a turf, returns an empty list.
+ * Returns everything this emitter can see, including non-turfs.
  */
 /datum/component/camera_coverage_emitter/proc/get_coverage()
 	var/atom/parent_atom = src.parent
-	if (QDELETED(src) || !src.active || !istype(parent_atom.loc, /turf))
+	if (QDELETED(src) || !src.active)
 		return list()
 
 	return view(parent_atom.loc, src.range)
