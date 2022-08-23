@@ -67954,6 +67954,9 @@
 	name = "the high ground"
 	},
 /area/centcom/offices/enakai)
+"dYr" = (
+/turf/unsimulated/floor/stairs/wood/wide,
+/area/centcom/gallery)
 "dYP" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -70326,6 +70329,11 @@
 "iJj" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/retentioncenter)
+"iJN" = (
+/turf/unsimulated/floor/stairs/wood{
+	dir = 6
+	},
+/area/centcom/gallery)
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -71908,6 +71916,11 @@
 /obj/storage/closet/office,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
+"mjk" = (
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/centcom/gallery)
 "mkm" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
@@ -143983,7 +143996,7 @@ rXi
 ohW
 pQk
 pKN
-dMu
+dYr
 dMu
 dMT
 dZt
@@ -144285,7 +144298,7 @@ cbS
 ohW
 pVO
 qTn
-dMu
+iJN
 dMu
 dMu
 dMu
@@ -144587,7 +144600,7 @@ oDT
 ohW
 pXL
 qeA
-dMu
+mjk
 dMu
 dMu
 dMu
