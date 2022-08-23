@@ -76091,12 +76091,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
-"uiV" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/space)
 "ujf" = (
 /obj/shrub{
 	dir = 10
@@ -142483,7 +142477,7 @@ sWb
 dMu
 dMu
 dMu
-uiV
+dKL
 aES
 aES
 aES
