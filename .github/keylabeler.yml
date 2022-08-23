@@ -41,8 +41,8 @@ labelMappings:
     "[REVERT]": c-revert
     "[REWORK]": c-rework
     "[SECRET]": a-secret
-    "[TGUI]": c-ui
-    "[UI]": c-ui
+    "[TGUI]": a-ui
+    "[UI]": a-ui
     "[TOOLS]": a-tooling
     "[TOOLING]": a-tooling
     "[EASY]": e-good-first-issue
