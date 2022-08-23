@@ -83,7 +83,7 @@ var/makingpowernets = 0
 var/makingpowernetssince = 0
 /proc/makepowernets()
 	if (makingpowernets)
-		logTheThing("debug", null, null, "makepowernets was called while it was already running! oh no!")
+		logTheThing(LOG_DEBUG, null, "makepowernets was called while it was already running! oh no!")
 		DEBUG_MESSAGE("attempt to rebuild powernets while already rebuilding")
 		return
 	DEBUG_MESSAGE("rebuilding powernets start")

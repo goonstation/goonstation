@@ -15,7 +15,7 @@
 
 	var/mob/living/carbon/human/character
 	if (random_human)
-		character = new /mob/living/carbon/human(currentLoc)
+		character = new /mob/living/carbon/human/normal(currentLoc)
 	else
 		character = new /mob/living/carbon/human(currentLoc, src.client.preferences.AH, src.client.preferences)
 
@@ -61,7 +61,7 @@
 
 		qdel(src)
 
-		logTheThing("debug", respawned, null, "Humanize() failed. Player was respawned instead.")
+		logTheThing(LOG_DEBUG, respawned, "Humanize() failed. Player was respawned instead.")
 		message_admins("Humanize() failed. [key_name(respawned)] was respawned instead.")
 		respawned.show_text("Humanize: an error occurred and you have been respawned instead. Please report this to a coder.", "red")
 
@@ -166,7 +166,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -311,7 +311,7 @@
 /mob/proc/blobize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
 
 		return make_blob()
 	return 0
@@ -348,10 +348,10 @@
 	if (src.mind || src.client)
 		if (shitty)
 			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
+			logTheThing(LOG_ADMIN, null, "[constructTarget(src,"admin")] has been made a faustian macho man.")
 		else
 			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a macho man.")
 		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src, shitty)
 
 		var/turf/T = get_turf(src)
@@ -428,7 +428,7 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
@@ -671,7 +671,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.original_name = selfmob.real_name
 
 	C.show_antag_popup("ghostcritter_mentor")
-	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
+	logTheThing(LOG_ADMIN, C, "respawned as a mentor mouse at [log_loc(C)].")
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -735,6 +735,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (!src.client) return //ZeWaka: fix for null.preferences
 	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
+	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
 		src.mind.assigned_role = "Staff Assistant"
 	newbody.JobEquipSpawned(src.mind.assigned_role, no_special_spawn = 1)
@@ -828,12 +829,12 @@ var/respawn_arena_enabled = 0
 		if(flock == null)
 			// no flocks given, make flockmind
 			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
 			return make_flockmind()
 		else
 			// make flocktrace of existing flock
 			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
+			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
 			return make_flocktrace(get_turf(src), flock)
 	return null
 
@@ -874,14 +875,14 @@ var/respawn_arena_enabled = 0
 	return O
 
 // flocktraces are made by flockminds
-/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
+/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock, var/free = FALSE)
 	if (src.mind || src.client)
 		if(!spawnloc)
 			spawnloc = get_turf(src)
 		if(!flock)
 			flock = new/datum/flock()
 
-		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
+		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock, free)
 		if (src.mind)
 			src.mind.transfer_to(O)
 			flock.trace_minds[O.name] = O.mind

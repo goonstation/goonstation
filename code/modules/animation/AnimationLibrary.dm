@@ -1537,7 +1537,10 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_turf_slidein(turf/T, new_turf_type, dir, time)
 	var/obj/overlay/tile_effect/sliding_turf/slide = new(T)
 	var/had_fullbright = T.fullbright
-	T.ReplaceWith(new_turf_type)
+	if(station_repair.station_generator && T.z == Z_LEVEL_STATION)
+		station_repair.repair_turfs(list(T))
+	else
+		T.ReplaceWith(new_turf_type)
 	T.layer -= 2
 	var/list/tr
 	switch(dir)

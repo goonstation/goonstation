@@ -64,7 +64,7 @@ mob/new_player
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
-			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(msgs_which_are_gifs.Find(num)) ? "gif" : "jpg"]")
+			var/resource = resource("images/member_msgs/byond_member_msg_[num].[(num in msgs_which_are_gifs) ? "gif" : "jpg"]")
 			boutput(src, "<img src='[resource]' style='margin: auto; display: block; max-width: 100%;'>")
 
 
@@ -180,56 +180,6 @@ mob/new_player
 						stat("[player.key]", (player.ready)?("(Playing)"):(null)) // show them normally
 
 	Topic(href, href_list[])
-
-		if(href_list["show_preferences"])
-			client.preferences.ShowChoices(src)
-			return 1
-
-		if(href_list["ready"])
-			if(!ready)
-				if(tgui_alert(src, "Are you sure you are ready? This will lock-in your preferences.", "Player Setup", list("Yes", "No")) == "Yes")
-					ready = 1
-
-		if(href_list["observe"])
-			if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
-				if(!src.client) return
-				var/mob/dead/observer/observer = new(src)
-
-				src.spawning = 1
-
-				close_spawn_windows()
-				boutput(src, "<span class='notice'>Now teleporting.</span>")
-				var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-				if (ASLoc)
-					observer.set_loc(ASLoc)
-				else
-					observer.set_loc(locate(1, 1, 1))
-				observer.apply_looks_of(client)
-
-				if(src.mind)
-					//src.mind.dnr = 1
-					src.mind.joined_observer = 1
-					src.mind.transfer_to(observer)
-				else
-					src.mind = new /datum/mind()
-					//src.mind.dnr = 1
-					src.mind.joined_observer = 1
-					src.mind.transfer_to(observer)
-
-				if(client.preferences.be_random_name)
-					client.preferences.randomize_name()
-				observer.name = client.preferences.real_name
-				observer.real_name = observer.name
-				observer.Equip_Bank_Purchase(observer.mind.purchased_bank_item)
-
-				src.client.loadResources()
-
-
-				qdel(src)
-
-		if(href_list["late_join"])
-			LateChoices()
-
 		if(href_list["SelectedJob"])
 			if (src.spawning)
 				return
@@ -406,9 +356,9 @@ mob/new_player
 				character.mind.join_time = world.time
 				//ticker.implant_skull_key() // This also checks if a key has been implanted already or not. If not then it'll implant a random sucker with a key.
 				if (!(character.mind in ticker.minds))
-					logTheThing("debug", character, null, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
+					logTheThing(LOG_DEBUG, character, "<b>Late join:</b> added player to ticker.minds. [character.mind.on_ticker_add_log()]")
 					ticker.minds += character.mind
-				logTheThing("debug", character, null, "<b>Late join:</b> assigned job: [JOB.name]")
+				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
 					participationRecorder.record(character.mind.ckey)
@@ -664,10 +614,10 @@ a.latejoin-card:hover {
 			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
 			new_character.mind.late_special_role = 1
-			logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
-				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1)
+				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1 && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
@@ -676,7 +626,7 @@ a.latejoin-card:hover {
 								continue
 
 							livingtraitor = 1
-							logTheThing("debug", null, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
+							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
 							break
 
 					var/bad_type = null
@@ -699,7 +649,7 @@ a.latejoin-card:hover {
 					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
 						makebad(new_character, bad_type)
 						new_character.mind.late_special_role = 1
-						logTheThing("debug", new_character, null, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+						logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 
 
@@ -731,15 +681,20 @@ a.latejoin-card:hover {
 		ticker.mode.traitors += traitor
 
 		var/objective_set_path = null
+		// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
+		// It should be removed when all antagonists are on the new system.
+		var/do_objectives = TRUE
 		switch (type)
 			if (ROLE_TRAITOR)
-				var/datum/antagonist/A = traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				SPAWN (1 SECOND) // Give the mob some time to be equipped with their job gear, as otherwise the uplink will fail to add properly
-					if (A)
-						A.give_equipment()
+				if (traitor.assigned_role)
+					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
+					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
+				do_objectives = FALSE
 
 			if (ROLE_ARCFIEND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_CHANGELING)
 				traitor.special_role = ROLE_CHANGELING
@@ -784,19 +739,20 @@ a.latejoin-card:hover {
 				objective_set_path = pick(typesof(/datum/objective_set/traitor))
 			#endif
 
-		if (!isnull(objective_set_path))
-			if (ispath(objective_set_path, /datum/objective_set))
-				new objective_set_path(traitor)
-			else if (ispath(objective_set_path, /datum/objective))
-				ticker.mode.bestow_objective(traitor, objective_set_path)
+		if (do_objectives)
+			if (!isnull(objective_set_path))
+				if (ispath(objective_set_path, /datum/objective_set))
+					new objective_set_path(traitor)
+				else if (ispath(objective_set_path, /datum/objective))
+					ticker.mode.bestow_objective(traitor, objective_set_path)
 
-		var/obj_count = 1
-		for(var/datum/objective/objective in traitor.objectives)
-			#ifdef CREW_OBJECTIVES
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
-			#endif
-			boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+			var/obj_count = 1
+			for(var/datum/objective/objective in traitor.objectives)
+				#ifdef CREW_OBJECTIVES
+				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
+				#endif
+				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+				obj_count++
 
 	proc/close_spawn_windows()
 		if(client)
@@ -892,7 +848,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
+		if(alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", "Yes", "No") == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token

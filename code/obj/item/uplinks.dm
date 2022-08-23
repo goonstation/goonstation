@@ -393,7 +393,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
 				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
 					T.purchased_items.Add(I)
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -622,7 +622,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
 				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
 					T.purchased_items.Add(I)
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -821,14 +821,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
-							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+							logTheThing(LOG_COMBAT, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
 						else if(HP != B.item)
 							user.show_text("That isn't the right limb!", "red")
 							return 0
 					else
 						M.drop_from_slot(delivery,get_turf(M))
 				if (!istype(delivery,/obj/item/parts))
-					logTheThing("debug", user, null, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+					logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
@@ -1111,7 +1111,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
-							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							logTheThing(LOG_COMBAT, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
@@ -1177,7 +1177,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
 			return
-		logTheThing("debug", null, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
+		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()

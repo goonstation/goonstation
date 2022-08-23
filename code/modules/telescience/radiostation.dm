@@ -226,7 +226,7 @@
 			if(!isnull(accent_id))
 				var/datum/bioEffect/speech/accent = src.accents[accent_id]
 				message = accent.OnSpeak(message)
-			logTheThing("say", usr, name, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
+			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
 			var/original_name = usr.real_name
 			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
 			usr.say(message)
@@ -261,7 +261,7 @@
 			W.set_loc(src)
 			src.record_inside = W
 			src.has_record = 1
-			var/R = html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text)
+			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
@@ -328,7 +328,7 @@
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
@@ -339,7 +339,7 @@
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+		logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 ABSTRACT_TYPE(/obj/item/record/random)
 

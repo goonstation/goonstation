@@ -263,7 +263,7 @@
 			return
 
 		boutput(F, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
-		playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 40, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_convert.ogg", 30, 1, extrarange = -10)
 
 		var/flick_anim = "spawn-floor"
 		if(istype(target, /turf/space))
@@ -350,9 +350,9 @@
 
 		boutput(F, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
 		if(duration <= 30)
-			playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 40, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
 		else
-			playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 40, 1)
+			playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
 
 		var/flick_anim = "spawn-barricade"
 		src.decal = new /obj/decal/flock_build_barricade
@@ -376,7 +376,7 @@
 		F.pay_resources(FLOCK_BARRICADE_COST)
 		var/obj/O = new structurepath(target)
 		animate_flock_convert_complete(O)
-		playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 40, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_build_complete.ogg", 30, 1, extrarange = -10)
 		O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
@@ -401,7 +401,7 @@
 			return
 		if(prob(40))
 			animate_shake(F)
-			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1)
+			playsound(F, pick("sound/machines/mixer.ogg", "sound/machines/repairing.ogg", "sound/impact_sounds/Metal_Clang_1.ogg"), 30, 1, extrarange = -10)
 
 	onStart()
 		..()
@@ -419,7 +419,7 @@
 
 		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 		new /obj/flock_structure/egg(get_turf(F), F.flock)
-		playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
+		playsound(F, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, extrarange = -10)
 		F.pay_resources(FLOCK_LAY_EGG_COST)
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -468,7 +468,7 @@
 			F.visible_message("<span class='notice'>[F] begins spraying glowing fibers onto [target].</span>",
 				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
-		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 30, 1, extrarange = -10)
 
 	onEnd()
 		..()
@@ -542,20 +542,18 @@
 
 	onStart()
 		..()
-		var/mob/living/critter/flock/drone/F = owner
-		if(!F || isdead(F) || !target || !in_interact_range(F, target) || !istype(target.loc, /turf))
-			interrupt(INTERRUPT_ALWAYS)
-			return
+		if(target)
+			var/mob/living/critter/flock/F = owner
+			if(F)
+				F.tri_message(target, "<span class='notice'>[owner] begins forming a cuboid structure around [target].</span>",
+						"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
+						"<span class='alert'>[F] is forming a structure around you!</span>",
+						"You hear strange building noises.")
+				if(istype(target,/mob/living))
+					var/mob/living/M = target
+					M.was_harmed(F, null, "flock", INTENT_DISARM)
 
-		F.tri_message(target, "<span class='notice'>[F] begins forming a cuboid structure around [target].</span>",
-			"<span class='notice'>You begin imprisoning [target]. You will need to stay still for this to work.</span>",
-			"<span class='alert'>[F] is forming a structure around you!</span>",
-			"You hear strange building noises.")
-		if(istype(target,/mob/living))
-			var/mob/living/M = target
-			M.was_harmed(F, null, "flock", INTENT_DISARM)
-
-		playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 50, 1)
+		playsound(target, "sound/misc/flockmind/flockdrone_build.ogg", 30, 1, extrarange = -10)
 
 	onInterrupt()
 		..()
@@ -627,7 +625,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(f, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target
@@ -683,10 +681,6 @@
 
 	onStart()
 		..()
-		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !target || !in_interact_range(F, target))
-			interrupt(INTERRUPT_ALWAYS)
-			return
 		playsound(target, "sound/misc/flockmind/flockdrone_quickbuild.ogg", 50, 1)
 
 	onEnd()

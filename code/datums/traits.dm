@@ -880,7 +880,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 		if(!owner.stat && can_act(owner) && probmult(9))
 			if(!owner.equipped())
 				for(var/obj/item/I in view(1, owner))
-					if(!I.anchored && isturf(I.loc) && can_reach(owner, I))
+					if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
 						I.Attackhand(owner)
 						if(prob(12))
 							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
@@ -971,7 +971,7 @@ ABSTRACT_TYPE(/obj/trait/job)
 	mutantRace = /datum/mutantrace/pug
 
 /obj/trait/super_slips
-	name = "Slipping Hazard (+1)"
+	name = "Slipping Hazard"
 	id = "super_slips"
 	desc = "You never were good at managing yourself slipping."
 	points = 1

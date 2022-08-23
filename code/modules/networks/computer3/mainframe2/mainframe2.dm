@@ -363,7 +363,7 @@
 					src.os.term_input(data, target, file)
 					if(!isnull(usr))
 						var/atom/source = signal.source
-						logTheThing("computers", usr, null, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
+						logTheThing(LOG_STATION, usr, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 

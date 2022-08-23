@@ -210,8 +210,8 @@ var/global/lastStationNameChange = 0 //timestamp
 		the_station_name = name
 
 		if (user)
-			logTheThing("admin", user, null, "changed the station name to: [name]")
-			logTheThing("diary", user, null, "changed the station name to: [name]", "admin")
+			logTheThing(LOG_ADMIN, user, "changed the station name to: [name]")
+			logTheThing(LOG_DIARY, user, "changed the station name to: [name]", "admin")
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()
