@@ -434,6 +434,7 @@
 			return
 
 		if (isobj(target))
+			user.lastattacked = target
 			switch (user.smash_through(target, list("window", "grille", "blob")))
 				if (0)
 					if (isitem(target))
