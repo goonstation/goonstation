@@ -1,4 +1,7 @@
 
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
 (t)fri aug 19 22
 (u)RichardGere
 (p)10307
