@@ -891,7 +891,7 @@ obj/item/assembly/radio_horn/receive_signal()
 			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
 
 			if (thingsneeded > 0)//craft successful, but they'll need more
-				boutput(user, "<span class='notice'>You add [consumed] [craftname] to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
+				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
 
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
