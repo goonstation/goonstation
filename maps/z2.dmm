@@ -7066,11 +7066,10 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "awc" = (
-/obj/machinery/vending/snack,
-/turf/unsimulated/floor/arrival{
-	dir = 4
-	},
-/area/centcom)
+/obj/decoration/decorativeplant/plant6,
+/obj/railing/velvet,
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "awd" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -9848,6 +9847,9 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
+"aFL" = (
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "aFN" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -24978,6 +24980,14 @@
 	icon_state = "leadwindow_gray_2"
 	},
 /area/iomoon/base)
+"bxr" = (
+/obj/decal/exhibit/highend{
+	exhibit_id = "ex_centcom_highend_2";
+	pixel_y = 31
+	},
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "bxs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -34304,6 +34314,11 @@
 /obj/item/stimpack,
 /turf/unsimulated/floor,
 /area/sim/tdome/tdome1)
+"cbS" = (
+/turf/simulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/centcom/gallery)
 "cbT" = (
 /obj/death_button/VR_logout_button{
 	pixel_y = 24
@@ -44911,8 +44926,7 @@
 /area/owlery/Owlopen)
 "cEJ" = (
 /obj/decal/fakeobjects/shuttlethruster{
-	dir = 1;
-	icon_state = "alt_propulsion"
+	dir = 1
 	},
 /turf/space,
 /area/shuttle/john/owlery)
@@ -49391,9 +49405,9 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
+	layer = 2;
 	name = "grimy vent";
-	tag = "";
-	layer = 2
+	tag = ""
 	},
 /obj/map/light/dimreddish,
 /obj/storage/crate{
@@ -54481,6 +54495,12 @@
 	},
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
+"dae" = (
+/obj/decal/stage_edge,
+/obj/machinery/vending/coffee,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "dah" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -55567,8 +55587,7 @@
 /area/afterlife/bar)
 "ddN" = (
 /obj/decal/fakeobjects/shuttlethruster{
-	dir = 1;
-	icon_state = "alt_propulsion"
+	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
@@ -57663,9 +57682,7 @@
 /turf/space,
 /area/space)
 "djj" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	icon_state = "alt_propulsion"
-	},
+/obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
 /area/syndicate_station/battlecruiser)
 "djk" = (
@@ -57768,8 +57785,7 @@
 /area/space)
 "djN" = (
 /obj/decal/fakeobjects/shuttlethruster{
-	dir = 8;
-	icon_state = "alt_propulsion"
+	dir = 8
 	},
 /turf/space,
 /area/wizard_station)
@@ -61494,9 +61510,9 @@
 "dAL" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/tree1/snow_random{
+	dir = 3;
 	pixel_x = -52;
-	pixel_y = 4;
-	dir = 3
+	pixel_y = 4
 	},
 /obj/decoration/syndcorpse10{
 	desc = "... but where is the rest?";
@@ -68033,15 +68049,31 @@
 /area/iomoon/base)
 "ebm" = (
 /obj/item/nature/flower/daisy{
+	anchored = 1;
 	pixel_x = 7;
-	pixel_y = 11;
-	anchored = 1
+	pixel_y = 11
 	},
 /obj/decoration/pottedfern,
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 6
 	},
 /area/centcom/offices/walpvrgis)
+"ebw" = (
+/obj/table/regal/auto,
+/obj/item/cigarbox/gold{
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/device/light/zippo/gold{
+	desc = "The shine has dulled a little, it looks well-loved.";
+	name = "weathered lighter";
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
+	},
+/area/centcom/gallery)
 "ebC" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -68060,15 +68092,15 @@
 "eev" = (
 /obj/table/endtable_gothic,
 /obj/item/decoration/incenseholder{
-	pixel_y = 10;
-	anchored = 1
+	anchored = 1;
+	pixel_y = 10
 	},
 /obj/map/light/dimred{
 	brightness = 5
 	},
 /obj/item/clothing/mask/cigarette/dryjoint{
-	pixel_y = -2;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -2
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 10
@@ -68448,21 +68480,21 @@
 "eTO" = (
 /obj/table/regal/auto,
 /obj/item/luggable_computer/personal{
-	pixel_y = 10;
-	pixel_x = -1;
+	desc = "It makes a sword noise when you power it up and there appears to be no way to disable this.";
 	name = "Gaming Laptop";
-	desc = "It makes a sword noise when you power it up and there appears to be no way to disable this."
+	pixel_x = -1;
+	pixel_y = 10
 	},
 /obj/item/reagent_containers/food/drinks/mug/random_color{
-	pixel_x = -6;
-	pixel_y = -2;
+	desc = "Woah, this mug is beautiful.";
 	initial_reagents = list("matchatea"=30,"honey_tea"=20);
 	name = "mug with a printed illustration of an elf man on it";
-	desc = "Woah, this mug is beautiful."
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /obj/item/reagent_containers/food/snacks/danish_weed{
-	pixel_y = -3;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = -3
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 5
@@ -68538,6 +68570,12 @@
 /obj/item/storage/pill_bottle/silver_sulfadiazine,
 /turf/unsimulated/floor/purple/side,
 /area/iomoon/base)
+"eZH" = (
+/turf/unsimulated/floor/carpet/blue{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/centcom/gallery)
 "eZW" = (
 /obj/decal/fakeobjects/dreambeach/sticks,
 /turf/unsimulated/floor/dream/beach,
@@ -68618,6 +68656,13 @@
 /obj/item/bananapeel,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"fkm" = (
+/turf/unsimulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2";
+	tag = "icon-fblue2 (NORTH)"
+	},
+/area/centcom/gallery)
 "fll" = (
 /obj/machinery/light{
 	dir = 1
@@ -68646,6 +68691,22 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
+"flI" = (
+/obj/table/regal/auto,
+/obj/item/cigarbox/gold{
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/device/light/zippo/gold{
+	desc = "The shine has dulled a little, it looks well-loved.";
+	name = "weathered lighter";
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/gallery)
 "fmt" = (
 /obj/cable{
 	d1 = 4;
@@ -68833,6 +68894,11 @@
 	},
 /turf/unsimulated/floor/caution,
 /area/centcom/offices/studenterhue)
+"fKc" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/centcom)
 "fKi" = (
 /obj/machinery/traymachine/morgue{
 	dir = 2
@@ -68842,13 +68908,17 @@
 	},
 /area/crypt/sigma/morgue)
 "fKl" = (
-/obj/machinery/light{
-	dir = 1
+/obj/decal/stage_edge,
+/obj/table/regal/auto,
+/obj/decal/statue/dead_exec_bust{
+	plane = -99
 	},
-/turf/unsimulated/floor/arrival{
-	dir = 5
-	},
-/area/centcom)
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
+"fKz" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border,
+/area/centcom/gallery)
 "fLs" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -69208,6 +69278,11 @@
 "gyu" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/entry)
+"gyx" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "gAq" = (
 /obj/railing/yellow/reinforced{
 	dir = 1
@@ -69302,6 +69377,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gLm" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -69350,6 +69431,14 @@
 "gRn" = (
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/centcom/offices/walpvrgis)
+"gSd" = (
+/obj/decoration/regallamp/walp{
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/centcom/gallery)
 "gUy" = (
 /obj/lattice{
 	dir = 4;
@@ -69428,6 +69517,14 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"hgp" = (
+/obj/decoration/regallamp/walp{
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/centcom/gallery)
 "hgL" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
@@ -69555,13 +69652,13 @@
 "hrQ" = (
 /obj/decal/cleanable/glitter/harmless,
 /obj/stool/bee_bed{
-	pixel_y = 3;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /obj/item/nature/flower/lavender{
+	anchored = 1;
 	pixel_x = -11;
-	pixel_y = 13;
-	anchored = 1
+	pixel_y = 13
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/centcom/offices/walpvrgis)
@@ -69583,8 +69680,8 @@
 /obj/item/clothing/shoes/witchboots,
 /obj/item/clothing/suit/witchcape_purple,
 /obj/item/clothing/mask/mime{
-	name = "bedazzled mime mask";
-	desc = "Someone has hand-painted and hot-glued rhinestones to this particular mime mask."
+	desc = "Someone has hand-painted and hot-glued rhinestones to this particular mime mask.";
+	name = "bedazzled mime mask"
 	},
 /obj/item/plant/herb/cannabis/white/spawnable,
 /obj/item/clothing/under/misc/walpoutfit2,
@@ -70003,6 +70100,13 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"ioS" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_5";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "iqu" = (
 /turf/unsimulated/floor/grass/leafy,
 /area/centcom/offices/azrun)
@@ -70012,6 +70116,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
+"irq" = (
+/turf/unsimulated/floor/carpet/blue/fancy{
+	dir = 10;
+	icon_state = "fblue3"
+	},
+/area/centcom/gallery)
 "irM" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -70101,6 +70211,11 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"iwq" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/centcom)
 "ixz" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris{
@@ -70178,8 +70293,8 @@
 /area/iomoon/base/underground)
 "iFm" = (
 /obj/item/sticker/gold_star{
-	pixel_x = 11;
-	anchored = 1
+	anchored = 1;
+	pixel_x = 11
 	},
 /turf/unsimulated/wall{
 	dir = 4;
@@ -70236,11 +70351,6 @@
 "iJj" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/retentioncenter)
-"iJx" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light,
-/turf/unsimulated/floor/arrival,
-/area/centcom)
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -70419,9 +70529,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
 "jgd" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	icon_state = "alt_propulsion"
-	},
+/obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
 /area/syndicate_station/assault_pod)
 "jgk" = (
@@ -70739,17 +70847,21 @@
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "jQD" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
-/obj/machinery/light,
-/turf/unsimulated/floor/arrival{
-	dir = 6
+/turf/unsimulated/floor/carpet/blue{
+	dir = 9;
+	icon_state = "fblue2"
 	},
-/area/centcom)
+/area/centcom/gallery)
 "jRr" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/sw,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"jRz" = (
+/turf/simulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/centcom/gallery)
 "jSc" = (
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -70833,6 +70945,11 @@
 	},
 /turf/unsimulated/martian/floor,
 /area/crunch)
+"kbq" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/centcom/gallery)
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
@@ -70993,10 +71110,6 @@
 "kqJ" = (
 /turf/unsimulated/outdoors/grass,
 /area/space)
-"krb" = (
-/obj/stool/bench/blue/auto,
-/turf/unsimulated/floor/arrival,
-/area/centcom)
 "krS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -71056,6 +71169,12 @@
 "kAx" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"kBI" = (
+/obj/stool/chair/comfy/throne_gold,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/centcom/gallery)
 "kCF" = (
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -4
@@ -71095,6 +71214,15 @@
 	dir = 4
 	},
 /area/centcom/offices/varshie)
+"kJQ" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_6";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/centcom/gallery)
 "kJR" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/centcom/offices{
@@ -71173,6 +71301,11 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"kTR" = (
+/turf/simulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/centcom/gallery)
 "kUZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -71493,11 +71626,15 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
 "lDQ" = (
-/obj/stool/bench/blue/auto,
-/turf/unsimulated/floor/arrival{
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
 	dir = 1
 	},
-/area/centcom)
+/turf/unsimulated/floor/carpet/darkcarpet/border,
+/area/centcom/gallery)
+"lEM" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/gallery)
 "lEU" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-1"
@@ -71644,6 +71781,17 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
+"lPc" = (
+/obj/shrub{
+	dir = 4;
+	layer = 3;
+	pixel_y = 10
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/centcom/gallery)
 "lPg" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -71834,6 +71982,15 @@
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"mor" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/centcom/gallery)
 "mrw" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-23"
@@ -71916,6 +72073,13 @@
 "mAM" = (
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"mBa" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_3";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "mCY" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -71943,6 +72107,11 @@
 	dir = 10
 	},
 /area/diner/cow)
+"mEy" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 8
+	},
+/area/centcom/gallery)
 "mEG" = (
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -71993,14 +72162,14 @@
 /area/sim/gunsim)
 "mIX" = (
 /obj/item/nature/resin/dragonsblood{
+	name = "Dragonsblood Resin";
 	pixel_x = -9;
-	pixel_y = -1;
-	name = "Dragonsblood Resin"
+	pixel_y = -1
 	},
 /obj/item/nature/resin/frankincense{
+	name = "Frankincense";
 	pixel_x = -3;
-	pixel_y = -5;
-	name = "Frankincense"
+	pixel_y = -5
 	},
 /obj/item/nature/crystal{
 	pixel_x = -7;
@@ -72188,9 +72357,18 @@
 	},
 /turf/unsimulated/floor/terrazzo/black,
 /area/centcom/offices/walpvrgis)
+"ndW" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/centcom/gallery)
 "ney" = (
-/turf/unsimulated/floor/arrival/corner,
-/area/centcom)
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_2";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "ngk" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -72430,6 +72608,21 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"nvA" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
+"nwd" = (
+/obj/decal/exhibit/highend{
+	exhibit_id = "ex_centcom_highend_1";
+	pixel_y = 31
+	},
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "nwm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -72437,6 +72630,19 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"nwt" = (
+/obj/decal/lightshaft,
+/turf/unsimulated/floor/carpet/darkcarpet,
+/area/centcom/gallery)
+"nwH" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/centcom/gallery)
 "nwN" = (
 /obj/stool{
 	desc = "A soft little bed the general size and shape of a space bee.";
@@ -72464,6 +72670,13 @@
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"nyE" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_4";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "nyQ" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -72644,6 +72857,11 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
+"nPf" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 1
+	},
+/area/centcom/gallery)
 "nQp" = (
 /obj/lattice{
 	dir = 6;
@@ -72783,6 +73001,14 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"nZV" = (
+/turf/unsimulated/wall{
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_old = null;
+	icon_state = "leadwall"
+	},
+/area/centcom/gallery)
 "oad" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -72816,16 +73042,31 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"obl" = (
+/obj/decoration/regallamp{
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 9
+	},
+/area/centcom/gallery)
 "odb" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
-	tag = "icon-chair_comfy-purple (EAST)";
-	pixel_y = 4
+	pixel_y = 4;
+	tag = "icon-chair_comfy-purple (EAST)"
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 1
 	},
 /area/centcom/offices/walpvrgis)
+"oeH" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "ogV" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -72844,6 +73085,16 @@
 	icon_state = "shore-36"
 	},
 /area/titlescreen)
+"ohW" = (
+/obj/shrub{
+	dir = 1;
+	layer = 3
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/centcom/gallery)
 "oiq" = (
 /obj/table/wood/auto/desk,
 /obj/item/clipboard,
@@ -72879,6 +73130,15 @@
 "okJ" = (
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
+"olG" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/centcom/gallery)
 "olK" = (
 /obj/machinery/light/runway_light{
 	name = "landing light"
@@ -72995,6 +73255,13 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"oDT" = (
+/obj/table/auto,
+/obj/item/decoration/ashtray{
+	icon_state = "ashtray4"
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "oEX" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/lawyers,
@@ -73050,6 +73317,14 @@
 	dir = 5
 	},
 /area/centcom/offices/varshie)
+"oJd" = (
+/obj/decal/exhibit/premium{
+	exhibit_id = "ex_centcom_premium";
+	pixel_y = 31
+	},
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "oKo" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -73057,6 +73332,13 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"oKZ" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_5";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "oLy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -73178,6 +73460,15 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"oXt" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/centcom/gallery)
 "oXv" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/cordon)
@@ -73200,6 +73491,9 @@
 	dir = 1
 	},
 /area/centcom)
+"oZo" = (
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "oZS" = (
 /obj/machinery/light,
 /obj/table/wood/auto/desk,
@@ -73350,6 +73644,12 @@
 	},
 /turf/space,
 /area/syndicate_station/battlecruiser)
+"pnE" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/gallery)
 "pom" = (
 /obj/admin_plaque{
 	desc = "Scream!";
@@ -73374,6 +73674,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"poV" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/centcom/gallery)
 "psc" = (
 /obj/stool/chair/comfy/shuttle/red,
 /obj/machinery/light{
@@ -73675,10 +73980,10 @@
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "pQr" = (
 /obj/decoration/regallamp/walp{
-	pixel_y = 19;
-	pixel_x = 6;
 	anchored = 1;
-	lit = 1
+	lit = 1;
+	pixel_x = 6;
+	pixel_y = 19
 	},
 /obj/item/nature/flower/rose{
 	anchored = 1
@@ -73722,6 +74027,16 @@
 	icon_state = "shore-16"
 	},
 /area/titlescreen)
+"pUu" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
+"pUH" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/centcom/gallery)
 "pVL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-9"
@@ -73774,6 +74089,32 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"pXL" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 7;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -4;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/centcom/gallery)
 "pZA" = (
 /obj/shrub/snow/random{
 	pixel_x = -6;
@@ -73846,6 +74187,25 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"qeA" = (
+/obj/shrub{
+	dir = 4;
+	layer = 3;
+	pixel_y = 10
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/centcom/gallery)
+"qfG" = (
+/obj/shrub{
+	dir = 8;
+	layer = 3
+	},
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "qfQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -73946,6 +74306,13 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
+"qsl" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 8
+	},
+/area/centcom/gallery)
 "qsP" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
@@ -73971,6 +74338,15 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qAT" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_3";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/centcom/gallery)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -74015,6 +74391,16 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/centcom/lobby)
+"qHX" = (
+/obj/shrub{
+	dir = 10;
+	layer = 3
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/centcom/gallery)
 "qII" = (
 /obj/machinery/light{
 	dir = 1;
@@ -74022,6 +74408,13 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/centcom/offices/azrun)
+"qIQ" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_2";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "qJM" = (
 /obj/noticeboard/persistent{
 	name = "aloe's personal persistent notice board";
@@ -74137,6 +74530,15 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qTn" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/wall{
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_old = null;
+	icon_state = "leadwall"
+	},
+/area/centcom/gallery)
 "qUi" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 1
@@ -74166,8 +74568,10 @@
 	},
 /area/centcom/lobby)
 "qXt" = (
-/turf/unsimulated/floor/arrival,
-/area/centcom)
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 5
+	},
+/area/centcom/gallery)
 "qYW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -74411,24 +74815,24 @@
 "ruS" = (
 /obj/table/regal/auto,
 /obj/item/paper/book/custom{
-	pixel_y = 3;
-	pixel_x = 7;
+	desc = "Hmm... Looks like a lot of unfinished entries here.";
 	name = "Spriting To-Do List";
-	desc = "Hmm... Looks like a lot of unfinished entries here."
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /obj/item/device/light/zippo/gold{
-	pixel_y = 15;
-	pixel_x = -7;
+	desc = "The shine has dulled a little, it looks well-loved.";
 	name = "weathered lighter";
-	desc = "The shine has dulled a little, it looks well-loved."
+	pixel_x = -7;
+	pixel_y = 15
 	},
 /obj/item/cigpacket/random{
-	pixel_y = 3;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 3
 	},
 /obj/item/decoration/ashtray{
-	pixel_y = 19;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 19
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 4
@@ -74591,6 +74995,14 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
+"rJS" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/gallery)
 "rJY" = (
 /obj/decal/poster/wallsign/bookcase{
 	pixel_y = 28
@@ -74682,6 +75094,13 @@
 	},
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
+"rQK" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_1";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "rQO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74694,6 +75113,27 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"rUx" = (
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = 5;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/marble/black,
+/area/centcom/gallery)
 "rUz" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -74715,6 +75155,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"rUZ" = (
+/obj/decal/stage_edge,
+/obj/machinery/vending/snack,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "rVy" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-37"
@@ -74723,6 +75169,13 @@
 "rWC" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"rXi" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2"
+	},
+/area/centcom/gallery)
 "rXO" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -74817,6 +75270,10 @@
 /obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"sdU" = (
+/obj/decal/lightshaft,
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/centcom/gallery)
 "seK" = (
 /obj/machinery/vending/kitchen,
 /turf/unsimulated/outdoors/grass,
@@ -74839,6 +75296,16 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim)
+"sgo" = (
+/obj/shrub{
+	dir = 10;
+	layer = 3
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/centcom/gallery)
 "sgB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -74933,9 +75400,9 @@
 /area/diner/cow)
 "spQ" = (
 /obj/admin_plaque{
+	desc = "A nameplate signifying who this office belongs to. It's been decorated with stickers, how cute.";
 	name = "Cyg Gwyllion's Office";
-	pixel_y = 32;
-	desc = "A nameplate signifying who this office belongs to. It's been decorated with stickers, how cute."
+	pixel_y = 32
 	},
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -74949,6 +75416,16 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"srC" = (
+/obj/admin_plaque{
+	desc = "A nameplate signifying the name of the art gallery.";
+	name = "Nanotrasen Applied Paints ";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 4
+	},
+/area/centcom/gallery)
 "ssh" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/setpieces/gauntlet{
@@ -75181,6 +75658,11 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
+"sYw" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
 "sZf" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 4
@@ -75302,6 +75784,13 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
+"tqB" = (
+/obj/decal/exhibit/lowend{
+	exhibit_id = "ex_centcom_lowend_6";
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "trs" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton{
@@ -75455,6 +75944,11 @@
 /obj/dialogueobj/dreambee,
 /turf/unsimulated/floor/carpet/red/fancy/narrow/eastwest,
 /area/titlescreen)
+"tFG" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/centcom/gallery)
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
@@ -75520,6 +76014,16 @@
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"tRx" = (
+/turf/unsimulated/floor/carpet/blue/fancy{
+	icon_state = "blue1"
+	},
+/area/centcom/gallery)
+"tRB" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/centcom/gallery)
 "tUJ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
@@ -75668,11 +76172,8 @@
 	},
 /area/centcom)
 "ujf" = (
-/obj/machinery/vending/cola/blue,
-/turf/unsimulated/floor/arrival{
-	dir = 4
-	},
-/area/centcom)
+/turf/unsimulated/floor/marble,
+/area/centcom/gallery)
 "ukK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-10"
@@ -75721,6 +76222,17 @@
 	icon_state = "shore-38"
 	},
 /area/titlescreen)
+"ute" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/marble/black,
+/area/centcom/gallery)
+"uti" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 8
+	},
+/area/centcom/gallery)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -75829,6 +76341,14 @@
 	},
 /turf/unsimulated/floor/stairs/quilty,
 /area/owlery/Owlopen)
+"uJb" = (
+/obj/decoration/regallamp{
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 5
+	},
+/area/centcom/gallery)
 "uJX" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/hall)
@@ -75872,14 +76392,14 @@
 /area/centcom/offices/hufflaw)
 "uNO" = (
 /obj/item/sticker/gold_star{
-	pixel_y = 9;
+	anchored = 1;
 	pixel_x = 11;
-	anchored = 1
+	pixel_y = 9
 	},
 /obj/item/sticker/heart{
+	anchored = 1;
 	pixel_x = -3;
-	pixel_y = -8;
-	anchored = 1
+	pixel_y = -8
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
@@ -75919,6 +76439,9 @@
 	icon_state = "space-1"
 	},
 /area/titlescreen)
+"uPK" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/centcom)
 "uPY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -75959,11 +76482,8 @@
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "uXp" = (
-/obj/shrub,
-/turf/unsimulated/floor/arrival{
-	dir = 6
-	},
-/area/centcom)
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "vab" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-45"
@@ -76357,6 +76877,10 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mbc)
+"vJH" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/gallery)
 "vKW" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -76453,6 +76977,13 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/cogwerks)
+"vWp" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 4
+	},
+/area/centcom/gallery)
 "vWW" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-35"
@@ -76483,6 +77014,20 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
+"wdl" = (
+/turf/simulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/centcom/gallery)
+"wdK" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_4";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/centcom/gallery)
 "wdR" = (
 /obj/item/decoration/walpfeathers,
 /obj/decal/cleanable/glitter/harmless,
@@ -76640,6 +77185,22 @@
 /obj/item/clothing/gloves/sailormoon,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
+"wux" = (
+/obj/table/regal/auto,
+/obj/item/cigarbox/gold{
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/device/light/zippo/gold{
+	desc = "The shine has dulled a little, it looks well-loved.";
+	name = "weathered lighter";
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/centcom/gallery)
 "wvy" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/nw,
 /area/centcom/offices/sovexe)
@@ -76959,6 +77520,16 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"xem" = (
+/obj/shrub{
+	dir = 1;
+	layer = 3
+	},
+/obj/railing/velvet,
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/centcom/gallery)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -77070,6 +77641,9 @@
 "xpW" = (
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"xqq" = (
+/turf/unsimulated/floor/stairs/dark/wide,
+/area/centcom/gallery)
 "xqr" = (
 /turf/unsimulated/floor/black/side{
 	dir = 8
@@ -77126,14 +77700,13 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "xBV" = (
-/obj/stool/bench/blue/auto,
-/obj/machinery/light{
-	dir = 1
+/obj/shrub{
+	dir = 10
 	},
-/turf/unsimulated/floor/arrival{
-	dir = 1
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 10
 	},
-/area/centcom)
+/area/centcom/gallery)
 "xCe" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -77251,14 +77824,20 @@
 	pixel_y = -3
 	},
 /obj/item/sticker/moon{
-	pixel_y = -7;
+	anchored = 1;
 	pixel_x = -11;
-	anchored = 1
+	pixel_y = -7
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"xMn" = (
+/turf/unsimulated/floor/carpet/blue{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/centcom/gallery)
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
@@ -77308,6 +77887,12 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
+"xSL" = (
+/turf/unsimulated/floor/carpet/blue{
+	dir = 5;
+	icon_state = "fblue2"
+	},
+/area/centcom/gallery)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -77479,6 +78064,11 @@
 "ybJ" = (
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
+"ycl" = (
+/turf/unsimulated/wall/setpieces/leadwall/junction{
+	dir = 4
+	},
+/area/centcom/gallery)
 "ycX" = (
 /obj/item/toy/plush{
 	desc = "Ew, it's soggy.";
@@ -77490,6 +78080,11 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
+"ydb" = (
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 4
+	},
+/area/centcom/gallery)
 "yeV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -77499,10 +78094,27 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"yeY" = (
+/obj/decal/exhibit/midrange{
+	exhibit_id = "ex_centcom_midrange_1";
+	pixel_y = 31
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/centcom/gallery)
 "yfT" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yhG" = (
+/obj/shrub{
+	dir = 10
+	},
+/turf/unsimulated/floor/carpet/darkcarpet/border{
+	dir = 6
+	},
+/area/centcom/gallery)
 "yiB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -77516,6 +78128,12 @@
 	icon_state = "shore-20"
 	},
 /area/titlescreen)
+"ykL" = (
+/turf/unsimulated/floor/carpet/blue/fancy{
+	dir = 6;
+	icon_state = "fblue3"
+	},
+/area/centcom/gallery)
 "ymj" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg5"
@@ -141607,20 +142225,20 @@ gcn
 dmJ
 gcn
 gcn
+iwq
+uPK
+uPK
+uPK
 dmJ
-gcn
-gcn
-gcn
-pWB
-dny
-dny
-dny
-dny
-dny
-dny
+uPK
+uPK
+uPK
+dmJ
+fKc
+srC
 qXt
-gcn
-gcn
+uPK
+iwq
 dmJ
 gcn
 gcn
@@ -141909,20 +142527,20 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-gcn
+ndW
+xem
+obl
+qsl
 xBV
-dny
-lBN
-dny
-dny
-lBN
-dny
-iJx
-gcn
-iCR
+nZV
+yeY
+gLm
+oXt
+nZV
+rQK
+uXp
+nvA
+ndW
 aES
 aES
 dKL
@@ -142209,22 +142827,22 @@ wLo
 wLo
 aES
 aES
-aES
-aES
-aES
 dFl
 aES
-tZZ
+qTn
+nwd
+nPf
+nwt
 lDQ
-dny
-lBN
-dny
-dny
-lBN
-dny
-krb
-tZZ
-aES
+nZV
+qIQ
+ujf
+sYw
+nZV
+ney
+uXp
+vJH
+ndW
 aES
 aES
 dKL
@@ -142511,22 +143129,22 @@ jvG
 wLo
 aES
 aES
-dFl
 aES
 aES
-aES
-aES
-gcn
-gOW
-gae
-lBN
-dny
-dny
-lBN
-ney
+ndW
+qHX
+uJb
+ydb
+flI
+nZV
+qAT
+aFL
+oXt
+nZV
+mBa
 uXp
-gcn
-aES
+gyx
+ndW
 aES
 rLQ
 dKL
@@ -142813,22 +143431,22 @@ dnY
 wLo
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-gcn
-gcn
+tRB
+pUH
+uti
+lEM
+rUx
+oZo
+qfG
 fKl
-mZx
+aFL
 ujf
 awc
-mZx
+rUZ
 jQD
-gcn
-gcn
-aES
+eZH
+oeH
+pnE
 aES
 aES
 dKL
@@ -143115,22 +143733,22 @@ jMC
 wLo
 aES
 aES
-aES
-uoE
-aES
-aES
-aES
-aES
-gcn
-gcn
-tZZ
-tZZ
-tZZ
-tZZ
-gcn
-gcn
-aES
-aES
+ndW
+qeA
+gSd
+pXL
+mor
+oZo
+oZo
+xqq
+wdl
+aFL
+jRz
+xqq
+fkm
+irq
+eZH
+pnE
 aES
 aES
 dKL
@@ -143417,24 +144035,24 @@ gbA
 wLo
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+qTn
+oJd
+kBI
+sdU
+fKz
+oZo
+oZo
+poV
+aFL
+ujf
+aFL
+poV
+fkm
+tRx
+rXi
+ndW
 aES
 dFl
-aES
-uoE
-aES
-aES
-aES
-aES
 dKL
 dMu
 dMT
@@ -143719,22 +144337,22 @@ wLo
 wLo
 aES
 aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+ndW
+lPc
+hgp
+wux
+olG
+oZo
+oZo
+tFG
+kTR
+aFL
+cbS
+tFG
+fkm
+ykL
+xMn
+pnE
 aES
 aES
 dKL
@@ -144021,22 +144639,22 @@ dFT
 wLo
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
+kbq
+pUH
+ycl
+lEM
+rUx
+oZo
+qfG
+fKl
+aFL
+ujf
+awc
+dae
+xSL
+xMn
+oDT
+pnE
 luT
 aES
 dKL
@@ -144324,21 +144942,21 @@ wLo
 aES
 aES
 aES
-dFl
 aES
-ruY
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
+ndW
+sgo
+obl
+mEy
+ebw
+nZV
+wdK
+aFL
+nwH
+nZV
+nyE
+uXp
+gyx
+ndW
 aES
 aES
 dKL
@@ -144625,22 +145243,22 @@ qJO
 wLo
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-aES
 dFl
 aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
+qTn
+bxr
+nPf
+nwt
+lDQ
+nZV
+ioS
+ujf
+sYw
+nZV
+oKZ
+uXp
+vJH
+ndW
 aES
 aES
 dKL
@@ -144929,21 +145547,21 @@ aES
 aES
 aES
 aES
+ndW
+ohW
+uJb
+vWp
+yhG
+nZV
+kJQ
+ute
+nwH
+nZV
+tqB
+uXp
+pUu
+ndW
 aES
-dFl
-aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-dFl
-aES
-aES
-aES
-dFl
 aES
 dKL
 dMu
@@ -145231,20 +145849,20 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-dFl
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-aES
-dFl
+kbq
+pUH
+pUH
+pUH
+rJS
+pUH
+pUH
+pUH
+rJS
+pUH
+pUH
+pUH
+pUH
+lEM
 aES
 aES
 dKL
@@ -145536,7 +146154,7 @@ aES
 aES
 dRx
 aES
-aES
+iCR
 aES
 aES
 dRx
@@ -145844,7 +146462,7 @@ aES
 dqf
 aES
 aES
-aES
+dFl
 aES
 aES
 aES
