@@ -302,7 +302,7 @@ toxic - poisons
 		shot_number = 3
 
 /datum/projectile/laser/precursor // for precursor traps
-	name = "energy bolt"
+	name = "skyrmionic bolt"
 	icon_state = "disrupt"
 	power = 30
 	cost = 30

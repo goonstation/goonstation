@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "An amplified carbon-arc weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -307,14 +307,13 @@
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 10
-	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-	force = MELEE_DMG_LARGE
+	force = MELEE_DMG_RIFLE
 	two_handed = 1
 	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
