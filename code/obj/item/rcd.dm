@@ -571,7 +571,7 @@ Broken RCD + Effects
 			log_construction(user, "builds an airlock ([T])")
 
 			//if(map_setting == "COG2") T.set_dir(user.dir)
-			T.autoclose = 1
+			T.autoclose = TRUE
 
 	update_icon() //we got fancy rcds now
 		if (GetOverlayImage("mode"))
@@ -745,7 +745,7 @@ Broken RCD + Effects
 						var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
 						B.id = "[hangar_id]"
 						B.set_dir(poddir)
-						B.autoclose = 1
+						B.autoclose = TRUE
 						ammo_consume(user, matter_create_door)
 						logTheThing(LOG_STATION, user, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
@@ -790,7 +790,7 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new door_type(A)
 			log_construction(user, null, "builds an airlock ([T], name: [door_name], access: [door_access], type: [door_type])")
 			T.set_dir(door_dir)
-			T.autoclose = 1
+			T.autoclose = TRUE
 			T.name = door_name
 			if (door_access)
 				T.req_access = list(door_access)
