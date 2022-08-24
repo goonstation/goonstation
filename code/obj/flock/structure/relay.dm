@@ -132,10 +132,10 @@
 			emergency_shuttle.disabled = FALSE
 			emergency_shuttle.incall()
 			emergency_shuttle.can_recall = FALSE
-			emergency_shuttle.settimeleft(180) // cut the time down to keep some sense of urgency
+			emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency
 			boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
 			boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
-			boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+			boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
 	sleep(2 SECONDS)
 	for(var/x = -2 to 2)
 		for(var/y = -2 to 2)
