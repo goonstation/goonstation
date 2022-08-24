@@ -2464,7 +2464,7 @@
 		var/message = msg[2]
 		if(lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html_tags(html_decode(message), no_fucking_autoparse = TRUE)
+		message = strip_html(html_decode(message), no_fucking_autoparse = TRUE)
 		var/heardname = M.name
 		if(real_name)
 			heardname = real_name
