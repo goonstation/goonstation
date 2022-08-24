@@ -756,7 +756,7 @@
 			return
 
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
