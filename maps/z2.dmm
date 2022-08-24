@@ -59560,7 +59560,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 4
 	},
 /area/centcom/gallery)
@@ -71590,7 +71590,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 4
 	},
 /area/centcom/gallery)
@@ -74117,7 +74117,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 8
 	},
 /area/centcom/gallery)
@@ -74932,7 +74932,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 8
 	},
 /area/centcom/gallery)
