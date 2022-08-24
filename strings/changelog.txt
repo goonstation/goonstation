@@ -1,4 +1,9 @@
 
+(t)wed aug 24 22
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
 (t)tue aug 23 22
 (u)Sovexe
 (p)10439
