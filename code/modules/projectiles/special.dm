@@ -280,8 +280,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 // Really crazy shit
 
 /datum/projectile/special/shock_orb
-	name = "skyrmionic orb"
-	sname = "skyrmionic orb"
+	name = "rydberg-matter orb"
+	sname = "rydberg-matter orb"
 	icon_state = "elecorb"
 	shot_sound = 'sound/weapons/energy/LightningCannon.ogg'
 	power = 75

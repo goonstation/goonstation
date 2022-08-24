@@ -302,11 +302,11 @@ toxic - poisons
 		shot_number = 3
 
 /datum/projectile/laser/precursor // for precursor traps
-	name = "skyrmionic bolt"
+	name = "rydberg-matter bolt"
 	icon_state = "disrupt"
 	power = 30
 	cost = 30
-	sname = "energy bolt"
+	sname = "rydberg-matter bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
 	color_red = 0.1
