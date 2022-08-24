@@ -67236,7 +67236,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "thh" = (
@@ -70674,7 +70674,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ufs" = (
