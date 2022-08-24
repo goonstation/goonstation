@@ -407,7 +407,7 @@
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
 
-	use_power(5)
+	src.use_power(5)
 	icon_state = "doorctrl1"
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	if(active)
 		return
 
-	use_power(5)
+	src.use_power(5)
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 	src.active = TRUE
 	icon_state = "launcheract"
@@ -1015,7 +1015,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	proc/open_door()
 		if(src.status & (NOPOWER|BROKEN))
 			return
-		use_power(5)
+		src.use_power(5)
 
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
@@ -1044,7 +1044,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			if(signal.data["doorpass"] == src.pass)
 				if(src.status & (NOPOWER|BROKEN))
 					return
-				use_power(5)
+				src.use_power(5)
 
 				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)

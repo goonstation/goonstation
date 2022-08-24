@@ -509,8 +509,8 @@
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (linked_forcefield)
-		linked_forcefield.setactive(1)
+	if (src.linked_forcefield)
+		src.linked_forcefield.setactive(1)
 
 	SPAWN(-1)
 		play_animation("opening")
@@ -520,7 +520,7 @@
 				src.opacity = 0
 			else
 				src.RL_SetOpacity(0)
-		use_power(100)
+		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
 		src.UpdateIcon(/*/toggling*/ 0)
@@ -555,8 +555,8 @@
 
 				if (--max <= 0) break
 
-	if (linked_forcefield)
-		linked_forcefield.setactive(0)
+	if (src.linked_forcefield)
+		src.linked_forcefield.setactive(0)
 
 	src.operating = 1
 	close_trys = 0

@@ -1592,9 +1592,9 @@ About the new airlock wires panel:
 /obj/machinery/door/airlock/open()
 	if (src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
-	use_power(50)
-	if (linked_forcefield)
-		use_power(100)
+	src.use_power(50)
+	if (src.linked_forcefield)
+		src.use_power(100)
 	.= ..()
 
 	if (narrator_mode)
@@ -1606,12 +1606,12 @@ About the new airlock wires panel:
 		src.closeOther.close(1)
 
 /obj/machinery/door/airlock/close()
-	if (linked_forcefield) //mbc : this sucks, but I need the forcefield to turn off even if the door is unpowered and can't close.
-		linked_forcefield.setactive(0)
+	if (src.linked_forcefield) //mbc : this sucks, but I need the forcefield to turn off even if the door is unpowered and can't close.
+		src.linked_forcefield.setactive(0)
 
 	if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return
-	use_power(50)
+	src.use_power(50)
 
 	if(!..(!src.safety))
 		if (narrator_mode)

@@ -1094,8 +1094,8 @@
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		linked_forcefield.setactive(1)
+	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
+		src.linked_forcefield.setactive(1)
 
 	SPAWN(-1)
 		flick("[icon_base][doordir]c0", src)
@@ -1118,8 +1118,8 @@
 /obj/machinery/door/poddoor/blast/close()
 	if (src.operating || src.density)
 		return
-	if (linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
-		linked_forcefield.setactive(0)
+	if (src.linked_forcefield) //mbc : SAVE ME FROM THIS HELL WHERE PARENTS ARENT CALLED
+		src.linked_forcefield.setactive(0)
 	src.operating = 1
 
 	SPAWN(0)
