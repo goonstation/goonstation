@@ -98,7 +98,7 @@ TYPEINFO(/datum/mutantrace)
 	/// If our mutant has a female variant that has different organs, these will be used instead
 	var/list/mutant_organs_f = null
 
-	/// icon definitions for mutantrace clothing variants. one icon file per slot.
+	// icon definitions for mutantrace clothing variants. one icon file per slot.
 	var/clothing_icon_uniform = null
 	var/clothing_icon_id = null
 	var/clothing_icon_hands = null
