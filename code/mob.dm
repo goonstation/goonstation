@@ -9,6 +9,7 @@
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
 	var/datum/mind/mind
+	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
 
@@ -1293,14 +1294,14 @@
 	. = list()
 
 	if (src.r_hand)
-		. += src.r_hand
+		. |= src.r_hand
 		if (src.r_hand.chokehold)
-			. += src.r_hand.chokehold
+			. |= src.r_hand.chokehold
 
 	if (src.l_hand)
-		. += src.l_hand
+		. |= src.l_hand
 		if (src.l_hand.chokehold)
-			. += src.l_hand.chokehold
+			. |= src.l_hand.chokehold
 
 	//handle mag tracktor
 	if (check_for_magtractor)
@@ -1308,15 +1309,15 @@
 			if (istype(I,/obj/item/magtractor))
 				var/obj/item/magtractor/M = I
 				if (M.holding)
-					.+= M.holding
-				.-= I
+					. |= M.holding
+				. -= I
 
 /mob/living/critter/equipped_list(check_for_magtractor = 1)
 	.= ..()
 	if (hands)
 		for(var/datum/handHolder/H in hands)
 			if (H.item)
-				.+= H.item
+				. |= H.item
 
 /mob/living/silicon/equipped_list(check_for_magtractor = 1) //lool copy paste fix later
 	.= 0
@@ -1334,7 +1335,7 @@
 		for (var/I in .)
 			if (istype(I,/obj/item/magtractor))
 				var/obj/item/magtractor/M = I
-				.+= M.holding
+				.|= M.holding
 				.-= I
 
 /mob/proc/swap_hand()

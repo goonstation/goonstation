@@ -436,13 +436,18 @@ END GUIDE
 			if (isnpc(M))
 				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
 				return
-			else if (M == user)
+			if (M == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
-			else if (!M.literate)
+			if (!M.literate)
 				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
 				return
-			else if (src.inuse != 1)
+			if (ismobcritter(M))
+				var/mob/living/critter/C = M
+				if (C.is_npc)
+					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you their soul!</span>")
+					return
+			if (src.inuse != 1)
 				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)
 
 		else
@@ -490,6 +495,11 @@ END GUIDE
 		if (!isliving(target) || isghostdrone(target) || issilicon(target) || isintangible(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (ismobcritter(target))
+			var/mob/living/critter/C = target
+			if (C.is_npc)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || my_contract == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return

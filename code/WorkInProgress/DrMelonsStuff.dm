@@ -324,7 +324,7 @@
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
 		else if(target != user && !user.restrained())
-			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='notice'>You push [target.name] into the [src]!</span>")
+			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='alert'>[user.name] pushes you into the [src]!</span>")
 		else
 			return
 
