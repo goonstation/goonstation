@@ -2255,6 +2255,7 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ahx" = (
@@ -10232,16 +10233,12 @@
 	},
 /area/station/teleporter)
 "aIo" = (
-/obj/item/device/audio_log,
 /obj/machinery/camera{
 	c_tag = "Tech Storage";
 	dir = 4
 	},
-/obj/item/disk/data/cartridge/diagnostics,
-/obj/item/disk/data/cartridge{
-	desc = "A programmable data cartridge for portable microcomputers.";
-	name = "EEPROM Cart"
-	},
+/obj/table/auto,
+/obj/machinery/computer3/luggable,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aIp" = (
@@ -10253,6 +10250,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/device/audio_log,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aIq" = (
@@ -20182,12 +20180,17 @@
 /area/station/security/main)
 "bni" = (
 /obj/table/auto,
-/obj/item/storage/box/revimp_kit,
-/obj/item/implanter,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 8
+	},
 /obj/machinery/camera{
 	c_tag = "Security";
 	network = "SS13"
 	},
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = -8
+	},
+/obj/item/implanter,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -37929,6 +37932,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"neE" = (
+/obj/machinery/computer3/luggable,
+/turf/simulated/floor/carpet{
+	dir = 2;
+	icon_state = "fred2"
+	},
+/area/station/chapel/sanctuary)
 "neH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37962,6 +37972,15 @@
 /obj/item/disk/data/cartridge/atmos,
 /obj/item/clothing/glasses/meson,
 /obj/item/disk/data/floppy/read_only/terminal_os,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 16;
+	pixel_y = 10
+	},
+/obj/item/disk/data/cartridge{
+	desc = "A programmable data cartridge for portable microcomputers.";
+	name = "EEPROM Cart";
+	pixel_x = 16
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "nha" = (
@@ -47225,6 +47244,10 @@
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/item/storage/box/trackimp_kit2{
+	pixel_x = 8;
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -87877,7 +87900,7 @@ aCN
 aFn
 aGP
 aFn
-aFl
+neE
 azh
 aHE
 slh
