@@ -40,7 +40,7 @@ chui/engine
 		themes = list()
 		for( var/thm in typesof( "/chui/theme" ) )
 			themes += new thm()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			staticinst = new
 		//staticinst.theme = themes[1]//fart
 

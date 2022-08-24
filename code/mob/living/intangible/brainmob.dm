@@ -18,7 +18,7 @@
 
 		if (reverse_mode) message = reverse_text(message)
 
-		logTheThing("diary", src, null, ": [message]", "say")
+		logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	#ifdef DATALOGGER
 		// Jewel's attempted fix for: null.ScanText()
@@ -84,7 +84,7 @@
 		if(!emote)
 			var/list/messages = process_language(message)
 			for (var/obj/O in (all_view(message_range, T)) | src.container.contents)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 

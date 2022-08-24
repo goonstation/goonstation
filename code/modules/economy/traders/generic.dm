@@ -10,7 +10,6 @@
 
 	base_goods_buy = list(/datum/commodity/trader/generic/anyore,
 	/datum/commodity/trader/generic/herbs,
-	/datum/commodity/trader/generic/electronics,
 	/datum/commodity/trader/generic/anyfood,
 	/datum/commodity/trader/generic/shipcomponents,
 	/datum/commodity/trader/generic/jumpsuits,
@@ -62,7 +61,7 @@
 /datum/commodity/trader/generic/fabric
 	comname = "Cloth Fabric"
 	comtype = /obj/item/material_piece/cloth/cottonfabric
-	price_boundary = list(5,7)
+	price_boundary = list(60,70)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
 
@@ -198,13 +197,6 @@
 	possible_names = list("I'll buy any medical herbs you may have.",
 	"I need to restock on medical herbs. I'm willing to buy them from you for a good price.")
 
-/datum/commodity/trader/generic/electronics
-	comname = "Electrical Components"
-	comtype = /obj/item/electronics/
-	price_boundary = list(20,100)
-	possible_names = list("I need to buy electrical components for a project.",
-	"We're rather short on electrical components needed for repairs. We're willing to pay well.")
-
 /datum/commodity/trader/generic/shipcomponents
 	comname = "Ship/Pod Components"
 	comtype = /obj/item/shipcomponent/
@@ -216,7 +208,7 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under/
-	price_boundary = list(75,150)
+	price_boundary = list(135,210)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 

@@ -11,146 +11,36 @@
 
 /datum/preferences/proc
 
-	savefile_path(client/user)
-		return "data/player_saves/[copytext(user.ckey, 1, 2)]/[user.ckey].sav"
+	savefile_path(var/key)
+		return "data/player_saves/[copytext(ckey(key), 1, 2)]/[ckey(key)].sav"
 
 
 	// returnSaveFile returns the file rather than writing it
 	// used for cloud saves
 	savefile_save(client/user, profileNum = 1, returnSavefile = 0)
-
-		profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
-
-		var/savefile/F
-		if (returnSavefile)
-			F = new /savefile
-		else
-			F = new /savefile(src.savefile_path(user), -1)
-		F.Lock(-1)
-
-		F["version"] << SAVEFILE_VERSION_MAX
-		// Mark the profile as having not been modified (for the prefs window)
-		src.profile_modified = 0
-
-		// Internal shit
-		F["[profileNum]_saved"] << 1
-		F["[profileNum]_profile_name"] << src.profile_name
-
-		// Character details
-		F["[profileNum]_real_name"] << src.real_name
-		F["[profileNum]_name_first"] << src.name_first
-		F["[profileNum]_name_middle"] << src.name_middle
-		F["[profileNum]_name_last"] << src.name_last
-		F["[profileNum]_gender"] << src.gender
-		F["[profileNum]_age"] << src.age
-		F["[profileNum]_fartsound"] << AH.fartsound
-		F["[profileNum]_screamsound"] << AH.screamsound
-		F["[profileNum]_voicetype"] << AH.voicetype
-		F["[profileNum]_PDAcolor"] << src.PDAcolor
-		F["[profileNum]_pda_ringtone_index"] << src.pda_ringtone_index
-		F["[profileNum]_random_blood"] << src.random_blood
-		F["[profileNum]_blood_type"] << src.blType
-
-		// Records
-		F["[profileNum]_pin"] << src.pin
-		F["[profileNum]_flavor_text"] << src.flavor_text
-		F["[profileNum]_medical_note"] << src.medical_note
-		F["[profileNum]_security_note"] << src.security_note
-
-		// Randomize appearances
-		F["[profileNum]_name_is_always_random"] << src.be_random_name
-		F["[profileNum]_look_is_always_random"] << src.be_random_look
-
-		// AppearanceHolder details
-		if (src.AH)
-			F["[profileNum]_pronouns"] << (isnull(AH.pronouns) ? "" : AH.pronouns.name)
-			F["[profileNum]_eye_color"] << AH.e_color
-			F["[profileNum]_hair_color"] << AH.customization_first_color
-			F["[profileNum]_facial_color"] << AH.customization_second_color
-			F["[profileNum]_detail_color"] << AH.customization_third_color
-			F["[profileNum]_skin_tone"] << AH.s_tone
-			F["[profileNum]_special_style"] << AH.special_style
-			F["[profileNum]_hair_style_name"] << AH.customization_first
-			F["[profileNum]_facial_style_name"] << AH.customization_second
-			F["[profileNum]_detail_style_name"] << AH.customization_third
-			F["[profileNum]_underwear_style_name"] << AH.underwear
-			F["[profileNum]_underwear_color"] << AH.u_color
-
-		// Job prefs
-		F["[profileNum]_job_prefs_1"] << src.job_favorite
-		F["[profileNum]_job_prefs_2"] << src.jobs_med_priority
-		F["[profileNum]_job_prefs_3"] << src.jobs_low_priority
-		F["[profileNum]_job_prefs_4"] << src.jobs_unwanted
-		F["[profileNum]_be_traitor"] << src.be_traitor
-		F["[profileNum]_be_syndicate"] << src.be_syndicate
-		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
-		F["[profileNum]_be_spy"] << src.be_spy
-		F["[profileNum]_be_gangleader"] << src.be_gangleader
-		F["[profileNum]_be_revhead"] << src.be_revhead
-		F["[profileNum]_be_changeling"] << src.be_changeling
-		F["[profileNum]_be_wizard"] << src.be_wizard
-		F["[profileNum]_be_werewolf"] << src.be_werewolf
-		F["[profileNum]_be_vampire"] << src.be_vampire
-		F["[profileNum]_be_arcfiend"] << src.be_arcfiend
-		F["[profileNum]_be_wraith"] << src.be_wraith
-		F["[profileNum]_be_blob"] << src.be_blob
-		F["[profileNum]_be_conspirator"] << src.be_conspirator
-		F["[profileNum]_be_flock"] << src.be_flock
-		F["[profileNum]_be_misc"] << src.be_misc
-
-		// UI settings. Ehhhhh.
-		F["[profileNum]_hud_style"] << src.hud_style
-		F["[profileNum]_tcursor"] << src.target_cursor
-
-		if(src.traitPreferences.isValid())
-			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
-
-
-
-		// Global options
-		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
-		F["changelog"] << src.view_changelog
-		F["score"] << src.view_score
-		F["tickets"] << src.view_tickets
-		F["sounds"] << src.admin_music_volume
-		F["radio_sounds"] << src.radio_music_volume
-		F["clickbuffer"] << src.use_click_buffer
-		F["font_size"] << src.font_size
-
-		F["see_mentor_pms"] << src.see_mentor_pms
-		F["listen_ooc"] << src.listen_ooc
-		F["listen_looc"] << src.listen_looc
-		F["default_wasd"] << src.use_wasd
-		F["use_azerty"] << src.use_azerty
-		F["preferred_map"] << src.preferred_map
-		F["flying_chat_hidden"] << src.flying_chat_hidden
-		F["auto_capitalization"] << src.auto_capitalization
-		F["local_deachat"] << src.local_deadchat
-
-		if (returnSavefile)
-			return F
 		return 1
 
-
-
-	// loads the savefile corresponding to the mob's ckey
+	// loads the savefile corresponding to the client's ckey
 	// if silent=true, report incompatible savefiles
 	// returns 1 if loaded (or file was incompatible)
 	// returns 0 if savefile did not exist
 	savefile_load(client/user, var/profileNum = 1, var/savefile/loadFrom = null)
-		if (ismob(user))
-			CRASH("[user] isnt a client. please give me a client. please. i beg you.")
+		if (user) // bypass these checks if we're loading from a savefile and don't have a user
+			if (!isclient(user))
+				CRASH("[user] isnt a client. please give me a client. please. i beg you.")
 
 		var/savefile/F
 		var/path
 		if (loadFrom)
 			F = loadFrom
-		else
-			path = savefile_path(user)
+		else if (user)
+			path = savefile_path(user.ckey)
 			if (!fexists(path))
 				return 0
 			profileNum = clamp(profileNum, 1, SAVEFILE_PROFILES_MAX)
 			F = new /savefile(path, -1)
+		else
+			CRASH("Tried to load a savefile with no passed user and no savefile to load from!")
 
 		var/version = null
 		F["version"] >> version
@@ -198,6 +88,7 @@
 		F["[profileNum]_name_first"] >> src.name_first
 		F["[profileNum]_name_middle"] >> src.name_middle
 		F["[profileNum]_name_last"] >> src.name_last
+		F["[profileNum]_robot_name"] >> src.robot_name
 		F["[profileNum]_gender"] >> src.gender
 		F["[profileNum]_age"] >> src.age
 		F["[profileNum]_fartsound"] >> AH.fartsound
@@ -342,9 +233,9 @@
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
-			src.traitPreferences.calcTotal()
-			alert(usr, "Your traits couldn't be loaded. Please reselect your traits.")
+			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 
+		src.traitPreferences.updateTotal()
 
 		if(!src.radio_music_volume) // We can take this out some time, when we're decently sure that most people will have this var set to something
 			F["[profileNum]_sounds"] >> src.radio_music_volume
@@ -377,7 +268,7 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-		var/path = savefile_path(user)
+		var/path = savefile_path(user.ckey)
 
 		if (!fexists(path))
 			return 0

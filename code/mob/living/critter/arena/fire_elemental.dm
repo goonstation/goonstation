@@ -1,7 +1,7 @@
 /mob/living/critter/fire_elemental
 	name = "fire elemental"
 	real_name = "fire elemental"
-	desc = "Oh god."
+	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	density = 1
 	icon_state = "fire_elemental"
 	custom_gib_handler = /proc/gibs

@@ -68,7 +68,7 @@
 			death()
 			boutput(src, "Your portal and master have been destroyed, you return to the nether.")
 
-		update_well_dist(TRUE, TRUE)
+		update_well_dist(master, marker)
 
 		if (loc == master && src.health < src.max_health)
 			HealDamage("chest", 5, 0)
@@ -122,7 +122,7 @@
 	makeCorporeal()
 		if (!src.density)
 			src.set_density(1)
-			REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 			src.icon_state = "poltergeist-corp"
 			src.see_invisible = INVIS_NONE
 			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -132,14 +132,14 @@
 		if (src.density)
 			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 			src.set_density(0)
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_GHOST)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 			src.icon_state = "poltergeist"
 			src.see_invisible = INVIS_GHOST
 		update_body()
 
 	Move(var/turf/NewLoc, direct)
 		..()
-		update_well_dist(TRUE, TRUE)
+		update_well_dist(master, marker)
 
 	click(atom/target)
 		. = ..()
@@ -214,9 +214,9 @@
 	//values, TRUE, FALSE. which, if any of these two do we want to update the distances of
 	proc/update_well_dist(var/update_master, var/update_marker)
 		if (update_master)
-			dist_from_master = master ? get_dist(src, master) : 0
+			dist_from_master = master ? GET_DIST(src, master) : 0
 		if (update_marker)
-			dist_from_marker = marker ? get_dist(src, marker) : 0
+			dist_from_marker = marker ? GET_DIST(src, marker) : 0
 
 		//lesser of dist from master and marker
 		power_well_dist = min(dist_from_master, dist_from_marker)
@@ -279,7 +279,9 @@
 				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
 				return 1
 
-			var/I = input(holder.owner, "Where to retreat", "Where to retreat", "Master") as anything in list("Master", "Anchor")
+			var/I = tgui_input_list(holder.owner, "Where to retreat", "Where to retreat", list("Master", "Anchor"))
+			if (!I)
+				return TRUE
 			switch (I)
 				if ("Master")
 					if (!isnull(P.master))

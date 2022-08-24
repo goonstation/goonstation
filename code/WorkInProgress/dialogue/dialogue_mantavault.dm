@@ -11,12 +11,12 @@
 		dialogue = new/datum/dialogueMaster/keypanel(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/keypanel

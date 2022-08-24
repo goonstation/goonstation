@@ -41,7 +41,7 @@ Contains:
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
-			if (get_dist(A,user) > 1) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
+			if (BOUNDS_DIST(A, user) > 0) // Scanning for COOL LORE SECRETS over the camera network is fun, but so is drinking and driving.
 				return
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
@@ -83,20 +83,20 @@ Contains:
 		var/image/main_display = image(null)
 		for(var/turf/T in range(src.scan_range, our_mob))
 			if(T.interesting && find_interesting)
-				playsound(T, "sound/machines/ping.ogg", 55, 1)
+				our_mob.playsound_local(T, "sound/machines/ping.ogg", 55, 1)
 
 			var/image/display = new
 
 			for(var/atom/A in T)
 				if(A.interesting && find_interesting)
-					playsound(A, "sound/machines/ping.ogg", 55, 1)
+					our_mob.playsound_local(A, "sound/machines/ping.ogg", 55, 1)
 				if(ismob(A))
 					var/mob/M = A
-					if(M?.invisibility != INVIS_CLOAK || !IN_RANGE(src, M, 1))
+					if(M?.invisibility != INVIS_CLOAK || !(BOUNDS_DIST(src, M) == 0))
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level != 1)
+					if(O.level != 1 && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -105,6 +105,9 @@ Contains:
 				img.alpha = 100
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR
 				display.overlays += img
+
+			if (T.disposal_image)
+				display.overlays += T.disposal_image
 
 			if( length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
@@ -149,47 +152,64 @@ that cannot be itched
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
+	var/last_scan = "No scans have been done yet."
+
 
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
 
-		var/holder = src.loc
-		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-		if (src.loc != holder || !search || user.stat)
-			return
-		search = copytext(sanitize(search), 1, 200)
-		search = lowertext(search)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Forensic scanner", list( "Find record", "Print last scan"))
+		switch (choice)
+			if ("Find record")
+				var/holder = src.loc
+				var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+				if (src.loc != holder || !search || user.stat)
+					return
+				search = copytext(sanitize(search), 1, 200)
+				search = lowertext(search)
 
-		for (var/datum/db_record/R as anything in data_core.general.records)
-			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
+				for (var/datum/db_record/R as anything in data_core.general.records)
+					if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
-				var/data = "--------------------------------<br>\
-				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
-				<br>\
-				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
-				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
+						var/data = "--------------------------------<br>\
+						<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
+						<br>\
+						<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+						<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
-				boutput(user, data)
+						boutput(user, data)
+						return
+
+				user.show_text("No match found in security records.", "red")
 				return
+			if("Print last scan")
+				if(!ON_COOLDOWN(src, "print", 2 SECOND))
+					playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+					SPAWN(1 SECONDS)
+						var/obj/item/paper/P = new /obj/item/paper
+						P.set_loc(get_turf(src))
 
-		user.show_text("No match found in security records.", "red")
-		return
+						P.info = last_scan
+						P.name = "Forensic readout"
+
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
-			if(!IN_RANGE(user, target, 1) && IN_RANGE(user, target, 3))
+			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
-				boutput(user, scan_forensic(target, visible = 1))
+				last_scan = scan_forensic(target, visible = 1)
+				boutput(user, last_scan)
 				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 
-		if (get_dist(A,user) > 1 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
+		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
-		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		boutput(user, last_scan)
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -218,7 +238,7 @@ that cannot be itched
 			active = 0
 			return
 		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
+		switch(GET_DIST(src,target))
 			if(0)
 				icon_state = "fs_pindirect"
 			if(1 to 8)
@@ -227,8 +247,9 @@ that cannot be itched
 				icon_state = "fs_pinmedium"
 			if(16 to INFINITY)
 				icon_state = "fs_pinfar"
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			.(T)
+
 
 /obj/item/device/detective_scanner/detective
 	name = "cool forensic scanner"
@@ -307,11 +328,11 @@ that cannot be itched
 			UpdateOverlays(scanner_status, "status")
 			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
 			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
@@ -346,7 +367,7 @@ that cannot be itched
 
 
 
-/obj/item/device/analyzer/healthanalyzer/borg
+/obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
 	reagent_upgrade = 1
 	reagent_scan = 1
@@ -402,7 +423,7 @@ that cannot be itched
 	hide_attack = 2
 	tooltip_flags = REBUILD_DIST
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -455,7 +476,7 @@ that cannot be itched
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
-		if ((analyzer_upgrade == 1) && (get_dist(user, T)>1))
+		if ((analyzer_upgrade == 1) && (BOUNDS_DIST(user, T) > 0))
 			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
@@ -476,11 +497,11 @@ that cannot be itched
 		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.analyzer_upgrade)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A, user) > 1 || istype(A, /obj/ability_button))
+		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button))
 			return
 
 		if (istype(A, /obj) || isturf(A))
@@ -501,7 +522,7 @@ that cannot be itched
 				det.attachments.Remove(src)
 			if ("leak")
 				det.attachedTo.visible_message("<style class='combat bold'>\The [src] picks up the rapid atmospheric change of the canister, and signals the detonator.</style>")
-				SPAWN_DBG(0)
+				SPAWN(0)
 					det.detonate()
 		return
 
@@ -579,7 +600,7 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
 	mats = 3
 
-	attack(mob/living/carbon/human/M as mob, mob/user as mob)
+	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
 			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
 			return
@@ -600,7 +621,7 @@ that cannot be itched
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
 				else
-					R["fingerprint"] = M.bioHolder.uid_hash
+					R["fingerprint"] = M.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -618,7 +639,7 @@ that cannot be itched
 			if (M.gloves)
 				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1["fingerprint"] = M.bioHolder.uid_hash
+				src.active1["fingerprint"] = M.bioHolder.fingerprints
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
@@ -648,6 +669,7 @@ that cannot be itched
 			src.active2["criminal"] = "Released"
 		else
 			src.active2["criminal"] = "None"
+		src.active2["sec_flag"] = "None"
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -685,8 +707,8 @@ that cannot be itched
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 
 	attack_self(mob/user)
-		var/menuchoice = alert("What would you like to do?",,"Ticket","Nothing")
-		if (menuchoice == "Nothing")
+		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
+		if (!menuchoice || menuchoice == "Nothing")
 			return
 		else if (menuchoice == "Ticket")
 			src.ticket(user)
@@ -728,9 +750,9 @@ that cannot be itched
 		T.issuer_byond_key = user.key
 		data_core.tickets += T
 
-		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
 			p.name = "Official Caution - [ticket_target]"
@@ -749,10 +771,10 @@ that cannot be itched
 	w_class = W_CLASS_SMALL
 	m_amt = 150
 	mats = 5
-	icon_state = "fs"
+	icon_state = "CargoA"
 	item_state = "electronic"
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return
 
 	// attack_self
@@ -762,12 +784,12 @@ that cannot be itched
 	// i dunno, who knows. at least you'd be able to take stock easier.
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (get_dist(A,user) > 1)
+		if (BOUNDS_DIST(A, user) > 0)
 			return
 
 		var/datum/artifact/art = null
+		var/obj/O = A
 		if (isobj(A))
-			var/obj/O = A
 			art = O.artifact
 		else
 			// objs only
@@ -776,10 +798,18 @@ that cannot be itched
 		var/sell_value = 0
 		var/out_text = ""
 		if (art)
-			// TODO: Artifact valuation
-			// shippingmarket.sell_artifact(AM, art)
-			boutput(user, "<span class='alert'>Artifact appraisal not yet available. Coming Soon&trade;!</span>")
-			return
+			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
+			if (pap?.artifactType)
+				out_text = "<strong>The following values depend on correct analysis of the artifact<br>Average price for [pap.artifactType] type artifacts</strong><br>"
+				// the unrandomized sell value for an artifact of the type detailed on the form, with perfect analysis
+				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
+				sell_value = round(sell_value, 5)
+			else if (pap)
+				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
+				return
+			else
+				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
+				return
 
 		else if (istype(A, /obj/storage/crate))
 			sell_value = -1
@@ -824,6 +854,8 @@ that cannot be itched
 			var/image/chat_maptext/chat_text = null
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
+			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

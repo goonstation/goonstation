@@ -132,7 +132,7 @@
 
 			mode.announce_critical_system_damage(team_num, src)
 			suppress_damage_message = 1
-			SPAWN_DBG(2 MINUTES)
+			SPAWN(2 MINUTES)
 				suppress_damage_message = 0
 
 
@@ -145,7 +145,7 @@
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -187,6 +187,9 @@
 	ex_act(severity)
 		return
 
+	powered()
+		return TRUE
+
 	disposing()
 		..()
 		UnsubscribeProcess()
@@ -208,7 +211,7 @@
 				mind.current?.traitHolder.removeTrait("puritan")
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
 				if (success && team)
-					SPAWN_DBG(1)
+					SPAWN(1)
 						team.equip_player(src.occupant, FALSE)
 				break
 
@@ -239,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/pod_wars
@@ -286,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
@@ -307,7 +310,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind?.special_role == "NanoTrasen")
+		if (C.mind?.special_role != "Syndicate")
 			return 1
 		else
 			return 0
@@ -339,7 +342,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	is_friend(var/mob/living/C)
 		if (!C.ckey || !C.mind)
 			return 1
-		if (C.mind.special_role == "Syndicate")
+		if (C.mind.special_role != "NanoTrasen")
 			return 1
 		else
 			return 0
@@ -379,7 +382,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 			if (isnull(assigned_id))
 				if (istype(I))
-					boutput(usr, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
+					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
 					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
@@ -389,7 +392,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (istype(I))
 				if (I == assigned_id || get_team(I) == team_num)
 					ship.locked = !ship.locked
-					boutput(usr, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
 
 
 
@@ -547,7 +550,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -581,7 +584,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 		ctrl_pt.capture(user, team_num)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!can_be_captured)
 			var/cur_time
 			var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -657,7 +660,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		return
 	meteorhit(var/obj/O as obj)
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team
@@ -676,7 +679,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -719,7 +722,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		user.lastattacked = src
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch (user.a_intent)
 			if (INTENT_HELP)
 				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")
@@ -784,7 +787,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing(LOG_DIARY, user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -793,7 +796,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -877,7 +880,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 		name = "[team_name_str] secure crate tier [tier_flavor]"
-		SPAWN_DBG(1 SECONDS)
+		SPAWN(1 SECONDS)
 			spawn_items()
 
 	//Selects the items that this crate spawns with based on its possible contents.
@@ -913,8 +916,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 //Kinda cheesey here with the map defs, but I'm too lazy to care. makes a temp var for the mode, if it's not the right type (which idk why it wouldn't be)
 //then it is null so that the ?. will fail. So it still works regardless of mode, not that it would have the populated rewards lists if the mdoe was wrong...
 		var/datum/game_mode/pod_wars/mode = ticker.mode
-		if (!istype(mode))
-			mode = null
+		ENSURE_TYPE(mode)
 		var/failsafe_counter = 0		//I'm paranoid okay... what if some admin accidentally fucks with the list, could hang the server.
 		var/points = 0
 		while (points < max_points)

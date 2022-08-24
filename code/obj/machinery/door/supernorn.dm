@@ -52,12 +52,12 @@
 	play_animation("opening")
 	UpdateIcon()
 	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
-	SPAWN_DBG(2.5)
+	SPAWN(2.5)
 		set_density(0) // let them through halfway through the anim
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		operating = 0
 	if (autoclose_delay)
-		SPAWN_DBG(autoclose_delay)
+		SPAWN(autoclose_delay)
 			try_autoclose()
 
 /obj/machinery/door/supernorn/close()
@@ -70,9 +70,9 @@
 	play_animation("closing")
 	UpdateIcon()
 	playsound(src, "sound/machines/airlock_swoosh_temp.ogg", 100, 0)
-	SPAWN_DBG(2.5)
+	SPAWN(2.5)
 		set_density(1)
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		operating = 0
 		if (ignore_light_or_cam_opacity)
 			src.opacity = 1
@@ -109,7 +109,7 @@
 	if (check_safeties())
 		close()
 	else
-		SPAWN_DBG(1 SECOND) // something was in the way
+		SPAWN(1 SECOND) // something was in the way
 			try_autoclose()
 
 /obj/machinery/door/tempfiredoor

@@ -25,12 +25,12 @@
 		if(prob(15))
 			spiderflail(src.target)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
 			else
-				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>")
+				src.visible_message("<span class='alert'><b>[user]</b> [pick("pets","hugs","snuggles","cuddles")] [src]!</span>", group="spiderhug")
 				if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)
@@ -47,7 +47,7 @@
 
 		flailing = 10
 		playsound(src.loc, "rustle", 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -203,7 +203,7 @@
 						sleep(5 SECONDS)
 						if(src.target && T.stat && src.loc == T.loc) // check to see if the target is still passed out and under the spider
 							src.visible_message("<span class='alert'><B>[src]</B> drains [T] dry!</span>")
-							T.death(0)
+							T.death(FALSE)
 							T.real_name = "Unknown"
 							T.bioHolder.AddEffect("husk")
 							sleep(0.2 SECONDS)
@@ -239,7 +239,7 @@
 						else
 							feeding = 0
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				src.attacking = 0
 
 	ChaseAttack(mob/M)
@@ -269,7 +269,7 @@
 		flailing = 10
 		if (src.stepsound)
 			playsound(src.loc, src.stepsound, 50, 0)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(flailing-- > 0 && src.alive)
 				src.set_loc(M.loc)
 				src.pixel_x = rand(-2,2) * 2
@@ -319,7 +319,7 @@
 
 	// don't ask
 	proc/streak(var/list/directions)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 				LAGCHECK(LAG_LOW)//sleep(0.3 SECONDS)
 				if (step_to(src, get_step(src, pick(directions)), 0))
@@ -464,7 +464,7 @@
 		..()
 		src.parent = parent
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
 			return
@@ -493,7 +493,7 @@
 				return
 			if (!src.scavenger || src.corpse_target == null)
 				src.task = "thinking"
-			if (get_dist(src, src.corpse_target) > src.attack_range)
+			if (GET_DIST(src, src.corpse_target) > src.attack_range)
 				src.task = "chasing corpse"
 			src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [C]!</span>")
 			src.set_loc(C.loc)
@@ -568,6 +568,7 @@
 			src.task = "chasing"
 			return
 		for (var/mob/living/C in hearers(src.seekrange,src))
+			if (isintangible(C)) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (C.bioHolder && C.bioHolder.HasEffect("husk")) continue
 			if (istype(C, /mob/living/critter/spider)) continue

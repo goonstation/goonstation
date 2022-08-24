@@ -125,7 +125,8 @@
 					else
 						suppress_out = 0
 						return 1
-
+				else
+					return 1
 				subPlace = findtext(text, "_sub")
 
 			//var/list/command_list = parse_string(text, (script_iteration ? src.scriptvars : null))

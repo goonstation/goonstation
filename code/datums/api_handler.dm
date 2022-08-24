@@ -14,8 +14,8 @@ var/global/datum/apiHandler/apiHandler
 		..()
 		if (!config.goonhub_api_endpoint)
 			src.enabled = 0
-			logTheThing("debug", null, null, "Goonhub endpoint doesn't exist, disabled api handler")
-			logTheThing("diary", null, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
+			logTheThing(LOG_DEBUG, null, "Goonhub endpoint doesn't exist, disabled api handler")
+			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
 	// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work

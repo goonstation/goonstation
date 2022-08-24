@@ -4,6 +4,9 @@ var/global/list/image/clown_disbelief_images
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/image/disbelief_image
 
+TYPEINFO(/datum/component/clown_disbelief_item)
+	initialization_args = list()
+
 /datum/component/clown_disbelief_item/Initialize()
 	SHOULD_CALL_PARENT(1)
 	..()

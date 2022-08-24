@@ -249,7 +249,7 @@
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Mulebot [suffix ? "([suffix])" : ""] controls",
@@ -370,7 +370,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing(LOG_VEHICLE, usr, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = usr
 						wires &= ~wirebit
 					else
@@ -379,7 +379,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing(LOG_VEHICLE, usr, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = null
 						wires |= wirebit
 					else
@@ -417,7 +417,7 @@
 		if(user.stat)
 			return
 
-		if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!on || !istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if(load)
@@ -430,7 +430,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if(get_dist(C, src) > 1 || load || !on)
+		if(BOUNDS_DIST(C, src) > 0 || load || !on)
 			return
 		mode = 1
 
@@ -508,7 +508,7 @@
 			on = 0
 			return
 		if(on)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				// speed varies between 1-4 depending on how many wires are cut (and which of the two)
 				var/speed = ((wires & wire_motor1) ? 1:0) + ((wires & wire_motor2) ? 2:0) + 1
 				// both wires results in no speed at all :(
@@ -567,7 +567,7 @@
 							path -= loc
 
 							if(mode==4)
-								SPAWN_DBG(1 DECI SECOND)
+								SPAWN(1 DECI SECOND)
 									send_status()
 
 							if(destination == home_destination)
@@ -593,7 +593,7 @@
 								src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
 								playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 
-								SPAWN_DBG(0.2 SECONDS)
+								SPAWN(0.2 SECONDS)
 									calc_path(next)
 									if(path)
 										src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
@@ -616,7 +616,7 @@
 			if(5)		// calculate new path
 				//boutput(world, "Calc new path.")
 				mode = 6
-				SPAWN_DBG(0)
+				SPAWN(0)
 
 					calc_path()
 
@@ -646,7 +646,7 @@
 	// signals all beacons matching the delivery code
 	// beacons will return a signal giving their locations
 	proc/set_destination(var/new_dest)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			new_destination = new_dest
 			post_signal_multiple("beacon", list("findbeacon" = "delivery", "address_tag" = "delivery"))
 			updateDialog()
@@ -662,7 +662,7 @@
 	// starts bot moving to home
 	// sends a beacon query to find
 	proc/start_home()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			set_destination(home_destination)
 			mode = 4
 		icon_state = "mulebot[(wires & wire_mobavoid) == wire_mobavoid]"
@@ -727,7 +727,7 @@
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
 		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 
-		logTheThing("vehicle", H, src.emagger, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
+		logTheThing(LOG_VEHICLE, H, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
 
 		if(ismob(load))
 			var/mob/M = load

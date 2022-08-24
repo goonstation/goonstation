@@ -149,6 +149,27 @@ const FilterFlagsEntry = (props, context) => {
   );
 };
 
+const FilterSpaceEntry = (props, context) => {
+  const { name, value, filterName, filterType } = props;
+  const { act, data } = useBackend(context);
+
+  const filterInfo = data.filter_info;
+  const flags = filterInfo[filterType]['space'];
+  return (
+    map((spaceField, flagName) => (
+      <Button.Checkbox
+        checked={value === spaceField}
+        content={flagName}
+        onClick={() => act('modify_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: spaceField,
+          },
+        })} />
+    ))(flags)
+  );
+};
+
 const FilterDataEntry = (props, context) => {
   const { name, value, hasValue, filterName } = props;
 
@@ -159,6 +180,7 @@ const FilterDataEntry = (props, context) => {
     color: <FilterColorEntry {...props} />,
     icon: <FilterIconEntry {...props} />,
     flags: <FilterFlagsEntry {...props} />,
+    space: <FilterSpaceEntry {...props} />,
   };
 
   const filterEntryMap = {
@@ -171,6 +193,7 @@ const FilterDataEntry = (props, context) => {
     color: 'color',
     offset: 'float',
     radius: 'float',
+    space: 'space',
     falloff: 'float',
     density: 'int',
     threshold: 'float',

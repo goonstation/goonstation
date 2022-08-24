@@ -40,40 +40,33 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
 	voice_grim = "sound/voice/wizard/FurryGrim.ogg"
 	voice_fem = "sound/voice/wizard/FurryFem.ogg"
 	voice_other = "sound/voice/wizard/FurryLoud.ogg"
+	maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
 
 	cast(mob/target)
 		if (!holder)
 			return 1
 
-		var/mob/living/carbon/human/H = target
-		if (!istype(H))
+		if (!ishuman(target))
 			boutput(holder.owner, "Your target must be human!")
 			return 1
 
-		var/datum/abilityHolder/A = src.holder
-		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(A, "<span class='alert'>[H] has divine protection from magic.</span>")
-			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
-			JOB_XP(H, "Chaplain", 2)
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
 			return 1
 
-		if (iswizard(H))
-			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+		var/mob/living/carbon/human/H = target
 
-		if(!IN_RANGE(target, holder.owner, max_range))
+		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
-		if (check_target_immunity( H ))
-			H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
-			return 1
-
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
-		actions.start(new/datum/action/bar/polymorph(target, src), holder.owner)
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		actions.start(new/datum/action/bar/polymorph(usr, target, src), holder.owner)
 
 /datum/action/bar/polymorph
 	duration = 2 SECONDS
@@ -82,30 +75,41 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 	var/datum/targetable/spell/animal/spell
 	var/mob/living/carbon/human/target
-	var/mob/living/carbon/human/M
+	var/datum/abilityHolder/A
+	var/mob/living/M
 
-	New(Target, Spell)
+	New(Source, Target, Spell)
 		target = Target
 		spell = Spell
-		M = spell.holder.owner
+		A = spell.holder
+		M = Source
 		..()
 
 	onStart()
 		..()
-		if (!spell.holder || get_dist(M, target) > spell.max_range || !target || !M || !ishuman(target) || !M.wizard_castcheck(spell))
+
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (!spell.holder || get_dist(M, target) > spell.max_range || !target || !M || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 
-		if(!istype(get_area(spell.holder), /area/sim/gunsim))
-			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
+		if(!istype(get_area(M), /area/sim/gunsim))
+			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, target.loc)
@@ -122,6 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
+			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = 1 // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C
@@ -129,4 +134,4 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			if (istype(C))
 				C.change_misstep_chance(30)
 				C.stuttering = 40
-				SHOW_POLYMORPH_TIPS(C)
+				C.show_antag_popup("polymorph")

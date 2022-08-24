@@ -4,7 +4,7 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4.0
+	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
 	FAIL_DAMAGE = 100
 
@@ -55,7 +55,7 @@
 				holder.stomach = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if (src.contents && src.contents.len > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/output = ""

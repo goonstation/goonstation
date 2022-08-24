@@ -93,7 +93,7 @@
 	return
 
 
-/obj/displaycase/attackby(obj/item/W as obj, mob/user as mob)
+/obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = 1
@@ -152,7 +152,7 @@
 	..()
 	return
 
-/obj/displaycase/attack_hand(mob/user as mob)
+/obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
 		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
 		user.lastattacked = src
@@ -170,7 +170,7 @@
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "gun"
-	force = 1.0
+	force = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
 	var/stability = 10
 
@@ -238,7 +238,7 @@
 	6 Power cell
 	7 Screwdriver
 	*/
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (isscrewingtool(O))
 			if (src.repair_stage == 0)
 				user.show_text("You open the maintenance panel.", "blue")
@@ -253,7 +253,7 @@
 				if (!isnull(src.our_projectile2))
 					src.our_projectiles = list(new src.our_projectile, new src.our_projectile2)
 					L.projectiles = src.our_projectiles
-				AddComponent(/datum/component/cell_holder, our_cell)
+				L.AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
@@ -360,22 +360,22 @@
 
 		// Nothing special, just a plain old laser.
 		if (src.quality_counter < src.q_threshold1)
-			src.our_projectile = /datum/projectile/laser
+			src.our_projectile = /datum/projectile/laser/glitter
 			if (user && ismob(user))
-				user.show_text("The [src.name] looks a little worn, but appears to work alright.", "blue")
+				user.show_text("The [src.name] looks a little worn, but appears to work alright, all things considered.", "blue")
 
 		// Player put some effort into it, so let's give him something a little more powerful.
 		else if (src.quality_counter >= src.q_threshold1 && src.quality_counter < src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name] seems to work better than expected thanks to above-average replacment parts.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
+			src.our_projectile = /datum/projectile/laser
 
 		// Now we're talking about top-notch stuff.
 		else if (src.quality_counter >= src.q_threshold2)
 			if (user && ismob(user))
 				user.show_text("The [src.name]'s high-quality replacement parts fit together perfectly, increasing the gun's output.", "blue")
-			src.our_projectile = /datum/projectile/laser/old
-			src.our_projectile2 = /datum/projectile/laser/old_burst
+			src.our_projectile = /datum/projectile/laser
+			src.our_projectile2 = /datum/projectile/laser/glitter/burst
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return

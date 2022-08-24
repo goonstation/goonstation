@@ -36,6 +36,8 @@
 	var/list/cloudsaves = null
 	/// saved data from the cloud (spacebux, volume settings, ...)
 	var/list/clouddata = null
+	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
+	var/datum/buildmode_holder/buildmode = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -143,6 +145,9 @@
 	proc/cloud_fetch()
 		return
 
+	proc/cloud_fetch_data_only()
+		return
+
 	/// returns the clouddata of a target ckey in list form
 	proc/cloud_fetch_target_data_only(target)
 		return
@@ -153,6 +158,12 @@
 
 	/// Returns cloud data and saves from goonhub for the target ckey in list form
 	proc/cloud_fetch_target_ckey(target)
+		return
+
+	proc/get_buildmode()
+		return
+
+	proc/on_round_end()
 		return
 
 /// returns a reference to a player datum based on the ckey you put into it
@@ -167,3 +178,33 @@
 	if (!player)
 		player = new(key)
 	return player
+
+/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
+ * example input (formatted for readability)
+ *  command add adds a number onto the current value (record must exist in the cloud to update or it won't do anything)
+ *  command replace overwrites the existing record
+ * 	{
+ * 		"some_ckey":{
+ * 			"persistent_bank":{
+ * 				"command":"add",
+ * 				"value":42069
+ * 			},
+ * 			"persistent_bank_item":{
+ * 				"command":"replace",
+ * 				"value":"none"
+ * 			}
+ * 		},
+ * 		"some_other_ckey":{
+ * 			"persistent_bank":{
+ * 				"command":"add",
+ * 				"value":1337
+ * 			},
+ * 			"persistent_bank_item":{
+ * 				"command":"replace",
+ * 				"value":"rubber_ducky"
+ * 			}
+ * 		}
+ * 	}
+**/
+proc/cloud_put_bulk(json)
+	return

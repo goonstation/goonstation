@@ -117,10 +117,10 @@
 				O.show_message("<span class='alert'><b>[occupant]</b> is puking over and over! It's all slimy and stringy. Oh god.</span>", 1)
 				if (prob(66))
 					O.vomit()
-					O.visible_message("<span class='alert'>[O] pukes all over \himself!</span>", "<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
+					O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]!</span>", "<span class='alert'>You feel [pick("<b>really</b>", "")] ill from watching that.</span>")
 
 		if (prob(40))
-			SPAWN_DBG(0) // linter demands this
+			SPAWN(0) // linter demands this
 				occupant.emote("scream")
 
 
@@ -128,7 +128,7 @@
 		boutput(user, "<span class='alert'>You're trapped inside!</span>")
 
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
 			return
@@ -151,7 +151,7 @@
 
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
-			logTheThing("combat", user, target, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.UpdateIcon()
 			qdel(G)

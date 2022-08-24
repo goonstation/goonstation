@@ -94,7 +94,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 	playsound(center_turf, sound, 50, 1)
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/atom in elecs)
 			var/atom/A = atom
 			qdel(A)
@@ -107,6 +107,8 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
+	if (isintangible(src) || check_target_immunity(src))
+		return
 	if (power > 1) // pretty light damage and stam damage :)
 		if (src.bioHolder.HasEffect("resist_electric"))
 			boutput(src, "<span class='notice'>You feel electricity spark across you harmlessly!</span>")
@@ -115,4 +117,4 @@ var/global/mutable_appearance/elecflash_ma = null
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 0, stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		else
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)
+		src.TakeDamage("chest", 0, rand(0,1) * power * 0.2, damage_type=DAMAGE_BURN)

@@ -37,7 +37,7 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full. [integrity_state ? "This engine, even with the metal debris removed, seems nigh unfixable" : "It looks quite broken"]. [core_inserted ? "It would be wise to repurpose it's core for something else, as it's still intact" : "The core is missing.."]."}
 
 
-/obj/machinery/power/sword_engine/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/sword_engine/attackby(obj/item/W, mob/user)
 	if (integrity_state == 0 && isweldingtool(W) && W:try_weld(user,1))
 		boutput(user, "<span class='notice'>You removed the mangled metal from the SWORD Engine!</span>")
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
@@ -124,7 +124,7 @@
 	src.charge -= 5e5
 	if (src.charge < 0)
 		src.charge = 0
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		src.output = initial(src.output)
 		src.charging = initial(src.charging)
 		src.online = 1
@@ -141,7 +141,7 @@
 
 
 /obj/machinery/power/sword_engine/proc/terminal_setup()
-	SPAWN_DBG(1)
+	SPAWN(1)
 		terminal = new /obj/machinery/power/terminal
 		terminal.set_loc(get_turf(src))
 		terminal.dir = src.dir
@@ -224,7 +224,7 @@
 
 	if (online)
 		if (prob(5))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_power), 60, 1)
 
 		lastout = min(charge, output)	//Limits the output to what is stored.

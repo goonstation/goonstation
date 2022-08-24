@@ -1,0 +1,64 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/crate,
+/obj/random_item_spawner/furniture_parts/few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/rack,
+/obj/random_item_spawner/tools_w_igloves/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"j" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/rack,
+/obj/random_item_spawner/tools/maybe_few,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+r
+D
+D
+r
+I
+"}
+(2,1,1) = {"
+r
+f
+D
+Y
+D
+"}
+(3,1,1) = {"
+e
+c
+j
+D
+a
+"}

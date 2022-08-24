@@ -42,8 +42,8 @@
 	name = "toolbox/robot arm assembly"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_arm"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -53,7 +53,7 @@
 
 /obj/machinery/bot/firebot/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		if (src)
 			src.icon_state = "firebot[src.on]"
 
@@ -70,14 +70,14 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
 			"content" = dat,
 		))
 
-/obj/machinery/bot/firebot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/firebot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Fire-Fighting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -86,7 +86,7 @@
 //	if(!src.locked)
 //To-Do: Behavior control stuff to go with ~fire patrols~
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Firebot v1.0 controls",
@@ -117,7 +117,7 @@
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -143,7 +143,7 @@
 		src.explode()
 	return
 
-/obj/machinery/bot/firebot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/firebot/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/card/emag))
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
@@ -336,10 +336,10 @@
 
 /obj/machinery/bot/firebot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -414,7 +414,7 @@
 	qdel(P)
 	qdel(src)
 
-/obj/item/toolbox_arm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/toolbox_arm/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/extinguisher)) && (!src.extinguisher))
 		src.extinguisher = 1
 		boutput(user, "You add the fire extinguisher to [src]!")

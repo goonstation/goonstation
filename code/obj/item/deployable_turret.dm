@@ -7,8 +7,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/syndieturret.dmi'
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	var/icon_tag = null
 	var/quick_deploy_fuel = 0
 	var/associated_turret = null //what kind of turret should this spawn?
+	var/turret_health = 100
 
 	New()
 		..()
@@ -26,6 +27,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 
 	attack_self(mob/user as mob)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(user, "You can't deploy the turret here!")
+			return
 		user.show_message("You assemble the turret parts.")
 		src.set_loc(get_turf(user))
 		src.spawn_turret(user.dir)
@@ -35,12 +39,15 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 	proc/spawn_turret(var/direct)
 		var/obj/deployable_turret/turret = new src.associated_turret(src.loc, direct)
-		turret.health = src.health // NO FREE REPAIRS, ASSHOLES
+		turret.health = src.turret_health // NO FREE REPAIRS, ASSHOLES
 		turret.damage_words = src.damage_words
 		turret.quick_deploy_fuel = src.quick_deploy_fuel
 		return turret
 
 	throw_end(list/params, turf/thrown_from)
+		if(istype(get_area(src), /area/sim/gunsim))
+			boutput(usr, "You can't deploy the turret here!")
+			return
 		if(src.quick_deploy_fuel > 0)
 			var/turf/thrown_to = get_turf(src)
 			var/spawn_direction = get_dir(thrown_to,thrown_from)
@@ -52,7 +59,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer/syndicate
 	name = "NAS-T Deployer"
 	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
-	health = 250
+	turret_health = 250
 	icon_tag = "st"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
@@ -68,9 +75,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
+	turret_health = 125
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
-	health = 125
 	icon_tag = "nt"
 	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
 	is_syndicate = 1
@@ -128,6 +135,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		if(active)
 			set_projectile()
 
+		#ifdef LOW_SECURITY
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		processing_items.Remove(src)
 		..()
@@ -172,7 +183,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 			else //GUN THEM DOWN
 				if(src.target)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							flick("[src.icon_tag]_fire",src)
 							muzzle_flash_any(src, 0, "muzzle_flash")
@@ -314,7 +325,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	proc/spawn_deployer()
 		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
-		deployer.health = src.health // NO FREE REPAIRS, ASSHOLES
+		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		deployer.tooltip_rebuild = 1
@@ -329,7 +340,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				src.target_list[C] = distance
 
 			else
@@ -350,7 +361,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
@@ -362,6 +373,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			return 0
 		if (C.stat == 2)
 			return 0
+		for(var/atom/movable/some_loc in obj_loc_chain(C))
+			if(istype(some_loc, /obj/item)) // prevent shooting at pickled people and such
+				return 0
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
@@ -439,11 +453,14 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate)
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/robotic/gunbot/syndicate) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
-	active = 1
 	anchored = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
@@ -475,7 +492,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 /obj/deployable_turret/riot/active
 	anchored = 1
-	active = 1
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
 
 /////////////////////////////
 //   Turret Ability Stuff  //
@@ -521,7 +541,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			if(target == get_turf(my_turret))
 				return
 
-			SPAWN_DBG(0)
+			SPAWN(0)
 				src.my_turret.set_angle(get_angle(my_turret,target))
 
 			return 0

@@ -6,24 +6,30 @@
 #define CHARGING 1 //! The sentinel is gaining charge
 #define CHARGED 2 //! The sentinel is charged
 /obj/flock_structure/sentinel
-	name = "Glowing pylon"
+	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
+	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
+	resourcecost = 150
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0
+	/// charge gained per tick
+	var/charge_per_tick = 20
+	/// Turret range in tiles
+	var/range = 4
+	/// The wattage of the arcflash
+	var/wattage = 6000
 	var/powered = FALSE
 
 
 	// flockdrones can pass through this
 	passthrough = TRUE
 
-	usesgroups = TRUE
-
-	// debug amount scale up if needed.
-	poweruse = 20
+	var/online_compute_cost = 20
+	compute = 0 //targetting consumes compute
 
 	var/obj/effect/flock_sentinelrays/rays = null
 
@@ -41,14 +47,23 @@
 	return {"<span class='bold'>Status:</span> [charge_status == 1 ? "charging" : (charge_status == 2 ? "charged" : "idle")].
 	<br><span class='bold'>Charge Percentage:</span> [charge]%."}
 
-/obj/flock_structure/sentinel/process()
+/obj/flock_structure/sentinel/process(mult)
 	updatefilter()
 
-	if(!src.group)//if it dont exist it off
+	if(!src.flock)//if it dont exist it off
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
-	else if(src.group.powerbalance >= 0)//if it has atleast 0 or more free power, the poweruse is already calculated in the group
-		powered = TRUE
-	else//if there isnt enough juice
+	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
+		src.compute = -online_compute_cost
+		if (!powered)
+			src.update_flock_compute("apply")
+			powered = TRUE
+	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
 
 	if(powered == 1)
@@ -59,27 +74,27 @@
 				charge_status = CHARGING//if its losing charge and suddenly theres energy available begin charging
 			if(CHARGING)
 				if(icon_state != "sentinelon") icon_state = "sentinelon"//forgive me
-				src.charge(5)
+				src.charge(charge_per_tick * mult)
 			if(CHARGED)
 				var/mob/loopmob = null
 				var/list/hit = list()
 				var/mob/mobtohit = null
-				for(loopmob in mobs)
-					if(IN_RANGE(loopmob, src, 5) && !isflock(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc))
+				for(loopmob in view(src.range,src))
+					if(!isflockmob(loopmob) && src.flock?.isEnemy(loopmob) && isturf(loopmob.loc) && isalive(loopmob) && !isintangible(loopmob))
 						mobtohit = loopmob
 						break//found target
 				if(!mobtohit) return//if no target stop
-				arcFlash(src, mobtohit, 10000)
+				arcFlash(src, mobtohit, wattage, 1.1)
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
-					for(var/mob/nearbymob in range(2, mobtohit))//todo: optimize(?) this.
-						if(nearbymob != mobtohit && !isflock(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob))
-							arcFlash(mobtohit, nearbymob, 10000)
+					for(var/mob/nearbymob in view(2, mobtohit.loc))
+						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
+							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
 							hit += nearbymob
 							mobtohit = nearbymob
 				hit.len = 0//clean up
 				charge = 1
-				var/filter = src.get_filter("flock_sentinel_rays")
+				var/filter = src.rays.get_filter("flock_sentinel_rays")
 				animate(filter, size=((-(cos(180*(3/100))-1)/2)*32), time=1 SECONDS, flags = ANIMATION_PARALLEL)
 				charge_status = CHARGING
 				return

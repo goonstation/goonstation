@@ -5,19 +5,19 @@ client/proc/enable_waterflow(var/enabled as num)
 	set name = "Set Fluid Flow Enabled"
 	set desc = "0 to disable, 1 to enable"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	waterflow_enabled = !!enabled
 
 client/proc/delete_fluids()
 	set name = "Delete All Fluids"
 	set desc = "Probably safe to run. Probably."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	var/exenabled = waterflow_enabled
 	enable_waterflow(0)
 	var/i = 0
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/obj/fluid/fluid in world)
 			if (fluid.disposed) continue
 
@@ -44,10 +44,10 @@ client/proc/special_fullbright()
 	set desc = "Helps when server load is heavy. Doesn't affect trench."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	message_admins("[key_name(src)] is making all Z1 Sea Lights static...")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/turf/space/fluid/F in world)
 			if (F.z == 1)
 				F.fullbright = 0.5
@@ -58,7 +58,7 @@ client/proc/replace_space()
 	set name = "Replace All Space Tiles With Ocean"
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
-	admin_only
+	ADMIN_ONLY
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -79,10 +79,10 @@ client/proc/replace_space()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
@@ -101,7 +101,7 @@ client/proc/replace_space_exclusive()
 	set name = "Oceanify"
 	set desc = "This is the safer one."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
@@ -122,10 +122,10 @@ client/proc/replace_space_exclusive()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		ocean_reagent_id = reagent.id
 		var/datum/reagents/R = new /datum/reagents(100)
 		R.add_reagent(reagent.id, 100)
@@ -172,8 +172,8 @@ client/proc/replace_space_exclusive()
 
 
 client/proc/update_ocean_lighting()
-	admin_only
-	SPAWN_DBG(0)
+	ADMIN_ONLY
+	SPAWN(0)
 		for(var/turf/space/fluid/S in world)
 			S.update_light()
 			LAGCHECK(LAG_REALTIME)
@@ -184,14 +184,14 @@ client/proc/dereplace_space()
 	set name = "Unoceanify"
 	set desc = "uh oh."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	admin_only
+	ADMIN_ONLY
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
-	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
+	logTheThing(LOG_ADMIN, src, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		map_currently_underwater = 0
 
 		if (answer == "Yes")

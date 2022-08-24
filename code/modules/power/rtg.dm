@@ -1,6 +1,6 @@
 /obj/machinery/power/rtg
-	name = "radioisotope thermoelectric generator"
-	desc = "Made by wrapping thermocouples around a chunk of nuclear stuff, or something like that."
+	name = "Leigong RTG"
+	desc = "The XIANG|GIESEL model '雷公' radio-thermal generator. Wrapped thermocouples produce power from the decay heat of nuclear fuel pellets."
 	icon_state = "rtg_empty"
 	anchored = 1
 	density = 1
@@ -9,7 +9,7 @@
 
 	process()
 		if (fuel_pellet?.material && fuel_pellet.material.hasProperty("radioactive"))
-			lastgen = (4800 + rand(-100, 100)) * log(1 + fuel_pellet.material.getProperty("radioactive"))
+			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty("radioactive") * 0.75
 			fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
 			UpdateIcon()
@@ -55,7 +55,7 @@
 
 
 	proc/interacted(mob/user)
-		if (get_dist(src, user) > 1 && !isAI(user))
+		if (BOUNDS_DIST(src, user) > 0 && !isAI(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=rtg")
 			return
@@ -86,6 +86,16 @@
 			return
 		src.UpdateOverlays(image('icons/obj/power.dmi', "rtg-f[min(1 + ceil(fuel_pellet.material.getProperty("radioactive") / 2), 5)]"), "rtg")
 
+	cerenkite_loaded
+		New()
+			..()
+			fuel_pellet = new /obj/item/fuel_pellet/cerenkite
+
+	erebite_loaded
+		New()
+			..()
+			fuel_pellet = new /obj/item/fuel_pellet/erebite
+
 /obj/item/fuel_pellet
 	name = "fuel pellet"
 	desc = "A rather small fuel pellet for use in RTGs."
@@ -98,3 +108,8 @@
 		New()
 			..()
 			src.setMaterial(getMaterial("cerenkite"))
+
+	erebite
+		New()
+			..()
+			src.setMaterial(getMaterial("erebite"))

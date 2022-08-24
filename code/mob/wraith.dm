@@ -17,7 +17,7 @@
 	blinded = 0
 	anchored = 1
 	alpha = 180
-	event_handler_flags =  IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
 
 	var/deaths = 0
@@ -72,8 +72,8 @@
 	New(var/mob/M)
 		. = ..()
 		src.poltergeists = list()
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
-		APPLY_MOB_PROPERTY(src, PROP_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -118,6 +118,8 @@
 				plane.alpha = 255
 
 	disposing()
+		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			P.master = null
 		poltergeists = null
 		..()
 
@@ -148,7 +150,7 @@
 		src.abilityHolder.updateText()
 
 		if (src.health < 1)
-			src.death(0)
+			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
@@ -159,6 +161,7 @@
 		return
 
 	death(gibbed)
+		. = ..()
 		//Todo: some cool-ass effects here
 
 		//Back to square one with you!
@@ -166,6 +169,8 @@
 		var/datum/abilityHolder/wraith/W = src.abilityHolder
 		if(istype(W))
 			W.corpsecount = 0
+			var/datum/targetable/wraithAbility/absorbCorpse/absorb = W.getAbility(/datum/targetable/wraithAbility/absorbCorpse)
+			absorb?.doCooldown()
 		src.abilityHolder.points = 0
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard
@@ -183,15 +188,15 @@
 
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
-			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
+			logTheThing(LOG_COMBAT, src, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-			SPAWN_DBG(15 SECONDS) //15 seconds
+			SPAWN(15 SECONDS) //15 seconds
 				src.justdied = 0
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
 			message_admins("Wraith [key_name(src)] died with no more respawns at [log_loc(src.loc)].")
-			logTheThing("combat", src, null, "died as a wraith with no more respawns at [log_loc(src.loc)].")
+			logTheThing(LOG_COMBAT, src, "died as a wraith with no more respawns at [log_loc(src.loc)].")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
@@ -199,9 +204,9 @@
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-			if (client) client.color = null
+			if (client) client.set_color()
 
 			animation = new(src.loc)
 			animation.icon_state = "blank"
@@ -240,8 +245,10 @@
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
 				return 0
-		if (src.density) return 0
-		else return 1
+		if (src.density)
+			return FALSE
+		else
+			return TRUE
 
 
 	projCanHit(datum/projectile/P)
@@ -257,7 +264,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)
@@ -276,7 +283,7 @@
 		health -= brute * 3
 		health = min(max_health, health)
 		if (src.health <= 0)
-			src.death(0)
+			src.death(FALSE)
 		health_update_queue |= src
 
 	HealDamage(zone, brute, burn)
@@ -330,26 +337,26 @@
 					horizontal = get_step(src, EAST)
 
 				var/turf/oldloc = loc
-				var/horiz = 0
-				var/vert = 0
+				var/horiz = FALSE
+				var/vert = FALSE
 
 				if (!src.density || vertical.Enter(src))
-					vert = 1
+					vert = TRUE
 					src.set_loc(vertical)
 					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
 				if (!src.density || horizontal.Enter(src))
-					horiz = 1
+					horiz = TRUE
 					src.set_loc(horizontal)
 					if (!src.density || NewLoc.Enter(src))
-						blocked = 0
+						blocked = FALSE
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
@@ -363,21 +370,24 @@
 					return
 
 			for(var/obj/decal/cleanable/saltpile/A in NewLoc)
-				if (istype(A)) salted = 1
+				if (istype(A)) salted = TRUE
 				if (salted) break
 
 			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc)
+			if (src.density) // if we're corporeal we follow normal mob restrictions
+				..()
+			else // if we're in ghost mode we get to cheat
+				src.set_loc(NewLoc)
 			OnMove()
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
 				src.makeCorporeal()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN_DBG(1 MINUTE) //one minute
+				SPAWN(1 MINUTE) //one minute
 					src.makeIncorporeal()
 
-		//if ((marker && get_dist(src, marker) > 15) && (master && get_dist(P,src) > 12 ))
+		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
 
 			return
 
@@ -448,7 +458,7 @@
 			return
 
 		if (src.density) //If corporeal speak to the living (garbled)
-			logTheThing("diary", src, null, "(WRAITH): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -473,7 +483,7 @@
 			if (copytext(message, 1, 2) == "*")
 				return
 
-			logTheThing("diary", src, null, "(WRAITH): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -521,7 +531,7 @@
 		makeCorporeal()
 			if (!src.density)
 				src.set_density(1)
-				REMOVE_MOB_PROPERTY(src, PROP_INVISIBILITY, src)
+				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 				src.alpha = 255
 				src.see_invisible = INVIS_NONE
 				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -530,7 +540,7 @@
 			if (src.density)
 				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 				src.set_density(0)
-				APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, src, INVIS_SPOOKY)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
 				src.see_invisible = INVIS_SPOOKY
 
@@ -543,7 +553,7 @@
 			src.haunting = 1
 			src.flags &= !UNCRUSHABLE
 
-			SPAWN_DBG (haunt_duration)
+			SPAWN(haunt_duration)
 				src.makeIncorporeal()
 				src.haunting = 0
 				src.flags |= UNCRUSHABLE
@@ -637,7 +647,7 @@
 /mob/proc/wraithize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a wraith.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
 		return make_wraith()
 	return null
 
@@ -686,49 +696,18 @@
 /proc/generate_wraith_objectives(var/datum/mind/traitor)
 	switch (rand(1,3))
 		if (1)
-			var/datum/objective/specialist/wraith/murder/M1 = new
-			M1.owner = traitor
-			M1.set_up()
-			traitor.objectives += M1
-			var/datum/objective/specialist/wraith/murder/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
-			var/datum/objective/specialist/wraith/murder/M3 = new
-			M3.owner = traitor
-			M3.set_up()
-			traitor.objectives += M3
+			for(var/i in 1 to 3)
+				new/datum/objective/specialist/wraith/murder(null, traitor)
 		if (2)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/prevent/P2 = new
-			P2.owner = traitor
-			P2.set_up()
-			traitor.objectives += P2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/prevent(null, traitor)
 		if (3)
-			var/datum/objective/specialist/wraith/absorb/A1 = new
-			A1.owner = traitor
-			A1.set_up()
-			traitor.objectives += A1
-			var/datum/objective/specialist/wraith/murder/absorb/M2 = new
-			M2.owner = traitor
-			M2.set_up()
-			traitor.objectives += M2
+			new/datum/objective/specialist/wraith/absorb(null, traitor)
+			new/datum/objective/specialist/wraith/murder/absorb(null, traitor)
 	switch (rand(1,3))
-		if (1)
-			var/datum/objective/specialist/wraith/travel/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (2)
-			var/datum/objective/specialist/wraith/survive/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
-		if (3)
-			var/datum/objective/specialist/wraith/flawless/T = new
-			T.owner = traitor
-			T.set_up()
-			traitor.objectives += T
+		if(1)
+			new/datum/objective/specialist/wraith/travel(null, traitor)
+		if(2)
+			new/datum/objective/specialist/wraith/survive(null, traitor)
+		if(3)
+			new/datum/objective/specialist/wraith/flawless(null, traitor)

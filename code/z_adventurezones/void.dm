@@ -20,20 +20,23 @@ CONTENTS:
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
 
-	New()
-		..()
-		SPAWN_DBG(1 SECOND)
-			process()
+/area/crunch/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/spooky/Void_Wail.ogg','sound/ambience/spooky/Void_Calls.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/crunch/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
+
+/area/crunch/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg',\
+		'sound/ambience/spooky/Void_Screaming.ogg',\
+		'sound/ambience/spooky/Void_Wail.ogg',\
+		'sound/ambience/spooky/Void_Calls.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /turf/unsimulated/wall/void
 	name = "dense void"
@@ -79,10 +82,10 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 
@@ -104,10 +107,10 @@ CONTENTS:
 	blob_act(var/power)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 //////////////////////////////
@@ -144,7 +147,7 @@ CONTENTS:
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			update_chairs()
 
 		overlays_list["cables"] = new /image('icons/obj/machines/mindswap.dmi', "mindswap-cables")
@@ -372,7 +375,26 @@ CONTENTS:
 		UpdateIcons()
 
 	proc/can_operate()
-		return chair1 && ishuman(chair1.buckled_guy) && !chair1.buckled_guy:on_chair && chair2 && ishuman(chair2.buckled_guy) && !chair2.buckled_guy:on_chair
+		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
+
+	proc/valid_mindswap(mob/M)
+		. = 0
+		if(isliving(M))
+			. = 1
+
+		if(issilicon(M))
+			. = 0
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.on_chair)
+				. = 0
+		if(istype(M, /mob/living/critter))
+			var/mob/living/critter/C = M
+			if(C.dormant || C.ghost_spawned)
+				. = 0
+		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
+			. = 0
 
 	proc/do_swap()
 
@@ -410,7 +432,7 @@ CONTENTS:
 				B.changeStatus("weakened", 5 SECONDS)
 				B.show_text("<B>IT HURTS!</B>", "red")
 				B.shock(src, 75000, ignore_gloves=1)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					playsound(src.loc, 'sound/machines/modem.ogg', 100, 1)
 					A.show_text("<B>You feel your mind slipping...</B>", "red")
 					A.changeStatus("drowsy", 20 SECONDS)
@@ -436,7 +458,7 @@ CONTENTS:
 						success = 0
 
 				else if(!can_operate()) //Someone was being clever during the process
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if(A)
 							playsound(A.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 70, 1)
 							A.show_text("<B>The residual energy from the machine suddenly rips you apart!</B>", "red")
@@ -472,6 +494,6 @@ CONTENTS:
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50,1)
 				src.visible_message("<span class='alert'>\The [src] emits a whirring and clicking noise followed by an angry beep!</span>")
 
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			operating = 0
 			UpdateIcons()

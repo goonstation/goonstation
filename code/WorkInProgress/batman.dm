@@ -4,7 +4,7 @@
 /mob/living/carbon/human/batman
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(src.bioHolder)
 				src.bioHolder.age = 120
 				src.bioHolder.AddEffect("nightvision", 0, 0, 0)
@@ -81,7 +81,7 @@
 	var/pow_type = pick(/obj/decal/batman_pow, /obj/decal/batman_pow/wham)
 	var/obj/decal/batman_pow/pow = new pow_type(target_location)
 	animate_portal_appear(pow)
-	SPAWN_DBG(1 SECOND) qdel(pow)
+	SPAWN(1 SECOND) qdel(pow)
 
 /mob/proc/batsmoke()
 	set category = "Batman"
@@ -108,7 +108,7 @@
 	var/i
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
-		if (get_dist(A,T) < 1)
+		if (GET_DIST(A,T) < 1)
 			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
@@ -196,7 +196,7 @@
 	if(usr.stat)
 		boutput(usr, "<span class='alert'>Not when you're incapped!</span>")
 		return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		T.setStatus("stunned", 10 SECONDS)
 		usr.visible_message("<span class='alert'><B>[usr] leaps into the air, shocking [T]!</B></span>", "<span class='alert'><B>You leap into the air, shocking [T]!</B></span>")
 		for(var/i = 0, i < 5, i++)
@@ -265,7 +265,7 @@
 	set name = "Bat Spin \[Finisher]"
 	set desc = "Grab someone and spin them around until they explode"
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		usr.visible_message("<span class='alert'><B>[usr] grabs [T] tightly!</B></span>", "<span class='alert'><B>You grab [T] tightly!</B></span>")
 		T.u_equip(l_hand)
 		T.u_equip(r_hand)
@@ -332,11 +332,11 @@
 	usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
 	for(var/i=0, i<100, i++)
 		step_to(usr,T,0)
-		if (get_dist(usr,T) <= 1)
+		if (BOUNDS_DIST(usr, T) == 0)
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
+			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming [him_or_her(T)] in the head</B>!</span>")
 			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
 			random_brute_damage(T, 25)
 			usr.delStatus("weakened")

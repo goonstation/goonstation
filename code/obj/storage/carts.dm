@@ -8,7 +8,7 @@
 	icon_welded = "welded-crate"
 	soundproofing = 5
 	throwforce = 50
-	health = 4
+	flip_health = 4
 	can_flip_bust = 1
 	p_class = 1.5
 	var/obj/storage/cart/next_cart = null

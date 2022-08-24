@@ -27,7 +27,7 @@
 			src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
 	ui_data(mob/user)
@@ -144,34 +144,6 @@
 
 		..()
 		return
-
-	colosseum
-		flush()
-			flushing = 1
-			if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
-			else flick("disposal-flush", src)
-
-			var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
-																	// travels through the pipes.
-
-			H.init(src)	// copy the contents of disposer to holder
-
-			sleep(1 SECOND)
-			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(0.5 SECONDS) // wait for animation to finish
-
-
-			H.start(src) // start the holder processing movement
-			flushing = 0
-			// now reset disposal state
-			flush = 0
-			if(mode == 2)	// if was ready,
-				mode = 1	// switch to charging
-			update()
-			return
-
-		ex_act(severity)
-			return
 
 /obj/machinery/disposal/mail/autoname
 	autoname = 1

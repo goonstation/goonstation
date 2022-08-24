@@ -29,15 +29,15 @@
 	proc/set_up()
 		return 0
 
-	proc/onGenerate(var/turf/simulated/wall/asteroid/AST)
+	proc/onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!istype(AST))
 			return 1
 
-	proc/onHit(var/turf/simulated/wall/asteroid/AST)
+	proc/onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!istype(AST))
 			return 1
 
-	proc/onExcavate(var/turf/simulated/wall/asteroid/AST)
+	proc/onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!istype(AST))
 			return 1
 
@@ -155,13 +155,13 @@
 	tiles_per_rock_max = 8
 	mining_health = 300
 
-	onHit(var/turf/simulated/wall/asteroid/AST)
+	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
 			L.changeStatus("radiation", 5 SECONDS, 2)
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
@@ -206,6 +206,7 @@
 /datum/ore/miracle
 	name = "miraclium"
 	output = /obj/item/raw_material/miracle
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
 	hardness_mod = 2
@@ -244,6 +245,7 @@
 /datum/ore/nanite
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15
 	hardness_mod = 2
@@ -253,14 +255,14 @@
 	no_pick = 1
 	mining_health = 300
 
-	onHit(var/turf/simulated/wall/asteroid/AST)
+	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)
 			return 1
 		if(prob(25))
 			var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
 			N.set_loc(AST)
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)
 			return 1
 		var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)

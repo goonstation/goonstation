@@ -15,7 +15,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	New()
 		..()
 		if (!src.load())
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!src.loaded)
 					src.load()
 
@@ -37,13 +37,14 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			else
 				loadTries++
 				if (loadTries >= 5)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing("diary", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
 				return 0
 
 
 		//Shortcut proc for event-type exports
 		event(type, data)
+			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
 			if (!type) return 0
 			var/list/eventArgs = list("type" = type)
 			if (data) eventArgs |= data
@@ -57,6 +58,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		text_args(list/arguments)
 			return src.apikey_scrub(list2params(arguments))
+
+		export_async(iface, args)
+			set waitfor = FALSE
+			export(iface, args)
 
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
@@ -101,7 +106,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		logDebug(log)
 			if (!log) return 0
-			logTheThing("debug", null, null, "<b>IRCBOT DEBUGGING:</b> [log]")
+			logTheThing(LOG_DEBUG, null, "<b>IRCBOT DEBUGGING:</b> [log]")
 			return 1
 
 
@@ -110,7 +115,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
-	admin_only
+	ADMIN_ONLY
 
 	ircbot.toggleDebug(src)
 	return 1
@@ -140,8 +145,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/res = ircbot.export("link", ircmsg)
 
 	if (res)
-		alert(src, "Please return to Discord and look for any Medical Assistant PMs.")
+		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
 	else
-		alert(src, "An unknown internal error occurred. Please report this.")
+		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0

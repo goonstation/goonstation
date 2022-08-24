@@ -5,6 +5,7 @@ obj/structure
 		icon_state = "girder"
 		anchored = 1
 		density = 1
+		material_amt = 0.2
 		var/state = 0
 		desc = "A metal support for an incomplete wall. Metal could be added to finish the wall, reinforced metal could make the girders stronger, or it could be pried to displace it."
 
@@ -31,18 +32,18 @@ obj/structure
 
 obj/structure/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if(prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			return
 	return
 
-/obj/structure/girder/attack_hand(mob/user as mob)
+/obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(50))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -53,6 +54,7 @@ obj/structure/ex_act(severity)
 					shake_camera(N, 4, 1, 8)
 		if (prob(80))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a girder at [log_loc(src)].")
 			if (istype(src, /obj/structure/girder/reinforced))
 				var/atom/A = new /obj/structure/girder(src)
 				if (src.material)
@@ -77,7 +79,7 @@ obj/structure/ex_act(severity)
 			return
 	..()
 
-/obj/structure/girder/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && state == 0 && anchored && !istype(src, /obj/structure/girder/displaced))
 		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISASSEMBLE), user)
 
@@ -140,7 +142,7 @@ obj/structure/ex_act(severity)
 
 	onUpdate()
 		..()
-		if (the_girder == null || the_tool == null || owner == null || get_dist(owner, the_girder) > 1)
+		if (the_girder == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_girder) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -222,7 +224,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 			if (GIRDER_PLATE)
 				verbens = "finishes plating"
-				logTheThing("station", owner, null, "builds a Wall in [owner.loc.loc] ([showCoords(owner.x, owner.y, owner.z)])")
+				logTheThing(LOG_STATION, owner, "builds a Wall in [owner.loc.loc] ([log_loc(owner)])")
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
@@ -241,7 +243,7 @@ obj/structure/ex_act(severity)
 				qdel(the_girder)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_girder].</span>")
 
-/obj/structure/girder/displaced/attack_hand(mob/user as mob)
+/obj/structure/girder/displaced/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(70))
 			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -252,6 +254,7 @@ obj/structure/ex_act(severity)
 					shake_camera(N, 4, 1, 8)
 		if (prob(70))
 			boutput(user, text("<span class='notice'>You smash through the girder.</span>"))
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a girder at [log_loc(src)].")
 			qdel(src)
 			return
 		else
@@ -259,7 +262,7 @@ obj/structure/ex_act(severity)
 			return
 	..()
 
-/obj/structure/girder/displaced/attackby(obj/item/W as obj, mob/user as mob)
+/obj/structure/girder/displaced/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/sheet))
 		if (!istype(src.loc, /turf/simulated/floor/))
@@ -293,7 +296,7 @@ obj/structure/ex_act(severity)
 		FW.known_by += user
 		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
-		logTheThing("station", user, null, "builds a False Wall in [user.loc.loc] ([showCoords(user.x, user.y, user.z)])")
+		logTheThing(LOG_STATION, user, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")
 		qdel(src)
 		return
 
@@ -350,7 +353,7 @@ obj/structure/ex_act(severity)
 		else
 			icon_state = "woodwall"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (ishuman(user) && !user.is_zombie)
 			var/mob/living/carbon/human/H = user
 			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
@@ -381,7 +384,7 @@ obj/structure/ex_act(severity)
 		else
 			return
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_repair_wall(W, src, 30), user)
 			return

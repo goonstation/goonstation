@@ -319,7 +319,7 @@ datum/pathogeneffects/benevolent/oxytocinproduction
 			return
 		for (var/mob/living/carbon/human/H in view(1, M))
 			if (ckey(param) == ckey(H.name) && prob(origin.spread*2))
-				SPAWN_DBG(0.5)
+				SPAWN(0.5)
 					infect_direct(H, origin, "hug")
 				return
 

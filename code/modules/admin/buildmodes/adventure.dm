@@ -6,9 +6,9 @@
 Click on the secondary adventure button to begin your adventure journey!<br>
 ***********************************************************"}
 	icon_state = "buildadventure"
-	var/atom/movable/screen/buildmode/buildadventure/adventure_mode
-	var/datum/adventure_submode/submode
-	var/list/submodes = list()
+	var/tmp/atom/movable/screen/buildmode/buildadventure/adventure_mode
+	var/tmp/datum/adventure_submode/submode
+	var/tmp/list/submodes = list()
 
 	New()
 		..()

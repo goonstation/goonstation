@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
 		playsound(T, "sound/effects/mag_warp.ogg", 100, 1)
-		user.set_loc(pick(wormholeturfs))
+		user.set_loc(pick(random_floor_turfs))
 
 /datum/artifact_fault/grow
 	// embiggens the artifact
@@ -127,10 +127,11 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			var/obj/item/I = O
 			if (I.loc == user)
 				user.u_equip(I)
-				I.dropped()
+				I.dropped(user)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
 		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		logTheThing(LOG_COMBAT, user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 
 /datum/artifact_fault/explode
@@ -147,7 +148,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		if (isitem(O))
 			var/obj/item/I = O
 			user.u_equip(I)
-			I.dropped()
+			I.dropped(user)
 		explosion(O, T, 0, 1, 2, 4)
 		O.ArtifactDestroyed()
 
@@ -194,7 +195,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 			else
 				user.say(generate_message(O, user))
 			var/datum/artifact/A = O.artifact
-			logTheThing("say", src, null, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
+			logTheThing(LOG_SAY, src, "SAY: [html_encode(msg)] [log_loc(user)] (was forced to speak by artifact of type [A.type] due to fault [src.type])")
 			return
 		switch(text_style)
 			if ("small")
@@ -252,13 +253,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 		..()
 		if(prob(70))
 			allowed_emoji = list()
-			for(var/i in 1 to rand(10))
+			for(var/i in 1 to rand(1, 10))
 				allowed_emoji += random_emoji()
 
 	generate_message(obj/O, mob/living/user)
 		. = list()
-		for(var/i in 1 to rand(10))
-			if(isnull(src.allowed_emoji) || prob(2))
+		for(var/i in 1 to rand(1, 10))
+			if(!length(src.allowed_emoji) || prob(2))
 				. += random_emoji()
 			else
 				. += pick(src.allowed_emoji)

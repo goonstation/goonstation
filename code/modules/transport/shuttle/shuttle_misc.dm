@@ -1,6 +1,7 @@
+ABSTRACT_TYPE(/obj/machinery/shuttle)
 /obj/machinery/shuttle
 	name = "shuttle"
-	icon = 'icons/turf/shuttle.dmi'
+	icon = 'icons/obj/shuttle.dmi'
 
 	New()
 		..()
@@ -9,7 +10,7 @@
 /obj/machinery/shuttle/engine
 	name = "engine"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 
 /obj/machinery/shuttle/engine/heater
@@ -50,7 +51,7 @@
 // SHUTTLE THRUSTER DAMAGE STARTS HERE
 //////////////////////////////////////////
 
-/obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shuttle/engine/propulsion/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W))
 		if (src.stat1 == 0)
 			boutput(user, "<span class='notice'>Resecuring outer frame.</span>")

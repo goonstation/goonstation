@@ -174,7 +174,7 @@
 				if (usage_count_builder)
 					newsignal.data["usage_breakdown"] = usage_count_builder
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("read_power", newsignal)
 
 				return newsignal
@@ -199,7 +199,7 @@
 				newsignal.data["damage_num"] = dmg_count
 				newsignal.data["degradation"] = cruiser.degradation
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("get_damage", newsignal)
 
 			if ("power_ratios")
@@ -209,7 +209,7 @@
 				newsignal.data["ratio_defense"] = cruiser.power_defense
 				newsignal.data["ratio_offense"] = cruiser.power_offense
 
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("power_ratios", newsignal)
 
 				return newsignal
@@ -262,7 +262,7 @@
 								cruiser.degradation = min(cruiser.degradation + 5, 100)
 					else
 						newsignal.data["info"] = "INTERNAL ERROR. UNKNOWN SYSTEM"
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("reboot", newsignal)
 				return
 
@@ -283,7 +283,7 @@
 						cruiser.power_defense = percentage
 
 				newsignal.data["info"] = "Set [signal.data["system"]] to [percentage]%"
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					send_command("set_power", newsignal)
 
 			else

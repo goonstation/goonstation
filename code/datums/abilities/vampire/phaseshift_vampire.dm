@@ -44,7 +44,7 @@
 				M.special_sprint |= SPRINT_BAT_CLOAKED
 				icon_state = "mist"
 
-		boutput(M, __blue("Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
+		boutput(M, "<span class='notice'>Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
 
 		return 0
 
@@ -87,8 +87,8 @@
 
 		spell_invisibility(M, src.duration, 1)
 		H.locked = 1 // Can't use any powers during phaseshift.
-		SPAWN_DBG (src.duration)
+		SPAWN(src.duration)
 			if (H) H.locked = 0
 
-		logTheThing("combat", M, null, "uses mist form at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses mist form at [log_loc(M)].")
 		return 0

@@ -1,0 +1,1323 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles1"
+	},
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"aH" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"aJ" = (
+/obj/table/regal/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/few,
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
+	initial_volume = 0;
+	name = "Ancient Blue Label Scotch";
+	pixel_x = 9
+	},
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/item/paper/cruiser_bought,
+/turf/simulated/floor/carpet/purple/standard/edge/sw,
+/area/prefab/crashed_hop_shuttle)
+"aX" = (
+/obj/rack,
+/obj/item/clothing/head/that/gold,
+/obj/item/spacecash/bag,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"bj" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bY" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/noGenerate)
+"cu" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/damaged3,
+/area/prefab/crashed_hop_shuttle)
+"cA" = (
+/obj/table/wood/auto/desk,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"dg" = (
+/obj/decoration/ceilingfan,
+/turf/simulated/floor/carpet/purple/fancy/narrow/west,
+/area/prefab/crashed_hop_shuttle)
+"eo" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"ev" = (
+/obj/decoration/regallamp,
+/turf/simulated/floor/carpet/purple/standard/edge/nw,
+/area/prefab/crashed_hop_shuttle)
+"ex" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/armor/hopcoat,
+/obj/item/clothing/glasses/regular,
+/obj/item/clothing/head/headband/nyan/leopard,
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/prefab/crashed_hop_shuttle)
+"eB" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/prefab/crashed_hop_shuttle)
+"eJ" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/structure/girder/displaced,
+/turf/space,
+/area/noGenerate)
+"fd" = (
+/obj/decal/cleanable/vomit,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/simulated/floor/carpet/purple/standard/edge/east,
+/area/prefab/crashed_hop_shuttle)
+"go" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/prefab/crashed_hop_shuttle)
+"gr" = (
+/obj/structure/girder,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"gv" = (
+/obj/rack,
+/obj/item/spacecash/bag,
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/device/light/zippo/gold,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"gE" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"gR" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless/scorched,
+/area/prefab/crashed_hop_shuttle)
+"hB" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/tubesponge/small,
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"hG" = (
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/prefab/crashed_hop_shuttle)
+"hJ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
+"iR" = (
+/obj/machinery/door/airlock/gannets/command/alt,
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"jd" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"jm" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"jK" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
+"jS" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"kq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"lh" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/prefab/crashed_hop_shuttle)
+"lk" = (
+/turf/simulated/floor/carpet/regalcarpet,
+/area/prefab/crashed_hop_shuttle)
+"lw" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/prefab/crashed_hop_shuttle)
+"mk" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"mY" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"nE" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"pa" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"ph" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"pQ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"qA" = (
+/turf/simulated/floor/carpet/regalcarpet/border,
+/area/prefab/crashed_hop_shuttle)
+"rm" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	name = "Toilet"
+	},
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"ro" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"rL" = (
+/obj/computerframe{
+	desc = "It is highly unlikely that this still works.";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "datamedb";
+	name = "smashed computer"
+	},
+/obj/map/light/screen,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"rM" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"sA" = (
+/turf/simulated/floor/damaged4,
+/area/prefab/crashed_hop_shuttle)
+"sG" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"sH" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles4"
+	},
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"sL" = (
+/obj/table/wood/round,
+/turf/simulated/floor/carpet/regalcarpet/border,
+/area/prefab/crashed_hop_shuttle)
+"tr" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/prefab/crashed_hop_shuttle)
+"tD" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/stool/bee_bed{
+	desc = "A soft little bed the general size and shape of a corgi.";
+	name = "dog bed"
+	},
+/mob/living/critter/small_animal/dog/corgi{
+	desc = "An adorable corgi who many people would literally die for.";
+	dir = 4;
+	name = "Liam"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/ne,
+/area/prefab/crashed_hop_shuttle)
+"tO" = (
+/obj/stool/bar,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/crashed_hop_shuttle)
+"uX" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/prefab/crashed_hop_shuttle)
+"uZ" = (
+/obj/grille/steel,
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"vk" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	opacity = 1
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"vq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	opacity = 1
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"vT" = (
+/turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
+"wb" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	opacity = 1
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"wu" = (
+/obj/rack,
+/obj/item/spacecash/bag,
+/obj/item/spacecash/fifty,
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/cigarbox/gold,
+/obj/blind_switch/area/east,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"wP" = (
+/turf/simulated/floor/carpet/purple/standard/edge/west,
+/area/prefab/crashed_hop_shuttle)
+"wQ" = (
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/prefab/crashed_hop_shuttle)
+"xg" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+/turf/simulated/floor/carpet/purple/fancy/narrow/east,
+/area/prefab/crashed_hop_shuttle)
+"xh" = (
+/obj/item/furniture_parts/comfy_chair,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8;
+	icon_state = "tube-broken"
+	},
+/turf/simulated/floor/damaged3,
+/area/prefab/crashed_hop_shuttle)
+"xl" = (
+/turf/space,
+/area/noGenerate)
+"yf" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
+"yy" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"yI" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/damaged5,
+/area/prefab/crashed_hop_shuttle)
+"zB" = (
+/obj/machinery/computer/card/portable,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/hop,
+/turf/simulated/floor/carpet/purple/standard/edge/se,
+/area/prefab/crashed_hop_shuttle)
+"zM" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"Al" = (
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"Am" = (
+/obj/sea_plant_manta/coralfingers,
+/mob/living/critter/aquatic/fish/tang{
+	desc = "This one holds a beauty that goes beyond words...";
+	name = "Milly"
+	},
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"Bt" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles3"
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"BR" = (
+/obj/table/wood/round,
+/obj/item/device/light/candle{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/matchbook,
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/prefab/crashed_hop_shuttle)
+"BW" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"CJ" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/turf/space,
+/area/noGenerate)
+"CS" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Dc" = (
+/obj/decoration/decorativeplant/plant4{
+	desc = "Is it flora or is it fauna? Hm. Oh, it's plastic."
+	},
+/obj/decal/fakeobjects/lighttube_broken,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Dg" = (
+/obj/decoration/bookcase,
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/prefab/crashed_hop_shuttle)
+"EQ" = (
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
+"Ge" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"GG" = (
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"GO" = (
+/turf/space,
+/area/allowGenerate)
+"Hg" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/noGenerate)
+"Hz" = (
+/obj/rack,
+/obj/item/spacecash/bag,
+/obj/item/spacecash/hundred,
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/clothing/head/laurels/gold,
+/turf/simulated/floor/carpet{
+	dir = 3;
+	icon_state = "green2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"HO" = (
+/obj/lattice,
+/obj/structure/girder/displaced,
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"Ij" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"IT" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/bulbous,
+/mob/living/critter/aquatic/fish/tang{
+	desc = "This one holds a beauty that goes beyond words...";
+	name = "Philly"
+	},
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"Jb" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"Kd" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/playing_card/expensive,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/crashed_hop_shuttle)
+"Ke" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"Kk" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/seaweed,
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"Kl" = (
+/turf/simulated/floor/airless{
+	icon_state = "damaged4"
+	},
+/area/noGenerate)
+"Lh" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"MD" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/crashed_hop_shuttle)
+"MK" = (
+/obj/lattice,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"MQ" = (
+/obj/decoration/decorativeplant/plant4,
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/prefab/crashed_hop_shuttle)
+"MU" = (
+/obj/rack,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/spacecash/bag,
+/obj/item/stamped_bullion,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"Nx" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/access_spawn/head_of_personnel,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Oo" = (
+/obj/decoration/clock,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"Op" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/standard/edge,
+/area/prefab/crashed_hop_shuttle)
+"OE" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"OQ" = (
+/turf/simulated/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/prefab/crashed_hop_shuttle)
+"Pa" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/prefab/crashed_hop_shuttle)
+"Pc" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles3"
+	},
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"Pu" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/obj/sea_plant/anemone,
+/turf/simulated/floor/sand,
+/area/prefab/crashed_hop_shuttle)
+"PP" = (
+/obj/machinery/vending/alcohol,
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"PZ" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Qs" = (
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/prefab/crashed_hop_shuttle)
+"QJ" = (
+/obj/machinery/door/window/westright{
+	dir = 1;
+	tag = "icon-right (NORTH)"
+	},
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"QN" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/storage/box/donkpocket_kit,
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"Rg" = (
+/obj/rack,
+/obj/item/spacecash/bag,
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/clothing/head/barrette/butterflyblu,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"SY" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"Ty" = (
+/turf/simulated/floor,
+/area/prefab/crashed_hop_shuttle)
+"TE" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fgreen1"
+	},
+/area/prefab/crashed_hop_shuttle)
+"TN" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
+"Uh" = (
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"Vb" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/crashed_hop_shuttle)
+"Vp" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 6;
+	pixel_y = -28
+	},
+/obj/item/furniture_parts/comfy_chair/blue,
+/turf/simulated/floor/damaged1,
+/area/prefab/crashed_hop_shuttle)
+"Vx" = (
+/obj/decoration/bookcase,
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"Vz" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
+/turf/simulated/floor/carpet/blue/fancy,
+/area/prefab/crashed_hop_shuttle)
+"VT" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/crashed_hop_shuttle{
+	opacity = 1
+	})
+"WZ" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Xn" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3";
+	opacity = 1
+	},
+/area/prefab/crashed_hop_shuttle)
+"Yh" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Yo" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fgreen2"
+	},
+/area/prefab/crashed_hop_shuttle)
+"Yu" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"Yz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/turf/space,
+/area/prefab/crashed_hop_shuttle)
+"YP" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/prefab/crashed_hop_shuttle)
+"YX" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/prefab/crashed_hop_shuttle)
+"Zn" = (
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"Zs" = (
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+"Zx" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
+
+(1,1,1) = {"
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+xl
+"}
+(2,1,1) = {"
+xl
+xl
+xl
+xl
+pa
+pa
+xl
+xl
+xl
+pa
+pa
+xl
+xl
+xl
+xl
+xl
+"}
+(3,1,1) = {"
+xl
+xl
+xl
+wb
+Lh
+Yu
+kq
+xl
+wb
+Lh
+Yu
+kq
+xl
+xl
+xl
+xl
+"}
+(4,1,1) = {"
+xl
+xl
+wb
+pQ
+Xn
+Xn
+pQ
+Xn
+pQ
+Xn
+Xn
+pQ
+yf
+xl
+xl
+xl
+"}
+(5,1,1) = {"
+xl
+xl
+OE
+eo
+Kk
+jm
+GG
+tO
+Pa
+tr
+Ty
+jS
+OE
+xl
+xl
+xl
+"}
+(6,1,1) = {"
+xl
+xl
+OE
+hB
+Am
+MD
+Ty
+Vb
+Kd
+uX
+Ty
+zM
+OE
+xl
+xl
+xl
+"}
+(7,1,1) = {"
+xl
+xl
+OE
+IT
+Pu
+MD
+Ty
+Vb
+Vz
+uX
+Ty
+PP
+OE
+xl
+xl
+xl
+"}
+(8,1,1) = {"
+GO
+xl
+yy
+Xn
+Xn
+SY
+Zs
+eB
+YP
+lw
+Ty
+Ge
+OE
+xl
+xl
+xl
+"}
+(9,1,1) = {"
+GO
+xl
+OE
+sG
+ph
+rm
+Ty
+nE
+QJ
+Ty
+Ty
+QN
+OE
+xl
+xl
+xl
+"}
+(10,1,1) = {"
+GO
+xl
+vk
+aH
+Xn
+Xn
+Jb
+aH
+Yh
+Yh
+Yh
+aH
+Yz
+xl
+xl
+xl
+"}
+(11,1,1) = {"
+GO
+GO
+xl
+OE
+BR
+go
+Qs
+Zx
+aX
+gv
+Rg
+YX
+xl
+xl
+xl
+xl
+"}
+(12,1,1) = {"
+GO
+GO
+xl
+OE
+Vx
+lk
+qA
+Nx
+Yo
+TE
+Hz
+YX
+xl
+xl
+xl
+xl
+"}
+(13,1,1) = {"
+GO
+Ij
+Ij
+OE
+Vx
+lk
+sL
+Zx
+wu
+Al
+MU
+YX
+xl
+xl
+xl
+xl
+"}
+(14,1,1) = {"
+GO
+Ij
+Ij
+OE
+Dg
+wQ
+lh
+yy
+Xn
+iR
+Xn
+SY
+xl
+xl
+xl
+xl
+"}
+(15,1,1) = {"
+GO
+Ij
+Ij
+yy
+Xn
+BW
+Xn
+SY
+ev
+wP
+aJ
+OE
+xl
+xl
+xl
+xl
+"}
+(16,1,1) = {"
+GO
+Ij
+Ij
+OE
+sH
+Zs
+Bt
+iR
+hG
+dg
+Op
+OE
+xl
+xl
+xl
+GO
+"}
+(17,1,1) = {"
+GO
+GO
+Ij
+eJ
+TN
+Zs
+cu
+Oo
+ex
+xg
+MQ
+VT
+xl
+xl
+GO
+GO
+"}
+(18,1,1) = {"
+xl
+xl
+Ij
+OE
+yI
+sA
+Dc
+jK
+tD
+fd
+zB
+OE
+xl
+xl
+GO
+GO
+"}
+(19,1,1) = {"
+xl
+xl
+bj
+gr
+CJ
+Zs
+vT
+vq
+Xn
+iR
+Xn
+hJ
+xl
+Ij
+GO
+GO
+"}
+(20,1,1) = {"
+xl
+xl
+bj
+Hg
+EQ
+OQ
+CS
+xh
+PZ
+Zs
+WZ
+HO
+bj
+bj
+Ij
+GO
+"}
+(21,1,1) = {"
+xl
+xl
+bj
+gE
+Ke
+Ke
+Zs
+vT
+cA
+Zs
+Vp
+OE
+bj
+Ij
+Ij
+GO
+"}
+(22,1,1) = {"
+xl
+xl
+xl
+Hg
+MK
+Zn
+Ke
+ak
+PZ
+rL
+Uh
+OE
+bj
+Ij
+GO
+GO
+"}
+(23,1,1) = {"
+GO
+GO
+Ij
+Ij
+Pc
+Uh
+mk
+bY
+gR
+jd
+uZ
+ro
+Ij
+Ij
+GO
+GO
+"}
+(24,1,1) = {"
+GO
+GO
+Ij
+Ij
+Ij
+Uh
+Ij
+Kl
+mY
+Uh
+Uh
+Ij
+Ij
+Ij
+GO
+GO
+"}
+(25,1,1) = {"
+GO
+GO
+GO
+GO
+Ij
+Ij
+Ij
+Ij
+Ij
+rM
+Ij
+Ij
+GO
+GO
+GO
+GO
+"}
+(26,1,1) = {"
+GO
+GO
+GO
+GO
+GO
+GO
+Ij
+Ij
+Ij
+bj
+Ij
+GO
+GO
+GO
+GO
+GO
+"}
+(27,1,1) = {"
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+GO
+"}

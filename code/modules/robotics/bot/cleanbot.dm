@@ -8,8 +8,8 @@
 	name = "proxy bucket"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "bucket_proxy"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -82,7 +82,7 @@
 		icon_state_base = copytext(icon_state, 1, -1)
 		src.add_simple_light("bot", list(255, 255, 255, 255 * 0.4))
 
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (src)
 				src.clear_invalid_targets = TIME
 
@@ -113,7 +113,7 @@
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(src.reagent_emagged, 50)
 
-			logTheThing("station", src.emagger, null, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
 			return 1
 
 		return 0
@@ -155,7 +155,7 @@
 
 		return
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		src.add_fingerprint(user)
 		var/dat = ""
 
@@ -163,7 +163,7 @@
 		dat += "<br><br>"
 		dat += "Status: <A href='?src=\ref[src];start=1'>[src.on ? "On" : "Off"]</A><br>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Cleanerbot v1.1 controls",
@@ -234,7 +234,7 @@
 			src.doing_something = 1
 
 			// are we there yet
-			if (IN_RANGE(src, src.target, 1))
+			if ((BOUNDS_DIST(src, src.target) == 0))
 				do_the_thing()
 				// stop the bot mover so it doesn't interrupt us if we're already in range
 				src.frustration = 0
@@ -310,10 +310,10 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				src.explode()
 				return
-			if (2.0)
+			if (2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode()

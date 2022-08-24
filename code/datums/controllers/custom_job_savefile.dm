@@ -1,25 +1,25 @@
 //some of this stuff is shamelessly based from savefile.dm. yay!! blame MBC if it breaks.
 
-datum/job_controller/proc/savefile_path(client/user)
-	return "data/admin_custom_job_saves/[src.load_another_ckey ? src.load_another_ckey : user.ckey].sav"
+datum/job_controller/proc/savefile_path(key)
+	return "data/admin_custom_job_saves/[src.load_another_ckey ? src.load_another_ckey : ckey(key)].sav"
 
-datum/job_controller/proc/savefile_path_exists(client/user)
-	var/path = savefile_path(user)
+datum/job_controller/proc/savefile_path_exists(key)
+	var/path = savefile_path(key)
 	if (!fexists(path))
 		return 0
 	return path
 
-datum/job_controller/proc/savefile_delete(client/user, profileNum=1)
-	fdel(savefile_path(user))
+datum/job_controller/proc/savefile_delete(key, profileNum=1)
+	fdel(savefile_path(key))
 
 datum/job_controller/proc/savefile_unlock(client/user)
-	if (savefile_path_exists(user))
-		var/savefile/F = new /savefile(src.savefile_path(user), -1)
+	if (savefile_path_exists(user.ckey))
+		var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
 		F.Unlock()
 
 datum/job_controller/proc/savefile_version_pass(client/user)
 	var/version = null
-	var/savefile/F = new /savefile(src.savefile_path(user), -1)
+	var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
 	F["version"] >> version
 	if (isnull(version) || version < CUSTOMJOB_SAVEFILE_VERSION_MIN || version > CUSTOMJOB_SAVEFILE_VERSION_MAX)
 		if (!src.load_another_ckey)
@@ -29,7 +29,7 @@ datum/job_controller/proc/savefile_version_pass(client/user)
 
 datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
-	var/savefile/F = new /savefile(src.savefile_path(user), -1)
+	var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
 	F.Lock(-1)
 
 	F["version"] << CUSTOMJOB_SAVEFILE_VERSION_MAX
@@ -74,13 +74,13 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	return 1
 
 datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
-	if (!savefile_path_exists(user))
+	if (!savefile_path_exists(user.ckey))
 		return 0
 
 	if (!src.savefile_version_pass(user))
 		return 0
 
-	var/path = savefile_path(user)
+	var/path = savefile_path(user.ckey)
 
 	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
 
@@ -145,10 +145,10 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 
 datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 
-	if (!savefile_path_exists(user))
+	if (!savefile_path_exists(user.ckey))
 		return 0
 
-	var/path = savefile_path(user)
+	var/path = savefile_path(user.ckey)
 	profileNum = clamp(profileNum, 1, CUSTOMJOB_SAVEFILE_PROFILES_MAX)
 
 	var/savefile/F = new /savefile(path, -1)

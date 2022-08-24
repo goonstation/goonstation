@@ -10,7 +10,7 @@
 	throw_range = 15
 	w_class = W_CLASS_SMALL
 
-/obj/item/bell/attack_hand(mob/user as mob)
+/obj/item/bell/attack_hand(mob/user)
 	if ((!isturf(src.loc) && !user.is_in_hands(src)))
 		return ..()
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
@@ -21,7 +21,7 @@
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)
 
-/obj/item/bell/MouseDrop(mob/user as mob) // copy paste
+/obj/item/bell/mouse_drop(mob/user as mob) // copy paste
 	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()

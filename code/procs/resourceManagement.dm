@@ -67,7 +67,7 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug Resource Cache"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	var/msg = "Resource cache contents:"
 	for (var/r in cachedResources)
@@ -79,12 +79,12 @@
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Resource Cache"
 	set desc = "Enable or disable the resource cache system"
-	admin_only
+	ADMIN_ONLY
 
 	disableResourceCache = !disableResourceCache
 	boutput(usr, "<span class='notice'>Toggled the resource cache [disableResourceCache ? "off" : "on"]</span>")
-	logTheThing("admin", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
-	logTheThing("diary", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
+	logTheThing(LOG_DIARY, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
 	message_admins("[key_name(usr)] toggled the resource cache [disableResourceCache ? "off" : "on"]")
 
 

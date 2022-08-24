@@ -227,7 +227,7 @@
 		src.updateDialog()
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 
 		src.add_dialog(user)

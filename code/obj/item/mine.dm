@@ -33,7 +33,7 @@
 		if (!src.suppress_flavourtext)
 			. += "It appears to be [src.armed ? "armed" : "disarmed"]."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 
 		if (prob(50) && src.armed && !src.used_up)
@@ -44,7 +44,7 @@
 
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (prob(50) && src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] fumbles with the [src.name], accidentally setting it off!</b></span>")
@@ -53,14 +53,14 @@
 
 		..()
 
-	pull(mob/user as mob)
+	pull(mob/user)
+		if (..())
+			return
 		if (src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] tries to pull the [src.name], triggering the anti-tamper mechanism!</b></span>")
 			src.triggered(user)
 			return
-
-		..()
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -73,7 +73,7 @@
 			src.armed = FALSE
 			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
-			logTheThing("bombing", user, null, "has disarmed the [src.name] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
 			src.our_timer.attack_self(user)
@@ -183,7 +183,7 @@
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"

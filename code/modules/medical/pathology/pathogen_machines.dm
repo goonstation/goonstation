@@ -17,7 +17,7 @@
 	var/obj/item/bloodslide/process_source
 	var/counter = 15
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
 		if (src.on)
 			output_text = "The centrifuge is currently working.<br><a href='?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
@@ -129,7 +129,7 @@
 					counter = 25
 		src.Attackhand(usr)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/bloodslide))
 			if (src.source)
 				boutput(user, "<span class='alert'>There is already a blood slide in the machine.</span>")
@@ -216,10 +216,10 @@
 		else
 			return null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.target)
 			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
-			if (get_dist(user.loc, src.loc) <= 1)
+			if (BOUNDS_DIST(user.loc, src.loc) == 0)
 				if (action == "View [target]")
 					if (zoom)
 						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
@@ -323,7 +323,7 @@
 					src.contents -= src.target
 					src.target = null
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish) || istype(O, /obj/item/bloodslide))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a [target] on the microscope.</span>")
@@ -357,18 +357,18 @@
 								if (P.curable_by_suppression)
 									act += "<br>The culture appears to be severely damaged by the suppressing agent."
 								src.supp_action[P.name] = act
-								SPAWN_DBG(10 SECONDS) // 100
+								SPAWN(10 SECONDS) // 100
 									src.supp_action -= P.name
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
 								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
 								if (a_in && !(a_in in src.symptom_action_in))
 									src.symptom_action_in += a_in
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_in -= a_in
 								if (a_out && !(a_out in src.symptom_action_out))
 									src.symptom_action_out += a_out
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
 
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
@@ -407,7 +407,7 @@
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			rescan()
 
 	proc/rescan()
@@ -416,7 +416,7 @@
 			P.comp = src
 			break
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -954,7 +954,7 @@
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
 					// how about some more feedback for what went wrong? :)
 					var/reason = ""
@@ -1067,7 +1067,7 @@
 		..()
 		flags |= NOSPLASH
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
 		if(!loaded)
 			firstFreeSlot = -2
@@ -1104,7 +1104,7 @@
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
 			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
-			logTheThing("pathology", user, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
 		else
@@ -1215,7 +1215,7 @@
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
 		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
 		else
@@ -1241,7 +1241,7 @@
 		src.add_module(new /obj/item/synthmodule/radiation())
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			return
 		..()
@@ -1262,7 +1262,7 @@
 			return 1
 		return 0
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if(status & (BROKEN|NOPOWER))
 			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
 			return
@@ -1537,25 +1537,25 @@
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 1)
 			else if (href_list["serumrad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 1)
 			else if (href_list["vaccine"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 0)
 			else if (href_list["vaccinerad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 0)
 			else if (href_list["antiagent"])
 				var/new_antiagent = href_list["antiagent"]
@@ -1583,7 +1583,7 @@
 						machine_state = 1
 						icon_state = "synth2"
 						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN_DBG (0 SECONDS)
+						SPAWN(0 SECONDS)
 							while(count > 0)
 								count--
 								sleep(5 SECONDS)
@@ -1654,7 +1654,7 @@
 	var/machine_state = 0
 	var/santime = 3 // 15
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass))
 			if (!sanitizing)
 				boutput(user, "<span class='notice'>You place the [O] inside the machine.</span>")
@@ -1693,7 +1693,7 @@
 				sanitizing = null
 				icon_state = "autoclave"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
@@ -1746,11 +1746,12 @@
 		flags |= NOSPLASH
 
 	update_icon()
-		src.overlays -= src.icon_beaker
 		if (src.target)
-			src.overlays += src.icon_beaker
+			icon_state = "incubator_on"
+		else
+			icon_state = "incubator"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(isnull(user.equipped()))
 			if (src.target)
 				src.target.set_loc(src.loc)
@@ -1759,7 +1760,7 @@
 				src.UpdateIcon()
 		return
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish))
 			if (src.target)
 				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")

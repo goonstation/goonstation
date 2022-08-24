@@ -11,7 +11,10 @@
 	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
 	var/deconstruct_flags = DECON_NONE
 
-	var/mechanics_type_override = null //Fix for children of scannable items being reproduced in mechanics
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 	var/artifact = null
 	var/move_triggered = 0
 	var/object_flags = 0
@@ -28,6 +31,8 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
+		if (!isnull(src.mats) && src.mats != 0 && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
@@ -70,16 +75,6 @@
 	proc/updateHealth(var/prevHealth)
 		if(_health <= 0)
 			onDestroy()
-/*		else
-			if((_health > 75) && !(prevHealth > 75))
-				//UpdateOverlays(null, "damage")
-			else if((_health <= 75 && _health > 50) && !(prevHealth <= 75 && prevHealth > 50))
-				//setTexture("damage1", BLEND_MULTIPLY, "damage")
-			else if((_health <= 50 && _health > 25) && !(prevHealth <= 50 && prevHealth > 25))
-				//setTexture("damage2", BLEND_MULTIPLY, "damage")
-			else if((_health <= 25) && !(prevHealth <= 25))
-				//setTexture("damage3", BLEND_MULTIPLY, "damage")
-		return*/
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
@@ -106,13 +101,13 @@
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				changeHealth(-100)
 				return
-			if(2.0)
+			if(2)
 				changeHealth(-70)
 				return
-			if(3.0)
+			if(3)
 				changeHealth(-40)
 				return
 			else
@@ -120,8 +115,8 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			pressure_resistance = round((material.getProperty("density") + material.getProperty("density")) / 2)
-			throwforce = round(max(material.getProperty("hard"),1) / 8)
+			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
+			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality
 			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
@@ -229,7 +224,7 @@
 
 	proc/initialize()
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
@@ -281,16 +276,17 @@
 	desc = "A bin for containing bedsheets."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
-	var/amount = 23.0
-	anchored = 1.0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
+	var/amount = 23
+	anchored = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			qdel(W)
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -308,16 +304,17 @@
 	desc = "A bin for containing towels."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bedbin"
-	var/amount = 23.0
-	anchored = 1.0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
+	var/amount = 23
+	anchored = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
 			qdel(W)
 			src.amount++
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -332,13 +329,13 @@
 
 
 /obj/lattice
-	desc = "A lightweight support lattice."
+	desc = "Intersecting metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
 	name = "lattice"
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1.0
+	anchored = 1
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -352,17 +349,17 @@
 	ex_act(severity)
 		src.material?.triggerExp(src, severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				qdel(src)
 				return
-			if(3.0)
+			if(3)
 				return
 			else
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
@@ -400,7 +397,7 @@
 			qdel(src)
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(W:try_weld(user,1))
 				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
@@ -436,11 +433,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0) src.barricade_damage(3)
-			if(3.0) src.barricade_damage(1)
+			if(2) src.barricade_damage(3)
+			if(3) src.barricade_damage(1)
 		return
 
 	blob_act(var/power)
@@ -480,12 +477,12 @@
 	New(newloc, deleteTimer)
 		..()
 		if (deleteTimer)
-			SPAWN_DBG(deleteTimer)
+			SPAWN(deleteTimer)
 				qdel(src)
 
 /obj/projection
 	name = "Projection"
-	anchored = 1.0
+	anchored = 1
 
 /obj/deskclutter
 	name = "desk clutter"
@@ -505,8 +502,8 @@
 /obj/proc/replace_with_explosive()
 	var/obj/O = src
 	if (alert("Are you sure? This will irreversibly replace this object with a copy that gibs the first person trying to touch it!", "Replace with explosive", "Yes", "No") == "Yes")
-		message_admins("[key_name(usr)] replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
-		logTheThing("admin", usr, null, "replaced [O] ([showCoords(O.x, O.y, O.z)]) with an explosive replica.")
+		message_admins("[key_name(usr)] replaced [O] ([log_loc(O)]) with an explosive replica.")
+		logTheThing(LOG_ADMIN, usr, "replaced [O] ([log_loc(O)]) with an explosive replica.")
 		var/obj/replica = new /obj/item/card/id/captains_spare/explosive(O.loc)
 		replica.icon = O.icon
 		replica.icon_state = O.icon_state

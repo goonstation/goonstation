@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	process()
 		src.update_water_status()
-		if (HAS_MOB_PROPERTY(src.critter_owner, PROP_BREATHLESS)) return
+		if (HAS_ATOM_PROPERTY(src.critter_owner, PROP_MOB_BREATHLESS)) return
 		if(src.critter_owner)
 			if(src.water_need)
 				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
 
-	/*SPAWN_DBG(0)
+	/*SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
@@ -249,12 +249,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	switch (act)
 		if ("flip")
 			if (src.emote_check(voluntary, 50) && !src.aquabreath_process.water_need)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
 				return null
 		if ("dance")
 			if (src.emote_check(voluntary, 100))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
 						src.set_dir(turn(src.dir, 90))
@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /mob/living/critter/aquatic/king_crab/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else
@@ -484,7 +484,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 					src.pixel_x-= 2
 					src.set_dir(turn(src.dir, 90))
 					sleep(0.2 SECONDS)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
 				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
@@ -498,12 +498,58 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
 				src.health_burn_vuln = 0.5
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3
 				return "<span class='alert'><b>[src]'s</b> chitin gleams.</span>"
 	return null
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//jellyfish
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/living/critter/aquatic/fish/jellyfish
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "Squishy"
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish"
+	base_move_delay = 2
+	hand_count = 2
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	death_text = "%src% collapses in a heap on the ground!"
+	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
+	add_abilities = list(/datum/targetable/critter/sting)
+
+/mob/living/critter/aquatic/fish/jellyfish/New()
+	..()
+	src.color = random_saturated_hex_color()
+	var/list/color_list = rgb2num(src.color)
+	src.add_medium_light("jellyglow", color_list + list(100))
+	SPAWN(0)
+		if(src.client)
+			src.is_npc = 0
+		else
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
+
+/mob/living/critter/aquatic/fish/jellyfish/setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
+	HH.limb = new /datum/limb/mouth/fish/jellyfish
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "mouth"
+	HH.name = "mouth"
+	HH.limb_name = "mouth"
+
+	HH = hands[2]
+	HH.limb = new /datum/limb/small_critter
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "handn"
+	HH.name = "tendrils"
+	HH.limb_name = "tendrils"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // aquatic mobcritter limbs
@@ -516,6 +562,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
 	stam_damage_mult = 0.2
 
+	jellyfish
+		dam_low = 3
+		dam_high = 8
+
 /datum/limb/king_crab // modified claw limb
 
 /datum/limb/king_crab/attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
@@ -527,7 +577,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		return
 
 	if (isobj(target))
-		switch (user.smash_through(target, list("window", "grille", "table")))
+		switch (user.smash_through(target, list("window", "grille", "table", "blob"))) //crab vs blob when
 			if (0)
 				if (isitem(target))
 					if (prob(33))
@@ -558,7 +608,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
@@ -581,7 +631,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
 	user.attack_effects(target, affecting)

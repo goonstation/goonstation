@@ -34,3 +34,8 @@
 
 //macro for lag-compensated probability - assumes lag-compensation multiplier is always called mult
 #define probmult(x) (prob(percentmult((x), mult)))
+
+#define THRESHOLD_UNDER 0
+#define THRESHOLD_OVER 1
+#define THRESHOLD_INIT THRESHOLD_UNDER
+

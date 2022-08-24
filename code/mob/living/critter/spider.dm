@@ -129,7 +129,7 @@
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.make_critter(src.adultpath)
 
 /mob/living/critter/spider/nice
@@ -144,6 +144,7 @@
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0
+	can_grab = 0
 	max_skins = 1
 	venom1 = "toxin"
 	venom2 = "black_goop"
@@ -159,6 +160,7 @@
 	health_brute = 5
 	health_burn = 5
 	good_grip = 0
+	can_grab = 0
 	max_skins = 1
 	venom1 = "toxin"
 	venom2 = "black_goop"
@@ -174,10 +176,10 @@
 	density = 0
 	flags = TABLEPASS
 	fits_under_table = 1
-	can_grab = 0 // Causes issues with tablepass, and doesn't make too much sense
 	health_brute = 25
 	health_burn = 25
 	good_grip = 0
+	can_grab = 0 // Causes issues with tablepass, and doesn't make too much sense
 	max_skins = 1
 	venom1 = "toxin"
 	venom2 = "black_goop"
@@ -195,6 +197,7 @@
 	health_burn = 10
 	health_burn_vuln = 1.5
 	good_grip = 0
+	can_grab = 0
 	venom1 = "toxin"
 	venom2 = "cryostylane"
 	bitesound = "sound/impact_sounds/Crystal_Hit_1.ogg"
@@ -237,6 +240,7 @@
 	venom2 = "spidereggs"
 	max_skins = 8
 	good_grip = 1
+	can_grab = 1
 
 /mob/living/critter/spider/spacerachnid
 	name = "spacerachnid"
@@ -395,7 +399,7 @@
 			count++
 			if (count > max_defensive_babies)
 				break
-			if (get_dist(src, CS) > 7)
+			if (GET_DIST(src, CS) > 7)
 				continue
 			if (defenders >= 3)
 				return
@@ -407,7 +411,7 @@
 			defenders++
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		playsound(location, "sound/musical_instruments/Bikehorn_1.ogg", 100, 1)
 		playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
@@ -451,7 +455,7 @@
 
 			I.set_loc(location)
 			I.layer = initial(I.layer)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				I.throw_at(target, 12, 3)
 
 	return bloods

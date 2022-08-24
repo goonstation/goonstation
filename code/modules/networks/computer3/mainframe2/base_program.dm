@@ -78,7 +78,7 @@
 						src.holder.root.holder = src
 						src.holder.root.name = "root"
 
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.master.post_status(termid, "command", "term_message", "data", message, "render", render)
 				return 0
 
@@ -101,7 +101,7 @@
 						src.holder.root.holder = src
 						src.holder.root.name = "root"
 
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.master.post_file(termid, "data", exdata, file)
 				return 0
 
@@ -613,6 +613,7 @@
 
 	//substitution_feedback_thing = list()	//debug
 	while(1)
+		text = html_decode(text) // makes it so this works again
 		findPosition = findtext(text, separator, searchPosition, 0)
 		var/quotePoint = findtext(text, QUOTE_SYMBOL, searchPosition, findPosition)
 		if (quotePoint)

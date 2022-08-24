@@ -1,0 +1,66 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/crate/robotparts,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/decal/cleanable/oil,
+/obj/storage/crate,
+/obj/item/cell/supercell,
+/obj/item/cell/supercell,
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/storage/box/cablesbox,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/item/cable_coil/cut,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/item/parts/robot_parts/arm/right/light,
+/obj/item/crowbar,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/item/parts/robot_parts/robot_frame,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/item/parts/robot_parts/leg/left/light,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+E
+f
+I
+"}
+(2,1,1) = {"
+E
+D
+K
+"}
+(3,1,1) = {"
+a
+i
+d
+"}

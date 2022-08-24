@@ -10,6 +10,7 @@
 	voice_grim = "sound/voice/wizard/MistFormGrim.ogg"
 	voice_fem = "sound/voice/wizard/MistFormFem.ogg"
 	voice_other = "sound/voice/wizard/MistFormLoud.ogg"
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
@@ -18,7 +19,7 @@
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("PHEE CABUE")
+			holder.owner.say("PHEE CABUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/SPtime = 35
@@ -56,12 +57,11 @@
 		return 1 // Return 1 if we got this far in the test run.
 
 	if (stop_burning == 1)
-		var/mob/living/carbon/human/HH = H
-		if (istype(HH) && HH.getStatusDuration("burning"))
-			boutput(HH, "<span class='notice'>The flames sputter out as you phase shift.</span>")
-			HH.delStatus("burning")
+		if (H.getStatusDuration("burning"))
+			boutput(H, "<span class='notice'>The flames sputter out as you phase shift.</span>")
+			H.delStatus("burning")
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mobloc = get_turf(H.loc)
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -132,7 +132,7 @@
 			src.y--
 			src.x--
 	src.movecd = 1
-	SPAWN_DBG(0.2 SECONDS) src.movecd = 0
+	SPAWN(0.2 SECONDS) src.movecd = 0
 
 /obj/dummy/spell_invis/ex_act(blah)
 	return
@@ -218,7 +218,7 @@
 		if (use_cloakofdarkness)
 			processing_items |= src
 
-		SPAWN_DBG(-1)
+		SPAWN(-1)
 			var/reduc_count = 0
 			while(src && !src.qdeled && owner && owner.stamina >= STAMINA_SPRINT && owner.client && owner.client.check_key(KEY_RUN))
 				reduc_count++
@@ -343,6 +343,7 @@
 
 
 	firepoof
+		name = "fireball"
 		icon_state = "fireball"
 		icon = 'icons/obj/wizard.dmi'
 		flags = TABLEPASS
