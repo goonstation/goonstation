@@ -70,11 +70,12 @@
 		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
-		if(ON_COOLDOWN(user, "instrument_play", src.note_time)) // on user because not just clients do music
+		var/atom/player = user || src
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
-			user.cooldowns["instrument_play"] += 10 SECONDS
+			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
@@ -87,7 +88,7 @@
 							continue
 						george.howl()
 
-			src.post_play_effect(user)
+		src.post_play_effect(user)
 		. = TRUE
 
 	proc/play(var/mob/user)

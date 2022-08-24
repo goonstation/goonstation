@@ -99,6 +99,14 @@ toxic - poisons
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
 
+/datum/projectile/laser/diffuse
+	sname = "diffuse laser"
+	cost = 30
+	dissipation_delay = 1
+	dissipation_rate = 8
+	max_range = 7
+	shot_number = 2
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
@@ -125,7 +133,7 @@ toxic - poisons
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
 	icon_state = "phaser_energy"
-	power = 25
+	power = 20
 	cost = 25
 	sname = "phaser bolt"
 	dissipation_delay = 5
@@ -138,8 +146,8 @@ toxic - poisons
 		name = "micro phaser bolt"
 		icon_state = "bolt"
 		sname = "micro phaser bolt"
-		power = 15
-		cost = 12.5
+		power = 10
+		cost = 10
 		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
 		color_red = 0
 		color_green = 1
@@ -279,7 +287,7 @@ toxic - poisons
 	name = "prismatic laser"
 	icon_state = "eyebeam"
 	power = 25
-	cost = 35
+	cost = 20
 	sname = "phaser bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/TaserOLD.ogg'
@@ -288,6 +296,10 @@ toxic - poisons
 	color_blue = 1
 	impact_image_state = "burn2"
 	projectile_speed = 42
+
+	burst
+		cost = 50
+		shot_number = 3
 
 /datum/projectile/laser/precursor // for precursor traps
 	name = "energy bolt"
