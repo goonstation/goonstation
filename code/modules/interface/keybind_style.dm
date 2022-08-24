@@ -102,6 +102,7 @@ var/global/list/datum/keybind_style/keybind_styles = null
 	"CTRL+N" = "nod",
 	"CTRL+Q" = "wave",
 	"CTRL+R" = "flip",
+	"CTRL+I" = "twirl",
 	"CTRL+S" = "scream",
 	"CTRL+W" = "wink",
 	"CTRL+X" = "flex",
