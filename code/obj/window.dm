@@ -1056,6 +1056,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
@@ -1071,8 +1072,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/auto/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/auto/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
@@ -1099,6 +1102,7 @@
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
+	var/repair_per_resource = 1
 	density = TRUE
 
 /obj/window/feather/New()
@@ -1114,8 +1118,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/feather/north
 	dir = NORTH

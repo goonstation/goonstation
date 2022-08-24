@@ -147,6 +147,7 @@
 	mat_changedesc = FALSE
 	var/health_attack = 100
 	var/health_max = 100
+	var/repair_per_resource = 2.5
 	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
 
 	take_damage(var/force, var/mob/user as mob)
@@ -193,8 +194,10 @@
 			if(user.drop_item())
 				W?.set_loc(src.loc)
 
-/obj/storage/closet/flock/proc/repair()
-	src.health_attack = min(src.health_attack + 25, src.health_max)
+/obj/storage/closet/flock/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health_attack)
+	src.health_attack += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/storage/closet/flock/proc/deconstruct()
 	var/turf/T = get_turf(src)
@@ -335,6 +338,7 @@
 	icon_state = "barricade"
 	health = 50
 	health_max = 50
+	var/repair_per_resource = 1
 	shock_when_entered = FALSE
 	auto = FALSE
 	mat_appearances_to_ignore = list("steel","gnesis")
@@ -401,9 +405,11 @@
 		return
 	..()
 
-/obj/grille/flock/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/grille/flock/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
 	if (ruined)
 		src.set_density(TRUE)
 		src.ruined = FALSE
 	src.UpdateIcon()
+	return ceil(health_given / src.repair_per_resource)
