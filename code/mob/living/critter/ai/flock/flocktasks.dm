@@ -779,12 +779,12 @@ stare
 		return 0
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/on_tick()
-	var/mob/living/critter/flock/drone/F = holder.owner
-	if (is_incapacitated(F))
+	var/mob/living/critter/flock/drone/flockdrone = holder.owner
+	if (is_incapacitated(flockdrone))
 		return
-	if (F.floorrunning)
-		F.end_floorrunning(TRUE)
-	walk(F, 0)
+	if (flockdrone.floorrunning)
+		flockdrone.end_floorrunning(TRUE)
+	walk(flockdrone, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -802,25 +802,25 @@ stare
 			holder.interrupt()
 			return
 
-		var/dist = GET_DIST(F, holder.target)
+		var/dist = GET_DIST(flockdrone, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
 			holder.move_to(holder.target,4)
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
 		else
-			if(F.active_hand != 3) // stunner
-				F.set_hand(3)
-			F.set_dir(get_dir(F, holder.target))
-			F.hand_range_attack(holder.target, dummy_params)
+			if(flockdrone.active_hand != 3) // stunner
+				flockdrone.set_hand(3)
+			flockdrone.set_dir(get_dir(flockdrone, holder.target))
+			flockdrone.hand_range_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				if(prob(20))
 					// run
 					holder.move_away(holder.target,4)
 			else if(prob(30))
 				// dodge
-				walk(F, 0)
-				walk_rand(F, 1, 2)
+				walk(flockdrone, 0)
+				walk_rand(flockdrone, 1, 2)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
