@@ -33560,7 +33560,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor,
 /area/station/quartermaster/refinery)
 "iJV" = (
 /obj/shrub{
