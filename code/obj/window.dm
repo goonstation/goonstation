@@ -444,7 +444,7 @@
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
-		else if(ispryingtool(W))
+		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
 			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
