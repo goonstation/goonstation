@@ -211,7 +211,7 @@
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
-			logTheThing("combat", H, null, "is thrown into a [src.name] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
 				src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
@@ -688,7 +688,7 @@
 			else if(target != user && !user.restrained())
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
-				logTheThing("combat", user, target, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
 			else
 				..()
 				return

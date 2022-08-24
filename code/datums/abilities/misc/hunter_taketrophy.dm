@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_taketrophy
 	name = "Take trophy"
 	desc = "Retrieves a trophy skull from the victim or severed head, mutilating them in the process."
+	icon_state = "taketrophy"
 	targeted = 1
 	target_anything = 1
 	target_nodamage_check = 1
@@ -138,7 +139,7 @@
 							W.dropped(HH)
 							W.layer = initial(W.layer)
 
-				logTheThing("combat", M, HH, "uses take trophy on [constructTarget(HH,"combat")], gibbing them at [log_loc(M)].")
+				logTheThing(LOG_COMBAT, M, "uses take trophy on [constructTarget(HH,"combat")], gibbing them at [log_loc(M)].")
 				HH.gib(1)
 
 		else

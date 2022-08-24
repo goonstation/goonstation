@@ -9,7 +9,6 @@
 //Camera Helmets /obj/item/clothing/head/helmet/camera X
 //Bots /obj/machinery/bot  X
 //Observables /obj/observable  X
-//Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye

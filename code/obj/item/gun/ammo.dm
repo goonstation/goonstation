@@ -1159,6 +1159,16 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/empty
 	charge = 0
 
+/obj/item/ammo/power_cell/med_minus_power
+	name = "Power Cell - 150"
+	desc = "A power cell that holds a max of 150PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 15000
+	g_amt = 30000
+	charge = 150
+	max_charge = 150
+
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
 	desc = "A power cell that holds a max of 200PU"

@@ -421,7 +421,7 @@
 			var/obj/item/grab/G = W
 			if (ishuman(G.affecting) && BOUNDS_DIST(G.affecting, src) == 0)
 				src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
-				logTheThing("combat", user, G.affecting, "slams [constructTarget(user,"combat")]'s head into [src]")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
 				playsound(src.loc, src.hitsound , 100, 1)
 				G.affecting.TakeDamage("head", 5, 0)
 				src.damage_blunt(G.affecting.throwforce)
@@ -442,9 +442,9 @@
 				src.anchored = !(src.anchored)
 				src.stops_space_move = !(src.stops_space_move)
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
-				logTheThing("station", user, null, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
-		else if(ispryingtool(W))
+		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
 			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
@@ -466,7 +466,7 @@
 		src.set_layer_from_settings()
 
 	proc/smash()
-		logTheThing("station", usr, null, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
+		logTheThing(LOG_STATION, usr, "smashes a [src] in [src.loc?.loc] ([log_loc(src)])")
 		if (src.health < (src.health_max * -0.75))
 			// You managed to destroy it so hard you ERASED it.
 			qdel(src)
@@ -756,7 +756,7 @@
 			return
 
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
@@ -987,8 +987,8 @@
 
 
 	auto
-		name = "autowindow grille spawner (will place nonreinf soon)"
-		win_path = "/obj/window/auto/reinforced"
+		name = "autowindow grille spawner"
+		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
 		icon_state = "wingrille_f"
@@ -999,8 +999,8 @@
 			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner (will place nonreinf soon)"
-			win_path = "/obj/window/auto/crystal/reinforced"
+			name = "crystal autowindow grille spawner"
+			win_path = "/obj/window/auto/crystal"
 			icon_state = "p-wingrille_f"
 
 			reinforced
@@ -1056,6 +1056,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
@@ -1071,8 +1072,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/auto/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/auto/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
@@ -1099,6 +1102,7 @@
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
+	var/repair_per_resource = 1
 	density = TRUE
 
 /obj/window/feather/New()
@@ -1114,8 +1118,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/feather/north
 	dir = NORTH

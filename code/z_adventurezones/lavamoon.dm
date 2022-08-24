@@ -801,7 +801,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -840,7 +840,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -1536,7 +1536,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
 
 		for(var/mob/living/L in get_turf(src))
-			logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 			L.gib()
 
 		set_density(1)

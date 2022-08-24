@@ -163,6 +163,9 @@
 
 	/// Override this for the child of `/obj/machinery/broadside_gun` to determine what happens on-firing
 	proc/bombard(atom/target, mob/user)
+		SHOULD_CALL_PARENT(TRUE)
+		logTheThing(LOG_BOMBING, user, "initiated an airstrike to [target ? "[log_loc(target)]" : "horrible no-loc nowhere void"].")
+		message_admins("[key_name(user)] initiated an airstrike to [target ? "[log_loc(target)]" : "horrible no-loc nowhere void"].")
 		return
 
 	New()
@@ -192,6 +195,8 @@
 		var/turf/firing_turf = get_turf(src)
 		if(getlineopaqueblocked(get_turf(user), target_turf) != target_turf)
 			return FALSE
+		..()
+
 		if(!isnull(src.target_overlay))
 			target_turf.overlays += src.target_overlay
 		while(sound_offset_length > 0)

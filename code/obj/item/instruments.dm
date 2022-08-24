@@ -19,8 +19,7 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5
-	var/next_play = 0
-	var/note_time = 100
+	var/note_time = 10 SECONDS
 	var/randomized_pitch = 1
 	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
@@ -42,7 +41,6 @@
 	New()
 		..()
 
-
 		if (!pick_random_note)
 			if(use_new_interface == 0)
 				contextLayout = new /datum/contextLayout/instrumental()
@@ -55,7 +53,7 @@
 				C.dispose()
 			src.contextActions = list()
 
-			for (var/i in 1 to sounds_instrument.len)
+			for (var/i in 1 to length(sounds_instrument))
 				var/datum/contextAction/instrument/newcontext
 
 				if (special_index && i >= special_index)
@@ -64,38 +62,38 @@
 					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
+
 				newcontext.note = i
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		if (note != clamp(note,1,sounds_instrument.len))
-			return 0
-		if (next_play > TIME)
-			return 0
-		next_play = TIME + note_time
-		//if drunk, play off pitch?
-		if (special_index && note >= special_index)
-			next_play = TIME + 200
+		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
+		if (note != clamp(note, 1, length(sounds_instrument)))
+			return FALSE
+		var/atom/player = user || src
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+			return FALSE
+
+		if (special_index && note >= special_index) // Add additional time if we just played a special note
+			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
 
-
-		if (prob(5) || sounds_instrument.len == 1)
+		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(G, /obj/critter/dog/george)
-					if (IN_RANGE(G, T, 6) && prob(60))
-						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+				for_by_tcl(george, /obj/critter/dog/george)
+					if (IN_RANGE(george, T, 6) && prob(60))
+						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
-						G.howl()
+						george.howl()
 
-			src.post_play_effect(user)
-
-		.= 1
+		src.post_play_effect(user)
+		. = TRUE
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1,sounds_instrument.len),user)
+			play_note(rand(1, length(sounds_instrument)),user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -123,7 +121,7 @@
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
 	volume = 100
-	note_time = 200
+	note_time = 20 SECONDS
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
@@ -296,7 +294,7 @@
 	stamina_cost = 5
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
-	note_time = 8
+	note_time = 0.8 SECONDS
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
@@ -380,7 +378,7 @@
 	item_state = "airhorn"
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
-	note_time = 10
+	note_time = 1 SECOND
 	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
@@ -395,7 +393,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
 	pick_random_note = 1
@@ -412,7 +410,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
 	volume = 75
 	randomized_pitch = 1
@@ -527,7 +525,7 @@
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (next_play > TIME)
+		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
