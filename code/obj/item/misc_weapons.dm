@@ -1705,79 +1705,86 @@ obj/item/whetstone
 // Halberd- Experimental weapon by NightmareChamillian
 /obj/item/halberd
 	name = "Halberd"
-	desc = "An ancient axe-like weapon capable of cleaving flesh with ease. You have no idea what this is doing outside a museum."
+	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "halberd"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "shinai-light"
+	item_state = "halberd1"
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
-
 	throw_range = 10
-	stamina_crit_chance = 2
+	throwforce = 30 //yeet like spear
+	stamina_crit_chance = 5
 
-	//these combat variables will change depending on the guard
-	throwforce = 9
-	force = 6
+	//these combat variables change depending on the stance- starts with help intent vars
+	force = 28
 	stamina_damage = 10
-	stamina_cost = 5
+	stamina_cost = 7
+
 
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | TABLEPASS | USEDELAY | ONBACK
 	c_flags = EQUIPPED_WHILE_HELD
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
-	var/guard
+	var/guard = null
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_SWORD)
 
+	setupProperties()
+		. = ..()
+		setProperty("deflection", 33)
+
 	proc/change_guard(var/mob/user,var/intent)
-		user.do_disorient(10,0,0,0,0,0,null)
 		guard = intent
 		switch(guard)
-			if("help") //normal swing, less stamina
-				force = 30
-				throwforce = 9
+			if("help") //light swing with the axe
+				force = 28
 				stamina_damage = 10
 				stamina_cost = 7
-				item_state = "fireaxe"
+				item_state = "halberd1"
 				hit_type = DAMAGE_CUT
 				src.click_delay = COMBAT_CLICK_DELAY * 0.75
-				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
-			if("disarm") //thrust - stabbing with the pointy end
+				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
+				icon_state = "halberd"
+			if("disarm") //thrust with the pointy end
 				force = 15
-				throwforce = 30// yeet like spear
 				stamina_damage = 10
 				stamina_cost = 8
-				item_state = "shinai-sweep"
+				item_state = "halberd2"
 				hit_type = DAMAGE_STAB
-				src.click_delay = COMBAT_CLICK_DELAY * 0.75
-				hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+				src.click_delay = COMBAT_CLICK_DELAY * 0.60
+				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 				src.setItemSpecial(/datum/item_special/rangestab)
-			if("grab") //swing- attack with the spur, dealing big stamina and maybe AP
+				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
+				icon_state = "halberd"
+			if("grab") //attack with the spur on the back
 				force = 10
-				throwforce = 9
 				stamina_damage = 40
 				stamina_cost = 20
-				item_state = "shinai-heavy"
+				item_state = "halberd1"
 				hit_type = DAMAGE_STAB
 				src.click_delay = COMBAT_CLICK_DELAY
 				hitsound ='sound/impact_sounds/Fireaxe.ogg'
 				src.setItemSpecial(/datum/item_special/simple)
-			if("harm") //sweep -wide swings with the axe
+				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
+				icon_state = "halberd2"
+			if("harm") //wide, tiring swings with the axe
 				force = 35
-				throwforce = 9
-				stamina_damage = 30
-				stamina_cost = 15
-				item_state = "fireaxe"
+				stamina_damage = 20
+				stamina_cost = 35
+				item_state = "halberd1"
 				hit_type = DAMAGE_CUT
-				src.click_delay = COMBAT_CLICK_DELAY
-				hitsound = 'sound/impact_sounds/Flesh_Cut_3.ogg'
+				src.click_delay = COMBAT_CLICK_DELAY * 1.25
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 				src.setItemSpecial(/datum/item_special/swipe)
+				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
+				icon_state = "halberd"
 
 
 		user.update_inhands()
