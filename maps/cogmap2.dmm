@@ -12090,7 +12090,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/food{
@@ -12646,7 +12646,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
@@ -50883,7 +50883,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -50912,7 +50912,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 2;
@@ -51646,7 +51646,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -51684,7 +51684,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -52526,7 +52526,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;

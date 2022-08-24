@@ -63,7 +63,7 @@
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
-		autoclose = 1
+		autoclose = TRUE
 
 		asteroid_horizontal
 			name = "asteroid"

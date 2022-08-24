@@ -37120,7 +37120,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -37269,7 +37269,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -44196,7 +44196,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -46203,7 +46203,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/glass_recycler{
 	density = 1;
