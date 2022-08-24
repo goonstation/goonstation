@@ -277,371 +277,370 @@
 /obj/machinery/door/window/brigdoor/disposing()
 	..()
 	STOP_TRACKING
+// Please keep synchronizied with these lists for easy map changes:
+// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
+// /obj/machinery/floorflusher (floorflusher.dm)
+// /obj/machinery/door_timer (door_timer.dm)
+// /obj/machinery/flasher (flasher.dm)
+/obj/machinery/door/window/brigdoor/solitary
+	name = "Cell"
+	id = "solitary"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/solitary2
+	name = "Cell #2"
+	id = "solitary2"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/solitary3
+	name = "Cell #3"
+	id = "solitary3"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
-	// /obj/machinery/floorflusher (floorflusher.dm)
-	// /obj/machinery/door_timer (door_timer.dm)
-	// /obj/machinery/flasher (flasher.dm)
-	solitary
-		name = "Cell"
-		id = "solitary"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	solitary2
-		name = "Cell #2"
-		id = "solitary2"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+/obj/machinery/door/window/brigdoor/solitary4
+	name = "Cell #4"
+	id = "solitary4"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	solitary3
-		name = "Cell #3"
-		id = "solitary3"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	solitary4
-		name = "Cell #4"
-		id = "solitary4"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+/obj/machinery/door/window/brigdoor/minibrig
+	name = "Mini-Brig"
+	id = "minibrig"
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	minibrig
-		name = "Mini-Brig"
-		id = "minibrig"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	minibrig2
-		name = "Mini-Brig #2"
-		id = "minibrig2"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	minibrig3
-		name = "Mini-Brig #3"
-		id = "minibrig3"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+/obj/machinery/door/window/brigdoor/minibrig2
+	name = "Mini-Brig #2"
+	id = "minibrig2"
 
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
 
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	genpop
-		name = "General Population"
-		id = "genpop"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	genpop_n
-		name = "General Population North"
-		id = "genpop_n"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-	genpop_s
-		name = "General Population South"
-		id = "genpop_s"
-
-		northleft
-			dir = NORTH
-
-		eastleft
-			dir = EAST
-
-		westleft
-			dir = WEST
-
-		southleft
-			dir = SOUTH
-
-		northright
-			dir = NORTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		eastright
-			dir = EAST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		westright
-			dir = WEST
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
-
-		southright
-			dir = SOUTH
-			icon_state = "rightsecure"
-			base_state = "rightsecure"
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/minibrig3
+	name = "Mini-Brig #3"
+	id = "minibrig3"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/genpop
+	name = "General Population"
+	id = "genpop"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/genpop_n
+	name = "General Population North"
+	id = "genpop_n"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+/obj/machinery/door/window/brigdoor/genpop_s
+	name = "General Population South"
+	id = "genpop_s"
+
+	northleft
+		dir = NORTH
+
+	eastleft
+		dir = EAST
+
+	westleft
+		dir = WEST
+
+	southleft
+		dir = SOUTH
+
+	northright
+		dir = NORTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	eastright
+		dir = EAST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	westright
+		dir = WEST
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
+
+	southright
+		dir = SOUTH
+		icon_state = "rightsecure"
+		base_state = "rightsecure"
 
 /////////////////////////////////////////////////////////// Opaque door //////////////////////////////////////
 

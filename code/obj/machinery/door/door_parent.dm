@@ -157,19 +157,19 @@
 		.= 1
 
 /obj/machinery/door/New()
-		..()
-		UnsubscribeProcess()
-		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
-		AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
-		src.update_nearby_tiles(need_rebuild=1)
-		START_TRACKING
-		for (var/turf/simulated/wall/auto/T in orange(1))
-			T.UpdateIcon()
-		#ifdef XMAS
-		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
-			src.xmasify()
-		#endif
+	..()
+	UnsubscribeProcess()
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
+	src.update_nearby_tiles(need_rebuild=1)
+	START_TRACKING
+	for (var/turf/simulated/wall/auto/T in orange(1))
+		T.UpdateIcon()
+	#ifdef XMAS
+	if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
+		src.xmasify()
+	#endif
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
@@ -177,19 +177,19 @@
 		..()
 
 /obj/machinery/door/proc/xmasify()
-		var/obj/decal/garland/garland = new(src.loc)
-		if(src.dir != NORTH)
-			garland.dir = src.dir
+	var/obj/decal/garland/garland = new(src.loc)
+	if(src.dir != NORTH)
+		garland.dir = src.dir
 
 /obj/machinery/door/proc/toggleinput()
-		if(src.cant_emag || (src.req_access && !(src.operating == -1)))
-			play_animation("deny")
-			return
-		if(density)
-			open()
-		else
-			close()
+	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
+		play_animation("deny")
 		return
+	if(density)
+		open()
+	else
+		close()
+	return
 
 /obj/machinery/door/meteorhit(obj/M as obj)
 	if (isrestrictedz(src.z))
