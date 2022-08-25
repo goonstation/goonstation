@@ -33,7 +33,7 @@ var/mutable_appearance/fluid_ma
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
-	anchored = 1
+	anchored = 2
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
@@ -810,29 +810,9 @@ var/mutable_appearance/fluid_ma
 			//	if (!M.anchored)
 			//		F.add_tracked_blood(M)
 
-
-	var/do_reagent_reaction = 1
-
-	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
-		do_reagent_reaction = 0
-
-	if (F.my_depth_level == 2 || F.my_depth_level == 3)
-		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
-			do_reagent_reaction = 0
-	if (F.my_depth_level >= 4)
-		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
-			do_reagent_reaction = 0
-
-	if(!shoes)
-		do_reagent_reaction = 1
-
-	if (src.lying)
-		if (!((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair)))
-			do_reagent_reaction = 1
-
-	if (do_reagent_reaction && entered_group) //if entered_group == 1, it may not have been set yet
+	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0
 
-	..(F, oldloc, do_reagent_reaction)
+	..(F, oldloc)

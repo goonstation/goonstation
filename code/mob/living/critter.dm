@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -58,6 +59,8 @@
 	// moved up from critter/small_animal
 	var/butcherable = 0
 	var/butcher_time = 1.2 SECONDS
+	/// The mob who is butchering this critter
+	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
@@ -84,10 +87,6 @@
 	blood_id = "blood"
 
 	New()
-//		if (ispath(default_task))
-//			default_task = new default_task
-//		if (ispath(current_task))
-//			current_task = new current_task
 
 		setup_hands()
 		post_setup_hands()
@@ -95,7 +94,7 @@
 		setup_reagents()
 		setup_healths()
 		if (!healthlist.len)
-			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
+			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
 		SPAWN(0)
@@ -298,14 +297,14 @@
 	attackby(var/obj/item/I, var/mob/M)
 		if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 			if (src.skinresult && max_skins)
-				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
+				if (issawingtool(I) || iscuttingtool(I))
 					for (var/i, i<rand(1, max_skins), i++)
 						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
+			if (issawingtool(I) || iscuttingtool(I))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
@@ -335,7 +334,6 @@
 
 		src.ghostize()
 		qdel (src)
-		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
@@ -390,24 +388,25 @@
 		//actually throw it!
 		if (I)
 			I.layer = initial(I.layer)
+			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = get_dir(target, src)
+				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
-				M.inertia_dir = get_dir(src,target)
+				M.inertia_dir = throw_dir
 			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
@@ -567,8 +566,10 @@
 			src.lastattacked = src
 
 	weapon_attack(atom/target, obj/item/W, reach, params)
-		if(issmallanimal(src) && src.ghost_spawned && (ghostcritter_blocked[target.type] || ghostcritter_blocked[W.type]))
-			return
+		if (isobj(target))
+			var/obj/O = target
+			if(issmallanimal(src) && src.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
+				return
 		. = ..()
 
 	hand_attack(atom/target, params)
@@ -667,7 +668,7 @@
 	equipped()
 		RETURN_TYPE(/obj/item)
 		if (active_hand)
-			if (hands.len >= active_hand)
+			if (length(src.hands) >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
 				return HH.item
 		return null
@@ -684,6 +685,7 @@
 			update_inhands()
 		for (var/datum/equipmentHolder/EH in equipment)
 			if (EH.item == I)
+				EH.on_unequip()
 				EH.item = null
 				hud.remove_object(I)
 				clothing = 1
@@ -768,12 +770,13 @@
 		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
-		hit_twitch(src)
+		if (brute > 0 || burn > 0 || tox > 0)
+			hit_twitch(src)
 		if (nodamage)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brute")
@@ -1034,7 +1037,7 @@
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1144,21 +1147,12 @@
 			return 1
 		return 0
 
-	get_explosion_resistance()
-		var/ret = explosion_resistance
-		for (var/datum/equipmentHolder/EH in equipment)
-			if (EH.armor_coverage & TORSO)
-				var/obj/item/clothing/suit/S = EH.item
-				if (istype(S))
-					ret += S.getProperty("exploprot")
-		return ret/100
-
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()
 		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 0.80 && prob(ex_res * 75))
+		if (ex_res >= 0.8 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)
@@ -1202,7 +1196,7 @@
 		return O
 
 	drop_item()
-		..()
+		. = ..()
 		src.update_inhands()
 
 	proc/on_sleep()
@@ -1283,7 +1277,7 @@
 		..(message)
 		return
 
-	if (src.robot_talk_understand && !src.stat)
+	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
 		if (length(message) >= 2)
 			if (copytext(lowertext(message), 1, 3) == ":s")
 				message = copytext(message, 3)
@@ -1292,7 +1286,7 @@
 	..()
 
 /mob/living/critter/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
 	if (isdead(src) || src.nodamage)
 		return
@@ -1342,3 +1336,29 @@
 		ai.enabled = FALSE
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
+
+
+
+ABSTRACT_TYPE(/mob/living/critter/robotic)
+/// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
+/mob/living/critter/robotic
+	name = "a fucked up robot"
+	can_bleed = FALSE
+	metabolizes = FALSE
+	var/emp_vuln = 1
+	blood_id = null
+
+	New()
+		..()
+		src.reagents = null
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+
+	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
+	emp_act()
+		src.emag_act() // heh
+		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+
+	vomit()
+		return

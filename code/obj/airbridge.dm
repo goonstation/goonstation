@@ -122,6 +122,7 @@
 
 		if(linked.working || working) return
 		if(linked.maintaining_bridge || maintaining_bridge) return
+		if((linked.x != src.x && linked.y != src.y) || linked.z != src.z) return
 
 		working = 1
 		maintaining_bridge = 1
@@ -349,7 +350,7 @@
 		icon_state = "airbr[working]"
 		state_str = C.get_state_string()
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user, params))
 			return
 
@@ -365,7 +366,7 @@
 		<A href='?src=\ref[src];air=1'>Pressurize</A><BR>
 		"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder) // BAD MONKEY!
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -421,21 +422,21 @@
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.establish_bridge())
-				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.remove_bridge())
-				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.pressurize())
-				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		update_status()
 		src.updateDialog()
@@ -478,9 +479,9 @@
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1.0
+	anchored = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
 			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break

@@ -22,7 +22,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Arcfiend", "Flockmind")
 		if (!type)
 			return
 		else
@@ -43,7 +43,7 @@
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
 
-			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling"))
+			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
@@ -56,7 +56,7 @@
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
 		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
-		logTheThing("admin", null, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
 		if (src.antagonist_type == "Blob (AI)")
@@ -64,7 +64,7 @@
 			if (BS)
 				new /mob/living/intangible/blob_overmind/ai(BS)
 				message_admins("Antagonist Spawn spawned an AI blob at [log_loc(BS)].")
-				logTheThing("admin", null, null, "Antagonist Spawn spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
+				logTheThing(LOG_ADMIN, null, "Antagonist Spawn spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
 				..() // Report spawn().
 				src.post_event()
 				return
@@ -103,7 +103,7 @@
 
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -117,7 +117,6 @@
 			/*
 			// Latejoin antagonists ignore antag prefs and so should this
 			// Nobody even realized that it checked this!
-			// @todo add hellban check (are hellbans even used still?)
 			if (lucky_dude.current.client.preferences)
 				var/datum/preferences/P = lucky_dude.current.client.preferences
 				switch (src.antagonist_type)
@@ -142,7 +141,7 @@
 
 		if (!(lucky_dude && istype(lucky_dude) && lucky_dude.current))
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -198,8 +197,11 @@
 				if (F && istype(F))
 					M3 = F
 					role = ROLE_FLOCKMIND
-					//objective_path = /datum/objective_set/blob
+					objective_path = /datum/objective/specialist/flock
 					send_to = 3
+					if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
+						SPAWN(1)
+							F.partition(TRUE)
 				else
 					failed = 1
 
@@ -315,13 +317,7 @@
 			if ("Arcfiend")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
-					L.make_arcfiend()
-					role = ROLE_ARCFIEND
-#ifdef RP_MODE
-					objective_path = /datum/objective_set/traitor/rp_friendly
-#else
-					objective_path = /datum/objective_set/traitor
-#endif
+					L.mind?.add_antagonist(ROLE_ARCFIEND)
 				else
 					failed = 1
 			else
@@ -332,7 +328,7 @@
 
 		if (failed != 0)
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -381,7 +377,7 @@
 		if (lucky_dude.current)
 			lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
 		message_admins("[lucky_dude.key] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-		logTheThing("admin", lucky_dude.current, null, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 		return
 

@@ -1,6 +1,6 @@
 var/global/list/available_ai_shells = list()
 var/datum/tgui/map_ui
-var/list/ai_emotions = list("Happy" = "ai_happy",\
+var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
 	"Unsure" = "ai_unsure",\
@@ -31,7 +31,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	"Snoozing" = "ai_zzz",\
 	"Loading Bar" = "ai_loading",\
 	"Exclamation" = "ai_exclamation",\
-	"Question" = "ai_question")
+	"Question" = "ai_question") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -116,6 +116,8 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/last_vox = -INFINITY
 	var/vox_cooldown = 1200
 
+	var/rename_cooldown = 10 MINUTES
+
 	var/has_feet = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
@@ -192,7 +194,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 /mob/living/silicon/ai/full_heal()
 	..()
-	src.try_rebooting_it()
+	src.turn_it_back_on()
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
@@ -217,8 +219,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.brain = new /obj/item/organ/brain/ai(src)
 
 	src.local_apc = get_local_apc(src)
-	if(src.local_apc)
-		src.power_area = src.local_apc.loc.loc
+	src.power_area = get_area(src.local_apc)
 	src.cell = new /obj/item/cell(src)
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
@@ -226,15 +227,27 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
-	coreSkin = skinToApply
+	src.coreSkin = skinToApply
+	src.set_color(global.random_color())
+	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
 	src.UpdateOverlays(get_image("ai_blank"), "backscreen")
 	update_appearance()
 
-	src.eyecam = new /mob/living/intangible/aieye(src.loc)
+	src.eyecam = new /mob/living/intangible/aieye(src)
 
 	hud = new(src)
 	src.attach_hud(hud)
 	src.eyecam.attach_hud(hud)
+
+	abilityHolder = new /datum/abilityHolder/silicon/ai(src)
+	if(eyecam)
+		eyecam.abilityHolder = abilityHolder
+
+	if(law_rack_connection)
+		holoHolder.text_expansion = law_rack_connection.holo_expansions.Copy()
+
+		for(var/ability_type in law_rack_connection.ai_abilities)
+			abilityHolder.addAbility(ability_type)
 
 	src.hologramContextActions = list()
 	for(var/actionType in childrentypesof(/datum/contextAction/ai_hologram))
@@ -319,7 +332,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 //sound.dm
 
 
-/mob/living/silicon/ai/attackby(obj/item/W as obj, mob/user as mob)
+/mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
 		if(src.dismantle_stage<2)
@@ -340,7 +353,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
 					src.law_rack_connection = linker.linked_rack
-					logTheThing("station", src, null, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
+					logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
 					var/area/A = get_area(src.law_rack_connection)
 					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
 					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
@@ -470,6 +483,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
+				src.verbs += /mob/living/silicon/ai/verb/rename_self
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -505,6 +519,16 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
 
+	else if(istype(W,/obj/item/ai_plating_kit))
+		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
+			user.show_message("<span class='alert'>[src] already has a plating kit installed!")
+		else
+			var/obj/item/ai_plating_kit/kit = W
+			src.setSkin(kit.skin)
+			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
+			qdel(W)
+
 	else ..()
 	src.update_appearance()
 
@@ -515,10 +539,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if (ismob(target) && is_mob_trackable_by_AI(target))
 				ai_actual_track(target)
 				return
-			//else if (isturf(target))
-			//	var/turf/T = target
-			//	T.move_camera_by_click()
-			//	return
 	. = ..()
 
 /mob/living/silicon/ai/build_keybind_styles(client/C)
@@ -540,7 +560,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
-		logTheThing("combat", user, src, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
+		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
 		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
 
@@ -586,15 +606,17 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
-	if (src.health >= 50 && isdead(src) && src.brain)
+	if (src.health >= 50 && src.brain)
 		setalive(src)
 		if (src.brain.owner && src.brain.owner.current)
-			if (!isobserver(src.brain.owner.current))
+			if (!find_ghost_by_key(src.brain.owner.current.key)) // we don't actually need a ref to the mob (since we already have that via current)
+																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
 			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
 			ghost.mind.transfer_to(src)
-			qdel(ghost)
+			if (isdead(ghost))
+				qdel(ghost)
 			update_appearance()
 		return TRUE
 	return FALSE
@@ -611,7 +633,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		actions += "Restart AI"
 
 	if (actions.len > 1)
-		var/action_taken = input("What do you want to do?","AI Unit") in actions
+		var/action_taken = tgui_input_list(user, "What do you want to do?", "AI Unit", actions)
+		if (!action_taken)
+			return
 		switch (action_taken)
 			if ("Remove CPU Unit")
 				src.eject_brain(user)
@@ -640,7 +664,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1)
 			if(INTENT_HARM)
 				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
-				logTheThing("combat", user, src, "kicks [constructTarget(src,"combat")]")
+				logTheThing(LOG_COMBAT, user, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
@@ -677,15 +701,15 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	var/b_loss = src.bruteloss
 	var/f_loss = src.fireloss
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (!isdead(src))
 				b_loss += rand(90,120)
 				f_loss += rand(90,120)
-		if(2.0)
+		if(2)
 			if (!isdead(src))
 				b_loss += rand(60,90)
 				f_loss += rand(60,90)
-		if(3.0)
+		if(3)
 			if (!isdead(src))
 				b_loss += rand(30,60)
 	src.bruteloss = b_loss
@@ -738,7 +762,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.post_status(termid, "command","term_message","data",t)
 
 		//Might as well log what they said too!
-		logTheThing("diary", src, null, ": [t]", "say")
+		logTheThing(LOG_DIARY, src, ": [t]", "say")
 		src.messageLog += "\[[formattedShiftTime(TRUE)]\] <i>Replied to </i><b>[termid]</b><i> with:</i><br>[t]<hr>"
 
 	if (href_list["mute"])
@@ -858,18 +882,13 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 
 	src.lastgasp() // calling lastgasp() here because we just died
 	setdead(src)
-	src.canmove = 0
+	src.canmove = FALSE
 	vision.set_color_mod("#ffffff")
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
-	src.lying = 1
 	src.light.disable()
 	src.update_appearance()
+	src.ghostize()
 
-	logTheThing("combat", src, null, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+	logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 
 	for(var/target in src.terminals)
 		src.terminals.Remove(target)
@@ -896,7 +915,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!( cancel ))
 		boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 		SPAWN( 300 )
-			logTheThing("diary", null, null, "Rebooting because of no live players", "game")
+			logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 			Reboot_server()
 			return
 #endif
@@ -1233,7 +1252,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			return
 
 	if ((message && isalive(src)))
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1340,7 +1359,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			if(src.client)
 				boutput(message_mob, "<span class='alert'><B>Killswitch Process Complete!</B></span>")
 			killswitch = 0
-			logTheThing("combat", src, null, "has died to the killswitch robot self destruct protocol")
+			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
 			src.eject_brain()
 
@@ -1451,6 +1470,28 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			src.link = null
 
 
+/////////////////
+/// Movement ////
+/////////////////
+
+/mob/living/silicon/ai/process_move(keys)
+	if(has_feet)
+		return ..()
+	if (isdead(src) && keys)
+		src.ghostize()
+	return FALSE
+
+/mob/living/silicon/ai/keys_changed(keys, changed)
+	if(has_feet)
+		return ..()
+
+	if (changed & (KEY_EXAMINE|KEY_BOLT|KEY_OPEN|KEY_SHOCK))
+		src.update_cursor()
+
+	if (keys & changed & (KEY_FORWARD|KEY_BACKWARD|KEY_LEFT|KEY_RIGHT))
+		src.tracker.cease_track()
+		src.eye_view()
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // PROCS AND VERBS ///////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1505,13 +1546,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	var/stored = ""
-	if(length(by_type[/obj/cryotron]))
-		var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-		for(var/L as anything in cryo_unit.stored_crew_names)
-			stored += "<i>- [L]<i><br>"
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]</tt></body>", "window=aimanifest")
+	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
@@ -1589,7 +1624,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	set name = "Set Fake Laws"
 
 	#define FAKE_LAW_LIMIT 12
-	var/law_base_choice = input(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", "Fake Laws") in list("Real Laws", "Fake Laws")
+	var/law_base_choice = tgui_input_list(usr,"Which lawset would you like to use as a base for your new fake laws?", "Fake Laws", list("Real Laws", "Fake Laws"))
+	if (!law_base_choice)
+		return
 	var/law_base = ""
 	if(law_base_choice == "Real Laws")
 		if(src.law_rack_connection)
@@ -1637,7 +1674,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
-	if (alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws","State Laws","Cancel") != "State Laws")
+	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
 	if(!src.law_rack_connection)
@@ -1695,7 +1732,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		if (R.shell && !R.dependent && !isdead(R))
 			bodies += R
 
-	var/mob/living/silicon/target_shell = input(usr, "Which body to control?") as null|anything in bodies
+	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies))
 
 	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
 		return
@@ -1721,7 +1758,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
 		src.mind.transfer_to(src.eyecam)
-		return
 
 /mob/living/silicon/ai/proc/notify_attacked()
 	if( last_notice > world.time + 100 ) return
@@ -1761,9 +1797,9 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (isdead(src))
 		boutput(usr, "You cannot change your emotional status because you are dead!")
 		return
-	var/list/L = custom_emotions ? custom_emotions : ai_emotions	//In case an AI uses the reward, use a local list instead
+	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
 
-	var/newEmotion = input("Select a status!", "AI Status", src.faceEmotion) as null|anything in L
+	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L))
 	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
@@ -1775,7 +1811,6 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 		update_appearance()
 	if (newMessage)
 		src.status_message = newMessage
-	return
 
 /mob/living/silicon/ai/proc/ai_colorchange()
 	set category = "AI Commands"
@@ -1835,7 +1870,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(alert("Are you sure?",,"Yes","No") == "Yes")
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
@@ -1857,7 +1892,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(alert("Are you sure?",,"Yes","No") == "Yes")
+	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
 			if (D.z == 1 && D.canAIControl() && D.locked && !D.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && D.arePowerSystemsOn())
 				D.locked = 0
@@ -1909,7 +1944,7 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	var/obj/item/device/radio/which = input("Which Radio?","AI Radio") as null|obj in list(src.radio1,src.radio2,src.radio3)
+	var/obj/item/device/radio/which = tgui_input_list(message_mob, "Which Radio?", "AI Radio", list(src.radio1, src.radio2, src.radio3))
 	if (!which)
 		return
 
@@ -1945,6 +1980,20 @@ var/list/ai_emotions = list("Happy" = "ai_happy",\
 			message_mob.client.screen += ai_station_map
 		map_ui = new(usr, message_mob, "AIMap")
 		map_ui.open()
+
+/mob/living/silicon/ai/verb/rename_self()
+	set category = "AI Commands"
+	set name = "Change Designation"
+	set desc = "Change your name."
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!message_mob.client || isdead(src))
+		return
+
+	if (!GET_COOLDOWN(src, "ai_self_rename"))
+		choose_name(retries = 3, renaming_mob = message_mob)
+	else
+		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
 // CALCULATIONS
 
@@ -2254,7 +2303,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 proc/get_mobs_trackable_by_AI()
 	var/list/names = list()
 	var/list/namecounts = list()
-	var/list/creatures = list("* Sort alphabetically...")
+	var/list/creatures = list()
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2314,7 +2363,7 @@ proc/get_mobs_trackable_by_AI()
 	var/message = copytext(message_in, 1, 140)
 
 	if(message_len != length(message))
-		if(alert("Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", "Yes", "No") != "Yes")
+		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
 	message = vox_playerfilter(message)
@@ -2322,8 +2371,8 @@ proc/get_mobs_trackable_by_AI()
 	var/output = vox_play(message, src)
 	if(output)
 		last_vox = world.time
-		logTheThing("say", src, null, "has created an intercom announcement: \"[output]\", input: \"[message_in]\"")
-		logTheThing("diary", src, null, "has created an intercom announcement: [output]", "say")
+		logTheThing(LOG_SAY, src, "has created an intercom announcement: \"[output]\", input: \"[message_in]\"")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output]", "say")
 		message_admins("[key_name(src)] has created an AI intercom announcement: \"[output]\"")
 
 
@@ -2351,7 +2400,7 @@ proc/get_mobs_trackable_by_AI()
 	var/message = copytext(message_in, 1, 280)
 
 	if(message_len != length(message))
-		if(alert("Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", "Yes", "No") != "Yes")
+		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
 	var/sound_to_play = "sound/misc/announcement_1.ogg"
@@ -2359,8 +2408,8 @@ proc/get_mobs_trackable_by_AI()
 
 	last_announcement = world.time
 
-	logTheThing("say", usr, null, "created a command report: [message]")
-	logTheThing("diary", usr, null, "created a command report: [message]", "say")
+	logTheThing(LOG_SAY, usr, "created a command report: [message]")
+	logTheThing(LOG_DIARY, usr, "created a command report: [message]", "say")
 
 
 /mob/living/silicon/ai/proc/ai_vox_help()
@@ -2370,7 +2419,8 @@ proc/get_mobs_trackable_by_AI()
 
 	vox_help(src)
 
-/mob/living/silicon/ai/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
+/// Lets the AI choose its own name. If renaming_mob is non-null, then that mob is allowed to rename the AI instead.
+/mob/living/silicon/ai/choose_name(var/retries = 3, var/default_name = null, var/force_instead = FALSE, var/mob/renaming_mob = null)
 	var/obj/item/organ/brain/brain_owner = src.brain.owner
 	if(isnull(default_name))
 		default_name = pick_string_autokey("names/ai.txt")
@@ -2379,7 +2429,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are an AI. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2396,8 +2446,11 @@ proc/get_mobs_trackable_by_AI()
 				src.show_text("Your name cannot be blank. Please choose a different name.", "red")
 				continue
 			else
-				if (alert(src, "Use the name [newname]?", newname, "Yes", "No") == "Yes")
+				if (tgui_alert(renaming_mob || src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
 					src.real_name = newname
+					if (src.deployed_to_eyecam)
+						src.eyecam.real_name = newname
+					ON_COOLDOWN(src, "ai_self_rename", src.rename_cooldown)
 					break
 				else
 					continue
@@ -2405,6 +2458,7 @@ proc/get_mobs_trackable_by_AI()
 		src.real_name = default_name
 
 	src.UpdateName()
+	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
 
@@ -2454,7 +2508,7 @@ proc/get_mobs_trackable_by_AI()
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
 
-/obj/ai_core_frame/attackby(obj/item/W as obj, mob/user as mob)
+/obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets
 			if (src.build_step < 1)
@@ -2638,13 +2692,13 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 
 /obj/item/ai_plating_kit/syndicate
 	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
+	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. <i>(Syndicate AI system not included)</i>"
 	icon_state = "syndie_kit" // get it???
 	skin = "syndicate"
 	contraband = 1 // crime
 
 /obj/item/ai_plating_kit/clown
 	name = "AI Frame Plating Kit"
-	desc = "A kit for putting the plating on an AI frame! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
+	desc = "A kit for putting the plating on an AI! WARNING: Choking hazard, not intended for children under 3 years. It smells funny."
 	icon_state = "clown_kit"
 	skin = "clown"

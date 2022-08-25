@@ -29,7 +29,7 @@
 		src.resistances += /datum/ailment/disease/lycanthropy
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_WEREWOLF_TIPS(src)
+			src.show_antag_popup("werewolf")
 
 	else return
 
@@ -125,7 +125,7 @@
 
 			which_way = 1
 
-		logTheThing("combat", M, null, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
 		return
 
 // There used to be more stuff here, most of which was moved to limb datums.
@@ -181,31 +181,31 @@
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
 			if (isnpcmonkey(HH))
-				boutput(M, __red("Monkey flesh just isn't the real deal..."))
+				boutput(M, "<span class='alert'>Monkey flesh just isn't the real deal...</span>")
 				healing /= 2
 			else if (isdead(HH))
-				boutput(M, __red("Fresh meat would be much preferable to this cadaver..."))
+				boutput(M, "<span class='alert'>Fresh meat would be much preferable to this cadaver...</span>")
 				healing /= 2
 			else if (HH.health < -150)
-				boutput(M, __red("[target] is pretty mangled. There's not a lot of flesh left..."))
+				boutput(M, "<span class='alert'>[target] is pretty mangled. There's not a lot of flesh left...</span>")
 				healing /= 1.5
 			else
 				if (iscluwne(HH))
-					boutput(M, __red("That tasted awful!"))
+					boutput(M, "<span class='alert'>That tasted awful!</span>")
 					healing /= 2
 					M.take_toxin_damage(5)
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
-					boutput(M, __blue("That tasted fantastic!"))
+					boutput(M, "<span class='notice'>That tasted fantastic!</span>")
 					healing *= 2
 				else if (HH.nutrition > 100)
-					boutput(M, __blue("That tasted amazing!"))
+					boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
 				else if (HH.mind && HH.mind.assigned_role == "Clown")
-					boutput(M, __blue("That tasted funny, huh."))
+					boutput(M, "<span class='notice'>That tasted funny, huh.</span>")
 					M.unlock_medal("That tasted funny", 1)
 				else
-					boutput(M, __blue("That tasted good!"))
+					boutput(M, "<span class='notice'>That tasted good!</span>")
 					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
@@ -383,7 +383,7 @@
 
 		return
 
-//percent, give number 0.0-1.0
+//percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
 		A.cooldown = A.cooldown * (1-percent)
@@ -464,23 +464,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (werewolf_only == 1 && !iswerewolf(M))
-			boutput(M, __red("You must be in your wolf form to use this ability."))
+			boutput(M, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

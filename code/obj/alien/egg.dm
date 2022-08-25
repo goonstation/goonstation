@@ -19,7 +19,7 @@
 			src.icon_state = "egg_hatched"
 			new /obj/alien/facehugger(src.loc)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.health <= 0)
 			src.visible_message("<span class='alert'><B>[user] has destroyed the egg!</B></span>")
 			src.death()

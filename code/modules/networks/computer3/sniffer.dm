@@ -20,7 +20,7 @@
 			src.interacted(user)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(mode)
 			src.interacted(user)
 			return

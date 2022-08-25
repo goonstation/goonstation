@@ -93,7 +93,7 @@
 		qdel(src)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
 				playsound(src, "sound/items/toys/figure-kiss.ogg", 15, 1)
@@ -122,7 +122,7 @@
 		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
-		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
@@ -647,9 +647,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "mavericksabre"
 		ckey = "wrench1"
 
-	whitneystingray
-		name = "\improper Whitney Stingray"
-		icon_state = "whitneystingray"
+	anguishedenglish
+		name = "\improper Whitney Blanchet"
+		icon_state = "whitneyblanchet"
 		ckey = "anguishedenglish"
 
 	fleur
@@ -751,6 +751,86 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Stinko"
 		icon_state = "stinko"
 		ckey = "dataerr0r"
+
+	gabr
+		name = "\improper Jayson Rodgers"
+		icon_state = "jaysonrodgers"
+		ckey = "gabr"
+
+	wivernshy
+		name = "\improper Fern Barker"
+		icon_state = "fernbarker"
+		ckey = "wivernshy"
+
+	kingmorshu552
+		name = "\improper David Cain"
+		icon_state = "davidcain"
+		ckey = "kingmorshu552"
+
+	telareti
+		name = "\improper Gael Yamikurai"
+		icon_state = "gaelyamikurai"
+		ckey = "telareti"
+
+	averyquill
+		name = "\improper Miss Helper"
+		icon_state = "misshelper"
+		ckey = "averyquill"
+
+	slashsync
+		name = "\improper Snark"
+		icon_state = "snark"
+		ckey = "slashsync"
+
+	zigguratx
+		name = "\improper Zoya Wagner"
+		icon_state = "zoyawagner"
+		ckey = "zigguratx"
+
+	badshot
+		name = "\improper Lydia Aivoras"
+		icon_state = "lydiaaivoras"
+		ckey = "badshot"
+
+	ezio334
+		name = "\improper Ezio Dane"
+		icon_state = "eziodane"
+		ckey = "ezio334"
+
+	ryeanbread
+		name = "\improper Neo Ryder"
+		icon_state = "neoryder"
+		ckey = "ryeanbread"
+
+	twobraids
+		name = "\improper Nurse Dee Ceased"
+		icon_state = "nursedeeceased"
+		ckey = "twobraids"
+
+	mikethewalldweller
+		name = "\improper Mikey"
+		icon_state = "mikey"
+		ckey = "mikethewalldweller"
+
+	ladygeartheart
+		name = "\improper Piffany Boudle"
+		icon_state = "piffany"
+		ckey = "ladygeartheart"
+
+	snowkeith
+		name = "\improper SC077Y"
+		icon_state = "sc077y"
+		ckey = "snowkeith"
+
+	ihaveteeth
+		name = "\improper Teeth Rattletail"
+		icon_state = "teeth"
+		ckey = "ihaveteeth"
+
+	walpvrgis
+		name = "\improper Cygnus Lyedelle"
+		icon_state = "cygnus"
+		ckey = "walpvrgis"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

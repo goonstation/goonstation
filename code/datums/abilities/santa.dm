@@ -110,17 +110,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (!isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

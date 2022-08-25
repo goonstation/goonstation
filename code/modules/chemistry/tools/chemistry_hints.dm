@@ -23,7 +23,7 @@
 		var/mob/living/carbon/human/user = U
 		has_been_read = 1
 		if(chem_name == "Quark Gluon Plasma") // YOU FOOL
-			if(alert(user, "You've heard horrific stories about this chemical. Are you really sure you want to read this scroll? Reading this is probably very dangerous!", "Confirmation", "Yes", "No") != "Yes")
+			if(tgui_alert(user, "You've heard horrific stories about this chemical. Are you really sure you want to read this scroll? Reading this is probably very dangerous!", "Confirmation", list("Yes", "No")) != "Yes")
 				has_been_read = 0
 				return
 			user.client.add_to_bank(3500)

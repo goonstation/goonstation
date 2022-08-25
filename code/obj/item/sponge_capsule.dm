@@ -48,7 +48,7 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
 		playsound(M,"sound/misc/gulp.ogg", 30, 1)

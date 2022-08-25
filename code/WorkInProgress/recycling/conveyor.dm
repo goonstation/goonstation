@@ -101,11 +101,11 @@
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
 	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
-	if(isobserver(A))
-		return
 	if(istype(A, /obj/machinery/bot) && A:on)	//They drive against the motion of the conveyor, ok.
 		return
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
+		return
+	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
 		return
 	var/movedir = dir	// base movement dir
 	if(divert && dir == divdir)	// update if diverter present
@@ -205,7 +205,7 @@
 
 // attack with hand, move pulled object onto conveyor
 
-/obj/machinery/conveyor/attack_hand(mob/user as mob)
+/obj/machinery/conveyor/attack_hand(mob/user)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
@@ -458,11 +458,11 @@
 			else
 				position = CONVEYOR_REVERSE
 				last_pos = CONVEYOR_STOPPED
-			logTheThing("station", user, null, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
 		else
 			last_pos = position
 			position = CONVEYOR_STOPPED
-			logTheThing("station", user, null, "turns the conveyor switch off at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "turns the conveyor switch off at [log_loc(src)].")
 		UpdateIcon()
 
 		// find any switches with same id as this one, and set their positions to match us

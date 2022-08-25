@@ -248,7 +248,8 @@
 				icon_state = pick("d_glitch2", "d_glitch3")
 				distort_size = 10
 
-#define MAX_TILES_PER_HOLOGRAM 3
+#define MAX_TILES_PER_HOLOGRAM_HORIZONTAL 3
+#define MAX_TILES_PER_HOLOGRAM_VERTICAL 2
 /obj/hologram/text
 	var/message
 	var/original_color
@@ -266,7 +267,8 @@
 		var/rgb = hex_to_rgb_list(original_color)
 		src.hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
 
-		maptext_width = MAX_TILES_PER_HOLOGRAM * 32
+		maptext_width = MAX_TILES_PER_HOLOGRAM_HORIZONTAL * 32
+		maptext_height = MAX_TILES_PER_HOLOGRAM_VERTICAL * 32
 		maptext_x = -(maptext_width / 2) + 16
 
 		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
@@ -278,3 +280,6 @@
 				E.icon_state = "d_fast"
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
+
+#undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
+#undef MAX_TILES_PER_HOLOGRAM_VERTICAL

@@ -13,7 +13,7 @@ obj/machinery/atmospherics/retrofilter
 	initialize_directions = SOUTH|NORTH|WEST
 
 	req_access = list(access_engineering_atmos)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	var/datum/gas_mixture/air_in
 	var/datum/gas_mixture/air_out1
@@ -28,7 +28,7 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through
@@ -122,7 +122,7 @@ obj/machinery/atmospherics/retrofilter
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			user.Browse(null, "window=pipefilter")
 			src.remove_dialog(user)
@@ -314,7 +314,7 @@ obj/machinery/atmospherics/retrofilter
 		src.update_overlays()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))

@@ -280,7 +280,7 @@
 					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
-	attack_hand(mob/user as mob, params)
+	attack_hand(mob/user, params)
 		var/dat
 
 		dat += {"
@@ -322,6 +322,7 @@
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			src.updateUsrDialog()
+			logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
 
 		switch(href_list["operation"])
 			if ("idcheck")
@@ -411,7 +412,7 @@
 			if(user)
 				src.oldtarget_name = user.name
 				ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
-			logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 			return 1
 		return 0
 
@@ -439,7 +440,7 @@
 			src.explode()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
@@ -490,10 +491,10 @@
 	//Generally we want to explode() instead of just deleting the securitron.
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.explode()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 15
 				if (src.health <= 0)
 					src.explode()
@@ -582,7 +583,11 @@
 					return
 
 				stuncount--
-				src.our_baton.do_stun(src, M, src.stun_type, 2)
+				if (check_target_immunity(M))
+					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
+					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				else
+					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
 					src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 				if (stuncount > 0)
@@ -754,7 +759,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - get_dist(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
 					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -1019,10 +1024,13 @@
 		if(loc == patrol_target) // We where we want to be?
 			at_patrol_target() // Find somewhere else to go!
 			look_for_perp()
-		else if (patrol_target && (isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
+			. = TRUE
+		else if (patrol_target && (frustration >= 3 || isnull(src.bot_mover) || get_turf(src.bot_mover.the_target) != get_turf(patrol_target)))
 			navigate_to(patrol_target, delay)
 			if(src.bot_mover && !src.bot_mover.disposed)
 				. = TRUE
+		else if(patrol_target)
+			. = TRUE
 		if(!.)
 			if(!ON_COOLDOWN(src, "find new path after failure", 15 SECONDS))
 				find_patrol_target() // find next beacon I guess!
@@ -1033,7 +1041,11 @@
 		if(awaiting_beacon)			// awaiting beacon response
 			awaiting_beacon++
 			if(awaiting_beacon > 5)	// wait 5 secs for beacon response
-				find_nearest_beacon()	// then go to nearest instead
+				if(text2num(new_destination) && prob(66))
+					new_destination = "[1 + text2num(new_destination)]"
+					send_status()
+				else
+					find_nearest_beacon()	// then go to nearest instead
 				return 0
 			else
 				return 1
@@ -1139,11 +1151,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(src,signal.source.loc)
+			var/dist = GET_DIST(src,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(src,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(src,nearest_beacon_loc))
 					nearest_beacon = signal_beacon
 					nearest_beacon_loc = signal.source.loc
 					return
@@ -1286,10 +1298,6 @@
 				return
 
 			var/uncuffable = 0
-			if (ishuman(master.target))
-				var/mob/living/carbon/human/H = master.target
-				if(!H.limbs.l_arm || !H.limbs.r_arm)
-					uncuffable = 1
 
 			if (!isturf(master.target.loc))
 				uncuffable = 1
@@ -1370,7 +1378,7 @@
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
 			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
-			duration = round(duration * 0.60)
+			duration = round(duration * 0.6)
 		else
 			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
 
@@ -1402,7 +1410,7 @@
 		qdel(src)
 
 
-/obj/item/secbot_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/secbot_assembly/attackby(obj/item/W, mob/user)
 	if ((isweldingtool(W)) && (!src.build_step))
 		if(W:try_weld(user, 1))
 			src.build_step++

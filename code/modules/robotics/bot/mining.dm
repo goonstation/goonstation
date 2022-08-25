@@ -4,7 +4,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "digbot0"
 	var/const/base_sprite_pixels_from_floor = 5
-	layer = 5.0
+	layer = 5
 	density = 0
 	anchored = 0
 	on = 0
@@ -77,7 +77,7 @@
 	else
 		src.UpdateOverlays(display_tool_idle, "tool")
 
-/obj/machinery/bot/mining/attack_hand(user as mob)
+/obj/machinery/bot/mining/attack_hand(user)
 	src.add_fingerprint(user)
 	ui.show_ui(user)
 
@@ -103,7 +103,7 @@
 /obj/machinery/bot/mining/process()
 	if(!src.on) return
 	if(src.digging) return
-	if(!istype(target, /turf/simulated/wall/asteroid/))
+	if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 		src.target = null
 	if(!src.target)
 		src.findTarget()
@@ -129,7 +129,7 @@
 	digbottargets = list()
 	for(var/obj/machinery/bot/mining/bot in machine_registry[MACHINES_BOTS])
 		if(bot != src) digbottargets += bot.target
-	for (var/turf/simulated/wall/asteroid/D in view(7,src))
+	for (var/turf/simulated/wall/auto/asteroid/D in view(7,src))
 		if(!(D in digbottargets) && D != src.oldtarget)
 			if (D.hardness <= src.hardthreshold)
 				if (!src.digsuspicious && D.event)
@@ -144,7 +144,7 @@
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
 			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> points and beeps, \"Doomed rock detected!\"</span></span>", 2)
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y)
+		point(target)
 
 /obj/machinery/bot/mining/proc/buildPath()
 	if (!isturf(src.loc)) return
@@ -205,9 +205,9 @@
 	icon_state = "" //intentionaly blank
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
 	var/obj/machinery/bot/mining/bot
-	var/turf/simulated/wall/asteroid/target
+	var/turf/simulated/wall/auto/asteroid/target
 
-	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/asteroid/target)
+	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/auto/asteroid/target)
 		..()
 		src.bot = bot
 		src.target = target
@@ -233,7 +233,7 @@
 	onEnd()
 		if(checkStillValid())
 			target.damage_asteroid(bot.diglevel)
-			if(!istype(target, /turf/simulated/wall/asteroid/))
+			if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 				bot.target = null
 		if(bot != null)
 			bot.stopDiggingEffects()
@@ -248,7 +248,7 @@
 		if(bot == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return false
-		if(!bot.on || !istype(target, /turf/simulated/wall/asteroid/))
+		if(!bot.on || !istype(target, /turf/simulated/wall/auto/asteroid/))
 			bot.target = null
 			interrupt(INTERRUPT_ALWAYS)
 			return false

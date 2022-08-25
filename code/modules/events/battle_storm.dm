@@ -1,6 +1,10 @@
+#define STORM_REGULAR 1
+#define STORM_FINAL 2
+
 // Basically a weaker radioactive blowout
 /datum/random_event/special/battlestorm
 	name = "Battle Storm"
+	customization_available = TRUE
 	required_elapsed_round_time = 0 MINUTES
 	var/space_color = "#ff4646"
 	var/list/area/safe_areas = list()
@@ -13,13 +17,29 @@
 		..()
 		safe_locations = get_accessible_station_areas()
 
-	event_effect(var/final = FALSE)
+	admin_call(var/source)
+		if (..())
+			return
+
+		if(alert("Are you sure you want to do this?","Caution!","Yes","No") == "Yes")
+			src.event_effect(STORM_REGULAR)
+		return
+
+	event_effect(var/storm_type = null)
+		// Safety check in case someone makes a button that triggers a random event...
+		if (storm_type != STORM_REGULAR && storm_type != STORM_FINAL)
+			message_admins("Error: The battlestorm event was called without a valid storm_type argument. Cancelling event")
+			logTheThing(LOG_DEBUG, null, "The battlestorm event was called without a valid storm_type argument.")
+			return
+		var/final
+		if (storm_type == STORM_FINAL)
+			final = TRUE
 		// Pick a safe area(s)
 		activations++
 		safe_area_names = list()
 		safe_areas = list()
 		if (!final)
-			var/num_safe_areas = clamp(6 - activations, 1, 5)
+			var/num_safe_areas = clamp(5 - activations, 1, 4)
 			var/area/temp = null
 			var/list/locations_copy = list()
 			for(var/A in safe_locations)
@@ -31,9 +51,6 @@
 				safe_areas.Add(safe_locations[temp])
 				safe_locations[temp].icon_state = "blue"
 
-		for (var/mob/M in mobs)
-			if (M.z == Z_LEVEL_STATION)
-				M.flash(3 SECONDS)
 		var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 		siren.repeat = TRUE
 		siren.channel = 5
@@ -47,9 +64,6 @@
 			siren.channel = 5
 			siren.volume = 50
 
-			for (var/mob/M in mobs)
-				if (M.z == Z_LEVEL_STATION)
-					M.flash(3 SECONDS)
 
 	#ifndef UNDERWATER_MAP
 			for (var/turf/space/S in world)
@@ -87,7 +101,7 @@
 			for (var/mob/M in mobs)
 				SPAWN(0)
 					if (!inafterlife(M) && !isVRghost(M))
-						shake_camera(M, 100, 16) // wire note: lowered strength from 840 to 400, by popular request
+						shake_camera(M, 100, 6)
 
 			if (final)
 				// Yes we are going forever
@@ -139,3 +153,6 @@ proc/get_battle_area_names(var/list/strings)
 	for(var/i = 1, i < strings.len; i++)
 		. += strings[i] + ", "
 	. += "or [strings[strings.len]]"
+
+#undef STORM_REGULAR
+#undef STORM_FINAL

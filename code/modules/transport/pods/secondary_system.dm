@@ -126,7 +126,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
-	desc = "Allows the ship to load crates and transport them."
+	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
 	var/list/load = list() //Current crates inside
 	var/maxcap = 3 //how many crates it can hold
 	var/list/acceptable = list(/obj/storage/crate,
@@ -158,12 +158,12 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/deactivate()
-	for(var/obj/O in load) //Drop cargo.
+	for(var/atom/movable/O in load) //Drop cargo.
 		src.unload(O)
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
-	var/loadmode = input(usr, "Unload/Load", "Unload/Load")  as null|anything in list("Load", "Unload")
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null
@@ -285,8 +285,6 @@
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 		return 1 // invalid cargo
 
-	C.set_loc(src.loc)
-	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
 	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
@@ -802,7 +800,7 @@
 
 	activate()
 		if (crashable == 0) // To avoid spam. SEEDs can't be deactivated (Convair880).
-			logTheThing("vehicle", usr, null, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
+			logTheThing(LOG_VEHICLE, usr, "activates a SEED, turning [src.ship] into a flying bomb at [log_loc(src.ship)]. Direction: [dir2text(src.ship.dir)].")
 		crashable = 1
 		return
 

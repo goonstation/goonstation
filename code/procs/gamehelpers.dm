@@ -1,16 +1,3 @@
-
-/*
-    replacetext(haystack, needle, replace)
-
-        Replaces all occurrences of needle in haystack (case-insensitive)
-        with replace value.
-
-    replaceText(haystack, needle, replace)
-
-        Replaces all occurrences of needle in haystack (case-sensitive)
-        with replace value.
-*/
-
 var/list/vowels_lower = list("a","e","i","o","u")
 var/list/vowels_upper = list("A","E","I","O","U")
 var/list/consonants_lower = list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")
@@ -25,7 +12,7 @@ var/list/stinkExclamations = list("Ugh","Good lord","Good grief","Christ","Fuck"
 var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile of poo",
 	"butt","skunk","outhouse","corpse","fart","devil")
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
-var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","administrator")
+var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administrator")
 
 /proc/stinkString()
 	// i am five - ISN
@@ -79,7 +66,6 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	return null
 
 /proc/get_area_name(N) //get area by it's name
-
 	for(var/area/A in world)
 		if(A.name == N)
 			return A
@@ -106,7 +92,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
-			if (C.bioHolder.HasEffect("telekinesis") && get_dist(source, user) <= 7) //You can only reach stuff within your screen.
+			if (C.bioHolder.HasEffect("telekinesis") && GET_DIST(source, user) <= 7) //You can only reach stuff within your screen.
 				var/X = source:x
 				var/Y = source:y
 				var/Z = source:z
@@ -228,11 +214,11 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 				if(IN_RANGE(center, AIeye, distance))
 					. += theAI
 
-//Kinda sorta like viewers but includes observers. In theory.
+//Kinda sorta like viewers but includes target observers inside viewing mobs
 /proc/observersviewers(var/Dist=world.view, var/Center=usr)
 	var/list/viewMobs = viewers(Dist, Center)
 
-	for(var/mob/dead/target_observer/M in observers)
+	for_by_tcl(M, /mob/dead/target_observer)
 		if(!M.client) continue
 		if(M.target in view(Dist, Center) || M.target == Center)
 			viewMobs += M
@@ -246,6 +232,9 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 		Depth = newDepth
 
 	. = viewers(Depth, Center) + get_viewing_AIs(Center, 7)
+	for(var/mob/living/intangible/aieye/eye in .)
+		. -= eye
+
 	if(length(by_cat[TR_CAT_OMNIPRESENT_MOBS]))
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(Center, 0)?.z)
@@ -363,7 +352,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 #endif
 
 	if(phrase_log.is_uncool(message) && !wasUncool)
-		logTheThing("admin",H,null,"[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
+		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
 
@@ -373,7 +362,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	var/turf/target_turf = get_turf(target)
 	if(current == target_turf)
 		return TRUE
-	if(get_dist(current, target_turf) > length)
+	if(GET_DIST(current, target_turf) > length)
 		return FALSE
 	current = get_step_towards(source, target_turf)
 	while((current != target_turf))
@@ -610,6 +599,7 @@ var/list/stinkThingies = list("ass","taint","armpit","excretions","leftovers","a
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
 		for (var/atom/movable/AM as anything in S)
+			if (istype(AM, /obj/effects/precipitation)) continue
 			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
 			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue

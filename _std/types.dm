@@ -38,7 +38,7 @@ if there are any violations).
 /datum/New()
 	..()
 	if(IS_ABSTRACT(src.type))
-		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")
+		logTheThing(LOG_DEBUG, src, "Attempt to instantiate abstract type '[src.type]'.")
 #endif
 
 var/global/list/cached_concrete_types
@@ -205,6 +205,8 @@ var/list/list/by_cat = list()
 #define TR_CAT_ARTIFACTS "artifacts"
 #define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
 #define TR_CAT_HUNTER_GEAR "hunter_gear"
+#define TR_CAT_FLOCK_STRUCTURE "flock_structure"
+#define TR_CAT_AREA_PROCESS "process_area"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -440,3 +442,11 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/atom) \
 		IT_TYPE(/datum)
 	#undef IT_TYPE
+
+/// istype but for checking a list of types
+proc/istypes(datum/dat, list/types)
+	// based on the size of the types list this could be optimizable later by pre-generating and caching a concatenation of typesof() of them
+	for(var/type in types)
+		if(istype(dat, type))
+			return TRUE
+	return FALSE

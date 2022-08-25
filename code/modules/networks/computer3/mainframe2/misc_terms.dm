@@ -77,7 +77,7 @@
 		if (..())
 			return 1
 
-		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
+		if (href_list["dipsw"] && src.panel_open && GET_DIST(usr, src) < 2)
 			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1
@@ -215,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -331,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -722,7 +722,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -735,7 +735,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -1038,7 +1038,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1054,7 +1054,7 @@
 					src.link = test_link
 					src.link.master = src
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -1170,7 +1170,7 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1276,14 +1276,13 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						if(station_or_ship() == "ship")
-							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
 							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
-						if(station_or_ship() == "station")
-							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
+						else
+							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, "sound/misc/airraid_loop.ogg", 25)
+						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
@@ -1385,7 +1384,7 @@
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1427,7 +1426,7 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
@@ -1715,7 +1714,7 @@
 		..()
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -1775,7 +1774,7 @@
 		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2167,7 +2166,7 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
@@ -2204,7 +2203,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2435,7 +2434,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2642,14 +2641,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
@@ -2733,7 +2732,7 @@
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2789,7 +2788,7 @@
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2897,7 +2896,7 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
@@ -2910,7 +2909,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3151,15 +3150,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
@@ -3212,7 +3211,7 @@
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	var/datum/light/light
 
@@ -3408,7 +3407,7 @@
 			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 
@@ -3422,7 +3421,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3623,15 +3622,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()

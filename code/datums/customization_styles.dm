@@ -232,6 +232,15 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Visual"
 				id = "visual"
 				gender = MASCULINE
+			combedfront
+				name = "Combed Front"
+				id = "combedfront"
+			combedfrontshort
+				name = "Combed Front Short"
+				id = "combedfrontshort"
+			longfront
+				name = "Long Front"
+				id = "longfront"
 		long
 			chub2_s
 				name = "Bang: Left"
@@ -308,6 +317,18 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			longbraid
 				name = "Long Braid"
 				id = "longbraid"
+				gender = FEMININE
+			looselongbraid
+				name = "Loose Long Braid"
+				id = "looselongbraid"
+				gender = FEMININE
+			looselongbraidtwincolor
+				name = "Loose Long Braid: Twin Color"
+				id = "looselongbraidfaded"
+				gender = FEMININE
+			looselongbraidshoulder
+				name = "Loose Long Braid Over Shoulder"
+				id = "looselongbraidshoulder"
 				gender = FEMININE
 			longsidepart_s
 				name = "Long Flip"

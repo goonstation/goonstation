@@ -62,14 +62,6 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/list/stored = list()
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		if(length(stored))
-			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
-
 		return dat
 
 //Status Display
@@ -216,7 +208,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -415,7 +407,7 @@ Code:
 /datum/computer/file/pda_program/door_control
 	name = "DoorMaster"
 	size = 8
-	var/id = 1.0
+	var/id = 1
 	var/last_toggle = 0
 
 	syndicate
@@ -1030,7 +1022,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
@@ -1077,7 +1069,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
@@ -1258,7 +1250,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if (station_name_changing)
 				var/nextName = lastStationNameChange + stationNameChangeDelay
 				if (nextName > world.timeofday)
-					alert("You must wait for the station naming coils to recharge! Did space school teach you nothing?!")
+					tgui_alert(usr, "You must wait for the station naming coils to recharge! Did space school teach you nothing?!", "Naming coils recharging")
 					usr.Browse(null, "window=stationnamechanger")
 					src.master.updateSelfDialog()
 					return
@@ -1267,7 +1259,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 			usr.Browse(null, "window=stationnamechanger")
 			src.master.updateSelfDialog()

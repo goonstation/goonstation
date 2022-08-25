@@ -10,12 +10,12 @@
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null
 
-	var/welding = 0.0
+	var/welding = 0
 	var/status = 0 // flamethrower construction :shobon:
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	tool_flags = TOOL_WELDING
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	health = 5
@@ -42,7 +42,7 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!src.welding)
 			if (!src.cautery_surgery(M, user, 0, src.welding))
 				return ..()
@@ -110,7 +110,7 @@
 			else return ..()
 		else return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (status)
 				status = 0

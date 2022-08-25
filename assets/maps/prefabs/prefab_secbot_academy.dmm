@@ -226,7 +226,9 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/obj/machinery/bot/secbot{
+	control_freq = 0
+	},
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "iR" = (
@@ -383,7 +385,11 @@
 /area/prefab/secbot_academy)
 "pi" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/networked/printer{
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Old Printer";
+	true_name = "printer";
 	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/purple/fancy,
@@ -548,7 +554,7 @@
 /area/prefab/secbot_academy)
 "yQ" = (
 /obj/storage/closet/janitor{
-	spawn_contents = list(/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags = 2,/obj/item/clothing/under/rank/janitor = 2, /obj/item/clothing/shoes/black = 2, /obj/item/device/light/flashlight,/obj/item/clothing/shoes/galoshes/torn,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/storage/box/body_bag,/obj/item/caution = 6, /obj/item/clothing/gloves/long,/obj/item/handheld_vacuum)
+	spawn_contents = list(/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags=2,/obj/item/clothing/under/rank/janitor=2,/obj/item/clothing/shoes/black=2,/obj/item/device/light/flashlight,/obj/item/clothing/shoes/galoshes/torn,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/storage/box/body_bag,/obj/item/caution=6,/obj/item/clothing/gloves/long,/obj/item/handheld_vacuum)
 	},
 /obj/item/mop,
 /obj/item/mop,
@@ -878,7 +884,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/machinery/bot/secbot,
+/obj/machinery/bot/secbot{
+	control_freq = 0
+	},
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "Pg" = (
@@ -984,7 +992,8 @@
 	},
 /obj/machinery/bot/secbot{
 	desc = "A little security robot.  He seems to be filling out paperwork... somehow.";
-	name = "Principal Boop"
+	name = "Principal Boop";
+	control_freq = 0
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)

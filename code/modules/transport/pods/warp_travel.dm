@@ -9,6 +9,7 @@
 	anchored = 1
 	density = 1
 	var/packable = 0
+	var/obj/deployer = /obj/beacon_deployer
 	var/beaconid //created by kits
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -69,15 +70,15 @@
 	deployed
 		packable = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/wrench))
+	attackby(obj/item/W, mob/user)
+		if (iswrenchingtool(W))
 			if (!packable)
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
 			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
 			src.startpack()
-		else if (istype(W, /obj/item/device/multitool))
+		else if (ispulsingtool(W))
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
@@ -108,7 +109,7 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
-	anchored = 1.0
+	anchored = 1
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
@@ -147,7 +148,7 @@
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
-			logTheThing("combat", T, null, "entered [src] at [log_loc(src)] and gibbed")
+			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
 			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
@@ -157,7 +158,7 @@
 					H:bioHolder:RandomEffect("bad")
 				else
 					H:bioHolder:RandomEffect("good")
-			logTheThing("combat", T, null, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
+			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
@@ -167,7 +168,7 @@
 	src.packable = 0
 	src.icon_state = "beaconpack"
 	SPAWN(14) //wait until packing is complete
-		var/obj/beacon_deployer/packitup = new /obj/beacon_deployer(src.loc)
+		var/obj/beacon_deployer/packitup = new src.deployer(src.loc)
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
@@ -182,6 +183,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beaconunit"
 	density = 1
+	var/tile_range = 2
 	var/deploying = null
 	var/beaconid = null
 
@@ -190,9 +192,9 @@
 		src.name = "warp buoy unit [beaconid]"
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/wrench) && !src.deploying)
-			for (var/turf/T in range(2,src))
+	attackby(obj/item/W, mob/user)
+		if (iswrenchingtool(W) && !src.deploying)
+			for (var/turf/T in range(src.tile_range,src))
 				if (!T.allows_vehicles)
 					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
@@ -204,7 +206,7 @@
 			src.deploying = 1
 			src.deploybeacon()
 
-		else if (istype(W, /obj/item/device/multitool/) && !src.deploying)
+		else if (ispulsingtool(W) && !src.deploying)
 			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
@@ -226,7 +228,19 @@
 		playsound(src, "sound/machines/heater_off.ogg", 20, 1)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
+		depbeac.deployer = src.type
 		qdel(src)
+
+/obj/beacon_deployer/sketchy
+	name = "unregistered warp buoy unit"
+	tile_range = 1
+
+	New()
+		src.beaconid = rand(1000,9999)
+		src.name = "unregistered warp buoy unit [beaconid]"
+		desc = "A compact anchor for teleportation technology, cobbled together from spare parts. Looks like the safety features have been laxened."
+		..()
+
 
 /obj/beacon_deployer/syndicate
 	name = "syndicate warp buoy unit"
@@ -244,7 +258,7 @@
 	density = 1
 	var/state = 1
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(1)
 				if (istype(I, /obj/item/rods))

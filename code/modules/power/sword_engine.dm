@@ -37,7 +37,7 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full. [integrity_state ? "This engine, even with the metal debris removed, seems nigh unfixable" : "It looks quite broken"]. [core_inserted ? "It would be wise to repurpose it's core for something else, as it's still intact" : "The core is missing.."]."}
 
 
-/obj/machinery/power/sword_engine/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/sword_engine/attackby(obj/item/W, mob/user)
 	if (integrity_state == 0 && isweldingtool(W) && W:try_weld(user,1))
 		boutput(user, "<span class='notice'>You removed the mangled metal from the SWORD Engine!</span>")
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."

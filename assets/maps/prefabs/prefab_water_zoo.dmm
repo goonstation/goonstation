@@ -105,7 +105,7 @@
 /area/prefab/zoo)
 "w" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	icon_state = "lamp-burned"
 	},
 /turf/simulated/floor/plating,

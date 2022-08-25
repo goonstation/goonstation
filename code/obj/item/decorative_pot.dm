@@ -7,7 +7,7 @@
 		density = 1
 		mats = list("ALL" = 1)
 
-		attackby(obj/item/weapon as obj,mob/user as mob)
+		attackby(obj/item/weapon, mob/user)
 				if((iswrenchingtool(weapon)) || isscrewingtool(weapon))
 						if(!src.anchored)
 								user.visible_message("<b>[user]</b> secures the [src] to the floor!")

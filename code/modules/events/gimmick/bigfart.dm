@@ -30,7 +30,7 @@
 			var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", 20; "drunkenly spotted")
 			var/anomlytext = pick("strange anomaly", "wave of cosmic energy", "spectral emission", 20; "shuttle of phantom George Melons clones")
 			var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", 20; "about to seriously fuck up")
-			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert")
+			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 		var/loops = rand(20, 100)
 		var/freebie = 1
 		for (var/i=0, i<loops, i++)
@@ -89,7 +89,7 @@
 			B = new /obj/item/clothing/head/butt/cyberbutt(T)
 			B.donor = H
 			ThrowRandom(B, dist = 6, speed = 1)
-		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from \his body[magical ? " in a magical explosion" : null]!</span>",\
+		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 		severed_something = TRUE
 
@@ -108,7 +108,7 @@
 		if (length(possible_limbs)) /// Dont want your tail removed? Keep all your limbs intact!
 			if(istype(H.organHolder.tail) && prob(100 - (25 * length(possible_limbs)))) // 25% chance to lose a tail per missing limb
 				severed_something = TRUE
-				H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from \his body[magical ? " in a magical explosion" : null]!</span>",\
+				H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 				"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
 			for(var/obj/item/parts/L in possible_limbs)

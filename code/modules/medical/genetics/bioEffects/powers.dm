@@ -179,24 +179,45 @@
 			the_server.eaten(owner)
 			using = FALSE
 			return
-		owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
-		playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+
+			// First, restore a little hunger, and heal our organs
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-			for(var/A in owner.organs)
-				var/obj/item/affecting = null
-				if (!owner.organs[A])    continue
-				affecting = owner.organs[A]
-				if (!isitem(affecting))
-					continue
-				affecting.heal_damage(4, 0)
-			owner.UpdateDamageIcon()
+				for(var/A in owner.organs)
+					var/obj/item/affecting = null
+					if (!owner.organs[A])
+						continue
+					affecting = owner.organs[A]
+					if (!isitem(affecting))
+						continue
+					affecting.heal_damage(4, 0)
+				owner.UpdateDamageIcon()
 
-		qdel(the_object)
+		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
+			var/obj/item/I = the_object
+			if(I)
+				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					// Organs and body parts have special behaviors we need to account for
+					if (ishuman(owner))
+						var/mob/living/carbon/human/H = owner
+						if (istype(the_object, /obj/item/organ))
+							var/obj/item/organ/organ_obj = the_object
+							if (organ_obj.donor)
+								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
+						else if (istype(the_object, /obj/item/parts))
+							var/obj/item/parts/part = the_object
+							part.delete()
+							H.hud.update_hands()
+			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
+				playsound(owner.loc, "sound/items/eatfood.ogg", 50, FALSE)
+				qdel(the_object)
+
+
 
 		using = FALSE
 
@@ -600,7 +621,7 @@
 		boutput(recipient, "<span style='color: #BD33D9'><b>[psyname]</b> echoes, \"<i>[msg]</i>\"</span>")
 		boutput(owner, "<span style='color: #BD33D9'>You echo \"<i>[msg]</i>\" to <b>[recipient.name]</b>.</span>")
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
+		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -641,7 +662,7 @@
 		owner.visible_message("<span class='alert'><b>[owner]</b> puts their fingers to their temples and stares at [target] really hard.</span>")
 		owner.say(msg)
 
-		logTheThing("telepathy", owner, recipient, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
+		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
 
 		return
 
@@ -974,6 +995,7 @@
 			if(owner.reagents.has_reagent("anti_fart"))
 				owner.visible_message("<span class='alert'><b>[owner.name]</b> swells up. That can't be good.</span>")
 				boutput(owner, "<span class='alert'><b>Oh god.</b></span>")
+				logTheThing(LOG_COMBAT, owner, "was gibbed by superfarting while containing anti_fart at [log_loc(owner)].")
 				indigestion_gib()
 				return 1
 
@@ -1139,7 +1161,7 @@
 	color_blue = 1
 
 /datum/projectile/laser/eyebeams/stun
-	ks_ratio = 0.0
+	ks_ratio = 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1648,7 +1670,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			tfireflash(F,0.5,temp)
 
@@ -2018,7 +2040,7 @@
 		var/range = BP.range
 		range *= BP.power
 		owner.visible_message("<span class='alert'><b>[owner] horfs up a huge stream of puke!</b></span>")
-		logTheThing("combat", owner, target, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, owner, "power-pukes [log_reagents(owner)] at [log_loc(owner)].")
 		playsound(owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
 		for (var/reagent_id in puke_reagents)
 			owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
@@ -2033,7 +2055,7 @@
 				break
 			if (F == get_turf(owner))
 				continue
-			if (get_dist(owner,F) > range)
+			if (GET_DIST(owner,F) > range)
 				continue
 			affected_turfs += F
 		for(var/turf/F in affected_turfs)
@@ -2208,7 +2230,7 @@
 							pwr.count = 0
 
 					owner.visible_message("<span class='alert'><b>[thrown_limb][linked_power.power > 1 ? " violently " : " "]bursts off of its socket and flies towards [target]!</b></span>")
-					logTheThing("combat", owner, target, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
+					logTheThing(LOG_COMBAT, owner, "shoot_limb [!linked_power.safety ? "Accidently" : ""] at [ismob(target)].")
 					SPAWN(1 SECOND)
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force

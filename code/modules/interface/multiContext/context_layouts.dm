@@ -43,6 +43,9 @@ var/list/datum/contextAction/globalContextActions = null
 	else if (ishivebot(target))
 		var/mob/living/silicon/hivebot/hivebot = target
 		hivebot.hud.add_screen(C)
+	else if (istype(target, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_entity = target
+		flock_entity.render_special.add_screen(C)
 
 
 /datum/contextLayout/flexdefault
@@ -199,6 +202,8 @@ var/list/datum/contextAction/globalContextActions = null
 
 /datum/contextLayout/experimentalcircle
 	var/dist
+	///If true the first button in the list will be rendered in the center of the circle
+	var/center = FALSE
 
 	New(var/Dist = 32)
 		dist = Dist
@@ -216,7 +221,7 @@ var/list/datum/contextAction/globalContextActions = null
 			screenX = (screenCenter.x - target.x) * -1 * 32
 			screenY = (screenCenter.y - target.y) * -1 * 32
 
-		var/anglePer = round(360 / buttons.len)
+		var/anglePer = round(360 / (length(buttons) - (center ? 1 : 0)))
 
 		var/count = 0
 
@@ -232,7 +237,9 @@ var/list/datum/contextAction/globalContextActions = null
 
 			var/offX = round(dist * cos(anglePer * count)) + round(sizeX / 2)
 			var/offY = round(dist * sin(anglePer * count)) + round(sizeY / 2)
-
+			if (center && count == 0)
+				offX = round(sizeX / 2)
+				offY = round(sizeY / 2)
 			var/matrix/trans = new /matrix
 			trans = trans.Reset()
 			trans.Translate(offX, offY)

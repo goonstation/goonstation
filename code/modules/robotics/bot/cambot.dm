@@ -48,7 +48,7 @@
 			user.show_text("You short out the flash control circuit on [src]!", "red")
 			src.emagger = user
 			src.add_fingerprint(user)
-			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		playsound(src, "sound/weapons/flash.ogg", 50, 1)
@@ -75,10 +75,10 @@
 
 /obj/machinery/bot/cambot/ex_act(severity)
 	switch (severity)
-		if (1.0)
+		if (1)
 			src.explode()
 			return
-		if (2.0)
+		if (2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 
@@ -312,7 +312,7 @@
 	var/build_step = 0
 	var/created_name = "Cambot"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
 			B.name = src.created_name

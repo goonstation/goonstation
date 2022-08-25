@@ -145,7 +145,7 @@
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -186,6 +186,9 @@
 
 	ex_act(severity)
 		return
+
+	powered()
+		return TRUE
 
 	disposing()
 		..()
@@ -239,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/pod_wars
@@ -286,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
@@ -547,7 +550,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -581,7 +584,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 		ctrl_pt.capture(user, team_num)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!can_be_captured)
 			var/cur_time
 			var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -657,7 +660,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		return
 	meteorhit(var/obj/O as obj)
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team
@@ -676,7 +679,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -719,7 +722,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		user.lastattacked = src
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch (user.a_intent)
 			if (INTENT_HELP)
 				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")
@@ -784,7 +787,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing(LOG_DIARY, user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -793,7 +796,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing

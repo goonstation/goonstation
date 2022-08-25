@@ -3,7 +3,7 @@
 	name = "artifact energy gun"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "laser"
-	force = 5.0
+	force = 5
 	artifact = 1
 	is_syndicate = 1
 	mat_changename = 0
@@ -43,7 +43,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 

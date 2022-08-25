@@ -16,7 +16,7 @@
 		P.addAbility(/datum/targetable/hunter/hunter_summongear)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_HUNTER_TIPS(src)
+			src.show_antag_popup("hunter")
 
 	else return
 
@@ -68,8 +68,8 @@
 		M.set_body_icon_dirty()
 		M.update_clothing()
 
-		boutput(M, __blue("<h3>You have received your equipment. Let the hunt begin!</h3>"))
-		logTheThing("combat", M, null, "transformed into a hunter at [log_loc(M)].")
+		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
+		logTheThing(LOG_COMBAT, M, "transformed into a hunter at [log_loc(M)].")
 		return 1
 
 	else
@@ -259,8 +259,8 @@
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 
 /datum/targetable/hunter
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "template"  // No custom sprites yet.
+	icon = 'icons/mob/hunter_abilities.dmi'
+	icon_state = "trophycount"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
@@ -331,23 +331,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (hunter_only == 1 && !ishunter(M))
-			boutput(M, __red("You're not quite sure how to go about doing that in your current form."))
+			boutput(M, "<span class='alert'>You're not quite sure how to go about doing that in your current form.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

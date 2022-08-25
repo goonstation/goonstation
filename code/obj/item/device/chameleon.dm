@@ -1,6 +1,7 @@
 /obj/dummy/chameleon
 	name = ""
 	desc = ""
+	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = 1
 	soundproofing = -1
@@ -69,7 +70,7 @@
 	icon_state = "shield0"
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | ONBELT | SUPPRESSATTACK
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -120,6 +121,8 @@
 		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
@@ -201,11 +204,11 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.active)
 			if (user)
 				message_admins("[key_name(user)] triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "triggers a chameleon bomb ([src]) by hitting it with [W] at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -213,7 +216,7 @@
 	attack_hand(var/mob/user)
 		if (src.active && isturf(loc))
 			message_admins("[key_name(user)] picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
-			logTheThing("bombing", user, null, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "picks up and triggers a chameleon bomb ([src]) at [log_loc(user)].")
 			src.disrupt()
 		else
 			return ..()
@@ -234,6 +237,8 @@
 		if (BOUNDS_DIST(src, target) > 0)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
+			return
+		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
 		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, "sound/weapons/flash.ogg", 100, 1, 1)
@@ -261,14 +266,14 @@
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			boutput(usr, "<span class='notice'>You disarm the [src].</span>")
 			message_admins("[key_name(usr)] disarms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "disarms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 		else
 			playsound(src, "sound/effects/pop.ogg", 100, 1, 1)
 			src.active = 1
 			boutput(usr, "<span class='notice'>You arm the [src].</span>")
 			message_admins("[key_name(usr)] arms a chameleon bomb ([src]) at [log_loc(usr)].")
-			logTheThing("bombing", usr, null, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
+			logTheThing(LOG_BOMBING, usr, "arms a chameleon bomb ([src]) at [log_loc(usr)].")
 
 	disrupt()
 		if (active)

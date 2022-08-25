@@ -42,7 +42,7 @@
 		else
 			icon_state = "scanner_on"
 
-	attackby(obj/item/W as obj, mob/user as mob) //If we get emagged...
+	attackby(obj/item/W, mob/user) //If we get emagged...
 		if (istype(W, /obj/item/card/emag) && (!emagged))
 			src.add_fingerprint(user)
 			emagged++

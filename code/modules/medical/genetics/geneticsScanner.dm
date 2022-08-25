@@ -11,7 +11,7 @@ var/list/genetek_hair_styles = list()
 	var/mob/occupant = null
 	var/datum/character_preview/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1.0
+	anchored = 1
 	soundproofing = 10
 
 	var/net_id = null
@@ -122,7 +122,7 @@ var/list/genetek_hair_styles = list()
 
 		move_mob_inside(usr)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		eject_occupant(user)
 
@@ -150,7 +150,7 @@ var/list/genetek_hair_styles = list()
 		src.go_out()
 		add_fingerprint(user)
 
-	attackby(var/obj/item/grab/G as obj, user as mob)
+	attackby(var/obj/item/grab/G, user)
 		if (!istype(G))
 			return
 
@@ -207,7 +207,7 @@ var/list/genetek_hair_styles = list()
 
 		// Added (Convair880).
 		if (src.occupant)
-			logTheThing("station", usr, src.occupant, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.locked ? "locks" : "unlocks"] the [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 
 		return
 
@@ -239,7 +239,7 @@ var/list/genetek_hair_styles = list()
 			return
 
 		if(!src.occupant.disposed)
-			src.occupant.set_loc(src.loc)
+			src.occupant.set_loc(get_turf(src))
 
 		src.occupant = null
 
@@ -260,6 +260,9 @@ var/list/genetek_hair_styles = list()
 		else
 			qdel(src.occupant_preview)
 			src.occupant_preview = null
+
+	was_deconstructed_to_frame(mob/user)
+		src.go_out()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

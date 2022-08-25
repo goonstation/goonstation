@@ -6,7 +6,7 @@
 	cost = 20
 	dissipation_rate = 2
 	dissipation_delay = 4
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "dewraithize"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1

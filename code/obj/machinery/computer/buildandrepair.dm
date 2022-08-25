@@ -7,6 +7,7 @@
 	var/state = 0
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
+	material_amt = 0.5
 
 	blob_act(var/power)
 		qdel(src)
@@ -30,8 +31,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	mats = 6
 
 /obj/item/circuitboard/security
-	name = "Circuit board (Security)"
+	name = "Circuit board (Security Cameras)"
 	computertype = "/obj/machinery/computer/security"
+/obj/item/circuitboard/security_tv
+	name = "Circuit board (Security Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv"
+/obj/item/circuitboard/small_tv
+	name = "Circuit board (Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv/small"
 
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
@@ -141,11 +148,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/telescope
 	name = "Circuit board (Quantum Telescope)"
 	computertype = "/obj/machinery/computer/telescope"
+/obj/item/circuitboard/announcement
+	name = "Circuit board (Announcement Computer)"
+	computertype = "/obj/machinery/computer/announcement"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
@@ -231,7 +241,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					B.records = circuit.records
 				if (circuit.frequency)
 					B.frequency = circuit.frequency
-				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
 /obj/computerframe/proc/state_actions(obj/item/P, mob/user)

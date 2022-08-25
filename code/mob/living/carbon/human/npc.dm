@@ -303,7 +303,7 @@
 				ai_findtarget_new()
 		if(AI_ANGERING)	//WHATS THAT?
 
-			if (get_dist(src,ai_target) > 6)
+			if (GET_DIST(src,ai_target) > 6)
 				ai_target = null
 				ai_state = AI_PASSIVE
 				ai_threatened = 0
@@ -329,7 +329,7 @@
 				return
 
 			var/valid = ai_validpath()
-			var/distance = get_dist(src,ai_target)
+			var/distance = GET_DIST(src,ai_target)
 
 			ai_obstacle(0)
 			ai_openclosets()
@@ -397,7 +397,7 @@
 					if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 						switch(pick(1,2))
 							if(1)
-								hearers(src) << "<B>[src.name]</B> makes machine-gun noises with \his mouth."
+								hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
 							if(2)
 								src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
@@ -551,7 +551,7 @@
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped().flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -641,7 +641,7 @@
 			ai_obstacle() //Remove.
 		else
 			//step_towards(src, ai_target)
-			var/dist = get_dist(src,ai_target)
+			var/dist = GET_DIST(src,ai_target)
 			if(ai_target && dist > 2) //We're in fast approach mode
 				walk_towards(src,ai_target, ai_movedelay)
 			else if (dist > 1)
@@ -921,9 +921,9 @@
 		var/obj/storage/closet/C = src.loc
 		if (C.open)
 			C.close()
-			C.open()
+			C.open(user=src)
 		else
-			C.open()
+			C.open(user=src)
 
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
@@ -969,10 +969,10 @@
 		return
 	for (var/obj/storage/closet/C in view(1,src))
 		if (!C.open)
-			C.open()
+			C.open(user=src)
 	for (var/obj/storage/secure/closet/S in view(1,src))
 		if (!S.open && !S.locked)
-			S.open()
+			S.open(user=src)
 
 
 #undef IS_NPC_HATED_ITEM

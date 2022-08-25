@@ -42,7 +42,7 @@
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/item/clothing/gloves/yellow/unsulated{
-	desc = "There's holes all over them. There's no way there are safe.";
+	desc = "There's holes all over them. There's no way these are safe.";
 	name = "gnawed yellow gloves"
 	},
 /turf/simulated/floor/plating,

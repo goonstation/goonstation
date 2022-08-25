@@ -35,16 +35,24 @@
 						H.health_mon.icon_state = "10"
 					if (-INFINITY to 0) //0
 						H.health_mon.icon_state = "0"
-		if (H.health_implant)
-			var/has_health = locate(/obj/item/implant/health) in H.implant
-			var/has_cloner = locate(/obj/item/implant/cloner) in H.implant
-			if(has_health && has_cloner)
-				H.health_implant.icon_state = "implant-both"
-			else if(has_health)
-				H.health_implant.icon_state = "implant-health"
-			else if(has_cloner)
-				H.health_implant.icon_state = "implant-cloner"
-			else
-				H.health_implant.icon_state = null
-
+		if (H.implant_icons)
+			var/has_health = FALSE
+			var/has_cloner = FALSE
+			var/has_other = FALSE
+			for (var/obj/item/implant/I in H.implant)
+				if (I.scan_category == "not_shown")
+					continue
+				if (I.scan_category == "health")
+					has_health = TRUE
+				else if (I.scan_category == "cloner")
+					has_cloner = TRUE
+				else if (I.scan_category == "other" || I.scan_category == "unknown")
+					has_other = TRUE
+			var/image/I
+			I = H.implant_icons["health"]
+			I.icon_state = has_health ? "implant-health" : null
+			I = H.implant_icons["cloner"]
+			I.icon_state = has_cloner ? "implant-cloner" : null
+			I = H.implant_icons["other"]
+			I.icon_state = has_other ? "implant-other" : null
 		..()

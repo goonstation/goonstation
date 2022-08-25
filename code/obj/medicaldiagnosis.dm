@@ -12,7 +12,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "stethoscope"
 	icon_state = "stethoscope"
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(user.a_intent == "help")
@@ -31,7 +31,9 @@
 					Light oxygen loss
 					Anything else
 					*/
-					user.tri_message("<span class='notice'><b>[user]</b> puts [src] to [(user != H) ? "[H]'s" : "their"] chest.</span>", user, "<span class='notice'>You put [src] to [(user != H) ? "[H]'s" : "your"] chest and begin listening.</span>", H, "<span class='notice'>[user] puts [src] to your chest and begins listening intently.</span>")
+					user.tri_message(H, "<span class='notice'><b>[user]</b> puts [src] to [(user != H) ? "[H]'s" : "their"] chest.</span>",
+						"<span class='notice'>You put [src] to [(user != H) ? "[H]'s" : "your"] chest and begin listening.</span>",
+						"<span class='notice'>[user] puts [src] to your chest and begins listening intently.</span>")
 					if(do_after(user, (user.traitHolder.hasTrait("training_medical") ? 2 SECONDS : 4 SECONDS)) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
 						if(!user.traitHolder.hasTrait("training_medical") && prob(15))
 							boutput(user, "<span class='alert'>You attempt to listen to [(user != H) ? "[H]'s" : "your"] lungs before realizing after a few attempts that you've been listening to [(user != H) ? "[H]'s" : "your"] [pick("liver", "kidneys", "spleen", "leg", "PDA", "eyes")], a shameful [user]</span>")

@@ -100,7 +100,7 @@
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
 				src.remove_dialog(user)
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
@@ -109,7 +109,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -330,7 +330,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 

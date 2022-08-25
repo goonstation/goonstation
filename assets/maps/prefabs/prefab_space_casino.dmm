@@ -425,7 +425,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/space_casino)
 "Tb" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/prefab/space_casino)
 "Tq" = (
 /obj/machinery/door/airlock/maintenance,

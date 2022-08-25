@@ -37,7 +37,9 @@
 				affected_mob.changeStatus("weakened", 15 SECONDS)
 				affected_mob.make_jittery(1000)
 				SPAWN(rand(20, 100))
-					if (affected_mob) affected_mob.gib()
+					if (affected_mob)
+						logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
+						affected_mob.gib()
 				return
 		else
 			return

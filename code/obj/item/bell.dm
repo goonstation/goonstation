@@ -10,7 +10,7 @@
 	throw_range = 15
 	w_class = W_CLASS_SMALL
 
-/obj/item/bell/attack_hand(mob/user as mob)
+/obj/item/bell/attack_hand(mob/user)
 	if ((!isturf(src.loc) && !user.is_in_hands(src)))
 		return ..()
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))

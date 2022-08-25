@@ -15,8 +15,9 @@
 	stamina_cost = 5
 	stamina_crit_chance = 5
 	custom_suicide = 1
+	contraband = 2 // Due to the illegalization of basketball in 2041
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bball"
@@ -37,27 +38,32 @@
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
-				if((prob(50) && M.bioHolder.HasEffect("clumsy")) || M.equipped() || get_dir(M, src) == M.dir)
+				if((prob(50) && M.bioHolder.HasEffect("clumsy")))
 					src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
 					M.changeStatus("stunned", 2 SECONDS)
 					JOB_XP(M, "Clown", 1)
 					return
-				// catch the ball!
-				src.Attackhand(M)
-				M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
-				logTheThing("combat", M, null, "catches [src]")
-				return
-			src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-			logTheThing("combat", M, null, "is struck by [src]")
-			M.changeStatus("stunned", 2 SECONDS)
-			return
+				else
+					if (M.equipped() || get_dir(M, src) == M.dir)
+						src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+						logTheThing(LOG_COMBAT, M, "is struck by [src]")
+						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
+					else
+						// catch the ball!
+						src.Attackhand(M)
+						M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
+						logTheThing(LOG_COMBAT, M, "catches [src]")
+			else
+				src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
+				logTheThing(LOG_COMBAT, M, "is struck by [src]")
+				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "bball_spin"
 	. = ..()
 
-/obj/item/basketball/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/basketball/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/plutonium_core))
 		boutput(user, "<span class='notice'>You insert the [W.name] into the [src.name].</span>")
 		user.u_equip(W)
@@ -72,7 +78,7 @@
 	..(W, user)
 	return
 
-/obj/item/basketball/attack_hand(mob/user as mob)
+/obj/item/basketball/attack_hand(mob/user)
 	..()
 	var/mob/living/carbon/human/H = user
 	if(istype(H) && payload && istype(payload))
@@ -103,7 +109,7 @@
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
@@ -124,14 +130,14 @@
 					src.visible_message("<span class='alert'>[user] whiffs the dunk.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (mounted)
 			return
 		else
 			return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!mounted && get_dist(src, target) == 1)
+		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)
@@ -226,7 +232,7 @@
 	proc/unplutonize(var/usrverbs)
 		usrverbs -= /mob/proc/chaos_dunk
 
-/obj/item/plutonium_core/attack_hand(mob/user as mob)
+/obj/item/plutonium_core/attack_hand(mob/user)
 	..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -254,7 +260,7 @@
 	throwforce = 2
 	throw_spin = 0
 
-/obj/item/bloodbowlball/attack_hand(mob/user as mob)
+/obj/item/bloodbowlball/attack_hand(mob/user)
 	..()
 	if(user)
 		src.icon_state = "bloodbowlball"
@@ -294,7 +300,7 @@
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 
-/obj/item/bloodbowlball/attack(target as mob, mob/user as mob)
+/obj/item/bloodbowlball/attack(target, mob/user)
 	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target

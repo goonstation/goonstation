@@ -125,7 +125,7 @@
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
-/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, mob/user as mob)
+/obj/submachine/slot_machine/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
 			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
@@ -174,12 +174,12 @@
 		win_sound = "sound/misc/airraid_loop_short.ogg"
 		exclamation = "JACKPOT! "
 		amount = 300 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 5) //4 - 400
 		win_sound =  "sound/misc/klaxon.ogg"
 		exclamation = "Big Winner! "
 		amount = 100 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
 		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
 		exclamation = "Big Winner! "
@@ -210,7 +210,7 @@
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -289,7 +289,7 @@
 	icon_state = "slots-off"
 	var/play_money = 0
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/spacecash/))
 			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
@@ -301,7 +301,7 @@
 			I.amount = 0
 			qdel(I)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>

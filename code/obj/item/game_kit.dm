@@ -61,7 +61,7 @@ THAT STUPID GAME KIT
 		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src='[resource("images/chess/board_[piece].png")]' width=32 height=32 border=0></a>"
 	src.data = jointext(dat, "")
 
-/obj/item/game_kit/attack_hand(mob/user as mob)
+/obj/item/game_kit/attack_hand(mob/user)
 	src.add_dialog(user)
 
 	if (!( src.data ))

@@ -18,13 +18,13 @@
 	icon_state = "c_saw_off"
 	item_state = "c_saw"
 	var/base_state = "c_saw"
-	var/active = 0.0
+	var/active = 0
 	hit_type = DAMAGE_CUT
-	force = 3.0
-	var/active_force = 12.0
-	var/off_force = 3.0
-	health = 10.0
-	throwforce = 5.0
+	force = 3
+	var/active_force = 12
+	var/off_force = 3
+	health = 10
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -75,7 +75,7 @@
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (!istype(target))
 			return
 
@@ -138,17 +138,17 @@
 	item_state = "c_saw_s"
 	base_state = "c_saw_s"
 	tool_flags = TOOL_SAWING | TOOL_CHOPPING //fucks up doors. fuck doors
-	active = 0.0
-	force = 6.0
-	active_force = 20.0
-	off_force = 6.0
+	active = 0
+	force = 6
+	active_force = 20
+	off_force = 6
 	health = 10
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
-	mats = 14
+	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = "sound/machines/chainsaw_red.ogg"
@@ -172,13 +172,13 @@
 		else
 			playsound(src, "sound/machines/chainsaw_red_stop.ogg", 90, 0)
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
 			var/mob/living/carbon/C = target
 			if (isdead(C))
-				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i=0, i<3, i++)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)
@@ -347,12 +347,12 @@
 	item_state = "c_saw_s"
 	base_state = "c_saw_s"
 	hit_type = DAMAGE_CUT
-	active = 1.0
+	active = 1
 	force = 5
-	active_force = 10.0
-	off_force = 5.0
+	active_force = 10
+	off_force = 5
 	health = 10
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
@@ -365,7 +365,7 @@
 	stamina_cost = 40
 	stamina_crit_chance = 50
 
-	attack(mob/target as mob, mob/user as mob)
+	attack(mob/target, mob/user)
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
@@ -456,8 +456,8 @@
 	flags = FPRINT | TABLEPASS | ONBELT
 	w_class = W_CLASS_TINY
 
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 10

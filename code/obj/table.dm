@@ -4,12 +4,13 @@
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE
 	mat_changename = 1
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	var/auto_type = /obj/table/auto
 	var/parts_type = /obj/item/furniture_parts/table
 	var/auto = 0
@@ -160,17 +161,17 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
 				else
 					src.deconstruct()
 					return
-			if (3.0)
+			if (3)
 				if (prob(25))
 					src.deconstruct()
 					return
@@ -203,12 +204,12 @@
 	meteorhit()
 		deconstruct()
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
 				return
-			if (!G.state)
+			if (G.state == GRAB_PASSIVE)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			var/mob/grabbed = G.affecting
@@ -220,10 +221,10 @@
 
 			if (user.a_intent == "harm")
 				src.harm_slam(user, grabbed)
-				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a table")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			else
 				src.gentle_slam(user, grabbed)
-				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a table at")
+				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a table at [log_loc(grabbed)]")
 			qdel(W)
 			return
 
@@ -246,6 +247,9 @@
 					boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
 			else
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
+
+		else if (istype(W, /obj/item/paint_can))
+			return
 
 		else if (isscrewingtool(W))
 			if (istype(src.desk_drawer) && src.desk_drawer.locked)
@@ -271,6 +275,9 @@
 			src.desk_drawer.Attackby(W, user)
 			return
 
+		else if (istype(W, /obj/item/cloth/towel))
+			user.visible_message("<span class='notice'>[user] wipes down [src] with [W].</span>")
+
 		else if (istype(W) && src.place_on(W, user, params))
 			return
 
@@ -282,6 +289,7 @@
 			user.visible_message("<span class='alert'>[user] destroys the table!</span>")
 			if (prob(40))
 				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			logTheThing(LOG_COMBAT, user, "uses hulk to smash a table at [log_loc(src)].")
 			deconstruct()
 			return
 
@@ -502,7 +510,7 @@
 	icon = 'icons/obj/furniture/table_folding.dmi'
 	parts_type = /obj/item/furniture_parts/table/folding
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.is_hulk())
 			user.visible_message("<span class='alert'>[user] collapses the [src] in one slam!</span>")
 			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
@@ -562,6 +570,66 @@
 /* ---------------------------------------- */
 /* ======================================== */
 
+/obj/table/endtable_classic
+	name = "vintage endtable"
+	desc = "A vintage-styled wooden endtable, complete with decorative doily."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtable-classic"
+	parts_type = /obj/item/furniture_parts/endtable_classic
+
+/obj/table/endtable_gothic
+	name = "gothic endtable"
+	desc = "A gothic-styled wooden endtable, complete with decorative doily."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtable-gothic"
+	parts_type = /obj/item/furniture_parts/endtable_gothic
+
+/obj/table/podium_wood
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood"
+	parts_type = /obj/item/furniture_parts/podium_wood
+
+/obj/table/podium_wood/nanotrasen
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official. Comes with a NT-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood-nt"
+	parts_type = /obj/item/furniture_parts/podium_wood/nt
+
+/obj/table/podium_wood/syndicate
+	name = "wooden podium"
+	desc = "A wooden podium. Looks official. Comes with a Syndicate-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood-snd"
+	parts_type = /obj/item/furniture_parts/podium_wood/syndie
+
+/obj/table/podium_white
+	name = "white podium"
+	desc = "A white podium. Looks official."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite"
+	parts_type = /obj/item/furniture_parts/podium_white
+
+/obj/table/podium_white/nanotrasen
+	name = "white podium"
+	desc = "A white podium. Looks official. Comes with a NT-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite-nt"
+	parts_type = /obj/item/furniture_parts/podium_white/nt
+
+/obj/table/podium_white/syndicate
+	name = "white podium"
+	desc = "A white podium. Looks official. Comes with a Syndicate-themed banner attached to the front."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite-snd"
+	parts_type = /obj/item/furniture_parts/podium_white/syndie
+
+/* ======================================== */
+/* ---------------------------------------- */
+/* ======================================== */
+
 /obj/table/reinforced
 	name = "reinforced table"
 	desc = "A table made from reinforced metal, it is quite strong and it requires welding and wrenching to disassemble it."
@@ -573,7 +641,7 @@
 	auto
 		auto = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
@@ -588,7 +656,8 @@
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
 			else
-				return ..()
+				boutput(user, "<span class='alert'>You need to weaken the [src.name] with a welding tool before you can disassemble it!</span>")
+				return
 		else
 			return ..()
 
@@ -705,7 +774,7 @@
 		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
-			for (var/i=rand(3,4), i>0, i--)
+			for (var/i=0, i<2, i++)
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
@@ -763,7 +832,7 @@
 	ex_act(severity)
 		if (src.glass_broken)
 			return ..()
-		if (severity == 2.0)
+		if (severity == 2)
 			if (prob(25))
 				src.smash()
 				return
@@ -784,7 +853,7 @@
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.glass_broken)
 			return ..()
 		..()
@@ -805,7 +874,7 @@
 		if (prob(smashprob))
 			src.smash()
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
@@ -827,7 +896,7 @@
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
 				return
-			if (!G.state)
+			if (G.state == GRAB_PASSIVE)
 				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 				return
 			var/mob/grabbed = G.affecting
@@ -838,10 +907,10 @@
 			if (remove_tablepass) REMOVE_FLAG(grabbed.flags, TABLEPASS)
 
 			if (user.a_intent == "harm")
-				logTheThing("combat", user, grabbed, "slams [constructTarget(grabbed,"combat")] onto a glass table")
+				logTheThing(LOG_COMBAT, user, "slams [constructTarget(grabbed,"combat")] onto a glass table")
 				src.harm_slam(user, grabbed)
 			else
-				logTheThing("station", user, grabbed, "puts [constructTarget(grabbed,"combat")] onto a glass table")
+				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a glass table")
 				src.gentle_slam(user, grabbed)
 
 		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
@@ -855,6 +924,9 @@
 					smashprob += 15
 				else
 					return
+
+		else if(istype(W, /obj/item/paint_can))
+			return
 
 		else if (istype(W)) // determine smash chance via item size and user clumsiness  :v
 			if (user.bioHolder.HasEffect("clumsy"))
@@ -903,7 +975,7 @@
 		if (ismob(AM))
 			var/mob/M = AM
 			if ((prob(src.reinforced ? 60 : 80)))
-				logTheThing("combat", thr.user, M, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
+				logTheThing(LOG_COMBAT, thr.user, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
 				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
 				src.smash()

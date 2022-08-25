@@ -161,6 +161,7 @@
 		return
 
 	death(gibbed)
+		. = ..()
 		//Todo: some cool-ass effects here
 
 		//Back to square one with you!
@@ -168,6 +169,8 @@
 		var/datum/abilityHolder/wraith/W = src.abilityHolder
 		if(istype(W))
 			W.corpsecount = 0
+			var/datum/targetable/wraithAbility/absorbCorpse/absorb = W.getAbility(/datum/targetable/wraithAbility/absorbCorpse)
+			absorb?.doCooldown()
 		src.abilityHolder.points = 0
 		src.abilityHolder.regenRate = 1
 		src.health = initial(src.health) // oh sweet jesus it spammed so hard
@@ -185,7 +188,7 @@
 
 		if (deaths < 2)
 			boutput(src, "<span class='alert'><b>You have been defeated...for now. The strain of banishment has weakened you, and you will not survive another.</b></span>")
-			logTheThing("combat", src, null, "lost a life as a wraith at [log_loc(src.loc)].")
+			logTheThing(LOG_COMBAT, src, "lost a life as a wraith at [log_loc(src.loc)].")
 			src.justdied = 1
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 			SPAWN(15 SECONDS) //15 seconds
@@ -193,7 +196,7 @@
 		else
 			boutput(src, "<span class='alert'><b>Your connection with the mortal realm is severed. You have been permanently banished.</b></span>")
 			message_admins("Wraith [key_name(src)] died with no more respawns at [log_loc(src.loc)].")
-			logTheThing("combat", src, null, "died as a wraith with no more respawns at [log_loc(src.loc)].")
+			logTheThing(LOG_COMBAT, src, "died as a wraith with no more respawns at [log_loc(src.loc)].")
 			if (src.mind)
 				for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 					WO.onBanished()
@@ -203,7 +206,7 @@
 			src.icon = null
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
-			if (client) client.color = null
+			if (client) client.set_color()
 
 			animation = new(src.loc)
 			animation.icon_state = "blank"
@@ -242,8 +245,10 @@
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
 				return 0
-		if (src.density) return 0
-		else return 1
+		if (src.density)
+			return FALSE
+		else
+			return TRUE
 
 
 	projCanHit(datum/projectile/P)
@@ -259,7 +264,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)
@@ -314,7 +319,7 @@
 			var/mydir = get_dir(src, NewLoc)
 			var/salted = 0
 			if (mydir == NORTH || mydir == EAST || mydir == WEST || mydir == SOUTH)
-				if (src.density && !NewLoc.canpass())
+				if (src.density && !NewLoc.Enter(src))
 					return
 
 			else
@@ -332,26 +337,26 @@
 					horizontal = get_step(src, EAST)
 
 				var/turf/oldloc = loc
-				var/horiz = 0
-				var/vert = 0
+				var/horiz = FALSE
+				var/vert = FALSE
 
-				if (!src.density || vertical.canpass())
-					vert = 1
+				if (!src.density || vertical.Enter(src))
+					vert = TRUE
 					src.set_loc(vertical)
-					if (!src.density || NewLoc.canpass())
+					if (!src.density || NewLoc.Enter(src))
 						blocked = 0
 						for(var/obj/decal/cleanable/saltpile/A in vertical)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
-				if (!src.density || horizontal.canpass())
-					horiz = 1
+				if (!src.density || horizontal.Enter(src))
+					horiz = TRUE
 					src.set_loc(horizontal)
-					if (!src.density || NewLoc.canpass())
-						blocked = 0
+					if (!src.density || NewLoc.Enter(src))
+						blocked = FALSE
 						for(var/obj/decal/cleanable/saltpile/A in horizontal)
-							if (istype(A)) salted = 1
+							if (istype(A)) salted = TRUE
 							if (salted) break
 					src.set_loc(oldloc)
 
@@ -365,11 +370,14 @@
 					return
 
 			for(var/obj/decal/cleanable/saltpile/A in NewLoc)
-				if (istype(A)) salted = 1
+				if (istype(A)) salted = TRUE
 				if (salted) break
 
 			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc)
+			if (src.density) // if we're corporeal we follow normal mob restrictions
+				..()
+			else // if we're in ghost mode we get to cheat
+				src.set_loc(NewLoc)
 			OnMove()
 
 			//if tile contains salt, wraith becomes corporeal
@@ -450,7 +458,7 @@
 			return
 
 		if (src.density) //If corporeal speak to the living (garbled)
-			logTheThing("diary", src, null, "(WRAITH): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -475,7 +483,7 @@
 			if (copytext(message, 1, 2) == "*")
 				return
 
-			logTheThing("diary", src, null, "(WRAITH): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(WRAITH): [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -639,7 +647,7 @@
 /mob/proc/wraithize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a wraith.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
 		return make_wraith()
 	return null
 

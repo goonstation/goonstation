@@ -390,9 +390,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -457,6 +458,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		purchase_flags = UPLINK_TRAITOR
 
 	nukeop
+		name = "syndicate operative uplink"
+		desc = "An uplink terminal that allows you to order weapons and items."
+		icon_state = "uplink"
 		purchase_flags = UPLINK_NUKE_OP
 
 	rev
@@ -615,9 +619,10 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				if (usr.mind && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-					usr.mind.purchased_traitor_items += I
-				logTheThing("debug", usr, null, "bought this from uplink: [I.name]")
+				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
+					T.purchased_items.Add(I)
+				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -810,19 +815,20 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						var/mob/living/carbon/human/H = M
 						var/obj/item/parts/HP = delivery
 					//	var/limb_name = HP.holder.real_name + "'s " + HP.name
-						if(HP == B.item) //Uhh idk if this will work
+						if(HP == B.item && HP.holder == M) //Is this the right limb and is it attached?
 							HP.remove()
 							take_bleeding_damage(H, null, 10)
 							H.changeStatus("weakened", 3 SECONDS)
 							playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 							H.emote("scream")
-							logTheThing("combat", user, null, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
-						else
+							logTheThing(LOG_COMBAT, user, "spy thief claimed [constructTarget(H)]'s [HP] at [log_loc(user)]")
+						else if(HP != B.item)
 							user.show_text("That isn't the right limb!", "red")
+							return 0
 					else
 						M.drop_from_slot(delivery,get_turf(M))
 				if (!istype(delivery,/obj/item/parts))
-					logTheThing("debug", user, null, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+					logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
 				qdel(delivery)
 				if (user.mind && user.mind.special_role == ROLE_SPY_THIEF)
 					user.mind.spy_stolen_items += B.name
@@ -1105,7 +1111,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 								new B.item3(get_turf(src))
 
 							B.run_on_spawn(A, usr, FALSE, src)
-							logTheThing("combat", usr, src, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
+							logTheThing(LOG_COMBAT, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
 							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B)]-Purchased")
 							if(isnull(loadnum))
 								loadnum = 0
@@ -1171,13 +1177,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	proc/SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
 			return
-		logTheThing("debug", null, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
+		logTheThing(LOG_DEBUG, null, "[constructTarget(user)] purchased the spell [src.name] using the [book] uplink.")
 		if (src.assoc_spell)
 			user.abilityHolder.addAbility(src.assoc_spell)
 			user.abilityHolder.updateButtons()
 		if (src.assoc_item)
 			var/obj/item/I = new src.assoc_item(user.loc)
-			if (istype(I, /obj/item/staff) && user.mind)
+			if (istype(I, /obj/item/staff) && user.mind && !isvirtual(user))
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
@@ -1202,6 +1208,14 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "The crew will normally steal your staff and run off with it to cripple your casting abilities, but that doesn't work so well with this version. Any non-wizard dumb enough to touch or pull the Staff of Cthulhu takes massive brain damage and is knocked down for quite a while, and hiding the staff in a closet or somewhere else is similarly ineffective given that you can summon it to your active hand at will. It also makes a much better bludgeoning weapon than the regular staff, hitting harder and occasionally inflicting brain damage."
 	assoc_spell = /datum/targetable/spell/summon_staff
 	assoc_item = /obj/item/staff/cthulhu
+	cost = 2
+
+/datum/SWFuplinkspell/staffofthunder
+	name = "Staff of Thunder"
+	eqtype = "Equipment"
+	desc = "A special staff attuned to electical energies. Able to conjure three lightning bolts to strike down foes before being recharged. Capable of being summoned magically, which recharges the wand. Take care, as you're not immune to your own thunder!"
+	assoc_spell = /datum/targetable/spell/summon_thunder_staff
+	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
 /datum/SWFuplinkspell/bull

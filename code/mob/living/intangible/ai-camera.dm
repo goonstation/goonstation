@@ -9,7 +9,6 @@
 //Camera Helmets /obj/item/clothing/head/helmet/camera X
 //Bots /obj/machinery/bot  X
 //Observables /obj/observable  X
-//Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
@@ -23,6 +22,9 @@
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_bleed = FALSE
+	metabolizes = FALSE
+	blood_id = null
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -102,12 +104,12 @@
 			O.set_loc(get_turf(src))
 		. = ..()
 
-	Move(var/turf/NewLoc, direct)//Ewww!
+	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
 		src.closeContextActions()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe.closeContextActions()
+		src.mainframe?.closeContextActions()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -115,22 +117,7 @@
 		if (!isturf(src.loc))
 			src.cancel_camera()
 
-		if (NewLoc)
-			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
-		else
-
-			src.set_dir(direct)
-			if((direct & NORTH) && src.y < world.maxy)
-				src.y++
-			if((direct & SOUTH) && src.y > 1)
-				src.y--
-			if((direct & EAST) && src.x < world.maxx)
-				src.x++
-			if((direct & WEST) && src.x > 1)
-				src.x--
-
-		//boutput(src,"[client.images.len]") //useful for debuggin that one bad bug
+		. = ..()
 
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()
@@ -177,6 +164,10 @@
 		//var/obj/item/equipped = src.equipped()
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
+			if (src.targeting_ability)
+				..()
+				return
+
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
 				mainframe.ai_actual_track(target)
@@ -188,7 +179,7 @@
 			if( isturf(target) && findtext(control, "map_viewport") )
 				set_loc(src, target)
 
-			if (get_dist(src, target) > 0)
+			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
 
@@ -281,6 +272,9 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
+
+	vomit()
+		return 0 //can't puke
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
@@ -400,7 +394,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P?.operating)
+			if(P)
 				P.attack_ai(src)
 				return
 
@@ -490,6 +484,15 @@
 		set category = "AI Commands"
 		mainframe?.open_map()
 
+	verb/rename_self()
+		set category = "AI Commands"
+		set name = "Change Designation"
+		set desc = "Change your name."
+		mainframe?.rename_self()
+
+	stopObserving()
+		src.set_loc(get_turf(src))
+		src.observing = null
 
 //---TURF---//
 /turf/var/image/aiImage
@@ -545,7 +548,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 		// takes about one second compared to the ~12++ that the actual calculations take
 		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
 //pod wars has no AI so this is just a waste of time...
-#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP)
+#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
 		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
 
 		var/lastpct = 0

@@ -161,7 +161,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 				C.throw_item(target,params)
 				return
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
-		RegisterSignal(user, COMSIG_MOUSEUP, .proc/end_shootloop)
+		RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/end_shootloop)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
@@ -210,7 +210,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/obj/item/gun/G = parent
 	G.suppress_fire_msg = initial(G.suppress_fire_msg)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
-	UnregisterSignal(user, COMSIG_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	target = null
 	if(aimer)

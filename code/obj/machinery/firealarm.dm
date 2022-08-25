@@ -11,10 +11,10 @@
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
 	var/alarm_frequency = FREQ_ALARM
-	var/detecting = 1.0
-	var/working = 1.0
+	var/detecting = 1
+	var/working = 1
 	var/lockdownbyai = 0
-	anchored = 1.0
+	anchored = 1
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0
@@ -102,7 +102,7 @@
 		src.alarm()
 	return
 
-/obj/machinery/firealarm/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
@@ -135,7 +135,7 @@
 			status |= NOPOWER
 			UpdateIcon()
 
-/obj/machinery/firealarm/attack_hand(mob/user as mob)
+/obj/machinery/firealarm/attack_hand(mob/user)
 	if(user.stat || status & (NOPOWER|BROKEN) || ON_COOLDOWN(src, "toggle", 1 SECOND))
 		return
 

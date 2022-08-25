@@ -16,6 +16,7 @@
 	firevuln = 0.5
 	brutevuln = 1
 	miscvuln = 0
+	attack_range = 7
 	luminosity = 5
 	seekrange = 15
 	flying = 1
@@ -90,19 +91,6 @@
 	seek_target()
 		src.anchored = 0
 
-		var/area/AR = get_area(src)
-		if (AR == colosseum_controller.colosseum)
-			var/list/targets = list()
-			for (var/obj/machinery/colosseum_putt/C in colosseum_controller.colosseum)
-				if (C.dying) continue
-				targets += C
-			for (var/mob/living/carbon/human/H in colosseum_controller.colosseum)
-				if (isdead(H)) continue
-				targets += H
-			if (targets.len)
-				select_target(pick(targets))
-			return
-
 		if(smashes_shit)
 			//There be shit near us what can block our way.
 			for (var/obj/O in oview(1,src))
@@ -126,7 +114,7 @@
 
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
-			if (A && src.z == A.z && get_dist(src,A) <= src.seekrange)
+			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0) continue
@@ -236,7 +224,7 @@
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN(2 SECONDS)
-			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
+			if (must_drop_loot)
 				if (prob(25))
 					new /obj/item/device/prox_sensor(src.loc)
 
@@ -276,31 +264,16 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 					if (isliving(M))
 						waking = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		waking = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
+				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					waking = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		waking = 1
-			//		break
-
-
-			if (!waking)
-				if (get_area(src) == colosseum_controller.colosseum)
-					waking = 1
 
 			if(waking)
 				task = "thinking"
@@ -314,26 +287,16 @@
 
 			for (var/client/C)
 				var/mob/M = C.mob
-				if (M && src.z == M.z && BOUNDS_DIST(src, M) == 00)
+				if (M && src.z == M.z && GET_DIST(src, M) <= 10)
 					if (isliving(M))
 						stay_awake = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		stay_awake = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
-				if (A && src.z == A.z && BOUNDS_DIST(src, A) == 00)
+				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					stay_awake = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		stay_awake = 1
-			//		break
 
 			if(!stay_awake)
 				sleeping = 5
@@ -362,7 +325,7 @@
 					src.task = "thinking"
 					walk_to(src,0)
 				if (target)
-					if (get_dist(src, src.target) <= 7)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
@@ -372,7 +335,7 @@
 							if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 
 					else
-						var/turf/olddist = get_dist(src, src.target)
+						var/turf/olddist = GET_DIST(src, src.target)
 
 						if(smashes_shit) //Break another thing near the drone
 							//There be shit near us what can block our way.
@@ -390,7 +353,7 @@
 							walk_towards(src, src.target, 1, 4)*/
 						else walk_to(src, src.target,1,4)
 
-						if ((get_dist(src, src.target)) >= (olddist))
+						if ((GET_DIST(src, src.target)) >= (olddist))
 							src.frustration++
 
 						else
@@ -545,7 +508,7 @@
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
-		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "DEN-3" =17, "erebite" =16)
+		mats = list("POW-3" = 15, "MET-3" = 17, "CON-2" = 13, "CRY-2" =17, "erebite" =16)
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
@@ -565,7 +528,7 @@
 		projectile_type = /datum/projectile/bullet/ak47
 		current_projectile = new/datum/projectile/bullet/ak47
 		attack_cooldown = 20
-		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "DEN-3" =17)
+		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
@@ -614,9 +577,6 @@
 					for(var/turf/T in src_turf)
 						if(T == O) continue
 						T.meteorhit(O)
-					for(var/obj/machinery/colosseum_putt/A in src_turf)
-						if (A == O || A == user) continue
-						A.meteorhit(O)
 					for (var/obj/machinery/cruiser/C in src_turf)
 						if (C == O || C == user) continue
 						C.meteorhit(O)
@@ -646,6 +606,7 @@
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
 		smashes_shit = 1
+		attack_range = 1
 		mats = 	list("POW-2" = 19, "MET-2" = 12, "CON-2" = 14, "DEN-2" =26)
 
 		ChaseAttack(atom/M)
@@ -675,6 +636,13 @@
 			..()
 			name = "Drone CR-[rand(1,999)]"
 			return
+
+		bullet_act(var/obj/projectile/P)
+			if (isobj(P.shooter))
+				var/obj/O = P.shooter
+				if(istype(O, /obj/critter/gunbot/drone/buzzdrone)) //No more friendly fire at melee range
+					return
+			..()
 
 		fish
 			name = "Syndicate FishDrone"
@@ -755,7 +723,7 @@
 		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
-		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "DEN-3" =20)
+		mats = 	list("POW-1" = 9, "MET-3" = 15, "CON-1" = 7, "CRY-2" =20)
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -770,7 +738,7 @@
 		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
-		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "DEN-3" =22, "butt"=10) //heh
+		mats = 	list("POW-3" = 30, "MET-3" = 14, "CON-2" = 23, "CRY-2" =22, "butt"=10) //heh
 
 		New()
 			..()
@@ -1041,12 +1009,6 @@
 				poorSoul.gib()
 
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
-			poorPod.ex_act(3)
-
-		for (var/obj/machinery/colosseum_putt/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
 			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)

@@ -1,6 +1,6 @@
 /datum/custom_soup
 	var/name
-	var/amount = 3
+	var/bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -8,11 +8,11 @@
 	var/list/food_effects = list()
 
 /obj/item/reagent_containers/food/snacks/soup/custom
-	icon = 'icons/obj/soup_pot.dmi'
-	icon_state = "soup_custom"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
-	amount = null
+	bites_left = null
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
@@ -24,7 +24,7 @@
 			qdel(src)
 			return
 		src.name = S.name
-		src.amount = S.amount
+		src.bites_left = S.bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
@@ -41,7 +41,7 @@
 				temp -= effect
 
 
-		fluid_icon = image("icon" = 'icons/obj/soup_pot.dmi', "icon_state" = "soup_custom-f")
+		fluid_icon = image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "fluid")
 
 		..()
 
@@ -65,7 +65,7 @@
 	var/on = 0
 	flags = NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
 				boutput(user,"<span class='alert'><b>There's already a pot on the stove, dummy!</span>")
@@ -82,7 +82,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
@@ -123,7 +123,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.on)
 			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return
@@ -165,7 +165,7 @@
 
 		var/datum/custom_soup/S = new()
 
-		S.amount = pot.total_wclass
+		S.bites_left = pot.total_wclass
 
 		var/soup_name_i = ""
 		var/soup_name_b = ""
@@ -204,9 +204,9 @@
 			if(istype(F))
 				S.food_effects |= F.food_effects
 				S.heal_amt += F.heal_amt/pot.total_wclass
-				S.amount += F.amount/pot.total_wclass
+				S.bites_left += F.bites_left/pot.total_wclass
 			else
-				S.amount += F.w_class/pot.total_wclass/2
+				S.bites_left += F.w_class/pot.total_wclass/2
 				S.heal_amt -= F.w_class/pot.total_wclass/2
 
 			if(I.reagents)
@@ -217,7 +217,7 @@
 						S.initial_reagents += id
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
-		S.amount = max(1,round(S.amount))
+		S.bites_left = max(1,round(S.bites_left))
 
 		if(biggester)
 			if(biggest)
@@ -296,7 +296,7 @@
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150
@@ -361,7 +361,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever

@@ -6,12 +6,12 @@
 //	icon = 'icons/obj/machines/nuclear.dmi'
 //	icon_state = "Sing2"
 
-	var/id = 0.0
+	var/id = 0
 
 	req_access = list(access_heads)
 	var/authenticated = 0
 
-	var/screen = 1.0
+	var/screen = 1
 
 	var/obj/machinery/power/fission/engine/theEngine = null
 	var/obj/machinery/fission/reactor/selectedReactor = null
@@ -22,7 +22,7 @@
 	process()
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		src.add_dialog(user)
@@ -37,7 +37,7 @@
 				switch(src.screen)
 
 					// Main engine screen
-					if(1.0)
+					if(1)
 
 						dat += {"<BR>
 						\[ This is where image of power goes \]<BR>
@@ -51,7 +51,7 @@
 							dat += "<BR>\[ <A HREF='?src=\ref[src];reactor=\ref[R]'>Reactor [i++]</A> \]"
 
 					// Screen for individual reactor
-					if(2.0)
+					if(2)
 
 						dat += {"
 						<BR>
@@ -105,7 +105,7 @@
 			var/obj/machinery/fission/reactor/R = locate(href_list["reactor"]) in theEngine.reactors
 
 			selectedReactor = R
-			src.screen = 2.0
+			src.screen = 2
 
 		else if(href_list["raise"])
 			if(selectedReactor)
@@ -154,7 +154,7 @@
 		else if(href_list["operation"])
 			switch(href_list["operation"])
 				if("back")
-					src.screen = 1.0
+					src.screen = 1
 
 				if("login")
 					var/mob/M = usr

@@ -180,6 +180,11 @@
 		var/rot = arctan(src.transform.b, src.transform.a)
 		src.transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
 
+	proc/SafeScaleAnim(var/scalex = 1, var/scaley = 1, var/anim_time=2 SECONDS, var/anim_easing=null)
+		var/rot = arctan(src.transform.b, src.transform.a)
+		var/matrix/new_transform = matrix(matrix(matrix(src.transform, -rot, MATRIX_ROTATE), scaley, scalex, MATRIX_SCALE), rot, MATRIX_ROTATE)
+		animate(src, transform=new_transform, time=anim_time, easing=anim_easing)
+
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
 
@@ -213,7 +218,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
@@ -292,12 +297,12 @@
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_CROSSED, AM)
 
-/atom/Entered(atom/movable/AM)
+/atom/Entered(atom/movable/AM, atom/OldLoc)
 	SHOULD_CALL_PARENT(TRUE)
 	#ifdef SPACEMAN_DMM //im cargo culter
 	..()
 	#endif
-	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM)
+	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -339,6 +344,7 @@
 /// Call this proc inplace of update_icon(...)
 /atom/proc/UpdateIcon(...)
 	SHOULD_NOT_OVERRIDE(TRUE)
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_NO_ICON_UPDATES)) return
 	SEND_SIGNAL(src, COMSIG_ATOM_PRE_UPDATE_ICON)
 	update_icon(arglist(args))
 	SEND_SIGNAL(src, COMSIG_ATOM_POST_UPDATE_ICON)
@@ -451,6 +457,7 @@
 
 
 /atom/movable/Move(NewLoc, direct)
+	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
 		return
 
@@ -521,9 +528,7 @@
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		#ifdef COMSIG_MOVABLE_MOVED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
-		#endif
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -556,38 +561,38 @@
 	*/
 /atom/movable/proc/OnMove(source = null)
 
-/atom/movable/proc/pull()
-	if (!( usr ))
-		return
+/// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
+/atom/movable/proc/pull(mob/user)
+	if (!(user))
+		return 1
 
-	if(src.loc == usr)
-		return
+	if(src.loc == user)
+		return 1
 
-	if (!isliving(usr))
-		return
+	if (!isliving(user))
+		return 1
 
-	if (isintangible(usr)) //can't pull shit if you can't touch shit
-		return
+	if (isintangible(user)) //can't pull shit if you can't touch shit
+		return 1
 
 	// no pulling other mobs for ghostdrones (but they can pull other ghostdrones)
-	else if (isghostdrone(usr) && ismob(src) && !isghostdrone(src))
-		return
+	else if (isghostdrone(user) && ismob(src) && !isghostdrone(src))
+		return 1
 
-	if (isghostcritter(usr))
-		var/mob/living/critter/C = usr
+	if (isghostcritter(user))
+		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(usr,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
-			return
+			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			return 1
 
-	if (iscarbon(usr) || issilicon(usr))
-		add_fingerprint(usr)
+	if (iscarbon(user) || issilicon(user))
+		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(usr, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
-		src.Attackhand(usr)
-		return
+		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		src.Attackhand(user)
+		return 1
 	if (!( src.anchored ))
-		var/mob/user = usr
 		user.set_pulling(src)
 
 		if (user.mob_flags & AT_GUNPOINT)
@@ -613,10 +618,10 @@
 /atom/proc/examine(mob/user)
 	RETURN_TYPE(/list)
 
-	var/dist = get_dist(src, user)
+	var/dist = GET_DIST(src, user)
 	if (istype(user, /mob/dead/target_observer))
 		var/mob/dead/target_observer/target_observer_user = user
-		dist = get_dist(src, target_observer_user.target)
+		dist = GET_DIST(src, target_observer_user.target)
 
 	// added for custom examine behaviour override - cirr
 	var/special_description = src.special_desc(dist, user)
@@ -669,14 +674,14 @@
 			. += "<br>*No PDA detected!*"
 
 /// Override MouseDrop_T instead of this. Call this instead of MouseDrop_T, but you probably shouldn't!
-/atom/proc/_MouseDrop_T(dropped, user)
+/atom/proc/_MouseDrop_T(dropped, user, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	SPAWN(0) // Yes, things break if this isn't a spawn.
-		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user))
+		if(SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP_T, dropped, user, src_location, over_location, src_control, over_control, params))
 			return
-		src.MouseDrop_T(dropped, user)
+		src.MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 
-/atom/proc/MouseDrop_T(dropped, user)
+/atom/proc/MouseDrop_T(dropped, user, src_location, over_location, over_control, src_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 
@@ -686,7 +691,7 @@
 		return
 	src.attack_hand(user)
 
-/atom/proc/attack_hand(mob/user as mob)
+/atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
@@ -696,15 +701,17 @@
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
 	SHOULD_NOT_OVERRIDE(1)
+	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
+		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
 	src.attackby(W, user, params, is_special)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W as obj, mob/user as mob, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
@@ -799,18 +806,18 @@
 	return null
 
 /// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
-/atom/MouseDrop(atom/over_object, src_location, over_location, over_control, params)
+/atom/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
 	if (isalive(usr) && !isintangible(usr) && isghostdrone(usr) && ismob(src) && src != usr)
 		return // Stops ghost drones from MouseDropping mobs
-	over_object._MouseDrop_T(src, usr)
-	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, over_control, params))
+	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
+	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return
-	src.mouse_drop(over_object, src_location, over_location, over_control, params)
+	src.mouse_drop(over_object, src_location, over_location, src_control, over_control, params)
 
-/atom/proc/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
 	return
 
@@ -940,10 +947,7 @@
 
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
-	src.density = newdensity
-
-/atom/movable/set_density(var/newdensity)
-	..()
+	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
 // standardized damage procs
 
@@ -971,6 +975,25 @@
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
 
+// Setup USE_PROXIMITY turfs
+/atom/proc/setup_use_proximity()
+	src.event_handler_flags |= USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		T.checkinghasproximity++
+		for (var/turf/T2 in range(1, T))
+			T2.neighcheckinghasproximity++
+
+/atom/proc/remove_use_proximity()
+	src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
+	if (isturf(src.loc))
+		var/turf/T = src.loc
+		if (T.checkinghasproximity > 0)
+			T.checkinghasproximity--
+		for (var/turf/T2 in range(1, T))
+			if (T2.neighcheckinghasproximity > 0)
+				T2.neighcheckinghasproximity--
+
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
 /atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
@@ -980,24 +1003,23 @@
 		return FALSE
 
 	for (var/connect in connect_to)
-		var/list/matches= list()
+		var/list/matches = list()
 		if(istype(T, connect))
 			matches.Add(T)
 		else
-			for (var/atom/A in T)
-				if (!isnull(A))
-					if (istype(A, /atom/movable))
-						var/atom/movable/M = A
-						if (!M.anchored)
-							continue
-						if (istype(A, connect))
-							matches.Add(A)
+			for (var/atom/movable/AM in T)
+				if (!AM.anchored)
+					continue
+				if (istype(AM, connect))
+					matches.Add(AM)
+		// TODO: do typecache here, make exceptions a joined typecacheof() list - `if(exceptions[match.type]) isvalid = FALSE`
 		for (var/match in matches)
 			var/valid = TRUE
 			if (exceptions && islist(exceptions))
 				for (var/exception in exceptions)
 					if (istype(match, exception))
 						valid = FALSE
+						break
 			if (valid)
 				return TRUE
 	return FALSE
@@ -1035,8 +1057,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
+	logTheThing(LOG_ADMIN, usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
+	logTheThing(LOG_DIARY, usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled every goddamn atom by X:[scalex] Y:[scaley]")
 	for(var/atom/A in world)
 		A.Scale(scalex,scaley)
@@ -1045,8 +1067,8 @@ N, S, E, W, NE, SE, SW, NW
 
 /proc/rotateatomall()
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated every goddamn atom by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated every goddamn atom by [rot] degrees", "admin")
+	logTheThing(LOG_ADMIN, usr, "rotated every goddamn atom by [rot] degrees")
+	logTheThing(LOG_DIARY, usr, "rotated every goddamn atom by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated every goddamn atom by [rot] degrees")
 	for(var/atom/A in world)
 		A.Turn(rot)
@@ -1057,8 +1079,8 @@ N, S, E, W, NE, SE, SW, NW
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
+	logTheThing(LOG_ADMIN, usr, "scaled [target] by X:[scalex] Y:[scaley]")
+	logTheThing(LOG_DIARY, usr, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley]")
 	target.Scale(scalex, scaley)
 	return
@@ -1066,8 +1088,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/rotateatom()
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees", "admin")
+	logTheThing(LOG_ADMIN, usr, "rotated [target] by [rot] degrees")
+	logTheThing(LOG_DIARY, usr, "rotated [target] by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return

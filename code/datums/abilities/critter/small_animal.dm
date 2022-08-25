@@ -35,12 +35,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to peck there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to peck there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to peck."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to peck.</span>")
 			return 1
 
 		var/mob/MT = target
@@ -108,12 +108,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to pounce on there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to pounce on there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to pounce on."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to pounce on.</span>")
 			return 1
 		var/mob/MT = target
 		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
@@ -147,12 +147,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to trip there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to trip there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to trip."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to trip.</span>")
 			return 1
 		var/mob/MT = target
 		var/tostun = rand(0,3)
@@ -187,12 +187,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to sting."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
@@ -240,12 +240,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to grab there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to grab there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to grab."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to grab.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] grabs [MT] with [his_or_her(holder.owner)] pincers!</b></span>",\

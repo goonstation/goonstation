@@ -15,6 +15,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		.[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
 
 /proc/init_spatial_map(zlevel)
+	spatial_z_maps.len = world.maxz
 	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
 
 /datum/spatial_hashmap

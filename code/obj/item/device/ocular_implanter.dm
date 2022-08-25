@@ -6,7 +6,7 @@
 	name = "Ocular Implanter (SecHUD)"
 	icon_state = "ocular_implanter-full"
 	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT
@@ -17,9 +17,10 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Which eye would you like to operate on with [src]?",,"Left Eye","Right Eye","Cancel"))
-				if ("Cancel")
-					return
+			var/choice = tgui_alert(user, "Which eye would you like to operate on with [src]?", "Pick eye", list("Left Eye", "Right Eye", "Cancel"))
+			if (!choice || choice == "Cancel")
+				return
+			switch (choice)
 				if ("Right Eye")
 					if (implants_available & EYE_RIGHT)
 						start_replace_eye(EYE_RIGHT, H)

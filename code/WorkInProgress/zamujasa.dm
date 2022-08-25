@@ -8,9 +8,9 @@
 	layer = CABLE_LAYER
 	color = "#037ffc"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
-			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
+			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
 			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client
@@ -147,13 +147,13 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	icon = 'icons/obj/glass.dmi'
-	icon_state = "sheet"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "sheet-g_1"
 
 	var/facing = NW_SE
 	var/list/affecting = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
@@ -161,7 +161,7 @@
 			boutput(user, "[PTL] would be notified")
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			boutput(user, "this would deconstruct it.")
 			return
@@ -277,14 +277,14 @@
 		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/score = get_item_value(W)
 		if (score == -1)
 			return ..()
 
 		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		mulch_item(W, score)
 		var/MT = start_scoring()
 		update_score(MT, score)
@@ -405,7 +405,7 @@
 		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "It just did some cleaning give it a minute!!!")
 			return
@@ -423,22 +423,10 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
 					qdel(S)
 
 
-/*
-			for (var/obj/storage/S in gunsim)
-				qdel(S)
-			for (var/obj/artifact/A in gunsim)
-				qdel(A)
-			for (var/obj/critter/C in gunsim)
-				qdel(C)
-			for (var/obj/machinery/bot/B in gunsim)
-				qdel(B)
-			for (var/obj/decal/D in gunsim)
-				qdel(D)
-*/
 		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255
@@ -453,7 +441,7 @@
 	var/active = 0
 	alpha = 255
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
@@ -1423,7 +1411,7 @@ Other Goonstation servers:[serverList]</span>"})
 	icon_state = "cowbrush"
 	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
 

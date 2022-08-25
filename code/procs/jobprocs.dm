@@ -64,7 +64,7 @@
 			unassigned += player
 
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
-	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
+	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
 	if (unassigned.len == 0)
 		return 0
@@ -132,25 +132,25 @@
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 	else
@@ -193,9 +193,9 @@
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
 
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
-			logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, player, "assigned job: [player.mind.assigned_role]")
 			unassigned -= player
 			JOB.assigned++
 
@@ -221,9 +221,9 @@
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -248,9 +248,9 @@
 				medical_staff += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -268,9 +268,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 			//Promote Research Director
 			else if (istype(JOB, /datum/job/command/research_director))
@@ -278,9 +278,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 			//Promote Medical Director
 			else if (istype(JOB, /datum/job/command/medical_director))
@@ -288,9 +288,9 @@
 				if (!picks || !length(picks))
 					continue
 				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
 				JOB.assigned++
 
 
@@ -301,9 +301,9 @@
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
 		if(!player?.mind) continue
-		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
+		logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
-		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+		logTheThing(LOG_DEBUG, player, "assigned job: [player.mind.assigned_role]")
 
 	return 1
 
@@ -459,7 +459,8 @@
 		if(src.client && src.client.preferences)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
-		data_core.addManifest(src, sec_note, med_note)
+		var/obj/item/device/pda2/pda = locate() in src
+		data_core.addManifest(src, sec_note, med_note, pda?.net_id)
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -478,6 +479,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
+				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null
@@ -509,7 +511,7 @@
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
-				logTheThing("station", src, null, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
+				logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -521,10 +523,6 @@
 				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
-
-		if (istraitor(src) && src.mind.late_special_role == 1)
-			//put this here because otherwise it's called before they have a PDA
-			equip_traitor(src)
 
 		set_clothing_icon_dirty()
 		sleep(0.1 SECONDS)
@@ -548,6 +546,18 @@
 		src.Equip_Bank_Purchase(src.mind?.purchased_bank_item)
 
 	return
+
+/// Equip items from sensory traits
+/mob/living/carbon/human/proc/equip_sensory_items()
+	if (src.traitHolder.hasTrait("blind"))
+		src.drop_from_slot(src.glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("shortsighted"))
+		src.drop_from_slot(src.glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+	if (src.traitHolder.hasTrait("deaf"))
+		src.drop_from_slot(src.ears)
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
@@ -681,7 +691,14 @@
 					if (src.limbs.r_arm)
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
-	return
+
+	// Special mutantrace items
+	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
+		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
+	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
+		src.put_in_hand_or_drop(new /obj/item/joint_wax)
+
+	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/card/id/C = null
@@ -731,7 +748,7 @@
 	src.mind?.remembered_pin = C.pin
 
 	if (wagesystem.jobs[JOB.name])
-		var/cashModifier = 1.0
+		var/cashModifier = 1
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
@@ -775,7 +792,7 @@
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
@@ -783,11 +800,11 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		for(var/i = 0, i < num_objectives, i++)
 			var/select_objective = pick(eligible_objectives)
 			new select_objective(null, H.mind)
-			H << browse(grabResource("html/traitorTips/traitorhardTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+			H.show_antag_popup("traitorhard")
 			ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
-		H << browse(grabResource("html/traitorTips/traitorGenericTips.html"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		H.show_antag_popup("traitorgeneric")
 	if (traitor_role)
 		H.mind.special_role = traitor_role
 	else
@@ -800,12 +817,12 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 /////////////////////////////////////////////
 
 var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikehorn, /obj/item/brick, /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/glasses/regular, /obj/item/clothing/glasses/sunglasses, /obj/item/clothing/gloves/boxing,
+/obj/item/clothing/glasses/regular, /obj/item/clothing/glasses/sunglasses/tanning, /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy, /obj/item/clothing/shoes/moon,
 /obj/item/clothing/suit/sweater, /obj/item/clothing/suit/sweater/red, /obj/item/clothing/suit/sweater/green, /obj/item/clothing/suit/sweater/grandma, /obj/item/clothing/under/shorts,
 /obj/item/clothing/under/suit/pinstripe, /obj/item/cigpacket, /obj/item/coin, /obj/item/crowbar, /obj/item/pen/crayon/lipstick,
 /obj/item/dice, /obj/item/dice/d20, /obj/item/device/light/flashlight, /obj/item/device/key/random, /obj/item/extinguisher, /obj/item/firework,
-/obj/item/football, /obj/item/material_piece/gold, /obj/item/instrument/harmonica, /obj/item/horseshoe,
+/obj/item/football, /obj/item/stamped_bullion, /obj/item/instrument/harmonica, /obj/item/horseshoe,
 /obj/item/kitchen/utensil/knife, /obj/item/raw_material/rock, /obj/item/pen/fancy, /obj/item/pen/odd, /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/razor_blade,/obj/item/rubberduck, /obj/item/instrument/saxophone, /obj/item/scissors, /obj/item/screwdriver, /obj/item/skull, /obj/item/stamp,
 /obj/item/instrument/vuvuzela, /obj/item/wrench, /obj/item/device/light/zippo, /obj/item/reagent_containers/food/drinks/bottle/beer, /obj/item/reagent_containers/food/drinks/bottle/vintage,

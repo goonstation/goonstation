@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -40,7 +41,7 @@
 				A.user_id = null
 		..()
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		remove_distant_beaker()
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
@@ -122,11 +123,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				SPAWN(0)
 					src.take_damage(400)
 				return
-			if(2.0)
+			if(2)
 				SPAWN(0)
 					src.take_damage(150)
 				return

@@ -128,7 +128,7 @@
 		boutput(user, "<span class='alert'>You're trapped inside!</span>")
 
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>You're dead! Quit that!</span>")
 			return
@@ -151,7 +151,7 @@
 
 			src.add_fingerprint(user)
 			src.visible_message("<span class='alert'><b>[user] shoves [target] into [src]!</b></span>")
-			logTheThing("combat", user, target, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(target,"combat")] into a portapuke at [log_loc(user)].")
 			target.set_loc(src)
 			src.UpdateIcon()
 			qdel(G)

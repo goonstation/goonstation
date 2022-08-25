@@ -8,12 +8,12 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6.0
-	throwforce = 10.0
+	force = 6
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -41,7 +41,7 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -166,14 +166,14 @@
 			return
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
 				return
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
@@ -386,7 +386,7 @@
 			progenitor.hunger += clamp((progenitor.force / 10), 1, 10) * mult
 
 		else if(D.stage == 4)
-			if(get_dist(get_turf(progenitor),src) <= 7)
+			if(GET_DIST(get_turf(progenitor),src) <= 7)
 				D.stage = 1
 				return
 			if(probmult(4))

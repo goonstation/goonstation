@@ -168,7 +168,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/bot/buttbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/buttbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/emag))
 		//Do not hit the buttbot with the emag tia
 	else
@@ -234,7 +234,7 @@
 
 	attack_hand(usr)
 
-/obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
 	var/butt_engine = "Bio-Reactive Organic Ketone Engine"
 	switch(src.butt_fluff)
@@ -431,7 +431,7 @@
 
 	if(!fart_on_other)
 		switch(rand(1, 42))
-			if(1) . = "<B>[src]</B> lets out a girly little 'toot' from their butt."
+			if(1) . = "<B>[src]</B> lets out a little 'toot' from their butt."
 			if(2) . = "<B>[src]</B> farts loudly!"
 			if(3) . = "<B>[src]</B> lets one rip!"
 			if(4) . = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."

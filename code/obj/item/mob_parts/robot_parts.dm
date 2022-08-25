@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
 		return standImage
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			remove_stage = 0
 
 		else if(remove_stage == 0 || remove_stage == 2)
-			if(istype(tool, /obj/item/scalpel) || istype(tool, /obj/item/raw_material/shard) || istype(tool, /obj/item/kitchen/utensil/knife))
+			if(iscuttingtool(tool))
 				remove_stage++
 			else
 				wrong_tool = 1
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			switch(remove_stage)
 				if(0)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
-					logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+					logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>")
 				if(2)
@@ -116,7 +116,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 							src.remove(0)
 				if(3)
 					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>")
-					logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name].")
+					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
 			if(!isdead(holder))
@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		else
 			. += "<span class='alert'>This head unit is empty.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (istype(W,/obj/item/organ/brain))
@@ -249,13 +249,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
 	max_health = 175
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					qdel(M)
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 		else
 			. += "<span class='alert'>This chest unit has not yet been wired up.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/cell))
 			if(src.cell)
 				boutput(user, "<span class='alert'>You have already inserted a cell!</span>")
@@ -463,7 +463,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	max_health = 250
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			var/obj/item/weldingtool/welder = W
 			if (welder.try_weld(user, 3, 3))
@@ -492,7 +492,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = 1
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -506,7 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		var/mob/living/carbon/human/H = M
 
-		if(H.limbs.vars.Find(src.slot) && H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
@@ -518,7 +518,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		//gonna hack this in with appearanceString
 		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
@@ -562,13 +562,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -587,7 +587,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -596,7 +596,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -636,13 +636,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
@@ -670,7 +670,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 			if (M.amount >= 2)
 				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
 				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
-				M.amount -= 2
+				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
 					del(M)
@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -721,11 +721,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		var/mob/living/carbon/human/H = M
 
-		if(!(src.slot in H.limbs.vars))
-			boutput(user, "<span class='alert'>You can't find a way to fit that on.</span>")
-			return
-
-		if(H.limbs.vars[src.slot])
+		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
 			return
 
@@ -737,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/skull))
 			var/obj/item/skull/Skull = W
 			var/obj/machinery/bot/skullbot/B
@@ -793,7 +789,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	step_image_state = "footprintsL"
 	icon_state_base = "l_leg"
 	icon_state = "l_leg-generic"
-	handlistPart = "legL-generic"
+	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
 /obj/item/parts/robot_parts/leg/left/standard
@@ -803,7 +799,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
-	handlistPart = "legL-light"
+	partlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -813,7 +809,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
-	handlistPart = "legL-treads"
+	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -828,7 +824,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	step_image_state = "footprintsR"
 	icon_state_base = "r_leg"
 	icon_state = "r_leg-generic"
-	handlistPart = "legR-generic"
+	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
 /obj/item/parts/robot_parts/leg/right/standard
@@ -838,7 +834,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
-	handlistPart = "legR-light"
+	partlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -848,7 +844,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
-	handlistPart = "legR-treads"
+	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
 	step_image_state = "tracksR"
@@ -901,7 +897,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		if(!emagged)
 			emagged = 1
 			if (user)
-				logTheThing("station", user, null, "emags a robot frame at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "emags a robot frame at [log_loc(user)].")
 				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
 			return 1
 		else if(user)
@@ -916,7 +912,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		emagged = 0
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/parts/robot_parts/))
 			var/obj/item/parts/robot_parts/P = W
 			switch (P.slot)
@@ -1015,7 +1011,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
 				return
 
-			var/action = input("What do you want to do?", "Robot Frame") in actions
+			var/action = tgui_input_list(user, "What do you want to do?", "Robot Frame", actions)
 			if (!action)
 				return
 			if (action == "Do nothing")

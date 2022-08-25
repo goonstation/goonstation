@@ -127,7 +127,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		krampus_spawned = 1
 
 	message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn completed successfully for player [L.mind.key] at [log_loc(L)].")
-	logTheThing("admin", L, null, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
+	logTheThing(LOG_ADMIN, L, "respawned as [which_one == 0 ? "Santa Claus" : "Krampus"] at [log_loc(L)].")
 	xmas_respawn_lock = 0
 	return
 
@@ -258,7 +258,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	cost = 25
 	dissipation_rate = 2
 	dissipation_delay = 4
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "stun"
 	shot_sound = 'sound/effects/pop.ogg'
 	shot_number = 1
@@ -330,7 +330,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				SPAWN(0.7 SECONDS)
 				W.aggressive = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.alive)
 			return
 		if (user.a_intent == "harm")
@@ -358,7 +358,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					user.reagents.add_reagent("hugs", 10)
 				playsound(src.loc, "sound/voice/babynoise.ogg", 50, 10,10)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if(!alive) return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
@@ -463,7 +463,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.fire_image = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		extinguish()
 		..()
 
@@ -507,7 +507,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	desc = "A snowball. Made of snow."
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "snowball"
-	amount = 2
+	bites_left = 2
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	doants = 0
@@ -547,9 +547,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (message)
 			M.visible_message("<span class='alert'><b>[M]</b> is hit by [src]!</span>",\
 			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
-		src.amount -= rand(1, 2)
+		src.bites_left -= rand(1, 2)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
 			"<span class='alert'>You plaster the snowball over your face.</span>")
@@ -559,7 +559,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		src.add_fingerprint(user)
 
-		if (src.amount <= 0)
+		if (src.bites_left <= 0)
 			src.visible_message("[src] collapses into a poof of snow!")
 			qdel(src)
 			return
@@ -569,9 +569,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
 				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
 			else if ((user != M && iscarbon(M)))
-				M.tri_message("<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-				user, "<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
-				M, "<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
+				M.tri_message(user, "<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
+					"<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
+					"<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
 			src.hit(M, 0)
 
 		else return ..()
@@ -579,7 +579,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if (ismob(A))
 			src.hit(A)
-		if (src.amount <= 0)
+		if (src.bites_left <= 0)
 			src.visible_message("[src] collapses into a poof of snow!")
 			qdel(src)
 			return
@@ -622,7 +622,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	New()
 		..()
 		light = new /datum/light/point
-		light.set_color(0.20, 0.60, 0.90)
+		light.set_color(0.2, 0.6, 0.9)
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()
@@ -632,7 +632,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		qdel(src.light)
 		src.light = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		change_light_pattern()
 		..()
 
@@ -1044,7 +1044,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			if(!src.stat && !src.transforming)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
-					C.show_message("<span class='alert'><B>[src] stomps the ground with \his huge feet!</B></span>", 1)
+					C.show_message("<span class='alert'><B>[src] stomps the ground with [his_or_her(src)] huge feet!</B></span>", 1)
 				playsound(src.loc, "meteorimpact.ogg", 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))
 					if (M == src)
@@ -1109,11 +1109,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				for(var/obj/item/grab/G in src)
 					if(G.affecting == M)
 						return
-				src.visible_message("<span class='alert'><B>[src] snatches up [M] in \his huge claws!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] snatches up [M] in [his_or_her(src)] huge claws!</B></span>")
 				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
-				G.state = 1
+				G.state = GRAB_AGGRESSIVE
 				G.UpdateIcon()
 				src.set_dir(get_dir(src, M))
 				playsound(src.loc, "sound/voice/animal/werewolf_attack3.ogg", 65, 1, 0, 0.5)
@@ -1132,7 +1132,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				if(ishuman(G.affecting))
 					src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_crush
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in \his hand!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in [his_or_her(src)] hand!</B></span>")
 					H.set_loc(src.loc)
 					while (!isdead(H))
 						if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
@@ -1172,7 +1172,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			for(var/obj/item/grab/G in src)
 				if(ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span class='alert'><B>[src] raises [H] up to \his mouth! Oh shit!</B></span>")
+					src.visible_message("<span class='alert'><B>[src] raises [H] up to [his_or_her(src)] mouth! Oh shit!</B></span>")
 					H.set_loc(src.loc)
 					sleep(6 SECONDS)
 					if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
@@ -1205,7 +1205,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (prob(50))
 			icon_state = "stocking_green"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..())
 			return
 		if (!islist(src.gift_paths) || !length(src.gift_paths))

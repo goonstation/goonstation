@@ -17,6 +17,18 @@ particles/rain
 	dense
 		spawning = 60
 
+		tile
+			count = 10
+			spawning = 1.2
+			fade = 4
+			fadein = 2
+			lifespan = generator("num", 6, 8, LINEAR_RAND)
+			position = generator("box", list(-32,32,0), list(32,40,50))
+			bound1 = list(-32, -32, -1000)
+			bound2 = list(40, 40, 1000)
+			width = 96
+			height = 96
+
 	sideways
 		rotation = generator("num", -10, -20 )
 		gravity = list(0.4, -3)
@@ -39,7 +51,148 @@ particles/rain
 			height = 96
 
 
-obj/effects/rain
+/datum/precipitation_controller
+	var/name = "Precipitation Controller"
+	var/list/obj/effects/precipitation/effects
+	var/datum/reagents/reagents
+	var/particles/shared_particle
+	var/probability = 100
+	var/cooldown = 5 SECONDS
+	var/max_pool_depth = 0
+	var/orig_color
+	var/lock_deletion = FALSE
+
+	New(obj/effects/precipitation/start)
+		..()
+		src.reagents = new/datum/reagents(100)
+		LAZYLISTINIT(effects)
+		if(start)
+			propogate_controller(get_turf(start), start.type)
+		START_TRACKING
+
+	disposing()
+		for(var/obj/effects/precipitation/P in effects )
+			qdel(P)
+		if (!isnull(reagents))
+			qdel(reagents)
+			reagents = null
+		STOP_TRACKING
+		..()
+
+	proc/process()
+		if(!src.reagents.total_volume) return
+		var/datum/reagents/R = new
+		for(var/obj/effects/precipitation/P in effects)
+			var/turf/T = P.loc
+			for(var/atom/movable/AM in T)
+				if(!(AM.event_handler_flags & USE_FLUID_ENTER)) continue
+
+				if(!ON_COOLDOWN(AM, "precipitation_cd_\ref[src]", src.cooldown))
+					src.reagents.copy_to(R)
+					R.reaction(AM, TOUCH)
+			if(!ON_COOLDOWN(T, "precipitation_cd_\ref[src]", src.cooldown))
+				var/fluid_ok = TRUE
+				if(T.active_liquid?.group.amt_per_tile >= max_pool_depth)
+					fluid_ok = FALSE
+				src.reagents.copy_to(R)
+				R.reaction(T, TOUCH, can_spawn_fluid = fluid_ok)
+			LAGCHECK(LAG_REALTIME)
+
+	proc/cross_check(atom/A)
+		if(isintangible(A)) return
+		if(prob(probability) && !ON_COOLDOWN(A, "precipitation_cd_\ref[src]", src.cooldown))
+			if(src.reagents.total_volume)
+				var/datum/reagents/R = new
+				src.reagents.copy_to(R)
+				R.reaction(A,TOUCH)
+
+	proc/propogate_controller(turf/start, desired_type)
+		var/list/nodes = list()
+		var/index_open = 1
+		var/list/open = list(start)
+		var/list/next_open = list()
+
+		var/obj/effects/precipitation/PE = locate() in start
+		nodes[PE] = TRUE
+		var/i = 0
+		while (index_open <= length(open) || length(next_open))
+			if(i++ % 500 == 0)
+				LAGCHECK(LAG_HIGH)
+			if(index_open > length(open))
+				open = next_open
+				next_open = list()
+				index_open = 1
+			var/turf/T = open[index_open++]
+			for (var/dir in alldirs)
+				var/turf/target = get_step(T, dir)
+				if (!target) continue // map edge
+				PE = locate() in target
+				if(!PE) continue
+				if(nodes[PE]) continue
+				if(PE.type != desired_type) continue
+				nodes[PE] = TRUE
+				next_open[target] = TRUE
+
+		for (PE as anything in nodes)
+			add_effect(PE)
+
+	proc/add_effect(obj/effects/precipitation/PE)
+		if(!src.shared_particle)
+			src.shared_particle = new PE.particles.type()
+			src.orig_color = shared_particle.color
+		PE.particles = src.shared_particle
+		PE.PC = src
+		PE.PC.effects += PE
+
+	proc/add_turfs(list/turf/turfs, type)
+		if(!ispath(type, /obj/effects/precipitation))
+			return
+		for(var/turf/T in turfs)
+			var/obj/effects/precipitation/PE = new type(T)
+			add_effect(PE)
+
+	proc/remove(obj/effects/precipitation/P)
+		effects -= P
+		if(!length(effects) && !src.lock_deletion)
+			qdel(src)
+
+	proc/clear_active_effects()
+		lock_deletion = TRUE
+		for(var/obj/effects/precipitation/P in effects)
+			qdel(P)
+		lock_deletion = FALSE
+
+	proc/update()
+		if(shared_particle)
+			if(reagents.total_volume)
+				var/datum/color/C = reagents.get_average_color()
+				shared_particle.color = rgb(C.r, C.g, C.b)
+			else
+				if(src.orig_color)
+					shared_particle.color = src.orig_color
+				else
+					shared_particle.color = "#fff"
+
+obj/effects/precipitation
+	anchored = 2
+	var/datum/precipitation_controller/PC
+	event_handler_flags = 0
+
+	Crossed(var/atom/A)
+		..()
+		if(PC)
+			PC.cross_check(A)
+
+	proc/generate_controller()
+		PC = new(src)
+
+	disposing()
+		if(PC)
+			PC.remove(src)
+			PC = null
+		..()
+
+obj/effects/precipitation/rain
 	particles = new/particles/rain
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
@@ -50,6 +203,9 @@ obj/effects/rain
 
 	dense
 		particles = new/particles/rain/dense
+
+		tile
+			particles = new/particles/rain/dense/tile
 
 	sideways
 		particles = new/particles/rain/sideways
@@ -118,12 +274,11 @@ particles/snow
 				lifespan = generator("num", 20, 90, LINEAR_RAND)
 
 
-
-
-obj/effects/snow
+obj/effects/precipitation/snow
 	particles = new/particles/snow
 	plane = PLANE_NOSHADOW_ABOVE
 	var/static/list/particles/z_particles
+
 	client_attach
 		screen_loc = "CENTER"
 	dense

@@ -5,7 +5,7 @@
 #else
 	icon_state = "intercom-map"
 #endif
-	anchored = 1.0
+	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
 	mats = 3
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -51,7 +51,7 @@
 	SPAWN(0)
 		attack_self(user)
 
-/obj/item/device/radio/intercom/attack_hand(mob/user as mob)
+/obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	SPAWN(0)
 		attack_self(user)
@@ -66,16 +66,6 @@
 		return
 	var/maptext = generateMapText(msg, textLoc, style = "color:#7F7FE2;", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
-
-/obj/item/device/radio/intercom/putt
-	name = "Colosseum Intercommunicator"
-	frequency = R_FREQ_INTERCOM_COLOSSEUM
-	broadcasting = 1
-	device_color = "#aa5c00"
-	protected_radio = 1
-
-	initialize()
-		set_frequency(frequency)
 
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
@@ -190,6 +180,41 @@
 				set_frequency(N.agent_radiofreq)
 		else
 			set_frequency(frequency)
+
+// -------------------- DetNet --------------------
+/obj/item/device/radio/intercom/detnet
+	name = "DetNet Intercom (General)"
+	locked_frequency = TRUE
+	device_color = RADIOC_STANDARD
+	layer = 3.2
+
+	initialize()
+		set_frequency(frequency)
+
+/obj/item/device/radio/intercom/detnet/security
+	name = "DetNet Intercom (Security)"
+	frequency = R_FREQ_SECURITY
+	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_classes = list("g" = R_FREQ_SECURITY)
+	device_color = RADIOC_SECURITY
+	layer = 3.1
+
+	initialize()
+		set_frequency(frequency)
+		set_secure_frequencies(src)
+
+/obj/item/device/radio/intercom/detnet/detective
+	name = "DetNet Intercom (???)"
+	frequency = R_FREQ_DETECTIVE
+	secure_frequencies = list("d" = R_FREQ_DETECTIVE)
+	secure_classes = list("d" = R_FREQ_DETECTIVE)
+	device_color = RADIOC_DETECTIVE
+	layer = 3
+
+	initialize()
+		set_frequency(frequency)
+		set_secure_frequencies(src)
+// ------------------------------------------------
 
 ////// adventure area intercoms
 

@@ -82,7 +82,7 @@
 		// Delayed Warning and Instruction
 		SPAWN(warning_delay)
 			if(event_active)
-				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning", alert_origin = ALERT_STATION)
 				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
@@ -264,7 +264,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindslave_status(M)
+			remove_mindhack_status(M)
 		. = ..()
 
 	on_grump(mult)
@@ -345,7 +345,7 @@ datum/teg_transformation/vampire
 			on_revert()
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
-	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
+	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
 		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60

@@ -35,7 +35,7 @@ For hairball DynAssemblies see: jonescity.dm
 	var/product = 0 //When secured, what do you want it to produce? Set in switch statement in createproduct().
 	var/secure_duration = 50 //How long it takes to secure / unsecure
 
-	attackby(obj/item/W as obj, mob/user as mob) //This is adding parts after the first run, creating is done on base objs attackby
+	attackby(obj/item/W, mob/user) //This is adding parts after the first run, creating is done on base objs attackby
 		if (!W)
 			return
 		if ((validate && (W.type in validparts)) || (validate && (W.parent_type in validparts)) || (!validate && !isscrewingtool(W)))
@@ -55,11 +55,11 @@ For hairball DynAssemblies see: jonescity.dm
 			if (!product)
 				boutput(user, "You can't secure \the [src] yet!")
 			else
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 30, 1, -2)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 				actions.start(new/datum/action/bar/icon/dynassemblySecure(src, user, secure_duration), user)
 		else if (iswrenchingtool(W)) //use a wrench to deconstruct
 			if (contents)
-				playsound(src.loc, "sound/items/Wrench.ogg", 30, 1, -2)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
 				actions.start(new/datum/action/bar/icon/dynassemblyUnsecure(src, user, secure_duration), user)
 
 	proc/newpart(var/obj/item/M, var/obj/item/P, firstrun = 0) //1st arg is the source object (norm. the assembly), 2nd arg is the thing you are adding
@@ -316,7 +316,7 @@ For hairball DynAssemblies see: jonescity.dm
 			src.color = src.material.color
 			src.alpha = src.material.alpha
 
-/obj/item/musicpart/attackby(obj/item/W as obj, mob/user as mob) //init the assembly
+/obj/item/musicpart/attackby(obj/item/W, mob/user) //init the assembly
 	if (istype(W, /obj/item/musicpart))
 		var/obj/item/musicpart/P = W
 		boutput(user, "<span class='notice'>You begin adding \the [P.name] to \the [src.name].</span>")

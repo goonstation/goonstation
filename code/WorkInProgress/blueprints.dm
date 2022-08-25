@@ -46,7 +46,7 @@
 		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(currentBp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
@@ -64,7 +64,7 @@
 			return
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(building)
 			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
 			return
@@ -431,7 +431,7 @@
 	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(get_dist(src,target) > 2) return
+		if(GET_DIST(src,target) > 2) return
 
 		if(!isturf(target)) target = get_turf(target)
 
@@ -599,7 +599,7 @@
 					tf.tiletype = save["type"]
 					tf.state = save["state"]
 					tf.direction = save["dir"]
-					bp.req_metal += 1.0
+					bp.req_metal += 1
 					bp.req_glass += 0.5
 					for (var/B in save.dir)
 						if(B == "type" || B == "state") continue

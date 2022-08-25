@@ -48,7 +48,7 @@
 		playsound(src, "sound/effects/pump.ogg",50, 1)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
-				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
+				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
 					AM.delivery_destination = "Disposals"
 				step(AM,src.dir)
@@ -82,14 +82,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M)) continue
+				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 
@@ -128,7 +128,7 @@
 
 	proc/get_next_dir()
 		for(var/atom/movable/AM in src.loc)
-			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM)) continue
+			if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
 			if(AM.delivery_destination)
 				if(destinations.Find(AM.delivery_destination))
 					return destinations[AM.delivery_destination]
@@ -153,7 +153,7 @@
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
-				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2)) continue
+				if(AM2.anchored || AM2 == src || isobserver(AM2) || isintangible(AM2) || isflockmob(AM2)) continue
 				step(AM2,src.dir)
 
 			driver = (locate(/obj/machinery/mass_driver) in get_step(src,src.dir))
@@ -177,14 +177,14 @@
 		if(!operating && !driver_operating)
 			var/drive = 0
 			for(var/atom/movable/M in src.loc)
-				if(M == src || M.anchored || isobserver(M) || isintangible(M)) continue
+				if(M == src || M.anchored || isobserver(M) || isintangible(M) || isflockmob(M)) continue
 				drive = 1
 				break
 			if(drive) activate()
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A)) return
+		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
 
 		if (!trigger_when_no_match)
 			var/atom/movable/AM = A
@@ -387,7 +387,7 @@
 			. = TRUE
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
@@ -482,7 +482,7 @@
 						pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 						poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
-				src.stick_to(target, pox, poy)
+				src.stick_to(target, pox, poy, user)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -495,4 +495,4 @@
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
 		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y)
+		src.stick_to(target, src.pixel_x, src.pixel_y, usr)

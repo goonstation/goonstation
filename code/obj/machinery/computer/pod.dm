@@ -28,7 +28,7 @@
 	icon_state = "wizard"
 	circuit_type = /obj/item/circuitboard/swfdoor
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!iswizard(user))
 			user.show_text("The [src.name] doesn't respond to your inputs.", "red")
 			return
@@ -73,7 +73,7 @@
 		return
 	return
 
-/obj/machinery/computer/pod/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/pod/attack_hand(var/mob/user)
 	if(..())
 		return
 

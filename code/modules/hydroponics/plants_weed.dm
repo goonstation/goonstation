@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		random_brute_damage(user, 10, 1)//see above
 		if (W && prob(50))
 			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
-			W.dropped()
+			W.dropped(user)
 			qdel(W)
 		return 1
 

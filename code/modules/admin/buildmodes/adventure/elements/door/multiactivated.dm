@@ -32,7 +32,7 @@
 	var/allow_negative = 0
 	var/static/list/triggeracts_multi = list("Close" = "close", "Decrease activation count" = "dec", "Do nothing" = "nop", "Increase activation count" = "inc", "Lock open" = "secopen", "Open" = "open", "Toggle" = "toggle")
 
-	attackby(C as obj, mob/user as mob)
+	attackby(C, mob/user)
 		return
 
 	trigger_actions()

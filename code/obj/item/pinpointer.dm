@@ -272,7 +272,7 @@
 			..()
 
 /obj/item/pinpointer/idtracker/spy
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)
 			boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
@@ -381,13 +381,13 @@
 			for (var/x in itemrefs)
 				var/atom/A = locate(x)
 				if (A && (A.type in accepted_types) && !A.qdeled && !A.disposed)
-					choices += A
+					choices[A.name] = A
 
 			if (!length(choices))
 				user.show_text("No track targets exist - possibly destroyed. Cannot activate pinpointer", "red")
 				return
 
-			target = input("Select a card to deal.", "Choose Card") as null|anything in choices
+			target = choices[tgui_input_list(user, "Select a weapon to locate.", "Locate Weapon", choices)]
 
 			if (!target)
 				user.show_text("No target specified. Cannot activate pinpointer.", "red")

@@ -6,8 +6,8 @@
 	var/oxyloss = 0
 	var/toxloss = 0
 	var/brainloss = 0
-	//var/brain_op_stage = 0.0
-	//var/heart_op_stage = 0.0
+	//var/brain_op_stage = 0
+	//var/heart_op_stage = 0
 
 	infra_luminosity = 4
 
@@ -82,6 +82,7 @@
 				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
 
 				if(prob(get_brute_damage() - 50))
+					logTheThing(LOG_COMBAT, user, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
 					src.gib()
 
 /mob/living/carbon/gib(give_medal, include_ejectables)

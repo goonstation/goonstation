@@ -119,7 +119,7 @@
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal-active"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		new /obj/item/fish_portal(get_turf(src))
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 40)
 		user.visible_message("[user] flips off the [src].", "You turn off the [src].")

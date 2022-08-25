@@ -7,7 +7,7 @@
 
 	var/tagged = 0 // Gang wars thing
 
-	level = 1.0
+	level = 1
 
 	unsimulated
 		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
@@ -56,6 +56,8 @@
 	var/turf_flags = 0
 	var/list/list/datum/disjoint_turf/connections
 
+	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
@@ -65,8 +67,6 @@
 		if(istype(src.material))
 			if(initial(src.opacity))
 				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
-
-		gas_impermeable = material.hasProperty("permeable") ? material.getProperty("permeable") >= 33 : gas_impermeable
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -94,12 +94,11 @@
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
 
-	proc/canpass()
-		if( density )
+	proc/can_crossed_by(atom/movable/AM)
+		if(!src.Cross(AM))
 			return 0
-		for( var/thing in contents )
-			var/atom/A = thing
-			if( A.density && !ismob(A) )
+		for(var/atom/A in contents)
+			if(!A.Cross(AM))
 				return 0
 		return 1
 
@@ -149,7 +148,8 @@
 	animate_movement = NO_STEPS // fix for things gliding around all weird
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/overlay/tile_gas_effect
 	name = ""
@@ -158,7 +158,8 @@
 	mouse_opacity = 0
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
@@ -351,7 +352,8 @@ proc/generate_space_color()
 	AM.movement_newloc = newloc
 	. = ..()
 
-/turf/Enter(atom/movable/mover as mob|obj, atom/forget as mob|obj|turf|area)
+/turf/Enter(atom/movable/mover, atom/forget)
+
 	if (!mover)
 		return TRUE
 
@@ -427,7 +429,7 @@ proc/generate_space_color()
 						M.set_loc(warptarget)
 					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
 						M.set_loc(warptarget)
-			else if ((abs(OldLoc.x - warptarget.x) > 1) || (abs(OldLoc.y - warptarget.y) > 1))
+			else if (isturf(warptarget) && (abs(OldLoc.x - warptarget.x) > 1 || abs(OldLoc.y - warptarget.y) > 1))
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
 				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
@@ -435,6 +437,9 @@ proc/generate_space_color()
 			else
 				M.set_loc(warptarget)
 #endif
+	// https://www.byond.com/forum/post/2382205
+	// Default behavior of turf/Entered() is to call Crossed() this will maintain that behavior
+	Crossed(M)
 
 // Ported from unstable r355
 /turf/space/Entered(atom/movable/A as mob|obj)
@@ -549,13 +554,15 @@ proc/generate_space_color()
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
 
+	var/image/old_disposal_image = src.disposal_image
+
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
 	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
-		if(ispath(new_type, /turf/space) && delay_space_conversion()) return
+		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
 			if (delay_space_conversion()) return
@@ -589,7 +596,11 @@ proc/generate_space_color()
 			new_turf = new /turf/unsimulated/floor(src)
 		else
 			if (delay_space_conversion()) return
-			new_turf = new /turf/space(src)
+			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
+				station_repair.repair_turfs(list(src), clear=TRUE)
+				new_turf = src
+			else
+				new_turf = new /turf/space(src)
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
@@ -624,6 +635,8 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+
+	new_turf.disposal_image = old_disposal_image
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
@@ -726,11 +739,16 @@ proc/generate_space_color()
 /turf/proc/ReplaceWithSpace()
 	var/area/my_area = loc
 	var/turf/floor
+	var/turf/replacement = map_settings.space_turf_replacement
 	if (my_area)
 		if (my_area.filler_turf)
 			floor = ReplaceWith(my_area.filler_turf)
+		else if (replacement)
+			floor = ReplaceWith(replacement)
 		else
 			floor = ReplaceWith("Space")
+	else if (replacement)
+		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
 
@@ -921,10 +939,18 @@ proc/generate_space_color()
 	fullbright = 1
 
 /turf/unsimulated/wall/solidcolor/white
+#ifdef IN_MAP_EDITOR
+	icon_state = "white-map"
+#else
 	icon_state = "white"
+#endif
 
 /turf/unsimulated/wall/solidcolor/black
+#ifdef IN_MAP_EDITOR
+	icon_state = "black-map"
+#else
 	icon_state = "black"
+#endif
 
 /turf/unsimulated/wall/other
 	icon_state = "r_wall"
@@ -944,7 +970,7 @@ proc/generate_space_color()
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "vrwall"
 
-/turf/unsimulated/attack_hand(var/mob/user as mob)
+/turf/unsimulated/attack_hand(var/mob/user)
 	if (src.density == 1)
 		return
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -971,7 +997,7 @@ proc/generate_space_color()
 
 // imported from space.dm
 
-/turf/space/attack_hand(mob/user as mob)
+/turf/space/attack_hand(mob/user)
 	if ((user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
@@ -992,7 +1018,7 @@ proc/generate_space_color()
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/space/attackby(obj/item/C as obj, mob/user as mob)
+/turf/space/attackby(obj/item/C, mob/user)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
 		boutput(user, "<span class='alert'>You can't build here.</span>")
@@ -1057,9 +1083,9 @@ proc/generate_space_color()
 //Vr turf is a jerk and pretends to be broken.
 /turf/unsimulated/bombvr/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.icon_state = "vrspace"
-		if(2.0)
+		if(2)
 			switch(pick(1;75,2))
 				if(1)
 					src.icon_state = "vrspace"
@@ -1067,18 +1093,18 @@ proc/generate_space_color()
 					if(prob(80))
 						src.icon_state = "vrplating"
 
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.icon_state = "vrplating"
 	return
 
 /turf/unsimulated/wall/bombvr/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			opacity = 0
 			set_density(0)
 			src.icon_state = "vrspace"
-		if(2.0)
+		if(2)
 			switch(pick(1;75,2))
 				if(1)
 					opacity = 0
@@ -1090,7 +1116,7 @@ proc/generate_space_color()
 						set_density(0)
 						src.icon_state = "vrplating"
 
-		if(3.0)
+		if(3)
 			if (prob(50))
 				src.icon_state = "vrwallbroken"
 				opacity = 0
@@ -1151,7 +1177,7 @@ proc/generate_space_color()
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
 				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")

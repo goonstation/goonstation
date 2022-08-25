@@ -84,7 +84,7 @@
 
 /area/upper_arctic/exterior/surface
 	name = "Ice Moon Surface"
-	icon_state = "white"
+	icon_state = "purple"
 	filler_turf = "/turf/unsimulated/floor/arctic/abyss"
 	skip_sims = 1
 	sims_score = 30
@@ -118,29 +118,32 @@
 	sound_group = "precursor"  //Differs from the caves it's in, for a mysterious sound-blocking effect.
 	sound_loop = 'sound/ambience/industrial/Precursor_Drone1.ogg'
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/precursor/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg','sound/ambience/industrial/Precursor_Choir.ogg','sound/ambience/industrial/Precursor_Drone3.ogg','sound/ambience/industrial/Precursor_Bells.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/precursor/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	pit
-		name = "Ominous Pit"
-		icon_state = "purple"
-		filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
-		sound_environment = 24
-		sound_group = "ominouspit"
-		skip_sims = 1
-		sims_score = 300
+/area/precursor/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/industrial/Precursor_Drone2.ogg',\
+			'sound/ambience/industrial/Precursor_Choir.ogg',\
+			'sound/ambience/industrial/Precursor_Drone3.ogg',\
+			'sound/ambience/industrial/Precursor_Bells.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
+
+/area/precursor/pit
+	name = "Ominous Pit"
+	icon_state = "purple"
+	filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor/pit" // this might fuck something up but it might also be hilarious
+	sound_environment = 24
+	sound_group = "ominouspit"
+	skip_sims = 1
+	sims_score = 300
 
 ////////////////////// cogwerks - HELL
 
@@ -156,6 +159,7 @@
 /obj/item/hell_sax
 	name = "curious instrument"
 	desc = "It appears to be a musical instrument of some sort."
+	interesting = "Scans detect: COBRYL | IRIDIUM *** UNUSUAL RESONANT PROPERTIES"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -257,7 +261,7 @@
 	ex_act(severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
 			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
@@ -285,6 +289,7 @@
 	desc = "Neat."
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb"
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	var/id = "ENTRY" // default
 
 /obj/precursor_puzzle/orb_stand
@@ -292,6 +297,7 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb_holder"
 	desc = "It seems to be missing something."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	density = 1
 	anchored = 1
 	var/id = 1
@@ -315,7 +321,7 @@
 
 		src.tag = "orb_stand_[id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 			return
 
@@ -333,7 +339,7 @@
 
 		SPAWN(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
-			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is blasted away somewhere by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
 			user.set_loc(otherside)
 			explosion(src,src.loc,-1,-1,1,2)
@@ -345,7 +351,7 @@
 			sleep(5 SECONDS)
 			src.ready = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.ready || src.assembled)
 			..()
 			return
@@ -385,7 +391,7 @@
 
 /obj/precursor_puzzle/glowing_door
 	name = "glowing edifice"
-	desc = "You can faintly make out a pattern of fissures and seams along the surface."
+	desc = "You can faintly make out a pattern of fissures and glowing seams along the surface."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bluedoor_1"
 	density = 1
@@ -404,7 +410,7 @@
 			active = 0
 			pitch = rand(0,12)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/hell_sax) && !src.opened)
 			..()
 			user.visible_message("<span class='notice'><B>[src] [pick("rings", "dings", "chimes","vibrates","oscillates")] [pick("faintly", "softly", "loudly", "weirdly", "scarily", "eerily")].</B></span>")
@@ -616,6 +622,7 @@
 /obj/precursor_puzzle/rotator
 	name = "peculiar machine"
 	desc = "It looks like it can be moved somehow."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-6"
 	density = 1
@@ -655,7 +662,7 @@
 							return // oh good you set it up wrong IDIOT
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.active)	return
 		src.active = 1
 
@@ -824,7 +831,7 @@
 
 
 /obj/precursor_puzzle/shield
-	name = "energy barrier"
+	name = "rydberg-matter barrier"
 	desc = "It's pretty solid, somehow."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
@@ -883,8 +890,9 @@
 			return
 
 /obj/precursor_puzzle/sphere
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	desc = "That doesn't look very safe at all."
+	interesting = "Scans detect: BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER *** ELECTROMAGNETIC HAZARD"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	event_handler_flags = USE_PROXIMITY
@@ -982,12 +990,12 @@
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		boutput(user, "<span class='notice'><b>You try to straighten [src], but it won't quite budge.</b></span>")
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
@@ -1014,7 +1022,7 @@
 	generic = 0
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.a_intent == "help")
 			return
 
@@ -1188,7 +1196,7 @@
 
 		var/temp_effect_limiter = 10
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 0
 			if(T_dist == 2)
 				T_effect_prob = 100
@@ -1270,12 +1278,12 @@
 
 
 /datum/projectile/laser/precursor/sphere // for precursor traps
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	power = 75
 	cost = 75
-	sname = "energy bolt"
+	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
 	shot_sound = 'sound/machines/ArtifactPre1.ogg'
 	color_red = 0.1
@@ -1390,7 +1398,7 @@
 	pixel_y = 32
 	var/activated = FALSE
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/dongle))
 			if (activated)
 				boutput(user, "<span class='alert'>There's already one plugged in!</span>")

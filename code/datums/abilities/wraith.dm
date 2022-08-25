@@ -147,7 +147,7 @@
 		if (!M && error)
 			boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
 			return 1
-		logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
+		logTheThing(LOG_COMBAT, usr, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 		//Make the corpse all grody and skeleton-y
 		M.decomp_stage = 4
@@ -157,7 +157,7 @@
 		M.set_body_icon_dirty()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
 
-		holder.regenRate *= 2.0
+		holder.regenRate *= 2
 		holder.owner:onAbsorb(M)
 		//Messages for everyone!
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
@@ -195,7 +195,7 @@
 	pointCost = 300
 	cooldown = 150 SECONDS //Tweaked this down from 3 minutes to 2 1/2, let's see if that ruins anything
 
-	cast(atom/T)
+	cast(var/atom/target)
 		if (..())
 			return 1
 
@@ -203,13 +203,16 @@
 			boutput(usr, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return 1
 
-		if (!isitem(T) || istype(T, /obj/item/storage/bible))
+		if (istype(target, /obj/item/storage/bible))
+			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
+
+		if (!isitem(target))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")
 			return 1
 
-		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [T].", "You force [T] to do your bidding.")]</strong></span>")
+		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [target].", "You force [target] to do your bidding.")]</strong></span>")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
-		var/mob/living/object/O = new/mob/living/object(T, holder.owner)
+		var/mob/living/object/O = new/mob/living/object(get_turf(target), target, holder.owner)
 		SPAWN(45 SECONDS)
 			if (O)
 				boutput(O, "<span class='alert'>You feel your control of this vessel slipping away!</span>")
@@ -267,7 +270,7 @@
 
 	cast(atom/T)
 		if (..())
-			return 1
+			return TRUE
 
 		//If you targeted a turf for some reason, find a valid target on it
 		var/atom/target = null
@@ -287,7 +290,7 @@
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
-				return 1
+				return TRUE
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
@@ -295,22 +298,22 @@
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
-				return 0
+				return FALSE
 		else if (isobj(T))
 			var/obj/O = T
-			if(istype(O, /obj/machinery/computer/shuttle/embedded))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy off [O].</span>" )
-				return 0
+			if(istype(O, /obj/machinery/computer/shuttle))
+				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
+				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))
 				boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
-				return 0
+				return FALSE
 			else
 				boutput(usr, "<span class='alert'>You fail to alter the energy of the [O].</span>")
-				return 1
+				return TRUE
 		else
 			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
-			return 1
+			return FALSE
 
 /datum/targetable/wraithAbility/command
 	name = "Command"
@@ -412,22 +415,7 @@
 			if(istype(O, /obj/critter) || istype(O, /obj/machinery/bot) || istype(O, /obj/decal) || O.anchored || O.invisibility)
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
-			O.visible_message("<span class='alert'>The [O] comes to life!</span>")
-			var/obj/critter/livingobj/L = new/obj/critter/livingobj(O.loc)
-			O.set_loc(L)
-			L.name = "Living [O.name]"
-			L.desc = "[O.desc]. It appears to be alive!"
-			L.overlays += O
-			L.health = rand(10, 50)
-			L.atk_brute_amt = rand(5, 20)
-			L.defensive = 1
-			L.aggressive = 1
-			L.atkcarbon = 1
-			L.atksilicon = 1
-			L.opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-			L.stunprob = 15
-			L.original_object = O
-			animate_levitate(L, -1, 30)
+			new/mob/living/object/ai_controlled(O.loc, O)
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
 			return 0
 		else
@@ -601,7 +589,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
+				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
 					return 1
@@ -653,7 +641,7 @@
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [t]")
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
@@ -707,7 +695,7 @@
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
-			logTheThing("admin", null, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, "No spirits responded. The portal closes.")
 				qdel(marker)
@@ -730,7 +718,7 @@
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
+		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")

@@ -14,7 +14,7 @@
 
 	if (!src.holder)
 		message_admins("Non-admin client [src.key] somehow tried to input some data. Huh?")
-		logTheThing("debug", src.mob, null, "somehow attempted to input data via the input_data proc.")
+		logTheThing(LOG_DEBUG, src.mob, "somehow attempted to input data via the input_data proc.")
 		return
 
 	// clear out invalid options. TODO might want to datumize these at some point
@@ -30,7 +30,7 @@
 	else
 		selected_type = input(custom_type_title || "Which input type?", custom_type_message || "Input Type Selection", default_type) as null|anything in allowed_types //TODO make this a TGUI list once we can indicate defaults on those
 
-	if (selected_type != default_type) //clear the default if we aren't using the suggested type
+	if (selected_type != default_type && selected_type != "JSON") //clear the default if we aren't using the suggested type
 		default = null
 
 	switch(selected_type)
@@ -41,14 +41,16 @@
 			input = input(custom_message  || "Enter number:", custom_title, default) as null|num
 
 		if (DATA_INPUT_TYPE)
-			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
-			if (!stub)
-				boutput(src, "<span class='alert'>Cancelled.</span>")
-				return
-			while (!input)
+			var/stub
+			while (!stub)
+				stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
+				if (!stub)
+					boutput(src, "<span class='alert'>Cancelled.</span>")
+					return
 				input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-				if (!input)
+				if (isnull(input))
 					alert("No types found matching that string.")
+					stub = null
 
 
 		if (DATA_INPUT_COLOR)
@@ -93,6 +95,8 @@
 
 		if (DATA_INPUT_JSON)
 			input = input(custom_message || "Enter JSON:", custom_title, json_encode(default)) as null|text
+			if(isnull(input))
+				return
 			input = json_decode(input)
 
 		if (DATA_INPUT_REF)
@@ -157,6 +161,9 @@
 			input = input(custom_message || "Select a mob:", custom_title) as null|mob in world
 
 		if (DATA_INPUT_MATRIX)
+			var/matrix/M = default
+			if (!M) M = matrix()
+			default = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
 			input = input("Create a matrix:  (format: \"a,b,c,d,e,f\" without quotes). Must have a leading 0 for decimals:", custom_title, default) as null|message
 			if(input == null)
 				boutput(src, "<span class='alert'>Cancelled.</span>")

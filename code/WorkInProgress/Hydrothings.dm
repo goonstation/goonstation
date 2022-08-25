@@ -384,7 +384,7 @@ obj/item/gnomechompski/elf
 		reload_gun(user)
 
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)
@@ -392,7 +392,7 @@ obj/item/gnomechompski/elf
 			src.shotsLeft--
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[user] points the gun at \his head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
+					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
 					playsound(user, "sound/vox/wonk.ogg", 70, 1)
 
 			return 0
@@ -430,7 +430,7 @@ obj/item/gnomechompski/elf
 		usrverbs -= /proc/owl_slam
 
 	attack_self(mob/user as mob)
-		var/input = alert("Would you like to attempt to absorb the core into your body?","Hoot or not to hoot.", "Yes","No")
+		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
 			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
@@ -510,6 +510,7 @@ obj/item/gnomechompski/elf
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
+				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob.gib()
 
 /obj/item/reagent_containers/food/snacks/candy/butterscotch
@@ -579,7 +580,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -588,7 +589,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -597,7 +598,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -627,7 +628,7 @@ obj/item/gnomechompski/elf
 	power = 10
 	cost = 20
 	dissipation_rate = 1
-	ks_ratio = 0.0
+	ks_ratio = 0
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
 	shot_number = 1
@@ -660,7 +661,7 @@ obj/item/gnomechompski/elf
 	name = "Prototype W.0-NK Laser Rifle"
 	desc = "Wonk!"
 	item_state = "gun"
-	force = 5.0
+	force = 5
 	icon_state = "bullpup"
 	rechargeable = 0
 	custom_cell_max_capacity = 100
@@ -724,43 +725,14 @@ obj/item/gnomechompski/elf
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	anchored = 1
 	density = 1
-	last_flash = 0
 	flash_prob = 80
-
-	flash()
-		if (src.last_flash && world.time < src.last_flash + 10)
-			return
-
-		playsound(src.loc, "sound/voice/animal/hoot.ogg", 70, 1)
-		flick("smallowl-flap", src)
-		src.last_flash = world.time
-
-	HasProximity(atom/movable/AM as mob|obj)
-		if (src.last_flash && world.time < src.last_flash + 10)
-			return
-
-		if (iscarbon(AM))
-			var/mob/living/carbon/M = AM
-			if ((M.m_intent != "walk") && (src.anchored))
-				if (M.client) // I can't take it anymore I can't take the destiny owls reacting to the monkey it's driving me mad
-					if (prob(flash_prob))
-						src.flash()
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (iswrenchingtool(W))
-			add_fingerprint(user)
-			src.anchored = !src.anchored
-
-			if (!src.anchored)
-				user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
-
-			else if (src.anchored)
-				user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
+	base_state = "smallowl"
 
 	attack_hand(user)
 		if (src.anchored)
-			if (src.last_flash && world.time < src.last_flash + 10)
+			if(!ON_COOLDOWN(src, "flash", 5 SECONDS))
 				return
+
 			name = "Not so Disabled Animatronic Owl"
 			src.flash()
 
@@ -1065,7 +1037,7 @@ obj/critter/madnessowl/switchblade
 			break
 
 
-	attackby(obj/item/W as obj, mob/living/user as mob) //ARRRRGH WHY
+	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
 		user.lastattacked = src
 
 		var/attack_force = 0
@@ -1121,7 +1093,7 @@ obj/critter/madnessowl/switchblade
 		src.oldtarget_name = user.name
 		src.task = "chasing"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		user.lastattacked = src
 		if (!src.alive)
 			..()
@@ -1176,6 +1148,7 @@ obj/critter/madnessowl/switchblade
 				src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
 				playsound(src.loc, "sound/voice/animal/hoot.ogg", 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
+				logTheThing(LOG_COMBAT, src, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
 				BORG.gib()
 				src.target = null
 				src.boredom_countdown = 0
@@ -1385,19 +1358,19 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, __red("This b-ball doesn't have the right heft to it!"))
+			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
 			return
 		else //Safety thing to ensure the hootonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, __red("You can't slam without a b-ball, yo!"))
+		boutput(M, "<span class='alert'>You can't slam without a b-ball, yo!</span>")
 		return
 
 	M.verbs -= /proc/owl_slam
-
-	logTheThing("combat", M, null, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
+	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
 	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
@@ -1437,13 +1410,14 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.channel = 5
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Owl Slam!</span>")
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
 		SPAWN(0)
 		M1.owlgib()
 	for(var/mob/living/carbon/human/M2 in range(50, M))
 		SPAWN(0)
-			if (!(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
+			if (!QDELETED(M2) && !(M2.wear_mask && istype(M2.wear_mask, /obj/item/clothing/mask/owl_mask)))
 				for(var/obj/item/clothing/O in M2)
 					M2.u_equip(O)
 					if (O)

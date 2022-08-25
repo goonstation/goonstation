@@ -52,6 +52,11 @@ proc/filter_trait_hats(var/type)
 	icon_state = "orange"
 	item_state = "ogloves"
 
+/obj/item/clothing/head/purple
+	desc = "A knit cap in orange."
+	icon_state = "purple"
+	item_state = "jgloves"
+
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
 	desc = "A plsing hat."
@@ -86,7 +91,6 @@ proc/filter_trait_hats(var/type)
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
-	permeability_coefficient = 0.005
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
@@ -96,9 +100,11 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("heatprot", 10)
 		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 5)
 		setProperty("disorient_resist_ear", 2)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
@@ -117,7 +123,6 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
-	permeability_coefficient = 0.25
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	seal_hair = 1
@@ -125,6 +130,7 @@ proc/filter_trait_hats(var/type)
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 15)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
@@ -132,7 +138,6 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
-	permeability_coefficient = 0.02
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
@@ -142,9 +147,10 @@ proc/filter_trait_hats(var/type)
 		setProperty("radprot", 50)
 		setProperty("heatprot", 10)
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 10)
 		setProperty("disorient_resist_eye", 12)
 		setProperty("disorient_resist_ear", 8)
-		setProperty("movespeed", 0.15)
+		setProperty("movespeed", 0.1)
 
 /obj/item/clothing/head/cakehat
 	name = "cakehat"
@@ -272,6 +278,25 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/det_hat/inspector
+	name = "inspector's hat"
+	desc = "Someone who wears this will look very mysterious."
+	icon_state = "inspector"
+	item_state = "ins_hat"
+
+//A robot in disguise, ready to go and spy on everyone for you
+/obj/item/clothing/head/det_hat/folded_scuttlebot
+	blocked_from_petasusaphilic = TRUE
+	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
+
+	attack_self(mob/user)
+		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
+		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
+		qdel(src)
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 5)
+
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
 	name = "DetGadget hat"
@@ -282,6 +307,7 @@ proc/filter_trait_hats(var/type)
 
 	var/max_cigs = 15
 	var/list/cigs
+	var/inspector = FALSE // If the hat has been turned into an inspector's hat from the medal reward
 
 	New()
 		..()
@@ -351,7 +377,7 @@ proc/filter_trait_hats(var/type)
 				M.show_text("Requested object missing or nonexistant!", "red")
 				return
 
-	attackby(obj/item/W as obj, mob/M as mob)
+	attackby(obj/item/W, mob/M)
 		var/success = 0
 		for (var/name in items)
 			var/type = items[name]
@@ -388,6 +414,17 @@ proc/filter_trait_hats(var/type)
 
 		return ..()
 
+	attack_self (mob/user as mob)
+		user.visible_message("<span class='combat'><b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b></span>")
+		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
+		S.linked_hat = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
 	verb/set_phrase()
 		set name = "Set Activation Phrase"
 		set desc = "Change the activation phrase for the DetGadget hat!"
@@ -400,8 +437,12 @@ proc/filter_trait_hats(var/type)
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
 			src.phrase = n_name
-			logTheThing("say", usr, null, "sets the activation phrase on DetGadget hat: [n_name]")
+			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -468,6 +509,12 @@ proc/filter_trait_hats(var/type)
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
+
+/obj/item/clothing/head/itamaehat
+	name = "Itamae hat"
+	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
+	icon_state = "itamae"
+	item_state = "itamae"
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
@@ -716,7 +763,7 @@ proc/filter_trait_hats(var/type)
 	see_face = 1
 	body_parts_covered = HEAD
 
-/obj/item/paper_hat/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/paper_hat/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		if (P.font_color)
@@ -969,7 +1016,7 @@ proc/filter_trait_hats(var/type)
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing("combat", user, null, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src].")
 		if (!src.processing)
 			src.processing++
 			processing_items |= src
@@ -1149,17 +1196,24 @@ proc/filter_trait_hats(var/type)
 	icon_state = "nursehat"
 	item_state = "nursehat"
 
+/obj/item/clothing/head/traditionalnursehat
+	name = "Traditional Nurse Hat"
+	desc = "A nurse hat from the past."
+	icon_state = "traditionalnursehat"
+	item_state = "traditionalnursehat"
+	seal_hair = 1
+
 /obj/item/clothing/head/chemhood
 	name = "chemical protection hood"
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
-	permeability_coefficient = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
 
 	setupProperties()
 		..()
+		setProperty("chemprot", 40)
 		setProperty("disorient_resist_eye", 6)
 		setProperty("disorient_resist_ear", 5)
 
@@ -1335,7 +1389,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if(istype(W,/obj/item/device/radio/headset))
 			user.show_message("You stuff the headset on the headband and tape it in place. [istype(src, /obj/item/clothing/head/headband/nyan) ? "Meow" : "Now"] you should be able to hear the radio using these!")
@@ -1639,6 +1693,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
 
+	blueberry
+		name = "blueberry beret"
+		icon_state = "beret_blueb"
+		item_state = "beret_blueb"
+
 // Costume goggles
 
 ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
@@ -1814,3 +1873,41 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
 	icon_state = "bouffant"
 	item_state = "bouffant"
+
+// Crate Loot
+
+/obj/item/clothing/head/bear
+	name = "bear hat"
+	desc = "A hat in the shape of the mythical Earth-bear."
+	icon_state = "bear"
+	item_state = "bear"
+
+/obj/item/clothing/head/rugged
+	name = "rugged hat"
+	desc = "A cool hat that's come pre-torn. Huh."
+	icon_state = "rugged"
+	item_state = "rugged"
+
+/obj/item/clothing/head/star_tophat
+	name = "starry tophat"
+	desc = "A fancy tophat with a detailed rendition of the night sky sewn in."
+	icon_state = "star_tophat"
+	item_state = "star_tophat"
+
+/obj/item/clothing/head/cow
+	name = "cow"
+	desc = "It looks like a cow and goes on your head. Wow."
+	icon_state = "cow"
+	item_state = "cow"
+
+/obj/item/clothing/head/torch
+	name = "torch hat"
+	desc = "A pretty dangerous looking hat."
+	icon_state = "torch"
+	item_state = "torch"
+
+/obj/item/clothing/head/helmet/space/replica
+	name = "replica space helmet"
+	icon_state = "space_replica"
+	item_state = "space_replica"
+	desc = "A replica of an old space helmet. Looks spaceworthy regardless."

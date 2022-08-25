@@ -162,7 +162,7 @@ var/global/the_automaton = null
 				ircmsg["msg"] = "inserted the 6th key into the Automaton and began the Solar Flare event at [round(ticker.round_elapsed_ticks / 600)] minutes into the round."
 				ircbot.export("admin", ircmsg)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (aggressive)
@@ -445,7 +445,7 @@ var/global/the_automaton = null
 
 		var/temp_effect_limiter = 7
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks

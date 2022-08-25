@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1
@@ -34,7 +34,7 @@
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
@@ -122,16 +122,16 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//gib(src.loc) NO.
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				for(var/x in src.verbs)
 					src.verbs -= x

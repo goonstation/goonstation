@@ -327,8 +327,8 @@
 			var/turf/T
 			for( var/dir in cardinal )
 				T = get_step( F, dir )
-				if (! (istype(T,/turf/simulated/floor) || istype (T,/turf/unsimulated/floor)) ) continue
-				if (T.canpass())
+				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) ) continue
+				if (T.Enter(src))
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
 					else
@@ -390,6 +390,7 @@
 		var/reagents = 0
 
 		for(var/reagent_id in src.reagents.reagent_list)
+			if (QDELETED(src.reagents)) return
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[reagent_id]
 
 			if (isnull(current_reagent))

@@ -1,5 +1,4 @@
 #define MAX_DICE_GROUP 6
-#define ROLL_WAIT_TIME 30
 var/list/rollList = list()
 
 /obj/item/dice
@@ -13,7 +12,6 @@ var/list/rollList = list()
 	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
-	var/last_roll_time = null
 	var/can_have_pals = 1
 	var/list/obj/item/dice/dicePals = list() // for combined dice rolls, up to 9 in a stack
 	var/sound_roll = 'sound/items/dicedrop.ogg'
@@ -54,7 +52,7 @@ var/list/rollList = list()
 		return 1
 
 	proc/roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
@@ -430,7 +428,7 @@ var/list/rollList = list()
 		return 1
 
 	roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
@@ -724,13 +722,13 @@ var/list/rollList = list()
 				src.UpdateOverlays(null,"[i]",0,1)
 			src.icon_state = "dicebox"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state != "dicebox"))
 			removeDie(user)
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state != "dicebox")
 			addDice(W,"diceboxt",user)
 
@@ -757,7 +755,7 @@ var/list/rollList = list()
 				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
 			removeDie(user)
 		else if(src.icon_state == "dicecupf")
@@ -775,7 +773,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state == "dicecup")
 			addDice(W,"dicecup",user)
 
@@ -783,7 +781,7 @@ var/list/rollList = list()
 	name = "dice pouch"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)

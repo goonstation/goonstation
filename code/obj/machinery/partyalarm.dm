@@ -7,20 +7,20 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "party"
 	desc = "WOOP WOOP PARTY ALARM WOOP WOOP"
-	var/working = 1.0
-	var/time = 10.0
-	var/timing = 0.0
+	var/working = 1
+	var/time = 10
+	var/timing = 0
 	var/party = 0
 	var/duration = 60//admemes
 	var/list/lights = list()
-	anchored = 1.0
+	anchored = 1
 	mats = 0
 
 /obj/machinery/partyalarm/process()
 	if (timing > 0)
 		timing--
 
-/obj/machinery/partyalarm/attack_hand(mob/user as mob)
+/obj/machinery/partyalarm/attack_hand(mob/user)
 	if(user.stat || status & (NOPOWER|BROKEN))
 		return
 

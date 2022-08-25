@@ -4,7 +4,7 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
@@ -43,7 +43,7 @@
 		. = ..()
 		. += "There are [src.pictures_left < 0 ? "a whole lot of" : src.pictures_left] pictures left!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/camera_film))
 			var/obj/item/camera_film/C = W
 
@@ -152,7 +152,7 @@
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
-		logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
 
@@ -198,6 +198,9 @@
 	var/written = null
 	var/image/my_writing = null
 	tooltip_flags = REBUILD_DIST
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
@@ -227,7 +230,7 @@
 			. += "At the bottom is written: [written]"
 
 
-/obj/item/photo/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
 	if(istype(P))
 		var/signwrite = input(user, "Sign or Write?", null, null) as null|anything in list("sign","write")
@@ -267,7 +270,7 @@
 
 	//farting is handled in human.dm
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && istype(cursed_dude, /mob))
 			cursed_dude.Attackby(W,user)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
@@ -304,7 +307,7 @@
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M as mob, mob/user as mob)
+/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
