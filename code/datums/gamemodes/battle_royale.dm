@@ -11,6 +11,9 @@ var/global/area/current_battle_spawn = null
 #define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
 #define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
+#define STORM_REGULAR 1
+#define STORM_FINAL 2
+
 
 /datum/game_mode/battle_royale
 	name = "Battle Royale"
@@ -259,7 +262,7 @@ var/global/area/current_battle_spawn = null
 		// Game ending storm
 		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 			if (emergency_shuttle.timeleft() < 30)
-				storm.event_effect(TRUE)
+				storm.event_effect(STORM_FINAL)
 				src.next_storm = null
 				SPAWN(60 SECONDS)
 					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
@@ -270,7 +273,7 @@ var/global/area/current_battle_spawn = null
 				if (emergency_shuttle.endtime > 0)
 					return
 			else
-				storm.event_effect()
+				storm.event_effect(STORM_REGULAR)
 				SPAWN(85 SECONDS)
 					var/you_died_good_work = length(recently_deceased) > 0 ? "The following players recently died: " : ""
 					for(var/datum/mind/M in recently_deceased)
@@ -538,3 +541,6 @@ proc/get_accessible_station_areas()
 	global.area_list_is_up_to_date = 1
 	global.station_areas = L
 	return L
+
+#undef STORM_REGULAR
+#undef STORM_FINAL
