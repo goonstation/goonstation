@@ -288,8 +288,8 @@
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				if (islist(override_states) && (wear_state in shoe_overrides))
-					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
+				if (islist(shoe_overrides) && (wear_state in shoe_overrides))
+					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
