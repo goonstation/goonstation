@@ -1800,19 +1800,19 @@ datum
 						new /obj/reagent_dispensers/cleanable/spiders(target)
 						var/obj/critter/S
 						if (prob(10))
-							S = new /mob/living/critter/spider/baby/ai(target)
+							S = new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(2))
-							S = new /mob/living/critter/spider/nice/ai(target)
+							S = new /mob/living/critter/spider/nice(target)
 							S.name = "spider"
 							S.set_density(0)
 					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/mob/living/critter/spider) in target)
 						if (prob(25))
 							if (prob(2))
-								new /mob/living/critter/spider/baby/ai(target)
+								new /mob/living/critter/spider/baby(target)
 							else
-								new /mob/living/critter/spider/baby/nice/ai(target)
+								new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(5))
-							new /mob/living/critter/spider/nice/ai(target)
+							new /mob/living/critter/spider/nice(target)
 
 				return
 
@@ -1841,9 +1841,9 @@ datum
 						"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 						if (prob(33))
 							if (prob(5))
-								new /mob/living/critter/spider/baby/ai(M)
+								new /mob/living/critter/spider/baby(M)
 							else
-								new /mob/living/critter/spider/baby/nice/ai(M)
+								new /mob/living/critter/spider/baby/nice(M)
 				..()
 				return
 

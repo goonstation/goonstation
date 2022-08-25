@@ -42,6 +42,9 @@
 
 	var/bite_transfer_amt = 1
 
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
+
 	New()
 		..()
 		if (src.icon_state == "big_spide")
@@ -169,6 +172,23 @@
 		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
 		return can_act(src,TRUE) && !flail.disabled
 
+
+	Login()
+		. = ..()
+		//Disable the AI when a player takes control
+		if(src.client)
+			src.is_npc = FALSE
+
+	Logout()
+		. = ..()
+		//Enable the AI when a player loses control
+		if(!src.client)
+			src.is_npc = TRUE
+			src.ai?.enabled = TRUE
+			src.ai?.interrupt() //trigger a task re-evaluation
+
+
+
 /mob/living/critter/spider/nice
 	name = "bumblespider"
 	real_name = "bumblespider"
@@ -185,6 +205,7 @@
 	max_skins = 1
 	venom1 = "toxin"
 	venom2 = "black_goop"
+	ai_type = /datum/aiHolder/spider_peaceful
 
 /mob/living/critter/spider/baby
 	name = "li'l space spider"
@@ -420,7 +441,7 @@
 	var/list/babies = null
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
-
+	ai_type = /datum/aiHolder/clown_spider_queen
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."
@@ -591,78 +612,7 @@
 
 	return bloods
 
-/* ====================================================== */
-/* --------------------- AI Spiders --------------------- */
-/* ====================================================== */
-
-/mob/living/critter/spider/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/nice/ai
+/mob/living/critter/spider/baby/nice
+	adultpath = /mob/living/critter/spider/nice
 	ai_type = /datum/aiHolder/spider_peaceful
-	is_npc = TRUE
-
-/mob/living/critter/spider/baby/ai
-	adultpath = /mob/living/critter/spider/med/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/baby/nice/ai
-	adultpath = /mob/living/critter/spider/nice/ai
-	ai_type = /datum/aiHolder/spider_peaceful
-	is_npc = TRUE
-	name = "baby bumblespider"
-	real_name = "baby bumblespider"
 	desc = "It seems pretty friendly. D'aww."
-
-/mob/living/critter/spider/med/ai
-	adultpath = /mob/living/critter/spider/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/ice/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/ice/baby/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-	New()
-		..()
-		if(adultpath == /mob/living/critter/spider/ice/queen)
-			adultpath = /mob/living/critter/spider/ice/queen/ai
-		else
-			adultpath = /mob/living/critter/spider/ice/ai
-
-/mob/living/critter/spider/ice/baby/queen/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-	adultpath = /mob/living/critter/spider/ice/queen/ai
-
-/mob/living/critter/spider/ice/queen/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/spacerachnid/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-
-/mob/living/critter/spider/clown/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-	adultpath = /mob/living/critter/spider/clownqueen/ai
-
-/mob/living/critter/spider/clown/cluwne/ai
-	ai_type = /datum/aiHolder/spider
-	is_npc = TRUE
-	adultpath = /mob/living/critter/spider/clownqueen/cluwne/ai
-
-/mob/living/critter/spider/clownqueen/ai
-	ai_type = /datum/aiHolder/clown_spider_queen
-	is_npc = TRUE
-
-/mob/living/critter/spider/clownqueen/cluwne/ai
-	ai_type = /datum/aiHolder/clown_spider_queen
-	is_npc = TRUE
