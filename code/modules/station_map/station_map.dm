@@ -1,17 +1,21 @@
 ///This is exclusively for the AI map right now
 
 /obj/map_icon
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "bucket"
+	var/obj/station_map/map = null
 	New(var/atom/movable/target, var/obj/station_map/map)
 		..(null)
-		target.render_target = ref(target)
-		src.render_source = target.render_target
+		src.map = map
+		// target.render_target = ref(target)
+		// src.render_source = target.render_target
 		src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/handle_move)
 		src.handle_move(target)
 
 	proc/handle_move(var/atom/movable/target)
 		var/turf/T = get_turf(target)
-		src.pixel_x = T.x
-		src.pixel_y = T.y
+		src.pixel_x = src.map.pixel_x + (T.x - src.map.center_x) * src.map.scale
+		src.pixel_y = src.map.pixel_y + (T.y - src.map.center_y) * src.map.scale
 
 /obj/station_map
 	name = "Station map"
@@ -23,6 +27,10 @@
 	var/y_min = null
 
 	var/border_width = 20
+
+	var/scale = 1
+	var/center_x = 0
+	var/center_y = 0
 
 	New()
 		..()
@@ -58,16 +66,16 @@
 	proc/zoom_map()
 		var/scale_x = world.maxx / ((x_max - x_min) + border_width)
 		var/scale_y = world.maxy / ((y_max - y_min) + border_width)
-		var/scale_main = min(scale_x, scale_y)
+		src.scale = min(scale_x, scale_y)
 		//scale the whole thing to the largest axis
-		src.Scale(scale_main, scale_main)
+		src.Scale(src.scale, src.scale)
 
 		//work out the center of the station
-		var/center_x = (x_max + x_min)/2
-		var/center_y = (y_max + y_min)/2
+		src.center_x = (x_max + x_min)/2
+		src.center_y = (y_max + y_min)/2
 		//adjust by distance to real center
-		src.pixel_x = -(center_x - (world.maxx/2)) * scale_main
-		src.pixel_y = -(center_y - (world.maxy/2)) * scale_main
+		src.pixel_x = -(center_x - (world.maxx/2)) * src.scale
+		src.pixel_y = -(center_y - (world.maxy/2)) * src.scale
 
 	proc/turf_color(turf/turf)
 		if (istype(turf.loc, /area/station/hydroponics) || istype(turf.loc, /area/station/ranch))
