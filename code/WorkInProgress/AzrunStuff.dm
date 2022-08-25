@@ -1057,7 +1057,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 
 /datum/component/brain_control/proc/update_icon(atom/A)
 	var/image/I = A.SafeGetOverlayImage("brain",image('icons/obj/items/device.dmi', "head-brain"))
-	I.appearance_flags = RESET_COLOR | KEEP_APART
+	I.appearance_flags = RESET_COLOR | KEEP_APART | PIXEL_SCALE
 	if(istype(parent, /mob/living/critter/robotic/bot/cleanbot))
 		I.pixel_x = -3
 		I.pixel_y = 3
