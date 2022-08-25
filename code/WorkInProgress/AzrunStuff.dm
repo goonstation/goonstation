@@ -770,8 +770,8 @@
 		..()
 		MC = new
 
-	get_desc()
-		if (usr?.traitHolder?.hasTrait("training_medical"))
+	get_desc(dist, mob/user)
+		if (user?.traitHolder?.hasTrait("training_medical"))
 			if (activated)
 				if (src.owner?.key)
 					if (!find_ghost_by_key(src.owner?.key))
@@ -786,7 +786,7 @@
 	attack_self(mob/user as mob)
 		if(activated && src.owner?.key && istype(owner.current, /mob/dead/observer))
 			if(alert(user, "Are you sure you want to release the ghost?", "Release Ghost?", "Yes", "No") == "Yes")
-				boutput(owner.current, "You no longer feel anchored to [src]!")
+				boutput(owner.current, "<span class='notice'>You no longer feel anchored to [src]!</span>")
 				owner.current.delStatus("bound_ghost")
 				if(old_brain)
 					owner.brain = old_brain // attempt to restore to previous brain?
@@ -798,14 +798,14 @@
 			return
 
 		if(M.client && (isnull(M.client.color) || M.client.color == "#FFFFFF") && !ON_COOLDOWN(src,"ghost_eyes", 5 MINUTES))
-			boutput(M,"Your vision starts to change as your connection this body wavers.")
+			boutput(M,"<span class='alert'>Your vision starts to change as your connection this body wavers.</span>")
 			animate(M.client, color=COLOR_MATRIX_GRAYSCALE, time=5 SECONDS, easing=SINE_EASING)
 			animate(color=COLOR_MATRIX_IDENTITY, time=30 SECONDS, easing=SINE_EASING)
 		if(prob(1))
-			boutput(M,"You find you lose control of your body for a moment...")
+			boutput(M,"<span class='alert'>You find you lose control of your body for a moment...</span>")
 			M.changeStatus("paralysis", 2 SECONDS)
 		if(prob(1))
-			boutput(M,"You suddenly feel sluggish as though your connection to your body isn't as strong.")
+			boutput(M,"<span class='alert'>You suddenly feel sluggish as though your connection to your body isn't as strong.</span")
 			M.changeStatus("slowed", 8 SECONDS, 2)
 
 	get_movement_controller()
@@ -862,7 +862,10 @@
 
 	onUpdate()
 		..()
+		var/obj/item/organ/brain/ghost/B = owner
 		if(GET_DIST(target,owner) != 0)
+			interrupt(INTERRUPT_ALWAYS)
+		if(B.owner)
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
@@ -874,7 +877,7 @@
 		..()
 		var/obj/item/organ/brain/ghost/B = owner
 		if(target.observe_round) return
-		if(B && target.client)
+		if(B && !B.owner && target.client)
 			B.activated = TRUE
 			playsound(B, "sound/effects/suck.ogg", 20, TRUE, 0, 0.9)
 			B.old_brain = target.mind.brain
@@ -983,7 +986,7 @@
 	proc/get_back_here()
 		var/mob/dead/observer/ghost = owner
 		if(istype(ghost) && bound_target && ghost.loc != bound_target)
-			boutput(ghost, "You find yourself pulled back into [bound_target]!")
+			boutput(ghost, "<span class='notice'>You find yourself pulled back into [bound_target]!</span>")
 			ghost.set_loc(bound_target)
 
 	onRemove()
