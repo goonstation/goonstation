@@ -224,7 +224,7 @@
 	/// stores total accumulated radiation dose
 	var/radiation_dose = 0
 	/// natural decay of radiation exposure
-	var/radiation_dose_decay = 0.01 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning
+	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 
@@ -3166,6 +3166,8 @@
 		var/radres_mult = (tanh(0.02*rad_res)**2)
 		src.radiation_dose += (1.0-radres_mult)*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
+		if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+			return
 		if((1.0-radres_mult)*Sv > 0.1)
 			src.TakeDamage("All",0,20*clamp(((1.0-radres_mult)*Sv)/2, 0, 1)) //a 2Sv dose all at once will badly burn you
 			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))

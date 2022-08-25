@@ -381,11 +381,11 @@
 		proc/get_stage(val)
 			. = 0
 			switch(val) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
-				if(0 to 0.04)
-					. = 0 //normal dose
-				if(0.04 to 0.4)
+				if(0 to 0.35)
+					. = 0
+				if(0.35 to 0.6)
 					. = 1 //you might feel sick
-				if(0.4 to 1.2)
+				if(0.6 to 1.2)
 					. = 2 //you're getting into dangerous teritory
 				if(1.2 to 2)
 					. = 3 //you're at a 50/50 of kicking it
@@ -411,32 +411,24 @@
 					damage_burn = 0
 				if(1)
 					howMuch = "barely " //you'll be fine
-					damage_tox = prob(10)
-					damage_burn = 0
 				if(2)
 					howMuch = "slightly " //you don't feel so good
-					damage_tox = prob(25)
-					damage_burn = prob(5)
 				if(3)
 					howMuch = "moderately " // not great, not terrible
-					damage_tox = prob(50)
-					damage_burn = prob(50)
 				if(4)
 					howMuch = "extremely " //oh no, you're very sick
-					damage_tox = prob(75)
-					damage_burn = prob(60)
 				if(5)
 					howMuch = "fatally " //congrats, you're dead in a minute
-					damage_tox = 1 + prob(60)
-					damage_burn = 1 + prob(40)
 				if(6)
 					howMuch = "totally " // you are literally dying in seconds
-					damage_tox = rand(2,5)
-					damage_burn = rand(1,4)
 			if(stage > 0)
 				visible = TRUE
+				var/damage_total = 0.8 * M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6)
+				damage_tox = prob(70) * damage_total
+				damage_burn = prob(30) * damage_total
 			else
 				visible = FALSE
+
 
 			if(stage > 0 && !isdead(M))
 				if (prob(max(stage-(2+M.traitHolder?.hasTrait("stablegenes")),0)**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
