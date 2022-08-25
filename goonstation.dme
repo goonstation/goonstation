@@ -431,6 +431,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\robot.dm"
 #include "code\datums\hud\roundend.dm"
 #include "code\datums\hud\shell.dm"
+#include "code\datums\hud\silicon.dm"
 #include "code\datums\hud\storage.dm"
 #include "code\datums\hud\vision.dm"
 #include "code\datums\hud\vision_impair.dm"
