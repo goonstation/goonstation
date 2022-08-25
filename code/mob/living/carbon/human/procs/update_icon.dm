@@ -341,33 +341,7 @@
 		src.wear_suit.wear_image.color = src.wear_suit.color
 		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
 
-		if (src.organHolder?.tail)
-			src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
-			src.tail_standing.overlays.len = 0
-			src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
-			src.tail_standing_oversuit.overlays.len = 0
-			var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
-
-			// does a suit potentially cover our tail?
-			if(our_tail.clothing_image_icon)
-				var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
-				if (islist(tail_overrides) && (wear_state in tail_overrides))
-					human_tail_image = our_tail.clothing_image_icon
-					src.tail_standing.overlays += human_tail_image
-					src.tail_standing_oversuit.overlays += human_tail_image
-
-			else
-				human_tail_image = our_tail.tail_image_1
-				src.tail_standing.overlays += human_tail_image
-
-				human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-				src.tail_standing.overlays += human_tail_image
-
-				human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-				src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
-			src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
-			src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
-			src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
+		if (src.organHolder?.tail) update_tail_clothing(wear_state)
 
 		UpdateOverlays(src.wear_suit.wear_image, "wear_suit")
 
@@ -408,21 +382,7 @@
 		UpdateOverlays(null, "wear_suit")
 		UpdateOverlays(null, "wear_suit_bloody")
 		UpdateOverlays(null, "material_armor")
-		src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
-		src.tail_standing.overlays.len = 0
-		src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
-		src.tail_standing_oversuit.overlays.len = 0
-		if (src.organHolder?.tail)
-			var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
-
-			human_tail_image = our_tail.tail_image_1
-			src.tail_standing.overlays += human_tail_image
-
-			human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-			src.tail_standing.overlays += human_tail_image
-
-			human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-			src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
+		if (src.organHolder?.tail)  update_tail_clothing()
 		src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
 		src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
 		src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
@@ -683,6 +643,35 @@
 
 #undef wear_sanity_check
 #undef inhand_sanity_check
+
+/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state)
+	src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
+	src.tail_standing.overlays.len = 0
+	src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
+	src.tail_standing_oversuit.overlays.len = 0
+	var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
+
+	// does a suit potentially cover our tail?
+	if(our_tail.clothing_image_icon && icon_state)
+		var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
+		if (islist(tail_overrides) && (icon_state in tail_overrides))
+			human_tail_image = our_tail.clothing_image_icon
+			src.tail_standing.overlays += human_tail_image
+			src.tail_standing_oversuit.overlays += human_tail_image
+
+	else
+		human_tail_image = our_tail.tail_image_1
+		src.tail_standing.overlays += human_tail_image
+
+		human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
+		src.tail_standing.overlays += human_tail_image
+
+		human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
+		src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
+
+	src.UpdateOverlays(src.tail_standing, "tail", 1, 1) // i blame pali for giving me this power
+	src.UpdateOverlays(src.tail_standing_oversuit, "tail_oversuit", 1, 1)
+	src.UpdateOverlays(src.detail_standing_oversuit, "detail_oversuit", 1, 1)
 
 /mob/living/carbon/human/update_face()
 	..()
@@ -985,26 +974,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					src.body_standing.overlays += human_head_image
 
 				if (src.organHolder?.tail)
-					var/obj/item/organ/tail/our_tail = src.organHolder.tail // visual tail data is stored in the tail
-
-					// does a suit potentially cover our tail?
-					if(our_tail.clothing_image_icon && src.wear_suit)
-						var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
-						var/tail_overrides = icon_states(our_tail.clothing_image_icon, 1)
-						if (islist(tail_overrides) && (wear_state in tail_overrides))
-							human_tail_image = our_tail.clothing_image_icon
-							src.tail_standing.overlays += human_tail_image
-							src.tail_standing_oversuit.overlays += human_tail_image
-
-					else
-						human_tail_image = our_tail.tail_image_1
-						src.tail_standing.overlays += human_tail_image
-
-						human_tail_image = our_tail.tail_image_2 // maybe our tail has multiple parts, like lizards
-						src.tail_standing.overlays += human_tail_image
-
-						human_tail_image = our_tail.tail_image_oversuit // oversuit tail, shown when facing north, for more seeable tails
-						src.tail_standing_oversuit.overlays += human_tail_image // handles over suit
+					update_tail_clothing()
 				else
 					UpdateOverlays(null, "tail")
 					UpdateOverlays(null, "tail_oversuit")
