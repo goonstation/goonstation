@@ -2056,6 +2056,7 @@
 		/datum/manufacture/shell_frame,
 		/datum/manufacture/ai_interface,
 		/datum/manufacture/latejoin_brain,
+		/datum/manufacture/ghost_brain,
 		/datum/manufacture/shell_cell,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,

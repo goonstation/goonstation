@@ -1027,15 +1027,15 @@ TYPEINFO(/datum/component/controlled_by_mob)
 		return COMPONENT_INCOMPATIBLE
 
 	// /obj/machinery/bot/medbot  TODO?
-	// /obj/machinery/bot/cleanbot <-> /mob/living/critter/bot/cleanbot
-	// /obj/machinery/bot/firebot <-> /mob/living/critter/bot/firebot
+	// /obj/machinery/bot/cleanbot <-> /mob/living/critter/robotic/bot/cleanbot
+	// /obj/machinery/bot/firebot <-> /mob/living/critter/robotic/bot/firebot
 	// /obj/machinery/bot/floorbot  TODO?
 	var/obj/machinery/bot/new_bot
 	if(istype(target, /obj/machinery/bot)) // Maybe move to /obj/machinery/bot to get mapping out of here
 		if(istype(target, /obj/machinery/bot/cleanbot ))
-			new_bot = new /mob/living/critter/bot/cleanbot(target.loc)
+			new_bot = new /mob/living/critter/robotic/bot/cleanbot(target.loc)
 		else if(istype(target, /obj/machinery/bot/firebot ))
-			new_bot = new /mob/living/critter/bot/firebot(target.loc)
+			new_bot = new /mob/living/critter/robotic/bot/firebot(target.loc)
 
 	if(new_bot)
 		qdel(target)
@@ -1058,10 +1058,10 @@ TYPEINFO(/datum/component/controlled_by_mob)
 /datum/component/brain_control/proc/update_icon(atom/A)
 	var/image/I = A.SafeGetOverlayImage("brain",image('icons/obj/items/device.dmi', "head-brain"))
 	I.appearance_flags = RESET_COLOR | KEEP_APART
-	if(istype(parent, /mob/living/critter/bot/cleanbot))
+	if(istype(parent, /mob/living/critter/robotic/bot/cleanbot))
 		I.pixel_x = -3
 		I.pixel_y = 3
-	else if(istype(parent, /mob/living/critter/bot/firebot ))
+	else if(istype(parent, /mob/living/critter/robotic/bot/firebot ))
 		I.pixel_x = -5
 		I.pixel_y = 2
 
