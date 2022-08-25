@@ -452,7 +452,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
-		/client/proc/upload_uncool_words
+		/client/proc/upload_uncool_words,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
