@@ -237,7 +237,7 @@ datum
 				initial_metabolized = TRUE
 				initial_metabolize(M)
 
-			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
+			holder?.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return

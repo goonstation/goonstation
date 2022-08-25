@@ -346,10 +346,11 @@ datum
 				return
 
 			on_mob_life_complete(var/mob/living/M)
-				if(src.current_color_pattern == 1)
-					animate_fade_from_drug_1(M.client, 40)
-				else
-					animate_fade_from_drug_2(M.client, 40)
+				if(M.client)
+					if(src.current_color_pattern == 1)
+						animate_fade_from_drug_1(M.client, 40)
+					else
+						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()

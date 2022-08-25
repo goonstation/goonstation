@@ -93,7 +93,7 @@
 			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
 			src.changeStatus("shivering", -1 SECONDS)
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
-			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick("diabolically","madly","evilly","strangely","scarily","awkwardly","excitedly","hauntingly","ominously","nonchalantly","gloriously","hairily")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
