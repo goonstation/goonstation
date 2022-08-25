@@ -2905,7 +2905,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	throw_range = 5
 	stamina_cost = 5
 	stamina_damage = 2
-	var/slicetype = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	initial_volume = 40
 	initial_reagents = "cheese"
 	food_effects = list("food_warm")
@@ -2919,15 +2921,4 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
-	attackby(obj/item/W, mob/user)
-		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] slices.", "You cut [src] into [src.slice_amount] slices.")
-			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
-			for (var/i in 1 to src.slice_amount)
-				var/obj/item/reagent_containers/food/slice = new src.slice_product(T)
-				slice.reagents.maximum_volume = amount_to_transfer
-				src.reagents.trans_to(slice, amount_to_transfer)
-			qdel (src)
-		else
-			..()
+
