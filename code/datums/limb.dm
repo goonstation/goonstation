@@ -468,15 +468,17 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 5, 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+		if (prob(20))
+			if (iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/bear/zombie
