@@ -118,7 +118,7 @@
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.set_color()
-	if(isnull(controller))
+	if(isnull(controller) && src.flock)
 		controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	if(src.dormant)
@@ -178,7 +178,10 @@
 		emote("beep")
 		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		else
+			src.ghostize()
 	if(controller)
 		if (src.floorrunning)
 			src.end_floorrunning(TRUE)
@@ -204,20 +207,25 @@
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
-			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
+			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
-			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 
 		controller = null
 		src.update_health_icon()
+	if(!src.flock)
+		src.dormantize()
 
 /mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
 	if(src.client && !controller)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		else
+			src.ghostize()
 	if(!controller)
 		return
 	if (src.floorrunning)
@@ -241,11 +249,13 @@
 	if (give_alert)
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
-		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
+		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
-		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 	controller = null
 	src.update_health_icon()
+	if(!src.flock)
+		src.dormantize()
 
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
@@ -301,7 +311,8 @@
 	src.add_simple_light("drone_light", rgb2num(glow_color))
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 	if(src.client)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	else
 		src.is_npc = TRUE
