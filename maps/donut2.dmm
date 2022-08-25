@@ -20040,9 +20040,6 @@
 /turf/simulated/floor/black,
 /area/station/security/processing)
 "bmJ" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
@@ -20855,34 +20852,12 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
-"bqf" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/courtroom)
-"bqg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/courtroom)
 "bqh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
 	},
 /obj/stool/chair,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/courtroom)
-"bqi" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bqk" = (
@@ -20894,9 +20869,6 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bql" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/item/hand_labeler,
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -20912,13 +20884,6 @@
 	},
 /area/station/crew_quarters/courtroom)
 "bqm" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
 /obj/machinery/computer/card,
 /obj/machinery/camera{
 	c_tag = "Courtroom checkpoint"
@@ -21073,12 +21038,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
-"bra" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/courtroom)
 "brb" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood,
@@ -21117,21 +21076,7 @@
 /area/station/crew_quarters/courtroom)
 "bri" = (
 /obj/disposalpipe/segment/ejection,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/courtroom)
-"brj" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
 /area/station/crew_quarters/courtroom)
 "brl" = (
 /obj/machinery/camera{
@@ -21157,6 +21102,7 @@
 /area/station/maintenance/east)
 "bro" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "brp" = (
@@ -21374,9 +21320,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
@@ -21384,9 +21327,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bse" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/disposalpipe/segment{
 	dir = 4;
 	pixel_y = 0
@@ -21418,9 +21358,6 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/courtroom)
 "bsi" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/courtroom)
@@ -21656,9 +21593,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bte" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/firealarm{
 	dir = 1;
 	layer = 3.5;
@@ -21883,12 +21817,6 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/juryroom)
 "btZ" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/juryroom)
-"bua" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/juryroom)
 "bub" = (
@@ -22119,23 +22047,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "bvf" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/juryroom)
-"bvg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/juryroom)
-"bvh" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/juryroom)
 "bvi" = (
 /obj/machinery/light/small{
@@ -33964,6 +33877,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"jed" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
 "jee" = (
 /obj/item/storage/firstaid/brain{
 	pixel_x = -6;
@@ -34517,6 +34434,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "jHm" = (
@@ -35165,7 +35083,7 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "kpr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "kqB" = (
@@ -36439,9 +36357,6 @@
 	},
 /area/station/science/lobby)
 "lEs" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/manufacturer/uniform,
 /obj/machinery/light/incandescent,
@@ -38604,9 +38519,6 @@
 /area/station/engine/ptl)
 "nHZ" = (
 /obj/disposalpipe/segment/ejection,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
@@ -40283,9 +40195,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "pqW" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -47025,9 +46934,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "vVq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/computer/bank_data,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
@@ -48130,9 +48036,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "xce" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/item/bell/hop{
 	pixel_y = 24;
 	name = "wall mounted service bell";
@@ -70738,7 +70641,7 @@ bgH
 jvw
 ygD
 bwR
-bro
+jed
 aWH
 bqD
 bmh
@@ -71040,7 +70943,7 @@ bgH
 bhm
 ygD
 bwR
-bro
+jed
 iGR
 bqD
 bmh
@@ -71342,7 +71245,7 @@ ayS
 bhm
 ygD
 nMC
-bro
+jed
 vnJ
 bqD
 bmh
@@ -71644,7 +71547,7 @@ bgH
 bhm
 ygD
 bwR
-bro
+jed
 uFT
 xWQ
 bmh
@@ -72251,13 +72154,13 @@ bwR
 bjo
 aOn
 bjo
-bro
-bro
-bro
+jed
+jed
+jed
 xZw
 bQo
-bro
-bro
+jed
+jed
 bjo
 bjo
 btx
@@ -86753,8 +86656,8 @@ boc
 boO
 shZ
 biU
-bqf
-bra
+bre
+bre
 bse
 btb
 btW
@@ -87055,7 +86958,7 @@ bod
 boP
 bpx
 dKv
-bqg
+brb
 brb
 gpc
 btc
@@ -87659,7 +87562,7 @@ boe
 boP
 nbM
 bpy
-bqi
+bre
 hHT
 bre
 bre
@@ -88872,7 +88775,7 @@ bpS
 bsh
 brh
 btZ
-bvg
+bwk
 bwk
 btZ
 beO
@@ -89173,8 +89076,8 @@ vVq
 opL
 wFj
 bte
-bua
-bvh
+btZ
+bwk
 bwk
 btZ
 beM
@@ -89774,7 +89677,7 @@ nfc
 boW
 bpA
 dqc
-brj
+brh
 brh
 btg
 btZ
