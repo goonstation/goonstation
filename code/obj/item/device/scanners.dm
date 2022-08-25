@@ -154,44 +154,44 @@ that cannot be itched
 	var/target = null
 	var/last_scan = "No scans have been done yet."
 
+	Topic(href, href_list)
+		..()
+		if (href_list["print"])
+			if(!ON_COOLDOWN(src, "print", 2 SECOND))
+				playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+				SPAWN(1 SECONDS)
+					var/obj/item/paper/P = new /obj/item/paper
+					P.set_loc(get_turf(src))
+
+					P.info = last_scan
+					P.name = "Forensic readout"
+
 
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
 
-		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Forensic scanner", list( "Find record", "Print last scan"))
-		switch (choice)
-			if ("Find record")
-				var/holder = src.loc
-				var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
-				if (src.loc != holder || !search || user.stat)
-					return
-				search = copytext(sanitize(search), 1, 200)
-				search = lowertext(search)
+		var/holder = src.loc
+		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+		if (src.loc != holder || !search || user.stat)
+			return
+		search = copytext(sanitize(search), 1, 200)
+		search = lowertext(search)
 
-				for (var/datum/db_record/R as anything in data_core.general.records)
-					if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
+		for (var/datum/db_record/R as anything in data_core.general.records)
+			if (search == lowertext(R["dna"]) || search == lowertext(R["fingerprint"]) || search == lowertext(R["name"]))
 
-						var/data = "--------------------------------<br>\
-						<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
-						<br>\
-						<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
-						<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
+				var/data = "--------------------------------<br>\
+				<font color='blue'>Match found in security records:<b> [R["name"]]</b> ([R["rank"]])</font><br>\
+				<br>\
+				<i>Fingerprint:</i><font color='blue'> [R["fingerprint"]]</font><br>\
+				<i>Blood DNA:</i><font color='blue'> [R["dna"]]</font>"
 
-						boutput(user, data)
-						return
-
-				user.show_text("No match found in security records.", "red")
+				boutput(user, data)
 				return
-			if("Print last scan")
-				if(!ON_COOLDOWN(src, "print", 2 SECOND))
-					playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
-					SPAWN(1 SECONDS)
-						var/obj/item/paper/P = new /obj/item/paper
-						P.set_loc(get_turf(src))
 
-						P.info = last_scan
-						P.name = "Forensic readout"
+		user.show_text("No match found in security records.", "red")
+		return
 
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -209,7 +209,8 @@ that cannot be itched
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
 		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
-		boutput(user, last_scan)
+		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=1'>PRINT REPORT</a> ----"
+		boutput(user, scan_output)
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
