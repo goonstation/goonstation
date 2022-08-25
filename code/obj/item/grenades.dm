@@ -756,10 +756,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					sleep(1 DECI SECOND)
 					if (isdead(user) || user.nodamage || isAI(user)) return
 					logTheThing(LOG_COMBAT, user, "was killed by touching a [src] at [log_loc(src)].")
-					var/mob/dead/observer/newmob
-					newmob = new/mob/dead/observer(user)
-					user.client.mob = newmob
-					user.mind.transfer_to(newmob)
+					if(user.client)
+						var/mob/dead/observer/newmob
+						newmob = new/mob/dead/observer(user)
+						user.client.mob = newmob
+						user.mind.transfer_to(newmob)
 					qdel(user)
 				else
 					logTheThing(LOG_COMBAT, user, "was teleported by touching [src] ([src.type]) at [log_loc(src)].")

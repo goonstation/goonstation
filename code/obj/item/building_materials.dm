@@ -254,7 +254,7 @@ MATERIAL
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
 		var/counter = 1
 		var/list/L = list(  )
-		if (src?.material.material_flags & MATERIAL_METAL)
+		if (src?.material?.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
 				L["industrialtable"] = "Industrial Table Parts (2 Sheets)"
@@ -278,13 +278,13 @@ MATERIAL
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
 				L["vending"] = "Vending Machine Frame (3 Sheets)"
-		if (src?.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
 			L["displaycase"] = "Display Case (3 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
-		if (src?.material.mat_id == "cardboard")
+		if (src?.material?.mat_id == "cardboard")
 			L["c_box"] = "Cardboard Box (2 Sheets)"
 
 		for(var/t in L)
