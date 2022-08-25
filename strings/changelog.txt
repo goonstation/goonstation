@@ -1,4 +1,7 @@
 
+(t)thu aug 25 22
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
 (t)wed aug 24 22
 (u)Mr. Moriarty
 (p)9908

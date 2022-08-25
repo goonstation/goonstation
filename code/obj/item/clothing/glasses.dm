@@ -655,6 +655,30 @@
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	sechud
+		name = "night vision sechud goggles"
+		icon_state = "nightvisionsechud"
+		mats = 12
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			..()
+
+		flashblocking //Admin or gimmick spawn option
+			name = "SUPER night vision sechud goggles"
+			mats = 15 //expensive if someone scans them
+			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
+
+			setupProperties()
+				..()
+				setProperty("disorient_resist_eye", 100)
 
 
 /obj/item/clothing/glasses/packetvision
