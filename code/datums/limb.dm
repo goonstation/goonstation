@@ -468,7 +468,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 5, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -735,7 +735,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 5, rand(5,9) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(5,9) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
