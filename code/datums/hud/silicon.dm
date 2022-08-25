@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/datum/hud/silicon)
 ///A parent type for borg and AI huds used to hold the shared killswitch stuff
 /datum/hud/silicon
 	var/mob/living/silicon/silicon
