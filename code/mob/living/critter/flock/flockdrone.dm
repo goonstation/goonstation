@@ -118,8 +118,9 @@
 /mob/living/critter/flock/drone/Login()
 	..()
 	src.client?.set_color()
-	if(isnull(controller) && src.flock)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+	if(isnull(controller))
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	if(src.dormant)
 		src.undormantize()
@@ -318,7 +319,8 @@
 		src.is_npc = TRUE
 
 /mob/living/critter/flock/drone/proc/pause_ai()
-	if(src.controller || src.dormant) //can't pause_ai when controlled or dormant, this shouldn't ever happen
+	if(src.controller || src.dormant || !src.flock) //can't pause_ai when controlled or dormant, this shouldn't ever happen. Also can't pause without a flock.
+		src.wander_count = 0
 		return
 	src.ai.stop_move()
 	src.ai_paused = TRUE
