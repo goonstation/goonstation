@@ -1,5 +1,9 @@
 
 (t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
 (u)ZWRh3
 (p)9518
 (e)|
