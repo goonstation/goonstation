@@ -175,6 +175,9 @@
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
+		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
+			newmob.name_prefix("ethereal")
+			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
