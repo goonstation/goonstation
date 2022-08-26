@@ -27529,12 +27529,12 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
 "bHd" = (
-/obj/machinery/manufacturer/personnel,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/manufacturer/hop_and_uniform,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bHe" = (
@@ -29292,7 +29292,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -29308,7 +29308,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -29702,7 +29702,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -29727,7 +29727,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 2;
@@ -30373,7 +30373,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/cable{
@@ -33338,7 +33338,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
@@ -38494,7 +38494,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/firedoor_spawn,
@@ -42938,7 +42938,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
@@ -51836,7 +51836,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
@@ -58198,7 +58198,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)

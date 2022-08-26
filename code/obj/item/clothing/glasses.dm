@@ -493,9 +493,12 @@
 		..()
 		if (slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+			if (src.health_scan)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 
 	unequipped(var/mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
+			REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 		..()
 
@@ -507,6 +510,9 @@
 			else
 				src.scan_upgrade = 1
 				src.health_scan = 1
+				var/mob/living/carbon/human/human_user = user
+				if (istype(human_user) && human_user.glasses == src)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
@@ -655,6 +661,30 @@
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight")
 
+	sechud
+		name = "night vision sechud goggles"
+		icon_state = "nightvisionsechud"
+		mats = 12
+		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_GLASSES)
+				get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(user)
+			..()
+
+		flashblocking //Admin or gimmick spawn option
+			name = "SUPER night vision sechud goggles"
+			mats = 15 //expensive if someone scans them
+			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
+
+			setupProperties()
+				..()
+				setProperty("disorient_resist_eye", 100)
 
 
 /obj/item/clothing/glasses/packetvision

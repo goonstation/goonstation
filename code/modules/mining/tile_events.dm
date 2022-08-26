@@ -70,7 +70,10 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/storage/crate/loot(AST)
+		if(prob(10))
+			new /obj/storage/crate/loot(AST)
+		else
+			new/obj/storage/crate(AST)
 
 /datum/ore/event/artifact
 	analysis_string = "Caution! Large object embedded in rock!"

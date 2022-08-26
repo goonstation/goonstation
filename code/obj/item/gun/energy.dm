@@ -142,7 +142,7 @@
 	uses_multiple_icon_states = 1
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
+	desc = "The Five Points Armory Taser Mk.I, a weapon that produces a cohesive electrical charge to stun and subdue its target."
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -174,7 +174,7 @@
 
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
+	desc = "A modified Five Points Armory taser gun. This one appears to be capable of firing ricochet stun charges."
 
 	New()
 		..()
@@ -198,7 +198,7 @@
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7
-	desc = "A gun that produces a harmful laser, causing substantial damage."
+	desc = "The venerable Hafgan Mod.28 laser gun, causes substantial damage in close quarters and space environments. Not suitable for use in dust storms."
 	muzzle_flash = "muzzle_flash_laser"
 
 	New()
@@ -230,7 +230,7 @@
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	uses_multiple_icon_states = 1
-	desc = "Wait, that's not a plastic toy..."
+	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
 
@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "An amplified carbon-arc weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -307,14 +307,13 @@
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 10
-	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-	force = MELEE_DMG_LARGE
+	force = MELEE_DMG_RIFLE
 	two_handed = 1
 	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
@@ -380,7 +379,7 @@
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	desc = "Its a gun that has two modes, stun and kill"
+	desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire."
 	item_state = "egun"
 	force = 5
 	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
@@ -424,8 +423,8 @@
 	icon_state = "egun-jr"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_minus_power
-	desc = "A smaller, disposable version of the energy gun, with dual modes for stun and kill."
-	item_state = "egun-jr"
+	desc = "A smaller, disposable version of the Five Points Armory energy gun, with dual modes for stun and kill."
+	item_state = "egun"
 	force = 3
 	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
 	muzzle_flash = "muzzle_flash_elec"
@@ -502,7 +501,7 @@
 /obj/item/gun/energy/tasershotgun
 	name = "taser shotgun"
 	icon_state = "tasers100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
+	desc = "The Five Points Armory Taser Mk.II, a shotgun-format weapon that produces a spreading electrical charge to stuns its targets."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	force = 12
@@ -661,7 +660,7 @@
 ///////////////////////////////////////Telegun
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
-	desc = "A hacked together combination of a taser and a handheld teleportation unit."
+	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
 	icon_state = "teleport"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_NORMAL
@@ -1807,7 +1806,7 @@
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"
 	icon_state = "tsmg_burst100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	desc = "The Five Points Armory Taser Mk.III. A weapon that produces a cohesive electrical charge to stun its target, capable of firing in two shot burst or full auto configurations."
 	item_state = "tsmg"
 	force = 5
 	two_handed = 1

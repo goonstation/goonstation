@@ -473,6 +473,8 @@ proc/Create_Tommyname()
 		INIT_CHECK //Initialize the SpyGUI instance on use
 		if((target in connecting))
 			return
+		if(!target.client)
+			return
 		connecting[target] = initData
 		var/retries = max_retries
 		var/extrasleep = 0

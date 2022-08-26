@@ -186,6 +186,7 @@
 				M.ai.enabled = FALSE
 			else
 				M.ai.enabled = TRUE
+				M.ai.interrupt()
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)

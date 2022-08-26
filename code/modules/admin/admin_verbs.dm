@@ -452,6 +452,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
+		/client/proc/upload_uncool_words,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -2278,3 +2279,13 @@ var/list/fun_images = list()
 		flock.unAchieve(cheat)
 	boutput(src, "[cheat] turned [toggle ? "on" : "off"] for flock [flockname]")
 	logTheThing(LOG_ADMIN, src, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")
+
+/client/proc/upload_uncool_words()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Upload Uncool Words"
+	set desc = "Upload a JSON file for the uncool words list"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	global.phrase_log?.upload_uncool_words()
+	global.phrase_log?.load()
