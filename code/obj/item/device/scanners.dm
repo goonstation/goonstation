@@ -152,19 +152,31 @@ that cannot be itched
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
-	var/last_scan = "No scans have been done yet."
+
+	var/list/scans
+	var/maximum_scans = 25
+	var/number_of_scans = 0
+	var/last_scan = "No scans have been performed yet."
 
 	Topic(href, href_list)
 		..()
 		if (href_list["print"])
+			if (!(src in usr.contents))
+				boutput(usr, "<span class='notice'>You must be holding [src] that made the record in order to print it.</span>")
+				return
+			var/scan_number = text2num(href_list["print"])
+			if (scan_number < number_of_scans - maximum_scans)
+				boutput(usr, "<span class='notice'>[src] only has enough storage to hold the last [maximum_scans] scans!</span>")
+				return
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
 				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(get_turf(src))
 
-					P.info = last_scan
-					P.name = "Forensic readout"
+					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+					P.info = scans[index]
+					P.name = "forensic readout"
 
 
 	attack_self(mob/user as mob)
@@ -208,8 +220,15 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
+
+		if (scans == null)
+			scans = new/list(maximum_scans)
 		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
-		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=1'>PRINT REPORT</a> ----"
+		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+		scans[index] = last_scan
+		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		number_of_scans += 1
+
 		boutput(user, scan_output)
 		src.add_fingerprint(user)
 
