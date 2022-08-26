@@ -645,22 +645,7 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
-			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
-			user.put_in_hand_or_drop(pizzam)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
-			var/pizzab = new /obj/item/reagent_containers/food/snacks/ingredient/pizzab
-			user.put_in_hand_or_drop(pizzab)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
-			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
-			user.put_in_hand_or_drop(pizzap)
-			qdel (W)
-			qdel (src)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return
