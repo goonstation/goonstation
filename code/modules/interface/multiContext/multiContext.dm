@@ -24,6 +24,8 @@
 				. += C
 
 /mob/proc/showContextActions(list/datum/contextAction/applicable, atom/target, datum/contextLayout/customContextLayout)
+	if(!src.client)
+		return
 	if(length(contextButtons))
 		closeContextActions()
 		return

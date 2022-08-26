@@ -33128,7 +33128,6 @@
 /area/station/hallway/primary/south)
 "bGZ" = (
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
