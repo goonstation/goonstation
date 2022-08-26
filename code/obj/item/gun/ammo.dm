@@ -694,7 +694,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
-	desc = "This appears to be some broken glass haphazardly shoved into a few cut open pipe frames."
+	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
 	icon_state = "makeshiftglass"
 
@@ -702,6 +702,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -1157,6 +1158,16 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/empty
 	charge = 0
+
+/obj/item/ammo/power_cell/med_minus_power
+	name = "Power Cell - 150"
+	desc = "A power cell that holds a max of 150PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 15000
+	g_amt = 30000
+	charge = 150
+	max_charge = 150
 
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"

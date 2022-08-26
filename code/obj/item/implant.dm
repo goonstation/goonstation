@@ -60,7 +60,7 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
@@ -476,6 +476,7 @@ THROWING DARTS
 				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
+					H.changeStatus("newcause", 5 SECONDS)
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
@@ -546,7 +547,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("[source][small_message].")
 			var/area/A = get_area(source)
 			if (!A.dont_log_combat)
-				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				logTheThing(LOG_BOMBING, source, "triggered \a [src] on death at [log_loc(source)].")
 				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
@@ -602,7 +603,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		elecflash(src, ., . * 2, TRUE)
 		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				var/dist = get_dist(src.owner, M) + 1
+				var/dist = GET_DIST(src.owner, M) + 1
 				// arcflash uses some fucked up thresholds so trust me on this one
 				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
 		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
@@ -674,7 +675,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
-			logTheThing("combat", H, implant_hacker, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
+			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return 0
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)
@@ -1406,6 +1407,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 
 	proc/implant(mob/M as mob, mob/user as mob)
+		if(!in_interact_range(M, user))
+			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
+			return
+
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else

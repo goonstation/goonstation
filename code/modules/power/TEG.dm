@@ -845,8 +845,8 @@ datum/pump_ui/circulator_ui
 			var/delta_temperature = hot_air.temperature - cold_air.temperature
 
 			// uncomment to debug
-			// logTheThing("debug", null, null, "pre delta, cold temp = [cold_air.temperature], hot temp = [hot_air.temperature]")
-			// logTheThing("debug", null, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
+			// logTheThing(LOG_DEBUG, null, "pre delta, cold temp = [cold_air.temperature], hot temp = [hot_air.temperature]")
+			// logTheThing(LOG_DEBUG, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				// carnot efficiency * 65%
 				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(delta_temperature, hot_air_heat_capacity, cold_air_heat_capacity) //controller expressed as a percentage
@@ -865,7 +865,7 @@ datum/pump_ui/circulator_ui
 				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
 				// uncomment to debug
-				// logTheThing("debug", null, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
+				// logTheThing(LOG_DEBUG, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
 		// update icon overlays only if displayed level has changed
 
 		if(swapped)
@@ -1052,7 +1052,7 @@ datum/pump_ui/circulator_ui
 					for (var/obj/window/W in range(6, src.loc)) // smash nearby windows
 						if (W.health_max >= 80) // plasma glass or better, no break please and thank you
 							continue
-						if (prob(get_dist(W,src.loc)*6))
+						if (prob(GET_DIST(W,src.loc)*6))
 							continue
 						W.health = 0
 						W.smash()
@@ -1067,7 +1067,7 @@ datum/pump_ui/circulator_ui
 
 					if(src.lastgen >= 10000000)
 						for (var/turf/T in range(6, src))
-							var/T_dist = get_dist(T, src)
+							var/T_dist = GET_DIST(T, src)
 							var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / 5))
 
 							for (var/obj/item/I in T)

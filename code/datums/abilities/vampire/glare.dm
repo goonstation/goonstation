@@ -24,7 +24,7 @@
 			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -63,5 +63,5 @@
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

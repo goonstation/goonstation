@@ -156,7 +156,7 @@ var/HasturPresent = 0
 			boutput(M, "<span class='alert'>You can't devour yourself.</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -318,9 +318,6 @@ var/HasturPresent = 0
 				for(var/turf/T in src_turf)
 					if(T == O) continue
 					T.meteorhit(O)
-				for(var/obj/machinery/colosseum_putt/A in src_turf)
-					if (A == O || A == user) continue
-					A.meteorhit(O)
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)
@@ -391,9 +388,6 @@ var/HasturPresent = 0
 				for(var/turf/T in src_turf)
 					if(T == O) continue
 					T.meteorhit(O)
-				for(var/obj/machinery/colosseum_putt/A in src_turf)
-					if (A == O || A == user) continue
-					A.meteorhit(O)
 
 			sleep(0.7 SECONDS)
 			for (var/obj/O in affected)

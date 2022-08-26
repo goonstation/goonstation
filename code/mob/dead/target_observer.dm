@@ -146,7 +146,7 @@
 		if(src.key || src.client)
 			var/mob/dead/observer/O = new/mob/dead/observer(src)
 			O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-			if (client) client.color = null
+			if (client) client.set_color()
 			setdead(O)
 
 			src.mind?.transfer_to(O)

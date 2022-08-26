@@ -60,7 +60,7 @@
 			boutput(user, "\The [src] is too full!")
 			return
 
-	else if (istype(W, /obj/item/wrench))
+	else if (iswrenchingtool(W))
 		if (length(src.bookshelf_contents) > 0)
 			boutput(user, "You can't take apart \the [src] if there's still books on it.")
 			return

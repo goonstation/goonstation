@@ -295,7 +295,7 @@
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
 			var/turf/O = get_turf(target)
-			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
+			var/dist = min(min(GET_DIST(A, O), GET_DIST(B, O)), min(GET_DIST(C, O), GET_DIST(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
 				qdel(M)
@@ -1780,7 +1780,7 @@ obj/item/clothing/gloves/concussive
 						boutput(user, "<span class='alert'>The timing mechanism malfunctions!</span>")
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
@@ -1794,7 +1794,7 @@ obj/item/clothing/gloves/concussive
 
 						// Yes, please (Convair880).
 						if (src?.hacked)
-							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
+							logTheThing(LOG_COMBAT, user, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
 						user.set_dir(get_dir(user, target))
 						user.drop_item()
@@ -1849,21 +1849,21 @@ obj/item/clothing/gloves/concussive
 	proc/concussive_blast()
 		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src.expl_flash,src))
-			if(get_dist(src,A) <= src.expl_heavy)
+			if(GET_DIST(src,A) <= src.expl_heavy)
 				A.damage_asteroid(4)
-			if(get_dist(src,A) <= src.expl_light)
+			if(GET_DIST(src,A) <= src.expl_light)
 				A.damage_asteroid(3)
-			if(get_dist(src,A) <= src.expl_flash)
+			if(GET_DIST(src,A) <= src.expl_flash)
 				A.damage_asteroid(2)
 
 		for(var/mob/living/carbon/C in range(src.expl_flash, src))
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
-			if(get_dist(src,C) <= src.expl_light)
+			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
-			if(get_dist(src,C) <= src.expl_heavy)
+			if(GET_DIST(src,C) <= src.expl_heavy)
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
@@ -1982,7 +1982,7 @@ obj/item/clothing/gloves/concussive
 
 		for (var/mob/M in cargo.contents)
 			if (M)
-				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2034,7 +2034,7 @@ obj/item/clothing/gloves/concussive
 
 		// Logs for good measure (Convair880).
 		for (var/mob/M in cargo.contents)
-			logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(src.target)
 		elecflash(src)

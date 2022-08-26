@@ -161,12 +161,12 @@ var/list/ai_move_scheduled = list()
 
 	proc/move_step()
 		if (src.move_side)
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				var/turn = src.move_reverse?90:-90
 				src.owner.move_dir = turn( get_dir(src.owner,get_turf(src.move_target)),turn )
 				src.owner.process_move()
 		else if (src.move_reverse)
-			if (get_dist(src.owner,get_turf(src.move_target)) < src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) < src.move_dist)
 				var/turn = 180
 				if (prob(50)) //fudge walk away behavior
 					if (prob(50))
@@ -185,11 +185,11 @@ var/list/ai_move_scheduled = list()
 			else
 				next = src.move_target
 
-			if (get_dist(src.owner,get_turf(next)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(next)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(next))
 				src.owner.process_move()
 		else
-			if (get_dist(src.owner,get_turf(src.move_target)) > src.move_dist)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
 				src.owner.move_dir = get_dir(src.owner,get_turf(src.move_target))
 				src.owner.process_move()
 

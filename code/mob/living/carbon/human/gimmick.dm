@@ -530,7 +530,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		SPAWN(0)
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
-			if (murray && get_dist(src,murray) > 7)
+			if (murray && GET_DIST(src,murray) > 7)
 				murray = null
 			if (istype(murray))
 				if (!findtext(murray.name, "murray"))
@@ -687,7 +687,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		for (var/mob/JB in by_cat[TR_CAT_JOHNBILLS])
 			var/mob/living/carbon/human/john/J = JB
-			if (get_dist(J,src) <= 7)
+			if (GET_DIST(J,src) <= 7)
 				if((!J.ai_active) || prob(25))
 					J.say("That's my brother, you [pick_string("johnbill.txt", "insults")]!")
 					M.add_karma(-1)

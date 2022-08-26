@@ -38,6 +38,8 @@ var/datum/artifact_controller/artifact_controls
 
 		for (var/A in concrete_typesof(/datum/artifact))
 			var/datum/artifact/AI = new A
+			if(!AI.type_name)
+				continue
 			artifact_types += AI
 			artifact_types_from_name[AI.type_name] = AI
 
@@ -73,8 +75,8 @@ var/datum/artifact_controller/artifact_controls
 	// Added. Admin actions related to artfacts were not logged at all (Convair880).
 	proc/log_me(var/mob/user, var/obj/O, var/type_of_action, var/trigger_alert = 0)
 		if (type_of_action == "spawns")
-			logTheThing("admin", user, null, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].")
-			logTheThing("diary", user, null, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].", "admin")
+			logTheThing(LOG_ADMIN, user, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].")
+			logTheThing(LOG_DIARY, user, "spawns a random artifact at [user && ismob(user) ? "[log_loc(user)]" : "*unknown*"].", "admin")
 			return
 
 		if (!O || !istype(O.artifact, /datum/artifact) || !type_of_action)
@@ -82,8 +84,8 @@ var/datum/artifact_controller/artifact_controls
 
 		var/datum/artifact/A = O.artifact
 
-		logTheThing("admin", user, null, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].")
-		logTheThing("diary", user, null, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].", "admin")
+		logTheThing(LOG_ADMIN, user, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].")
+		logTheThing(LOG_DIARY, user, "[type_of_action] an artifact ([A.type]) at [log_loc(O)].", "admin")
 		if (trigger_alert)
 			message_admins("[key_name(user)] [type_of_action] an artifact ([A.type]) at [log_loc(O)].")
 		return

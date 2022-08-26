@@ -507,7 +507,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)

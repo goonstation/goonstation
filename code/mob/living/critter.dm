@@ -297,14 +297,14 @@ ABSTRACT_TYPE(/mob/living/critter)
 	attackby(var/obj/item/I, var/mob/M)
 		if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 			if (src.skinresult && max_skins)
-				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
+				if (issawingtool(I) || iscuttingtool(I))
 					for (var/i, i<rand(1, max_skins), i++)
 						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
 					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
+			if (issawingtool(I) || iscuttingtool(I))
 				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
@@ -388,24 +388,25 @@ ABSTRACT_TYPE(/mob/living/critter)
 		//actually throw it!
 		if (I)
 			I.layer = initial(I.layer)
+			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
 				var/mob/living/carbon/C = I
-				logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = get_dir(target, src)
+				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
 			if (istype(I.loc, /turf/space) && ismob(I))
 				var/mob/M = I
-				M.inertia_dir = get_dir(src,target)
+				M.inertia_dir = throw_dir
 			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
@@ -769,7 +770,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 		random_brute_damage(src, AM.throwforce, TRUE)
 		if (src.client)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 		if(thr?.user)
 			src.was_harmed(thr.user, AM)
 
@@ -1036,7 +1037,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1145,15 +1146,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		if (!get_health_holder("burn"))
 			return 1
 		return 0
-
-	get_explosion_resistance()
-		var/ret = explosion_resistance
-		for (var/datum/equipmentHolder/EH in equipment)
-			if (EH.armor_coverage & TORSO)
-				var/obj/item/clothing/suit/S = EH.item
-				if (istype(S))
-					ret += S.getProperty("exploprot")
-		return ret/100
 
 	ex_act(var/severity)
 		..() // Logs.
@@ -1294,7 +1286,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	..()
 
 /mob/living/critter/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
 	if (isdead(src) || src.nodamage)
 		return

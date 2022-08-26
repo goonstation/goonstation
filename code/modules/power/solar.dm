@@ -43,6 +43,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -107,6 +111,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 
 /obj/machinery/power/solar/New()
@@ -253,6 +261,10 @@
 		solar_id = "diner"
 	silverglass
 		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
@@ -386,11 +398,11 @@
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && get_dist(src, S) >= closest_solar_distance)
+		if (closest_solar_distance != null && GET_DIST(src, S) >= closest_solar_distance)
 			continue
 
 		closest_solar_id = S.id
-		closest_solar_distance = get_dist(src, S)
+		closest_solar_distance = GET_DIST(src, S)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)

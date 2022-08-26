@@ -130,7 +130,7 @@
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -140,7 +140,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
@@ -331,7 +331,7 @@
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(get_dist(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
+		if(GET_DIST(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder

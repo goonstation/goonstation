@@ -64,14 +64,16 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONEY)
-						M.HealDamage("All", 1 * mult, 1 * mult)
-						if(probmult(15))
-							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				..()
+				if(M.mob_flags & IS_BONEY)
+					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
+					if(prob(15))
+						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -648,7 +650,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
-						logTheThing("combat", src, null, "was gibbed by the reagent [name].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -698,7 +700,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (probmult(15))
-					if (isrestrictedz(M.z))
+					var/turf/mob_turf = get_turf(M)
+					if (isrestrictedz(mob_turf?.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
@@ -1126,7 +1129,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -2043,16 +2046,21 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M))
-						if(!M.wear_mask)
-							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-							if(prob(50))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-								M.take_eye_damage(1, 1)
-							M.change_eye_blurry(3)
-							M.changeStatus("stunned", 2 SECONDS)
-							M.change_misstep_chance(10)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))))
+							return
+					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
+						return
+					else
+						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							M.take_eye_damage(1, 1)
+						M.change_eye_blurry(3)
+						M.changeStatus("stunned", 2 SECONDS)
+						M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
@@ -3042,7 +3050,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
 					if (prob(10))
-						M.take_toxin_damage(rand(2.4) * mult)
+						M.take_toxin_damage(rand(2,4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatusMin("stunned", 4 SECONDS * mult)
@@ -3069,11 +3077,11 @@ datum
 				if(prob(3))
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
-				
+
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if(probmult(16))
 					M.emote("fart")
-						
+
 		fooddrink/beff
 			name = "beff"
 			id = "beff"
@@ -4121,7 +4129,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 

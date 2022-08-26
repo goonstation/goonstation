@@ -63,9 +63,9 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
 
-/obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
+/obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
@@ -116,8 +116,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
 
-	logTheThing("station", user, null, "toggled the ship alert to \"[alertWord]\"")
-	logTheThing("diary", user, null, "toggled the ship alert to \"[alertWord]\"", "station")
+	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
+	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
 	src.working = 0
 
 /obj/item/tinyhammer

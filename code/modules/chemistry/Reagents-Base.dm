@@ -800,14 +800,14 @@ datum
 						var/obj/item/toy/sponge_capsule/S = O
 						S.add_water()
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
-				if(!volume)
-					volume = 10
+				if(!raw_volume)
+					raw_volume = 10
 				if(method == TOUCH)
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
-						L.changeStatus("burning", -1 * volume SECONDS)
+						L.changeStatus("burning", -1 * raw_volume SECONDS)
 						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
 						. = 0
 
@@ -819,7 +819,7 @@ datum
 			hygiene_value = 2
 			value = 3 // 1 1 1
 
-			reaction_mob(var/mob/target, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/target, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				..()
 				var/reacted = 0
 				var/mob/living/M = target
@@ -836,7 +836,7 @@ datum
 						for(var/mob/O in AIviewers(M, null))
 							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
-						var/burndmg = volume * 1.25
+						var/burndmg = raw_volume * 1.25 //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 						M.change_vampire_blood(-burndmg)

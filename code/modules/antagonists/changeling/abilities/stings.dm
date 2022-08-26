@@ -31,7 +31,7 @@
 					//break the seal
 					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 					P.medical = 0
-			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
+			logTheThing(LOG_COMBAT, holder.owner, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
 			target.reagents.add_reagent(venom_id, inject_amount)
 			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
 			return 0
@@ -63,7 +63,7 @@
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
-		logTheThing("combat", holder.owner, MT, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
 
 	neurotoxin
 		name = "Neurotoxic Sting"
