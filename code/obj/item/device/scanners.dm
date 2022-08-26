@@ -158,7 +158,7 @@ that cannot be itched
 		..()
 		if (href_list["print"])
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
-				playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(get_turf(src))
