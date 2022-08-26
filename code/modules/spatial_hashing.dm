@@ -46,8 +46,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		cols = w / cs
 		rows = h / cs
 
-		hashmap = list()
-		hashmap.len = cols * rows
+		hashmap = new /list(cols * rows)
 
 		for (var/i in 1 to cols*rows)
 			hashmap[i] = list()
