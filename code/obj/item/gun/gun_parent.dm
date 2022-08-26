@@ -47,7 +47,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/add_residue = 0 // Does this gun add gunshot residue when fired (Convair880)?
 
 	var/charge_up = 0 //Does this gun have a charge up time and how long is it? 0 = normal instant shots.
-	var/skip_charge_up = FALSE
 	var/shoot_delay = 4
 
 	var/muzzle_flash = null //set to a different icon state name if you want a different muzzle flash when fired, flash anims located in icons/mob/mob.dmi
@@ -206,9 +205,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	onEnd()
 		..()
-		ownerGun.skip_charge_up = TRUE // This is to bypass the 'charge_up' check in 'shoot_point_blank', as to prevent an actionbar loop. This is better than duplicating the entire 'shoot_point_blank' proc.
-		ownerGun.shoot_point_blank(target, user, second_shot)
-		ownerGun.skip_charge_up = FALSE
+		ownerGun.shoot_point_blank(target, user, second_shot, TRUE)
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
@@ -254,7 +251,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
 	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
-		if(charge_up && !skip_charge_up && !can_dual_wield && canshoot())
+		if(charge_up && !can_dual_wield && canshoot())
 			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 		else
 			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
@@ -285,7 +282,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0, var/skip_charge_up = FALSE)
 	if (!target || !user)
 		return FALSE
 
