@@ -1,5 +1,10 @@
 
 (t)thu aug 25 22
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
 (u)Sord
 (*)Security can now buy Night Vision SecHUD Goggles from the vendor
 (t)wed aug 24 22
