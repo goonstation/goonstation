@@ -455,7 +455,7 @@
 		..()
 		var/mob/living/critter/flock/drone/F = owner
 		var/mob/living/critter/flock/C = target
-		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || !F.can_afford(FLOCK_REPAIR_COST))
+		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || F.resources <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -476,7 +476,7 @@
 		..()
 		var/mob/living/critter/flock/drone/F = owner
 		var/mob/living/critter/flock/C = target
-		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target))
+		if(!F || isdead(F) || !target || (istype(C) && isdead(C)) || !in_interact_range(F, target) || F.resources <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
