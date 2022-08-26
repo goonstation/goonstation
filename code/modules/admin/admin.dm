@@ -2016,7 +2016,7 @@ var/global/noir = 0
 			if (length(matches) == 1)
 				CT = matches[1]
 			else
-				CT = text2path(tgui_input_list(owner, "Select a match", "matches for pattern", matches))
+				CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
 			if (CT && M)
 				M.critterize(text2path(CT))
 			return

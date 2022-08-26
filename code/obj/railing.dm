@@ -15,6 +15,7 @@
 	material_amt = 0.1
 	var/broken = 0
 	var/is_reinforced = 0
+	var/can_reinforce = TRUE
 
 	proc/layerify()
 		if (dir == SOUTH)
@@ -137,7 +138,7 @@
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
 		else if (istype(W,/obj/item/rods))
-			if(!src.is_reinforced)
+			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
 				if(R.change_stack_amount(-1))
 					user.show_text("You reinforce [src] with the rods.", "blue")
@@ -207,6 +208,11 @@
 			is_reinforced = 1
 			icon_state = "railing-reinforced"
 
+	velvet
+		icon = 'icons/obj/velvetrope.dmi'
+		icon_state = "velvetrope"
+		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND

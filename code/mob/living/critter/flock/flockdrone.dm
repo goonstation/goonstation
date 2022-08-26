@@ -17,6 +17,7 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+	repair_per_resource = 2
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -1030,8 +1031,8 @@
 		if (!found_target)
 			boutput(user, "<span class='alert'>The target is in perfect condition!</span>")
 		else
-			if(user.resources < FLOCK_REPAIR_COST)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+			if(user.resources <= 0)
+				boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 			else
 				actions.start(new /datum/action/bar/flock_repair(target), user)
 
@@ -1045,8 +1046,8 @@
 			return
 		if (isdead(F))
 			return
-		if(user.resources < FLOCK_REPAIR_COST)
-			boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+		if(user.resources <= 0)
+			boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else

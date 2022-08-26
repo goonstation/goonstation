@@ -106,7 +106,7 @@
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
-		showContextActions(hologramContextActions, T, contextLayout)
+		src.eyecam.showContextActions(hologramContextActions, T, contextLayout)
 
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
