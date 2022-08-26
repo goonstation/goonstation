@@ -743,7 +743,9 @@
 
 
 
-
+/*=========================*/
+/*------Ghost Brain--------*/
+/*=========================*/
 
 /datum/manufacture/ghost_brain // Move to manufacturing.dm
 	name = "Ghost Intelligence Core"
@@ -753,6 +755,9 @@
 	time = 45 SECONDS
 	create = 1
 	category = "Component"
+
+/obj/item/paper/manufacturer_blueprint/ghost_brain
+	blueprint = /datum/manufacture/ghost_brain
 
 /obj/item/organ/brain/ghost // Move to brain.dm
 	name = "Ghost Intelligence Core"
