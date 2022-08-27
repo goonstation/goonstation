@@ -5676,6 +5676,11 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue3"
 	},
