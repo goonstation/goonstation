@@ -42,10 +42,7 @@
 	wizard_mob.equip_if_possible(new /obj/item/clothing/under/shorts/black(wizard_mob), wizard_mob.slot_w_uniform)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/head/wizard(wizard_mob), wizard_mob.slot_head)
 	if (!vr)
-		if(wizard_mob.traitHolder && wizard_mob.traitHolder.hasTrait("deaf"))
-			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset/deaf(wizard_mob), wizard_mob.slot_ears)
-		else
-			wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
+		wizard_mob.equip_if_possible(new /obj/item/device/radio/headset(wizard_mob), wizard_mob.slot_ears)
 	wizard_mob.equip_if_possible(new /obj/item/storage/backpack(wizard_mob), wizard_mob.slot_back)
 	wizard_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(wizard_mob), wizard_mob.slot_shoes)
 	wizard_mob.equip_if_possible(new /obj/item/staff(wizard_mob), wizard_mob.slot_r_hand)
