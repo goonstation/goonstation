@@ -16,6 +16,11 @@
 	MAX_DAMAGE = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
+	New(loc, datum/organHolder/nholder)
+		..()
+		if(made_from == "flesh")
+			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
+
 	disposing()
 		if (owner && owner.brain == src)
 			owner.brain = null
