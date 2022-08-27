@@ -182,6 +182,31 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		..()
 		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)
 
+/datum/action/bar/icon/guncharge_pointblank
+	duration = 150
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "guncharge"
+	icon = 'icons/obj/items/tools/screwdriver.dmi'
+	icon_state = "screwdriver"
+	var/obj/item/gun/ownerGun
+	var/atom/target
+	var/mob/user
+	var/second_shot
+
+	New(_gun, _target, _user, _second_shot, _time, _icon, _icon_state)
+		ownerGun = _gun
+		target = _target
+		user = _user
+		second_shot = _second_shot
+		icon = _icon
+		icon_state = _icon_state
+		duration = _time
+		..()
+
+	onEnd()
+		..()
+		ownerGun.shoot_point_blank(target, user, second_shot, TRUE)
+
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
@@ -259,13 +284,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 #endif
 		return
 
-/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+/obj/item/gun/proc/shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0, var/skip_charge_up = FALSE)
 	if (!target || !user)
 		return FALSE
 
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
+
+	if (charge_up && !skip_charge_up && !can_dual_wield && canshoot())
+		actions.start(new/datum/action/bar/icon/guncharge_pointblank(src, target, user, second_shot, charge_up, icon, icon_state), user)
+		return
+
 	var/is_dual_wield = 0
 	var/obj/item/gun/second_gun
 	//Ok. i know it's kind of dumb to add this param 'second_shot' to the shoot_point_blank proc just to make sure pointblanks don't repeat forever when we could just move these checks somewhere else.
