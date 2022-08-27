@@ -8,28 +8,9 @@
 import { useBackend, useLocalState } from '../backend';
 import { Button, Input, Section, Box, Stack, NumberInput, LabeledList } from '../components';
 import { Window } from '../layouts';
-import { KEY_ENTER } from 'common/keycodes';
 import { capitalize } from '../../common/string';
 import { ListSearch } from './common/ListSearch';
-
-const IDCard = (props, context) => {
-  if (!props.card) {
-    return;
-  }
-  const { act } = useBackend(context);
-  const {
-    card,
-  } = props;
-  return (
-    <Button
-      icon="eject"
-      content={card.name + ` (${card.role})`}
-      tooltip="Clear scanned card"
-      tooltipPosition="bottom-end"
-      onClick={() => { act("reset_id"); }}
-    />
-  );
-};
+import { IDCard } from './common/IDCard';
 
 const ReagentSearch = (props, context) => {
   const { act } = useBackend(context);
@@ -70,7 +51,7 @@ export const ChemRequester = (props, context) => {
         {!!card && (
           <Stack vertical>
             <Stack.Item>
-              <IDCard card={card} />
+              <IDCard card={card} onEject={() => { act("reset_id"); }} />
             </Stack.Item>
             <Stack.Item>
               {!selected_reagent && (
