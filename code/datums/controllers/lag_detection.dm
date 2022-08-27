@@ -55,7 +55,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				var/fname = "data/logs/profiling/[global.roundLog_date]_automatic_[profilerLogID++].json"
 				rustg_file_write(output, fname)
 				message_admins("CPU back down to [world.cpu], turning off profiling, saved as [fname].")
-				logTheThing("debug", null, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
+				logTheThing(LOG_DEBUG, null, "Automatic profiling finished, CPU at [world.cpu], saved as [fname].")
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling finished, CPU at [world.cpu], saved as [fname]."))
 				highCpuCount = 0
 				automatic_profiling_on = FALSE
@@ -80,7 +80,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 				#endif
 				world.Profile(prof_flags , null, "json")
 				message_admins("CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last], turning on profiling.")
-				logTheThing("debug", null, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last].")
+				logTheThing(LOG_DEBUG, null, "Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last].")
 				ircbot.export_async("admin_debug", list("msg"="Automatic profiling started, CPU at [world.cpu], map CPU at [world.map_cpu], last tick time at [time_since_last]."))
 				highCpuCount = CPU_STOP_PROFILING_COUNT
 				automatic_profiling_on = TRUE

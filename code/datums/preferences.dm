@@ -572,7 +572,7 @@ datum/preferences
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
 					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 					if (!(src.pda_ringtone_index in selectable_ringtones))
@@ -1010,7 +1010,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -1040,7 +1040,7 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null

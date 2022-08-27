@@ -149,7 +149,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "ks" = (
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood,

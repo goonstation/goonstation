@@ -1669,7 +1669,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Pad Lockdown Door";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	tag = "icon-1-2";
@@ -13097,7 +13097,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13548,7 +13548,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13911,7 +13911,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29826,7 +29826,7 @@
 	layer = 4;
 	name = "Market #2";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/market)
@@ -29847,7 +29847,7 @@
 	layer = 4;
 	name = "Market #1";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/market)
@@ -31617,7 +31617,7 @@
 	layer = 4;
 	name = "Privacy Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/table/reinforced/bar{
 	dir = 4

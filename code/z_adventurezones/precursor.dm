@@ -159,6 +159,7 @@
 /obj/item/hell_sax
 	name = "curious instrument"
 	desc = "It appears to be a musical instrument of some sort."
+	interesting = "Scans detect: COBRYL | IRIDIUM *** UNUSUAL RESONANT PROPERTIES"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -288,6 +289,7 @@
 	desc = "Neat."
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb"
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	var/id = "ENTRY" // default
 
 /obj/precursor_puzzle/orb_stand
@@ -295,6 +297,7 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb_holder"
 	desc = "It seems to be missing something."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	density = 1
 	anchored = 1
 	var/id = 1
@@ -336,7 +339,7 @@
 
 		SPAWN(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
-			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is blasted away somewhere by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
 			user.set_loc(otherside)
 			explosion(src,src.loc,-1,-1,1,2)
@@ -388,7 +391,7 @@
 
 /obj/precursor_puzzle/glowing_door
 	name = "glowing edifice"
-	desc = "You can faintly make out a pattern of fissures and seams along the surface."
+	desc = "You can faintly make out a pattern of fissures and glowing seams along the surface."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bluedoor_1"
 	density = 1
@@ -619,6 +622,7 @@
 /obj/precursor_puzzle/rotator
 	name = "peculiar machine"
 	desc = "It looks like it can be moved somehow."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-6"
 	density = 1
@@ -827,7 +831,7 @@
 
 
 /obj/precursor_puzzle/shield
-	name = "energy barrier"
+	name = "rydberg-matter barrier"
 	desc = "It's pretty solid, somehow."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
@@ -886,8 +890,9 @@
 			return
 
 /obj/precursor_puzzle/sphere
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	desc = "That doesn't look very safe at all."
+	interesting = "Scans detect: BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER *** ELECTROMAGNETIC HAZARD"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	event_handler_flags = USE_PROXIMITY
@@ -1273,12 +1278,12 @@
 
 
 /datum/projectile/laser/precursor/sphere // for precursor traps
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	power = 75
 	cost = 75
-	sname = "energy bolt"
+	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
 	shot_sound = 'sound/machines/ArtifactPre1.ogg'
 	color_red = 0.1

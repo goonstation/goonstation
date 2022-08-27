@@ -225,7 +225,7 @@
 		take_from()
 			if( !contained_items.len )
 				boutput( usr, "Dag, this box has nothing special about it. Oh well." )
-				logTheThing("debug", src, null, "has no items in it!")
+				logTheThing(LOG_DEBUG, src, "has no items in it!")
 				return
 			src.contained_item = pick( contained_items )
 			return ..()//TODO: hack?
@@ -337,7 +337,7 @@
 			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
-					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
+					logTheThing(LOG_DEBUG, src, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
 				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!

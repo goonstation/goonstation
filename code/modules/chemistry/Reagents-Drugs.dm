@@ -296,7 +296,7 @@ datum
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				if(prob(20))
+				if(M.client && prob(20))
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
 						src.current_color_pattern = 2
@@ -346,10 +346,11 @@ datum
 				return
 
 			on_mob_life_complete(var/mob/living/M)
-				if(src.current_color_pattern == 1)
-					animate_fade_from_drug_1(M.client, 40)
-				else
-					animate_fade_from_drug_2(M.client, 40)
+				if(M.client)
+					if(src.current_color_pattern == 1)
+						animate_fade_from_drug_1(M.client, 40)
+					else
+						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()

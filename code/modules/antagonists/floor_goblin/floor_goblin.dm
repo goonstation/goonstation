@@ -4,7 +4,7 @@
 	var/mob/living/carbon/human/H = src
 
 	message_admins("[key_name(usr)] made [key_name(H)] a floor goblin.")
-	logTheThing("admin", usr, H, "made [constructTarget(H,"admin")] a floor goblin.")
+	logTheThing(LOG_ADMIN, usr, "made [constructTarget(H,"admin")] a floor goblin.")
 
 	var/datum/abilityHolder/floor_goblin/abilityHolder = H.add_ability_holder(/datum/abilityHolder/floor_goblin)
 	H.bioHolder.age = -200
@@ -265,7 +265,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to remove \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, source, "tries to remove \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
 		var/name = "something"
 		icon = shoes.icon
 		icon_state = shoes.icon_state
@@ -286,7 +286,7 @@
 
 		if(shoes)
 			if(shoes.handle_other_remove(source, target))
-				logTheThing("combat", source, target, "successfully removes \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
+				logTheThing(LOG_COMBAT, source, "successfully removes \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
 					O.show_message("<span class='alert'><B>[source] removes [shoes] from [target]!</B></span>", 1)
 

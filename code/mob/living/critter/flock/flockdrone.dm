@@ -17,6 +17,7 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+	repair_per_resource = 2
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -71,7 +72,7 @@
 			continue
 		src.contexts += new type
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
-	src.AddComponent(/datum/component/flock_protection, FALSE, FALSE, FALSE, FALSE)
+	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, FALSE, FALSE)
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 
 /mob/living/critter/flock/drone/proc/do_antigrab(source, obj/item/grab/grab)
@@ -127,9 +128,6 @@
 	if(src.flock)
 		src.flock.showAnnotations(src)
 
-/mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
-	boutput(src, message, group, forceScroll)
-
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
 		return
@@ -157,6 +155,7 @@
 			ticker.minds += src.mind
 
 	pilot.set_loc(src)
+	pilot.boutput_relay_mob = src
 	controller = pilot
 	src.client?.set_color()
 	//hack to make night vision apply instantly
@@ -201,6 +200,7 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
@@ -237,6 +237,7 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
+	controller.boutput_relay_mob = null
 	if (give_alert)
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
@@ -271,6 +272,7 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		controller.boutput_relay_mob = null
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b></span>")
 		controller = null
 	src.is_npc = TRUE // to ensure right flock_speak message
@@ -321,6 +323,8 @@
 
 /mob/living/critter/flock/drone/proc/wake_from_ai_pause()
 	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
+		return
+	if (isdead(src) || isnull(src.flock)) //also can't wake up if you're dead
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
 	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
@@ -1027,8 +1031,8 @@
 		if (!found_target)
 			boutput(user, "<span class='alert'>The target is in perfect condition!</span>")
 		else
-			if(user.resources < FLOCK_REPAIR_COST)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+			if(user.resources <= 0)
+				boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 			else
 				actions.start(new /datum/action/bar/flock_repair(target), user)
 
@@ -1042,8 +1046,8 @@
 			return
 		if (isdead(F))
 			return
-		if(user.resources < FLOCK_REPAIR_COST)
-			boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+		if(user.resources <= 0)
+			boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
