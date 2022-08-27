@@ -1,5 +1,4 @@
 /datum/lifeprocess/radiation
-	var/tick_count = 0
 	process(datum/gas_mixture/environment)
 		if(!owner || !owner.radiation_dose)
 			return
@@ -11,6 +10,4 @@
 
 		if(!isdead(owner))
 			//remove some rads
-			tick_count++
-			boutput(world, "T: [tick_count] R: [owner.radiation_dose] D: [(src.get_multiplier() * (owner.radiation_dose_decay * (owner.radiation_dose**1.3))/2)]")
-			owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * (owner.radiation_dose_decay * (owner.radiation_dose**1.3))/2),0)
+			owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * (owner.radiation_dose_decay * (owner.radiation_dose**1.2))),0)

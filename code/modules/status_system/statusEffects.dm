@@ -423,7 +423,7 @@
 					howMuch = "totally " // you are literally dying in seconds
 			if(stage > 0)
 				visible = TRUE
-				var/damage_total = 0.8 * (M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6))
+				var/damage_total = 5 * (M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6))
 				damage_tox = prob(70) * damage_total
 				damage_burn = prob(30) * damage_total
 			else
