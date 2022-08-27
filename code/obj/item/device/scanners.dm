@@ -166,7 +166,7 @@ that cannot be itched
 				return
 			var/scan_number = text2num(href_list["print"])
 			if (scan_number < number_of_scans - maximum_scans)
-				boutput(usr, "<span class='notice'>[src] only has enough storage to hold the last [maximum_scans] scans!</span>")
+				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
 				return
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
 				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
