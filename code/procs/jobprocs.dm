@@ -547,8 +547,8 @@
 
 	return
 
-/// Equip items from sensory traits
-/mob/living/carbon/human/proc/equip_sensory_items()
+/// Equip items from traits and put items that have been over written into hands/pockets
+/mob/living/carbon/human/proc/equip_trait_items() //could probably use varibles in the proc to determine what needs to be equipped and in what slot but im lazy as hell
 	if (src.traitHolder.hasTrait("blind"))
 		src.store_from_slot(src.glasses)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
@@ -725,7 +725,7 @@
 	else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 		src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-	src.equip_sensory_items()
+	src.equip_trait_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
 	var/obj/item/card/id/C = null
