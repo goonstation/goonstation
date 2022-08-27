@@ -214,6 +214,28 @@ var/mutable_appearance/fluid_ma
 		var/turf/T = src.loc
 		T.Attackhand(user)
 
+	mouse_drop(obj/over_object, src_location, over_location)
+		if (istype(src, /obj/fluid/airborne) || !istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
+			return ..()
+		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+
+		var/obj/item/reagent_containers/container = over_object
+		if (!src.group || !src.group.reagents.total_volume)
+			boutput(usr, "<span class='alert'>[container] is empty. (this is a bug, whooops!)</span>")
+			src.removed()
+			return
+		if (container.reagents.total_volume >= container.reagents.maximum_volume)
+			boutput(usr, "<span class='alert'>[container] is full.</span>")
+			return
+
+		src.group.reagents.skip_next_update = 1
+		src.group.update_amt_per_tile()
+		var/amt = min(src.group.contained_amt, container.reagents.maximum_volume - container.reagents.total_volume)
+		boutput(usr, "<span class='notice'>You fill [container] with [amt] units of [src].</span>")
+		src.group.drain(src, amt / src.group.amt_per_tile, container) // drain uses weird units
+
 	proc/add_reagents(var/datum/reagents/R, var/volume) //should be called right after new() on inital group creation
 		if (!src.group) return
 		R.trans_to(src.group.reagents,volume)
