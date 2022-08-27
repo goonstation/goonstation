@@ -850,6 +850,60 @@
 			GH.disable(FALSE)
 			GH.updateButtons()
 
+/obj/item/organ/brain/ghost/boreing
+	color = "#F99"
+
+	var/revives = 1
+
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		if(src.owner == user.mind)
+			if(..() && revives)
+				revives--
+				if (M.stat > 1)
+					setalive(M)
+
+			else if (isdead(M) && M.organHolder.head.scalp_op_stage <= 3.0)
+				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
+
+				if (M.organHolder.brain)
+					src.tri_message(M, "<span class='alert'><b>[src]</b> severs [M]'s brain's connection to the spine!</span>",\
+						"<span class='alert'>You sever [M]'s brain's connection to the spine!</span>",\
+						"<span class='alert'><b>[src]</b> severs your brain's connection to the spine!</span>")
+
+					M.organHolder.drop_organ("brain")
+				else
+					// If the brain is gone, but the suture site was closed and we're re-opening
+					src.tri_message(M, "<span class='alert'><b>[src]</b> cuts open [M]'s brain cavity!</span>",\
+						"<span class='alert'>You cut open [M]'s brain cavity!</span>",\
+						"<span class='alert'><b>[src]</b> cuts open your brain cavity!</span>")
+
+				var/damage_low = rand(5,15)
+				M.TakeDamage("head", damage_low, 0)
+				take_bleeding_damage(M, user, damage_low, surgery_bleed = 1)
+				logTheThing(LOG_COMBAT, user, "removed [constructTarget(M,"combat")]'s brain with [src].")
+				M.death()
+				M.organHolder.head.scalp_op_stage = 4
+		else
+			. = ..()
+
+	can_attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		if(src.owner == user.mind)
+			/* Checks if an organ can be attached to a target mob */
+			if (istype(/obj/item/organ/chest/, src))
+				// We can't transplant a chest
+				return 0
+
+			if (!in_interact_range(src, user))
+				return 0
+
+			var/mob/living/carbon/human/H = M
+			if (!H.organHolder)
+				return 0
+
+			return 1
+		else
+			. = ..()
+
 /datum/action/bar/capture_ghost
 	id = "capture_ghost"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -888,7 +942,6 @@
 			B.old_brain = target.mind.brain
 			B.setOwner(target.mind)
 			target.set_loc(B)
-			target.changeStatus("ghost_bound", 2 MINUTES, B)
 
 	onDelete()
 		..()
@@ -997,7 +1050,7 @@
 	onRemove()
 		..()
 		var/mob/dead/observer/ghost = owner
-		if(istype(ghost) && bound_target && ghost.loc == bound_target)
+		if(istype(ghost) && ghost.mind && bound_target && ghost.loc == bound_target)
 			ON_COOLDOWN(bound_target, "ghost_suck", 2 SECONDS)
 			ghost.set_loc(get_turf(bound_target))
 
