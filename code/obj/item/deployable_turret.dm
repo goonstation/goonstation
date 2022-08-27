@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
-			  src.anchored ? "You unweld the turret from the floor." : "You weld the turret to the floor.", \
+			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isweldingtool(W) && (src.active))
@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			user.show_message("You start to repair the turret.")
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
-			  "You repair some of the turret's damage.", \
+			  "[user] repairs some of the turret's damage.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if  (iswrenchingtool(W))
@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.show_message("You begin to disassemble the turret.")
 				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
-				  "You disassemble the turret.", \
+				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isscrewingtool(W))
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
 
 			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
-			  "You power the turret [src.active ? "off" : "on"].", \
+			  "[user] powers the turret [src.active ? "off" : "on"].", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
