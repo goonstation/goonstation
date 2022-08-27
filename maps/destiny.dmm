@@ -4504,8 +4504,8 @@
 /area/station/hallway/primary/central)
 "asc" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 8
+	dir = 8;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -4664,8 +4664,8 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue4";
-	dir = 4
+	dir = 4;
+	icon_state = "blue4"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -7818,8 +7818,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay";
-	id = "medbay_door"
+	id = "medbay_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -11640,8 +11640,8 @@
 	pixel_x = -13
 	},
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 10
+	dir = 10;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -13023,8 +13023,8 @@
 	name = "Station Intercom"
 	},
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 9
+	dir = 9;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -18442,8 +18442,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
-	name = "Cloning";
-	id = "Cloning"
+	id = "Cloning";
+	name = "Cloning"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -19300,8 +19300,8 @@
 /area/station/security/equipment)
 "cUy" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 4
+	dir = 4;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -20230,9 +20230,9 @@
 "dnb" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	dir = 1;
 	name = "Television";
-	network = "Zeta";
-	dir = 1
+	network = "Zeta"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -22410,8 +22410,8 @@
 /area/station/crew_quarters/lounge/starboard)
 "eql" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 6
+	dir = 6;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -30586,8 +30586,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -36972,9 +36972,9 @@
 /area/station/security/hos)
 "lIU" = (
 /obj/machinery/door/unpowered/wood/stall{
+	dir = 4;
 	lock_dir = 2;
-	name = "changing room door";
-	dir = 4
+	name = "changing room door"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/showers)
@@ -37435,7 +37435,6 @@
 /area/station/science/chemistry)
 "lSZ" = (
 /obj/rack,
-/obj/item/storage/box/stinger_kit,
 /obj/item/chem_grenade/flashbang,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -42053,8 +42052,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Psychiatrist's Office";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Psychiatrist's Office"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -42309,8 +42308,8 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/south,
 /turf/simulated/floor/stairs{
-	icon_state = "wood_stairs";
-	dir = 4
+	dir = 4;
+	icon_state = "wood_stairs"
 	},
 /area/station/crew_quarters/sauna)
 "ouE" = (
@@ -44056,8 +44055,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -44534,8 +44533,8 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 5
+	dir = 5;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -46232,8 +46231,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -52638,8 +52637,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay";
-	id = "medbay_door"
+	id = "medbay_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -53143,8 +53142,8 @@
 "uiW" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -54220,8 +54219,8 @@
 "uIi" = (
 /obj/landmark/start/latejoin,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 1
+	dir = 1;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -57966,8 +57965,8 @@
 /area/station/maintenance/southwest)
 "wAa" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 1
+	dir = 1;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
