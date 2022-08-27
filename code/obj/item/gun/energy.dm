@@ -142,7 +142,7 @@
 	uses_multiple_icon_states = 1
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target."
+	desc = "The Five Points Armory Taser Mk.I, a weapon that produces a cohesive electrical charge to stun and subdue its target."
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -174,7 +174,7 @@
 
 /obj/item/gun/energy/taser_gun/bouncy
 	name = "richochet taser gun"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. This one appears to be capable of firing ricochet charges."
+	desc = "A modified Five Points Armory taser gun. This one appears to be capable of firing ricochet stun charges."
 
 	New()
 		..()
@@ -198,7 +198,7 @@
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7
-	desc = "A gun that produces a harmful laser, causing substantial damage."
+	desc = "The venerable Hafgan Mod.28 laser gun, causes substantial damage in close quarters and space environments. Not suitable for use in dust storms."
 	muzzle_flash = "muzzle_flash_laser"
 
 	New()
@@ -230,13 +230,13 @@
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	uses_multiple_icon_states = 1
-	desc = "Wait, that's not a plastic toy..."
+	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
 
 	New()
 		if (!src.current_projectile)
-			src.set_current_projectile(new /datum/projectile/laser)
+			src.set_current_projectile(new /datum/projectile/laser/glitter)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
 		..()
@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "An amplified carbon-arc weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -276,7 +276,6 @@
 			src.icon_state = "phaser-new[ratio]"
 			return
 
-
 /obj/item/gun/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
@@ -285,7 +284,9 @@
 	force = 4
 	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
+	mats = 20
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -301,21 +302,20 @@
 			src.icon_state = "phaser-tiny[ratio]"
 			return
 
-
-
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
-	force = 10
-	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/higherish_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-
+	force = MELEE_DMG_RIFLE
+	two_handed = 1
+	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
@@ -330,10 +330,8 @@
 			src.icon_state = "phaser-xl[ratio]"
 			return
 
-
-
-
-
+	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+		return FALSE
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
@@ -381,7 +379,7 @@
 	icon_state = "energy"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	desc = "Its a gun that has two modes, stun and kill"
+	desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire."
 	item_state = "egun"
 	force = 5
 	mats = list("MET-1"=15, "CON-1"=5, "POW-1"=5)
@@ -424,17 +422,19 @@
 	name = "energy gun junior"
 	icon_state = "egun-jr"
 	uses_multiple_icon_states = 1
-	cell_type = /obj/item/ammo/power_cell
-	desc = "A smaller sidearm version of the energy gun, with dual modes for stun and kill."
-	item_state = "egun-jr"
+	cell_type = /obj/item/ammo/power_cell/med_minus_power
+	desc = "A smaller, disposable version of the Five Points Armory energy gun, with dual modes for stun and kill."
+	item_state = "egun"
 	force = 3
 	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
 	muzzle_flash = "muzzle_flash_elec"
 	can_swap_cell = FALSE
+	rechargeable = FALSE
+	spread_angle = 10
 
 	New()
-		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile,new/datum/projectile/laser)
+		set_current_projectile(new/datum/projectile/energy_bolt/diffuse)
+		projectiles = list(current_projectile,new/datum/projectile/laser/diffuse)
 		..()
 
 	update_icon()
@@ -443,11 +443,11 @@
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			if(current_projectile.type == /datum/projectile/energy_bolt)
+			if(current_projectile.type == /datum/projectile/energy_bolt/diffuse)
 				src.item_state = "egun-jrstun"
 				src.icon_state = "egun-jrstun[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/laser)
+			else if (current_projectile.type == /datum/projectile/laser/diffuse)
 				src.item_state = "egun-jrkill"
 				src.icon_state = "egun-jrkill[ratio]"
 				muzzle_flash = "muzzle_flash_laser"
@@ -455,6 +455,7 @@
 				src.item_state = "egun-jr"
 				src.icon_state = "egun-jr[ratio]"
 				muzzle_flash = "muzzle_flash_elec"
+
 	attack_self(var/mob/M)
 		..()
 		UpdateIcon()
@@ -500,7 +501,7 @@
 /obj/item/gun/energy/tasershotgun
 	name = "taser shotgun"
 	icon_state = "tasers100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
+	desc = "The Five Points Armory Taser Mk.II, a shotgun-format weapon that produces a spreading electrical charge to stuns its targets."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
 	force = 12
@@ -659,7 +660,7 @@
 ///////////////////////////////////////Telegun
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
-	desc = "A hacked together combination of a taser and a handheld teleportation unit."
+	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
 	icon_state = "teleport"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_NORMAL
@@ -1805,7 +1806,7 @@
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"
 	icon_state = "tsmg_burst100"
-	desc = "A weapon that produces an cohesive electrical charge that stuns its target, capable of firing in two shot burst or full auto configurations."
+	desc = "The Five Points Armory Taser Mk.III. A weapon that produces a cohesive electrical charge to stun its target, capable of firing in two shot burst or full auto configurations."
 	item_state = "tsmg"
 	force = 5
 	two_handed = 1

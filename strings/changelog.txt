@@ -1,4 +1,57 @@
-
+(t)sat aug 27 22
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
+(t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
+(t)wed aug 24 22
+(u)Mr. Moriarty
+(p)9908
+(e)|
+(*)Added Ctrl-I as the *twirl hotkey.
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
+(t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
+(u)Sord
+(e)|
+(+)Donut 2 now has a public refinery near mining
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
 (t)fri aug 19 22
 (u)RichardGere
 (p)10307

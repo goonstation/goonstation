@@ -1912,7 +1912,7 @@ var/global/noir = 0
 					mind.objectives.len = 0
 				else
 					mind.objectives = list()
-				switch (tgui_alert(usr,"Objectives?", "Objectives", "Custom", "Random", "None"))
+				switch (tgui_alert(usr,"Objectives?", "Objectives", list("Custom", "Random", "None")))
 					if ("Custom")
 						var/WO = null
 						do
@@ -2018,7 +2018,7 @@ var/global/noir = 0
 			else
 				CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
 			if (CT && M)
-				M.critterize(CT)
+				M.critterize(text2path(CT))
 			return
 
 		if ("makecube")
@@ -2724,7 +2724,7 @@ var/global/noir = 0
 							if (length(matches) == 1)
 								CT = matches[1]
 							else
-								CT = tgui_input_list(owner, "Select a match", "matches for pattern", matches)
+								CT = text2path(tgui_input_list(owner, "Select a match", "matches for pattern", matches))
 
 							if (!CT)
 								return
@@ -4800,10 +4800,10 @@ var/global/noir = 0
 
 /proc/get_one_match_string(var/text, var/list/possibles)
 	var/list/matches = get_matches_string(text, possibles)
-	if (matches.len == 0)
+	if (length(matches) == 0)
 		return null
 	var/chosen
-	if (matches.len == 1)
+	if (length(matches) == 1)
 		chosen = matches[1]
 	else
 		chosen = input("Select a match", "matches for pattern", null) as null|anything in matches
@@ -4827,22 +4827,22 @@ var/global/noir = 0
 			if(!typeinfo.admin_spawnable)
 				continue
 		if(findtext("[path]$", object))
-			matches += path
+			matches += "[path]"
 
 	. = matches
 
 /proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
 	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
-	if(!matches.len)
+	if(!length(matches))
 		return null
 
 	var/chosen
-	if(matches.len == 1)
+	if(length(matches) == 1)
 		chosen = matches[1]
 	else
-		var/safe_matches = matches - list(/database, /client, /icon, /sound, /savefile)
-		chosen = tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches)
+		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
+		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
 		if(!chosen)
 			return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
 

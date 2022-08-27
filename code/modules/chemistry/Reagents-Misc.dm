@@ -1394,9 +1394,7 @@ datum
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
-			on_mob_life_complete()
-				message_admins("")
-				return
+
 		capulettium_plus
 			name = "capulettium plus"
 			id = "capulettium_plus"
@@ -2196,6 +2194,7 @@ datum
 						if(probmult(1)) // i hate you all, players
 							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
+							return
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))
 							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
@@ -3490,8 +3489,8 @@ datum
 				M.ex_act(1)
 				if (isliving(M))
 					logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name] at [log_loc(M)].")
-				M.gib()
 				M.reagents.del_reagent(src.id)
+				M.gib()
 
 		cyclopentanol
 			name = "cyclopentanol"

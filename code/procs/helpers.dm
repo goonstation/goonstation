@@ -400,34 +400,13 @@ proc/get_angle(atom/a, atom/b)
 	if(L.len < 2)
 		return L
 	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	. = mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
+	. = (sortList(L.Copy(0,middle)) + sortList(L.Copy(middle))) //second parameter null = to end of list
 
 /proc/sortNames(var/list/L)
 	var/list/Q = new()
 	for(var/atom/x in L)
 		Q[x.name] = x
 	. = sortList(Q)
-
-/proc/mergeLists(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	. = list()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			var/key = R[Ri]
-			var/ass = !isnum(key) ? R[key] : null //Associative lists. (also hurf durf)
-			. += R[Ri++]
-			if(ass) .[key] = ass
-		else
-			var/key = L[Li]
-			var/ass = !isnum(key) ? L[key] : null //Associative lists. (also hurf durf)
-			. += L[Li++]
-			if(ass) .[key] = ass
-
-	if(Li <= L.len)
-		. += L.Copy(Li, 0)
-	else
-		. += R.Copy(Ri, 0)
 
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
@@ -1831,7 +1810,7 @@ proc/countJob(rank)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
-		var/ghost_timestamp = world.time
+		var/ghost_timestamp = TIME
 
 		// Preliminary work.
 		var/text_alert = "Would you like to be respawned? Your name will be added to the list of eligible candidates and may be selected at random by the game."
@@ -1865,10 +1844,10 @@ proc/countJob(rank)
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
-
-					var/response = tgui_alert(M.current, text_alert, "Respawn", list("Yes", "No", "Stop these"), timeout = ghost_timestamp + confirmation_spawn - world.time)
+					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
+					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)
 					if (response == "Yes")
-						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
+						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
 						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)

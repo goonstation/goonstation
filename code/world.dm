@@ -523,6 +523,9 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
+#ifdef SECRETS_ENABLED
+	initialize_gallery_manager()
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()

@@ -9,7 +9,10 @@
 	icon_state = "flockmind"
 
 	var/started = FALSE
-	var/last_time
+	///Pity respawn counter
+	var/current_try = 1
+	///Pity respawn max
+	var/max_tries = 3
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
@@ -17,7 +20,6 @@
 
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
-	src.last_time = world.timeofday
 
 	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
@@ -57,6 +59,7 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
+	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
 	if (src.started && src.flock)
 		if (src.flock.getComplexDroneCount())
 			return
@@ -88,7 +91,24 @@
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
 
+/mob/living/intangible/flock/flockmind/proc/reset()
+	for (var/datum/targetable/ability in src.abilityHolder.abilities)
+		//do not remove the hidden drone control ability
+		if (istype(ability, /datum/targetable/flockmindAbility/droneControl))
+			continue
+		src.abilityHolder.removeAbilityInstance(ability)
+	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.addAbility(/datum/targetable/flockmindAbility/ping)
+	src.started = FALSE
+
 /mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)
+	src.emote("scream")
+	if (src.flock.peak_compute < 200 && src.current_try < src.max_tries)
+		src.reset()
+		src.flock?.perish(FALSE)
+		src.current_try++
+		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.current_try].</b></span>")
+		return
 	. = ..()
 	if(src.client)
 		if (relay_destroyed)

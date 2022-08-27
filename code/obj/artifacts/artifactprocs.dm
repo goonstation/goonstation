@@ -232,9 +232,6 @@
 	return
 
 /obj/proc/Artifact_attackby(obj/item/W, mob/user)
-	if (isrobot(user))
-		src.ArtifactStimulus("silitouch", 1)
-
 	if (istype(W,/obj/item/artifact/activator_key))
 		var/obj/item/artifact/activator_key/ACT = W
 		if (!src.ArtifactSanityCheck())

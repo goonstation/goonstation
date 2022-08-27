@@ -227,6 +227,22 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/kick
+	name = "kick"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Kick a given ckey off the specified server."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				del(C)
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "kicked [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "kicked [constructTarget(C,"diary")].", "admin")
+				system.reply("Kicked [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
 /datum/spacebee_extension_command/alert
 	name = "alert"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
