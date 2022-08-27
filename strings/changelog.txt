@@ -1,4 +1,9 @@
-
+(t)sat aug 27 22
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
 (t)thu aug 25 22
 (u)Mr. Moriarty
 (p)10462

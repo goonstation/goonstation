@@ -141,6 +141,14 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/port_a_brig)
 				qdel(MAC)
+			if (/obj/machinery/door/firedoor/pyro)
+				qdel(MAC)
+			if (/obj/machinery/turret)
+				qdel(MAC)
+			if (/obj/machinery/turretcover)
+				qdel(MAC)
+			if (/obj/deployable_turret/riot)
+				qdel(MAC)
 
 	for_by_tcl(I, /obj/item/hand_tele)
 		qdel(I)
@@ -515,7 +523,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	battler.equip_if_possible(vest, battler.slot_wear_suit)
 	battler.equip_if_possible(new /obj/item/storage/backpack/withO2(battler), battler.slot_back)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_r_store)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
