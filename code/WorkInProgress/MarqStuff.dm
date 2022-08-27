@@ -451,7 +451,7 @@
 					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
-					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
+					logTheThing(LOG_COMBAT, user, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
 					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
 

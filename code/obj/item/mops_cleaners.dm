@@ -241,14 +241,14 @@ WET FLOOR SIGN
 					continue
 				D.reagents.reaction(T, react_volume=1)
 				if (ismob(T))
-					logTheThing("combat", user, T, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "'s spray hits [constructTarget(T,"combat")] [log_reagents] at [log_loc(user)].")
 				D.reagents.remove_any(1)
 			if (!D.reagents.total_volume)
 				break
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing("combat", user, logTurf, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -329,7 +329,7 @@ WET FLOOR SIGN
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing("combat", user, null, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
@@ -409,7 +409,7 @@ WET FLOOR SIGN
 			// Some people use mops for heat-delayed fireballs and stuff.
 			// Mopping the floor with just water isn't of any interest, however (Convair880).
 			if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-				logTheThing("combat", user, null, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 			mopcount++
 
@@ -634,11 +634,7 @@ WET FLOOR SIGN
 				JOB_XP(user, "Janitor", 3)
 				if (target.reagents)
 					target.reagents.trans_to(src, 5)
-				if((target.color != initial(target.color)) || (target.icon != initial(target.icon))) //if painted, un-paint
-					target.color = initial(target.color)
-					target.icon = initial(target.icon)
-					if(target.material)
-						target.setMaterialAppearance(target.material)
+				target.remove_filter(list("paint_color", "paint_pattern"))
 				playsound(src, 'sound/items/sponge.ogg', 20, 1)
 				if (ismob(target))
 					animate_smush(target)

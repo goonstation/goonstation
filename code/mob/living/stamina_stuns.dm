@@ -67,7 +67,8 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	stamina = min(stamina_max, stamina + x)
-	if(src.stamina_bar.last_update != TIME) src.stamina_bar.update_value(src)
+	if(src.stamina_bar && src.stamina_bar.last_update != TIME)
+		src.stamina_bar.update_value(src)
 	return
 
 //Removes stamina

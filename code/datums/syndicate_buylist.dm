@@ -800,7 +800,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/donkpocket_w_kit
 	cost = 2
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

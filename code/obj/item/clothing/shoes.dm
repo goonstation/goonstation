@@ -230,11 +230,11 @@
 
 /obj/item/clothing/shoes/industrial/equipped(mob/user, slot)
 	. = ..()
-	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+	APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
 
 /obj/item/clothing/shoes/industrial/unequipped(mob/user)
 	. = ..()
-	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/mech_boots, src.type)
+	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/reagent/energydrink, src.type)
 
 /obj/item/clothing/shoes/white
 	name = "white shoes"

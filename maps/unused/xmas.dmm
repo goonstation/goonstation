@@ -10219,7 +10219,7 @@
 /area/crew_quarters/quarters)
 "atq" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /turf/simulated/floor{
@@ -11673,7 +11673,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille,
 /obj/window/reinforced{
@@ -12124,7 +12124,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille,
 /obj/window/reinforced{
@@ -12494,7 +12494,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille,
 /obj/window/reinforced{
@@ -24502,7 +24502,7 @@
 	layer = 4;
 	name = "Market #2";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -24529,7 +24529,7 @@
 	layer = 4;
 	name = "Market #1";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -26403,7 +26403,7 @@
 	layer = 4;
 	name = "Privacy Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/crew_quarters/bar)
@@ -29247,7 +29247,7 @@
 /area/crew_quarters/juryroom)
 "bcy" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor{
 	icon_state = "snow"
@@ -29551,7 +29551,7 @@
 "bdb" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -33038,7 +33038,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

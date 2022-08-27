@@ -388,8 +388,8 @@
 			if (recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
@@ -399,8 +399,8 @@
 			if (phenomena_flags > PH_QUAKE && recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 
 	proc/poll_capture_amt(var/turf/center)

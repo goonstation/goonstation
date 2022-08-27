@@ -163,7 +163,7 @@ Broken RCD + Effects
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material.mat_id in restricted_materials))
+			if (!restricted_materials || (R?.material?.mat_id in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)
@@ -562,7 +562,7 @@ Broken RCD + Effects
 		return 0
 
 	proc/log_construction(mob/user as mob, var/what)
-		logTheThing("station", user, null, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "[what] using \the [src] at [user.loc.loc] ([log_loc(user)])")
 
 	proc/create_door(var/turf/A, mob/user as mob)
 		if(do_thing(user, A, "building an airlock", matter_create_door, time_create_door))
@@ -571,7 +571,7 @@ Broken RCD + Effects
 			log_construction(user, "builds an airlock ([T])")
 
 			//if(map_setting == "COG2") T.set_dir(user.dir)
-			T.autoclose = 1
+			T.autoclose = TRUE
 
 	update_icon() //we got fancy rcds now
 		if (GetOverlayImage("mode"))
@@ -682,7 +682,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -698,7 +698,7 @@ Broken RCD + Effects
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
-							logTheThing("station", user, null, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
+							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
 							playsound(src, "sound/items/Deconstruct.ogg", 50, 1)
 				else
@@ -729,7 +729,7 @@ Broken RCD + Effects
 						R.pass="[hangar_id]"
 						R.name="Access code: [hangar_id]"
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing(LOG_STATION, user, "creates Door Control [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 						boutput(user, "Now creating pod bay blast doors linked to the new door control.")
 
 		else if (mode == RCD_MODE_PODDOOR)
@@ -745,9 +745,9 @@ Broken RCD + Effects
 						var/obj/machinery/door/poddoor/blast/B = new /obj/machinery/door/poddoor/blast(A)
 						B.id = "[hangar_id]"
 						B.set_dir(poddir)
-						B.autoclose = 1
+						B.autoclose = TRUE
 						ammo_consume(user, matter_create_door)
-						logTheThing("station", user, null, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
+						logTheThing(LOG_STATION, user, "creates Blast Door [hangar_id] using \the [src] in [user.loc.loc] ([log_loc(user)])")
 
 	create_door(var/turf/A, mob/user as mob)
 		var/turf/L = get_turf(user)
@@ -790,7 +790,7 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new door_type(A)
 			log_construction(user, null, "builds an airlock ([T], name: [door_name], access: [door_access], type: [door_type])")
 			T.set_dir(door_dir)
-			T.autoclose = 1
+			T.autoclose = TRUE
 			T.name = door_name
 			if (door_access)
 				T.req_access = list(door_access)
@@ -1065,7 +1065,7 @@ Broken RCD + Effects
 
 				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
 
-				logTheThing("combat", user, null, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
+				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] with a halloween RCD.")
 
 				new /obj/effects/void_break(A)
 				if (user)

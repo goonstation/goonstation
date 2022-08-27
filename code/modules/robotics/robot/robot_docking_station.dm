@@ -312,7 +312,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing(LOG_COMBAT, usr, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
@@ -500,7 +500,7 @@
 			R.cell = null
 			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
+			logTheThing(LOG_COMBAT, usr, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
 
 		if (href_list["eject"])
@@ -679,7 +679,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = victim
-	logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
+	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
 
 	H.remove_pulling()

@@ -4,7 +4,7 @@ export const pluralize = (word: string, n: number) => (n !== 1 ? word + 's' : wo
 
 export const capitalize = (word: string) => word.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase());
 
-const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ю', '/', '#', '~'];
+const glitches = ['$', '{', ']', '%', '^', '?', '>', '¬', 'π', ';', 'и', 'ѫ', '/', '#', '~'];
 export const glitch = (text: string, amount: number) => {
   const chars = text.split('');
   for (let i = 0; i < amount; i++) {

@@ -191,8 +191,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
