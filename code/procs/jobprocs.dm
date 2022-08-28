@@ -559,8 +559,8 @@
 		src.store_from_slot(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 
-/mob/living/carbon/human/proc/store_from_slot(obj/item/item,) //this is in here over mob.dm because equip_if_possible wouldnt work lmao
-	var/equipped = 0
+/mob/living/carbon/human/proc/store_from_slot(obj/item/item) //this is in here over mob.dm because equip_if_possible wouldnt work lmao
+	var/equipped = FALSE
 	if (!item)
 		return
 	if (!(item in src.contents))
@@ -574,13 +574,13 @@
 
 	if (!equipped)
 		if (!src.l_store && src.equip_if_possible(item, slot_l_store))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.r_store && src.equip_if_possible(item, slot_r_store))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.l_hand && src.equip_if_possible(item, slot_l_hand))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.r_hand && src.equip_if_possible(item, slot_r_hand))
-			equipped = 1
+			equipped = TRUE
 
 		if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 			item.set_loc(get_turf(src))
