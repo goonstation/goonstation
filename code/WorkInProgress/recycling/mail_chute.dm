@@ -79,7 +79,7 @@
 
 			if (!(destination in src.destinations))
 				src.destinations += destination
-				sortList(src.destinations)
+				sortList(src.destinations, /proc/cmp_name_asc)
 
 		else if (signal.data["command"] == "mail_inquire")
 			src.post_radio_status()

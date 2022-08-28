@@ -160,7 +160,7 @@ proc/keep_truthy(some_list)
 	var/list/Q = new()
 	for(var/atom/x in L)
 		Q[x.name] = x
-	. = sortList(Q)
+	. = sortList(Q, /proc/cmp_text_asc)
 
 /proc/assoc_list_to_list(var/list/l)
 	RETURN_TYPE(/list)
