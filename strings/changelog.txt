@@ -1,5 +1,9 @@
 
 (t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
 (u)LeahTheTech
 (p)10325
 (e)|
