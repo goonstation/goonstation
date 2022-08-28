@@ -63,6 +63,7 @@
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capbackpack"
 	item_state = "capbackpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
