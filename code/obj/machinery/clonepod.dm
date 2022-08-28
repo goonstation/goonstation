@@ -263,11 +263,13 @@
 			if(health_penalty >= 100)
 				src.occupant.unlock_medal("Quit Cloning Around")
 
-		src.mess = 0
+		src.mess = FALSE
+		var/puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
 			traits.copy_to(src.occupant.traitHolder)
-			if (src.occupant.traitHolder.hasTrait("puritan"))
-				src.mess = 1
+			puritan = src.occupant.traitHolder.hasTrait("puritan")
+			if (puritan)
+				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
 				// - Immediately take 250 tox and 100 random brute
@@ -351,7 +353,8 @@
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
+		if (!puritan)
+			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
 
