@@ -30,7 +30,7 @@
 
 	Crossed(atom/movable/AM)
 		if(isliving(AM) && !isintangible(AM))
-			src.do_scan(O)
+			src.do_scan(AM)
 		else if (isobserver(AM) && prob(1))
 			src.do_scan(AM)
 		else if (istype(AM, /obj/item) && (!src.emagged))
