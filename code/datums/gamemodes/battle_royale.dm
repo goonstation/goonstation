@@ -172,8 +172,7 @@ var/global/area/current_battle_spawn = null
 		qdel(HT)
 
 	for_by_tcl(BLT, /obj/item/storage/belt)
-		SPAWN (1 SECOND) // Hack. For some reason this doesn't work right away
-			qdel(BLT)
+		qdel(BLT)
 
 	for_by_tcl(MV, /obj/machinery/vehicle)
 		if (!istype(MV, /obj/machinery/vehicle/escape_pod) && !istype(MV, /obj/machinery/vehicle/tank/minisub/escape_sub))
