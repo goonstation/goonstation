@@ -1,5 +1,9 @@
 
 (t)sun aug 28 22
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
 (u)CrystalClover
 (p)10469
 (e)|
