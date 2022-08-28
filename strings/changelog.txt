@@ -11,8 +11,11 @@
 (+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
 (+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
 (+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
-(+)Remove Garotte, EMAG, Sawfly Cluster, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
 (+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
 (+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
 (+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
 (t)sat aug 27 22

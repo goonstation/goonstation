@@ -96,7 +96,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/gun/energy/crossbow
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
@@ -188,7 +187,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/old_grenade/sawfly/withremote
 	cost = 2
 	vr_allowed = FALSE
-	br_allowed = TRUE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -597,7 +595,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/wasp_grenade_kit
 	cost = 3
 	desc = "These wasp grenades contain genetically modified extra double large hornets that will surely inspire awe in all your non-botanical friends."
-	br_allowed = TRUE
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -608,7 +605,6 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
 	not_in_crates = 1 //the value of the item goes down significantly for non-botanists since only botanists are treated kindly by wasps
-	br_allowed = TRUE
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR
@@ -804,7 +800,6 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR
 
@@ -982,7 +977,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/dagger/syndicate
 	cost = 2
 	desc = "An ornamental dagger for stabbing people with."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
