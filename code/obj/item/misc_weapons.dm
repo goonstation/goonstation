@@ -196,12 +196,12 @@
 
 		if (!loaded_glowstick)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
-			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
 			return
 
 		if (!loaded_glowstick.on)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
-			playsound(user, "sound/items/zippo_close.ogg", 60, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -272,7 +272,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.open = 1
 			if (loaded_glowstick)
 				src.icon_state = "[state_name]-open-[bladecolor]"
@@ -281,12 +281,12 @@
 			return
 		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.open = 0
 			src.icon_state = "[state_name]0"
 		else
 			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
@@ -597,7 +597,7 @@
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			src.set_loc(M)
 			src.implanted = 1
@@ -1199,7 +1199,7 @@
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
 		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
-		playsound(src.loc, "sound/impact_sounds/Blade_Small_Bloody.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		user.TakeDamage("chest", 100, 0)
 		SPAWN(10 SECONDS)
 		if (user)
@@ -1227,7 +1227,7 @@
 	else
 		user.visible_message("<span class='alert'><b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b></span>")
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 /obj/item/katana_sheath
 	name = "katana sheath"
@@ -1285,7 +1285,7 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(user, "sound/effects/sword_sheath.ogg", 50, 0, 0)
+			playsound(user, 'sound/effects/sword_sheath.ogg', 50, 0, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
@@ -1422,7 +1422,7 @@
 
 
 /obj/item/bloodthirsty_blade/attack(target, mob/user)
-	playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+	playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(!isdead(C))
@@ -1463,7 +1463,7 @@ obj/item/fragile_sword
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target, mob/user)
-		playsound(target, "sound/impact_sounds/Blade_Small_Bloody.ogg", 60, 1)
+		playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -1480,7 +1480,7 @@ obj/item/fragile_sword
 				force += 5
 				throwforce = force
 				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
-				playsound(loc, "sound/items/blade_pull.ogg", 60, 1)
+				playsound(loc, 'sound/items/blade_pull.ogg', 60, 1)
 		..()
 
 obj/item/whetstone

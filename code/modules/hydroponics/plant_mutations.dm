@@ -186,7 +186,7 @@
 		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -297,7 +297,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 

@@ -91,7 +91,7 @@
 		src.answered = 1
 
 		src.icon_state = "[answeredicon]"
-		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
 			if(src.connected == 1)

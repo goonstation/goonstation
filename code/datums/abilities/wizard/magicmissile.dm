@@ -62,4 +62,4 @@
 					P.mob_shooter = holder.owner
 					P.shooter = holder.owner
 
-		playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_magmislaunch.ogg', 25, 1, -1)

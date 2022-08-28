@@ -22,7 +22,7 @@
 					return ..(target, start, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
@@ -35,7 +35,7 @@
 					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
@@ -175,7 +175,7 @@
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -217,7 +217,7 @@
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/conc_grenade.ogg", 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"

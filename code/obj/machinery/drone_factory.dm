@@ -274,7 +274,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 

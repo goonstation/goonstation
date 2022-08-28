@@ -18,7 +18,7 @@
 			holder.owner.say("ARSE NATH", FALSE, maptext_style, maptext_colors)
 		..()
 
-		playsound(holder.owner, "sound/voice/farts/superfart.ogg", 25, 1)
+		playsound(holder.owner, 'sound/voice/farts/superfart.ogg', 25, 1)
 
 		for (var/mob/*living/carbon/human*//H in oview(holder.owner))
 			if (H.traitHolder.hasTrait("training_chaplain"))

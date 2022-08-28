@@ -601,7 +601,7 @@ that cannot be itched
 			boutput(user, "<span class='alert'>That cartridge won't fit in there!</span>")
 			return
 		boutput(user, "<span class='notice'>Upgrade cartridge installed.</span>")
-		playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+		playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 		user.u_equip(W)
 		qdel(W)
 
@@ -746,7 +746,7 @@ that cannot be itched
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
-		playsound(src, "sound/machines/keyboard3.ogg", 30, 1)
+		playsound(src, 'sound/machines/keyboard3.ogg', 30, 1)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -771,7 +771,7 @@ that cannot be itched
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
@@ -868,7 +868,7 @@ that cannot be itched
 		// replace with boutput
 		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
 		if (sell_value > 0)
-			playsound(src, "sound/machines/chime.ogg", 10, 1)
+			playsound(src, 'sound/machines/chime.ogg', 10, 1)
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null

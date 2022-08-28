@@ -56,7 +56,7 @@
   if(istype(T, /turf/space))
     return
   if(src.active)
-    playsound(T, "sound/impact_sounds/Flesh_Stab_2.ogg", 60, 1)
+    playsound(T, 'sound/impact_sounds/Flesh_Stab_2.ogg', 60, 1)
     T.visible_message("<span style='game'>[src] is planted on [T].</span>")
     //T = new /turf/simulated/martian/floor(T)
     new /obj/martianBiotech/structureSpawner(T, src.spawn_path)
@@ -109,8 +109,8 @@
       if(100 to INFINITY)
         // we're done here
         src.active = 0
-        playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-        playsound(src, "sound/impact_sounds/Slimy_Splat_2.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+        playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 100, 1)
         src.visible_message("<span style='color: red; font-weight: bold;'>[src] bursts open!</span>")
         new spawn_path(src.loc)
         src.icon_state = "seed_dead"

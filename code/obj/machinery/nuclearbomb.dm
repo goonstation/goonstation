@@ -198,7 +198,7 @@
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
 						ticker.mode.shuttle_available = 1
 
-				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
 				logTheThing(LOG_BOMBING, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
 				W.set_loc(src)

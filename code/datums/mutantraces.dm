@@ -1284,7 +1284,7 @@ TYPEINFO(/datum/mutantrace)
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<span class='alert'><B>[src.mob] screeches!</B></span>"
-					playsound(src.mob, "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
 		return message
@@ -1404,7 +1404,7 @@ TYPEINFO(/datum/mutantrace)
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<B>[src.mob]</B> belches."
-					playsound(src.mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						src.mob?.emote_allowed = 1
 		return message
@@ -1865,7 +1865,7 @@ TYPEINFO(/datum/mutantrace)
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<B>[src.mob]</B> croaks."
-					playsound(src.mob, "sound/voice/farts/frogfart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						if (src.mob) src.mob.emote_allowed = 1
 					return message
@@ -2126,7 +2126,7 @@ TYPEINFO(/datum/mutantrace)
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
 				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
-				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return
 

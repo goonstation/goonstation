@@ -333,7 +333,7 @@
 		if (printing)
 			return
 		printing = TRUE
-		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+		playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
 		sleep(1.75 SECONDS)
 		for (var/i in 1 to amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)

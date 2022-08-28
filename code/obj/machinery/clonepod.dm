@@ -459,7 +459,7 @@
 					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
 					src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
-					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					src.failed_tick_counter = 1
 
 				var/heal_delta = (src.occupant.health - previous_heal)
@@ -490,7 +490,7 @@
 					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					// literally ding like a microwave
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 					look_busy()
 					src.go_out(1)
 				else
@@ -605,13 +605,13 @@
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
 				clonehack = 0
 				implant_hacker = null
 				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor!</span>")
-				playsound(src.loc, "sound/effects/pop.ogg", 80, 0)
+				playsound(src.loc, 'sound/effects/pop.ogg', 80, 0)
 				light.disable()
 				src.UpdateIcon()
 			else

@@ -84,7 +84,7 @@
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -168,7 +168,7 @@
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, "sound/voice/yeaaahhh.ogg", 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -515,7 +515,7 @@
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
-				playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
 				qdel(W)
 				return

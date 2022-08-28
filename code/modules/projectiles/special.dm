@@ -314,7 +314,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				sfloors -= Q
 
 	on_hit(var/atom/A)
-		playsound(A, "sound/weapons/energy/LightningCannonImpact.ogg", 50, 1)
+		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, 1)
 		var/list/sfloors = list()
 		for (var/turf/T in view(shock_range, A))
 			if (!T.density)
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		fireflash_sm(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
-		playsound(A, "sound/effects/ExplosionFirey.ogg", 100, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
@@ -402,7 +402,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(var/atom/A)
 		var/turf/T = get_turf(A)
-		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
 		if(!src.impacted)
 			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
 			src.impacted = 1

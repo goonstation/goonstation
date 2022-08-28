@@ -254,7 +254,7 @@
 				src.anchored = !src.anchored
 				src.backup = 0
 				src.visible_message("<b>[user.name]</b> [src.connected ? "connects" : "disconnects"] [src.name] [src.connected ? "to" : "from"] the wire.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				boutput(user, "There is no cable to connect to.")
 

@@ -80,7 +80,7 @@
 			src.working = 1
 			src.icon_state = "[icon_base]-on"
 
-			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
 			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
@@ -250,17 +250,17 @@
 					//O.show_message(text("<b>[]</b> says, 'Let's roll!'", src), 1)
 				var/roll = rand(1,101)
 
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
-						playsound(src.loc, "sound/voice/heavenly.ogg", 55, 1)
+						playsound(src.loc, 'sound/voice/heavenly.ogg', 55, 1)
 						usr.un_damn()
 					else if(roll > 1 && roll <= 10 && istype(usr,/mob/living/carbon/human))
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, '[usr.name] has a limb ripped off by the machine!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						var/mob/living/carbon/human/H = usr
 						if(H.limbs.l_arm)
 							H.limbs.l_arm.sever()
@@ -348,48 +348,48 @@
 					//O.show_message(text("<b>[]</b> says, 'Let's roll!'", src), 1)
 				var/roll = rand(1,1350)
 
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/airraid_loop_short.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/airraid_loop_short.ogg', 55, 1)
 						src.play_money += 1000000
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won a hundred thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/klaxon.ogg', 55, 1)
 						src.play_money += 100000
 						//src.money -= 100000
 					else if (roll > 5 && roll <= 25)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won ten thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/klaxon.ogg', 55, 1)
 						src.play_money += 10000
 						//src.money -= 10000
 					else if (roll > 25 && roll <= 50)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
+						playsound(src.loc, 'sound/musical_instruments/Bell_Huge_1.ogg', 55, 1)
 						src.play_money += 1000
 						//src.money -= 1000
 					else if (roll > 50 && roll <= 100)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a hundred credits!'</span>", src), 1)
-						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
+						playsound(src.loc, 'sound/musical_instruments/Bell_Huge_1.ogg', 55, 1)
 						src.play_money += 100
 						//src.money -= 100
 					else if (roll > 100 && roll <= 200)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won fifty credits!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						src.play_money += 50
 						//src.money -= 50
 					else if (roll > 200 && roll <= 500)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'You have won ten credits!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						src.play_money += 10
 						//src.money -= 10
 					else

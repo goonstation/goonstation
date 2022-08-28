@@ -714,7 +714,7 @@ datum
 						..()
 						return
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
-					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 					M.set_loc(pick(randomturfs))
 				..()
 				return
@@ -2217,7 +2217,7 @@ datum
 
 				if(volume >= 5 && prob(10))
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2797,7 +2797,7 @@ datum
 
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/ketchup) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/ketchup,T)
 
 		fooddrink/mustard
@@ -3205,7 +3205,7 @@ datum
 						boutput(M, "<span class='alert'>My goodness, that was tasty!</span>")
 					else
 						boutput(M, "<span class='alert'>A slice of pepperoni slaps you!</span>")
-						playsound(M.loc, "sound/impact_sounds/Generic_Slap_1.ogg", 50, 1)
+						playsound(M.loc, 'sound/impact_sounds/Generic_Slap_1.ogg', 50, 1)
 						M.TakeDamage("head", 1, 0, 0, DAMAGE_BLUNT)
 
 			reaction_turf(var/turf/T, var/volume)
@@ -4181,7 +4181,7 @@ datum
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
 					M.visible_message("<span class='alert'>[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!</span>")
-					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
 					var/message = null

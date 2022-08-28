@@ -91,7 +91,7 @@
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
 
 
@@ -101,7 +101,7 @@
 
 		if (istype(A, /turf/simulated/floor))
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
 
 
@@ -114,7 +114,7 @@
 			if (locate(/obj/window) in B)
 				return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
-			playsound(user, "sound/machines/click.ogg", 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
 
 
@@ -137,7 +137,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(src, "sound/machines/click.ogg", 25, 1)
+					playsound(src, 'sound/machines/click.ogg', 25, 1)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -372,7 +372,7 @@
 			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.charge -= 100
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
 			return
@@ -449,7 +449,7 @@ ported and crapped up by: haine
 			else
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [target.reagents.total_volume] units.")
 				target.reagents.trans_to(src, target.reagents.total_volume) // Transfer it all!
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 				qdel(target)
 				return
 		else

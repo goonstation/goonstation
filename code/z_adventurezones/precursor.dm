@@ -263,7 +263,7 @@
 
 	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
-			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
 
 			if (id)
@@ -360,14 +360,14 @@
 			var/obj/item/chilly_orb/O = W
 			if(O.id == src.id)
 				boutput(user, "<span class='notice'><b>[O] attaches neatly to [src]. Oh dear.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 60, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 60, 1)
 				user.drop_item(O)
 				O.set_loc(src)
 				src.icon_state = "orb_activated"
 				src.assembled = 1
 				sleep(0.5 SECONDS)
 				src.visible_message("<span class='notice'><b>[src] makes a strange noise!</b></span>")
-				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
+				playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 60, 1)
 				src.ready = 1
 				return
 			else
@@ -378,8 +378,8 @@
 			sleep(0.1 SECONDS)
 			user.visible_message("<span class='alert'><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 75, 1)
-			playsound(src.loc, "sound/machines/hiss.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 75, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 75, 1)
 			explosion(src, src.loc, -1,-1,1,1)
 			user:emote("scream")
 			qdel(W)
@@ -458,7 +458,7 @@
 			opened = 1
 			changing_state = 1
 			active = (opened != default_state)
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides open.</b>")
 			flick("bluedoor_opening",src)
 			src.icon_state = "bluedoor_0"
@@ -479,7 +479,7 @@
 
 			set_density(1)
 			opacity = 1
-			playsound(src.loc,"sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
@@ -571,10 +571,10 @@
 						return
 					light.enable()
 					src.animate_effect()
-					playsound(src.loc, "sound/effects/warp1.ogg", 65, 1)
+					playsound(src.loc, 'sound/effects/warp1.ogg', 65, 1)
 					src.visible_message("<span class='alert'><b>[src]</b> charges up!</span>")
 					sleep(0.5 SECONDS)
-					playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+					playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 					var/list/lineObjs
 					lineObjs = DrawLine(src, linked_object, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -667,13 +667,13 @@
 		src.active = 1
 
 		src.visible_message("<span class='notice'><b>[user] turns [src].</b></span>")
-		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/stoneshift.ogg', 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
 		sleep(1 SECOND)
 		src.icon = 'icons/obj/artifacts/artifacts.dmi'
 		src.icon_state = "precursor-6"
-		playsound(src.loc, "sound/machines/click.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 60, 1)
 
 		switch(src.setting) // roll to next color
 			if("red")
@@ -865,7 +865,7 @@
 				src.set_density(1)
 				src.invisibility = INVIS_NONE
 				changing_state = 1
-				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
@@ -880,7 +880,7 @@
 				src.active = 0
 				src.set_density(0)
 				src.invisibility = INVIS_ALWAYS_ISH
-				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown2.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
@@ -997,7 +997,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
@@ -1314,7 +1314,7 @@
 		elec_zap()
 
 	proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1333,7 +1333,7 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 4))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.bullet_act(src)
 
 

@@ -503,7 +503,7 @@ toxic - poisons
 
 	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
 	on_hit(atom/hit)
-		//playsound(hit.loc, "sound/machines/engine_grump1.ogg", 45, 1)
+		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
 		if (istype(hit, /turf/simulated/wall/auto/asteroid))
 			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)

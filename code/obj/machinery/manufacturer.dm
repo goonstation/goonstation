@@ -954,7 +954,7 @@
 					C.use(1)
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (src.health >= 50)
 						boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -970,7 +970,7 @@
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
 					src.dismantle_stage = 1
@@ -986,7 +986,7 @@
 
 		else if (ispryingtool(W) && src.dismantle_stage == 1)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.dismantle_stage = 2
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
@@ -996,7 +996,7 @@
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)

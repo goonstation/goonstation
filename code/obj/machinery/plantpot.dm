@@ -488,7 +488,7 @@
 								qdel(C)
 							else
 								qdel(C)
-							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+							playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
 							SPAWN(2.5 SECONDS)
 								if(src)
@@ -522,11 +522,11 @@
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 0
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 1
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
@@ -652,7 +652,7 @@
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
@@ -1869,7 +1869,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
 
 /obj/machinery/hydro_mister
@@ -1915,7 +1915,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -1939,7 +1939,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	is_open_container()
 		return 1 // :I

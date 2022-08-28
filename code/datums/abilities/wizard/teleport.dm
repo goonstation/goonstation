@@ -171,13 +171,13 @@
 	if (effect)
 		animate_teleport_wiz(src)
 		sleep(2 SECONDS) // Animation.
-		playsound(src.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(src.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 		sleep(2 SECONDS) // Animation.
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		playsound(destination, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 		src.set_loc(destination)
 		smoke.start()
 

@@ -1453,7 +1453,7 @@ var/datum/action_controller/actions
 			return
 		else
 			picker.working = 1
-			playsound(picker.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
@@ -1868,7 +1868,7 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(owner.loc, "sound/machines/click.ogg", 60, 1)
+		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()
@@ -2084,11 +2084,11 @@ var/datum/action_controller/actions
 	onStart()
 		..()
 		if(iswrenchingtool(tool))
-			playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 		else if(isweldingtool(tool))
-			playsound(target, "sound/items/Welder.ogg", 50, 1)
+			playsound(target, 'sound/items/Welder.ogg', 50, 1)
 		else if(isscrewingtool(tool))
-			playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
 
 	onEnd()

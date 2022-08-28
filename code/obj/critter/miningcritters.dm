@@ -43,7 +43,7 @@
 		if(istype(M, /obj/item/raw_material/))
 			var/obj/item/raw_material/material = M
 			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
-			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			src.eaten += material.amount
 			qdel(src.target)
 			src.target = null

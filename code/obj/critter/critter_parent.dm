@@ -961,7 +961,7 @@
 	/*	if(bullet == 0)
 			A = new /obj/bullet/mpbullet( user:loc )
 		else if(bullet == 1)
-			playsound(user, "sound/weapons/shotgunshot.ogg", 100, 1)
+			playsound(user, 'sound/weapons/shotgunshot.ogg', 100, 1)
 			A = new /obj/bullet/slug( user:loc )
 		else if(bullet == 2)
 			playsound(user, "fivegunshot.ogg", 100, 1)
@@ -1056,7 +1056,7 @@
 
 			if (shouldThrow && T)
 				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)

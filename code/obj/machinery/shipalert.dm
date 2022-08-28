@@ -44,7 +44,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		if (2)
 			//activate
 			if (src.working) return
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.toggleActivate(user)
 
 /obj/machinery/shipalert/attackby(obj/item/W, mob/user)

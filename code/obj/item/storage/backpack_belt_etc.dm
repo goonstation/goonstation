@@ -551,7 +551,7 @@
 				H.attached_objs.Add(overlay)
 
 
-			playsound(src.loc, "sound/machines/shieldup.ogg", 60, 1)
+			playsound(src.loc, 'sound/machines/shieldup.ogg', 60, 1)
 		return
 
 	dropped(mob/user as mob)
@@ -574,7 +574,7 @@
 			qdel(overlay)
 			overlay = null
 
-		playsound(src.loc, "sound/machines/shielddown.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/shielddown.ogg', 60, 1)
 		return
 
 	process()

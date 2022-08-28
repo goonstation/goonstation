@@ -46,7 +46,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 
@@ -58,7 +58,7 @@
 				if(iscarbon(M))
 					src.visible_message("<span class='combat'><B>[src]</B> ravenously wolfs down [M]!</span>")
 					logTheThing(LOG_COMBAT, M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-					playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+					playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 					M.death(TRUE)
 					var/atom/movable/overlay/animation = null
 					M.transforming = 1
@@ -143,7 +143,7 @@
 
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,src.loc)
 		B.name = "ruined tomato"
 		qdel (src)

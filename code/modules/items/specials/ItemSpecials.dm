@@ -636,9 +636,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(master, "sound/effects/flame.ogg", 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )

@@ -47,7 +47,7 @@
 				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 				continue
 
-			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
+			playsound(holder.owner.loc, 'sound/effects/mag_iceburstlaunch.ogg', 25, 1, -1)
 			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
 			SPAWN(0)
@@ -73,7 +73,7 @@
 					if (GET_DIST(A,M) == 0)
 						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
-						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
+						playsound(holder.owner.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time

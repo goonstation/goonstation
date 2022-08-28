@@ -225,11 +225,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 			else
 				user.show_message("You begin to disassemble the turret.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
 				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
@@ -244,7 +244,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
 			  "[user] powers the turret [src.active ? "off" : "on"].", \
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 		else
 			src.health = src.health - W.force
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 			attack_particle(user,src)
 			src.check_health()
 			..()
@@ -285,7 +285,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				damage_words = "to be on the verge of falling apart!"
 
 	proc/die()
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			src.icon_state = "[src.icon_tag]_active"
 
-			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
+			playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
 
 		return src.target
 

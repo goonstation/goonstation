@@ -17,7 +17,7 @@
 			holder.owner.say("ERATH QUUK")
 		..()
 
-		playsound(holder.owner.loc, "sound/effects/exlow.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/exlow.ogg', 25, 1, -1)
 
 		new/obj/effects/shockwave(holder.owner.loc)
 

@@ -648,7 +648,7 @@
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2
-			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
+			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")

@@ -542,7 +542,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		G.icon_state = string
 		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -570,7 +570,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!istype(T, /turf/space) && !T.density)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
-			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+			playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else

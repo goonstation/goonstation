@@ -232,7 +232,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 60, 1, 5)
+				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, 1, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -265,7 +265,7 @@
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
-			playsound(src, "sound/musical_instruments/bard/riff.ogg", 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, 1, 5)
 			. = ..()
 
 	ultrasound
@@ -281,7 +281,7 @@
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
-			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, 1, 5)
 			. = ..()
 
 	focus
