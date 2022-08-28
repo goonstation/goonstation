@@ -137,4 +137,3 @@
 			src.victim = C
 		else
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
-	return
