@@ -799,7 +799,7 @@ TYPEINFO(/datum/mutantrace)
 				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
 				playsound(src.mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -991,7 +991,7 @@ TYPEINFO(/datum/mutantrace)
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1092,7 +1092,7 @@ TYPEINFO(/datum/mutantrace)
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1140,6 +1140,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
+		// if the head was previous linked to someone else
 		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
@@ -1147,6 +1148,12 @@ TYPEINFO(/datum/mutantrace)
 				H.set_eye(null)
 			S.head_tracker = null
 			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		// if we were previously linked to another head
+		if (src.head_tracker)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
+			src.head_tracker.linked_human = null
 		head_tracker = head
 		head_tracker.linked_human = src.mob
 
@@ -1392,14 +1399,14 @@ TYPEINFO(/datum/mutantrace)
 					message = "<span class='alert'><B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
 					playsound(src.mob, "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						src.mob.emote_allowed = 1
+						src.mob?.emote_allowed = 1
 			if("burp")
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<B>[src.mob]</B> belches."
 					playsound(src.mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						src.mob.emote_allowed = 1
+						src.mob?.emote_allowed = 1
 		return message
 
 /datum/mutantrace/hunter
@@ -2167,7 +2174,8 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ishuman(src.mob))
 			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN(0)
-				APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
+				if(src.mob) //how??
+					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
 		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)

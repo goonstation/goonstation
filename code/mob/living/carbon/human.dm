@@ -417,7 +417,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your left arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
+					logTheThing(LOG_ADMIN, user, "replaced [constructTarget(src.holder,"admin")]'s left arm with [new_type]")
 				. ++
 
 			if (target == "both_arms" || target == "r_arm")
@@ -434,7 +434,7 @@
 				if (show_message)
 					src.holder.show_message("<span class='notice'><b>Your right arm [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_arm]!</b></span>")
 				if (user)
-					logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
+					logTheThing(LOG_ADMIN, user, "replaced [constructTarget(src.holder,"admin")]'s right arm with [new_type]")
 				. ++
 
 			if (target == "both_legs" || target == "l_leg")
@@ -445,7 +445,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your left leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.l_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
+						logTheThing(LOG_ADMIN, user, "replaced [constructTarget(src.holder,"admin")]'s left leg with [new_type]")
 					. ++
 
 			if (target == "both_legs" || target == "r_leg")
@@ -456,7 +456,7 @@
 					if (show_message)
 						src.holder.show_message("<span class='notice'><b>Your right leg [pick("magically ", "weirdly ", "suddenly ", "grodily ", "")]becomes [src.r_leg]!</b></span>")
 					if (user)
-						logTheThing("admin", user, src.holder, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
+						logTheThing(LOG_ADMIN, user, "replaced [constructTarget(src.holder,"admin")]'s right leg with [new_type]")
 					. ++
 			if (.)
 				src.holder.set_body_icon_dirty()
@@ -612,14 +612,14 @@
 	//The unkillable man just respawns nearby! Oh no!
 	if (src.unkillable || src.spell_soulguard)
 		if (src.unkillable && src.mind.dnr) //Unless they have dnr set in which case rip for good
-			logTheThing("combat", src, null, "was about to be respawned (Unkillable) but had DNR set.")
+			logTheThing(LOG_COMBAT, src, "was about to be respawned (Unkillable) but had DNR set.")
 			if (!gibbed)
 				src.gib()
 			boutput(src, "<span class='alert'>The shield hisses and buzzes grumpily! It's almost as if you have some sort of option set that prevents you from coming back to life. Fancy that.</span>")
 			var/obj/item/unkill_shield/U = new /obj/item/unkill_shield
 			U.set_loc(src.loc)
 		else
-			logTheThing("combat", src, null, "respawns ([src.spell_soulguard ? "Soul Guard" : "Unkillable"])")
+			logTheThing(LOG_COMBAT, src, "respawns ([src.spell_soulguard ? "Soul Guard" : "Unkillable"])")
 			src.unkillable_respawn()
 
 	if(src.traitHolder && src.traitHolder.hasTrait("soggy"))
@@ -686,7 +686,7 @@
 					src.ghostize()
 					boutput(src, "Something went wrong, and we couldnt transfer you into a handspider! Please adminhelp this.")
 
-				logTheThing("combat", src, null, "became a headspider at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
 
 				if(src.wear_mask)
 					var/obj/item/dropped_mask = src.wear_mask
@@ -746,7 +746,7 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 
-	logTheThing("combat", src, null, "dies [log_health(src)] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
 
 	if (!src.suiciding)
@@ -795,7 +795,7 @@
 				boutput(world, "<B>Everyone is dead! Resetting in 30 seconds!</B>")
 
 				SPAWN(30 SECONDS)
-					logTheThing("diary", null, null, "Rebooting because of no live players", "game")
+					logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
 	return ..(gibbed)
@@ -899,9 +899,6 @@
 	..()
 	statpanel("Status")
 	if (src.client.statpanel == "Status")
-		if (src.client)
-			stat("Time Until Payday:", wagesystem.get_banking_timeleft())
-
 		stat(null, " ")
 		if (src.mind && src.mind.stealth_objective)
 			if (src.mind.objectives && istype(src.mind.objectives, /list))
@@ -1021,11 +1018,6 @@
 	if (src.stat)
 		return
 
-
-	//MBC : removing this because it felt bad and it wasn't *too* exploitable. still does click delay on the end of a throw anyway.
-	//if (usr.next_click > world.time)
-	//	return
-
 	var/obj/item/I = src.equipped()
 
 	if (!I || !isitem(I) || I.cant_drop) return
@@ -1039,7 +1031,7 @@
 
 	u_equip(I)
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		src.set_dir(get_dir(src, target))
 
 	//actually throw it!
@@ -1047,6 +1039,7 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
+		var/throw_dir = get_dir(target, src)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
 				yeet_chance = 1
@@ -1063,18 +1056,18 @@
 			src.visible_message("<span class='alert'>[src] throws [I].</span>")
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
-			logTheThing("combat", src, C, "throws [constructTarget(C,"combat")] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 			if ( ishuman(C) && !C.getStatusDuration("weakened"))
 				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-			logTheThing("combat", src, null, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 		if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
-			src.inertia_dir = get_dir(target, src)
+			src.inertia_dir = throw_dir
 			step(src, inertia_dir)
 		if ((istype(I.loc, /turf/space) || I.no_gravity)  && ismob(I))
 			var/mob/M = I
-			M.inertia_dir = get_dir(src,target)
+			M.inertia_dir = throw_dir
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
@@ -1526,13 +1519,13 @@
 					secure_headset_mode = lowertext(copytext(message,2,3))
 				message = copytext(message, 3)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
 
-	logTheThing("diary", src, null, "(WHISPER): [message]", "whisper")
-	logTheThing("whisper", src, null, "SAY: [message] (WHISPER) [log_loc(src)]")
+	logTheThing(LOG_DIARY, src, "(WHISPER): [message]", "whisper")
+	logTheThing(LOG_WHISPER, src, "SAY: [message] (WHISPER) [log_loc(src)]")
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
 		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -1571,9 +1564,12 @@
 	forced_language = get_special_language(secure_headset_mode)
 
 	message = process_accents(src,message)
+
+	if (src.stuttering)
+		message = stutter(message)
+
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
-
 
 	switch (message_mode)
 		//MBC : now that you can whisper while dying or suffocating, let's not allow you to whisper into a radio.
@@ -1678,10 +1674,7 @@
 		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	SPAWN(1.5 SECONDS)
-		if (has_typing_indicator == FALSE)
-			UpdateOverlays(null, "speech_bubble")
+	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/var/const
 	slot_back = 1
@@ -2433,14 +2426,14 @@
 		src.pathogens += Q.pathogen_uid
 		src.pathogens[Q.pathogen_uid] = Q
 		Q.infected = src
-		logTheThing("pathology", src, null, "is infected by [Q].")
+		logTheThing(LOG_PATHOLOGY, src, "is infected by [Q].")
 		return 1
 	else
 		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
 		if (C.generation < P.generation)
 			var/datum/pathogen/Q = new /datum/pathogen
 			Q.setup(0, P, 1)
-			logTheThing("pathology", src, null, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
+			logTheThing(LOG_PATHOLOGY, src, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
 			pathogen_controller.mob_infected(Q, src)
 			Q.stage = min(C.stage, Q.stages)
 			qdel(C)
@@ -2459,7 +2452,7 @@
 		if (M.auto_immunize)
 			immunity(P)
 		qdel(Q)
-		logTheThing("pathology", src, null, "is cured of [pname].")
+		logTheThing(LOG_PATHOLOGY, src, "is cured of [pname].")
 
 /mob/living/carbon/human/remission(var/datum/pathogen/P)
 	if (isdead(src))
@@ -2467,14 +2460,14 @@
 	if (P.pathogen_uid in src.pathogens)
 		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
 		Q.remission()
-		logTheThing("pathology", src, null, "'s pathogen [Q] enters remission.")
+		logTheThing(LOG_PATHOLOGY, src, "'s pathogen [Q] enters remission.")
 
 /mob/living/carbon/human/immunity(var/datum/pathogen/P)
 	if (isdead(src))
 		return
 	if (!(P.pathogen_uid in src.immunities))
 		src.immunities += P.pathogen_uid
-		logTheThing("pathology", src, null, "gains immunity to pathogen [P].")
+		logTheThing(LOG_PATHOLOGY, src, "gains immunity to pathogen [P].")
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
@@ -2950,7 +2943,7 @@
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
-	logTheThing("combat", src, null, "drops the items they were juggling")
+	logTheThing(LOG_COMBAT, src, "drops the items they were juggling")
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2979,7 +2972,7 @@
 		var/obj/item/i = thing
 		i.on_spin_emote(src)
 	src.update_body()
-	logTheThing("combat", src, null, "juggles [thing]")
+	logTheThing(LOG_COMBAT, src, "juggles [thing]")
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3059,7 +3052,7 @@
 /mob/living/carbon/human/proc/activate_chest_item_on_attack(mob/living/carbon/human/M) // Let's only have humans do this, ok?
 	// If attacker is targeting the chest and a chest item exists, activate it.
 	if (M && M.zone_sel && M.zone_sel.selecting == "chest" && src.chest_item != null && (src.chest_item in src.contents))
-		logTheThing("combat", M, src, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
+		logTheThing(LOG_COMBAT, M, "activates [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		SPAWN(0) //might sleep/input/etc, and we don't want to hold anything up
 			src.chest_item.AttackSelf(src)
 	return
@@ -3074,7 +3067,7 @@
 		var/maxVolumeAdd = src.reagents.maximum_volume - src.reagents.total_volume	// Get max available volume in human
 		if (maxVolumeAdd > 0)	// If we can add reagents to human, print message and dump shit into human
 			boutput(src, "<span class='alert'><b>[src.chest_item] spills its contents inside your chest!</span>")
-			logTheThing("combat", src, src.chest_item, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
+			logTheThing(LOG_COMBAT, src, "transfers chemicals from [src.chest_item] [log_reagents(src.chest_item)] to [src] at [log_loc(src)]")
 			src.chest_item.reagents.trans_to(src, maxVolumeAdd)
 	return
 
@@ -3128,7 +3121,7 @@
 			src.TakeDamage("chest", 20, 0, 0, DAMAGE_BLUNT)
 			take_bleeding_damage(src, src, 5)
 		// added log - cirr
-		logTheThing("combat", src, src.chest_item, "takes damage from farting out [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
+		logTheThing(LOG_COMBAT, src, "takes damage from farting out [src.chest_item] embedded in [src]'s chest cavity at [log_loc(src)]")
 		// Make copy of item on ground
 		var/obj/item/outChestItem = src.chest_item
 		outChestItem.set_loc(get_turf(src))
@@ -3172,6 +3165,7 @@
 	if (LinkBlocked(src.loc,usr.loc)) return
 	if (isAI(usr) || isAI(src)) return
 	if (isghostcritter(usr) && !isdead(src)) return
+	if (isintangible(usr)) return
 	src.show_inv(usr)
 
 /mob/living/carbon/human/get_random_equipped_thing_name() //FOR FLAVOR USE ONLY
@@ -3372,7 +3366,7 @@
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? thr.user : "a non-mob"]).")
 			random_brute_damage(src, AM.throwforce,1)
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
@@ -3388,7 +3382,7 @@
 		else
 			AM.Attackhand(src)	// nice catch, hayes. don't ever fuckin do it again
 			src.visible_message("<span class='alert'>[src] catches the [AM.name]!</span>")
-			logTheThing("combat", src, null, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "catches [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			src.throw_mode_off()
 			#ifdef DATALOGGER
 			game_stats.Increment("catches")
@@ -3400,7 +3394,7 @@
 		else
 			src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
 			random_brute_damage(src, AM.throwforce,1)
-			logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
 

@@ -156,7 +156,7 @@
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		. = (get_dist(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) == 0)
 		return
 
 /datum/aiTask/succeedable/move/failed()

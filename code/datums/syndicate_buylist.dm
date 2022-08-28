@@ -11,7 +11,7 @@ proc/build_syndi_buylist_cache()
 		if (!LE.cost || !isnum(LE.cost) || LE.cost <= 0)
 			syndi_buylist_cache.Remove(LE)
 
-	syndi_buylist_cache = sortList(syndi_buylist_cache)
+	sortList(syndi_buylist_cache, /proc/cmp_text_asc)
 
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 ABSTRACT_TYPE(/datum/syndicate_buylist)
@@ -800,7 +800,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/donkpocket_w_kit
 	cost = 2
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

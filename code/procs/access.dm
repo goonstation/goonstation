@@ -406,7 +406,7 @@
 
 var/list/access_name_lookup //Generated at round start.
 
-//Build the access_name_lookup table, to associate descriptions of accesses with their numerical value.
+/// Build the access_name_lookup table, to associate descriptions of accesses with their numerical value.
 /proc/generate_access_name_lookup()
 	if (access_name_lookup)
 		return
@@ -416,7 +416,7 @@ var/list/access_name_lookup //Generated at round start.
 	for (var/accessNum in accesses)
 		access_name_lookup += "[get_access_desc(accessNum)]"
 
-	access_name_lookup = sortList(access_name_lookup) //Make the list all nice and alphabetical.
+	sortList(access_name_lookup, /proc/cmp_text_asc)
 
 	for (var/accessNum in accesses)
 		access_name_lookup["[get_access_desc(accessNum)]"] = accessNum

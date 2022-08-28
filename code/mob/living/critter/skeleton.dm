@@ -41,6 +41,7 @@
 	blood_id = null
 	burning_suffix = "humanoid"
 	metabolizes = 0
+	mob_flags = IS_BONEY
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

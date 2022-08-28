@@ -591,7 +591,7 @@
 			switchStage(getStage())
 			owner.delStatus("shivering")
 
-			logTheThing("combat", owner, null, "gains the burning status effect at [log_loc(owner)]")
+			logTheThing(LOG_COMBAT, owner, "gains the burning status effect at [log_loc(owner)]")
 
 			if(istype(owner, /mob/living))
 				var/mob/living/L = owner
@@ -1265,7 +1265,7 @@
 				on_turf = 1
 
 				//get distance divided by max distance and invert it. Result will be between 0 and 1
-				var/buff_mult = round(1-(min(get_dist(owner,gang.locker), max_dist) / max_dist), 0.1)
+				var/buff_mult = round(1-(min(GET_DIST(owner,gang.locker), max_dist) / max_dist), 0.1)
 				if (buff_mult <=0)
 					buff_mult = 0.1
 
@@ -1430,6 +1430,27 @@
 
 		getTooltip()
 			. = "Your max stamina and stamina regen have been increased slightly."
+
+	newcause
+		id = "newcause"
+		name = "Newfound cause"
+		desc = "Your newfound purpose in life has encouraged you to toughen up a little!"
+		icon_state = "revspirit"
+		unique = 1
+		maxDuration = 5 SECONDS
+		onAdd(optional = 8)
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 	patho_oxy_speed
 		id = "patho_oxy_speed"
@@ -1738,14 +1759,7 @@
 
 	onAdd(optional)
 		. = ..()
-		var/color2 = list(
-			0.5, 0, 0,
-			0, 0.5, 0,
-			0, 0, 0.5,
-			0.5, 0.25, 0.0625)
-		var/oldcol = owner.color
-		owner.color = color2
-		owner.onVarChanged("color", oldcol, color2)
+		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
 
@@ -2216,7 +2230,7 @@
 
 	onAdd(mob/hacker, custom_orders)
 		. = ..()
-		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [his_or_her(hacker)]."
+		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
 		var/mob/M = owner
 		if (M.mind && ticker.mode)
 			if (!M.mind.special_role)
@@ -2238,3 +2252,22 @@
 			remove_mindhack_status(M, "mindhack", "expired")
 		else if (M.mind?.master)
 			remove_mindhack_status(M, "otherhack", "expired")
+
+/datum/statusEffect/defib_charged
+	id = "defib_charged"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-on")
+
+	onRemove()
+		. = ..()
+		if(istype(owner, /obj/item/robodefibrillator))
+			var/obj/item/robodefibrillator/defib = owner
+			defib.set_icon_state("[defib.icon_base]-off")
+		if(duration <= 0)//timed out
+			playsound(owner, "sparks", 50, 1, -10)

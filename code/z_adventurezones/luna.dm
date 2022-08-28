@@ -836,7 +836,7 @@ Contents:
 /obj/machinery/door/poddoor/blast/lunar
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
-	autoclose = 0
+	autoclose = FALSE
 	req_access_txt = ""
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -912,8 +912,8 @@ Contents:
 	anchored = 1
 	density = 1
 	opacity = 1
-	autoclose = 0
-	cant_emag = 1
+	autoclose = FALSE
+	cant_emag = TRUE
 	req_access_txt = "999"
 
 	var/broken = 0
@@ -1631,7 +1631,7 @@ datum/computer/file/embedded_program/maintpanel
 
 			var/obj/controlTarget = locate(setupEntry)
 			if (!controlTarget)
-				logTheThing("debug", null, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
+				logTheThing(LOG_DEBUG, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
 				continue
 
 			if (istype(controlTarget, /obj/machinery/door/airlock))

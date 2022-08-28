@@ -528,7 +528,7 @@
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
-	desc = "A light but robust combat knife that allows you to move faster in fights."
+	desc = "A light but robust combat knife that allows you to move faster in fights. Knocks down targets when thrown."
 	icon_state = "combat_knife"
 	force = 15
 	throwforce = 20
@@ -651,7 +651,7 @@
 	// can_disarm = 1
 	two_handed = 0
 	var/use_two_handed = 1
-	var/status = 0
+	var/status = FALSE
 	var/one_handed_force = 7
 	var/two_handed_force = 13
 
@@ -688,8 +688,9 @@
 		..()
 
 	dropped(mob/user)
-		setTwoHanded(0)
-		status = 0
+		if (src.status)
+			setTwoHanded(FALSE)
+			src.status = FALSE
 		..()
 
 ////////////////////////////////////////// Butcher's knife /////////////////////////////////////////
@@ -745,7 +746,7 @@
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
-				logTheThing("combat", user, C, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i in 0 to 2)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
 				if (C.mind)

@@ -14,6 +14,7 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 	var/health = 50
+	var/repair_per_resource = 1
 	var/col_r = 0.1
 	var/col_g = 0.7
 	var/col_b = 0.6
@@ -80,13 +81,15 @@
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
 
-/turf/simulated/floor/feather/proc/repair()
+/turf/simulated/floor/feather/proc/repair(resources_available)
 	if (src.broken)
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
 		src.icon_state = initial(src.icon_state)
 		src.broken = FALSE
-	src.health = min(src.health + 10, initial(src.health))
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, initial(src.health) - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /turf/simulated/floor/feather/burn_tile()
 	return
@@ -167,6 +170,7 @@
 	mod = "flock"
 	health = 250
 	var/max_health = 250
+	var/repair_per_resource = 5
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
@@ -311,14 +315,16 @@
 		for (var/turf/simulated/wall/auto/feather/W in orange(1, src))
 			W.UpdateIcon()
 
-/turf/simulated/wall/auto/feather/proc/repair()
+/turf/simulated/wall/auto/feather/proc/repair(resources_available)
 	if (src.broken)
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("gnesis"))
-	src.health = min(src.health + 50, src.max_health)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /turf/simulated/wall/auto/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
 	..()

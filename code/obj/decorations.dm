@@ -232,7 +232,7 @@
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
-				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
@@ -357,6 +357,7 @@
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
+		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course

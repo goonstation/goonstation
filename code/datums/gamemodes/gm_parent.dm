@@ -184,12 +184,14 @@
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor && length(flock.trace_minds))
-							stuff_to_output += "Flocktraces:"
-							for (var/trace_name in flock.trace_minds)
-								var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-								//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-								stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
+						if (flock.flockmind_mind == traitor)
+							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							if(length(flock.trace_minds))
+								stuff_to_output += "Flocktraces:"
+								for (var/trace_name in flock.trace_minds)
+									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
+									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
+									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
@@ -200,12 +202,12 @@
 					obj_count++
 					if (objective.check_completion())
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
-						logTheThing("diary",traitor,null,"completed objective: [objective.explanation_text]")
+						logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(traitor.current))
 							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 					else
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
-						logTheThing("diary",traitor,null,"failed objective: [objective.explanation_text]. Womp womp.")
+						logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
 						traitorwin = 0
 
 			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
@@ -228,7 +230,7 @@
 				game_stats.Increment("traitorloss")
 	#endif
 		catch(var/exception/e)
-			logTheThing("debug", null, null, "Kyle|antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DEBUG, null, "Kyle|antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
 
 	// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
@@ -250,7 +252,7 @@
 					else
 						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 		catch(var/exception/e)
-			logTheThing("debug", null, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+			logTheThing(LOG_DEBUG, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
 	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
@@ -291,7 +293,7 @@
 				unpicked_candidate_minds.Add(player.mind)
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
+		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		if(length(unpicked_candidate_minds))
 			shuffle_list(unpicked_candidate_minds)
@@ -304,7 +306,7 @@
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
 		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
-		logTheThing("debug", null, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)
 		return list()
@@ -314,6 +316,9 @@
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
 	var/objective_set_path = null
+	// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
+	// It should be removed when all antagonists are on the new system.
+	var/do_objectives = TRUE
 
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
@@ -325,6 +330,7 @@
 	switch (antag.special_role)
 		if (ROLE_TRAITOR)
 			antag.add_antagonist(ROLE_TRAITOR)
+			do_objectives = FALSE
 
 		if (ROLE_CHANGELING)
 			objective_set_path = /datum/objective_set/changeling
@@ -389,6 +395,9 @@
 					antag.current.real_name = newname
 					antag.current.name = newname
 
+		if (ROLE_FLOCKMIND)
+			bestow_objective(antag, /datum/objective/specialist/flock)
+			antag.current.make_flockmind()
 		if (ROLE_SPY_THIEF)
 			objective_set_path = /datum/objective_set/spy_theft
 			SPAWN(1 SECOND) //dumb delay to avoid race condition where spy assignment bugs
@@ -405,15 +414,16 @@
 			antag.current.make_werewolf()
 
 		if (ROLE_ARCFIEND)
-			objective_set_path = /datum/objective_set/arcfiend
-			antag.current.make_arcfiend()
+			antag.add_antagonist(ROLE_ARCFIEND)
+			do_objectives = FALSE
 
-	if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
-		new objective_set_path(antag)
-	var/obj_count = 1
-	for (var/datum/objective/objective in antag.objectives)
-		boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-		obj_count++
+	if (do_objectives)
+		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
+			new objective_set_path(antag)
+		var/obj_count = 1
+		for (var/datum/objective/objective in antag.objectives)
+			boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+			obj_count++
 
 /datum/game_mode/proc/check_win()
 

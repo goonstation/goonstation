@@ -46,7 +46,7 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/wine
 	name = "wine"
-	desc = "Not to be confused with pubbie tears."
+	desc = "Not to be confused with high-pitched crying."
 	icon_state = "bottle-wine"
 	heal_amt = 1
 	g_amt = 40
@@ -131,7 +131,7 @@
 			if (isnull(new_name) || !length(new_name) || new_name == " ")
 				return
 			phrase_log.log_phrase("vehicle", new_name, no_duplicates=TRUE)
-			logTheThing("station", user, null, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
+			logTheThing(LOG_STATION, user, "renamed [O] to [new_name] in [get_area(user)] ([log_loc(user)])")
 			new_name = copytext(strip_html(new_name), 1, 32)
 			O.name = new_name
 			return

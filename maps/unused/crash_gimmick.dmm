@@ -24592,7 +24592,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -25726,7 +25726,7 @@
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	desc = " It is made of steel.";
@@ -25777,7 +25777,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	desc = " It is made of steel.";
@@ -27554,7 +27554,7 @@
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -27586,7 +27586,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -29435,7 +29435,7 @@
 	dir = 10;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -29449,7 +29449,7 @@
 	dir = 1;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";

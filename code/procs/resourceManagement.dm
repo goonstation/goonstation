@@ -88,8 +88,8 @@
 
 	disableResourceCache = !disableResourceCache
 	boutput(usr, "<span class='notice'>Toggled the resource cache [disableResourceCache ? "off" : "on"]</span>")
-	logTheThing("admin", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
-	logTheThing("diary", usr, null, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]")
+	logTheThing(LOG_DIARY, usr, "toggled the resource cache [disableResourceCache ? "off" : "on"]", "admin")
 	message_admins("[key_name(usr)] toggled the resource cache [disableResourceCache ? "off" : "on"]")
 
 

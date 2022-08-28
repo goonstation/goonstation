@@ -297,7 +297,7 @@
 			src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
-			if (get_dist(src, pal) > 7)
+			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
@@ -337,7 +337,7 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
-		if (src.health <= 0 || (get_dist(src, T) >= 11))
+		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
 			else
@@ -533,7 +533,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		logTheThing("combat", source, target, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
+		logTheThing(LOG_COMBAT, source, "tries to pickpocket \an [I] from [constructTarget(target,"combat")]")
 
 		if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 			source.visible_message("<B>[source]</B> rifles through [target]'s pockets!", "You rifle through [target]'s pockets!")
@@ -554,7 +554,7 @@
 			return
 
 		if(I.handle_other_remove(source, target))
-			logTheThing("combat", source, target, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
+			logTheThing(LOG_COMBAT, source, "successfully pickpockets \an [I] from [constructTarget(target,"combat")]!")
 			if(slot == SLOT_L_STORE || slot == SLOT_R_STORE)
 				source.visible_message("<B>[source]</B> grabs [I] from [target]'s pockets!", "You grab [I] from [target]'s pockets!")
 			else

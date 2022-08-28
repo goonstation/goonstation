@@ -160,7 +160,7 @@
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = 1
+	var/hair_group = ALL_HAIR
 	var/image/dye_image
 
 	New()

@@ -322,7 +322,7 @@
 					A.attach(src)
 					abil[i] = A
 				else
-					logTheThing("debug", null, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
+					logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
@@ -935,7 +935,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			event.deserialize(F, "[path].event", sandbox)
 			event.attached = src
 		else
-			logTheThing("debug", "usr", null, "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
+			logTheThing(LOG_DEBUG, "usr", "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
 
 	proc/attach(var/obj/critter/custom/CR)
 		C = CR
@@ -1038,14 +1038,14 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	use_ability()
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(critical_text, M)
 			C.play_optional_sound(critical_sound)
 			M.TakeDamageAccountArmor("chest", bonus_damage, 0)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1104,18 +1104,18 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	use_ability()
 		if (!C)
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
 			return 0
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(inject_text, M)
 			C.play_optional_sound(inject_sound)
 			M.reagents.add_reagent(reagent_id, inject_amount)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)

@@ -376,7 +376,7 @@
 	if (user.wear_mask == src)
 		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
 
-	if (!user || get_dist(user, src) > 0)
+	if (!user || GET_DIST(user, src) > 0)
 		return 0
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)

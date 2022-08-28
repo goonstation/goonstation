@@ -403,7 +403,7 @@
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		else if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
@@ -532,7 +532,7 @@
 	icon_state = "dough-sweet"
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 4, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src))
@@ -583,7 +583,7 @@
 			qdel(src)
 		if (prob(25))
 			JOB_XP(user, "Chef", 1)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		else if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] into smaller pieces...</span>")
 			for(var/i = 1, i <= 3, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/tortilla(get_turf(src))

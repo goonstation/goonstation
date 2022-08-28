@@ -101,7 +101,7 @@
 			count[T.name]++
 			beacons["[T.name][count[T.name] == 1 ? null : " #[count[T.name]]"]"] = T
 	wormholeQueued = 1
-	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons))]
+	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons, /proc/cmp_text_asc))]
 	if(!target)
 		wormholeQueued = 0
 		return
@@ -131,7 +131,7 @@
 	for(var/i=0, i<max_steps, i++)
 		step(P, warp_dir)
 
-	var/dist = get_dist(src, P)
+	var/dist = GET_DIST(src, P)
 	portal_px_offset(P, warp_dir, dist)
 	animate(P, transform = matrix(1, MATRIX_SCALE), pixel_x = 0, pixel_y = 0, time = 30, easing = ELASTIC_EASING )
 
@@ -139,7 +139,7 @@
 	P.target = target
 	ready = 0
 	warp_autopilot = 0
-	logTheThing("station", usr, null, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
+	logTheThing(LOG_STATION, usr, "creates a wormhole (pod portal) (<b>Destination:</b> [target]) at [log_loc(usr)].")
 	ready()
 
 

@@ -11,6 +11,9 @@ var/global/area/current_battle_spawn = null
 #define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
 #define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
 
+#define STORM_REGULAR 1
+#define STORM_FINAL 2
+
 
 /datum/game_mode/battle_royale
 	name = "Battle Royale"
@@ -45,28 +48,38 @@ var/global/area/current_battle_spawn = null
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
-	for (var/turf/space/space in world)
-		LAGCHECK(LAG_LOW)
-		if(space.icon_state != "darkvoid")
-			space.icon_state = "darkvoid"
-			space.icon = 'icons/turf/floors.dmi'
-			space.name = "void"
+	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
+	// Stolen from /datum/terrainify/void
+	var/datum/station_zlevel_repair/station_repair = new
+	station_repair.ambient_light = new /image/ambient
+	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+	station_repair.station_generator = new/datum/map_generator/void_generator
+	var/list/space = list()
+	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		space += S
+	station_repair.station_generator.generate_terrain(space, flags=MAPGEN_IGNORE_FAUNA)
+	for (var/turf/S in space)
+		S.UpdateOverlays(station_repair.ambient_light, "ambient")
+	station_repair.clean_up_station_level()
+	map_settings.space_turf_replacement = /turf/simulated/floor/void
+
+	// Dense borders to prevent leaving the station Z
+	for(var/x in 1 to world.maxx)
+		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+
+	for(var/y in 1 to world.maxy)
+		var/turf/T = locate(1, y, Z_LEVEL_STATION)
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
+		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 
 	storm = new /datum/random_event/special/battlestorm()
 	dropper = new/datum/random_event/special/supplydrop()
 
-	// The places the battle shuttle can take you.
 	drop_locations = get_accessible_station_areas()
-	/*
-	drop_locations = list("security" = /area/station/security,\
-	"science wing" = /area/station/science,\
-		"the cargo bay" = /area/station/quartermaster/office,\
-		"engineering" = /area/station/engine,\
-		"medbay" = /area/station/medical,\
-		"the cafeteria" = /area/station/crew_quarters/cafeteria,\
-		"the chapel" = /area/station/chapel,\
-		"hydroponics" = /area/station/hydroponics,\
-		"the bridge" = /area/station/bridge)*/
 
 	current_battle_spawn_name = pick(drop_locations)
 	current_battle_spawn = drop_locations[current_battle_spawn_name]
@@ -90,6 +103,8 @@ var/global/area/current_battle_spawn = null
 		switch (mac_type)
 			if (/obj/machinery/clone_scanner)
 				qdel(MAC)
+			if (/obj/machinery/the_singularitygen/)
+				qdel(MAC)
 			if (/obj/machinery/vending/monkey)
 				qdel(MAC)
 			if (/obj/machinery/vending/monkey/kitchen)
@@ -108,6 +123,8 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/networked/telepad)
 				qdel(MAC)
+			if (/obj/machinery/atmospherics/pipe/tank/sleeping_agent)
+				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 				qdel(MAC)
 			if (/obj/machinery/portable_atmospherics/canister/toxins)
@@ -120,13 +137,28 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/bot/secbot/beepsky)
 				qdel(MAC)
+			if (/obj/machinery/flasher/portable)
+				qdel(MAC)
+			if (/obj/machinery/port_a_brig)
+				qdel(MAC)
+			if (/obj/machinery/door/firedoor/pyro)
+				qdel(MAC)
+			if (/obj/machinery/turret)
+				qdel(MAC)
+			if (/obj/machinery/turretcover)
+				qdel(MAC)
+			if (/obj/deployable_turret/riot)
+				qdel(MAC)
 
 	for_by_tcl(I, /obj/item/hand_tele)
 		qdel(I)
 
-	for_by_tcl(V, /obj/machinery/vehicle)
-		if (!istype(V, /obj/machinery/vehicle/escape_pod) && !istype(V, /obj/machinery/vehicle/tank/minisub/escape_sub))
-			qdel(V)
+	for_by_tcl(MV, /obj/machinery/vehicle)
+		if (!istype(MV, /obj/machinery/vehicle/escape_pod) && !istype(MV, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			qdel(MV)
+
+	for_by_tcl(VH, /obj/vehicle)
+		qdel(VH)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
@@ -137,20 +169,7 @@ var/global/area/current_battle_spawn = null
 
 	emergency_shuttle.disabled = 1
 
-	for(var/x in 1 to world.maxx)
-		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-		T = locate(x, world.maxy - 2, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-
-	for(var/y in 1 to world.maxy)
-		var/turf/T = locate(1, y, Z_LEVEL_STATION)
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
-		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
-		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 	return 1
-
-
 	// Things we are skipping:
 	// Antag selection. Everyone is an antag!
 	// Antag weighting. We dont record this - otherwise playing this round would fuck your weighting chances
@@ -250,10 +269,10 @@ var/global/area/current_battle_spawn = null
 	if (src.next_storm != null)
 		// Game ending storm
 		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-			if (emergency_shuttle.timeleft() < 60)
-				storm.event_effect(TRUE)
+			if (emergency_shuttle.timeleft() < 30)
+				storm.event_effect(STORM_FINAL)
 				src.next_storm = null
-				SPAWN(70 SECONDS)
+				SPAWN(60 SECONDS)
 					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
 		else if(src.next_storm < world.time)
 			// Regular storm
@@ -262,7 +281,7 @@ var/global/area/current_battle_spawn = null
 				if (emergency_shuttle.endtime > 0)
 					return
 			else
-				storm.event_effect()
+				storm.event_effect(STORM_REGULAR)
 				SPAWN(85 SECONDS)
 					var/you_died_good_work = length(recently_deceased) > 0 ? "The following players recently died: " : ""
 					for(var/datum/mind/M in recently_deceased)
@@ -276,11 +295,8 @@ var/global/area/current_battle_spawn = null
 		SPAWN(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
 
 
-// Does what it says on the tin
 proc/hide_weapons_everywhere(var/total_battlers = 1)
-	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
-	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
-	// Im stealing the list of items from the surplus crate so this check needs to happen
+	// Replaces lockers with generic syndicate to clear out junk items, fill them with loot
 
 	var/list/obj/murder_supplies = list()
 
@@ -328,14 +344,12 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/high_explosive)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
-	weapon_supplies.Add(/obj/item/storage/banana_grenade_pouch)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
 
 	var/list/armor_supplies = list()
 	// Feel free to add more!
 	armor_supplies.Add(/obj/item/clothing/shoes/rocket)
-	armor_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
-	armor_supplies.Add(/obj/item/clothing/shoes/galoshes)
+	armor_supplies.Add(/obj/item/clothing/shoes/swat/knight)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/vest)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
@@ -502,14 +516,14 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	hat.setProperty("heatprot", 5)
 	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
 	battler.equip_if_possible(hat, battler.slot_head)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat(battler), battler.slot_shoes)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
 	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
 	battler.equip_if_possible(vest, battler.slot_wear_suit)
-	battler.equip_if_possible(new /obj/item/storage/backpack(battler), battler.slot_back)
+	battler.equip_if_possible(new /obj/item/storage/backpack/withO2(battler), battler.slot_back)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_r_store)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
@@ -535,3 +549,6 @@ proc/get_accessible_station_areas()
 	global.area_list_is_up_to_date = 1
 	global.station_areas = L
 	return L
+
+#undef STORM_REGULAR
+#undef STORM_FINAL

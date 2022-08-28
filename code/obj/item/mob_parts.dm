@@ -179,6 +179,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	proc/sever(var/mob/user)
@@ -193,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing(LOG_ADMIN, user, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -255,7 +257,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.remove_object = null
 			holder = null
 			qdel(src)
-
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	//for humans

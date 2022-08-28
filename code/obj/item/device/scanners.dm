@@ -153,6 +153,32 @@ that cannot be itched
 	var/distancescan = 0
 	var/target = null
 
+	var/list/scans
+	var/maximum_scans = 25
+	var/number_of_scans = 0
+	var/last_scan = "No scans have been performed yet."
+
+	Topic(href, href_list)
+		..()
+		if (href_list["print"])
+			if (!(src in usr.contents))
+				boutput(usr, "<span class='notice'>You must be holding [src] that made the record in order to print it.</span>")
+				return
+			var/scan_number = text2num(href_list["print"])
+			if (scan_number < number_of_scans - maximum_scans)
+				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
+				return
+			if(!ON_COOLDOWN(src, "print", 2 SECOND))
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+				SPAWN(1 SECONDS)
+					var/obj/item/paper/P = new /obj/item/paper
+					P.set_loc(get_turf(src))
+
+					var/index = (scan_number % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+					P.info = scans[index]
+					P.name = "forensic readout"
+
+
 	attack_self(mob/user as mob)
 
 		src.add_fingerprint(user)
@@ -179,11 +205,13 @@ that cannot be itched
 		user.show_text("No match found in security records.", "red")
 		return
 
+
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
 				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
-				boutput(user, scan_forensic(target, visible = 1))
+				last_scan = scan_forensic(target, visible = 1)
+				boutput(user, last_scan)
 				src.add_fingerprint(user)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -192,7 +220,16 @@ that cannot be itched
 			return
 
 		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
-		boutput(user, scan_forensic(A, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+
+		if (scans == null)
+			scans = new/list(maximum_scans)
+		last_scan = scan_forensic(A, visible = 1) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
+		var/index = (number_of_scans % maximum_scans) + 1 // Once a number of scans equal to the maximum number of scans is made, begin to overwrite existing scans, starting from the earliest made.
+		scans[index] = last_scan
+		var/scan_output = last_scan + "<br>---- <a href='?src=\ref[src];print=[number_of_scans];'>PRINT REPORT</a> ----"
+		number_of_scans += 1
+
+		boutput(user, scan_output)
 		src.add_fingerprint(user)
 
 		if(!active && istype(A, /obj/decal/cleanable/blood))
@@ -221,7 +258,7 @@ that cannot be itched
 			active = 0
 			return
 		src.set_dir(get_dir(src,target))
-		switch(get_dist(src,target))
+		switch(GET_DIST(src,target))
 			if(0)
 				icon_state = "fs_pindirect"
 			if(1 to 8)
@@ -232,6 +269,7 @@ that cannot be itched
 				icon_state = "fs_pinfar"
 		SPAWN(0.5 SECONDS)
 			.(T)
+
 
 /obj/item/device/detective_scanner/detective
 	name = "cool forensic scanner"
@@ -732,7 +770,7 @@ that cannot be itched
 		T.issuer_byond_key = user.key
 		data_core.tickets += T
 
-		logTheThing("admin", user, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, "sound/machines/printer_thermal.ogg", 50, 1)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper

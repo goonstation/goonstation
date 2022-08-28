@@ -34,7 +34,7 @@
 		if (!POT || !user) return 301
 		if (POT.dead || !POT.current) return 302
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc_override = 0
 		return lasterr
 
@@ -43,7 +43,7 @@
 		if (!POT) lasterr = 401
 		if (POT.dead || !POT.current) lasterr = 402
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc_override = FALSE
 		return lasterr
 
@@ -52,7 +52,7 @@
 		if (!POT) lasterr = 501
 		if (POT.dead || !POT.current) lasterr = 502
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc_override = 0
 		return lasterr
 
@@ -762,3 +762,9 @@
 	dont_rename_crop = true
 	crop = /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	assoc_reagents = list("juice_blueraspberry")
+
+/datum/plantmutation/rose/holorose
+	name = "Holo Rose"
+	iconmod = "HoloRose"
+	dont_rename_crop = true
+	crop = /obj/item/plant/flower/rose/holorose

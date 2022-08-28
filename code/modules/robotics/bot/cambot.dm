@@ -48,7 +48,7 @@
 			user.show_text("You short out the flash control circuit on [src]!", "red")
 			src.emagger = user
 			src.add_fingerprint(user)
-			logTheThing("station", src.emagger, null, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 		playsound(src, "sound/weapons/flash.ogg", 50, 1)
@@ -191,7 +191,7 @@
 			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (get_dist(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 

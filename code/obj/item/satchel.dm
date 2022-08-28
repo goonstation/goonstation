@@ -41,7 +41,7 @@
 	attack_self(var/mob/user as mob)
 		if (length(src.contents))
 			var/turf/T = user.loc
-			logTheThing("station", user, null, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
+			logTheThing(LOG_STATION, user, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
@@ -57,7 +57,7 @@
 		// This is probably easily fixable by just running the check again
 		// but to be honest this is one of those funny bugs that can be fixed later
 
-		if (get_dist(user, src) <= 0 && length(src.contents))
+		if (GET_DIST(user, src) <= 0 && length(src.contents))
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
@@ -107,7 +107,7 @@
 				temp = "[I.name]"
 				satchel_contents += temp
 				satchel_contents[temp] = I
-		satchel_contents = sortList(satchel_contents)
+		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem)
 			return
@@ -253,7 +253,7 @@
 			src.open_it_up(0)
 
 		attack_hand(mob/user)
-			if (get_dist(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
+			if (GET_DIST(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
 				src.open_it_up(1)
 			..()
 			src.open_it_up(0)

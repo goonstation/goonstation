@@ -28,7 +28,7 @@
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(atom/target, mob/user)
+	shoot_point_blank(atom/target, mob/user, second_shot)
 		if (canshoot())
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
@@ -39,7 +39,7 @@
 
 					return
 			else
-				return ..(target, user)
+				return ..(target, user, second_shot)
 
 	disposing()
 		indicator_display = null
@@ -242,7 +242,7 @@
 						var/mob/living/M = A
 						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
-						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
+						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
 			SPAWN(0.1 SECONDS)
 				qdel(O)

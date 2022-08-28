@@ -122,7 +122,7 @@
 		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
-		logTheThing("say", user, null, "makes [src] say,  \"[message]\"")
+		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
