@@ -208,9 +208,9 @@
 		generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling(spawn_location)
 	else
 		if(decomposed_level < 3) // fresh or fresh enough
-			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location,meat_source)
+			generated_meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(spawn_location, meat_source)
 		else // rotten yucky mess
 			generated_meat = new /obj/item/reagent_containers/food/snacks/yuck(spawn_location)
-			generated_meat.name = meat_source.real_name + " meat-related substance"
+			generated_meat.name = (meat_source.disfigured ? meat_source.real_name : "Unknown") + " meat-related substance"
 
 	return generated_meat
