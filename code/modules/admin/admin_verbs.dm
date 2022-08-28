@@ -1074,7 +1074,7 @@ var/list/fun_images = list()
 	if (!length(ckeys))
 		return
 	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-	sortList(jobs, /proc/cmp_name_asc)
+	sortList(jobs, /proc/cmp_text_asc)
 	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 	if (!job)
 		return

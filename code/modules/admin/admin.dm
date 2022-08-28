@@ -3936,7 +3936,7 @@ var/global/noir = 0
 				var/client/C = M.client
 				if (!M) return
 				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-				sortList(jobs, /proc/cmp_name_asc)
+				sortList(jobs, /proc/cmp_text_asc)
 				var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 				if(!job) return
 				var/mob/new_player/newM = usr.client.respawn_target(M)
