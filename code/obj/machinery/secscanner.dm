@@ -28,11 +28,13 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-	Crossed( atom/movable/O )
-		if(isliving(O) && !isintangible(O))
-			do_scan(O)
-		if (istype(O,/obj/item) && (!emagged))
-			do_scan_item(O)
+	Crossed(atom/movable/AM)
+		if(isliving(AM) && !isintangible(AM))
+			src.do_scan(O)
+		else if (isobserver(AM) && prob(1))
+			src.do_scan(AM)
+		else if (istype(AM, /obj/item) && (!src.emagged))
+			src.do_scan_item(AM)
 		return ..()
 
 	process()
