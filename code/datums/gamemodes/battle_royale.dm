@@ -29,6 +29,7 @@ var/global/area/current_battle_spawn = null
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
+	var/datum/hud/battlersleft/battlersleft_hud
 	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
@@ -105,6 +106,14 @@ var/global/area/current_battle_spawn = null
 				qdel(MAC)
 			if (/obj/machinery/the_singularitygen/)
 				qdel(MAC)
+			if (/obj/machinery/chem_dispenser)
+				qdel(MAC)
+			if (/obj/machinery/chemicompiler_stationary)
+				qdel(MAC)
+			if (/obj/machinery/chem_master)
+				qdel(MAC)
+			if (/obj/submachine/chem_extractor)
+				qdel(MAC)
 			if (/obj/machinery/vending/monkey)
 				qdel(MAC)
 			if (/obj/machinery/vending/monkey/kitchen)
@@ -116,6 +125,16 @@ var/global/area/current_battle_spawn = null
 			if (/obj/machinery/vending/security)
 				qdel(MAC)
 			if (/obj/machinery/vending/mechanics)
+				qdel(MAC)
+			if (/obj/machinery/vending/medical_public)
+				qdel(MAC)
+			if (/obj/machinery/vending/medical)
+				qdel(MAC)
+			if (/obj/machinery/vending/port_a_nanomed)
+				qdel(MAC)
+			if (/obj/machinery/sleeper/compact)
+				qdel(MAC)
+			if (/obj/machinery/sleeper)
 				qdel(MAC)
 			if (/obj/machinery/computer/supplycomp)
 				qdel(MAC)
@@ -150,8 +169,14 @@ var/global/area/current_battle_spawn = null
 			if (/obj/deployable_turret/riot)
 				qdel(MAC)
 
-	for_by_tcl(I, /obj/item/hand_tele)
-		qdel(I)
+	for_by_tcl(CB, /obj/item/circuitboard)
+		qdel(CB)
+
+	for_by_tcl(HT, /obj/item/hand_tele)
+		qdel(HT)
+
+	for_by_tcl(BLT, /obj/item/storage/belt)
+		qdel(BLT)
 
 	for_by_tcl(MV, /obj/machinery/vehicle)
 		if (!istype(MV, /obj/machinery/vehicle/escape_pod) && !istype(MV, /obj/machinery/vehicle/tank/minisub/escape_sub))
@@ -178,6 +203,10 @@ var/global/area/current_battle_spawn = null
 /datum/game_mode/battle_royale/post_setup()
 	for(var/datum/mind/player in src.living_battlers)
 		battle_shuttle_spawn(player)
+	battlersleft_hud = new()
+
+	for (var/client/C in clients)
+		battlersleft_hud.add_client(C)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
@@ -209,6 +238,7 @@ var/global/area/current_battle_spawn = null
 			DEBUG_MESSAGE("[M.current.name] died. There are [length(living_battlers)] left!")
 			recently_deceased.Add(M)
 			someone_died++
+	battlersleft_hud.update_battlersleft(length(living_battlers))
 	if(someone_died && length(living_battlers) <= 5)
 		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	else if(someone_died && length(living_battlers) % 10 == 0)
@@ -223,14 +253,14 @@ var/global/area/current_battle_spawn = null
 
 
 /datum/game_mode/battle_royale/declare_completion()
+	for (var/client/C in clients)
+		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
-
-
 
 /datum/game_mode/battle_royale/process()
 	..()
@@ -308,10 +338,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 
 	var/list/weapon_supplies = list()
 	// Feel free to add more!
-	weapon_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
-	weapon_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
 	weapon_supplies.Add(/obj/item/gun/kinetic/smg)
-	weapon_supplies.Add(/obj/item/gun/kinetic/spes)
+	weapon_supplies.Add(/obj/item/gun/kinetic/spes/engineer)
 	weapon_supplies.Add(/obj/item/gun/kinetic/pistol)
 	weapon_supplies.Add(/obj/item/gun/kinetic/silenced_22)
 	weapon_supplies.Add(/obj/item/gun/kinetic/clock_188)
@@ -322,10 +350,13 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
-	weapon_supplies.Add(/obj/item/gun/energy/laser_gun)
-	weapon_supplies.Add(/obj/item/gun/energy/alastor)
-	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
+	weapon_supplies.Add(/obj/item/gun/energy/optio1)
 	weapon_supplies.Add(/obj/item/gun/energy/blaster_pistol)
+	weapon_supplies.Add(/obj/item/gun/energy/alastor)
+	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
+	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
@@ -334,7 +365,6 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/quarterstaff)
 	weapon_supplies.Add(/obj/item/fireaxe)
 	weapon_supplies.Add(/obj/item/fragile_sword)
-	weapon_supplies.Add(/obj/item/knife/butcher/hunterspear)
 	weapon_supplies.Add(/obj/item/katana_sheath/reverse)
 	weapon_supplies.Add(/obj/item/katana_sheath/captain)
 	weapon_supplies.Add(/obj/item/katana_sheath/nukeop)
@@ -413,6 +443,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)
 					var/obj/weapon = pick(murder_supplies)
 					new weapon(locker)
+					if (prob(25))
+						weapon = pick(weapon_supplies)
+						new weapon(locker)
 				else
 					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
@@ -421,6 +454,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					if (prob(50))
 						var/obj/armor = pick(armor_supplies)
 						new armor(chest)
+					if (prob(33))
+						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
@@ -521,7 +556,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
 	battler.equip_if_possible(vest, battler.slot_wear_suit)
-	battler.equip_if_possible(new /obj/item/storage/backpack/withO2(battler), battler.slot_back)
+	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), battler.slot_back)
 	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
 	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
 

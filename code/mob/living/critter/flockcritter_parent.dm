@@ -166,7 +166,7 @@
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1, -3)
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
@@ -176,7 +176,7 @@
 				F.set_loc(src.loc)
 				SPAWN(10 SECONDS)
 					qdel(F)
-			playsound(src, "sound/effects/spray.ogg", 50, 1, -3)
+			playsound(src, 'sound/effects/spray.ogg', 50, 1, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = FALSE
@@ -216,7 +216,7 @@
 	walk(src, 0)
 	src.update_health_icon()
 	src.flock?.removeDrone(src)
-	playsound(src, "sound/impact_sounds/Glass_Shatter_3.ogg", 50, 1)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()
 	if (src.flock)
@@ -647,7 +647,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
+			playsound(f, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target

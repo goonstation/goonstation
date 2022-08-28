@@ -374,7 +374,7 @@
 			if (state == 10) // ???
 				return
 			else if (state >= 1)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -386,7 +386,7 @@
 				else
 					assembly_handler(user, W)
 			else
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -447,7 +447,7 @@
 		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 
 	proc/align_window()
 		update_nearby_tiles(need_rebuild=1)
@@ -562,7 +562,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
-		playsound(the_window.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
 		..()
@@ -1037,7 +1037,7 @@
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return
 

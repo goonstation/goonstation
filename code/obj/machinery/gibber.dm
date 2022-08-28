@@ -10,10 +10,10 @@
 	var/mob/occupant // Mob who has been put inside
 	var/atom/movable/proxy // a proxy object containing the occupant in its vis_contents for easier manipulation
 	var/output_direction = WEST // Spray gibs and meat in that direction.
-	var/list/meat_grinding_sounds = list("sound/impact_sounds/Flesh_Crush_1.ogg", "sound/impact_sounds/Flesh_Tear_1.ogg", "sound/impact_sounds/Flesh_Tear_2.ogg", "sound/impact_sounds/Flesh_Tear_3.ogg")
-	var/machine_startup_sound = "sound/machines/tractorrev.ogg"
-	var/machine_shutdown_sound = "sound/machines/tractor_running3.ogg"
-	var/rotor_sound = "sound/machines/lavamoon_rotors_fast_short.ogg"
+	var/list/meat_grinding_sounds = list('sound/impact_sounds/Flesh_Crush_1.ogg', 'sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg', 'sound/impact_sounds/Flesh_Tear_3.ogg')
+	var/machine_startup_sound = 'sound/machines/tractorrev.ogg'
+	var/machine_shutdown_sound = 'sound/machines/tractor_running3.ogg'
+	var/rotor_sound = 'sound/machines/lavamoon_rotors_fast_short.ogg'
 	mats = 15
 	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 

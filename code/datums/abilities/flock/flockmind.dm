@@ -220,7 +220,7 @@
 		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
 		return TRUE
 
-	playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	target.HealDamage("All", 200, 200)
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst on [constructTarget(target)] at [log_loc(src.holder.owner)].")
@@ -271,7 +271,7 @@
 		if(A.canAIControl())
 			targets += A
 	if(length(targets))
-		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
 		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts gatecrash at [log_loc(src.holder.owner)].")
 		sleep(1.5 SECONDS)
@@ -301,7 +301,7 @@
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
 	if(length(targets))
-		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts radio stun burst at [log_loc(src.holder.owner)].")
 		for(var/mob/living/M in targets)

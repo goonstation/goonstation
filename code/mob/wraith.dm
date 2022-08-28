@@ -73,6 +73,7 @@
 		. = ..()
 		src.poltergeists = list()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls

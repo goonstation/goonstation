@@ -169,11 +169,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 
@@ -257,7 +257,7 @@
 
 		if (isscrewingtool(W))
 			if (src.anchored)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.show_text("You start unscrewing [src] from the floor.", "blue")
 				if (do_after(user, 3 SECONDS))
 					user.show_text("You unscrew [src] from the floor.", "blue")
@@ -269,7 +269,7 @@
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 					return
 				else
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					user.show_text("You start securing [src] to [T].", "blue")
 					if (do_after(user, 3 SECONDS))
 						user.show_text("You secure [src] to [T].", "blue")
@@ -337,7 +337,7 @@
 			return 0
 		user.visible_message("<span class='alert'><b>[user] drinks deeply from [src]. [capitalize(he_or_she(user))] then pulls out a match from somewhere, strikes it and swallows it!</b></span>")
 		src.reagents.remove_any(20)
-		playsound(src.loc, "sound/items/drink.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/items/drink.ogg', 50, 1, -6)
 		user.TakeDamage("chest", 0, 150)
 		if (isliving(user))
 			var/mob/living/L = user
@@ -405,11 +405,11 @@
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 1
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = 0
 			return
 		var/load = 1
@@ -421,7 +421,7 @@
 
 		if(load)
 			boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
-			playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
@@ -455,7 +455,7 @@
 					amount = 2
 				else if (istype(P,/obj/item/plant/))
 					amount = 15
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				src.reagents.add_reagent("poo", amount)
 				qdel( P )
 				sleep(0.3 SECONDS)

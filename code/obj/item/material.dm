@@ -76,7 +76,7 @@
 				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, "sound/machines/chime.ogg", 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -86,7 +86,7 @@
 				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
-					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
+					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
 			return

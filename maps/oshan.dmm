@@ -39923,9 +39923,6 @@
 /area/station/ai_monitored/armory)
 "bYq" = (
 /obj/rack,
-/obj/item/storage/box/stinger_kit{
-	pixel_x = 4
-	},
 /obj/item/storage/box/flashbang_kit,
 /obj/item/storage/box/flashbang_kit{
 	pixel_x = -4

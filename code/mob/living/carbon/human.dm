@@ -2616,7 +2616,7 @@
 		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
-				new /obj/critter/spider/baby(src.loc)
+				new /mob/living/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)
 		ghostize()

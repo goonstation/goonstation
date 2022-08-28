@@ -45,7 +45,7 @@
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, 1)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
@@ -149,7 +149,7 @@
 		operating = 1
 
 		flick("amdl_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, 1)
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
@@ -333,7 +333,7 @@
 		if (printing)
 			return
 		printing = TRUE
-		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+		playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
 		sleep(1.75 SECONDS)
 		for (var/i in 1 to amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)

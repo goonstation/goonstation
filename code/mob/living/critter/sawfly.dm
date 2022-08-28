@@ -136,7 +136,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					SPAWN(5)
 						if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
 							src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes"))] [user]!</b>")
-							playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
+							playsound(src, 'sound/machines/chainsaw_green.ogg', 50, 1)
 							take_bleeding_damage(user, null, 17, DAMAGE_STAB)
 							random_brute_damage(user, 14, FALSE)
 
