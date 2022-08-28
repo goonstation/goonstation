@@ -464,6 +464,7 @@
 
 	disposing()
 		STOP_TRACKING
+		. = ..()
 
 	proc/can_use()
 		.= 1
