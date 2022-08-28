@@ -414,6 +414,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gauntlet\bullethell.dm"
 #include "code\datums\gauntlet\crittergauntlet.dm"
 #include "code\datums\hud\ai.dm"
+#include "code\datums\hud\battlersleft.dm"
 #include "code\datums\hud\cinematic.dm"
 #include "code\datums\hud\compass_display.dm"
 #include "code\datums\hud\critter.dm"

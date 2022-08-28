@@ -30,6 +30,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	var/list/records = null
 	mats = 6
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 /obj/item/circuitboard/security
 	name = "Circuit board (Security Cameras)"
 	computertype = "/obj/machinery/computer/security"

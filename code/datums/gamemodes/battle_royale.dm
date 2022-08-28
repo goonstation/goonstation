@@ -29,6 +29,7 @@ var/global/area/current_battle_spawn = null
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
+	var/datum/hud/battlersleft/battlersleft_hud
 	do_antag_random_spawns = 0
 
 /datum/game_mode/battle_royale/announce()
@@ -168,6 +169,9 @@ var/global/area/current_battle_spawn = null
 			if (/obj/deployable_turret/riot)
 				qdel(MAC)
 
+	for_by_tcl(CB, /obj/item/circuitboard)
+		qdel(CB)
+
 	for_by_tcl(HT, /obj/item/hand_tele)
 		qdel(HT)
 
@@ -199,6 +203,10 @@ var/global/area/current_battle_spawn = null
 /datum/game_mode/battle_royale/post_setup()
 	for(var/datum/mind/player in src.living_battlers)
 		battle_shuttle_spawn(player)
+	battlersleft_hud = new()
+
+	for (var/client/C in clients)
+		battlersleft_hud.add_client(C)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
@@ -230,6 +238,7 @@ var/global/area/current_battle_spawn = null
 			DEBUG_MESSAGE("[M.current.name] died. There are [length(living_battlers)] left!")
 			recently_deceased.Add(M)
 			someone_died++
+	battlersleft_hud.update_battlersleft(length(living_battlers))
 	if(someone_died && length(living_battlers) <= 5)
 		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	else if(someone_died && length(living_battlers) % 10 == 0)
@@ -244,14 +253,14 @@ var/global/area/current_battle_spawn = null
 
 
 /datum/game_mode/battle_royale/declare_completion()
+	for (var/client/C in clients)
+		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
-
-
 
 /datum/game_mode/battle_royale/process()
 	..()
