@@ -39438,6 +39438,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
 "mTM" = (
@@ -45005,6 +45008,9 @@
 	anchored = 0;
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Security Officer"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNK" = (
@@ -47309,9 +47315,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -48459,9 +48462,6 @@
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/landmark/start{
-	name = "Security Officer"
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 10;
