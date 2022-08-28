@@ -32,6 +32,8 @@
 		..()
 
 	Eat(mob/M, mob/user)
+		if(isghostcritter(M) || isghostcritter(user))
+			return 0
 		if(M == user)
 			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
 				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
