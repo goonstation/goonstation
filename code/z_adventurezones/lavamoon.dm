@@ -697,22 +697,22 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/radio_tape/adventure/xg
 	name = "XIANG|GIESEL Onboarding Tape 1"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding1.ogg"
+	audio = 'sound/radio_station/xg_onboarding1.ogg'
 
 /obj/item/radio_tape/adventure/xg2
 	name = "XIANG|GIESEL Onboarding Tape 2"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding2.ogg"
+	audio = 'sound/radio_station/xg_onboarding2.ogg'
 
 /obj/item/radio_tape/adventure/xg3
 	name = "XIANG|GIESEL Onboarding Tape 3"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding3.ogg"
+	audio = 'sound/radio_station/xg_onboarding3.ogg'
 
 /obj/item/radio_tape/adventure/xg4
 	name = "XIANG|GIESEL Onboarding Tape 4"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding4.ogg"
+	audio = 'sound/radio_station/xg_onboarding4.ogg'
 
 
 

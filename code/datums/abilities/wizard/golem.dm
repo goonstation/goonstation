@@ -8,9 +8,9 @@
 	requires_being_on_turf = TRUE
 	offensive = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/GolemGrim.ogg"
-	voice_fem = "sound/voice/wizard/GolemFem.ogg"
-	voice_other = "sound/voice/wizard/GolemLoud.ogg"
+	voice_grim = 'sound/voice/wizard/GolemGrim.ogg'
+	voice_fem = 'sound/voice/wizard/GolemFem.ogg'
+	voice_other = 'sound/voice/wizard/GolemLoud.ogg'
 	maptext_colors = list("#fcdf74", "#d75015")
 
 	cast()

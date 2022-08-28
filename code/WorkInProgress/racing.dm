@@ -336,7 +336,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, "sound/mksounds/invin10sec.ogg",33, 0,0) // 33
+		playsound(R, 'sound/mksounds/invin10sec.ogg',33, 0,0) // 33
 
 		R.super = 1
 		R.boost()

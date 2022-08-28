@@ -15,7 +15,7 @@ var/HasturPresent = 0
 	can_help = 1
 	see_invisible = INVIS_ADVENTURE
 	stat = 2
-	stepsound = "sound/misc/hastur/tentacle_walk.ogg"
+	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 	speechverb_say = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "inquires"
@@ -122,7 +122,7 @@ var/HasturPresent = 0
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/misc/hastur/growl.ogg" , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/misc/hastur/growl.ogg' , 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>Something growls menacingly under [src]'s robe!</b>"
 		return null
 
@@ -230,7 +230,7 @@ var/HasturPresent = 0
 			H.set_density(1)
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, src)
 			H.alpha = 255
-			H.stepsound = "sound/misc/hastur/tentacle_walk.ogg"
+			H.stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 			H.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms and manifests into shape!</span>"), pick("<span class='alert'>Void manifests around you, giving you your physical form back.</span>", "<span class='alert'>Energies of the void allow you to manifest back in a physical form.</span>"))
 			stage = 0
 		else

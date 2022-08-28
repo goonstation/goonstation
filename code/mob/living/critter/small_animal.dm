@@ -444,7 +444,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute = 30
 	health_burn = 30
 	var/dogtype = "pug"
-	var/sound/sound_bark = "sound/voice/animal/dogbark.ogg"
+	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.
 	pull_w_class = W_CLASS_BULKY
 
@@ -728,7 +728,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/feather_color = "#ba1418"
 	var/last_feather_time = 0
 	var/bird_call_msg = list("squawks", "shrieks")
-	var/bird_call_sound = list("sound/voice/animal/squawk1.ogg","sound/voice/animal/squawk2.ogg", "sound/voice/animal/squawk3.ogg")
+	var/bird_call_sound = list('sound/voice/animal/squawk1.ogg','sound/voice/animal/squawk2.ogg', 'sound/voice/animal/squawk3.ogg')
 	var/icon_state_poof = null // atm used for male turkeys and nothing else
 	var/good_grip = 1 // they can hold any sized item because they are stronk birbs, otherwise small_critter limb
 	health_brute = 15
@@ -1018,7 +1018,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	species = "smallowl"
 	bird_call_msg = list("hoots", "hoos")
-	bird_call_sound = "sound/voice/animal/hoot.ogg"
+	bird_call_sound = 'sound/voice/animal/hoot.ogg'
 
 	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
@@ -1111,7 +1111,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = null
 	fits_under_table = 0
 	bird_call_msg = "gobbles"
-	bird_call_sound = "sound/voice/animal/turkey.ogg"
+	bird_call_sound = 'sound/voice/animal/turkey.ogg'
 	good_grip = 0.5
 	health_brute = 20
 	health_burn = 20
@@ -1166,7 +1166,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	death_text = "%src% lets out a final weak eent and keels over."
 	feather_color = list("#ffd0a4","#cc9475","#b85a39","#572c26")
 	bird_call_msg = list("peents", "eents")
-	bird_call_sound = "sound/voice/animal/woodcock.ogg"
+	bird_call_sound = 'sound/voice/animal/woodcock.ogg'
 	good_grip = 0
 	health_brute = 20
 	health_burn = 20
@@ -1269,7 +1269,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 0
 	good_grip = 0.5
 	bird_call_msg = "honks"
-	bird_call_sound = "sound/voice/animal/goose.ogg"
+	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	species = "goose"
 	health_brute = 30
 	health_burn = 30
@@ -1657,7 +1657,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
-	var/frog_sound = list("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg", "sound/voice/screams/frogscream4.ogg")
+	var/frog_sound = list('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg', 'sound/voice/screams/frogscream4.ogg')
 
 	New()
 		if (prob(80))
@@ -2877,7 +2877,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, (voice_gender == "male" ? 'sound/voice/screams/male_scream.ogg' : 'sound/voice/screams/female_scream.ogg'), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("burp")
 				if (src.emote_check(voluntary, 30))

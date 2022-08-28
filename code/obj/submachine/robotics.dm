@@ -442,7 +442,7 @@ ported and crapped up by: haine
 				var/transamnt = src.reagents.maximum_volume - src.reagents.total_volume
 				target.reagents.trans_to(src, transamnt)
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [transamnt] units, the rest is wasted.")
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1) // Play a sound effect.
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1) // Play a sound effect.
 				qdel(target) // delete the fruit, it got juiced!
 				return
 
@@ -543,7 +543,7 @@ ported and crapped up by: haine
 			if (tank.label_name == switch_tank)
 				src.active_tank = tank
 				user.show_text("[src] is now dispensing [switch_tank].")
-				playsound(loc, "sound/effects/pop.ogg", 50, 0) // Play a sound effect.
+				playsound(loc, 'sound/effects/pop.ogg', 50, 0) // Play a sound effect.
 				return
 
 	afterattack(obj/target, mob/user)
@@ -562,7 +562,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0) // Play a sound effect.
+			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

@@ -801,7 +801,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "mime_bowler"
 	uses_multiple_icon_states = 1
 	item_state = "that"
-	hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
+	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/active = 0
 	throw_return = 1
 	throw_speed = 1
@@ -821,7 +821,7 @@ proc/filter_trait_hats(var/type)
 			if (user)
 				user.visible_message("<span class='combat'><b>Blades extend from the brim of [user]'s hat!</b></span>")
 			src.hit_type = DAMAGE_CUT
-			src.hitsound = "sound/impact_sounds/Flesh_Cut_1.ogg"
+			src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 			src.force = 10
 			src.icon_state = "oddjob"
 			src.throw_source = null
@@ -829,7 +829,7 @@ proc/filter_trait_hats(var/type)
 			if (user)
 				user.visible_message("<span class='notice'><b>[user]'s hat's blades retract.</b></span>")
 			src.hit_type = DAMAGE_BLUNT
-			src.hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
+			src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 			src.force = 1
 			src.icon_state = "mime_bowler"
 			src.throw_source = null

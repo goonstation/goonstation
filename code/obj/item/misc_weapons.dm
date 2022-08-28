@@ -219,8 +219,8 @@
 		stamina_damage = active_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordstart.ogg", 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
-			else playsound(U,"sound/weapons/female_cswordturnon.ogg" , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
+			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
@@ -233,8 +233,8 @@
 		stamina_damage = inactive_stamina_dmg
 		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,"sound/weapons/male_cswordturnoff.ogg", 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
-			else playsound(U,"sound/weapons/female_cswordturnoff.ogg", 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
+			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.w_class = off_w_class
@@ -480,7 +480,7 @@
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 
 	New()
 		..()
@@ -621,7 +621,7 @@
 	stamina_damage = 45
 	stamina_cost = 20
 	stamina_crit_chance = 60
-	// pickup_sfx = "sound/items/blade_pull.ogg"
+	// pickup_sfx = 'sound/items/blade_pull.ogg'
 
 	New()
 		..()
@@ -647,7 +647,7 @@
 	stamina_damage = 65
 	stamina_cost = 22
 	stamina_crit_chance = 60
-	// pickup_sfx = "sound/items/blade_pull.ogg"
+	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	// can_disarm = 1
 	two_handed = 0
 	var/use_two_handed = 1
@@ -985,10 +985,10 @@
 	attack(var/atom/A, var/mob/user)
 		if (prob(50))
 			hit_type = DAMAGE_BLUNT
-			hitsound = "sound/impact_sounds/Generic_Hit_1.ogg"
+			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		else
 			hit_type = DAMAGE_CUT
-			hitsound = "sound/impact_sounds/Blade_Small_Bloody.ogg"
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		return ..()
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
@@ -1033,7 +1033,7 @@
 	attack_verbs = "slashes"
 
 
-	// pickup_sfx = "sound/items/blade_pull.ogg"
+	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	custom_suicide = 1
 	var/obj/itemspecialeffect/katana_dash/start/start
 	var/obj/itemspecialeffect/katana_dash/mid/mid1
@@ -1110,7 +1110,7 @@
 		var/mob/living/carbon/human/H = target
 		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
-			playsound(target, pick("sound/effects/sword_clash1.ogg","sound/effects/sword_clash2.ogg","sound/effects/sword_clash3.ogg"), 70, 0, 0)
+			playsound(target, pick('sound/effects/sword_clash1.ogg','sound/effects/sword_clash2.ogg','sound/effects/sword_clash3.ogg'), 70, 0, 0)
 			C.setup(H.loc)
 			var/matrix/m = matrix()
 			m.Turn(rand(0,360))
@@ -1296,7 +1296,7 @@
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
-			playsound(user, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 50, 0, 0)
+			playsound(user, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
@@ -1412,7 +1412,7 @@
 	stamina_cost = 25
 	stamina_crit_chance = 15
 	two_handed = 1
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 
 	New()
 		..()
@@ -1453,7 +1453,7 @@ obj/item/fragile_sword
 	stamina_damage = 25
 	stamina_cost = 25
 	stamina_crit_chance = 15
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 
 	var/minimum_force = 5
 	var/maximum_force = 70
@@ -1519,7 +1519,7 @@ obj/item/whetstone
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = "sound/weapons/hadar-pickup.ogg"
+	pickup_sfx = 'sound/weapons/hadar-pickup.ogg'
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	two_handed = 1
 	uses_multiple_icon_states = 1

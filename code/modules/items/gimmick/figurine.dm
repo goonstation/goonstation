@@ -870,7 +870,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 
 	attack_self(mob/user as mob)
 		if (open && item_amount == 0)
-			user.playsound_local(user, "sound/items/can_crush-3.ogg", 50, 1)
+			user.playsound_local(user, 'sound/items/can_crush-3.ogg', 50, 1)
 			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
 			qdel(src)
 			return

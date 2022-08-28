@@ -111,7 +111,7 @@
 	ChaseAttack(mob/M)
 		if (prob(20))
 			..()
-			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			playsound(src.loc, pick('sound/impact_sounds/Generic_Shove_1.ogg'), 50, 0)
 			M.changeStatus("weakened", 3 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)

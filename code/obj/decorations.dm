@@ -291,7 +291,7 @@
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(user)
-		playsound(user, "sound/items/eatfood.ogg", rand(10,50), 1)
+		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
 			user.setStatus("weakened", 3 SECONDS)

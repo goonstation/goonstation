@@ -7,9 +7,9 @@
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
-	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
-	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
+	voice_grim = 'sound/voice/wizard/IceBurstGrim.ogg'
+	voice_fem = 'sound/voice/wizard/IceBurstFem.ogg'
+	voice_other = 'sound/voice/wizard/IceBurstLoud.ogg'
 	maptext_colors = list("#55eec2", "#62a5ee", "#3c6dc3", "#12135b", "#3c6dc3", "#62a5ee")
 
 	cast()

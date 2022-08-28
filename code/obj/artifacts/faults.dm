@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				I.dropped(user)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
-		playsound(T, "sound/effects/elec_bigzap.ogg", 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		playsound(T, 'sound/effects/elec_bigzap.ogg', 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
 		logTheThing(LOG_COMBAT, user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 

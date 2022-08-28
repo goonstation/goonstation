@@ -404,7 +404,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
 		if(!src.impacted)
-			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
+			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
 			SPAWN(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -413,7 +413,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		SPAWN(0)
 			explosion_new(null, T, 30, 1)
 		if(prob(10))
-			playsound_global(world, "sound/effects/creaking_metal1.ogg", 40)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	start_speed = 0.1
 
 
-	shot_sound = "sound/effects/mag_phase.ogg"
+	shot_sound = 'sound/effects/mag_phase.ogg'
 	goes_through_walls = 1
 	goes_through_mobs = 1
 
@@ -914,7 +914,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	max_range = 10
 	cost = 1
-	shot_sound = "sound/weapons/rocket.ogg"
+	shot_sound = 'sound/weapons/rocket.ogg'
 	icon_state = "bullet"
 	implanted= null
 	casing = null

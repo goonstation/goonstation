@@ -546,7 +546,7 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
-	pickup_sfx = "sound/items/pickup_plate.ogg"
+	pickup_sfx = 'sound/items/pickup_plate.ogg'
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
 
@@ -555,7 +555,7 @@ TRAYS
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
-	var/hit_sound = "sound/items/plate_tap.ogg"
+	var/hit_sound = 'sound/items/plate_tap.ogg'
 	/// Can this be stacked with other stackable plates?
 	var/stackable = TRUE
 

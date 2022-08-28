@@ -722,8 +722,8 @@
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"
-			P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
-			P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+			P.shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+			P.hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 			P.name = "monkey"
 
 /datum/item_special/slam

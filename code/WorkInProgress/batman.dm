@@ -98,7 +98,7 @@
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
 	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
-	playsound(usr, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+	playsound(usr, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
@@ -359,7 +359,7 @@ obj/item/batarang
 	throw_range = 10
 	throw_speed = 1
 	throw_return = 1
-	hitsound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+	hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 	hit_type = DAMAGE_CUT
 
 

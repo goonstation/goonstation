@@ -501,7 +501,7 @@ toxic - poisons
 	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
-	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_hit(atom/hit)
 		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
 		if (istype(hit, /turf/simulated/wall/auto/asteroid))
@@ -530,7 +530,7 @@ toxic - poisons
 		dissipation_rate = 5
 		sname = "saw teeth"
 		shot_sound = 'sound/machines/chainsaw.ogg'
-		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod

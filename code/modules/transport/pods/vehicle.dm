@@ -582,7 +582,7 @@
 
 			for (var/mob/C in src)
 				shake_camera(C, 6, 8)
-				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
+				//M << sound('sound/impact_sounds/Generic_Hit_Heavy_1.ogg',volume=35)
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target

@@ -356,7 +356,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 					logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
 					var/area/A = get_area(src.law_rack_connection)
 					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-					src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+					src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 					src.show_laws()
 		else
@@ -2400,7 +2400,7 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
-	var/sound_to_play = "sound/misc/announcement_1.ogg"
+	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time

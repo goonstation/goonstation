@@ -685,7 +685,7 @@
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
-					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+					playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 					if (food_target)
 						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
@@ -715,7 +715,7 @@
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				sleep(rand(20,30))
 				if (prob(20))
 					C.decomp_stage += 1

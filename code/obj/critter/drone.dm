@@ -1171,7 +1171,7 @@
 	process()
 		..()
 		if(prob(3))
-			playsound(src,"sound/effects/heartbeat.ogg", 60, 0) //for the spooky effect
+			playsound(src,'sound/effects/heartbeat.ogg', 60, 0) //for the spooky effect
 		return
 
 	New()
@@ -1264,7 +1264,7 @@
 
 	select_target(var/atom/newtarget)
 		..()
-		playsound(src, (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, (voice_gender == "male" ? 'sound/voice/screams/male_scream.ogg' : 'sound/voice/screams/female_scream.ogg'), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 
 	ex_act(severity)
 		return

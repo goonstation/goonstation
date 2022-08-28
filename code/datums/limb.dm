@@ -351,7 +351,7 @@
 		reload_time = 20 SECONDS
 
 /datum/limb/mouth
-	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
+	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
@@ -396,7 +396,7 @@
 		user.lastattacked = target
 
 /datum/limb/mouth/small // for cats/mice/etc
-	sound_attack = "sound/impact_sounds/Flesh_Tear_1.ogg"
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	dam_low = 1
 	dam_high = 3
 	stam_damage_mult = 0.3
@@ -472,7 +472,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(20))
@@ -587,7 +587,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(40))
@@ -658,7 +658,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/effects/sawhit.ogg"
+		msgs.played_sound = 'sound/effects/sawhit.ogg'
 		boutput(target, "<span class='alert'>You can feel the saw slicing your body apart!</span>")
 		target.emote("scream")
 		msgs.damage_type = DAMAGE_CUT
@@ -739,7 +739,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(20 * quality))
@@ -818,7 +818,7 @@
 		user.attack_effects(target, affecting)
 
 		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
+		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -1261,7 +1261,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -1312,7 +1312,7 @@
 	var/dam_low = 1
 	var/dam_high = 1
 	var/actions = list("scratches", "baps", "slashes", "paws")
-	var/sound_attack = "sound/impact_sounds/Flesh_Tear_3.ogg"
+	var/sound_attack = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 	var/dmg_type = DAMAGE_BLUNT
 	var/custom_msg = null
 	var/stam_damage_mult = 0.1
@@ -1424,7 +1424,7 @@
 	stam_damage_mult = 0.5
 	dam_low = 2
 	dam_high = 4
-	sound_attack = "sound/items/Wirecutter.ogg"
+	sound_attack = 'sound/items/Wirecutter.ogg'
 	actions = list("snips", "pinches", "slashes")
 
 /datum/limb/small_critter/possum
@@ -1466,7 +1466,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("cut", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target

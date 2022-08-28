@@ -411,7 +411,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 			I.dropped(user)
 			qdel(I)
 			src.visible_message("<span class='notice'>[src] happily chows down on [I]!</span>")
-			playsound(src,"sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(src,'sound/items/eatfood.ogg', rand(10,50), 1)
 			return
 		..()
 

@@ -1066,7 +1066,7 @@
 		var/scream_decrement = 0.25
 
 		while(scream_time > 0)
-			playsound(owner.loc, pick("sound/impact_sounds/Flesh_Break_1.ogg","sound/impact_sounds/Flesh_Tear_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg"), 100, 1)
+			playsound(owner.loc, pick('sound/impact_sounds/Flesh_Break_1.ogg','sound/impact_sounds/Flesh_Tear_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg'), 100, 1)
 			owner.emote("scream")
 			sleep(scream_time SECONDS)
 			scream_time -= scream_decrement

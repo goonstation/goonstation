@@ -120,7 +120,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
 
@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "banana"
 	item_state = "banana"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
 	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
 	is_syndicate = 1
 	mats = 12
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 
@@ -258,7 +258,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	item_state = "emp"
 	is_syndicate = 1
 	mats = 12
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 	var/radius = 3
@@ -324,7 +324,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/pindrop.ogg"
+	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
@@ -462,7 +462,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/pindrop.ogg"
+	sound_armed = 'sound/weapons/pindrop.ogg'
 
 	prime()
 		var/turf/T = ..()
@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/effects/screech.ogg"
+	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
 	prime()
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "emp"
 	item_state = "emp"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
 	prime()
@@ -572,7 +572,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "oxy"
 	item_state = "flashbang"
 	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
 
@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "moustache"
 	item_state = "flashbang"
 	is_syndicate = 1
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 
 	prime()

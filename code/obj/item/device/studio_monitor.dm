@@ -289,7 +289,7 @@
 		desc = "Clear Stuns and improves resistance"
 		icon_state = "focus"
 		status_effect_ids = list("music_focus")
-		sound_clip = "sound/musical_instruments/bard/tapping1.ogg"
+		sound_clip = 'sound/musical_instruments/bard/tapping1.ogg'
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -318,21 +318,21 @@
 		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
-		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
+		sound_clip = 'sound/musical_instruments/bard/lead2.ogg'
 
 	death_march
 		name = "Death March"
 		desc = "Move Faster, Longer, and Silently"
 		icon_state = "death_march"
 		status_effect_ids = list("music_refreshed_big")
-		sound_clip = "sound/musical_instruments/bard/riff.ogg"
+		sound_clip = 'sound/musical_instruments/bard/riff.ogg'
 
 	perseverance
 		name = "Perseverance"
 		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
-		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
+		sound_clip = 'sound/musical_instruments/bard/lead1.ogg'
 
 	epic_climax
 		name = "EPIC CLIMAX"
@@ -341,7 +341,7 @@
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
-		sound_clip = "sound/musical_instruments/bard/tapping2.ogg"
+		sound_clip = 'sound/musical_instruments/bard/tapping2.ogg'
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item

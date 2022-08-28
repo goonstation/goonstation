@@ -20,9 +20,9 @@
 
 // These two procs were so similar that I combined them (Convair880).
 /mob/proc/teleportscroll(var/effect = 0, var/perform_check = 0, var/obj/item_to_check = null, var/datum/targetable/spell/teleport/spell, var/abort_if_incapacitated = FALSE)
-	var/voice_grim = "sound/voice/wizard/TeleportGrim.ogg"
-	var/voice_fem = "sound/voice/wizard/TeleportFem.ogg"
-	var/voice_other = "sound/voice/wizard/TeleportLoud.ogg"
+	var/voice_grim = 'sound/voice/wizard/TeleportGrim.ogg'
+	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
+	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")

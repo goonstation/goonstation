@@ -105,7 +105,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			else
 				user.show_text("<span class='notice'><b>You turn on the propellers.</b></span>")
 				on = 1
-				playsound_global(world, "sound/effects/mantamoving.ogg", 90)
+				playsound_global(world, 'sound/effects/mantamoving.ogg', 90)
 				sleep(7 SECONDS)
 				UpdateIcon()
 				command_alert("Attention, firing up propellers.  NSS Manta will be on the move shortly.", "NSS Manta Movement Computer", alert_origin = ALERT_STATION)
@@ -609,7 +609,7 @@ var/obj/manta_speed_lever/mantaLever = null
 			repairstate = 1
 			MagneticTether = 0
 			src.desc = "You should start by removing the outer screws from the casing. Be sure to wear some insulated gloves!"
-			playsound_global(world, "sound/effects/manta_alarm.ogg", 90)
+			playsound_global(world, 'sound/effects/manta_alarm.ogg', 90)
 			command_alert("The Magnetic tether has suffered critical damage aboard NSS Manta. Jetpacks equipped with magnetic attachments are now offline, please do not venture out into the ocean until the tether has been repaired.", "Magnetic Tether Damaged", alert_origin = ALERT_STATION)
 
 /obj/miningteleporter
@@ -1231,7 +1231,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		..()
 		if (random_events.announce_events)
 			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
-			playsound_global(world, "sound/effects/commsdown.ogg", 100)
+			playsound_global(world, 'sound/effects/commsdown.ogg', 100)
 			sleep(rand(80,100))
 			signal_loss += 100
 			sleep(rand(4800,6000))
@@ -1571,7 +1571,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "NSS Manta Secret Vault"
 	icon_state = "red"
 	teleport_blocked = 1
-	sound_loop = "sound/ambience/loop/manta_vault.ogg"
+	sound_loop = 'sound/ambience/loop/manta_vault.ogg'
 	sound_group = "vault"
 
 /obj/trigger/mantasecrettrigger

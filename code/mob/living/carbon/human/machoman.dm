@@ -268,7 +268,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.bioHolder.AddEffect("fire_resist")
 			src.transforming = 1
 			src.visible_message("<span class='alert'><B>[src] begins glowing with ominous power!</B></span>")
-			playsound(src.loc, "sound/voice/chanting.ogg", 75, 0, 0, src.get_age_pitch())
+			playsound(src.loc, 'sound/voice/chanting.ogg', 75, 0, 0, src.get_age_pitch())
 			sleep(4 SECONDS)
 			for (var/mob/N in viewers(src, null))
 				N.flash(3 SECONDS)
@@ -695,7 +695,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				H.set_loc(holder.owner.loc)
 			else
 				holder.owner.visible_message("<span class='alert'>[holder.owner] closes his eyes for a moment.</span>")
-				playsound(holder.owner.loc, "sound/voice/macho/macho_breathing18.ogg", 50, 0, 0, holder.owner.get_age_pitch())
+				playsound(holder.owner.loc, 'sound/voice/macho/macho_breathing18.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 				sleep(4 SECONDS)
 			holder.owner.set_density(0)
 			if (H)
@@ -717,7 +717,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			else
 				holder.owner.visible_message("<span class='alert'>[holder.owner] flies through the ceiling!</span>")
 			playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
-			playsound(holder.owner.loc, "sound/voice/macho/macho_become_enraged01.ogg", 50, 0, 0, holder.owner.get_age_pitch())
+			playsound(holder.owner.loc, 'sound/voice/macho/macho_become_enraged01.ogg', 50, 0, 0, holder.owner.get_age_pitch())
 			for (var/i = 0, i < 20, i++)
 				holder.owner.pixel_y += 15
 				holder.owner.set_dir(turn(holder.owner.dir, 90))
@@ -1019,7 +1019,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						return
 				//var/arena_time = 45 SECONDS
 				holder.owner.verbs -= /mob/living/carbon/human/machoman/verb/macho_summon_arena
-				playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+				playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 				holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins summoning a wrestling ring!</B></span>", "<span class='alert'><B>You begin summoning a wrestling ring!</B></span>")
 				for (var/mob/living/M in oviewers(ring_radius + 4, get_turf(holder.owner)))
 					M.apply_sonic_stun(6, 3, stamina_damage = 0)
@@ -1144,7 +1144,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 						H.pixel_y += 2
 						sleep(0.3 SECONDS)
 
-					playsound(holder.owner.loc, "sound/voice/macho/macho_slimjim.ogg", 75) // SNAP INTO A SLIM JIM!
+					playsound(holder.owner.loc, 'sound/voice/macho/macho_slimjim.ogg', 75) // SNAP INTO A SLIM JIM!
 					sleep(0.5 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
@@ -1222,7 +1222,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 					holder.owner.transforming = 0
 					holder.owner.bioHolder.AddEffect("fire_resist")
 					holder.owner.transforming = 1
-					playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+					playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'>[holder.owner] begins radiating with dark energy!</span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))
@@ -1251,7 +1251,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 			holder.owner.bioHolder.AddEffect("fire_resist")
 			holder.owner.transforming = 1
 			holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins glowing with ominous power!</B></span>")
-			playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+			playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 			sleep(4 SECONDS)
 			for (var/mob/N in viewers(holder.owner, null))
 				N.flash(3 SECONDS)
@@ -1462,7 +1462,7 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 				//		composite.Blend(Ic, ICON_OVERLAY)
 				//	holder.owner.overlays = null
 				//	holder.owner.icon = composite
-					playsound(holder.owner.loc, "sound/voice/chanting.ogg", 75, 0, 0, holder.owner.get_age_pitch())
+					playsound(holder.owner.loc, 'sound/voice/chanting.ogg', 75, 0, 0, holder.owner.get_age_pitch())
 					holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins radiating with evil energies!</b></span>")
 					sleep(4 SECONDS)
 					for (var/mob/N in viewers(holder.owner, null))

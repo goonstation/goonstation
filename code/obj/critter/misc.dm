@@ -1445,7 +1445,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			//src.visible_message("<span class='combat'><b>[src]</b> charges at [Cc.name]!</span>")
-			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 25, 1, -1) // cat hiss, snake hiss - basically the same thing, right?
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 25, 1, -1) // cat hiss, snake hiss - basically the same thing, right?
 			src.task = "chasing"
 			return
 

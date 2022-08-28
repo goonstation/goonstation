@@ -6,9 +6,9 @@
 	cooldown = 600
 	requires_robes = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/MagicShieldGrim.ogg"
-	voice_fem = "sound/voice/wizard/MagicShieldFem.ogg"
-	voice_other = "sound/voice/wizard/MagicShieldLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MagicShieldGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MagicShieldFem.ogg'
+	voice_other = 'sound/voice/wizard/MagicShieldLoud.ogg'
 	maptext_colors = list("#24639a", "#24bdc6")
 
 	cast()

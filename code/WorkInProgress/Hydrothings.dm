@@ -435,7 +435,7 @@ obj/item/gnomechompski/elf
 			chosen = 1
 			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
 			sleep(1.5 SECONDS)
-			playsound(user.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(user.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 			user.reagents.add_reagent("hootonium", 10)
 			qdel(src)
 

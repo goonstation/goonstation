@@ -6,9 +6,9 @@
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/PandemoniumGrim.ogg"
-	voice_fem = "sound/voice/wizard/PandemoniumFem.ogg"
-	voice_other = "sound/voice/wizard/PandemoniumLoud.ogg"
+	voice_grim = 'sound/voice/wizard/PandemoniumGrim.ogg'
+	voice_fem = 'sound/voice/wizard/PandemoniumFem.ogg'
+	voice_other = 'sound/voice/wizard/PandemoniumLoud.ogg'
 	maptext_colors = list("#FF0000", "#00FF00", "#FFFF00", "#0000FF", "#00FFFF", "#FF00FF")
 
 	cast()
@@ -124,7 +124,7 @@
 			if("roar")
 				spell_result = "roar"
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrific reverberating roar!</span>")
-				playsound_global(world, "sound/effects/mag_pandroar.ogg", 50)
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 50)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue

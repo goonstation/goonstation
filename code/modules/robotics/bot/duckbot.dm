@@ -95,7 +95,7 @@
 			src.speak(message, 1, 1)
 			wakka_wakka(TRUE) // Seek loser is TRUE
 			if(prob(70))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 1) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1) // MUSIC
 		else
 			if(!ON_COOLDOWN(src, DUCKBOT_QUACK_COOLDOWN, src.quack_cooldown) && prob(60))
 				var/message = pick("wacka", "quack","quacky","gaggle")
@@ -109,7 +109,7 @@
 				else
 					wakka_wakka()
 			if(!ON_COOLDOWN(src, DUCKBOT_AMUSEMENT_COOLDOWN, src.amusement_cooldown) && prob(20))
-				playsound(src.loc, "sound/misc/amusingduck.ogg", 50, 0) // MUSIC
+				playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 0) // MUSIC
 		if(prob (7) && src.eggs >= 1)
 			var/obj/item/a_gift/easter/E = new /obj/item/a_gift/easter(src.loc)
 			E.name = "duck egg"

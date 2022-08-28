@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(src), 'sound/voice/screams/robot_scream.ogg' , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 

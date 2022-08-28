@@ -31,7 +31,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	mats = 12
-	var/sawnoise = "sound/machines/chainsaw_green.ogg"
+	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
@@ -50,7 +50,7 @@
 
 		New()
 			..()
-			hitsound = "sound/machines/chainsaw_green.ogg"
+			hitsound = 'sound/machines/chainsaw_green.ogg'
 
 	New()
 		..()
@@ -151,7 +151,7 @@
 	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
-	sawnoise = "sound/machines/chainsaw_red.ogg"
+	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s-D"
 	base_arm = "chainsaw_s"
 	stamina_damage = 100
@@ -357,8 +357,8 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	mats = 12
-	sawnoise = "sound/machines/chainsaw_red.ogg"
-	hitsound = "sound/machines/chainsaw_red.ogg"
+	sawnoise = 'sound/machines/chainsaw_red.ogg'
+	hitsound = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s-A"
 	base_arm = "chainsaw_s"
 	stamina_damage = 40

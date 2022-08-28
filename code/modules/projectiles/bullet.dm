@@ -1111,8 +1111,8 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	hit_type = DAMAGE_BLUNT
-	hit_mob_sound = "sound/misc/splash_1.ogg"
-	hit_object_sound = "sound/misc/splash_1.ogg"
+	hit_mob_sound = 'sound/misc/splash_1.ogg'
+	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
 
 

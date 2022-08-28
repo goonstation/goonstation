@@ -356,7 +356,7 @@ CONTAINS:
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "defib-off"
 	item_state = "defib"
-	pickup_sfx = "sound/items/pickup_defib.ogg"
+	pickup_sfx = 'sound/items/pickup_defib.ogg'
 	var/icon_base = "defib"
 	var/charge_time = 100
 	var/emagged = 0
@@ -1167,7 +1167,7 @@ CONTAINS:
 		def_zone = (user?.zone_sel?.selecting) ? user.zone_sel.selecting : "chest" // may as well default to head idk
 
 	var/my_damage = src.force
-	var/my_sound = "sound/impact_sounds/Generic_Stab_1.ogg"
+	var/my_sound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	var/clumsy = 0 // time to be rude :T
 	var/doctor = 0
 
@@ -1186,7 +1186,7 @@ CONTAINS:
 				if (!H.get_organ("head")) // ain't got NO HEAD TO TAP, WHAT YOU TRYIN TO PULL HERE SON
 					H.visible_message("[user][doctor ? " gently" : null] swings [src] at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head, <span style='color:red;font-weight:bold'>but [H == user ? he_or_she(H) : H] has no head to tap!</span>[H == user ? " How did [he_or_she(H)] even pull that off?!" : null]")
 					my_damage = 0
-					my_sound = "sound/impact_sounds/Generic_Swing_1.ogg"
+					my_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")

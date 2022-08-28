@@ -9,9 +9,9 @@
 	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/ShockingGraspGrim.ogg"
-	voice_fem = "sound/voice/wizard/ShockingGraspFem.ogg"
-	voice_other = "sound/voice/wizard/ShockingGraspLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ShockingGraspGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ShockingGraspFem.ogg'
+	voice_other = 'sound/voice/wizard/ShockingGraspLoud.ogg'
 	var/wattage = 100000
 	var/burn_damage = 100
 	var/target_damage_modifier = 1.95

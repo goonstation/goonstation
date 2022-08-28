@@ -140,15 +140,15 @@
 	icon_state = "flock"
 	icon_closed = "flock"
 	icon_opened = "flock-open"
-	open_sound = "sound/misc/flockmind/flockdrone_locker_open.ogg"
-	close_sound = "sound/misc/flockmind/flockdrone_locker_close.ogg"
+	open_sound = 'sound/misc/flockmind/flockdrone_locker_open.ogg'
+	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	var/health_attack = 100
 	var/health_max = 100
 	var/repair_per_resource = 2.5
-	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
 
 	take_damage(var/force, var/mob/user as mob)
 		if (!isnum(force) || force <= 0)

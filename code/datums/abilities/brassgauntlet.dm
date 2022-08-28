@@ -124,7 +124,7 @@
 					continue
 				M.flash(60)
 				M.changeStatus("weakened", 5 SECONDS)
-				M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+				M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 
 				if(prob(1))
 					if(prob(50))
@@ -166,7 +166,7 @@
 					boutput(M,"<span class='alert'><B>You hear an intense and painful hooting inside your head.</B></span>")
 					var/hooting = 0
 					while(hooting <= rand(8, 12))
-						M.playsound_local(M.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+						M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 						if(prob(50))
 							random_brute_damage(M, rand(1,5))
 							M.flash(10)

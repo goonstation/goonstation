@@ -69,18 +69,18 @@
 	money_roll(waver)
 		var/roll = rand(1,max_roll)
 		var/exclamation = ""
-		var/win_sound = "sound/machines/ping.ogg"
+		var/win_sound = 'sound/machines/ping.ogg'
 		var/prize_type = null
 
 		if(roll > (max_roll - uses * 20)) // failure chances increase by 2% every roll
 			src.emag_act(null, null) // bye bye!
 			prize_type = /obj/item/gimmickbomb/butt/prearmed
 			exclamation = "Big Loser! Goodbye! "
-			win_sound = "sound/musical_instruments/Trombone_Failiure.ogg"
+			win_sound = 'sound/musical_instruments/Trombone_Failiure.ogg'
 			return
 		else if (roll <= 20 && wager > 250) // rare tier, 2% chance, only on high wagers
 			prize_type = pick(raretier)
-			win_sound = "sound/misc/airraid_loop_short.ogg"
+			win_sound = 'sound/misc/airraid_loop_short.ogg'
 			exclamation = "JACKPOT! "
 			src.uses += 20
 		else if (roll > 20 && roll <= 170) // half decent tier, 15% chance

@@ -161,7 +161,7 @@
 /obj/submachine/slot_machine/proc/money_roll(wager)
 	var/roll = rand(1, max_roll)
 	var/exclamation = ""
-	var/win_sound = "sound/machines/ping.ogg"
+	var/win_sound = 'sound/machines/ping.ogg'
 	var/amount = 0
 
 	//300x and 100x jackpots fall through to 50x winner if wager <= 250
@@ -171,17 +171,17 @@
 		roll = min(roll * 2, max_roll)
 
 	if (roll == 1) //1 - 300
-		win_sound = "sound/misc/airraid_loop_short.ogg"
+		win_sound = 'sound/misc/airraid_loop_short.ogg'
 		exclamation = "JACKPOT! "
 		amount = 300 * wager
 		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 5) //4 - 400
-		win_sound =  "sound/misc/klaxon.ogg"
+		win_sound =  'sound/misc/klaxon.ogg'
 		exclamation = "Big Winner! "
 		amount = 100 * wager
 		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
-		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
+		win_sound =  'sound/musical_instruments/Bell_Huge_1.ogg'
 		exclamation = "Big Winner! "
 		amount = 50 * wager
 	else if (roll <= 65) //50 - 500
@@ -395,7 +395,7 @@
 					else
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
-							//playsound(src.loc, "sound/machines/buzz-two.ogg", 55, 1) // way too loud UGH
+							//playsound(src.loc, 'sound/machines/buzz-two.ogg', 55, 1) // way too loud UGH
 					src.working = 0
 					src.icon_state = "slots-off"
 					updateUsrDialog()

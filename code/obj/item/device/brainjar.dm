@@ -159,7 +159,7 @@
 			if(4)
 				if(istype(W, /obj/item/device/radio))
 					user.show_text("You hook up \the [W] to the assembly. It emits a loud screech!", "blue")
-					var/bad_noise = pick("sound/machines/glitch1.ogg", "sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg", "sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg")
+					var/bad_noise = pick('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg', 'sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg')
 					playsound(src.loc, bad_noise, 50, 1)
 					user.u_equip(W)
 					rad = W

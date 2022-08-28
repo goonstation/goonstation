@@ -148,7 +148,7 @@
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	New()
@@ -167,7 +167,7 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "energy_stinger1"
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
@@ -211,7 +211,7 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
 	prime()

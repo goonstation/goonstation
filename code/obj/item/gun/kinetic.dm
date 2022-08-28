@@ -1193,7 +1193,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	w_class = W_CLASS_BULKY
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
-	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
+	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 
 
 	New()
@@ -1266,7 +1266,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	alter_projectile(var/obj/projectile/P)
 		. = ..()
-		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
+		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'
 
 	pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 		if (src.icon_state == "slamgun-ready")
@@ -1811,7 +1811,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	ammobag_magazines = list(/obj/item/ammo/bullets/grenade_round/explosive)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 3
-	sound_load_override = "sound/weapons/gunload_rigil.ogg"
+	sound_load_override = 'sound/weapons/gunload_rigil.ogg'
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -1997,7 +1997,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	can_dual_wield = FALSE
 	two_handed = FALSE
 	add_residue = TRUE
-	sound_load_override = "sound/weapons/gunload_sawnoff.ogg"
+	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
@@ -2053,4 +2053,4 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
-		P.proj_data.shot_sound = "sound/weapons/sawnoff.ogg"
+		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'

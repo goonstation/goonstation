@@ -21,10 +21,10 @@
 	var/image/display_active = null
 	var/image/display_battery = null
 	var/image/display_panel = null
-	var/sound/sound_on = "sound/effects/shielddown.ogg"
-	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
-	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
+	var/sound/sound_on = 'sound/effects/shielddown.ogg'
+	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
+	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
@@ -346,7 +346,7 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
 
 	attackby(obj/item/W, mob/user)
@@ -443,7 +443,7 @@
 	var/isactive = TRUE
 	density = 0
 
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
 	var/update_tiles

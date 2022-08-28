@@ -92,7 +92,7 @@ var/global/noir = 0
 
 	if (src.level < 0)
 		tgui_alert(usr,"UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-		usr << csound("sound/voice/farts/poo2.ogg")
+		usr << csound('sound/voice/farts/poo2.ogg')
 		return
 
 	if (usr.client != src.owner)
@@ -3381,7 +3381,7 @@ var/global/noir = 0
 								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report(input2, input)
 
-								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
+								var/sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
 								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing(LOG_ADMIN, usr, "has created a command report (zalgo): [input]")
@@ -3403,7 +3403,7 @@ var/global/noir = 0
 								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report(input2, input)
 
-								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
+								var/sound_to_play = 'sound/ambience/spooky/Void_Calls.ogg'
 								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing(LOG_ADMIN, usr, "has created a command report (void): [input]")

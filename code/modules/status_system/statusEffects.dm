@@ -920,7 +920,7 @@
 		unique = 1
 		maxDuration = 15 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
 
@@ -942,7 +942,7 @@
 		unique = 1
 		maxDuration = 30 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 
 		onUpdate(timePassed)

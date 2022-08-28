@@ -143,9 +143,9 @@
 				if(player.ready)
 					num_players++
 			if (num_players <= 70)
-				command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+				command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", 'sound/misc/announcement_1.ogg')
 			sleep(rand_time / 2)
-			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", 'sound/misc/announcement_1.ogg')
 			sleep(rand_time / 2)
 			send_pods()
 
@@ -166,7 +166,7 @@
 			if(!length(possible_turfs))
 				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
 				break
-		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
+		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", 'sound/misc/announcement_1.ogg')
 		qdel(src)
 
 /obj/machinery/computer/security/pod_timer

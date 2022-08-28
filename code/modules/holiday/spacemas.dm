@@ -1186,7 +1186,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 						qdel(G)
 						src.HealDamage("All", 15, 15)
 						sleep(1 SECOND)
-						playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 1, 0 ,0.5)
+						playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 1, 0 ,0.5)
 
 /obj/stocking
 	name = "stocking"

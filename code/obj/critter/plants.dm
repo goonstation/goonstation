@@ -20,7 +20,7 @@
 
 	New()
 		..()
-		playsound(src.loc, pick("sound/voice/MEilive.ogg"), 45, 0)
+		playsound(src.loc, pick('sound/voice/MEilive.ogg'), 45, 0)
 
 	seek_target()
 		src.anchored = 0
@@ -77,7 +77,7 @@
 					sleeping = 2
 					src.target = null
 					src.task = "thinking"
-					playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+					playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 			else
 				if (isliving(M))
 					var/mob/living/H = M

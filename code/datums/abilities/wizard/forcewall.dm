@@ -6,9 +6,9 @@
 	cooldown = 20 SECONDS
 	requires_robes = 1
 	requires_being_on_turf = TRUE
-	voice_grim = "sound/voice/wizard/ForcewallGrim.ogg"
-	voice_fem = "sound/voice/wizard/ForcewallFem.ogg"
-	voice_other = "sound/voice/wizard/ForcewallLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ForcewallGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ForcewallFem.ogg'
+	voice_other = 'sound/voice/wizard/ForcewallLoud.ogg'
 	maptext_colors = list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF")
 
 	cast()

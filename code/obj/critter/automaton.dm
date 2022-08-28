@@ -386,7 +386,7 @@ var/global/the_automaton = null
 					sleep(0.3 SECONDS)
 					tornpaper.combust()
 				keycount = INFINITY
-				playsound_global(world, "sound/musical_instruments/Gong_Rumbling.ogg", 70)
+				playsound_global(world, 'sound/musical_instruments/Gong_Rumbling.ogg', 70)
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
 				if (the_sun)

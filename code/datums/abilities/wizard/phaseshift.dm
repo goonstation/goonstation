@@ -7,9 +7,9 @@
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/MistFormGrim.ogg"
-	voice_fem = "sound/voice/wizard/MistFormFem.ogg"
-	voice_other = "sound/voice/wizard/MistFormLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MistFormGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MistFormFem.ogg'
+	voice_other = 'sound/voice/wizard/MistFormLoud.ogg'
 	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()

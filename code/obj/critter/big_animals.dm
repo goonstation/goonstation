@@ -116,7 +116,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/MEraaargh.ogg"), 40, 0)
+		playsound(src.loc, pick('sound/voice/MEraaargh.ogg'), 40, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -133,7 +133,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/babynoise.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/babynoise.ogg'), 50, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -177,7 +177,7 @@ obj/critter/bear/care
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-				playsound(src.loc, pick("sound/voice/animal/YetiGrowl.ogg"), 40, 0)
+				playsound(src.loc, pick('sound/voice/animal/YetiGrowl.ogg'), 40, 0)
 				src.task = "chasing"
 				break
 			else
@@ -214,7 +214,7 @@ obj/critter/bear/care
 		src.task = "thinking"
 		src.seek_target()
 		src.attacking = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 
 		sleeping = 1
 
@@ -431,7 +431,7 @@ obj/critter/bear/care
 		else return 0
 
 		if (sips_taken == 0 || prob(80))
-			playsound(src.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			playsound(src.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		// if (prob(20))
 		eat_twitch(src)
 

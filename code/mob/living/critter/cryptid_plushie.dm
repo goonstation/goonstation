@@ -294,9 +294,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	cooldown = 400
 	targeted = 0
 	qdel_itself_if_not_attached_to_plushie = 1
-	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
-	var/list/moderate_event_sounds = list("sound/machines/giantdrone_boop2.ogg")
-	var/list/major_event_sounds = list("sound/misc/android_scream.ogg")
+	var/list/minor_event_sounds = list('sound/machines/giantdrone_boop1.ogg', 'sound/machines/giantdrone_boop3.ogg', 'sound/machines/giantdrone_boop4.ogg')
+	var/list/moderate_event_sounds = list('sound/machines/giantdrone_boop2.ogg')
+	var/list/major_event_sounds = list('sound/misc/android_scream.ogg')
 	var/cycle
 
 	cast(atom/target)

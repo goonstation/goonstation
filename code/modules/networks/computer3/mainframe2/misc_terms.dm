@@ -1139,7 +1139,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				playsound_global(world, "sound/misc/airraid_loop_short.ogg", 90)
+				playsound_global(world, 'sound/misc/airraid_loop_short.ogg', 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1278,10 +1278,10 @@
 						//World announcement.
 						if (src.z == Z_LEVEL_STATION)
 							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
+							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 						else
 							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
-							playsound_global(world, "sound/misc/airraid_loop.ogg", 25)
+							playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
 						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
@@ -1322,7 +1322,7 @@
 		return
 
 	proc/detonate()
-		playsound_global(world, "sound/effects/kaboom.ogg", 70)
+		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()

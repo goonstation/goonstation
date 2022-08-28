@@ -115,7 +115,7 @@
 	proc/play_pickip_sound()
 		if(!handset || !handset.holder) //fuck
 			return
-		handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
+		handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	attack_ai(mob/user as mob)
 		return
@@ -125,7 +125,7 @@
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
 				if(src.linked && src.linked.handset && src.linked.handset.holder)
-					src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
+					src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 				user.drop_item(PH)
 				qdel(PH)
 				hang_up()
@@ -171,7 +171,7 @@
 
 	process()
 		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
 			return
@@ -188,10 +188,10 @@
 				if(src.last_ring >= 2)
 					src.last_ring = 0
 					if(src.handset && src.handset.holder)
-						src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/ring_outgoing.ogg" ,40,0)
+						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
-					playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
+					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
 					src.icon_state = "[ringingicon]"
 					src.last_ring = 0
 
@@ -204,17 +204,17 @@
 		src.ringing = 0
 		src.handset = null
 		src.icon_state = "[phoneicon]"
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
 	// This makes phones do that thing that phones do
 	proc/call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
-				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
+				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = 0
 				return
 
@@ -321,11 +321,11 @@
 	call_other(var/obj/machinery/phone/target)
 		// Dial the number
 		src.dialing = 1
-		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(!target.can_be_called())
-				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
+				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = 0
 				return
 

@@ -6,9 +6,9 @@
 	cooldown = 500
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/RathensSecretGrim.ogg"
-	voice_fem = "sound/voice/wizard/RathensSecretFem.ogg"
-	voice_other = "sound/voice/wizard/RathensSecretLoud.ogg"
+	voice_grim = 'sound/voice/wizard/RathensSecretGrim.ogg'
+	voice_fem = 'sound/voice/wizard/RathensSecretFem.ogg'
+	voice_other = 'sound/voice/wizard/RathensSecretLoud.ogg'
 	maptext_colors = list("#d73715", "#d73715", "#fcf574")
 
 	cast()

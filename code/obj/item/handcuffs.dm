@@ -54,7 +54,7 @@
 				O.show_message("<span class='alert'>You feel ill from watching that.</span>") // O is grossed out
 				for (var/mob/V in viewers(O, null)) // loop through all the mobs that can see O locally
 					V.show_message("<span class='alert'>[O.name] pukes all over \himself. Thanks, [user.name].</span>", 1) // tell them that O puked
-					playsound(O.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) // play a sound where O is
+					playsound(O.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) // play a sound where O is
 					make_cleanable( /obj/decal/cleanable/vomit,O.loc) // make a vomit decal where O
 					// these last two parts are within the for loop so that means that for EVERY MOB THAT SEES THIS, A SOUND AND DECAL ARE MADE
 */

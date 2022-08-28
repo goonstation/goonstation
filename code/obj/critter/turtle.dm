@@ -64,7 +64,7 @@
 
 	CritterAttack(mob/M)
 		..()
-		var/S = pick("sound/impact_sounds/Generic_Hit_2.ogg", "sound/impact_sounds/Wood_Hit_Small_1.ogg")
+		var/S = pick('sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Wood_Hit_Small_1.ogg')
 		playsound(src.loc, S, 30, 1, -1)
 
 	ChaseAttack(mob/M)

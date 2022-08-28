@@ -42,7 +42,7 @@
     if(active)
       boutput(user, "It's already active, use it on a non-space tile to plant it!")
     else
-      playsound(src.loc, pick("sound/machines/ArtifactMar1.ogg", "sound/machines/ArtifactMar2.ogg"), 60, 1)
+      playsound(src.loc, pick('sound/machines/ArtifactMar1.ogg', 'sound/machines/ArtifactMar2.ogg'), 60, 1)
       icon_state = "seed_active"
       active = 1
       user.visible_message("<span class='notice'><b>[user]</b> activates the seed!</span>", "<span class='notice'>You activate the seed!</span>")

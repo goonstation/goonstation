@@ -9,9 +9,9 @@
 	offensive = 1
 	restricted_area_check = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/WarpGrim.ogg"
-	voice_fem = "sound/voice/wizard/WarpFem.ogg"
-	voice_other = "sound/voice/wizard/WarpLoud.ogg"
+	voice_grim = 'sound/voice/wizard/WarpGrim.ogg'
+	voice_fem = 'sound/voice/wizard/WarpFem.ogg'
+	voice_other = 'sound/voice/wizard/WarpLoud.ogg'
 	maptext_colors = list("#5cde24", "#167935", "#084623", "#0167935")
 
 	cast(mob/target)

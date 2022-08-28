@@ -15,8 +15,8 @@
 	var/venom2 = "spiders"
 	var/babyspider = 0
 	var/adultpath = null
-	var/bitesound = "sound/weapons/handcuffs.ogg"
-	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
+	var/bitesound = 'sound/weapons/handcuffs.ogg'
+	var/deathsound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	death_text = "%src% crumples up into a ball!"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	var/encase_in_web = 1 // do they encase people in ice, web, or uh, cotton candy?
@@ -258,9 +258,9 @@
 	can_grab = 0
 	venom1 = "toxin"
 	venom2 = "cryostylane"
-	bitesound = "sound/impact_sounds/Crystal_Hit_1.ogg"
-	stepsound = "sound/impact_sounds/Glass_Shards_Hit_1.ogg"
-	deathsound = "sound/impact_sounds/Crystal_Shatter_1.ogg"
+	bitesound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
+	stepsound = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
+	deathsound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	encase_in_web = 0
 	max_skins = 4
 	reacting = 0

@@ -247,7 +247,7 @@
 		src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 		if (prob(30))
 			..()
-			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			playsound(src.loc, pick('sound/impact_sounds/Generic_Shove_1.ogg'), 50, 0)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)

@@ -5,7 +5,7 @@
 /datum/limb/small_critter/fermid // can hold slightly larger things than base small critter
   max_wclass = W_CLASS_NORMAL
   actions = list("jabs", "prods", "pokes", "taps")
-  sound_attack = "sound/impact_sounds/Flesh_Stab_1.ogg"
+  sound_attack = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 /datum/limb/mouth/small/fermid
   dam_low = 1

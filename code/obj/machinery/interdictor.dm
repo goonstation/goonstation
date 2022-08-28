@@ -26,10 +26,10 @@
 
 	var/list/deployed_fields = list()
 
-	var/sound/sound_interdict_on = "sound/machines/interdictor_activate.ogg"
-	var/sound/sound_interdict_off = "sound/machines/interdictor_deactivate.ogg"
-	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
-	var/sound/sound_togglebolts = "sound/machines/click.ogg"
+	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
+	var/sound/sound_interdict_off = 'sound/machines/interdictor_deactivate.ogg'
+	var/sound/sound_interdict_run = 'sound/machines/interdictor_operate.ogg'
+	var/sound/sound_togglebolts = 'sound/machines/click.ogg'
 
 	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
 		if(altcap)
