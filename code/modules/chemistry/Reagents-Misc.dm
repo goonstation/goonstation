@@ -1798,25 +1798,20 @@ datum
 						new /obj/reagent_dispensers/cleanable/spiders(target)
 						var/obj/critter/S
 						if (prob(10))
-							S = new /obj/critter/spider/baby(target)
+							S = new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(2))
-							S = new /obj/critter/nicespider(target)
+							S = new /mob/living/critter/spider/nice(target)
 							S.name = "spider"
 							S.set_density(0)
-					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/obj/critter) in target)
-						var/obj/critter/S
+					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/mob/living/critter/spider) in target)
 						if (prob(25))
-							S = new /obj/critter/spider/baby(target)
 							if (prob(2))
-								S.aggressive = 1
+								new /mob/living/critter/spider/baby(target)
+							else
+								new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(5))
-							S = new /obj/critter/nicespider(target)
-							S.name = "spider"
-							S.set_density(0)
-						else if (prob(10))
-							S = new /obj/critter/spider(target)
-							if (prob(1))
-								S.aggressive = 1
+							new /mob/living/critter/spider/nice(target)
+
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1843,9 +1838,10 @@ datum
 						M.visible_message("<span class='alert'><b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]</span>",\
 						"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 						if (prob(33))
-							var/obj/critter/spider/baby/S = new /obj/critter/spider/baby(M)
 							if (prob(5))
-								S.aggressive = 1
+								new /mob/living/critter/spider/baby(M)
+							else
+								new /mob/living/critter/spider/baby/nice(M)
 				..()
 				return
 
