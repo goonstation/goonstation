@@ -1732,7 +1732,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		if (R.shell && !R.dependent && !isdead(R))
 			bodies += R
 
-	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies))
+	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
 	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
 		return
@@ -1799,7 +1799,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		return
 	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
 
-	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L))
+	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
 	var/newMessage = scrubbed_input(usr, "Enter a message for your status displays!", "AI Message", src.status_message)
 	if (!newEmotion && !newMessage)
 		return
@@ -2300,6 +2300,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 
 	return 1
 
+// zewaka
 proc/get_mobs_trackable_by_AI()
 	var/list/names = list()
 	var/list/namecounts = list()

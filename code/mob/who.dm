@@ -1,5 +1,6 @@
 /mob/verb/who()
 	set name = "Who"
+	// ZEWAKA
 	var/rendered = "<div class='who-list'>"
 
 	var/list/whoAdmins = list()
@@ -60,9 +61,9 @@
 			thisW += C.key + (usr.client.holder ? "</a>" : "</span>")
 			whoNormies += thisW
 
-	whoAdmins = sortList(whoAdmins)
-	whoMentors = sortList(whoMentors)
-	whoNormies = sortList(whoNormies)
+	sortList(whoAdmins, /proc/cmp_text_asc)
+	sortList(whoMentors, /proc/cmp_text_asc)
+	sortList(whoNormies, /proc/cmp_text_asc)
 
 	if (whoAdmins.len)
 		rendered += "<b>Admins:</b>"

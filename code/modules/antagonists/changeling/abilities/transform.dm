@@ -91,7 +91,7 @@
 			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
 			return 1
 
-		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna))
+		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1

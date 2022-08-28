@@ -1065,7 +1065,7 @@ var/global/noir = 0
 				for (var/area/A in world)
 					areas += A
 					LAGCHECK(LAG_LOW)
-				SortList(areas, /proc/compareName)
+				sortList(areas, /proc/cmp_name_asc)
 				var/area = tgui_input_list(usr, "Area to send to", "Send", areas)
 				if (area)
 					usr.client.sendmob(M, area)
@@ -1244,7 +1244,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/statusEffect))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
 
 				if (!effect)
@@ -1572,7 +1572,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/reagent))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/type = tgui_input_list(usr, "Select Reagent:", "Select", L)
 
 				if(!type) return
@@ -1688,7 +1688,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/targetable))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
 				if (!ab_to_add)
 					return // user canceled
@@ -1726,7 +1726,7 @@ var/global/noir = 0
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
 					return //nothing to remove
 
-				abils = sortList(abils)
+				sortList(abils, /proc/cmp_text_asc)
 				ab_to_rem = tgui_input_list(usr, "Remove which ability?", "Ability", abils)
 				if (!ab_to_rem) return //user cancelled
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
@@ -1833,7 +1833,7 @@ var/global/noir = 0
 					all_traits[traitList[trait].name] = traitList[trait].id
 					traits_by_name.Add(traitList[trait].name)
 
-				traits_by_name = sortList(traits_by_name)
+				sortList(traits_by_name, /proc/cmp_text_asc)
 
 				var/trait_to_add_name = tgui_input_list(usr, "Add a Trait:", "Select", traits_by_name)
 				if (!trait_to_add_name)
@@ -1865,7 +1865,7 @@ var/global/noir = 0
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any traits!</span></b>")
 					return //nothing to remove
 
-				traits = sortList(traits)
+				sortList(traits, /proc/cmp_text_asc)
 				trait_to_remove_name = tgui_input_list(usr, "Remove which trait?", "Trait", traits)
 				if (!trait_to_remove_name) return //user cancelled
 
@@ -3936,7 +3936,7 @@ var/global/noir = 0
 				var/client/C = M.client
 				if (!M) return
 				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-				SortList(jobs, /proc/compareName)
+				sortList(jobs, /proc/cmp_name_asc)
 				var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 				if(!job) return
 				var/mob/new_player/newM = usr.client.respawn_target(M)
