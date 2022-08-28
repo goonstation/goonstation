@@ -64751,10 +64751,9 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dKO" = (
-/obj/machinery/computer3/generic,
-/turf/unsimulated/floor/redblack{
-	dir = 1
-	},
+/obj/decal/cleanable/rust,
+/obj/machinery/surplusopauth,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station)
 "dKR" = (
 /obj/stool/chair/comfy/purple{
@@ -68224,6 +68223,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"elP" = (
+/obj/submachine/surplusopdeployer{
+	pixel_y = 2
+	},
+/turf/unsimulated/floor/red,
+/area/space)
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
@@ -69172,7 +69177,6 @@
 /area/sim/gunsim)
 "gmO" = (
 /obj/decal/cleanable/cobweb2,
-/obj/random_item_spawner/peripherals/two,
 /obj/item/sheet/steel,
 /obj/item/sheet/steel{
 	pixel_y = -5;
@@ -69182,6 +69186,7 @@
 	pixel_y = -5;
 	pixel_x = 2
 	},
+/obj/random_item_spawner/dressup/one,
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
@@ -71652,6 +71657,7 @@
 /area/crater/biodome/research)
 "lAk" = (
 /obj/submachine/weapon_vendor/surplus,
+/obj/map/light/green,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 6
 	},
@@ -73046,9 +73052,6 @@
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/decal/cleanable/robot_debris{
-	icon_state = "gib7"
-	},
 /turf/space,
 /area/space)
 "odD" = (
@@ -74137,18 +74140,10 @@
 	},
 /area/iomoon)
 "qjM" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/weldingtool{
-	pixel_y = -4
-	},
-/obj/item/clothing/head/helmet/welding{
-	pixel_x = -7;
-	pixel_y = 9
-	},
+/obj/rack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
+/obj/item/tank/jetpack,
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "qkO" = (
@@ -75271,6 +75266,18 @@
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "sDZ" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/weldingtool{
+	pixel_y = -4
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 8;
+	pixel_y = -4
+	},
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "sEV" = (
@@ -75533,6 +75540,7 @@
 /area/crunch/wtc)
 "tdf" = (
 /obj/submachine/weapon_vendor/surplus,
+/obj/map/light/green,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 5
 	},
@@ -75645,7 +75653,14 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
 "tsp" = (
-/obj/item/remote/syndicate_teleporter,
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/item/electronics/bulb{
+	pixel_y = -9;
+	pixel_x = 8
+	},
 /turf/space,
 /area/space)
 "tsP" = (
@@ -77358,6 +77373,7 @@
 /area/iomoon/base)
 "wXx" = (
 /obj/submachine/weapon_vendor/surplus,
+/obj/map/light/green,
 /turf/unsimulated/floor/wizard/carpet/edge{
 	dir = 4
 	},
@@ -77928,10 +77944,6 @@
 "ybJ" = (
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
-"ybL" = (
-/obj/submachine/syndicate_teleporter,
-/turf/unsimulated/floor/plating,
-/area/space)
 "ybR" = (
 /obj/decal/cleanable/generic,
 /turf/unsimulated/floor/blackwhite{
@@ -118216,7 +118228,7 @@ cnw
 bDu
 xfK
 cnw
-tsp
+cnw
 cnw
 cnw
 cnw
@@ -118515,7 +118527,7 @@ abp
 aaa
 abj
 aEN
-ybL
+elP
 uDG
 cnw
 cnw
@@ -118525,7 +118537,7 @@ jZR
 jZR
 jZR
 jZR
-xXE
+dKO
 nvE
 jZR
 xXE
@@ -118818,7 +118830,7 @@ aaa
 abj
 cnw
 ocB
-tsp
+cnw
 fJA
 cnw
 cnw
@@ -119119,7 +119131,7 @@ abp
 aaa
 abj
 cnw
-aNO
+tsp
 cnw
 vVm
 mdQ
@@ -119722,7 +119734,7 @@ aeX
 abp
 aaa
 abj
-tsp
+cnw
 cnw
 tsP
 wIx
@@ -120330,7 +120342,7 @@ cnw
 cnw
 mcy
 paA
-dKO
+flp
 uts
 sah
 flp

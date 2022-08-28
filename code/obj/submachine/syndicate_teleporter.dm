@@ -47,30 +47,15 @@
 			S.teleport(user)
 
 
-/obj/submachine/surplusop
+/obj/submachine/surplusopdeployer
 	icon = 'icons/obj/teleporter.dmi'
-	icon_state = "tele0"
+	icon_state = "syndtele1"
+	name = "Old portal ring"
+	desc = "An outdated and unstable portal ring model, locked in to a preset location."
 	density = TRUE
-	var/votesleft = 3 //how many more activations
-	var/id = "shuttle"
+	var/active = FALSE //can we go yet?
 
 	Bumped(atom/movable/M as mob|obj)
-		for_by_tcl(S, /obj/submachine/syndicate_teleporter)
-			if(S.id == src.id && S != src)
-				if(recharging == 1)
-					return 1
-				else
-					S.recharging = 1
-					src.recharging = 1
-					user.set_loc(S.loc)
-					showswirl(user.loc)
-					SPAWN(recharge)
-						S.recharging = 0
-						src.recharging = 0
-				return
+		if(active)
+			do_teleport(M, pick_landmark(LANDMARK_LATEJOIN)) //put them at the latejoin for now
 
-/obj/item/surplusoptelevote
-	name = "Teleporter activation card"
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "surpluscard"
-	desc = "A small device that acts as one of three votes required to activate a certain teleporter" //desc is meh but whatevs

@@ -138,7 +138,14 @@
 
 	New()
 		..()
-		beeptext = list("Bips")
 
-	foldself()
+	attack_hand(var/mob/user as mob)
+		..()
 		src.visible_message("<span class='combat'>[src] makes a [pick("clank", "whir", "thump", "grind", "creak","kunk")]ing sound, but doesn't fold.</span>")
+
+
+	proc/communalbeep() // distributes the beepchance among the number of sawflies nearby
+
+		if(isalive(src))
+			playsound(src, pick(src.beeps), 40, 1)
+			src.visible_message("<b>[src] bips!.</b>")
