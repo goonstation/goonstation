@@ -489,7 +489,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)

@@ -432,7 +432,7 @@
 			return
 		else
 			last_ring = world.time
-			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
+			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 /obj/item/trophy
 	name = "trophy"

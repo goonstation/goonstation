@@ -677,7 +677,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -697,7 +697,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232

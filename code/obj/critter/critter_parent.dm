@@ -957,15 +957,6 @@
 		if(target == start)
 			return
 
-	//	playsound(user, "mp5gunshot.ogg", 100, 1)
-	/*	if(bullet == 0)
-			A = new /obj/bullet/mpbullet( user:loc )
-		else if(bullet == 1)
-			playsound(user, 'sound/weapons/shotgunshot.ogg', 100, 1)
-			A = new /obj/bullet/slug( user:loc )
-		else if(bullet == 2)
-			playsound(user, "fivegunshot.ogg", 100, 1)
-			A = new /obj/bullet/medbullet( user:loc )*/
 		if (!isturf(target))
 			return
 		// FUCK YOU WHOEVER IS USING THIS

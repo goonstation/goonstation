@@ -1100,7 +1100,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					rotors.icon_state = "powercore_rotors_start"
 					SPAWN(2.4 SECONDS)
 						rotors.icon_state = "powercore_rotors"
-					playsound(src.loc, "sound/machines/lavamoon_rotors_starting.ogg",50, 0)
+					playsound(src.loc, 'sound/machines/lavamoon_rotors_starting.ogg', 50, 0)
 					last_noise_time = ticker.round_elapsed_ticks
 					last_noise_length = 80
 

@@ -684,7 +684,7 @@
 						if (!isintangible(mob))
 							target = mob
 							break
-					playsound(src, "sound/machines/bweep.ogg", rand(45,70), 1, pitch = 1.6)
+					playsound(src, 'sound/machines/bweep.ogg', rand(45,70), 1, pitch = 1.6)
 					mined.throw_at(target, 7, rand(4,6))
 					src.visible_message("<span class='alert'>[I] energetically expels [mined]!</span>")
 			sleep(1 SECOND)

@@ -940,8 +940,8 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				M.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(M, 10,1)
 				M.take_brain_damage(rand(5,10))
-				playsound(M.loc, "fleshbr1.ogg", attack_volume, 1, -1)
-				playsound(M.loc, "loudcrunch2.ogg", attack_volume, 1, -1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', attack_volume, 1, -1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', attack_volume, 1, -1)
 				if (istype(M.loc,/turf/))
 					src.set_loc(M.loc)
 			else if(isobj(AM))
@@ -1014,7 +1014,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			playsound(src.loc, 'sound/voice/animal/bull.ogg', 50, 1, 0, 0.8)
 			animate_fading_leap_down(src)
 			SPAWN(0)
-				playsound(M.loc, "Explosion1.ogg", 50, 1, -1)
+				playsound(M.loc, "explosion", 50, 1, -1)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] slams down onto the ground!</B></span>", 1)
@@ -1024,7 +1024,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 					if (X == src)
 						continue
 					X.ex_act(3)
-					playsound(X.loc, "fleshbr1.ogg", 50, 1, -1)
+					playsound(X.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, -1)
 				src.transforming = 0
 
 			SPAWN(1 MINUTE)
@@ -1045,11 +1045,11 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
 					C.show_message("<span class='alert'><B>[src] stomps the ground with [his_or_her(src)] huge feet!</B></span>", 1)
-				playsound(src.loc, "meteorimpact.ogg", 80, 1, 1, 0.6)
+				playsound(src.loc, 'sound/effects/Explosion2.ogg', 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))
 					if (M == src)
 						continue
-					playsound(M.loc, "fleshbr1.ogg", 40, 1, -1)
+					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1, -1)
 					M.ex_act(3)
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))

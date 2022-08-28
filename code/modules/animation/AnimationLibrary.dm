@@ -1359,7 +1359,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (ismob(A))
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
-	playsound(A.loc,"sound/voice/heavenly3.ogg",50,0)
+	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
@@ -1397,7 +1397,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center,"sound/effects/darkspawn.ogg",50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,0)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
