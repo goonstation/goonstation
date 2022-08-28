@@ -4289,8 +4289,8 @@
 /area/station/hangar/main)
 "apu" = (
 /obj/decal/poster/wallsign/space{
-	pixel_y = 2;
-	pixel_x = 33
+	pixel_x = 33;
+	pixel_y = 2
 	},
 /turf/simulated/floor/stairs,
 /area/station/hangar/main)
@@ -6501,11 +6501,11 @@
 	pixel_y = 4
 	},
 /obj/machinery/light_switch{
+	dir = 8;
 	name = "W light switch";
 	on = 0;
 	pixel_x = -22;
-	pixel_y = -4;
-	dir = 8
+	pixel_y = -4
 	},
 /obj/machinery/optable{
 	name = "Autopsy Table"
@@ -6784,9 +6784,9 @@
 	rand_pos = 0
 	},
 /obj/item/device/light/candle{
+	pixel_x = 6;
 	pixel_y = 10;
-	rand_pos = 0;
-	pixel_x = 6
+	rand_pos = 0
 	},
 /obj/item/device/light/candle/small{
 	pixel_x = -12;
@@ -6815,8 +6815,8 @@
 	pixel_y = 10
 	},
 /obj/item/device/light/candle/small{
-	pixel_y = -6;
 	pixel_x = 9;
+	pixel_y = -6;
 	rand_pos = 0
 	},
 /obj/item/device/radio/intercom,
@@ -6843,8 +6843,8 @@
 	pixel_x = -24
 	},
 /obj/item/reagent_containers/food/drinks/bottle/wine{
-	pixel_y = 12;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 1;
@@ -7431,8 +7431,8 @@
 "azq" = (
 /obj/stool/chair/comfy,
 /obj/blind_switch/area/north{
-	pixel_y = 26;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 26
 	},
 /obj/landmark/start{
 	name = "Chaplain"
@@ -7680,12 +7680,12 @@
 "aAf" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/fruitmilk{
-	pixel_y = 13;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /obj/item/clothing/head/fruithat{
-	pixel_y = 2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge,
 /turf/simulated/floor/orangeblack/side,
@@ -7719,8 +7719,8 @@
 /obj/machinery/light/incandescent,
 /obj/rack,
 /obj/item/storage/belt/utility{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /obj/item/storage/belt/utility,
 /obj/item/device/light/flashlight,
@@ -7730,8 +7730,8 @@
 /obj/rack,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /obj/item/device/light/flashlight,
 /obj/machinery/light/emergency{
@@ -8513,13 +8513,13 @@
 	},
 /obj/table/wood/auto,
 /obj/item/device/light/candle{
+	pixel_x = 8;
 	pixel_y = 18;
-	rand_pos = 0;
-	pixel_x = 8
+	rand_pos = 0
 	},
 /obj/item/device/light/candle/small{
-	pixel_y = 3;
-	pixel_x = -12
+	pixel_x = -12;
+	pixel_y = 3
 	},
 /obj/item/device/light/candle/small{
 	pixel_x = -1;
@@ -8609,8 +8609,8 @@
 	icon_state = "line2"
 	},
 /obj/decoration/bookcase{
-	pixel_y = 27;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 27
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
@@ -8623,8 +8623,8 @@
 	icon_state = "line1"
 	},
 /obj/decoration/bookcase{
-	pixel_y = 27;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 27
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
@@ -8753,12 +8753,12 @@
 	},
 /obj/table/glass/auto,
 /obj/item/paper_bin{
-	pixel_y = -2;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -2
 	},
 /obj/item/paper{
-	pixel_y = -3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -3
 	},
 /obj/item/paper{
 	pixel_y = 6
@@ -8769,8 +8769,8 @@
 	pixel_y = 2
 	},
 /obj/item/paper{
-	pixel_y = -3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -3
 	},
 /turf/simulated/floor/neutral/corner{
 	dir = 1
@@ -9284,8 +9284,8 @@
 /area/station/maintenance/inner/central)
 "aFb" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_mrsmuggles";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_mrsmuggles"
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
@@ -9353,16 +9353,16 @@
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
 /obj/item/decoration/incenseholder{
-	pixel_y = 9;
-	pixel_x = 13
+	pixel_x = 13;
+	pixel_y = 9
 	},
 /obj/item/device/light/candle/small{
 	pixel_x = -1;
 	pixel_y = -1
 	},
 /obj/item/device/light/candle/small{
-	pixel_y = 6;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet{
 	dir = 2;
@@ -9806,8 +9806,8 @@
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
 /obj/item/card_box/tarot{
-	pixel_y = 5;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 5
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -11745,12 +11745,12 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler{
 	density = 1;
-	pixel_y = -2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -2
 	},
 /obj/channel{
-	required_to_pass = 210;
-	dir = 1
+	dir = 1;
+	required_to_pass = 210
 	},
 /obj/pool/perspective,
 /turf/simulated/floor/wood{
@@ -11761,17 +11761,17 @@
 /obj/pool/perspective,
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
-	pixel_y = 9;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/coconut{
-	pixel_y = 1;
 	pixel_x = 7;
+	pixel_y = 1;
 	rand_pos = 1
 	},
 /obj/channel{
-	required_to_pass = 210;
-	dir = 1
+	dir = 1;
+	required_to_pass = 210
 	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
@@ -11781,12 +11781,12 @@
 /obj/pool/perspective,
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
-	pixel_y = 9;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /obj/item/cocktail_stuff/drink_umbrella{
-	pixel_y = 17;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 17
 	},
 /obj/item/decoration/ashtray{
 	pixel_x = 4;
@@ -11797,8 +11797,8 @@
 	pixel_y = 2
 	},
 /obj/channel{
-	required_to_pass = 210;
-	dir = 1
+	dir = 1;
+	required_to_pass = 210
 	},
 /turf/simulated/floor/wood{
 	icon_state = "0,6"
@@ -12478,9 +12478,9 @@
 /area/station/hallway/primary/west)
 "aOE" = (
 /obj/submachine/ice_cream_dispenser{
-	name = "Frozen Margarita Machine";
+	desc = "A machine designed to dispense frozen margaritas.";
 	flavors = list("chocolate","vanilla","margarita");
-	desc = "A machine designed to dispense frozen margaritas."
+	name = "Frozen Margarita Machine"
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood{
@@ -13491,8 +13491,8 @@
 	},
 /obj/table/regal/auto,
 /obj/candle_light{
-	pixel_y = 13;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 13
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
@@ -13669,12 +13669,12 @@
 	},
 /obj/item/clothing/mask/cigarette/cigar,
 /obj/item/clothing/mask/cigarette/cigar{
-	pixel_y = -3;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -3
 	},
 /obj/item/device/light/zippo{
-	pixel_y = 8;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 8
 	},
 /obj/table/regal/auto,
 /turf/simulated/floor/wood,
@@ -18699,8 +18699,8 @@
 	pixel_y = 3
 	},
 /obj/item/extinguisher{
-	pixel_y = 8;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -18976,8 +18976,8 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/item/toy/plush/small/buddy{
-	name = "Nuke Commander Buddy Plush Toy";
-	desc = "Aw, it even has the same angry face too..."
+	desc = "Aw, it even has the same angry face too...";
+	name = "Nuke Commander Buddy Plush Toy"
 	},
 /obj/item/device/radio/intercom/security{
 	dir = 1
@@ -19231,7 +19231,6 @@
 "bjI" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /obj/item/storage/box/stun_landmines,
-/obj/item/storage/box/stinger_kit,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bjJ" = (
@@ -27206,8 +27205,8 @@
 /area/station/engine/ptl)
 "cwg" = (
 /obj/item/canned_laughter/crushed{
-	pixel_y = -2;
-	pixel_x = -17
+	pixel_x = -17;
+	pixel_y = -2
 	},
 /obj/decal/cleanable/generic,
 /turf/simulated/floor,
@@ -27313,8 +27312,8 @@
 /area/station/quartermaster/refinery)
 "cDS" = (
 /obj/machinery/r_door_control/podbay/security{
-	pixel_x = 24;
-	name = "Security Hangar Door Control"
+	name = "Security Hangar Door Control";
+	pixel_x = 24
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
@@ -27409,8 +27408,8 @@
 	pixel_y = 12
 	},
 /obj/machinery/phone{
-	pixel_y = 4;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -27831,8 +27830,8 @@
 	id = "outpostla"
 	},
 /obj/decal/poster/wallsign/stencil/right/q{
-	pixel_y = 39;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 39
 	},
 /obj/decal/poster/wallsign/stencil/right/m{
 	pixel_y = 39
@@ -28100,8 +28099,8 @@
 	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/croissant{
-	pixel_y = -4;
 	pixel_x = 6;
+	pixel_y = -4;
 	rand_pos = 0
 	},
 /obj/machinery/camera{
@@ -28499,9 +28498,9 @@
 	dir = 8
 	},
 /obj/machinery/firealarm{
+	pixel_x = 32;
 	pixel_y = 64;
-	text = "NF";
-	pixel_x = 32
+	text = "NF"
 	},
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -28952,8 +28951,8 @@
 	icon_state = "4-8"
 	},
 /obj/landmark{
-	name = "kudzustart";
-	icon_state = "kudzu-start"
+	icon_state = "kudzu-start";
+	name = "kudzustart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -29462,8 +29461,8 @@
 "eJS" = (
 /obj/machinery/power/smes{
 	charge = 5e+006;
-	output = 10000;
-	chargelevel = 100000
+	chargelevel = 100000;
+	output = 10000
 	},
 /obj/cable,
 /turf/simulated/floor/engine,
@@ -29825,16 +29824,16 @@
 "eWm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/glassbox{
-	pixel_y = 11;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = 11
 	},
 /obj/item/storage/box/glassbox{
-	pixel_y = -2;
-	pixel_x = -9
+	pixel_x = -9;
+	pixel_y = -2
 	},
 /obj/item/storage/box/syringes{
-	pixel_y = 12;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 12
 	},
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment{
@@ -30102,23 +30101,23 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	pixel_y = 19;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_y = 19
 	},
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
-	pixel_y = 19;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
 	pixel_x = 10;
 	pixel_y = 12
 	},
 /obj/item/reagent_containers/food/drinks/bottle/vodka{
-	pixel_y = 15;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 15
 	},
 /obj/item/reagent_containers/food/drinks/curacao{
 	pixel_x = -9;
@@ -31305,8 +31304,8 @@
 /obj/table/auto,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/sponge{
-	pixel_y = 12;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 12
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
@@ -31380,19 +31379,19 @@
 "gye" = (
 /obj/table/auto,
 /obj/item/device/light/glowstick{
-	pixel_y = 6;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 6
 	},
 /obj/item/device/light/glowstick{
 	pixel_y = 6
 	},
 /obj/item/device/light/glowstick{
-	pixel_y = 6;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 6
 	},
 /obj/item/device/light/glowstick{
-	pixel_y = 6;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 6
 	},
 /obj/item/device/light/flashlight,
 /obj/item/device/radio/intercom/cargo{
@@ -31732,8 +31731,8 @@
 /area/station/hallway/primary/north)
 "gQw" = (
 /obj/critter/boogiebot{
-	name = "Illegal Boogie Bot";
-	desc = "Sealed away for our safety."
+	desc = "Sealed away for our safety.";
+	name = "Illegal Boogie Bot"
 	},
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/head/flatcap,
@@ -32582,8 +32581,8 @@
 /area/station/medical/medbay)
 "hHT" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_tanhony";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_tanhony"
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -33002,9 +33001,9 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/head/NTberet{
-	pixel_y = -1;
+	desc = "This one smells like medbay, eugh.";
 	pixel_x = 6;
-	desc = "This one smells like medbay, eugh."
+	pixel_y = -1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
@@ -33239,8 +33238,8 @@
 	pixel_y = -24
 	},
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
@@ -33637,8 +33636,8 @@
 	pixel_y = 4
 	},
 /obj/item/reagent_containers/glass/bottle/holywater{
-	pixel_y = 4;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -34040,8 +34039,8 @@
 "jhs" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/bottle/holywater{
-	pixel_y = 8;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 8
 	},
 /obj/item/clothing/suit/cultist/nerd,
 /obj/item/clothing/mask/gas/plague,
@@ -34384,8 +34383,8 @@
 "jyc" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/popcorn{
-	pixel_y = 2;
-	pixel_x = 26
+	pixel_x = 26;
+	pixel_y = 2
 	},
 /obj/item/camera,
 /turf/simulated/floor,
@@ -34818,8 +34817,8 @@
 /area/station/chapel/sanctuary)
 "jYR" = (
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -35050,8 +35049,8 @@
 "kjH" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Cloning Foyer";
-	id = "cloning_exit"
+	id = "cloning_exit";
+	name = "Cloning Foyer"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -35072,8 +35071,8 @@
 /area/station/science/bot_storage)
 "kkq" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_stirstir";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_stirstir"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -35667,8 +35666,8 @@
 	name = "AI-Sat"
 	},
 /obj/landmark/start{
-	name = "AI";
-	icon_state = "ai-start"
+	icon_state = "ai-start";
+	name = "AI"
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -36113,12 +36112,12 @@
 	pixel_y = -2
 	},
 /obj/item/storage/box/plates{
-	pixel_y = 11;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 11
 	},
 /obj/item/storage/box/plates{
-	pixel_y = -2;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = -2
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -36281,8 +36280,8 @@
 	pixel_y = 30
 	},
 /obj/item/clothing/mask/cigarette/propuffs{
-	pixel_y = -6;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = -6
 	},
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/carpet/grime,
@@ -36617,8 +36616,8 @@
 /area/station/quartermaster/office)
 "lLB" = (
 /obj/landmark{
-	name = "kudzustart";
-	icon_state = "kudzu-start"
+	icon_state = "kudzu-start";
+	name = "kudzustart"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -36946,8 +36945,8 @@
 /area/station/hydroponics/bay)
 "mgZ" = (
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -37164,8 +37163,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
 /obj/landmark/spawner{
-	name = "monkeyspawn_albert";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_albert"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
@@ -37445,8 +37444,8 @@
 	pixel_y = -2
 	},
 /obj/machinery/phone{
-	pixel_y = 7;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 7
 	},
 /obj/random_item_spawner/desk_stuff/few,
 /turf/simulated/floor/black/corner{
@@ -37873,10 +37872,10 @@
 /area/station/crew_quarters/market)
 "mVH" = (
 /obj/machinery/door_control{
+	desc = "A remote control switch for a door. This one looks like it operates the QM mass driver to ship objects to QM.";
 	id = "outpostla";
 	name = "Manual Ejection Button";
-	pixel_y = 24;
-	desc = "A remote control switch for a door. This one looks like it operates the QM mass driver to ship objects to QM."
+	pixel_y = 24
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
@@ -38261,18 +38260,18 @@
 "npw" = (
 /obj/item/device/light/candle/small{
 	pixel_x = -4;
-	rand_pos = 0;
-	pixel_y = 7
+	pixel_y = 7;
+	rand_pos = 0
 	},
 /obj/item/device/light/candle{
-	rand_pos = 0;
 	pixel_x = 4;
-	pixel_y = 11
+	pixel_y = 11;
+	rand_pos = 0
 	},
 /obj/table/wood/auto,
 /obj/item/matchbook{
-	pixel_y = -3;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = -3
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -38558,8 +38557,8 @@
 /area/station/crew_quarters/arcade)
 "nDp" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -38688,8 +38687,8 @@
 "nKo" = (
 /obj/table/auto,
 /obj/item/clothing/under/rank{
-	pixel_y = -1;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -1
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary/white,
@@ -39027,8 +39026,8 @@
 	pixel_y = 4
 	},
 /obj/item/storage/wall/medical{
-	pixel_y = 2;
-	pixel_x = -28
+	pixel_x = -28;
+	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -39039,8 +39038,8 @@
 /area/station/crew_quarters/market)
 "oev" = (
 /obj/landmark{
-	name = "kudzustart";
-	icon_state = "kudzu-start"
+	icon_state = "kudzu-start";
+	name = "kudzustart"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -39197,8 +39196,8 @@
 "omH" = (
 /obj/table/auto,
 /obj/decoration/decorativeplant/plant3{
-	pixel_y = 10;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 10
 	},
 /obj/item/kitchen/food_box/lollipop{
 	pixel_x = -6
@@ -39366,8 +39365,8 @@
 "otj" = (
 /obj/stool/chair/comfy/shuttle,
 /obj/landmark{
-	name = "JoinLate";
-	icon_state = "latejoin"
+	icon_state = "latejoin";
+	name = "JoinLate"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -39390,8 +39389,8 @@
 	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/fruitmilk{
-	pixel_y = 13;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 13
 	},
 /obj/random_item_spawner/tableware/three,
 /obj/machinery/light/small/floor,
@@ -39422,8 +39421,8 @@
 /area/station/crew_quarters/kitchen)
 "ouI" = (
 /obj/machinery/chem_dispenser/alcohol{
-	dispensable_reagents = list("margarita");
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Exclusive property of Margaritaville.";
+	dispensable_reagents = list("margarita");
 	name = "Margaritaville Margarita Dispenser"
 	},
 /obj/machinery/camera{
@@ -39712,8 +39711,8 @@
 "oKv" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
-	pixel_y = 9;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -40002,8 +40001,8 @@
 	pixel_y = 29
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
@@ -40633,8 +40632,8 @@
 "pCR" = (
 /obj/stool/bar,
 /obj/landmark/spawner{
-	name = "monkeyspawn_mrmuggles";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_mrmuggles"
 	},
 /obj/item/device/radio/intercom/catering{
 	dir = 4
@@ -40778,8 +40777,8 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/research,
 /obj/decal/poster/wallsign/space{
-	pixel_y = 2;
-	pixel_x = 33
+	pixel_x = 33;
+	pixel_y = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
@@ -40954,8 +40953,8 @@
 /area/station/crew_quarters/quarters)
 "pWv" = (
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -41334,8 +41333,8 @@
 "qql" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
-	pixel_y = 16;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 16
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
@@ -42256,8 +42255,8 @@
 	pixel_y = 5
 	},
 /obj/item/device/radio{
-	pixel_y = 3;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 3
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 6
@@ -42321,8 +42320,8 @@
 /area/station/hallway/primary/south)
 "rnP" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_normal"
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass{
@@ -42394,20 +42393,20 @@
 	pixel_y = 12
 	},
 /obj/item/card_box{
-	pixel_y = 4;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_y = 3;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /obj/item/pen{
 	pixel_x = 9;
 	pixel_y = -11
 	},
 /obj/item/wrapping_paper{
-	pixel_y = -17;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -17
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -42779,8 +42778,8 @@
 	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 9;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 5
@@ -43278,8 +43277,8 @@
 	icon_state = "4-8"
 	},
 /obj/decal/poster/wallsign/poster_beach{
-	pixel_y = 35;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 35
 	},
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_x = -4;
@@ -44678,8 +44677,8 @@
 "tuF" = (
 /obj/table/regal/auto,
 /obj/item/clothing/head/that{
-	pixel_y = 4;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -44840,8 +44839,8 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/spawner{
-	name = "monkeyspawn_rathen";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_rathen"
 	},
 /turf/simulated/floor,
 /area/station/engine/inner)
@@ -45306,8 +45305,8 @@
 	icon_state = "1-4"
 	},
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -45522,8 +45521,8 @@
 /area/station/crew_quarters/catering)
 "umY" = (
 /obj/landmark{
-	name = "Observer-Start";
-	icon_state = "generic-spawn"
+	icon_state = "generic-spawn";
+	name = "Observer-Start"
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -45550,8 +45549,8 @@
 	dir = 4
 	},
 /obj/landmark{
-	name = "kudzustart";
-	icon_state = "kudzu-start"
+	icon_state = "kudzu-start";
+	name = "kudzustart"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -45747,8 +45746,8 @@
 /area/station/maintenance/southwest)
 "uyr" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_normal"
 	},
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -45774,8 +45773,8 @@
 /area/station/engine/ptl)
 "uAd" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_normal";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_normal"
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
@@ -46136,8 +46135,8 @@
 /area/station/chapel/sanctuary)
 "uRa" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_horse";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_horse"
 	},
 /turf/simulated/floor,
 /area/station/maintenance/north)
@@ -46173,8 +46172,8 @@
 	},
 /obj/item/decoration/incenseholder{
 	dir = 8;
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /obj/item/device/light/candle{
 	pixel_x = 9;
@@ -46851,8 +46850,8 @@
 /area/station/science/lobby)
 "vEn" = (
 /obj/landmark/spawner{
-	name = "monkeyspawn_krimpus";
-	icon_state = "chimp-start"
+	icon_state = "chimp-start";
+	name = "monkeyspawn_krimpus"
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
@@ -47685,8 +47684,8 @@
 /area/station/mining/staff_room)
 "wzX" = (
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -48250,9 +48249,9 @@
 /area/station/maintenance/inner/central)
 "xce" = (
 /obj/item/bell/hop{
-	pixel_y = 24;
+	anchored = 1;
 	name = "wall mounted service bell";
-	anchored = 1
+	pixel_y = 24
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
@@ -48358,9 +48357,9 @@
 /area/station/storage/tools)
 "xjq" = (
 /obj/item/device/light/candle{
-	rand_pos = 0;
 	pixel_x = -13;
-	pixel_y = 8
+	pixel_y = 8;
+	rand_pos = 0
 	},
 /obj/item/device/light/candle/small{
 	pixel_x = 13;
@@ -48380,8 +48379,8 @@
 "xjP" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/danish_cherry{
-	pixel_y = 8;
 	pixel_x = -20;
+	pixel_y = 8;
 	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/painauchocolat{
@@ -48398,8 +48397,8 @@
 	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/peach{
-	pixel_y = 9;
 	pixel_x = -5;
+	pixel_y = 9;
 	rand_pos = 0
 	},
 /obj/item/reagent_containers/food/snacks/plant/blueberry{
@@ -49044,8 +49043,8 @@
 /area/station/medical/medbay)
 "xPd" = (
 /obj/landmark{
-	name = "blobstart";
-	icon_state = "blob-start"
+	icon_state = "blob-start";
+	name = "blobstart"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -49168,9 +49167,9 @@
 /area/station/crew_quarters/bar)
 "xWQ" = (
 /obj/machinery/firealarm{
+	pixel_x = 32;
 	pixel_y = 64;
-	text = "NF";
-	pixel_x = 32
+	text = "NF"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -49373,8 +49372,8 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
-	pixel_y = 1;
-	pixel_x = 12
+	pixel_x = 12;
+	pixel_y = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
 /turf/simulated/floor/specialroom/freezer{

@@ -38155,7 +38155,6 @@
 /obj/table/reinforced/auto,
 /obj/item/chem_grenade/flashbang,
 /obj/item/chem_grenade/flashbang,
-/obj/item/storage/box/stinger_kit,
 /obj/item/storage/box/revimp_kit{
 	pixel_x = 5
 	},
