@@ -42,7 +42,12 @@
 /proc/cmp_datum_text_dsc(datum/a, datum/b, variable)
 	return sorttext(a.vars[variable], b.vars[variable])
 
-/proc/compareArtifactTypes(var/datum/artifact/A1, var/datum/artifact/A2)
+/proc/compareArtifactTypes(datum/artifact/A1, datum/artifact/A2)
 	if(A1.type_size == A2.type_size)
 		return A1.type_name < A2.type_name
 	return A1.type_size > A2.type_size
+
+#ifdef CHEM_REACTION_PRIORITIES
+/proc/cmp_chemical_reaction_priotity(datum/chemical_reaction/a, datum/chemical_reaction/b)
+	return a.priority > b.priority
+#endif

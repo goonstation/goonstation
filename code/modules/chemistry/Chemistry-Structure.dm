@@ -38,9 +38,8 @@
 		if(reagent_list.len)
 			for(var/R in reagent_list)
 				possible_reactions |= total_chem_reactions[R]
-				// zewaka
 #ifdef CHEM_REACTION_PRIORITIES
-		sortList(possible_reactions, /proc/cmp_text_asc) //see: /datum/chemical_reaction/operator<()
+		sortList(possible_reactions, /proc/cmp_chemical_reaction_priotity)
 #endif
 
 	proc/append_possible_reactions(var/reagent_id)
@@ -50,8 +49,8 @@
 			. = 1
 #ifdef CHEM_REACTION_PRIORITIES
 		// sorting it each time anew is bad and slow, especially since your sorting algorithm doesn't even work nicely with almost sorted lists!!
-		// above is no longer true i think, also operators need to be replaced by a sort proc
-		sortList(possible_reactions, /proc/cmp_text_asc) //see: /datum/chemical_reaction/operator<()
+		// above is no longer true i think, timsort is really good with near-sorted lists
+		sortList(possible_reactions, /proc/cmp_chemical_reaction_priotity)
 #endif
 
 	proc/remove_possible_reactions(var/reagent_id)
