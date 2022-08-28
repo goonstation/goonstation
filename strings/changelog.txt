@@ -1,5 +1,9 @@
 
 (t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
 (u)ZeWaka
 (p)10484
 (e)|
