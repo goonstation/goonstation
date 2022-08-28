@@ -1,8 +1,9 @@
+
 /* Note about this file:
- * A portion of this code was written by Carnie over at /tg/, back in 2014
- * We are using the code under the terms of our license, as Carnie cannot be
+ * A portion of this code was written by Carnie over at /tg/, back in 2014.
+ * We are using the code under the terms of our license, as Carnie can't be
  * contacted, and with this code being algorithims, any original work would
- * look nearly identical.
+ * be almost identical. The tg project maintainers have also given their OK.
  */
 
 /proc/cmp_numeric_dsc(a,b)
