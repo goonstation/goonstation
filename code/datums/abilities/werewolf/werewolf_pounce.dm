@@ -57,7 +57,7 @@
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(M.loc, 'sound/effects/bang.ogg', 50, 1)
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			var/wiggle = 6
 			while(wiggle > 0)
 				wiggle--

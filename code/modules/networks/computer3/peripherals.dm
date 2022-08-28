@@ -969,7 +969,7 @@
 			if (src.clownifies_card)
 				src.authid.assignment = "Clown"
 				src.authid.update_name()
-				playsound(src.host.loc, 'sound/items/bikehorn.ogg', 50, 1)
+				playsound(src.host.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 			status_text = "Card: [authid.registered]"
 		return status_text
 
