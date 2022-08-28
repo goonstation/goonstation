@@ -2220,7 +2220,7 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
-	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
