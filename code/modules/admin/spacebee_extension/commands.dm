@@ -548,7 +548,7 @@
 		if(!length(result))
 			system.reply("No results.", user)
 		else
-			system.reply(reverse_list(result).Join("\n"), user)
+			system.reply(reverse_list_range(result).Join("\n"), user)
 
 /datum/spacebee_extension_command/crate
 	name = "crate"

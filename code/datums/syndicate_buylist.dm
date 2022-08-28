@@ -11,7 +11,7 @@ proc/build_syndi_buylist_cache()
 		if (!LE.cost || !isnum(LE.cost) || LE.cost <= 0)
 			syndi_buylist_cache.Remove(LE)
 
-	syndi_buylist_cache = sortList(syndi_buylist_cache)
+	sortList(syndi_buylist_cache, /proc/cmp_text_asc)
 
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 ABSTRACT_TYPE(/datum/syndicate_buylist)

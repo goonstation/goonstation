@@ -101,7 +101,7 @@
 			count[T.name]++
 			beacons["[T.name][count[T.name] == 1 ? null : " #[count[T.name]]"]"] = T
 	wormholeQueued = 1
-	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons))]
+	var/obj/target = beacons[tgui_input_list(usr, "Please select a location to warp to.", "Warp Computer", sortList(beacons, /proc/cmp_text_asc))]
 	if(!target)
 		wormholeQueued = 0
 		return

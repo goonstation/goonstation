@@ -48,7 +48,7 @@
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()
 	if (length(eligible_traces))
-		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces))
+		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces, /proc/cmp_text_asc))
 	else
 		return -1
 

@@ -41,7 +41,7 @@
     boutput(holder.owner, "<span class='alert'>There are no other martians to summon. You're on your own!</span>")
     return 1
 
-  martianNames = sortList(martianNames)
+  sortList(martianNames, /proc/cmp_text_asc)
 
   var/chosenName = input("Who should be summoned?", "Summon", martianNames[1]) in martianNames
   var/mob/living/critter/martian/martian = otherMartians[chosenName]

@@ -2187,7 +2187,7 @@
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
 
-		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions))
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions, /proc/cmp_text_asc))
 		if (!newFace) return 0
 		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
 		if (!newMode) return 0

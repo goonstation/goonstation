@@ -1607,7 +1607,7 @@
 		var/con = alert("[M] currently has a ckey. Continue?",, "Yes", "No")
 		if (con != "Yes")
 			return
-	var/list/L = sortList(clients)
+	var/list/L = sortListCopy(clients, /proc/cmp_text_asc)
 	var/client/selection = input("Please, select a player!", "Player Options (Key)", null, null) as null|anything in L
 
 	if (selection)

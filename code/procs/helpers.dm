@@ -396,18 +396,6 @@ proc/get_angle(atom/a, atom/b)
 		t = "[t] "
 	. = t
 
-/proc/sortList(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	. = (sortList(L.Copy(0,middle)) + sortList(L.Copy(middle))) //second parameter null = to end of list
-
-/proc/sortNames(var/list/L)
-	var/list/Q = new()
-	for(var/atom/x in L)
-		Q[x.name] = x
-	. = sortList(Q)
-
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
 		separator = "\n"
@@ -458,29 +446,6 @@ proc/get_angle(atom/a, atom/b)
 		message = copytext(message, 2)
 
 	return list(prefix, message)
-
-/**
-	* Given a list, returns a text string representation of the list's contents.
-	*/
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = length(input)
-	if (!total)
-		return "[nothing_text]"
-	else if (total == 1)
-		return "[input[1]]"
-	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
-	else
-		var/output = ""
-		var/index = 1
-		while (index < total)
-			if (index == total - 1)
-				comma_text = final_comma_text
-
-			output += "[input[index]][comma_text]"
-			index++
-
-		return "[output][and_text][input[index]]"
 
 /proc/dd_centertext(message, length)
 	. = length(message)

@@ -666,7 +666,7 @@
 		creatures[name] = M
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -792,7 +792,7 @@
 					creatures -= name
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)

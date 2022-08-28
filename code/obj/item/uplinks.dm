@@ -129,7 +129,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S1
 
-			src.items_general = sortList(sort1)
+			src.items_general = sortList(sort1, /proc/cmp_text_asc)
 
 		if (length(src.items_job))
 			var/list/sort2 = list()
@@ -145,7 +145,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort2[name] = S2
 
-			src.items_job = sortList(sort2)
+			src.items_job = sortList(sort2, /proc/cmp_text_asc)
 
 		if (length(src.items_objective))
 			var/list/sort3 = list()
@@ -161,7 +161,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort3[name] = S3
 
-			src.items_objective = sortList(sort3)
+			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
 
 		if (length(src.items_telecrystal))
 			var/list/sort4 = list()
@@ -177,7 +177,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort4[name] = S4
 
-			src.items_telecrystal = sortList(sort4)
+			src.items_telecrystal = sortList(sort4, /proc/cmp_text_asc)
 
 		return
 
@@ -1064,7 +1064,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				sort1[name] = S
 
-			src.commander_buylist = sortList(sort1)
+			src.commander_buylist = sortList(sort1, /proc/cmp_text_asc)
 
 	attack_self(mob/user)
 		return ui_interact(user)
