@@ -18,6 +18,7 @@
  * * from/toIndex - indexes of the list you want to sort from and to
  */
 /proc/sortList(list/L, cmp=/proc/cmp_numeric_asc, associative, fromIndex=1, toIndex=0)
+	RETURN_TYPE(/list)
 	if(L && (length(L) >= 2))
 		fromIndex = fromIndex % length(L)
 		toIndex = toIndex % (length(L) + 1)
@@ -39,6 +40,7 @@
 
 /// Just like [/proc/sortList], but return a sorted copy of the given list
 /proc/sortListCopy(list/L, cmp=/proc/cmp_numeric_asc, associative, fromIndex=1, toIndex=0)
+	RETURN_TYPE(/list)
 	return sortList(L.Copy(), cmp, associative, fromIndex, toIndex)
 
 //These are macros used to reduce on proc calls
@@ -189,7 +191,7 @@ var/global/datum/sort_instance/sortInstance = new()
 			if(call(cmp)(current, last) >= 0)
 				break
 			++runHi
-		reverse_range(L, lo, runHi)
+		reverse_list_range(L, lo, runHi)
 	else
 		while(runHi < hi)
 			last = current

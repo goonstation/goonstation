@@ -210,7 +210,7 @@
 		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
 
 		SPAWN(2 SECONDS)
-			var/list/path_reverse = reverse_list(path)
+			var/list/path_reverse = reverse_list_range(path)
 
 			for(var/obj/light in src.my_lights)
 				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
