@@ -2300,6 +2300,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 	return 1
 
 proc/get_mobs_trackable_by_AI()
+	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
 
