@@ -2272,7 +2272,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.open_nearest_door_silicon()
 	return
 
-
 //just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
 proc/is_mob_trackable_by_AI(var/mob/M)
 	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
@@ -2300,11 +2299,9 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 
 	return 1
 
-// zewaka
 proc/get_mobs_trackable_by_AI()
 	var/list/names = list()
 	var/list/namecounts = list()
-	var/list/creatures = list()
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2336,9 +2333,7 @@ proc/get_mobs_trackable_by_AI()
 			names.Add(name)
 			namecounts[name] = 1
 
-		creatures[name] = M
-
-	return creatures
+		.[name] = M
 
 /mob/living/silicon/ai/proc/ai_vox_announcement()
 	set name = "AI Intercom Announcement"
