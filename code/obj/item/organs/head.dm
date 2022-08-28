@@ -83,7 +83,7 @@
 			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		if (holder)
 			holder.head = null
-		if (donor_original.eye == src)
+		if (donor_original?.eye == src)
 			donor_original.set_eye(null)
 			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
 		skull = null
