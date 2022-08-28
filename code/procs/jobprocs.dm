@@ -574,13 +574,13 @@
 
 	if (!equipped)
 		if (!src.l_store && src.equip_if_possible(item, slot_l_store))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.r_store && src.equip_if_possible(item, slot_r_store))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.l_hand && src.equip_if_possible(item, slot_l_hand))
-			equipped = 1
+			equipped = TRUE
 		else if (!src.r_hand && src.equip_if_possible(item, slot_r_hand))
-			equipped = 1
+			equipped = TRUE
 
 		if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 			item.set_loc(get_turf(src))
