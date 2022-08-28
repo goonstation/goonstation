@@ -103,7 +103,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/garrote
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
@@ -143,7 +142,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/card/emag
 	cost = 6
 	desc = "A sophisticated tool of sabotage and infiltration. Capable of shorting out or otherwise bypassing security on door locks, robot friend/foe identification systems, shuttle control consoles, and more!"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/fimplant
@@ -199,7 +197,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/old_grenade/spawner/sawflycluster
 	cost = 5
 	vr_allowed = FALSE
-	br_allowed = TRUE // A smidge of tomfoolery, if you will
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
 	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
@@ -308,7 +305,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/chameleon
 	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
 	name = "Holographic Disguiser"
@@ -645,7 +641,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/caution/traitor
 	cost = 2
 	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
-	br_allowed = TRUE
 	job = list("Janitor")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_SPY | UPLINK_HEAD_REV
 
@@ -1021,13 +1016,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/gun/kinetic/hunting_rifle
 	cost = 3
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
 		cost = 5
 		not_in_crates = TRUE
-		br_allowed = FALSE // Or it shows up twice in loot
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/bananagrenades
@@ -1070,10 +1063,18 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).
 /datum/syndicate_buylist/surplus/landmine
-	name = "Land Mine"
-	item = /obj/random_item_spawner/landmine/surplus // RNG picker.
+	name = "Land Mine Pouch"
+	item = /obj/item/storage/landmine_pouch
 	cost = 1
-	desc = "Some old anti-personnel mine we found in the warehouse."
+	desc = "A pouch of old anti-personnel mines we found in the warehouse."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+
+/datum/syndicate_buylist/surplus/beartrap
+	name = "Bear Trap Pouch"
+	item = /obj/item/storage/beartrap_pouch
+	cost = 1
+	desc = "Just in case you happen to run into some space bears."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
