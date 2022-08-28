@@ -559,7 +559,7 @@
 		src.store_from_slot(src.ears)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
 
-/mob/living/carbon/human/proc/store_from_slot(obj/item/item,) //this is in here over mob.dm because equip_if_possible wouldnt work lmao
+/mob/living/carbon/human/proc/store_from_slot(obj/item/item) //this is in here over mob.dm because equip_if_possible wouldnt work lmao
 	var/equipped = FALSE
 	if (!item)
 		return
