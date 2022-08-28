@@ -46,7 +46,7 @@
 /proc/compareArtifactTypes(datum/artifact/A1, datum/artifact/A2)
 	if(A1.type_size == A2.type_size)
 		return sorttext(A2.type_name, A1.type_name)
-	return A1.type_size - A2.type_size
+	return A2.type_size - A1.type_size
 
 #ifdef CHEM_REACTION_PRIORITIES
 /proc/cmp_chemical_reaction_priotity(datum/chemical_reaction/a, datum/chemical_reaction/b)
