@@ -1,6 +1,7 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
 	rare_chance = 5
+
 /*
 	amt2spawn =
 		items2spawn = list(
@@ -14,13 +15,17 @@
 
 /obj/random_item_spawner/surplus/plinkerrounds
 	amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_22)
 	items2spawn = list(/obj/item/ammo/bullets/bullet_22/smartgun,
 	/obj/item/ammo/bullets/bullet_22, //repeats, as a hacky way to alter the weight of some items without using rare_items2spawn
 	/obj/item/ammo/bullets/bullet_22,
 	/obj/item/ammo/bullets/bullet_22HP)
 
+
+
 /obj/random_item_spawner/surplus/pistolrounds
 	amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_9mm)
 	items2spawn = list(/obj/item/ammo/bullets/bullet_9mm,
 	/obj/item/ammo/bullets/bullet_9mm,
 	/obj/item/ammo/bullets/bullet_9mm,
@@ -28,6 +33,7 @@
 
 /obj/random_item_spawner/surplus/revolverrounds
 	amt2spawn = 3
+	rare_items2spawn = list(/obj/item/ammo/bullets/a38)
 	items2spawn = list(/obj/item/ammo/bullets/a357,
 		/obj/item/ammo/bullets/a357/AP,
 		/obj/item/ammo/bullets/a38,
@@ -36,14 +42,13 @@
 		/obj/item/ammo/bullets/a38/stun)
 
 /obj/random_item_spawner/surplus/riflerounds
-	min_amt2spawn = 3
 	max_amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/assault_rifle)
 	items2spawn = list(/obj/item/ammo/bullets/assault_rifle,
 		/obj/item/ammo/bullets/assault_rifle,
 		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
 
 /obj/random_item_spawner/surplus/shotgunshells
-	min_amt2spawn = 4
 	max_amt2spawn = 5
 	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
 	/obj/item/ammo/bullets/pipeshot/scrap,
@@ -244,8 +249,7 @@
 	/obj/item/storage/firstaid/regular/doctor_spawn,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 	New()
+		var/obj/new_item = pick(items2spawn)
+		new new_item(src.loc)
 		..()
-		SPAWN(1 DECI SECOND)
-			var/obj/new_item = pick(items2spawn)
-			new new_item(src.loc)
-			qdel(src)
+

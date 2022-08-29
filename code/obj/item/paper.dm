@@ -419,11 +419,12 @@
 
 /obj/item/paper/surplusopsdiary
 	name ="'Journal Entry'"
-	info ={"When they said they said they'd send me to the penal strike force after my incident with the Vega flamethrower and that medic (who totally deserved
-		it for standing four meters behind me when there was a rat nearby), I was expecting a few days of physical labor, not one and a half weeks of living on a damn scrap heap!
-		Thankfully, we've made it to the teleport satellite they said should take us the rest of the way to the research station.
+	info ={"<br>When they said they said they'd send me to the penal strike force after my incident with the Vega flamethrower and that medic (who totally deserved
+		it for standing four meters behind me when there was a rat nearby), I was expecting a few days of physical labor, not one and a half weeks of living on a damn scrap heap!<br>
+		<br>Thankfully, we've made it to the teleport satellite they said should take us the rest of the way to the research station.
 		Rather, it made itself into our windshield. Luckily, due to my clever thinking and resourceful use of the planks they gave us in case we crashed into anything, I was
-		able to patch it up in a jiffy before we lost most of the air in the cabin. Anyways, I'm going to wake the other two up now, here's to hoping it'll be an easy job."}
+		able to patch it up in a jiffy before we lost most of the air in the cabin. <br>
+		<br> I'm going to wake the other two up now, here's to hoping it'll be an easy job.<br>"}
 
 /obj/item/paper/Map
 	name = "'Station Blueprint'"

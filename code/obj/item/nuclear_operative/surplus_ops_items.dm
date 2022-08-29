@@ -1,5 +1,12 @@
-/obj/surplusopspawner/
-	name = "gungus spawner"
+//miscellaneous surplus objects
+//Contents:
+//loadout spawners
+//prefab plasmaglass/wood spear
+//surplus medical beaker
+//surplus deployment computer and teleporter
+
+/obj/surplusopspawner //borrowing attributes from the random objects spawner
+	name = "surplus spawner"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
@@ -7,16 +14,19 @@
 	invisibility = INVIS_ALWAYS
 	layer = 99
 
+	New()
+		..()
+		qdel(src)
+
 /obj/surplusopspawner/loadout_shortgun_spawner
 	name = "shortgun loadout spawner"
 
 	New()
+
+		new /obj/random_item_spawner/surplus/shortgun(src.loc)
+		new /obj/random_item_spawner/surplus/melee(src.loc)
+		new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 		..()
-		SPAWN(1 DECI SECOND)
-			new /obj/random_item_spawner/surplus/shortgun(src.loc)
-			new /obj/random_item_spawner/surplus/melee(src.loc)
-			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
-			qdel(src)
 
 /obj/random_item_spawner/surplus/melee/withcredits
 	New()
@@ -27,8 +37,8 @@
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 		..()
 /obj/item/reagent_containers/glass/beaker/large/surplusmedical
-	name = "Beaker- Jungle Juice"
-	desc = "A beaker full of an odd-smelling medical cocktail."
+	name = "Doctor Schmidt's Super Mega Restoration Jungle Juice"
+	desc = "A beaker containing a supposed panacea. It smells weird and the glass feels sticky."
 	initial_reagents = list("ephedrine"=30, "saline"= 30, "synaptizine" = 30, "omnizine" = 9)
 
 /obj/item/experimental/melee/spear/plaswood
@@ -53,30 +63,26 @@
 
 	var/authed = 0
 
-	proc/authorize()
-		if(src.authed)
-			return
 
-		ourportal.active = TRUE //FLIP THE LEVER, KRONK!
-		ourportal.icon_state = "syndtele1"
-
-	proc/print_auth_needed(var/mob/author)
-		if (author)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until teleporter is activated.\"</span></span>", 2)
-		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until until teleporter is activated.\"</span></span>", 2)
 	New()
 		for_by_tcl(D, /obj/submachine/surplusopdeployer)
 			src.ourportal = D //connect to portal
 		..()
+
+
+
+//account for both empty and full hand authorizations
 	attackby(var/obj/item/W, var/mob/user)
+		authaction(user)
+		..()
+	attack_hand(mob/user)
+		authaction(user)
+		..()
+// what goes down when you try to auth- stolen from armory code
+	proc/authaction(var/mob/user)
 
 		if (!user)
 			return
-
-	//stolen from armory code
 		if (!src.authorized)
 			src.authorized = list()
 			src.authorized_registered = list()
@@ -101,10 +107,36 @@
 					src.authorized += H.bioHolder.Uid
 				else
 					src.authorized += user
-				src.authorized_registered += W:registered
+
 
 				if (src.authorized.len < auth_need)
 					print_auth_needed(user)
 				else
 					authorize()
+
+	proc/authorize()
+		if(src.authed)
+			return
+		ourportal.active = TRUE //FLIP THE LEVER, KRONK!
+		ourportal.icon_state = "syndtele1"
+
+	proc/print_auth_needed(var/mob/author)
+		if (author)
+			for (var/mob/O in hearers(src, null))
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until teleporter is activated.\"</span></span>", 2)
+		else
+			for (var/mob/O in hearers(src, null))
+				O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[src.auth_need - src.authorized.len] authorizations needed until until teleporter is activated.\"</span></span>", 2)
+
+/obj/submachine/surplusopdeployer
+	icon = 'icons/obj/teleporter.dmi'
+	icon_state = "syndtele"
+	name = "Old portal ring"
+	desc = "An outdated and unstable portal ring model, locked in to a preset location."
+	density = TRUE
+	var/active = FALSE //can we go yet?
+
+	Bumped(atom/movable/M as mob|obj)
+		if(active)
+			do_teleport(M, pick_landmark(LANDMARK_LATEJOIN)) //put them at the latejoin for now- CHANGE THIS LATER
 

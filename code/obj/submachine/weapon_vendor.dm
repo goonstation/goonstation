@@ -227,10 +227,6 @@
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		// List of avaliable objects for purchase
-		//materiel_stock += new/datum/materiel/sidearm/smartgun
-		//materiel_stock += new/datum/materiel/sidearm/pistol
-		//materiel_stock += new/datum/materiel/sidearm/revolver
-
 		materiel_stock += new/datum/materiel/loadout/longgun
 		materiel_stock += new/datum/materiel/loadout/shortgun
 		materiel_stock += new/datum/materiel/loadout/melee
@@ -250,12 +246,7 @@
 		materiel_stock += new/datum/materiel/utility/backup
 		materiel_stock += new/datum/materiel/utility/expensive
 		materiel_stock += new/datum/materiel/utility/holding
-		/*materiel_stock += new/datum/materiel/utility/sarin_grenade
-		materiel_stock += new/datum/materiel/utility/bomb_decoy
-		materiel_stock += new/datum/materiel/utility/comtac
-		materiel_stock += new/datum/materiel/utility/beartraps
-		materiel_stock += new/datum/materiel/utility/miscpouch
-		materiel_stock += new/datum/materiel/utility/sawflies*/
+
 
 	accepted_token(var/token)
 
@@ -270,96 +261,6 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
-
-/datum/materiel/loadout/longgun
-	name = "Long gun"
-	path = /obj/random_item_spawner/surplus/longgun
-	description = "Gun that is have power and strike of hammer upon nail."
-
-/datum/materiel/loadout/shortgun
-	name = "Short gun"
-	path = /obj/surplusopspawner/loadout_shortgun_spawner
-	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and change."
-
-/datum/materiel/loadout/melee
-	name = "Attack item"
-	path = /obj/random_item_spawner/surplus/melee/withcredits
-	description = "Item of attack is with hand in hand combat. For those whom are not wishing of allow gun to be in hand of pig-dogs. Bonus deal of many partial refund."
-
-/datum/materiel/ammo/plinking
-	name = ".22 bullets"
-	path = /obj/random_item_spawner/surplus/plinkerrounds
-	description = "Small bullet for little gun."
-
-/datum/materiel/ammo/pistol
-	name = "Pistol bullets"
-	path = /obj/random_item_spawner/surplus/pistolrounds
-	description = "Bullet of types in pistol."
-
-/datum/materiel/ammo/revolver
-	name = "Revolve bullets"
-	path = /obj/random_item_spawner/surplus/revolverrounds
-	description = "Various bullet sets for in revolvers."
-/datum/materiel/ammo/rifle
-	name = "Rifle bullets"
-	path = /obj/random_item_spawner/surplus/riflerounds
-	description = "Western bullet holder of rifle."
-/datum/materiel/ammo/shotgun
-	name = "Bullets of shotgun"
-	path = /obj/random_item_spawner/surplus/shotgunshells
-	description = "These bullets is large that has made of plastic?"
-
-/datum/materiel/ammo/energy
-	name = "Energy bullets"
-	path = /obj/random_item_spawner/surplus/energycells
-	description = "These bullets is confusing, for they is not of bullet, but little square."
-
-/datum/materiel/utility/healing
-	name = "items of healing"
-	path = /obj/surplusopspawner/medical
-	description = "Good for keeping alive. Cannot make them not dead."
-	cost = 2
-/datum/materiel/utility/grenade
-	name = "greande"
-	path = /obj/random_item_spawner/surplus/grenades
-	description = "Thrown explosives of the grenides! Good deal of many!"
-	cost = 1
-
-/datum/materiel/utility/stealth
-	name = "Sneaking materials"
-	path = /obj/random_item_spawner/surplus/stealth
-	description = "Sometimes it is of an important nature to stealting."
-	cost = 2
-
-/datum/materiel/utility/melee
-	name = "Additional item of hand in hand combat"
-	path = /obj/random_item_spawner/surplus/melee
-	description = "For if you do not have or want more."
-	cost = 1
-
-/datum/materiel/utility/holding
-	name = "Storing equipment"
-	path = /obj/random_item_spawner/surplus/storage
-	description = "You are buy too many things and have to hold! Buy more thing for holding."
-	cost = 1
-	vr_allowed = TRUE
-
-/datum/materiel/utility/backup
-	name = "Team guard item"
-	path = /obj/random_item_spawner/surplus/backup
-	description = "Yuri know that world is crew. Yuri give deals and trading on frienship object."
-	cost = 1 //6
-/datum/materiel/utility/expensive
-	name = "Expensive toy"
-	path = /obj/random_item_spawner/surplus/expensive
-	description = "You are looking at best of big boy toys."
-	cost = 1 //6
-
-/datum/materiel/utility/change
-	name = "Money return"
-	path = /obj/item/requisition_token/syndicate/surplusutility
-	description = "For giving back of reubels."
-	cost = 1
 
 // Materiel avaliable for purchase:
 
@@ -638,6 +539,95 @@
 
 //SURPLUS
 
+/datum/materiel/loadout/longgun
+	name = "Long gun"
+	path = /obj/random_item_spawner/surplus/longgun
+	description = "Gun that is have power and strike of hammer upon nail."
+
+/datum/materiel/loadout/shortgun
+	name = "Short gun"
+	path = /obj/surplusopspawner/loadout_shortgun_spawner
+	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and change."
+
+/datum/materiel/loadout/melee
+	name = "Attack item"
+	path = /obj/random_item_spawner/surplus/melee/withcredits
+	description = "Item of attack is with hand in hand combat. For those whom are not wishing of allow gun to be in hand of pig-dogs. Bonus deal of many partial refund."
+
+/datum/materiel/ammo/plinking
+	name = ".22 bullets"
+	path = /obj/random_item_spawner/surplus/plinkerrounds
+	description = "Small bullet for little gun."
+
+/datum/materiel/ammo/pistol
+	name = "Pistol bullets"
+	path = /obj/random_item_spawner/surplus/pistolrounds
+	description = "Bullet of types in pistol."
+
+/datum/materiel/ammo/revolver
+	name = "Revolve bullets"
+	path = /obj/random_item_spawner/surplus/revolverrounds
+	description = "Various bullet sets for in revolvers."
+/datum/materiel/ammo/rifle
+	name = "Rifle bullets"
+	path = /obj/random_item_spawner/surplus/riflerounds
+	description = "Western bullet holder of rifle."
+/datum/materiel/ammo/shotgun
+	name = "Bullets of shotgun"
+	path = /obj/random_item_spawner/surplus/shotgunshells
+	description = "These bullets is large that has made of plastic?"
+
+/datum/materiel/ammo/energy
+	name = "Energy bullets"
+	path = /obj/random_item_spawner/surplus/energycells
+	description = "These bullets is confusing, for they is not of bullet, but little square."
+
+/datum/materiel/utility/healing
+	name = "items of healing"
+	path = /obj/surplusopspawner/medical
+	description = "Good for keeping alive. Cannot make them not dead."
+	cost = 2
+/datum/materiel/utility/grenade
+	name = "greande"
+	path = /obj/random_item_spawner/surplus/grenades
+	description = "Thrown explosives of the grenides! Good deal of many!"
+	cost = 1
+
+/datum/materiel/utility/stealth
+	name = "Sneaking materials"
+	path = /obj/random_item_spawner/surplus/stealth
+	description = "Sometimes it is of an important nature to stealting."
+	cost = 2
+
+/datum/materiel/utility/melee
+	name = "Additional item of hand in hand combat"
+	path = /obj/random_item_spawner/surplus/melee
+	description = "For if you do not have or want more."
+	cost = 1
+
+/datum/materiel/utility/holding
+	name = "Storing equipment"
+	path = /obj/random_item_spawner/surplus/storage
+	description = "You are buy too many things and have to hold! Buy more thing for holding."
+	cost = 1
+	vr_allowed = TRUE
+
+/datum/materiel/utility/backup
+	name = "Team guard item"
+	path = /obj/random_item_spawner/surplus/backup
+	description = "Yuri know that world is crew. Yuri give deals and trading on frienship object."
+	cost = 1 //6
+/datum/materiel/utility/expensive
+	name = "Expensive toy"
+	path = /obj/random_item_spawner/surplus/expensive
+	description = "You are looking at best of big boy toys."
+	cost = 1 //6
+
+/datum/materiel/utility/change
+	name = "Money return"
+	path = /obj/item/requisition_token/syndicate/surplusutility
+	description = "For giving back of reubels."
+	cost = 1
 
 // Requisition tokens
 

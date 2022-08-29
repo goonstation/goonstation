@@ -45,17 +45,3 @@
 	attack_self(mob/user as mob)
 		for(var/obj/submachine/syndicate_teleporter/S in get_turf(src))
 			S.teleport(user)
-
-
-/obj/submachine/surplusopdeployer
-	icon = 'icons/obj/teleporter.dmi'
-	icon_state = "syndtele1"
-	name = "Old portal ring"
-	desc = "An outdated and unstable portal ring model, locked in to a preset location."
-	density = TRUE
-	var/active = FALSE //can we go yet?
-
-	Bumped(atom/movable/M as mob|obj)
-		if(active)
-			do_teleport(M, pick_landmark(LANDMARK_LATEJOIN)) //put them at the latejoin for now
-
