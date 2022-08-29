@@ -1,5 +1,9 @@
 
 (t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
 (u)LeahTheTech
 (p)10494
 (e)|
