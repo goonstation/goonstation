@@ -287,6 +287,8 @@ mob/new_player
 				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if (current_state < GAME_STATE_FINISHED)
+					battlemode.battlersleft_hud.add_client(character.client)
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
 					character.ghostize()

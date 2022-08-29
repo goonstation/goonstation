@@ -424,7 +424,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		team.first_system_destroyed = 1
 		src.playsound_to_team(team, "sound/voice/pod_wars_voices/{PWTN}Crit_System_Destroyed{ALTS}.ogg", sound_type=PW_CRIT_SYSTEM_DESTORYED)
 	else
-		src.playsound_to_team(team, "sound/effects/ship_alert_major.ogg", 60)
+		src.playsound_to_team(team, 'sound/effects/ship_alert_major.ogg', 60)
 
 	//Gah, why? Gotta say "The" I guess.
 	var/team_name_string = team?.name
@@ -444,7 +444,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 		if (TEAM_SYNDICATE)
 			team = team_SY
 
-	src.playsound_to_team(team, "sound/effects/ship_alert_minor.ogg")
+	src.playsound_to_team(team, 'sound/effects/ship_alert_minor.ogg')
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"

@@ -647,7 +647,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, "sound/items/Deconstruct.ogg", 30, 1, extrarange = -10)
+	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)

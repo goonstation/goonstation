@@ -60540,7 +60540,6 @@
 	pixel_x = 20
 	},
 /obj/rack,
-/obj/item/storage/box/stinger_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,

@@ -87,7 +87,7 @@
 		boutput(user, "There's nothing to take off the shelf!")
 
 /obj/bookshelf/proc/deconstruct()
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	var/obj/parts = new /obj/item/furniture_parts/bookshelf
 	parts.set_loc(src.loc)
 	qdel(src)

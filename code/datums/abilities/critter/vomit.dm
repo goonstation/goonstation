@@ -19,7 +19,7 @@
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] pukes!</b></span>")
 		logTheThing(LOG_COMBAT, holder.owner, "power-pukes [log_reagents(holder.owner)] at [log_loc(holder.owner)].")
-		playsound(holder.owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		playsound(holder.owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
 		holder.owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf

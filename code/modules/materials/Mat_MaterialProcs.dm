@@ -326,7 +326,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				if (prob(25) && attacker == attacked)
 					fail_msg = " but you lose [owner]!"
 					attacker.drop_item(owner)
-					playsound(attacker.loc, "sound/effects/poof.ogg", 90)
+					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
 				else
 					playsound(attacker.loc, "warp", 50)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
@@ -402,7 +402,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
+			playsound(location, 'sound/effects/leakagentb.ogg', 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += 0.18
@@ -412,7 +412,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
+			playsound(location, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 			payload.oxygen = 80
 			iterations -= 1
 
@@ -530,7 +530,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
 		return
 
 /datum/materialProc/ice_life

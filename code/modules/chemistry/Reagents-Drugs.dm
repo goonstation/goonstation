@@ -80,7 +80,7 @@ datum
 							else if(prob(50))
 								fake_attackEx(M, 'icons/misc/critter.dmi', "mimicface", "smiling thing")
 								boutput(M, "<span class='alert'><b>The smiling thing</b> laughs!</span>")
-								M.playsound_local(M.loc, pick("sound/voice/cluwnelaugh1.ogg", "sound/voice/cluwnelaugh2.ogg", "sound/voice/cluwnelaugh3.ogg"), 35, 1)
+								M.playsound_local(M.loc, pick('sound/voice/cluwnelaugh1.ogg', 'sound/voice/cluwnelaugh2.ogg', 'sound/voice/cluwnelaugh3.ogg'), 35, 1)
 							else
 								M.playsound_local(M.loc, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
 								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
@@ -834,10 +834,10 @@ datum
 				M.druggy = max(M.druggy, 15)
 				if(probmult(11))
 					M.visible_message("<span class='notice'><b>[M.name]</b> hisses!</span>")
-					playsound(M.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+					playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 				if(probmult(9))
 					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
-					playsound(M.loc, "sound/voice/animal/cat.ogg", 50, 1)
+					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
 				if(probmult(7))
 					switch(rand(1,2))
 						if(1)
@@ -1106,7 +1106,7 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 	var/list/affected_turfs = getline(M, T)
 
 	M.visible_message("<span class='alert'><b>[M] burps a stream of fire!</b></span>")
-	playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
+	playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 	var/turf/currentturf
 	var/turf/previousturf

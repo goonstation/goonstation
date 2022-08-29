@@ -252,7 +252,7 @@
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		E.set_loc(get_turf(src))
 		return
 
@@ -279,7 +279,7 @@
 			honey.reagents.maximum_volume += honey_production_amount
 
 		src.reagents.trans_to(honey, honey_production_amount)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		if (src.honey_color)
 			var/icon/composite = icon(honey.icon, honey.icon_state)
 			composite.ColorTone( src.honey_color )
@@ -433,7 +433,7 @@
 /datum/limb/small_critter/bee/strong/bubs // da bubs
 	dam_low = 18
 	dam_high = 22
-	sound_attack = "sound/impact_sounds/Flesh_Stab_1.ogg"
+	sound_attack = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	dmg_type = DAMAGE_STAB
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
@@ -562,7 +562,7 @@
 
 				honeycube.set_loc(holder.owner.loc)
 				holder.owner.visible_message("<b>[holder.owner] regurgitates [MT]!</b>")
-				playsound(holder.owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(holder.owner, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		return 0
 
 /datum/targetable/critter/bee_teleport
@@ -833,7 +833,7 @@
 				src.visible_message("<b>[src]</b> burps!  It smells...coppery.  What'd that bee eat?")
 			if (100)
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
 					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
 				else
@@ -869,7 +869,7 @@
 			honey.reagents.maximum_volume = honey_production_amount
 		src.reagents.trans_to(honey, honey_production_amount)
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
-		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 1)
 
 	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
@@ -892,7 +892,7 @@
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
 				W.name = "golden key"
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				W.set_loc(get_turf(src))
 		else
 			return ..()

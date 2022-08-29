@@ -252,7 +252,7 @@
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
@@ -261,7 +261,7 @@
 
 /obj/machinery/camera/proc/repair_camera(mob/user)
 	src.set_camera_status(TRUE)
-	playsound(src.loc, "sound/items/Wirecutter.ogg", 100, 1)
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
 	// updateCoverage()
 	if (user)

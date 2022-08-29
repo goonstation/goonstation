@@ -142,9 +142,9 @@
 			throw_range = max(throw_range,0)
 
 		if (intensity <= 2.4)
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		else
-			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip_big.ogg', 50, 1, -3)
 		src.remove_pulling()
 		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
 		var/throw_speed = 2
@@ -1051,7 +1051,7 @@
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
-				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
 
@@ -1063,7 +1063,7 @@
 
 		if (S == "table" && istype(target, /obj/table))
 			var/obj/table/table = target
-			playsound(table.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(table.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			table.deconstruct()
 			return TRUE
 

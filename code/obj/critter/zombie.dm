@@ -33,6 +33,7 @@
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iszombie(C)) continue // For admin gimmicks mixing player zombies and critters
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C in src.friends) continue

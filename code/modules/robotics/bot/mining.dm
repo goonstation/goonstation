@@ -70,7 +70,7 @@
 		src.UpdateOverlays(null, "hover")
 		var/const/volume = 50
 		var/const/vary = 1
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", volume, vary)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', volume, vary)
 		pixel_y = -base_sprite_pixels_from_floor
 	if(src.digging)
 		src.UpdateOverlays(display_tool_animated, "tool")
@@ -160,7 +160,7 @@
 
 /obj/machinery/bot/mining/proc/startDiggingEffects()
 	src.visible_message("<span class='alert'>[src] starts digging!</span>")
-	if (src.diglevel > 2) playsound(src.loc, "sound/items/Welder.ogg", 100, 1)
+	if (src.diglevel > 2) playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
 	else playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 100, 1)
 	src.digging = 1
 	src.anchored = 1

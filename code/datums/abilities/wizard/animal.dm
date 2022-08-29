@@ -43,9 +43,9 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/FurryGrim.ogg"
-	voice_fem = "sound/voice/wizard/FurryFem.ogg"
-	voice_other = "sound/voice/wizard/FurryLoud.ogg"
+	voice_grim = 'sound/voice/wizard/FurryGrim.ogg'
+	voice_fem = 'sound/voice/wizard/FurryFem.ogg'
+	voice_other = 'sound/voice/wizard/FurryLoud.ogg'
 	maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
 
 	cast(mob/target)
