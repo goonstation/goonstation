@@ -1274,7 +1274,7 @@ datum
 					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-5 * mult)
+						M.take_oxygen_deprivation(-10 * mult)
 					if(M.losebreath && prob(25))
 						M.lose_breath(-1 * mult)
 					if(M.get_toxin_damage())
