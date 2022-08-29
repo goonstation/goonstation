@@ -363,7 +363,7 @@
 			temp_add = null
 
 		// preference is in a percentage of the default
-		var/font_size = user.client ? (user.client.preferences.font_size/100) * 10 : 10;
+		var/font_size = user.client ? (((user.client.preferences.font_size/100) * 10) || 10) : 10 // font size pref is null if you haven't changed it from the default, so we need extra logic
 		var/dat = {"<title>Computer Terminal</title>
 		<style type="text/css">
 		body
