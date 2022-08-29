@@ -183,7 +183,7 @@
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
-				playsound(usr.loc, "sound/misc/stamp_paper.ogg", 50, 0.5)
+				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -316,7 +316,7 @@
 		return // Normaly you just stamp, you don't need to read the thing
 	else if (issnippingtool(P))
 		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
@@ -1475,7 +1475,7 @@ as it may become compromised.
 /obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)

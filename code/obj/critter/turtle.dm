@@ -64,12 +64,12 @@
 
 	CritterAttack(mob/M)
 		..()
-		var/S = pick("sound/impact_sounds/Generic_Hit_2.ogg", "sound/impact_sounds/Wood_Hit_Small_1.ogg")
+		var/S = pick('sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Wood_Hit_Small_1.ogg')
 		playsound(src.loc, S, 30, 1, -1)
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 20, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 20, 1, -1)
 		M.changeStatus("stunned", 3 SECONDS)
 
 	on_grump()
@@ -148,7 +148,7 @@
 			var/chat_text = make_chat_maptext(src, message)
 			for (var/mob/O in all_hearers(7, get_turf(src)))
 				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
-			playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
 	proc/enter_shell()

@@ -1,4 +1,49 @@
 
+(t)sun aug 28 22
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
+(u)CrystalClover
+(p)10469
+(e)|
+(+)Fixed custom pizzas so that Pepperoni, Meatball and Mushroom can be added alongside other toppings
+(u)flappybat
+(e)⚖|balance
+(+)Upgrade the single landmine given by the surplus crate to a landmine pouch with three random mines.
+(+)Add beartrap pouch to the surplus crate loot table.
+(+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
+(+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
+(+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
+(+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
+(+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
+(t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
+(u)ZeWaka
+(p)10484
+(e)|
+(*)Reworked internal list sorting code - be sure to report any bugs you see (hopefully less, as this fixed a lot)
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
+(u)LeahTheTech
+(p)10325
+(e)|
+(+)Gunbots no longer take eye damage from welding
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
 (t)thu aug 25 22
 (u)Mr. Moriarty
 (p)10462

@@ -37,7 +37,7 @@
 			if (prob(4) || freebie)
 				freebie = 0
 				SPAWN(50+rand(0,550))
-					playsound_global(world, "sound/voice/farts/superfart.ogg", 60)
+					playsound_global(world, 'sound/voice/farts/superfart.ogg', 60)
 					for (var/mob/M in mobs)
 						if (M.client)
 							shake_camera(M, 20, 8)

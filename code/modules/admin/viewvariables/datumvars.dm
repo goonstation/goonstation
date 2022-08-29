@@ -154,7 +154,7 @@
 			if(!istype(D.vars[V], /datum/admins))
 				names += V
 
-	names = sortList(names)
+	names = sortList(names, /proc/cmp_text_asc)
 	if(D == "GLOB")
 		for (var/V in names)
 			body += debug_variable(V, global.vars[V], D, 0, 10)

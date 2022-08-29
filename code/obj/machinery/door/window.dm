@@ -179,7 +179,7 @@
 	src.operating = 1
 
 	flick(text("[]opening", src.base_state), src)
-	playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]open", src.base_state)
 
 	SPAWN(0.8 SECONDS)
@@ -209,7 +209,7 @@
 	src.operating = 1
 
 	flick(text("[]closing", src.base_state), src)
-	playsound(src.loc, "sound/machines/windowdoor.ogg", 100, 1)
+	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
 	src.icon_state = text("[]", src.base_state)
 
 	src.set_density(1)

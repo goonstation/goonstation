@@ -63,7 +63,7 @@
       // work on cloning the current occupant
       if(src.do_rejection)
         // *price is right losing horn*
-        playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
         M.emote("scream")
         src.visible_message("<span style='color: red;text-weight: bold;'>[src] spits out a pink fleshy lump!</span>")
         // eject martian brain
@@ -88,7 +88,7 @@
           var/health_percent = (M.health / M.max_health) * 100
           if(health_percent >= src.eject_at_health_percent)
             // alright, get out
-            playsound(src, "sound/impact_sounds/Slimy_Splat_2.ogg", 100, 1)
+            playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 100, 1)
             src.visible_message("<span style='color: red; font-weight: bold;'>[src.occupant] is unceremoniously ejected from [src].</span>")
             setalive(M)
             M.set_loc(src.loc)
@@ -103,8 +103,8 @@
       var/health_percent = (M.health / M.max_health) * 100
       if(health_percent <= src.consume_at_health_percent)
         src.visible_message("<span style='color: red; font-weight: bold;'>Horrible sounds come from [src]!</span>")
-        playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
-        playsound(src, "sound/effects/bubbles.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 100, 1)
+        playsound(src, 'sound/effects/bubbles.ogg', 100, 1)
         // if there's a ghost, time to pull them back
         if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
           boutput(M.ghost, "<span class='notice'>You are dimly aware of bubbling fluid.</span>")
@@ -178,7 +178,7 @@
     src.growing_variant = pick(whitelisted_martian_types)
   // now consume
   src.visible_message("<span style='color: red; font-weight: bold;'>[src] [pick("devours", "swallows", "consumes", "gulps down", "snaps up")] [target]![prob(20) ? " Holy shit!" : ""]</span>")
-  playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
+  playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 100, 1)
   target.set_loc(src)
   src.in_use = 1
   src.occupant = target

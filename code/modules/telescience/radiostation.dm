@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/obj/item/record/random)
 /obj/item/record/random/dance_on_a_space_volcano
 	name = "record - \"Dance On A Space Volcano\""
 	record_name = "Dance On A Space Volcano"
-	song = "sound/radio_station/music/dance_on_a_space_volcano.ogg"
+	song = 'sound/radio_station/music/dance_on_a_space_volcano.ogg'
 
 /obj/item/record/random/adventure_1
 	name = "record - \"adventure track #1\""
@@ -361,17 +361,17 @@ ABSTRACT_TYPE(/obj/item/record/random)
 /obj/item/record/random/adventure_3
 	name = "record - \"adventure track #3\""
 	record_name = "adventure track #3"
-	song = "sound/radio_station/music/adventure_3.ogg"
+	song = 'sound/radio_station/music/adventure_3.ogg'
 
 /obj/item/record/random/adventure_4
 	name = "record - \"adventure track #4\""
 	record_name = "adventure track #4"
-	song = "sound/radio_station/music/adventure_4.ogg"
+	song = 'sound/radio_station/music/adventure_4.ogg'
 
 /obj/item/record/random/adventure_5
 	name = "record - \"adventure track #5\""
 	record_name = "adventure track #5"
-	song = "sound/radio_station/music/adventure_5.ogg"
+	song = 'sound/radio_station/music/adventure_5.ogg'
 
 /obj/item/record/random/adventure_6
 	name = "record - \"adventure track #6\""
@@ -381,32 +381,32 @@ ABSTRACT_TYPE(/obj/item/record/random)
 /obj/item/record/random/upbeat_1
 	name = "record - \"upbeat track #1\""
 	record_name = "upbeat track #1"
-	song = "sound/radio_station/music/upbeat_1.ogg"
+	song = 'sound/radio_station/music/upbeat_1.ogg'
 
 /obj/item/record/random/upbeat_2
 	name = "record - \"upbeat track #2\""
 	record_name = "upbeat track #2"
-	song = "sound/radio_station/music/upbeat_2.ogg"
+	song = 'sound/radio_station/music/upbeat_2.ogg'
 
 /obj/item/record/random/chill_1
 	name = "record - \"chill track #1\""
 	record_name = "chill track #1"
-	song = "sound/radio_station/music/chill_1.ogg"
+	song = 'sound/radio_station/music/chill_1.ogg'
 
 /obj/item/record/random/chill_2
 	name = "record - \"chill track #2\""
 	record_name = "chill track #2"
-	song = "sound/radio_station/music/chill_2.ogg"
+	song = 'sound/radio_station/music/chill_2.ogg'
 
 /obj/item/record/random/chill_3
 	name = "record - \"chill track #3\""
 	record_name = "chill track #3"
-	song = "sound/radio_station/music/chill_3.ogg"
+	song = 'sound/radio_station/music/chill_3.ogg'
 
 /obj/item/record/random/chill_4
 	name = "record - \"chill track #4\""
 	record_name = "chill track #4"
-	song = "sound/radio_station/music/chill_4.ogg"
+	song = 'sound/radio_station/music/chill_4.ogg'
 
 /obj/item/record/random/january
 	record_name = "january"
@@ -469,27 +469,27 @@ ABSTRACT_TYPE(/obj/item/record/random/nostalgic)
 /obj/item/record/random/nostalgic/distant
 	name = "record - \"Distant Star\""
 	record_name = "Distant Star"
-	song = "sound/radio_station/music/distant_star.ogg"
+	song = 'sound/radio_station/music/distant_star.ogg'
 
 /obj/item/record/random/nostalgic/technologic
 	name = "record - \"High Technologic Beat\""
 	record_name = "High Technologic Beat"
-	song = "sound/radio_station/music/high_technologic_beat.ogg"
+	song = 'sound/radio_station/music/high_technologic_beat.ogg'
 
 /obj/item/record/random/nostalgic/afterparty
 	name = "record - \"After Party\""
 	record_name = "After Party"
-	song = "sound/radio_station/music/after_party.ogg"
+	song = 'sound/radio_station/music/after_party.ogg'
 
 /obj/item/record/random/nostalgic/soalive
 	name = "record - \"Everyone Is So Alive\""
 	record_name = "Everyone Is So Alive"
-	song = "sound/radio_station/music/everyone_is_so_alive.ogg"
+	song = 'sound/radio_station/music/everyone_is_so_alive.ogg'
 
 /obj/item/record/random/nostalgic/alivetoo
 	name = "record - \"It Feels Good To Be Alive Too\""
 	record_name = "It Feels Good To Be Alive Too"
-	song = "sound/radio_station/music/it_feels_good_to_be_alive_too.ogg"
+	song = 'sound/radio_station/music/it_feels_good_to_be_alive_too.ogg'
 
 ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest
@@ -500,37 +500,37 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 /obj/item/record/random/chronoquest/waystations
 	record_name = "Waystations"
 	name = "record - \"Waystations\""
-	song = "sound/radio_station/music/waystations.ogg"
+	song = 'sound/radio_station/music/waystations.ogg'
 
 /obj/item/record/random/chronoquest/planets
 	record_name = "Planets"
 	name = "record - \"Planets\""
-	song = "sound/radio_station/music/planets.ogg"
+	song = 'sound/radio_station/music/planets.ogg'
 
 /obj/item/record/random/chronoquest/oh_no_evil_star
 	record_name = "Oh No Evil Star"
 	name = "record - \"Oh No Evil Star\""
-	song = "sound/radio_station/music/oh_no_evil_star.ogg"
+	song = 'sound/radio_station/music/oh_no_evil_star.ogg'
 
 /obj/item/record/random/chronoquest/cloudskymanguy
 	record_name = "Cloudskymanguy"
 	name = "record - \"Cloudskymanguy\""
-	song = "sound/radio_station/music/cloudskymanguy.ogg"
+	song = 'sound/radio_station/music/cloudskymanguy.ogg'
 
 /obj/item/record/random/chronoquest/black_wing_interface
 	record_name = "Black Wing Interface"
 	name = "record - \"Black Wing Interface\""
-	song = "sound/radio_station/music/black_wing_interface.ogg"
+	song = 'sound/radio_station/music/black_wing_interface.ogg'
 
 /obj/item/record/random/chronoquest/riverdancer
 	name = "record - \"Riverdancer\""
 	record_name = "Riverdancer"
-	song = "sound/radio_station/music/riverdancer.ogg"
+	song = 'sound/radio_station/music/riverdancer.ogg'
 
 /obj/item/record/random/key_lime
 	name = "record - \"key_lime #1\""
 	record_name = "key lime #1"
-	song = "sound/radio_station/music/key_lime.ogg"
+	song = 'sound/radio_station/music/key_lime.ogg'
 	add_overlay = FALSE
 
 	New()
@@ -560,17 +560,17 @@ ABSTRACT_TYPE(/obj/item/record/random/metal)
 /obj/item/record/random/metal/xtra
 	name = "record - \"Radstorm Rock\""
 	record_name = "Radstorm Rock"
-	song = "sound/radio_station/music/xtra.ogg"
+	song = 'sound/radio_station/music/xtra.ogg'
 
 /obj/item/record/random/metal/giga
 	name = "record - \"Punctured Spacesuit\""
 	record_name = "Punctured Spacesuit"
-	song = "sound/radio_station/music/giga.ogg"
+	song = 'sound/radio_station/music/giga.ogg'
 
 /obj/item/record/random/metal/maxi
 	name = "record - \"Plasmageddon\""
 	record_name = "Plasmageddon"
-	song = "sound/radio_station/music/maxi.ogg"
+	song = 'sound/radio_station/music/maxi.ogg'
 
 ABSTRACT_TYPE(/obj/item/record/random/funk)
 /obj/item/record/random/funk
@@ -581,17 +581,17 @@ ABSTRACT_TYPE(/obj/item/record/random/funk)
 /obj/item/record/random/funk/funkadelic
 	name = "record - \"Fission Funk\""
 	record_name = "Fission Funk"
-	song = "sound/radio_station/music/funkadelic.ogg"
+	song = 'sound/radio_station/music/funkadelic.ogg'
 
 /obj/item/record/random/funk/groovy
 	name = "record - \"Gaussian Groove\""
 	record_name = "Gaussian Groove"
-	song = "sound/radio_station/music/groovy.ogg"
+	song = 'sound/radio_station/music/groovy.ogg'
 
 /obj/item/record/random/funk/time4lunch
 	name = "record - \"Lunch4Laika\""
 	record_name = "Lunch4Laika"
-	song = "sound/radio_station/music/lunch.ogg"
+	song = 'sound/radio_station/music/lunch.ogg'
 
 ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/record/random/notaquario
@@ -601,23 +601,23 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/record/random/notaquario/beaches
 	record_name = "Beaches"
-	song = "sound/radio_station/music/beaches.ogg"
+	song = 'sound/radio_station/music/beaches.ogg'
 
 /obj/item/record/random/notaquario/graveyard
 	record_name = "Graveyard"
-	song = "sound/radio_station/music/graveyard.ogg"
+	song = 'sound/radio_station/music/graveyard.ogg'
 
 /obj/item/record/random/notaquario/floaty
 	record_name = "I'm Floaty In Space But Thats Ok"
-	song = "sound/radio_station/music/floaty.ogg"
+	song = 'sound/radio_station/music/floaty.ogg'
 
 /obj/item/record/random/notaquario/repose
 	record_name = "Repose"
-	song = "sound/radio_station/music/repose.ogg"
+	song = 'sound/radio_station/music/repose.ogg'
 
 /obj/item/record/random/notaquario/biodome
 	record_name = "Biodome"
-	song = "sound/radio_station/music/biodome.ogg"
+	song = 'sound/radio_station/music/biodome.ogg'
 
 /obj/item/record/spacebux/New()
 	..()
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	desc = "A fairly large record. It has a scratch on one side."
 	add_overlay = 0
 	icon_state = "record_blue"
-	song = "sound/radio_station/music/poo.ogg"
+	song = 'sound/radio_station/music/poo.ogg'
 
 /obj/item/record/poo/attackby(obj/item/P, mob/user)
 	if (istype(P, /obj/item/magnifying_glass))
@@ -643,48 +643,48 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/record/atlas
 	desc = "Ode to a space ship."
-	song = "sound/radio_station/music/atlas.ogg"
+	song = 'sound/radio_station/music/atlas.ogg'
 
 /obj/item/record/honey
 	desc = "A fairly large record. It's all sticky and coated in honey!"
 	add_overlay = 0
 	icon_state = "record_honey"
-	song = "sound/radio_station/music/bumblebee.ogg"
+	song = 'sound/radio_station/music/bumblebee.ogg'
 
 /obj/item/record/christmas
 	desc = "A truly nefarious and unholy record that has been banned in most of space."
 	add_overlay = 0
 	icon_state = "record_red"
-	song = "sound/radio_station/music/christmassong.ogg"
+	song = 'sound/radio_station/music/christmassong.ogg'
 
 /obj/item/record/honkmas
 	desc = "Wow, this fruitcake record is almost as good as the real thing!"
 	add_overlay = 0
 	icon_state = "record_fruit"
-	song = "sound/radio_station/music/honkmas.ogg"
+	song = 'sound/radio_station/music/honkmas.ogg'
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
 	icon_state = "record_yellow"
 
 /obj/item/record/clown_collection/honk
-	song = "sound/radio_station/music/warriors_honk.ogg"
+	song = 'sound/radio_station/music/warriors_honk.ogg'
 	color = "#DED347"
 
 /obj/item/record/clown_collection/uguu
-	song = "sound/radio_station/music/uguu.ogg"
+	song = 'sound/radio_station/music/uguu.ogg'
 	color = "#DEC647"
 
 /obj/item/record/clown_collection/eggshell
-	song = "sound/radio_station/music/eggshell.ogg"
+	song = 'sound/radio_station/music/eggshell.ogg'
 	color = "#DEB947"
 
 /obj/item/record/clown_collection/disco
-	song = "sound/radio_station/music/disco_poo.ogg"
+	song = 'sound/radio_station/music/disco_poo.ogg'
 	color = "#DEAC47"
 
 /obj/item/record/clown_collection/poo
-	song = "sound/radio_station/music/core_of_poo.ogg"
+	song = 'sound/radio_station/music/core_of_poo.ogg'
 	color = "#DE9F47"
 
 // Record sets
@@ -848,36 +848,36 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/advertisement/grones
 	name = "compact tape - 'Grones Soda'"
-	audio = "sound/radio_station/adverts/grones.ogg"
+	audio = 'sound/radio_station/adverts/grones.ogg'
 	name_of_thing = "Grones Soda"
 
 /obj/item/radio_tape/advertisement/dans_tickets
 	name = "compact tape - 'Discount Dan's GTMs'"
-	audio = "sound/radio_station/adverts/dans_tickets.ogg"
+	audio = 'sound/radio_station/adverts/dans_tickets.ogg'
 	name_of_thing = "Discount Dan's GTMs"
 
 /obj/item/radio_tape/advertisement/quik_noodles
 	name = "compact tape - 'Discount Dan's Quik Noodles'"
-	audio = "sound/radio_station/adverts/quik_noodles.ogg"
+	audio = 'sound/radio_station/adverts/quik_noodles.ogg'
 	name_of_thing = "Discount Dan's Quik Noodles"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	The music is "Palast Rock by Stefan Kartenberg (CC BY-NC 3.0)"}
 
 /obj/item/radio_tape/advertisement/danitos_burritos
 	name = "compact tape - 'Descuento Danito's Burritos'"
-	audio = "sound/radio_station/adverts/danitos_burritos.ogg"
+	audio = 'sound/radio_station/adverts/danitos_burritos.ogg'
 	name_of_thing = "Descuento Danito's Burritos"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	The music is "Requiem for a Fish" by The Freak Fandango Orchestra (CC BY-NC 4.0)"}
 
 /obj/item/radio_tape/advertisement/movie
 	name = "compact tape - 'Movie Ad'"
-	audio = "sound/radio_station/adverts/bill_movie.ogg"
+	audio = 'sound/radio_station/adverts/bill_movie.ogg'
 	name_of_thing = "some shitty movie"
 
 /obj/item/radio_tape/advertisement/pope_crunch
 	name = "compact tape - 'Pope Crunch'"
-	audio = "sound/radio_station/adverts/pope_crunch_cereal.ogg"
+	audio = 'sound/radio_station/adverts/pope_crunch_cereal.ogg'
 	name_of_thing = "Pope Crunch Cereal"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Puppet Master and HeadsmanStukka of the Black Pants Legion. <br>
@@ -885,7 +885,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/advertisement/cloning_psa
 	name = "compact tape - 'Cloning PSA'"
-	audio = "sound/radio_station/adverts/cloning_psa.ogg"
+	audio = 'sound/radio_station/adverts/cloning_psa.ogg'
 	name_of_thing = "Cloning Public Service Announcement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Cenith of the Black Pants Legion<br>
@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/advertisement/captain_psa
 	name = "compact tape - 'Captain's Training Program'"
-	audio = "sound/radio_station/adverts/captain_training.ogg"
+	audio = 'sound/radio_station/adverts/captain_training.ogg'
 	name_of_thing = "Nanotrasen Captain's Training Promotional Tape"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Tex of the Black Pants Legion<br>
@@ -901,14 +901,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/advertisement/security_psa
 	name = "compact tape - 'Nanotrasen Security PSA'"
-	audio = "sound/radio_station/adverts/security_psa.ogg"
+	audio = 'sound/radio_station/adverts/security_psa.ogg'
 	name_of_thing = "Security Department Public Service Announcement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Squidchild of the Black Pants Legion"}
 
 /obj/item/radio_tape/advertisement/cargonia
 	name = "compact tape - 'Scuffed Compact Tape'"
-	audio = "sound/radio_station/adverts/Cargonia.ogg"
+	audio = 'sound/radio_station/adverts/Cargonia.ogg'
 	name_of_thing = "Cargo Union Advertisement <VERY ILLEGAL>"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	You found this in a locked up chest in the depths. Someone went to a lot of trouble to get rid of it.<br>
@@ -917,14 +917,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/advertisement/chemistry
 	name = "charred compact tape - 'Unofficial Chemsitry Advertisment tape'"
-	audio = "sound/radio_station/adverts/Chemistry.ogg"
+	audio = 'sound/radio_station/adverts/Chemistry.ogg'
 	name_of_thing = "Unofficial Chemsitry Advertisment"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
 /obj/item/radio_tape/advertisement/robotics
 	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
-	audio = "sound/radio_station/adverts/Robotics.ogg"
+	audio = 'sound/radio_station/adverts/Robotics.ogg'
 	name_of_thing = "Unofficial Robotics Advertisment"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
@@ -934,39 +934,39 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/radio_tape/audio_book/heisenbee
 	name = "compact tape - 'The Trial of Heisenbee'"
-	audio = "sound/radio_station/trial_of_heisenbee.ogg"
+	audio = 'sound/radio_station/trial_of_heisenbee.ogg'
 	name_of_thing = "The Trial of Heisenbee"
 
 /obj/item/radio_tape/audio_book/commander_announcement
 	name = "Commander's Log - 'You Got A Small Arsenal'"
 	name_of_thing = "You Got A Small Arsenal"
-	audio = "sound/radio_station/commander_announcement.ogg"
+	audio = 'sound/radio_station/commander_announcement.ogg'
 
 /obj/item/radio_tape/audio_book/commander_support
 	name = "Commander's Log - 'Customer Support Ticket #121'"
 	name_of_thing = "Customer Support Ticket #121"
-	audio = "sound/radio_station/commander_support.ogg"
+	audio = 'sound/radio_station/commander_support.ogg'
 
 /obj/item/radio_tape/audio_book/commander_resignation
 	name = "Commander's Log - 'I Quit'"
 	name_of_thing = "I Quit"
-	audio = "sound/radio_station/commander_resignation.ogg"
+	audio = 'sound/radio_station/commander_resignation.ogg'
 
 /obj/item/radio_tape/audio_book/commander_figurines
 	name = "Commander's Log - 'They're Called Collectibles'"
 	name_of_thing = "They're Called Collectibles"
-	audio = "sound/radio_station/commander_figurines.ogg"
+	audio = 'sound/radio_station/commander_figurines.ogg'
 
 /obj/item/radio_tape/owl
 	audio_type = "???"
 	name = "compact tape - 'Owls'"
-	audio = "sound/radio_station/adverts/owl.ogg"
+	audio = 'sound/radio_station/adverts/owl.ogg'
 	name_of_thing = "Owls"
 
 /obj/item/radio_tape/adventure
 	audio_type = "???"
 	name = "compact tape - 'Unlabeled'"
-	audio = "sound/ambience/spooky/Somewhere_Tone.ogg"
+	audio = 'sound/ambience/spooky/Somewhere_Tone.ogg'
 	name_of_thing = "found tape"
 	interesting = "The tape seems pretty corrupted."
 
