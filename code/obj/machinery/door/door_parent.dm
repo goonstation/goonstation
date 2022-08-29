@@ -608,8 +608,6 @@
 			src.operating = 0
 
 /obj/machinery/door/proc/opened()
-	src.update_camera_coverage()
-
 	if(autoclose)
 		sleep(15 SECONDS)
 		if(interrupt_autoclose)
@@ -619,16 +617,6 @@
 
 /obj/machinery/door/proc/closed()
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
-
-	src.update_camera_coverage()
-
-/**
- * Updates camera coverage when opening and closing
- */
-/obj/machinery/door/proc/update_camera_coverage()
-	var/turf/T = get_turf(src)
-	if (T)
-		camera_coverage_controller.update_emitters(T.camera_coverage_emitters)
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)

@@ -964,6 +964,14 @@
 		// Not a turf, so we must send a signal to the turf
 		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
+  // Below is a "smart" signal on a turf that only get called when the opacity
+	// actually changes in a meaningfull way. If atom is on a turf and we are
+	// obscuring vision in a turf that was originally not obscured. Or we are on a
+	// turf that is not obscuring vision, we were obscuring vision and are not
+	// anymore.
+	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, src)
+
 // standardized damage procs
 
 /// Does x blunt damage to the atom
