@@ -1275,7 +1275,7 @@ datum
 
 					if(M.get_oxygen_deprivation())
 						M.take_oxygen_deprivation(-10 * mult)
-					if(M.losebreath && prob(25))
+					if(M.losebreath && prob(50))
 						M.lose_breath(-1 * mult)
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-3 * mult)
