@@ -263,7 +263,7 @@ datum
 			blob_damage = 5
 			value = 7 // 3 2 1 heat
 			target_organs = list("left_lung","right_lung","heart")
-			flushing_multiplier = 0.5
+			flushing_multiplier = 0.8
 			var/counter = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
