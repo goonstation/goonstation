@@ -568,13 +568,13 @@ SYNDICATE DRONE FACTORY AREAS
 		active = 1
 
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(tile)
 
 		SPAWN(0.5 SECONDS)
 			tile.invisibility = INVIS_ALWAYS_ISH
-			tile.opacity = 1
+			tile.set_opacity(1)
 			active = 0
 
 	find_suitable_tiles()
@@ -609,13 +609,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(picked)
 
 		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
+			picked.set_opacity(1)
 			active = 0
 
 		//SPAWN(rand(100,200)) update() // raised delay
@@ -989,7 +989,7 @@ SYNDICATE DRONE FACTORY AREAS
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		SPAWN(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
@@ -1414,6 +1414,3 @@ var/satellite_crash_event_status = -1
 /area/drone/assembly
 	name = "Assembly Floor"
 	icon_state = "storage"
-
-
-

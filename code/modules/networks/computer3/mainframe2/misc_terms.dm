@@ -925,7 +925,7 @@
 					VT.icon_state = initial(VT.icon_state)
 				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
 					VT.icon_state = initial(VT.icon_state)
-					VT.opacity = 1
+					VT.set_opacity(1)
 					VT.set_density(1)
 
 			if(results)

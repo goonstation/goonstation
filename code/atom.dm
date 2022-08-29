@@ -949,6 +949,21 @@
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
+/atom/proc/set_opacity(var/newopacity)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (newopacity == src.opacity)
+		return // Why even bother
+
+	var/oldopacity = src.opacity
+	src.opacity = newopacity
+
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+
+	if (isturf(src.loc))
+		// Not a turf, so we must send a signal to the turf
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+
 // standardized damage procs
 
 /// Does x blunt damage to the atom

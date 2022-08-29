@@ -178,7 +178,7 @@
 		O.alpha = alpha
 		O.anchored = anchored
 		O.set_density(density)
-		O.opacity = opacity
+		O.set_opacity(opacity)
 		if (material)
 			O.setMaterial(material)
 		O.transform = transform
@@ -510,7 +510,7 @@
 		replica.name = O.name
 		replica.desc = O.desc
 		replica.set_density(O.density)
-		replica.opacity = O.opacity
+		replica.set_opacity(O.opacity)
 		replica.anchored = O.anchored
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x

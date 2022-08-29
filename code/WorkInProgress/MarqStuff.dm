@@ -182,7 +182,7 @@
 		playsound(src.loc, 'sound/machines/door_open.ogg', 50, 1)
 		icon_state = "hld1"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		overlays.len = 0
 
 	meteorhit()

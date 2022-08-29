@@ -3163,7 +3163,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 
