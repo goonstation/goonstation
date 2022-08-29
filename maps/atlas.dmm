@@ -6235,9 +6235,7 @@
 /area/station/teleporter)
 "pC" = (
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
+/turf/simulated/floor/purpleblack,
 /area/station/teleporter)
 "pD" = (
 /obj/machinery/power/apc/autoname_west,
