@@ -156,9 +156,9 @@
 		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
 	if(istype(src.loc, /obj/item/clipboard))
-		if (isliving(M))
-			var/mob/living/M = user
-			return M.shared_living_ui_distance(src, viewcheck = FALSE)
+		if (isliving(user))
+			var/mob/living/L = user
+			return L.shared_living_ui_distance(src, viewcheck = FALSE)
 		else
 			return UI_UPDATE // ghosts always get updates
 	. = max(..(), UI_DISABLED)
