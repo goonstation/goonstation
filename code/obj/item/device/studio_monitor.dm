@@ -217,7 +217,7 @@
 			var/mob/living/carbon/human/virtual/V = target
 			. = istype(V.ears, /obj/item/device/radio/headset/syndicate) || istype(V.head, /obj/item/clothing/head/helmet/space/syndicate)
 		else
-			if(is_syndicate)
+			if(the_item.is_syndicate)
 				. = istype(target.ears, /obj/item/device/radio/headset/syndicate)
 			else
 				. = istype(target.ears, /obj/item/device/radio/headset/command) //Nanotrasen guitar, Nanotrasen tunes
@@ -308,7 +308,7 @@
 
 					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
-			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
+			logTheThing(LOG_COMBAT, src.the_mob, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
 
 	// Songs

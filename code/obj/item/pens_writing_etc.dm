@@ -15,7 +15,7 @@
 /* =============== PENS =============== */
 
 /obj/item/pen
-	desc = "It's a normal black ink pen."
+	desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -109,7 +109,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -155,7 +155,7 @@
 
 /obj/item/pen/fancy
 	name = "fancy pen"
-	desc = "A pretty swag pen."
+	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
 	icon_state = "pen_fancy"
 	item_state = "pen_fancy"
 	font_color = "blue"
@@ -165,7 +165,7 @@
 
 /obj/item/pen/odd
 	name = "odd pen"
-	desc = "There's something strange about this pen."
+	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
 	font = "Wingdings"
 
 /obj/item/pen/red // we didn't have one of these already??
@@ -193,7 +193,7 @@
 
 /obj/item/pen/marker
 	name = "felt marker"
-	desc = "Try not to sniff it too much. Weirdo."
+	desc = "It's the National Notary 'Edgewater' waterproof marker. Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
 	font = "'Permanent Marker', cursive"
@@ -505,7 +505,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -648,7 +648,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -738,7 +738,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
+		logTheThing(LOG_COMBAT, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -774,9 +774,9 @@
 			A.UpdateName()
 		playsound(src, "sound/items/hand_label.ogg", 40, 1)
 		if (user && !no_message)
-			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
-			logTheThing("combat", A, null, "has a label applied to them, \"[src.label]\"")
+			logTheThing(LOG_COMBAT, A, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
 
 	custom_suicide = 1
@@ -1060,7 +1060,7 @@
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == user || (src.loc && src.loc.loc == user)) && isalive(user)))
 			src.name = "booklet[n_name ? "- '[n_name]'" : null]"
-			logTheThing("say", user, null, "labels a paper booklet: [n_name]")
+			logTheThing(LOG_SAY, user, "labels a paper booklet: [n_name]")
 		src.add_fingerprint(user)
 		return
 
@@ -1206,7 +1206,7 @@
 /* ============== PRINTERS & TYPEWRITERS ================= */
 
 /obj/item/pen/typewriter
-	name = "integrated typewriter pen"
+	name = "National Notary 'Turbot Landing' experimental integrated typewriter pen"
 	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
 	font = "Monospace"
 	clicknoise = FALSE

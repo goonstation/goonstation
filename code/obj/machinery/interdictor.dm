@@ -203,7 +203,7 @@
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
 	for(var/turf/T in orange(src.interdict_range,src))
-		if (get_dist(T,src) != src.interdict_range)
+		if (GET_DIST(T,src) != src.interdict_range)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
 		src.deployed_fields += YEE

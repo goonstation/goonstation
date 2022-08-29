@@ -41,7 +41,7 @@ Contains:
 	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
+		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
 				smallestdimension = min(smallestdimension, gen.shortestlink)
@@ -49,7 +49,7 @@ Contains:
 	if (goodgenerators>=4)
 
 		// Did you know this thing still works? And wasn't logged (Convair880)?
-		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		var/turf/T = get_turf(src)
@@ -57,7 +57,7 @@ Contains:
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -80,7 +80,7 @@ Contains:
 			boutput(user, "You unsecure the [src.name].")
 			src.anchored = 0
 
-		logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+		logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 		return
 	else
 		return ..()
@@ -186,7 +186,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained at [log_loc(src)]")
 					message_admins("[src] has been contained at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
@@ -197,7 +197,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
 
 
@@ -346,7 +346,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
 		radius++
-		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
 		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
@@ -497,7 +497,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				set_active(1)
 				icon_state = "Field_Gen +a"
 				boutput(user, "You turn on the field generator.")
-				logTheThing("station", user, null, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
+				logTheThing(LOG_STATION, user, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
 		else
 			boutput(user, "The controls are locked!")
 	else
@@ -512,7 +512,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.set_active(1)
 			icon_state = "Field_Gen +a"
 			boutput(user, "You turn on the field generator.")
-			logTheThing("station", user, null, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
+			logTheThing(LOG_STATION, user, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
 	else
 		boutput(user, "The field generator needs to be firmly secured to the floor first.")
 	src.add_fingerprint(user)
@@ -880,7 +880,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shock_damage = min(rand(10,20),rand(10,20))*prot
 
 	// Added (Convair880).
-	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, user, "was shocked by a containment field at [log_loc(src)].")
 
 	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric_heal"))
@@ -907,7 +907,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
-		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
@@ -995,14 +995,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.active = 0
 					icon_state = "Emitter"
 					boutput(user, "You turn off the emitter.")
-					logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
 					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 			else
 				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 1
 					icon_state = "Emitter +a"
 					boutput(user, "You turn on the emitter.")
-					logTheThing("station", user, null, "activated emitter at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
 					src.shot_number = 0
 					src.fire_delay = 100
 					message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
@@ -1020,14 +1020,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.active = 0
 				icon_state = "Emitter"
 				boutput(user, "You turn off the emitter.")
-				logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
 				message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 		else
 			if(tgui_alert(user, "Turn on the emitter?","Switch",list("Yes","No")) == "Yes")
 				src.active = 1
 				icon_state = "Emitter +a"
 				boutput(user, "You turn on the emitter.")
-				logTheThing("station", user, null, "activated emitter at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
 				src.shot_number = 0
 				src.fire_delay = 100
 				message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
@@ -1113,7 +1113,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			if (!src.locked)
-				logTheThing("station", user, null, "unlocked emitter at at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "unlocked emitter at at [log_loc(src)].")
 		else
 			boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -1146,7 +1146,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
-		logTheThing("station", user, null, "welds an emitter to the floor at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "welds an emitter to the floor at [log_loc(src)].")
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Time to clear our link.
@@ -1154,7 +1154,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.link = null
 		desc = "Shoots a high power laser when active, it has been bolted to the floor."
 		boutput(user, "You cut the emitter free from the floor.")
-		logTheThing("station", user, null, "unwelds an emitter from the floor at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "unwelds an emitter from the floor at [log_loc(src)].")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -1305,7 +1305,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
-			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
 			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
@@ -1532,7 +1532,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
-			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
 		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
 
@@ -1595,7 +1595,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 
-			logTheThing("station", user, null, "welds a [src.name] to the floor at [log_loc(src)].") // Like here (Convair880).
+			logTheThing(LOG_STATION, user, "welds a [src.name] to the floor at [log_loc(src)].") // Like here (Convair880).
 
 			if ((user.loc == T && user.equipped() == W))
 				state = WELDED
@@ -1613,7 +1613,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "You start to cut the bomb free from the floor.")
 			sleep(5 SECONDS)
 
-			logTheThing("station", user, null, "cuts a [src.name] from the floor at [log_loc(src)].") // Hmm (Convair880).
+			logTheThing(LOG_STATION, user, "cuts a [src.name] from the floor at [log_loc(src)].") // Hmm (Convair880).
 			if (src.activator)
 				src.activator = null
 
@@ -1649,7 +1649,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							src.icon_state = "portgen2"
 
 							// And here (Convair880).
-							logTheThing("bombing", usr, null, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+							logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
 							message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
 							if (ismob(usr))
 								src.activator = usr
@@ -1662,7 +1662,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							src.icon_state = "portgen1"
 
 							// And here (Convair880).
-							logTheThing("bombing", usr, src.activator, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
+							logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
 							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 						else
@@ -1739,7 +1739,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
-		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
 	SPAWN(3 SECONDS)
@@ -1748,10 +1748,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			shake_camera(M, 5, 16)
 
 		// And most importantly here (Convair880)!
-		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
+		logTheThing(LOG_BOMBING, src.activator, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/satcrash.ogg', 60, 0, 5, 0.5)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

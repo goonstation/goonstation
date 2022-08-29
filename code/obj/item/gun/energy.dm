@@ -69,7 +69,7 @@
 			return
 
 		if (!(src in processing_items))
-			logTheThing("debug", null, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_DEBUG, null, "<b>Convair880</b>: Process() was called for an egun ([src]) that wasn't in the item loop. Last touched by: [src.fingerprintslast]")
 			processing_items.Add(src)
 			return
 		if (!src.cell)
@@ -236,7 +236,7 @@
 
 	New()
 		if (!src.current_projectile)
-			src.set_current_projectile(new /datum/projectile/laser)
+			src.set_current_projectile(new /datum/projectile/laser/glitter)
 		if (isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
 		..()
@@ -258,7 +258,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
-	desc = "An energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
+	desc = "A carbon-arc energy weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
@@ -276,16 +276,17 @@
 			src.icon_state = "phaser-new[ratio]"
 			return
 
-
 /obj/item/gun/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 4
-	desc = "A diminutive sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
+	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/med_power
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
+	mats = 20
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/tiny)
@@ -301,21 +302,21 @@
 			src.icon_state = "phaser-tiny[ratio]"
 			return
 
-
-
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 10
-	desc = "The largest phaser from Radnor Photonics. A big gun for big problems."
+	desc = "The largest carbon-arc phaser from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
-	cell_type = /obj/item/ammo/power_cell/higherish_power
+	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	shoot_delay = 10
 	charge_up = 5
 	can_dual_wield = FALSE
-
+	force = MELEE_DMG_LARGE
+	two_handed = 1
+	mats = list("MET-1"=15, "MET-2"=10, "CON-2"=10, "POW-2"=15, "CRY-1"=10)
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
 		projectiles = list(current_projectile)
@@ -330,15 +331,13 @@
 			src.icon_state = "phaser-xl[ratio]"
 			return
 
-
-
-
-
+	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
+		return FALSE
 
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
-	name = "mini rad-poison-crossbow"
-	desc = "A weapon favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell."
+	name = "\improper Wenshen mini rad-poison-crossbow"
+	desc = "The XIANG|GEISEL Wenshen (瘟神) crossbow favored by many of the syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Geisel Radiofabrik."
 	icon_state = "crossbow"
 	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
@@ -391,6 +390,7 @@
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
+		RegisterSignal(src, COMSIG_ATOM_ANALYZE, .proc/noreward)
 		..()
 	update_icon()
 		..()
@@ -415,10 +415,52 @@
 		UpdateIcon()
 		M.update_inhands()
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/electronics/scanner))
-			nojobreward = 1
+	proc/noreward()
+		src.nojobreward = 1
+
+
+/obj/item/gun/energy/egun_jr
+	name = "energy gun junior"
+	icon_state = "egun-jr"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/med_minus_power
+	desc = "A smaller, disposable version of the energy gun, with dual modes for stun and kill."
+	item_state = "egun-jr"
+	force = 3
+	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
+	muzzle_flash = "muzzle_flash_elec"
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	spread_angle = 10
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/diffuse)
+		projectiles = list(current_projectile,new/datum/projectile/laser/diffuse)
 		..()
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			if(current_projectile.type == /datum/projectile/energy_bolt/diffuse)
+				src.item_state = "egun-jrstun"
+				src.icon_state = "egun-jrstun[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+			else if (current_projectile.type == /datum/projectile/laser/diffuse)
+				src.item_state = "egun-jrkill"
+				src.icon_state = "egun-jrkill[ratio]"
+				muzzle_flash = "muzzle_flash_laser"
+			else
+				src.item_state = "egun-jr"
+				src.icon_state = "egun-jr[ratio]"
+				muzzle_flash = "muzzle_flash_elec"
+
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
@@ -463,15 +505,15 @@
 	desc = "A weapon that produces an cohesive electrical charge that stuns its target. Now in a shotgun format."
 	item_state = "tasers"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	force = 8
+	force = 12
 	two_handed = 1
 	can_dual_wield = 0
-	shoot_delay = 6
+	shoot_delay = 8 DECI SECONDS
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/tasershotgunspread)
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgun)
+		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/tasershotgunslug)
 		..()
 
 	update_icon()
@@ -482,13 +524,6 @@
 			ratio = round(ratio, 0.25) * 100
 			set_icon_state("tasers[ratio]")
 			return
-
-	attack_self()
-		..()
-		if(istype(current_projectile, /datum/projectile/energy_bolt))
-			shoot_delay = 4
-		else
-			shoot_delay = 6
 
 
 ////////////////////////////////////VUVUV
@@ -1459,7 +1494,7 @@
 				if (M.job != "Head of Security")
 					src.cant_self_remove = 1
 					playsound(src.loc, "sound/weapons/armbomb.ogg", 75, 1, -3)
-					logTheThing("combat", src, null, "Is not the law. Caused explosion with Lawbringer.")
+					logTheThing(LOG_COMBAT, src, "Is not the law. Caused explosion with Lawbringer.")
 
 					SPAWN(2 SECONDS)
 						src.blowthefuckup(15)
@@ -1574,7 +1609,7 @@
 			break
 		if (F == get_turf(user))
 			continue
-		if (get_dist(user,F) > range)
+		if (GET_DIST(user,F) > range)
 			continue
 		tfireflash(F,0.5,2400)
 
@@ -1649,10 +1684,25 @@
 		set_current_projectile(new/datum/projectile/special/howitzer)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
+/obj/item/gun/energy/optio1
+	name = "\improper Optio I"
+	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
+	w_class = W_CLASS_SMALL
+	icon_state = "optio_1"
+	item_state = "protopistol"
+	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
+	can_swap_cell = 0
+
+	New()
+		set_current_projectile(new/datum/projectile/bullet/optio)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/optio/hitscan)
+		..()
+
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
-	icon_state = "signifer2"
+	icon_state = "signifer_2"
 	w_class = W_CLASS_NORMAL		//for clarity
 	object_flags = NO_ARM_ATTACH
 	force = 8
@@ -1669,26 +1719,22 @@
 
 	update_icon()
 		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
-				src.icon_state = "signifer_2"
-				src.item_state = "signifer_2"
-				muzzle_flash = "muzzle_flash_elec"
-				shoot_delay = 2
-				spread_angle = 0
-				force = 9
-				w_class = W_CLASS_NORMAL
-			else //if (current_projectile.type == /datum/projectile/laser)
-				src.item_state = "signifer_2-smg"
-				src.icon_state = "signifer_2-smg"
-				muzzle_flash = "muzzle_flash_bluezap"
-				spread_angle = 3
-				shoot_delay = 5
-				force = 12
-				w_class = W_CLASS_BULKY
+		if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+			src.icon_state = "signifer_2"
+			src.item_state = "signifer_2"
+			muzzle_flash = "muzzle_flash_elec"
+			shoot_delay = 2
+			spread_angle = 0
+			force = 9
+			w_class = W_CLASS_NORMAL
+		else //if (current_projectile.type == /datum/projectile/laser)
+			src.item_state = "signifer_2-smg"
+			src.icon_state = "signifer_2-smg"
+			muzzle_flash = "muzzle_flash_bluezap"
+			spread_angle = 3
+			shoot_delay = 5
+			force = 12
+			w_class = W_CLASS_BULKY
 
 	attack_self(var/mob/M)
 		if (!setTwoHanded(!src.two_handed))
@@ -1732,8 +1778,9 @@
 	var/extended = FALSE
 
 	New()
-		set_current_projectile(new/datum/projectile/special/spreader/plasma_spreader)
+		set_current_projectile(new/datum/projectile/laser/plasma/auto)
 		projectiles = list(current_projectile,new/datum/projectile/laser/plasma/burst)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
 		..()
 
 	update_icon()
@@ -1741,11 +1788,13 @@
 		if(!src.extended)
 			src.icon_state = "cornicen_close"
 			src.item_state = "cornicen"
-			w_class = W_CLASS_NORMAL
+			src.w_class = W_CLASS_NORMAL
+			src.spread_angle = initial(src.spread_angle)
 		else
 			src.icon_state = "cornicen_ext"
 			src.item_state = "cornicen_ext"
-			w_class = W_CLASS_BULKY
+			src.w_class = W_CLASS_BULKY
+			src.spread_angle = 0
 
 	attack_self(var/mob/M)
 		..()

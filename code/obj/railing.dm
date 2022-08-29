@@ -245,7 +245,7 @@
 			jump_target = getLandingLoc()
 
 	proc/getLandingLoc()
-		if (get_dist(ownerMob, the_railing) == 0)
+		if (GET_DIST(ownerMob, the_railing) == 0)
 			if (use_owner_dir)
 				// for handling the multiple ways top hop a corner railing
 				return get_step(the_railing, owner.dir)
@@ -375,7 +375,7 @@
 			return
 		if (!tool)
 			interrupt(INTERRUPT_ALWAYS)
-			logTheThing("debug", src, the_railing, "tried to interact with [the_railing] using a null tool... somehow.")
+			logTheThing(LOG_DEBUG, src, "tried to interact with [the_railing] using a null tool... somehow.")
 			return
 		var/verbing = "doing something to"
 		switch (interaction)
@@ -410,5 +410,5 @@
 				playsound(the_railing, "sound/items/Screwdriver.ogg", 50, 1)
 		for(var/mob/O in AIviewers(ownerMob))
 			O.show_text("[owner] [verbens] [the_railing].", "red")
-			logTheThing("station", ownerMob, the_railing, "[verbens] [the_railing].")
+			logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing].")
 

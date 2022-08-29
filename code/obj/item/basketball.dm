@@ -46,16 +46,16 @@
 				else
 					if (M.equipped() || get_dir(M, src) == M.dir)
 						src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-						logTheThing("combat", M, null, "is struck by [src]")
+						logTheThing(LOG_COMBAT, M, "is struck by [src]")
 						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 					else
 						// catch the ball!
 						src.Attackhand(M)
 						M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
-						logTheThing("combat", M, null, "catches [src]")
+						logTheThing(LOG_COMBAT, M, "catches [src]")
 			else
 				src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-				logTheThing("combat", M, null, "is struck by [src]")
+				logTheThing(LOG_COMBAT, M, "is struck by [src]")
 				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
@@ -137,7 +137,7 @@
 			return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (!mounted && get_dist(src, target) == 1)
+		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
 				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)

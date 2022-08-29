@@ -228,7 +228,7 @@
 
 	proc/drain_bathtub(mob/user)
 		src.add_fingerprint(user)
-		if (get_dist(usr, src) <= 1 && !is_incapacitated(usr))
+		if (GET_DIST(usr, src) <= 1 && !is_incapacitated(usr))
 			if (src.reagents.total_volume)
 				user.visible_message("<span class='notice'>[user] reaches into the bath and pulls the plug.", "<span class='notice'>You reach into the bath and pull the plug.</span>")
 				if (ishuman(usr))
@@ -324,7 +324,7 @@
 		if(target == user && !user.stat)
 			target.visible_message("[user.name] climbs into the [src].", "You climb into the [src]")
 		else if(target != user && !user.restrained())
-			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='notice'>You push [target.name] into the [src]!</span>")
+			target.visible_message("<span class='alert'>[user.name] pushes [target.name] into the [src]!</alert>", "<span class='alert'>[user.name] pushes you into the [src]!</span>")
 		else
 			return
 

@@ -436,7 +436,7 @@
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
 					clear_owner()
@@ -457,7 +457,7 @@
 						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
 						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					set_owner(user)
@@ -495,7 +495,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
@@ -745,7 +745,7 @@
 		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -764,7 +764,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",.proc/toggleThermal)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -877,7 +877,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -925,7 +925,7 @@
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -977,7 +977,7 @@
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
-		thr?.user = (owner || usr)
+		thr?.user = (owner)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -1832,7 +1832,7 @@
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
 			if(X == "command" && converted[X] == "text_message")
-				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
+				logTheThing(LOG_PDAMSG, usr, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
@@ -2333,7 +2333,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2616,12 +2616,12 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
@@ -2726,7 +2726,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
-				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2764,7 +2764,7 @@
 
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
-			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [Gun] from [src] at [log_loc(src)].")
 			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
@@ -2783,7 +2783,7 @@
 		if(gun_fits)
 			if(!Gun)
 				boutput(user, "You put the [W] inside the [src].")
-				logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 				user.drop_item()
 				Gun = W
 				Gun.set_loc(src)
@@ -2916,7 +2916,7 @@
 
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
-			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [instrument] from [src] at [log_loc(src)].")
 			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
@@ -2957,7 +2957,7 @@
 
 		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
 			boutput(user, "You put [W] inside [src].")
-			logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1

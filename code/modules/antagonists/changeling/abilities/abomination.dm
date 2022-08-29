@@ -45,7 +45,7 @@
 
 			H.abilityHolder.updateButtons()
 
-			logTheThing("combat", H, null, "enters horror form as a changeling, [log_loc(H)].")
+			logTheThing(LOG_COMBAT, H, "enters horror form as a changeling, [log_loc(H)].")
 			return 0
 
 /mob/proc/revert_from_horror_form()
@@ -71,7 +71,7 @@
 		H.update_clothing()
 		H.abilityHolder.updateButtons()
 		C?.transferOwnership(H)
-		logTheThing("combat", H, null, "voluntarily leaves horror form as a changeling, [log_loc(H)].")
+		logTheThing(LOG_COMBAT, H, "voluntarily leaves horror form as a changeling, [log_loc(H)].")
 		return 0
 
 /datum/targetable/changeling/scream
@@ -88,7 +88,7 @@
 		if (..())
 			return 1
 		holder.owner.visible_message("<span class='alert'><B>[holder.owner] screeches loudly! The very noise fills you with dread!</B></span>")
-		logTheThing("combat", holder.owner, null, "screeches as a changeling in horror form [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "screeches as a changeling in horror form [log_loc(holder.owner)].")
 		playsound(holder.owner.loc, 'sound/voice/creepyshriek.ogg', 80, 1) // cogwerks - using ISN's scary goddamn shriek here
 
 		for (var/mob/living/O in viewers(holder.owner, null))

@@ -31,7 +31,7 @@
 	/// Defines what kind of head this is, for things like lizards being able to colorchange a transplanted lizardhead
 	/// Since we can't easily swap out one head for a different type
 	var/head_type = HEAD_HUMAN
-	var/linked_human = null
+	var/mob/living/carbon/human/linked_human = null
 
 	var/image/head_image = null
 	var/head_icon = null
@@ -74,11 +74,13 @@
 				src.UpdateIcon(/*makeshitup*/ 1)
 
 	disposing()
-		if (src.donor && ishuman(src.donor))
-			var/mob/living/carbon/human/H = src.donor
-			if (isskeleton(H))
-				var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (src.linked_human)
+			if (isskeleton(src.linked_human))
+				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
 				S.head_tracker = null
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		if (holder)
 			holder.head = null
 		if (donor_original.eye == src)
@@ -293,6 +295,10 @@
 	on_removal()
 		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
+		if (src.linked_human)
+			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
+			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, .proc/remove_typing_indicator)
+			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, .proc/speech_bubble)
 		. = ..()
 
 	///Taking items off a head
@@ -365,7 +371,7 @@
 		if (src.skull || src.brain)
 
 			// scalpel surgery
-			if (istype(W, /obj/item/scalpel) || istype(W, /obj/item/razor_blade) || istype(W, /obj/item/knife/butcher) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/raw_material/shard))
+			if (iscuttingtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, "sound/impact_sounds/Slimy_Cut_1.ogg", 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
@@ -456,6 +462,10 @@
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
+		if (src.linked_human)
+			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
+			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0

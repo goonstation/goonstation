@@ -515,7 +515,7 @@
 						return
 					note = strip_html(note,MAX_MESSAGE_LEN)
 					note += " - [user.name]"
-					logTheThing("say", user, null, "[user] has created a Zoldorf note: [note]")
+					logTheThing(LOG_SAY, user, "[user] has created a Zoldorf note: [note]")
 					if(pz)
 						pz.notes.Add(note)
 						boutput(user,"<span class='success'><b>Note added!</b></span>")

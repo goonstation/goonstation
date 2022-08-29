@@ -81,7 +81,7 @@
 		if (antag_len)
 			antag = "<b>[antag_len] antagonist role\s present.</b><br>"
 			for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
-				antag += "[this_antag.display_name] &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
+				antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
 			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a><br>"
 		else if (M.mind.special_role != null)

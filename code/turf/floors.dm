@@ -1608,11 +1608,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	switch(severity)
 		if(1)
 			src.ReplaceWithSpace()
-#ifdef UNDERWATER_MAP
-			//if (prob(10))
-			//	src.ex_act(severity+1)
-#endif
-
 		if(2)
 			switch(pick(1,2;75,3))
 				if (1)
@@ -1853,20 +1848,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
-			if (C:amount >= 2)
+			if (C.amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
-				if(do_after(user, 3 SECONDS))
-					ReplaceWithEngineFloor()
 
-					if (C)
-						C.change_stack_amount(-2)
-						if (C:amount <= 0)
-							qdel(C) //wtf
-
-						if (C.material)
-							src.setMaterial(C.material)
-
-					playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			else
 				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else
@@ -1892,7 +1877,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
 
 				if(!istype(src.material, /datum/material/metal/steel))
-					logTheThing("station", user, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -2014,7 +1999,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/obj/item/martianSeed/S = C
 		if(S)
 			S.plant(src)
-			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 
 	//also in turf.dm. Put this here for lowest priority.
@@ -2027,6 +2012,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src?.material?.triggerOnHit(src, C, user, 1)
 	else
 		return attack_hand(user)
+
+/turf/simulated/floor/proc/reinforce(obj/item/rods/I)
+	src.ReplaceWithEngineFloor()
+	if (I.material)
+		src.setMaterial(I.material)
+	I.change_stack_amount(-2)
+	playsound(src, "sound/items/Deconstruct.ogg", 80, 1)
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)

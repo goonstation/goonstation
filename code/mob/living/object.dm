@@ -187,7 +187,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
-		logTheThing("combat", src, null, "is hit by a blob")
+		logTheThing(LOG_COMBAT, src, "is hit by a blob")
 		if (isdead(src) || src.nodamage)
 			return
 
@@ -268,7 +268,7 @@
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
-				var/mob/dead/observer/O = new/mob/dead/observer()
+				var/mob/dead/observer/O = new/mob/dead/observer(src)
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
 					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
@@ -370,7 +370,7 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage)
+		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
 			humans += H
 	return humans
 

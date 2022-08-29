@@ -1,4 +1,199 @@
 
+(t)tue aug 23 22
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
+(t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
+(t)thu aug 18 22
+(u)Roddy
+(p)10340
+(e)|
+(*)Updated the Donut 2 Pool/Arcade/Gym area.
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
+(u)Cogwerks
+(e)|
+(*)Added orderable crates for the Micro and Macro Phasers
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open
+(+)Updated naming scheme and descriptions for rad crossbow and phasers.
+(t)wed aug 17 22
+(u)MylieDaniels
+(p)9902
+(e)|
+(*)Forcefeeding pills has an action bar, and time to forcefeed scales with size of pill, from 3 seconds at 30u to 5 seconds at 90u.
+(u)tarmunora
+(*)Defibs must now be primed (used in-hand) before being used, and will discharge themselves 3 seconds after being primed.
+(u)Kubius
+(p)9904
+(e)|
+(*)Chem protection on gear now properly factors into most chemical touch effects. Menders and patches are exempt.
+(u)LeahTheTech
+(p)10186
+(e)|
+(+)Flockdrones now do ~40 damage per shot to pods, up from 4 (yes really)
+(t)tue aug 16 22
+(u)Jan.antilles
+(p)10282
+(e)|
+(*)Resprited and rebalanced lunchboxes.
+(u)LeahTheTech
+(p)10163
+(e)|
+(+)Vampire bite action bars are now only visible to the vampire, and biting a victim will now cause a little of their blood to drip to the floor at your feet.
+(u)Amylizzle
+(p)10234
+(e)|
+(+)Removed the broken pod colosseum
+(u)ZeWaka
+(+)Stickers now have fingerprints
+(t)mon aug 15 22
+(u)zjdtmkhzt
+(p)10144
+(e)|
+(+)Lost your tray of artifact forms in a terrible accident? You can now make a new one at the Science Fabricator!
+(u)Roddy
+(p)10136
+(e)|
+(*)Updates Donut 2 Crew Quarters
+(u)Roddy
+(p)10260
+(e)|
+(+)Moved several Cog2 pest starts.
+(u)Gannets
+(p)10262
+(e)|
+(+)Redrew the syndicate combat knife & amended the description to mention it's throw-stun utility.
+(t)sun aug 14 22
+(u)Roddy
+(p)10259
+(e)|
+(+)Moved some pest spawns on Oshan.
+(u)Amylizzle
+(p)10185
+(e)|
+(+)Non-hostile flock actions are now much quieter, and can be heard from less far away.
+(u)ZWRh3
+(p)10081
+(e)|
+(+)Cyborg teleport upgrade no longer works while stunned
+(u)glowbold
+(p)10226
+(e)|
+(+)Engineering cyborgs can no longer insert their material stacks into a reclaimer.
+(u)Amylizze
+(p)10237
+(e)|
+(+)You can now clean up paint with a wet sponge.
+(t)sat aug 06 22
+(u)tarnunora
+(e)⚖|balance
+(*)taser shotgun singlefire now energy "slug" with high (30) power and high (33) cost, round up spread pellet power (17.5 -> 18)
+(+)taser shotgun fire delay 6ds -> 8ds
+(+)taser shotgun force 8 -> 12
+(u)Flourish
+(p)10071
+(e)|
+(*)You can now adjust the game's saturation through Game > Effects > Saturation in the upper left corner.
+(u)DisturbHerb
+(p)10103
+(e)🐛|bug
+(+)Removed the variability of CheMaster bottle styles.
+(t)wed aug 03 22
+(u)TTerc
+(e)🆕|feature
+(+)Russian revolver suicide is now WAY more brutal. Give it a try!
+(u)NightmarechaMillian
+(p)9794
+(e)🎨⚖|sprites, balance
+(+)Glass pipeshot now requires 2 shards instead of 1.
+(u)ZWRh3
+(p)10026
+(e)⚖|balance
+(+)Civilian cyborg cleaning spray bottles refill speed has been increased from 1u to 5u, maximum volume changed from 25 to 100.
+(u)Chatauscours
+(p)9761
+(e)🆕|feature
+(+)Forensic scanners can now print the copy of the last report.
+(t)tue aug 02 22
+(u)LeahTheTech, Amylizzle, FlameArrow57, Stonepillar
+(p)9915
+(e)🆕⚖|feature, balance
+(*)Flockminds can now spawn in the (non RP) mixed gamemode and as random event antags.
+(u)Wisemonster
+(p)9958
+(e)⚖|balance
+(+)The fire orb no longer gives fire damage immunity.
+(+)The fire jewel's heat protection has been reduced to 50%, down from 100%.
+(u)Ikea
+(p)9835
+(e)⚖|balance
+(*)Upon being converted through counterrev implants or beatings, you now gain 5 seconds of additional melee protection.
+(u)Munien & Avimour
+(p)9892
+(e)🆕🎨|feature, sprites
+(*)Added a new Rose mutation: Holo-Roses. Give one to your favourite silicons today!
+(u)Hans
+(p)9856
+(e)⚖|balance
+(+)You can now shoot rattlesnakes, scorpions have a longer special ability delay, and viper venom's bleeding isn't as RNG dependant and can't hit as hard as fast now.
+(u)Ilysen
+(p)9966
+(e)|
+(*)Arcfiends and mid-round/mixed gamemode traitors have been moved onto the new system. Please keep an eye out for bugs and report them on GitHub if something comes up!
+(t)mon aug 01 22
+(u)Flourish
+(e)🔄|rework
+(*)The "time until payday" countdown has been removed from the status panel. Now, every payday you get a PDA message informing you how much has been deposited into your account and how many credits you have total. (You may block PAYROLL-MAILBOT if you wish.)
+(u)Flourish
+(e)🆕|feature
+(+)Clowns can now stow a single tiny item in their clown towel. This is compatible with eating and vomiting back out the towel.
+(t)sun jul 31 22
+(u)Roddy
+(p)9982
+(e)🗺|mapping
+(*)Updates Donut2 civilian sector (bar, kitchen, botany) to modern standards.
+(u)LeahTheTech
+(p)9790
+(e)🐛📄|bug, tgui
+(+)Timers and proximity sensors now use TGUI
+(u)Amylizzle
+(p)9986
+(e)🐛⚖📄|bug, balance, tgui
+(+)Genetics reclaimer can now only reclaim active genes.
+(u)Amylizzle
+(p)9976
+(e)🐛|bug
+(+)Eyespider mark ability is now more accurate, and points at the marked target.
+(t)sat jul 30 22
+(u)Luxizzle
+(p)9571
+(e)📄|tgui
+(+)Traits have been moved into the main character setup window
 (t)fri jul 29 22
 (u)DisturbHerb
 (p)9770

@@ -23,7 +23,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -55,6 +55,8 @@
 				return
 
 	point_at(atom/target)
+		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
+			return
 		make_hive_point(target, color="#e2a059")
 
 	/// Like make_point, but the point is an image that is only displayed to hivemind members

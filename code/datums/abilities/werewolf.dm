@@ -125,7 +125,7 @@
 
 			which_way = 1
 
-		logTheThing("combat", M, null, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
 		return
 
 // There used to be more stuff here, most of which was moved to limb datums.

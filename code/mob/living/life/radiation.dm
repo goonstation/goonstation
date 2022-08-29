@@ -8,7 +8,6 @@
 		if(!owner.hasStatus("radiation"))
 			owner.changeStatus("radiation",null)
 
-		if(isalive(owner))
+		if(!isdead(owner))
 			//remove some rads
-			owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * owner.radiation_dose_decay),0)
-		..()
+			owner.radiation_dose = max(owner.radiation_dose - (src.get_multiplier() * (owner.radiation_dose_decay * (owner.radiation_dose**1.2))),0)
