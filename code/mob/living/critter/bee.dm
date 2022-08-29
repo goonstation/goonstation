@@ -742,6 +742,9 @@
 	icon_body = "zombee"
 	honey_color = rgb(0, 255, 0)
 	var/playing_dead = 0
+	#if ASS_JAM
+		src.aggressive = 1
+	#endif
 
 	Life(datum/controller/process/mobs/parent)
 		src.play_dead()
