@@ -184,7 +184,7 @@
 	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("sugar"=20,"hugs"=10)
-	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
