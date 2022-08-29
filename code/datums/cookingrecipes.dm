@@ -1827,7 +1827,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 
 /datum/cookingrecipe/cheesewheel
-	item1= /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
