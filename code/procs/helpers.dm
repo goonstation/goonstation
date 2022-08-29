@@ -87,7 +87,7 @@ var/global/obj/flashDummy
 	if (!flashDummy)
 		flashDummy = new /obj(null)
 		flashDummy.set_density(0)
-		flashDummy.opacity = 0
+		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
 		flashDummy.mouse_opacity = 0
 	return flashDummy

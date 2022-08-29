@@ -127,9 +127,9 @@
 			corrode_resist 	= material.getProperty("chemical") * 10
 
 			if (material.alpha > 220)
-				opacity = 1 // useless opaque window
+				set_opacity(1) // useless opaque window)
 			else
-				opacity = 0
+				set_opacity(0)
 
 		if (istype(reinforcement))
 

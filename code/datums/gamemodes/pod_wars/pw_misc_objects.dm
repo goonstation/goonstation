@@ -276,10 +276,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			destroyed = 1
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
-			src.opacity = 0
+			src.set_opacity(0)
 			if (reconstruction_time)
 				sleep(reconstruction_time)
-				src.opacity = 1
+				src.set_opacity(1)
 				src.alpha = 255
 				health = initial(health)
 				destroyed = 0

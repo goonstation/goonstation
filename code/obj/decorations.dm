@@ -558,10 +558,10 @@
 	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
-			src.opacity = 1
+			src.set_opacity(1)
 		else
 			src.icon_state = "[src.base_state]-o"
-			src.opacity = 0
+			src.set_opacity(0)
 
 	left
 		icon_state = "blindsH-L-o"
