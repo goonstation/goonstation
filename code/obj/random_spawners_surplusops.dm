@@ -13,74 +13,20 @@
 //ammo!
 
 
-/obj/random_item_spawner/surplus/plinkerrounds
-	amt2spawn = 4
-	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_22)
-	items2spawn = list(/obj/item/ammo/bullets/bullet_22/smartgun,
-	/obj/item/ammo/bullets/bullet_22, //repeats, as a hacky way to alter the weight of some items without using rare_items2spawn
-	/obj/item/ammo/bullets/bullet_22,
-	/obj/item/ammo/bullets/bullet_22HP)
-
-
-
-/obj/random_item_spawner/surplus/pistolrounds
-	amt2spawn = 4
-	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_9mm)
-	items2spawn = list(/obj/item/ammo/bullets/bullet_9mm,
-	/obj/item/ammo/bullets/bullet_9mm,
-	/obj/item/ammo/bullets/bullet_9mm,
-	/obj/item/ammo/bullets/nine_mm_NATO)
-
-/obj/random_item_spawner/surplus/revolverrounds
-	amt2spawn = 3
-	rare_items2spawn = list(/obj/item/ammo/bullets/a38)
-	items2spawn = list(/obj/item/ammo/bullets/a357,
-		/obj/item/ammo/bullets/a357/AP,
-		/obj/item/ammo/bullets/a38,
-		/obj/item/ammo/bullets/a38,
-		/obj/item/ammo/bullets/a38/AP,
-		/obj/item/ammo/bullets/a38/stun)
-
-/obj/random_item_spawner/surplus/riflerounds
-	max_amt2spawn = 4
-	rare_items2spawn = list(/obj/item/ammo/bullets/assault_rifle)
-	items2spawn = list(/obj/item/ammo/bullets/assault_rifle,
-		/obj/item/ammo/bullets/assault_rifle,
-		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
-
-/obj/random_item_spawner/surplus/shotgunshells
-	max_amt2spawn = 5
-	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
-	/obj/item/ammo/bullets/pipeshot/scrap,
-	/obj/item/ammo/bullets/abg,
-	/obj/item/ammo/bullets/flare,
-	/obj/item/ammo/bullets/a12/weak,
-	/obj/item/ammo/bullets/a12)
-	rare_items2spawn = list(/obj/item/ammo/bullets/pipeshot/scrap,
-		/obj/item/ammo/bullets/aex)
-
-/obj/random_item_spawner/surplus/energycells
-	amt2spawn = 2
-	items2spawn = list(/obj/item/ammo/power_cell,
-		/obj/item/ammo/power_cell,
-		/obj/item/ammo/power_cell/med_power,
-		/obj/item/ammo/power_cell/med_power,
-		/obj/item/ammo/power_cell/self_charging/disruptor)
-	rare_items2spawn = list(/obj/item/ammo/power_cell/high_power)
-
 //weapons
-
 /obj/random_item_spawner/surplus/longgun //not necessarily 2 handed, but powerful. Very pricey.
 	amt2spawn = 1
-	items2spawn = list( //sorta out of place but it's more out of place in the shortguns
+	items2spawn = list(
 		/obj/item/gun/kinetic/spes,
 		/obj/item/gun/kinetic/assault_rifle,
 		/obj/item/gun/energy/egun,
+		/obj/item/gun/kinetic/hunting_rifle,
 		/obj/item/gun/energy/plasma_gun,
 		/obj/item/gun/energy/alastor,
 		/obj/item/gun/energy/blaster_smg)
-	rare_items2spawn = list(/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/grenade_launcher)
+	rare_items2spawn = list(/obj/item/gun/kinetic/riotgun, //sorta out of place but it's more out of place in the shortguns
+	/obj/item/gun/kinetic/grenade_launcher, //A little unsure on these two
+	/obj/item/gun/kinetic/sniper)
 
 /obj/random_item_spawner/surplus/shortgun //PRAY TO RNJESUS, SONNY
 	amt2spawn = 1
@@ -112,6 +58,7 @@
 	items2spawn = list(/obj/item/ratstick,
 		/obj/item/bat,
 		/obj/item/katana_sheath/reverse,
+		/obj/item/knife/butcher,
 		/obj/item/breaching_hammer,
 		/obj/item/experimental/melee/spear/plaswood,
 		/obj/item/sword/discount,
@@ -130,6 +77,9 @@
 	spawn_items()
 		var/obj/item/thingy = pick(items2spawn)
 		new thingy(get_turf(src))
+
+
+
 
 //utility
 /obj/random_item_spawner/surplus/grenades
@@ -190,13 +140,16 @@
 
 
 /obj/random_item_spawner/surplus/expensive
-	items2spawn = list(/obj/item/card/emag,
+	items2spawn = list(
+		/obj/item/card/emag,
 		/obj/item/storage/belt/wrestling,
 		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/implanter/super_mindslave,
 		/obj/item/katana_sheath,
 		/obj/item/sword,
-		 /obj/storage/crate/syndicate_surplus, //yo dawg, I heard you like surplus
+		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
+		/obj/item/storage/box/donkpocket_w_kit,
+		/obj/storage/crate/syndicate_surplus/spawnable, //yo dawg, I heard you like surplus
 		/obj/item/storage/box/mindslave_module_kit)
 	spawn_items()
 		var/obj/item/thingy = pick(src.items2spawn)
@@ -218,12 +171,27 @@
 		/obj/item/cloak_gen,
 		/obj/item/lightbreaker,
 		/obj/item/storage/box/chameleonbomb,
-		/obj/item/storage/box/poison)
+		)
 
 
 	spawn_items()
 		var/obj/item/thingy = pick(src.items2spawn)
 		new thingy(get_turf(src))
+
+/obj/random_item_spawner/surplus/defensive
+
+	amt2spawn = 1
+	rare_items2spawn = list(/obj/item/clothing/suit/armor/vest)
+	items2spawn = list(
+		/obj/item/barrier,
+		/obj/item/storage/beartrap_pouch,
+		/obj/item/clothing/suit/armor/makeshift,
+		/obj/item/clothing/gloves/swat,
+		/obj/item/device/flash,
+		/obj/item/storage/box/stun_landmines,
+//land mine pouch?
+		)
+
 
 /obj/surplusopspawner/medical //the medical spawner uppity and refuses to work so we're doing this for the time being.
 	var/list/items2spawn = list(
@@ -245,7 +213,6 @@
 	/obj/item/reagent_containers/emergency_injector/methamphetamine,
 	/obj/item/reagent_containers/glass/beaker/large/surplusmedical,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
-	/obj/item/storage/box/donkpocket_w_kit,
 	/obj/item/storage/firstaid/regular/doctor_spawn,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
 	New()
@@ -253,3 +220,67 @@
 		new new_item(src.loc)
 		..()
 
+//AMMO
+/obj/random_item_spawner/surplus/plinkerrounds
+	amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_22)
+	items2spawn = list(/obj/item/ammo/bullets/bullet_22/smartgun,
+	/obj/item/ammo/bullets/bullet_22, //repeats, as a hacky way to alter the weight of some items without using rare_items2spawn
+	/obj/item/ammo/bullets/bullet_22,
+	/obj/item/ammo/bullets/bullet_22HP)
+
+
+
+/obj/random_item_spawner/surplus/pistolrounds
+	amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_9mm)
+	items2spawn = list(/obj/item/ammo/bullets/bullet_9mm,
+	/obj/item/ammo/bullets/bullet_9mm,
+	/obj/item/ammo/bullets/bullet_9mm,
+	/obj/item/ammo/bullets/nine_mm_NATO)
+
+/obj/random_item_spawner/surplus/revolverrounds
+	amt2spawn = 3
+	rare_items2spawn = list(/obj/item/ammo/bullets/a38)
+	items2spawn = list(/obj/item/ammo/bullets/a357,
+		/obj/item/ammo/bullets/a357/AP,
+		/obj/item/ammo/bullets/a38,
+		/obj/item/ammo/bullets/a38,
+		/obj/item/ammo/bullets/a38/AP,
+		/obj/item/ammo/bullets/a38/stun)
+
+
+
+/obj/random_item_spawner/surplus/rifleroundslittle
+	amt2spawn = 4
+	rare_items2spawn = list(/obj/item/ammo/bullets/assault_rifle)
+	items2spawn = list(/obj/item/ammo/bullets/assault_rifle,
+		/obj/item/ammo/bullets/assault_rifle,
+		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
+
+/obj/random_item_spawner/surplus/rifleroundsbig
+	amt2spawn = 3
+	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
+	items2spawn = list(
+		/obj/item/ammo/bullets/rifle_3006)
+
+
+/obj/random_item_spawner/surplus/shotgunshells
+	max_amt2spawn = 5
+	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
+	/obj/item/ammo/bullets/pipeshot/scrap,
+	/obj/item/ammo/bullets/abg,
+	/obj/item/ammo/bullets/flare,
+	/obj/item/ammo/bullets/a12/weak,
+	/obj/item/ammo/bullets/a12)
+	rare_items2spawn = list(/obj/item/ammo/bullets/pipeshot/scrap,
+		/obj/item/ammo/bullets/aex)
+
+/obj/random_item_spawner/surplus/energycells
+	amt2spawn = 2
+	items2spawn = list(/obj/item/ammo/power_cell,
+		/obj/item/ammo/power_cell,
+		/obj/item/ammo/power_cell/med_power,
+		/obj/item/ammo/power_cell/med_power,
+		/obj/item/ammo/power_cell/self_charging/disruptor)
+	rare_items2spawn = list(/obj/item/ammo/power_cell/high_power)

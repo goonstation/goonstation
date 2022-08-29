@@ -41,7 +41,7 @@
 			if (!(lucky_dude in ticker.mode.former_antagonists))
 				ticker.mode.former_antagonists.Add(lucky_dude)
 
-			var/mob/living/carbon/human/R = M3.humanize()
+		var/mob/living/carbon/human/R = M3.humanize()
 		if (R && istype(R))
 			M3 = R
 			R.unequip_all(1)

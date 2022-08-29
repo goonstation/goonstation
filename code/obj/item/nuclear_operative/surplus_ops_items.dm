@@ -36,6 +36,22 @@
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 		..()
+
+
+/obj/surplusopspawner/suitandhelm
+	var/helmetlist = list()
+	var/suitlist = list()
+
+
+	New()
+
+		SPAWN(1 DECI SECOND)
+			new suitlist(src.loc)
+			new helmetlist(src.loc)
+		..()
+
+
+/obj/surplusopspawner/spacesuit
 /obj/item/reagent_containers/glass/beaker/large/surplusmedical
 	name = "Doctor Schmidt's Super Mega Restoration Jungle Juice"
 	desc = "A beaker containing a supposed panacea. It smells weird and the glass feels sticky."
@@ -47,6 +63,10 @@
 		setHeadMaterial(getMaterial("plasmaglass"))
 		setShaftMaterial(getMaterial("wood"))
 		buildOverlays()
+
+
+
+
 
 
 /obj/machinery/surplusopauth

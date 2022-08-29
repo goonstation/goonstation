@@ -213,10 +213,10 @@
 
 /obj/submachine/weapon_vendor/surplus
 
-	name = "Tovarich Yuri is Have Good Deals and Militarily Trade Depot"
+	name = "Black Jack's Swashbuckling Surplus"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-surplus"
-	desc = "An incredibly poorly-translated trading interface with a private auctioneer."
+	desc = "A secure trading interface with a lesser-known space pirate."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
@@ -234,7 +234,8 @@
 		materiel_stock += new/datum/materiel/ammo/plinking
 		materiel_stock += new/datum/materiel/ammo/pistol
 		materiel_stock += new/datum/materiel/ammo/revolver
-		materiel_stock += new/datum/materiel/ammo/rifle
+		materiel_stock += new/datum/materiel/ammo/riflesmall
+		materiel_stock += new/datum/materiel/ammo/riflebig
 		materiel_stock += new/datum/materiel/ammo/shotgun
 		materiel_stock += new/datum/materiel/ammo/energy
 
@@ -542,91 +543,101 @@
 /datum/materiel/loadout/longgun
 	name = "Long gun"
 	path = /obj/random_item_spawner/surplus/longgun
-	description = "Gun that is have power and strike of hammer upon nail."
+	description = "Long guns that be havin' the power of thunder!"
 
 /datum/materiel/loadout/shortgun
 	name = "Short gun"
 	path = /obj/surplusopspawner/loadout_shortgun_spawner
-	description = "Gun that is have held in one hand. Bonus surprise deal of object personal hit and change."
+	description = "A shorter gun, with an' additional utility and weapon."
 
 /datum/materiel/loadout/melee
 	name = "Attack item"
 	path = /obj/random_item_spawner/surplus/melee/withcredits
-	description = "Item of attack is with hand in hand combat. For those whom are not wishing of allow gun to be in hand of pig-dogs. Bonus deal of many partial refund."
+	description = "A melee item fer the experienced privateer. Ye get three utilities as change."
 
 /datum/materiel/ammo/plinking
 	name = ".22 bullets"
 	path = /obj/random_item_spawner/surplus/plinkerrounds
-	description = "Small bullet for little gun."
+	description = "Pistol bullets that be teeny tiny."
 
 /datum/materiel/ammo/pistol
 	name = "Pistol bullets"
 	path = /obj/random_item_spawner/surplus/pistolrounds
-	description = "Bullet of types in pistol."
+	description = "Bullets fer' yer intermediate pistols."
 
 /datum/materiel/ammo/revolver
-	name = "Revolve bullets"
+	name = "Revolver bullets"
 	path = /obj/random_item_spawner/surplus/revolverrounds
-	description = "Various bullet sets for in revolvers."
-/datum/materiel/ammo/rifle
+	description = "Revolvin' bullets. Fer the revolvin' guns."
+/datum/materiel/ammo/riflesmall
 	name = "Rifle bullets"
-	path = /obj/random_item_spawner/surplus/riflerounds
-	description = "Western bullet holder of rifle."
+	path = /obj/random_item_spawner/surplus/rifleroundslittle
+	description = "Rifle bullets o' the five five six variety."
+
+/datum/materiel/ammo/riflebig
+	name = "Rifle bullets"
+	path = /obj/random_item_spawner/surplus/rifleroundsbig
+	description = "Rifle bullets o' the three oh eight variety."
 /datum/materiel/ammo/shotgun
 	name = "Bullets of shotgun"
 	path = /obj/random_item_spawner/surplus/shotgunshells
-	description = "These bullets is large that has made of plastic?"
+	description = "Bullets fer the blunderbusses."
 
 /datum/materiel/ammo/energy
 	name = "Energy bullets"
 	path = /obj/random_item_spawner/surplus/energycells
-	description = "These bullets is confusing, for they is not of bullet, but little square."
+	description = "These bullets be plastic and square!"
 
 /datum/materiel/utility/healing
-	name = "items of healing"
+	name = "Healing items"
 	path = /obj/surplusopspawner/medical
-	description = "Good for keeping alive. Cannot make them not dead."
+	description = "Some medicinal supplies me lads have scrounged up."
 	cost = 2
 /datum/materiel/utility/grenade
-	name = "greande"
+	name = "Grenades"
 	path = /obj/random_item_spawner/surplus/grenades
-	description = "Thrown explosives of the grenides! Good deal of many!"
+	description = "Chemical, fragmentatin', explosive, firey- ye name it and it be in me storage."
 	cost = 1
 
 /datum/materiel/utility/stealth
 	name = "Sneaking materials"
 	path = /obj/random_item_spawner/surplus/stealth
-	description = "Sometimes it is of an important nature to stealting."
+	description = "Sneakin' materials, for when ye need to not get caught."
 	cost = 2
 
+/datum/materiel/utility/defensive
+	name = "Defensive items"
+	path = /obj/random_item_spawner/surplus/defensive
+	description = "If anyone be wantin' to harm ye, this'll help."
+	cost = 2
 /datum/materiel/utility/melee
 	name = "Additional item of hand in hand combat"
 	path = /obj/random_item_spawner/surplus/melee
-	description = "For if you do not have or want more."
+	description = "An additional weapon fer slashin'. Or bonkin'. Or stabbin'."
 	cost = 1
 
 /datum/materiel/utility/holding
 	name = "Storing equipment"
 	path = /obj/random_item_spawner/surplus/storage
-	description = "You are buy too many things and have to hold! Buy more thing for holding."
+	description = "Ye can never have enough room fer yer carryin' yer plunder!"
 	cost = 1
 	vr_allowed = TRUE
 
 /datum/materiel/utility/backup
-	name = "Team guard item"
+	name = "Backup"
 	path = /obj/random_item_spawner/surplus/backup
-	description = "Yuri know that world is crew. Yuri give deals and trading on frienship object."
+	description = "Somethin' to help even the odds if ye be outnumbered."
 	cost = 1 //6
 /datum/materiel/utility/expensive
 	name = "Expensive toy"
 	path = /obj/random_item_spawner/surplus/expensive
-	description = "You are looking at best of big boy toys."
+	description = "Somethin' nice an' shiny, from me private stash."
 	cost = 1 //6
 
 /datum/materiel/utility/change
-	name = "Money return"
+	name = "Utility return"
 	path = /obj/item/requisition_token/syndicate/surplusutility
-	description = "For giving back of reubels."
+	description = "If ye be needin to swap around utilities, buy this."
 	cost = 1
 
 // Requisition tokens
@@ -645,24 +656,14 @@
 		icon_state = "req-token"
 
 		surplus
-			var/reubelamount
 			name = "Prepaid check"
-			desc = "A written check."
+			desc = "A written check of a couple thousand credits to an individual named Jack Hysen Matthews. Huh."
 			icon_state = "req-token-surplus"
-			New()
-				..()
-				reubelamount = rand(3200, 49999)
-				desc = desc = "A written check of [reubelamount] space reubles to an individual named Yuri Aleskivankihaslovanonyiakhornovitch. Huh."
 
 		surplusutility
-			var/reubelamount
-			name = "Reubels"
-			desc = "Some change, from a space russian trader. It should be enough to afford you another utility credit."
+			name = "Bronze dubloon"
+			desc = "A bronze dubloon, from a spacefaring pirate. It should be enough to afford you another utility credit."
 			icon_state = "req-token-surplusutil"
-			New()
-				..()
-				reubelamount = rand(5000, 9000)
-				name = "[reubelamount] space reubels"
 		vr
 			name = "syndicoin requisition token"
 
