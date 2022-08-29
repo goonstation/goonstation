@@ -112,7 +112,7 @@
 	holder.owner.show_message("<span class='combat'><b>You emit a wave of radiation!</b></span>")
 
 	for(var/mob/living/L in orange(7, holder.owner))
-		L.take_radiation_dose(2 SIEVERTS)
+		L.take_radiation_dose(0.1 SIEVERTS)
 		L.show_text("You feel odd.", "red")
 
 ////////////////////////////////////////////////////////////////////////////////////////
