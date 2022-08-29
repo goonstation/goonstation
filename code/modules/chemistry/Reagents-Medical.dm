@@ -1274,12 +1274,14 @@ datum
 					var/health_before = M.health
 
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-10 * mult)
+						M.take_oxygen_deprivation(-5 * mult)
+					if(M.losebreath && prob(25))
+						M.lose_breath(-1 * mult)
 					if(M.get_toxin_damage())
 						M.take_toxin_damage(-3 * mult)
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 12 * mult, 12 * mult)
+					M.HealDamage("All", 2 * mult, 2 * mult)
 					M.updatehealth() //I hate this, but we actually need the health on time here.
 					if(M.health > health_before)
 						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
