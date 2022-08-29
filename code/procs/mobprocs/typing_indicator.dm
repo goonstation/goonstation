@@ -97,7 +97,9 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		return
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
-		src.UpdateOverlays(null, "speech_bubble")
+		// This check prevents the removal of a typing indicator. Without the check, if you begin to speak again before your speech bubble disappears, your typing indicator gets deleted instead.
+		if (src.has_typing_indicator == FALSE)
+			src.UpdateOverlays(null, "speech_bubble")
 
 /obj/item/organ/head/proc/create_typing_indicator()
 	src.UpdateOverlays(living_typing_bubble, TYPING_OVERLAY_KEY)
@@ -110,7 +112,8 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 /obj/item/organ/head/proc/speech_bubble(datum/source, speech_bubble)
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
 	SPAWN(1.5 SECONDS)
-		src.UpdateOverlays(null, "speech_bubble")
+		if (src.linked_human.has_typing_indicator == FALSE)
+			src.UpdateOverlays(null, "speech_bubble")
 	return TRUE
 
 #undef TYPING_OVERLAY_KEY

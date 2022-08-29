@@ -882,31 +882,35 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/thingsneeded = null
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
+	var/craftname = null
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+
 		if (istype(craftingitem, accepteditem)) //success! items match
-			src.thingsneeded --
+			var/consumed = min(src.thingsneeded, craftingitem.amount)
+			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
+
 			if (thingsneeded > 0)//craft successful, but they'll need more
-				boutput(user, "<span class='notice'>You add the [craftingitem] to the [frame]. You feel like you'll need [thingsneeded] more [craftingitem]s to fill all the shells. </span>")
+				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
 
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
 				user.put_in_hand_or_drop(shot)
 				qdel(frame)
 
-
-			qdel(craftingitem)
-
+			//consume material
+			craftingitem.change_stack_amount(-consumed)
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
 	accepteditem = /obj/item/raw_material/scrap_metal
+	craftname = "scrap chunk"
 /datum/pipeshotrecipe/glass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/glass/
 	accepteditem = /obj/item/raw_material/shard
-
-/obj/item/assembly/makeshiftshell
+	craftname = "shard"
+/obj/item/assembly/pipehulls
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
@@ -919,7 +923,7 @@ obj/item/assembly/radio_horn/receive_signal()
 				recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
 				recipe = new/datum/pipeshotrecipe/scrap
-		if(recipe) //probably a better way to do this but my feverish brain is not coming up with it
+		if(recipe) //probably a better way, but it works well enough
 			recipe.craftwith(W, src, user)
 		..()
 

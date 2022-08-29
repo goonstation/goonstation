@@ -47,7 +47,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/MEraaargh.ogg", 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -101,7 +101,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/MEraaargh.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 

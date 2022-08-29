@@ -374,7 +374,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
+						else if (result || (((data["vpn"] == true) || (data["tor"] == true)) && (data["fraud_score"] > 75)))
 							global.vpn_ip_checks["[src.address]"] = true
 							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
 							logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
@@ -802,37 +802,23 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 
 /client/proc/load_persistent_bank()
-	//var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
-	//if (!PB)
-	//	if( cloud_available() )
-	//		persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-
-	//var/bank = 0
-	//PB[ckey] >> bank
-	//if (!bank)
-
 	persistent_bank_valid = cloud_available()
 
-	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-	//else
-	//	persistent_bank = bank
-	if( !persistent_bank && cloud_available() )
+	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
+
+	if(!persistent_bank && cloud_available())
 		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get( "persistent_bank" ) || "0" )
+		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
 		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if( failed )
+		if(failed)
 			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-		//else
-		//	PB[ckey] << null
 
-	persistent_bank_item = cloud_get( "persistent_bank_item" )
+	persistent_bank_item = cloud_get("persistent_bank_item")
 
-	if( !persistent_bank_item && cloud_available() )
-		persistent_bank_item = cloud_get( "persistent_bank_item" )
+	if(!persistent_bank_item && cloud_available())
+		persistent_bank_item = cloud_get("persistent_bank_item")
 		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if( failed )
+		if(failed)
 			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
 
 
@@ -1140,15 +1126,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")

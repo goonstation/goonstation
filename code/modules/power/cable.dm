@@ -122,7 +122,7 @@
 		if (cuts >= cuts_required)
 			..()
 		else
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()

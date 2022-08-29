@@ -25,6 +25,8 @@
 	var/slots = 7
 	/// Initial contents when created
 	var/list/spawn_contents = list()
+	/// specify if storage should grab other items on turf
+	var/grab_stuff_on_spawn = FALSE
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
@@ -48,6 +50,13 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
+
+		if (grab_stuff_on_spawn)
+			for (var/obj/item/I in src.loc)
+				if (I == src) continue
+				if (I.anchored) continue
+				if (check_can_hold(I) > 0)
+					add_contents(I)
 
 	Entered(Obj, OldLoc)
 		. = ..()
@@ -422,7 +431,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

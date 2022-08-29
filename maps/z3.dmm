@@ -13266,10 +13266,6 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "aRL" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 5
-	},
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
@@ -19167,14 +19163,6 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bjz" = (
-/obj/mopbucket,
-/obj/item/mop,
-/obj/item/caution,
-/obj/submachine/chef_sink/chem_sink{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -5
-	},
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
 "bjA" = (
@@ -20611,6 +20599,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"ery" = (
+/obj/mopbucket,
+/obj/item/mop,
+/obj/item/caution,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "erR" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -22116,6 +22110,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"pfi" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "pfn" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22246,6 +22249,13 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
+"qdj" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "qdV" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
@@ -22952,6 +22962,15 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"uLu" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "uNg" = (
 /obj/item/clothing/head/helmet/space/donk,
 /turf/simulated/floor/white/grime,
@@ -104405,13 +104424,13 @@ adY
 adY
 adY
 adO
-aeH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oro
+aga
+aga
+aga
+aga
+boO
+bjA
 aaa
 aaa
 aaa
@@ -104707,13 +104726,13 @@ adZ
 aeA
 aeW
 adO
-oro
+akS
+asy
+pfi
+biR
 aga
-aga
-aga
-aga
-boO
-bjA
+bjl
+bjB
 aaa
 aaa
 aaa
@@ -105012,9 +105031,9 @@ aej
 akS
 asx
 bjz
-biR
+ery
 aga
-bjl
+bjw
 bjB
 aaa
 aaa
@@ -108636,9 +108655,9 @@ aej
 arr
 aGy
 aRL
-bja
+uLu
 agJ
-bjx
+bjw
 bjB
 aaa
 aaa
@@ -108935,13 +108954,13 @@ aes
 aeS
 afi
 adO
-dQS
+arr
+aGx
+qdj
+bja
 agJ
-agJ
-agJ
-agJ
-boP
-bjA
+bjx
+bjB
 aaa
 aaa
 aaa
@@ -109237,13 +109256,13 @@ aet
 aeT
 adY
 adO
-agV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dQS
+agJ
+agJ
+agJ
+agJ
+boP
+bjA
 aaa
 aaa
 aaa

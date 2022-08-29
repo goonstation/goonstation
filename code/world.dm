@@ -523,6 +523,9 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
+#ifdef SECRETS_ENABLED
+	initialize_gallery_manager()
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
@@ -540,10 +543,12 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
 
+	#ifndef NO_RANDOM_ROOMS
 	UPDATE_TITLE_STATUS("Building random station rooms")
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
 	buildRandomRooms()
 	makepowernets()
+	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
@@ -607,7 +612,7 @@ var/f_color_selector_handler/F_Color_Selector
 	bioele_shifts_since_accident++
 	bioele_save_stats()
 
-	AuxSort(by_type[/area], /proc/compareName)
+	sortList(by_type[/area], /proc/cmp_name_asc)
 
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
@@ -1334,7 +1339,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 				if (M?.client)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
-					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 					for (var/client/C)

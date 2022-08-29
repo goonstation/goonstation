@@ -684,7 +684,7 @@ turf
 				else
 					RL_Lights |= old_lights
 			var/new_opacity = src.opacity
-			src.opacity = old_opacity
+			src.set_opacity(old_opacity)
 			RL_SetOpacity(new_opacity)
 
 			for (var/turf/T in view(RL_MaxRadius, src))
@@ -872,7 +872,7 @@ atom
 			if (src.opacity == new_opacity)
 				return
 			if(!RL_Started)
-				src.opacity = new_opacity
+				src.set_opacity(new_opacity)
 				return
 
 			var/list/datum/light/lights = list()
@@ -888,7 +888,7 @@ atom
 			var/turf/L = get_turf(src)
 			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
 
-			src.opacity = new_opacity
+			src.set_opacity(new_opacity)
 			for (var/datum/light/light as anything in lights)
 				if (light.enabled)
 					affected |= light.apply()

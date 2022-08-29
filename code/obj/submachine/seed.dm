@@ -858,7 +858,7 @@
 /obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
 	var/can_autoextract = src.autoextract && src.extract_to
 	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-		playsound(src, "sound/machines/chime.ogg", 10, 1)
+		playsound(src, 'sound/machines/chime.ogg', 10, 1)
 		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
 		can_autoextract = FALSE
 

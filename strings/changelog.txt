@@ -1,4 +1,127 @@
 
+(t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
+(u)CrystalClover
+(p)10469
+(e)|
+(+)Fixed custom pizzas so that Pepperoni, Meatball and Mushroom can be added alongside other toppings
+(u)flappybat
+(e)⚖|balance
+(+)Upgrade the single landmine given by the surplus crate to a landmine pouch with three random mines.
+(+)Add beartrap pouch to the surplus crate loot table.
+(+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
+(+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
+(+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
+(+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
+(+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
+(t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
+(u)ZeWaka
+(p)10484
+(e)|
+(*)Reworked internal list sorting code - be sure to report any bugs you see (hopefully less, as this fixed a lot)
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
+(u)LeahTheTech
+(p)10325
+(e)|
+(+)Gunbots no longer take eye damage from welding
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
+(t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
+(t)wed aug 24 22
+(u)Mr. Moriarty
+(p)9908
+(e)|
+(*)Added Ctrl-I as the *twirl hotkey.
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
+(t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
+(u)Sord
+(e)|
+(+)Donut 2 now has a public refinery near mining
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
+(t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
+(t)thu aug 18 22
+(u)Roddy
+(p)10340
+(e)|
+(*)Updated the Donut 2 Pool/Arcade/Gym area.
+(u)Sovexe
+(p)10334
+(e)|
+(+)Arcfiend Jolt now has reduced cost (500 -> 200) and cast time (18 -> 12 seconds)
+(u)Cogwerks
+(e)|
+(*)Added orderable crates for the Micro and Macro Phasers
+(+)All three classes of phasers are encouraged for use in Player vs Environment adventures
+(+)Ask security to open the crates if you wanna use them for telesci or space exploration
+(+)Added Egun-Jr. More like a holdout blaster than the full-size egun
+(+)Egun Jr crate and Huge Phaser crate will require armory access to open
+(+)Updated naming scheme and descriptions for rad crossbow and phasers.
 (t)wed aug 17 22
 (u)MylieDaniels
 (p)9902

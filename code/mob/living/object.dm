@@ -267,7 +267,7 @@
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
-				var/mob/dead/observer/O = new/mob/dead/observer()
+				var/mob/dead/observer/O = new/mob/dead/observer(src)
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
 					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
@@ -282,7 +282,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, 'sound/voice/wraith/wraithleaveobject.ogg', 40, 1, -1, 0.6)
 
 		for (var/atom/movable/AM in src.contents)
 			AM.set_loc(src.loc)
@@ -369,7 +369,7 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage)
+		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
 			humans += H
 	return humans
 

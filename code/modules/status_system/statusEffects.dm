@@ -920,7 +920,7 @@
 		unique = 1
 		maxDuration = 15 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
 
@@ -942,7 +942,7 @@
 		unique = 1
 		maxDuration = 30 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 
 		onUpdate(timePassed)
@@ -1550,7 +1550,7 @@
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 
@@ -1759,14 +1759,7 @@
 
 	onAdd(optional)
 		. = ..()
-		var/color2 = list(
-			0.5, 0, 0,
-			0, 0.5, 0,
-			0, 0, 0.5,
-			0.5, 0.25, 0.0625)
-		var/oldcol = owner.color
-		owner.color = color2
-		owner.onVarChanged("color", oldcol, color2)
+		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
 			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
 
