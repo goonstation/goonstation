@@ -37869,6 +37869,9 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 4
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -51017,6 +51020,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"dmY" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "dmZ" = (
 /obj/grille/catwalk/cross{
 	dir = 6;
@@ -53373,6 +53384,11 @@
 	},
 /turf/simulated/floor/bot,
 /area/station/engine/gas)
+"gnE" = (
+/obj/disposalpipe/segment/transport,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "gnN" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -63781,6 +63797,9 @@
 "vMi" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -95637,7 +95656,7 @@ clU
 cnb
 coj
 cpm
-cqn
+gnE
 crq
 cqn
 cqn
@@ -96241,7 +96260,7 @@ clW
 cnd
 col
 cpo
-cqo
+dmY
 coT
 cqo
 ctd

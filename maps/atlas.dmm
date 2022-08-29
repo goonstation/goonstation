@@ -3497,6 +3497,12 @@
 /obj/machinery/r_door_control/podbay/mainpod1,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
+"ji" = (
+/obj/machinery/computer/chem_requester/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "jj" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mechanics"
@@ -6229,7 +6235,9 @@
 /area/station/teleporter)
 "pC" = (
 /obj/machinery/light_switch/auto,
-/turf/simulated/floor/purpleblack,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
 /area/station/teleporter)
 "pD" = (
 /obj/machinery/power/apc/autoname_west,
@@ -10505,6 +10513,12 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "zr" = (
@@ -11356,17 +11370,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
 "By" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/computer/chem_requester/science,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "Bz" = (
@@ -12179,6 +12188,15 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "DN" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -12203,15 +12221,9 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "DQ" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
+/obj/machinery/computer/chem_request_receiver{
+	dir = 8
 	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -17654,7 +17666,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
 /area/station/hallway/primary/east)
 "Rg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17924,7 +17938,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
 /area/station/hallway/primary/east)
 "RY" = (
 /obj/item/reagent_containers/food/snacks/burger/moldy{
@@ -18301,6 +18317,11 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/station/shield_zone)
+"Ta" = (
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "Tb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18894,6 +18915,11 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge/united_command)
+"UC" = (
+/turf/simulated/floor/purpleblack/corner{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "UD" = (
 /obj/machinery/power/terminal,
 /obj/cable,
@@ -19570,7 +19596,9 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
 /area/station/hallway/primary/east)
 "Wz" = (
 /obj/stool/chair/office/blue,
@@ -63312,7 +63340,7 @@ rw
 qD
 qD
 By
-Zy
+Ta
 RJ
 Ui
 Rp
@@ -63614,7 +63642,7 @@ vI
 qj
 qD
 Wy
-Zy
+UC
 nu
 RZ
 Rp
@@ -70568,7 +70596,7 @@ PN
 Dl
 Eb
 yg
-Bz
+FC
 Go
 GV
 HA
@@ -70870,7 +70898,7 @@ PO
 yg
 Bx
 Bx
-FC
+ji
 SP
 GW
 HB

@@ -6702,6 +6702,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "apN" = (
@@ -13352,6 +13353,14 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "aFN" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/emergency_injector/calomel,
+/obj/item/reagent_containers/emergency_injector/calomel,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -14247,20 +14256,16 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "aHT" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/emergency_injector/calomel,
-/obj/item/reagent_containers/emergency_injector/calomel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/computer/chem_request_receiver{
+	dir = 4;
+	pixel_x = -4
 	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -14425,6 +14430,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6

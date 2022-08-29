@@ -1255,6 +1255,7 @@
 "adX" = (
 /obj/item/hand_labeler,
 /obj/table/reinforced/chemistry/auto,
+/obj/item/crowbar,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -1273,17 +1274,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/glass/bottle/antitoxin,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 3;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/table/reinforced/chemistry/auto,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -1442,7 +1433,19 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "aeN" = (
-/obj/item/crowbar,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/reagent_containers/glass/bottle/antitoxin{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/bottle/antitoxin,
+/obj/item/reagent_containers/glass/bottle/epinephrine{
+	pixel_x = 3;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -15245,11 +15248,10 @@
 	},
 /area/station/medical/research)
 "aXx" = (
-/obj/shrub,
 /obj/decal/poster/wallsign/biohazard{
 	pixel_y = 29
 	},
-/obj/machinery/light/small/floor,
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aXA" = (
@@ -45874,6 +45876,12 @@
 /obj/machinery/vending/alcohol,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"uFU" = (
+/obj/machinery/computer/chem_requester/science{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "uFY" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -70481,7 +70489,7 @@ aaa
 aaa
 xDG
 aqJ
-fqV
+uFU
 dbf
 dbf
 aqY

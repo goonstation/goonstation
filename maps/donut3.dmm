@@ -38460,7 +38460,9 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
-/obj/machinery/vending/port_a_nanomed,
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -38795,11 +38797,37 @@
 	},
 /area/station/medical/robotics)
 "lda" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
+/obj/storage/crate{
+	desc = "Wow! Crate may or may not still contain bottles.";
+	name = "Bottles in a Crate"
 	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 8
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "ldk" = (
@@ -39498,35 +39526,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "lnW" = (
-/obj/storage/crate{
-	desc = "Wow! Crate may or may not still contain bottles.";
-	name = "Bottles in a Crate"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = -8;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/bottle/soda{
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 8
-	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "loa" = (
@@ -43616,6 +43616,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
+"muP" = (
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
+/turf/simulated/floor/purple,
+/area/station/hallway/primary/south)
 "muV" = (
 /obj/cabinet/medicalmenders,
 /obj/disposalpipe/segment/morgue{
@@ -68756,6 +68762,9 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "tCr" = (
@@ -70434,6 +70443,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
+/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "ubC" = (
@@ -123248,8 +123258,8 @@ sZM
 dpI
 fHL
 pyL
-mfI
-qEc
+mZl
+muP
 oqi
 oqi
 aZz
@@ -123550,8 +123560,8 @@ oos
 eOq
 npV
 pyL
-mZl
-aLq
+mfI
+qEc
 xXq
 gfr
 bmF

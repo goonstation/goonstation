@@ -1881,6 +1881,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
+"aea" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "aeb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17247,7 +17258,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/iv_stand,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aKq" = (
@@ -17906,6 +17917,27 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "aLK" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/firedoor_spawn,
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "pharmacylock";
+	layer = 4;
+	name = "Pharmacy Shutter";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"aLL" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 8;
@@ -17924,27 +17956,6 @@
 	layer = 4;
 	name = "Pharmacy Shutter";
 	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/medical/medbay/pharmacy)
-"aLL" = (
-/obj/table/reinforced/auto,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/firedoor_spawn,
-/obj/machinery/door/poddoor/blast{
-	density = 0;
-	dir = 4;
-	icon_state = "bdoormid0";
-	id = "pharmacylock";
-	layer = 4;
-	name = "Pharmacy Shutter";
-	opacity = 0
-	},
-/obj/cable{
-	icon_state = "0-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -27874,8 +27885,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/vending/monkey/research,
 /obj/item/device/radio/intercom/science,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -45109,6 +45120,12 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/science/research_director)
+"gvD" = (
+/obj/machinery/computer/chem_requester/medical,
+/turf/simulated/floor/white/checker{
+	dir = 1
+	},
+/area/station/medical/medbay/lobby)
 "gxe" = (
 /obj/stove,
 /obj/item/soup_pot{
@@ -45135,6 +45152,10 @@
 	dir = 6
 	},
 /area/station/security/brig)
+"gFl" = (
+/obj/iv_stand,
+/turf/simulated/floor/engine,
+/area/station/science/testchamber)
 "gIr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -77429,7 +77450,7 @@ llk
 xiU
 aKG
 aLL
-aNj
+gvD
 aOm
 aPl
 aQK
@@ -89524,7 +89545,7 @@ bbU
 beq
 bbU
 aUr
-aRt
+aea
 bbU
 bbU
 aRt
@@ -94644,7 +94665,7 @@ aET
 aET
 aET
 aHO
-aIV
+gFl
 aKm
 aLr
 aMN

@@ -58926,7 +58926,6 @@
 /area/station/science/lobby)
 "cDr" = (
 /obj/item/device/radio/intercom/science,
-/obj/stool/chair,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26;
@@ -58934,6 +58933,11 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
+/obj/shrub,
+/obj/landmark{
+	icon_state = "kudzu-start";
+	name = "kudzustart"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -60211,15 +60215,13 @@
 	},
 /area/station/science/lobby)
 "cGx" = (
-/obj/shrub,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
+/obj/machinery/computer/chem_requester/science{
+	dir = 4
 	},
 /turf/simulated/floor/purple/side{
 	dir = 10
@@ -61309,22 +61311,10 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJd" = (
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 28
 	},
-/obj/storage/crate{
-	desc = "Wow! Crate may or may not still contain bottles.";
-	name = "Bottles in a Crate"
-	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJe" = (
@@ -62076,6 +62066,19 @@
 	},
 /area/station/science/chemistry)
 "cKO" = (
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/storage/crate{
+	desc = "Wow! Crate may or may not still contain bottles.";
+	name = "Bottles in a Crate"
+	},
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 8
@@ -63873,6 +63876,9 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)

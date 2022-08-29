@@ -19795,7 +19795,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "bhn" = (
-/obj/stool/chair/blue{
+/obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
@@ -26248,7 +26248,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "bDm" = (
-/obj/machinery/chem_master{
+/obj/machinery/computer/chem_request_receiver{
 	dir = 8
 	},
 /turf/simulated/floor/purpleblack{
@@ -28818,7 +28818,6 @@
 	},
 /area/station/science/lobby)
 "bKv" = (
-/obj/stool/bench/auto,
 /obj/machinery/light,
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -28827,6 +28826,7 @@
 /obj/decal/tile_edge/floorguide/science{
 	dir = 8
 	},
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -47263,7 +47263,6 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "kuP" = (
-/obj/machinery/vending/cigarette,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -47272,6 +47271,9 @@
 	tag = ""
 	},
 /obj/decal/tile_edge/floorguide/science,
+/obj/machinery/computer/chem_requester/science{
+	dir = 4
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -100082,7 +100084,7 @@ bFl
 cFJ
 bHv
 bJb
-bKx
+bKw
 bMM
 bMP
 bOt

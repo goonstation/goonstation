@@ -3661,6 +3661,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -6907,10 +6908,12 @@
 	nostick = 1;
 	pixel_x = 11
 	},
-/obj/machinery/vending/medical_public,
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "line1"
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -33413,6 +33416,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "jJZ" = (
@@ -42268,6 +42272,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/bot/medbot,
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
 "otk" = (
@@ -58173,10 +58178,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/bot/medbot,
 /obj/machinery/status_display{
 	pixel_y = 32
 	},
+/obj/machinery/computer/chem_requester/medical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "wDM" = (
