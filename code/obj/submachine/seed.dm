@@ -22,7 +22,7 @@
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	ui_data(mob/user)
+	ui_static_data(mob/user)
 		var/exlist = list()
 		var/seedlist = list()
 		var/geneout = null//tmp var for storing analysis results
@@ -123,7 +123,7 @@
 			if("change_tab")
 				src.mode = params["tab"]
 				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("ejectbeaker")
 				var/obj/item/I = src.inserted
@@ -135,7 +135,7 @@
 					else
 						I.set_loc(src.loc) // causes Exited proc to be called
 						usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("insertbeaker")
 				if (src.inserted)
@@ -152,21 +152,21 @@
 					ui.user.drop_item()
 					inserting.set_loc(src)
 					boutput(ui.user, "<span class='notice'>You add [inserted] to the machine!</span>")
-					return TRUE
+					update_static_data(ui.user, ui)
 
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("ejectextractables")
 				for (var/obj/item/I in src.extractables)
 					src.extractables.Remove(I)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("eject")
 				var/obj/item/I = locate(params["eject_ref"]) in src
@@ -180,13 +180,13 @@
 					src.splicing2 = null
 				I.set_loc(src.loc)
 				ui.user.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				return TRUE
+				update_static_data(ui.user, ui)
 
 
 			if("sort")
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -210,7 +210,7 @@
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -218,7 +218,7 @@
 				if(istype(I) && I.name != newname)
 					phrase_log.log_phrase("seed", newname, TRUE)
 					I.name = newname
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("extract")
 				var/obj/item/I = locate(params["extract_ref"]) in src
@@ -275,7 +275,7 @@
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)
-					return TRUE
+					update_static_data(ui.user, ui)
 				else
 					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
 
@@ -294,7 +294,7 @@
 				else if(!src.splicing2)
 					src.splicing2 = I
 
-				return TRUE
+				update_static_data(ui.user, ui)
 
 			if("infuse")
 				var/obj/item/seed/S = locate(params["infuse_ref"]) in src
@@ -347,7 +347,7 @@
 										playsound(src, "sound/effects/zzzt.ogg", 50, 1)
 										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 								src.inserted.reagents.remove_reagent(R.id,10)
-					return TRUE
+					update_static_data(ui.user, ui)
 
 			if("splice")
 				// Get the seeds being spliced first
@@ -486,7 +486,7 @@
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-				return TRUE
+				update_static_data(ui.user, ui)
 
 
 
@@ -499,6 +499,9 @@
 			user.drop_item()
 			W.set_loc(src)
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)
 
 
@@ -509,6 +512,9 @@
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
 			W.dropped(user)
+			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)
 			return
 
@@ -533,6 +539,9 @@
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.UpdateIcon()
+				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+						update_static_data(ui.user, ui)
 				tgui_process.update_uis(src)
 		else ..()
 
@@ -563,6 +572,10 @@
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+					update_static_data(ui.user, ui)
+			tgui_process.update_uis(src)
 		else ..()
 
 	proc/SpliceChance(var/obj/item/seed/seed1, var/obj/item/seed/seed2)
