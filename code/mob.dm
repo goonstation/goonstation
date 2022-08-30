@@ -224,6 +224,10 @@
 
 	var/last_pulled_time = 0
 
+	/// stores total accumulated radiation dose
+	var/radiation_dose = 0
+	/// natural decay of radiation exposure
+	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 
@@ -1537,7 +1541,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage) SECONDS)
+			src.take_radiation_dose(damage/33 SIEVERTS) //power 100 shots will give lethal radiation poisoning instantly without protection - 3Sv
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
@@ -2435,7 +2439,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
-	src.delStatus("n_radiation")
+	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)
@@ -3158,6 +3162,30 @@
 				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
+
+
+/// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
+/mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
+	if(!internal)
+		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
+	if(Sv > 0)
+		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
+		src.radiation_dose += radres_mult*Sv
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
+		if(isliving(src))
+			var/mob/living/lp_owner = src
+			if(!lp_owner.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+				return
+		if(radres_mult*Sv > 0.2 && !internal)
+			src.TakeDamage("All",0,20*clamp((radres_mult*Sv)/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
+			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
+				src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+		else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
+	else
+		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
 /mob/proc/observeMob(mob/target)

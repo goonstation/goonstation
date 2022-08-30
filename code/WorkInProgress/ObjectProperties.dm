@@ -426,7 +426,7 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal]%"
 
-	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT_EXT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
