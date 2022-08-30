@@ -788,6 +788,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/cleaner_grenade
+	name = "Cleaner Grenade"
+	item_paths = list("INS-1", "CRY-1")
+	item_amounts = list(2, 2)
+	item_outputs = list(/obj/item/chem_grenade/cleaner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
