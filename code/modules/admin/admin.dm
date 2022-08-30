@@ -4837,7 +4837,7 @@ var/global/noir = 0
 
 	var/chosen
 	if(length(matches) == 1)
-		chosen = matches[1]
+		chosen = text2path(matches[1])
 	else
 		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
 		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
