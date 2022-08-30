@@ -69629,6 +69629,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
+/obj/item/paper/surplusopslore,
 /turf/unsimulated/floor/plating/scorched,
 /area/syndicate_station)
 "hjf" = (

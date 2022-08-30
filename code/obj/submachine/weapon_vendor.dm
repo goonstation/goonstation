@@ -552,8 +552,8 @@
 
 /datum/materiel/loadout/melee
 	name = "Attack item"
-	path = /obj/random_item_spawner/surplus/melee/withcredits
-	description = "A melee item fer the experienced privateer. Ye get three utilities as change."
+	path = /obj/random_item_spawner/surplus/melee/loadout
+	description = "A melee item fer the experienced privateer. Ye get four utilities as change."
 
 /datum/materiel/ammo/plinking
 	name = ".22 bullets"

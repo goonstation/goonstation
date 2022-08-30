@@ -20,38 +20,62 @@
 
 /obj/surplusopspawner/loadout_shortgun_spawner
 	name = "shortgun loadout spawner"
-
 	New()
-
 		new /obj/random_item_spawner/surplus/shortgun(src.loc)
 		new /obj/random_item_spawner/surplus/melee(src.loc)
 		new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
+		new /obj/surplusopspawner/suitandhelm(src.loc)
 		..()
 
-/obj/random_item_spawner/surplus/melee/withcredits
+/obj/random_item_spawner/surplus/melee/loadout
 	New()
-
 		SPAWN(1 DECI SECOND)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
+			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
+			new /obj/surplusopspawner/suitandhelm(src.loc)
 		..()
 
+
+/obj/random_item_spawner/surplus/longgun/loadout
+	New()
+		SPAWN(1 DECI SECOND)
+			new /obj/surplusopspawner/suitandhelm(src.loc)
+		..()
 
 /obj/surplusopspawner/suitandhelm
-	var/helmetlist = list()
-	var/suitlist = list()
+	var/helmetlist = list(/obj/item/clothing/head/emerg,  //We want to heaviliy skew this towards more common helmets, so include repeats
+		/obj/item/clothing/head/emerg,
+		/obj/item/clothing/suit/space/soviet,
+		/obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/head/helmet/space,
+		/obj/item/clothing/head/helmet/space,
+		/obj/item/clothing/head/helmet/space/engineer/diving/civilian,
+		/obj/item/clothing/head/helmet/space/replica,
+		/obj/item/clothing/head/helmet/space/old,
+		)
+	var/suitlist = list(/obj/item/clothing/suit/space/emerg, //ditto
+		/obj/item/clothing/suit/space/emerg,
+		/obj/item/clothing/head/helmet/space/soviet,
+		/obj/item/clothing/suit/space/syndicate,
+		/obj/item/clothing/suit/space/engineer,
+		/obj/item/clothing/suit/space/engineer,
+		/obj/item/clothing/suit/space,
+		/obj/item/clothing/suit/space,
+		/obj/item/clothing/suit/space/replica)
 
 
 	New()
 
 		SPAWN(1 DECI SECOND)
-			new suitlist(src.loc)
-			new helmetlist(src.loc)
-		..()
-
-
-/obj/surplusopspawner/spacesuit
+			var/helm = pick(helmetlist)
+			var/suit = pick(suitlist)
+			new suit(src.loc)
+			new helm(src.loc)
+			..()
+//misc stuff
 /obj/item/reagent_containers/glass/beaker/large/surplusmedical
 	name = "Doctor Schmidt's Super Mega Restoration Jungle Juice"
 	desc = "A beaker containing a supposed panacea. It smells weird and the glass feels sticky."
@@ -63,11 +87,6 @@
 		setHeadMaterial(getMaterial("plasmaglass"))
 		setShaftMaterial(getMaterial("wood"))
 		buildOverlays()
-
-
-
-
-
 
 /obj/machinery/surplusopauth
 	name = "Deployment Authorization Computer"
@@ -87,6 +106,7 @@
 	New()
 		for_by_tcl(D, /obj/submachine/surplusopdeployer)
 			src.ourportal = D //connect to portal
+		desc = "A voting computer that allows three users to activate a certain portal frame. [auth_need] votes are left."
 		..()
 
 
@@ -154,6 +174,7 @@
 	name = "Old portal ring"
 	desc = "An outdated and unstable portal ring model, locked in to a preset location."
 	density = TRUE
+	anchored = TRUE
 	var/active = FALSE //can we go yet?
 
 	Bumped(atom/movable/M as mob|obj)

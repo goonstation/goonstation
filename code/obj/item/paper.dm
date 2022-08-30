@@ -426,6 +426,40 @@
 		able to patch it up in a jiffy before we lost most of the air in the cabin. <br>
 		<br> I'm going to wake the other two up now, here's to hoping it'll be an easy job.<br>"}
 
+/obj/item/paper/surplusopsinstructions
+	name ="'Infiltration instructions'"
+
+	info ={"
+		Allrite, numbnuts, since Steve used the instruction papers they gave us for his blunt wrappers, Im going to have to transcribe more or less
+		what they said about why were here and what we need to do <br>
+		<br> 1) First, put the checks into the computer and get yoruself a loadout ammo and utillitys. Different loadouts give different utillitys, and the utillitys can be
+		swapped from one computer to the other, <br>
+		<br> 1.5) When u are loading up, try to look like your one of them. They do'nt care enough about us to give us any fancey weapons or equipment, so stelth and co-ordinating are going to be the only thing we have going for us. Stick together and stay low.<br>
+		<br> 2) Second of all, settle on a plan. We should all know our objectives, and all have the headsets they gave us, so comunication shouldn't be an issue. Once we know whose doing what,
+		hit the authoreyze deploymint button. After everyones voted, the portal should turn on and allow us to get into NT teritorry.
+		<br> 3) From the telleport point, itll be another short space walk to the station. Don NOT forget the jetpacks.
+
+	"}
+
+
+/obj/item/paper/surplusopslore
+	name ="Incredibly crumpled paper- 'IF YOU FORGET WHAT YOU'RE SUPPOSED TO BE DOING REREAD THIS'"
+	info ={"<br> You forgot what you were doing! Don't worry, we foresaw this. You made a mistake. We are now angry with you and are giving you an option to redeem youself.<br>
+		<hr> <br>This is what is going to happen. You and your friends are going to go onto a ship. The ship is on a set course and you should not try to steer it. Please do not bolt improvised
+		thrusters onto the sides of the ship in order to attempt to steer it. Please do not destroy the course computer and drive the ship into the nearest large asteroid.<br>
+		<br>Eventually, the ship will be where it needs to be. When you hear a loud alarm, you have to press the ship stop button. If you do not do this you are going to crash the ship into the satellite. The alarm will sound for ten minutes prior to impact.<br>
+		<br> The satellite is very important and will bring you to where you need to go. Do not destroy or scavenge the satellite for parts. Please do not climb on or try to eat the satellite.<br>
+		<br><B>Once the ship has stopped, you are going to put the check we gave you into the computer machines and a nice man is going to give you weapons.</B> Please don't drool on
+		or try to eat the check. Please do not use the check to smoke any illicit substances. If you have already any of those things we are very dissappointed in you.<br>
+		<br>After the nice man has given all of you weapons, you will use the computer in the airlock to turn the portal on the satellite on. <B>All of you have to press the button
+		on the computer to turn the satellite on.</B> It is big, red, and the only button on the computer. Do not shoot or smash the button. <br>
+		<br>Once all of you have pressed the buttons, <B>get a jetpack and put on the space suits the nice man has given you, and then walk into the satellite.</B> It will take you to a safehouse.<br>
+		<br>From there, you should see a big space station. The people on the big space station have said very mean things about you and we need you do complete
+		the objectives we have given you in order to prove them wrong. Do not tell the people on the big space station that you have guns. Do not tell the people
+		on the space station that we sent you. <B>It is VERY important you act and look like the people on the space station! If they think you have guns or are not from the station, they will say very mean things about you!<br>
+
+	"}
+
 /obj/item/paper/Map
 	name = "'Station Blueprint'"
 
