@@ -201,7 +201,7 @@
 		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.take_radiation_dose(5 SIEVERTS)
+					L.take_radiation_dose(2.5 SIEVERTS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)

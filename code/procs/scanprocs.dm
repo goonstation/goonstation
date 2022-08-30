@@ -199,7 +199,7 @@
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
 	if (R?.stage)
-		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage] Dose: [M.radiation_dose] Sv</span>"
+		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
 
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)

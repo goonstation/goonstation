@@ -1535,7 +1535,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.take_radiation_dose((damage)/25 SIEVERTS) //power 100 shots will give you moderate radiation sickness instantly without protection - 4Sv
+			src.take_radiation_dose(damage/33 SIEVERTS) //power 100 shots will give lethal radiation poisoning instantly without protection - 3Sv
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
@@ -3163,15 +3163,15 @@
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
 	if(Sv > 0)
-		var/radres_mult = (tanh(0.02*rad_res)**2)
-		src.radiation_dose += (1.0-radres_mult)*Sv
-		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv/0.1),1),5))
+		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
+		src.radiation_dose += radres_mult*Sv
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
 		if(isliving(src))
 			var/mob/living/lp_owner = src
 			if(!lp_owner.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
 				return
-		if((1.0-radres_mult)*Sv > 0.1)
-			src.TakeDamage("All",0,20*clamp(((1.0-radres_mult)*Sv)/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
+		if(radres_mult*Sv > 0.1)
+			src.TakeDamage("All",0,20*clamp((radres_mult*Sv)/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
 			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
 				src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
 		else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))

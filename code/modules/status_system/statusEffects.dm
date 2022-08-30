@@ -430,15 +430,15 @@
 				visible = FALSE
 
 
-			if(stage > 0 && !isdead(M))
-				if (prob(max(stage-(2+M.traitHolder?.hasTrait("stablegenes")),0)**2) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+			if(stage > 0 && !isdead(M) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if(prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2) && !ON_COOLDOWN(M, "radiation_mutated_recently", 15 SECONDS))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob((stage-1)**2) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
-				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECOND) && prob(stage**2) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel sick.</span>")
 					M.vomit()
