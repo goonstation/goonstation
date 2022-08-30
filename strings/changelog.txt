@@ -1,5 +1,18 @@
 
+(t)mon aug 29 22
+(u)Roddy
+(p)9442
+(e)|
+(+)Adds a cheese wheel to the game.
+(u)Azrun
+(p)10499
+(e)|
+(+)Head Access no longer required to deconstruct fabricators and Genetics booth.
 (t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
 (u)LeahTheTech
 (p)10494
 (e)|

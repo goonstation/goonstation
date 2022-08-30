@@ -41778,10 +41778,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"qMw" = (
-/obj/machinery/nanofab/refining,
-/turf/simulated/wall/auto/supernorn,
-/area/station/mining/staff_room)
 "qME" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
@@ -76317,7 +76313,7 @@ bzg
 oUb
 oSV
 fVw
-qMw
+fVw
 fVw
 jDc
 tbf
