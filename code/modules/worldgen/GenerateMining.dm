@@ -213,7 +213,7 @@ var/list/miningModifiers = list()
 		numAsteroidSeed *= 4
 		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
-			logTheThing(LOG_DEBUG, null, "Generating asteroid #[i]/[numAsteroidSeed].")
+			logTheThing(LOG_DEBUG, null, "Generating asteroid #[i+1]/[numAsteroidSeed].")
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
@@ -285,7 +285,7 @@ var/list/miningModifiers = list()
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
-			logTheThing(LOG_DEBUG, null, "Sucessfully generated asteroid #[i]/[numAsteroidSeed].")
+			logTheThing(LOG_DEBUG, null, "Sucessfully generated asteroid #[i+1]/[numAsteroidSeed].")
 
 		return miningZ
 
