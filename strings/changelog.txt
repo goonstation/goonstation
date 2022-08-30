@@ -1,5 +1,10 @@
 
 (t)mon aug 29 22
+(u)Sord
+(*)Added 4 new Research accesses, view minor changes for details
+(u)Sord
+(e)|
+(+)New Research accesses are "Research Foyer", "Telescience", "Artifact Lab", and "Robot Depot"
 (u)Roddy
 (p)9442
 (e)|

@@ -12164,7 +12164,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -12220,7 +12220,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Wing"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	icon_state = "scanner_off";
@@ -13456,7 +13456,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
@@ -20331,7 +20331,7 @@
 	id = "tele";
 	name = "Teleporter Lockdown Shutter"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)

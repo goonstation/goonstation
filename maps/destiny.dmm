@@ -7379,7 +7379,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aEH" = (
@@ -7875,7 +7875,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aGl" = (
@@ -12109,7 +12109,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "baE" = (
@@ -13512,7 +13512,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bkW" = (
@@ -17848,6 +17848,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "clt" = (
@@ -21688,7 +21689,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -24210,6 +24211,7 @@
 	name = "Test Chamber"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/tox,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "eYq" = (
@@ -26431,6 +26433,7 @@
 	dir = 4;
 	name = "Toxins"
 	},
+/obj/access_spawn/tox_storage,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "fZr" = (
@@ -31932,7 +31935,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "iWP" = (
@@ -38859,7 +38862,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mFb" = (
@@ -50258,7 +50261,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "sJu" = (
@@ -52153,7 +52156,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tHw" = (
@@ -55308,7 +55311,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "vgb" = (
@@ -60026,7 +60029,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "xBL" = (
