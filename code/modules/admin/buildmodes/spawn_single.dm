@@ -21,7 +21,7 @@ change the direction of created objects.<br>
 			return
 		if (!objpath)
 			objpath = /obj/critter/domestic_bee/heisenbee
-		objpath = text2path(get_one_match(input("Type path", "Type path", "[objpath]"), /atom))
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		update_button_text(objpath)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)

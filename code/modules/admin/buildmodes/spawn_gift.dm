@@ -25,7 +25,7 @@ change the direction of created objects.<br>
 			return
 		if (!objpath)
 			objpath = /obj/critter/domestic_bee/heisenbee
-		objpath = text2path(get_one_match(input("Type path", "Type path", "[objpath]"), /atom))
+		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
 		first_corner = null
 		if(ispath(objpath, /turf))
 			boutput(usr, "<span class='alert'>No gifting turfs!</span>")
