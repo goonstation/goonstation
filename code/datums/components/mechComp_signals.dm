@@ -334,7 +334,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
-		if(hacked_door.p_open)
+		if(hacked_door.panel_open)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target

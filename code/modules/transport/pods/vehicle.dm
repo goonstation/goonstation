@@ -582,7 +582,7 @@
 
 			for (var/mob/C in src)
 				shake_camera(C, 6, 8)
-				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
+				//M << sound('sound/impact_sounds/Generic_Hit_Heavy_1.ogg',volume=35)
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
@@ -646,7 +646,7 @@
 					C.healthcheck()
 				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 		if (sec_system)
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
@@ -734,7 +734,7 @@
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
 							boutput(M, "<span class='alert'><b>The cabin bursts into flames!</b></span>")
-							playsound(M.loc, "sound/machines/engine_alert1.ogg", 35, 0)
+							playsound(M.loc, 'sound/machines/engine_alert1.ogg', 35, 0)
 				if(25 to 50)
 					if(damage_overlays < 1)
 						damage_overlays = 1
@@ -762,7 +762,7 @@
 
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
-		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
+		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		visible_message("<span class='alert'>[src]'s engine bursts into flame!</span>")
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
@@ -829,7 +829,7 @@
 	S.ship = src
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 0)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
 	return
@@ -851,13 +851,13 @@
 			M.update_burning(35)
 			boutput(M, "<span class='alert'><b>Everything is on fire!</b></span>")
 			//playsound(M.loc, "explosion", 50, 1)
-			//playsound(M.loc, "sound/machines/engine_alert1.ogg", 40, 0)
+			//playsound(M.loc, 'sound/machines/engine_alert1.ogg', 40, 0)
 			M << sound('sound/machines/engine_alert1.ogg',volume=50)
 		sleep(2.5 SECONDS)
-		//playsound(src.loc, "sound/machines/engine_alert2.ogg", 40, 1)
-		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
+		//playsound(src.loc, 'sound/machines/engine_alert2.ogg', 40, 1)
+		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		for(var/mob/living/carbon/human/M in src)
-			//playsound(M.loc, "sound/machines/engine_alert2.ogg", 50, 0)
+			//playsound(M.loc, 'sound/machines/engine_alert2.ogg', 50, 0)
 			M << sound('sound/machines/pod_alarm.ogg',volume=50)
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -959,10 +959,6 @@
 
 	if(iscube(boarder))
 		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
-		return
-
-	if(ismobcritter(boarder) && boarder:ghost_spawned)
-		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
 		return
 
 	if(isflockmob(boarder))
@@ -1708,10 +1704,10 @@
 			var/datum/movement_controller/tank/M = movement_controller
 			if (M.squeal_sfx)
 				M.squeal_sfx = 0
-				playsound(src, "sound/machines/car_screech.ogg", 40, 1)
+				playsound(src, 'sound/machines/car_screech.ogg', 40, 1)
 			if (M.accel_sfx)
 				M.accel_sfx = 0
-				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
+				playsound(src, 'sound/machines/rev_engine.ogg', 40, 1)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
@@ -1911,9 +1907,9 @@
 				D.open()
 				opened_door = 1
 			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
-			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/bamf.ogg', 100, 0)
 			sleep(0.5 SECONDS)
-			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
 			while(!failing)
 				var/loc = src.loc
 				step(src,src.dir)

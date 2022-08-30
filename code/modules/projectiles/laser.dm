@@ -302,11 +302,11 @@ toxic - poisons
 		shot_number = 3
 
 /datum/projectile/laser/precursor // for precursor traps
-	name = "energy bolt"
+	name = "rydberg-matter bolt"
 	icon_state = "disrupt"
 	power = 30
 	cost = 30
-	sname = "energy bolt"
+	sname = "rydberg-matter bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
 	color_red = 0.1
@@ -501,9 +501,9 @@ toxic - poisons
 	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
-	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_hit(atom/hit)
-		//playsound(hit.loc, "sound/machines/engine_grump1.ogg", 45, 1)
+		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
 		if (istype(hit, /turf/simulated/wall/auto/asteroid))
 			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
@@ -530,7 +530,7 @@ toxic - poisons
 		dissipation_rate = 5
 		sname = "saw teeth"
 		shot_sound = 'sound/machines/chainsaw.ogg'
-		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod

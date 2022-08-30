@@ -33128,7 +33128,6 @@
 /area/station/hallway/primary/south)
 "bGZ" = (
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -39924,9 +39923,6 @@
 /area/station/ai_monitored/armory)
 "bYq" = (
 /obj/rack,
-/obj/item/storage/box/stinger_kit{
-	pixel_x = 4
-	},
 /obj/item/storage/box/flashbang_kit,
 /obj/item/storage/box/flashbang_kit{
 	pixel_x = -4

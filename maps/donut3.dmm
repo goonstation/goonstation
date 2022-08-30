@@ -3114,7 +3114,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -5675,6 +5675,11 @@
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue3"
@@ -10047,7 +10052,7 @@
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -10776,7 +10781,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -14663,7 +14668,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -27951,7 +27956,7 @@
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -40338,7 +40343,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -46210,7 +46215,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -51165,7 +51170,7 @@
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -65028,7 +65033,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -67236,7 +67241,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "thh" = (
@@ -69968,7 +69973,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -70674,7 +70679,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ufs" = (
@@ -85166,7 +85171,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)

@@ -31,7 +31,7 @@
 	return rgb(22, 210, 22)
 
 /proc/fix_hex(hex)
-	return copytext(hex + "000000", 1, 8)
+	return copytext((startswith(hex, "#") ? hex : "#") + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\

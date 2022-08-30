@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_gearspawn
 	name = "Order hunting gear"
 	desc = "Equip your hunting gear."
+	icon_state = "gearspawn"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0

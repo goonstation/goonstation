@@ -36,7 +36,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -136,7 +136,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -234,7 +234,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -331,7 +331,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -442,7 +442,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible))
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
@@ -495,7 +495,7 @@
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible))
+		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if(!HO)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return TRUE

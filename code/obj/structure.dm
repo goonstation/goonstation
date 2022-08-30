@@ -46,7 +46,7 @@ obj/structure/ex_act(severity)
 /obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(50))
-			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			if (src.material)
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(user, null))
@@ -159,20 +159,20 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
 			if (GIRDER_UNSECURESUPPORT)
 				verbing = "unsecuring support struts from"
-				playsound(the_girder, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Screwdriver.ogg', 100, 1)
 			if (GIRDER_REMOVESUPPORT)
 				verbing = "removing support struts from"
-				playsound(the_girder, "sound/items/Wirecutter.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Wirecutter.ogg', 100, 1)
 			if (GIRDER_DISLODGE)
 				verbing = "dislodging"
-				playsound(the_girder, "sound/items/Crowbar.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Crowbar.ogg', 100, 1)
 			if (GIRDER_REINFORCE)
 				verbing = "reinforcing"
 			if (GIRDER_SECURE)
-				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
 				verbing = "securing"
 			if (GIRDER_PLATE)
 				verbing = "plating"
@@ -184,7 +184,7 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(the_girder, "sound/items/Ratchet.ogg", 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
 				var/atom/A = new /obj/item/sheet(get_turf(the_girder))
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)
@@ -246,7 +246,7 @@ obj/structure/ex_act(severity)
 /obj/structure/girder/displaced/attack_hand(mob/user)
 	if (user.is_hulk())
 		if (prob(70))
-			playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			if (src.material)
 				src.material.triggerOnAttacked(src, user, user, src)
 			for (var/mob/N in AIviewers(user, null))
@@ -307,7 +307,7 @@ obj/structure/ex_act(severity)
 		else
 			var/datum/material/M = getMaterial("steel")
 			S.setMaterial(M)
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 		qdel(src)
 		return
 	else
@@ -344,10 +344,10 @@ obj/structure/ex_act(severity)
 			return
 		else if (src.health <= 5)
 			icon_state = "woodwall4"
-			opacity = 0
+			set_opacity(0)
 		else if (src.health <= 10)
 			icon_state = "woodwall3"
-			opacity = 0
+			set_opacity(0)
 		else if (src.health <= 20)
 			icon_state = "woodwall2"
 		else
@@ -361,7 +361,7 @@ obj/structure/ex_act(severity)
 				if (health > 15)
 					H.visible_message("<span class='notice'><b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!</span>")
 					boutput(H, "<span class='alert'><b>OWW! You bruise yourself slightly!</span>")
-					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
+					playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 					random_brute_damage(H, 5)
 					src.health -= rand(0,2)
 					checkhealth()
@@ -370,7 +370,7 @@ obj/structure/ex_act(severity)
 		if (ishuman(user))
 			user.lastattacked = src
 			src.visible_message("<span class='alert'><b>[user]</b> bashes [src]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 			//Zombies do less damage
 			var/mob/living/carbon/human/H = user
 			if (istype(H.mutantrace, /datum/mutantrace/zombie))
@@ -390,7 +390,7 @@ obj/structure/ex_act(severity)
 			return
 		..()
 		user.lastattacked = src
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 		src.health -= W.force
 		checkhealth()
 		return

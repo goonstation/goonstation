@@ -685,7 +685,7 @@
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
-					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+					playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 					if (food_target)
 						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
@@ -715,7 +715,7 @@
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				sleep(rand(20,30))
 				if (prob(20))
 					C.decomp_stage += 1
@@ -957,15 +957,6 @@
 		if(target == start)
 			return
 
-	//	playsound(user, "mp5gunshot.ogg", 100, 1)
-	/*	if(bullet == 0)
-			A = new /obj/bullet/mpbullet( user:loc )
-		else if(bullet == 1)
-			playsound(user, "sound/weapons/shotgunshot.ogg", 100, 1)
-			A = new /obj/bullet/slug( user:loc )
-		else if(bullet == 2)
-			playsound(user, "fivegunshot.ogg", 100, 1)
-			A = new /obj/bullet/medbullet( user:loc )*/
 		if (!isturf(target))
 			return
 		// FUCK YOU WHOEVER IS USING THIS
@@ -1056,7 +1047,7 @@
 
 			if (shouldThrow && T)
 				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)

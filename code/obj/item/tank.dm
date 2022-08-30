@@ -99,7 +99,7 @@ Contains:
 			var/mob/living/carbon/location = loc
 			if (!location)
 				return
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 					if(T.the_item == src)
@@ -125,7 +125,7 @@ Contains:
 					return TRUE
 				else
 					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
-					playsound(src.loc, "sound/items/penclick.ogg", 50, TRUE)
+					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
 	proc/remove_air_volume(volume_to_return)
@@ -149,7 +149,7 @@ Contains:
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
@@ -179,14 +179,14 @@ Contains:
 				loc.assume_air(air_contents)
 				air_contents = null
 				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, TRUE)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
 			if(integrity <= 0)
-				playsound(src.loc, "sound/effects/spray.ogg", 50, TRUE)
+				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
 			else
@@ -347,7 +347,7 @@ Contains:
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
-		playsound(src.loc, "sound/machines/click.ogg", 30, TRUE)
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		update_icon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
@@ -479,7 +479,7 @@ Contains:
 			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20

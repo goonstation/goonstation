@@ -110,7 +110,7 @@ TYPEINFO(/datum/component/cell_holder)
 			var/mob/M = old_loc
 			M.put_in_hand_or_drop(old_cell)
 
-	playsound(parent, "sound/weapons/gunload_click.ogg", 50, 1)
+	playsound(parent, 'sound/weapons/gunload_click.ogg', 50, 1)
 
 /datum/component/cell_holder/proc/try_swap(source, obj/item/I, mob/user)
 	begin_swap(user, I)

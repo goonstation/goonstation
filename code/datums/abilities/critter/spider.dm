@@ -36,7 +36,7 @@
 		if (istype(S))
 			S.venom_bite(MT)
 		else // no venom, very sad
-			playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1, pitch = 1.6)
+			playsound(holder.owner, 'sound/weapons/handcuffs.ogg', 50, 1, pitch = 1.6)
 			if (issilicon(MT))
 				var/mob/living/silicon/robot/R = MT
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -86,7 +86,7 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
-		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
+		playsound(holder.owner, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0, pitch = 1.6)
 		logTheThing(LOG_COMBAT, S, "used their [src.name] ability on [MT] at [log_loc(S)]")
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (MT.loc && holder.owner.loc != MT.loc)
@@ -107,7 +107,7 @@
 				if (istype(S))
 					S.venom_bite(MT)
 				else // no venom, very sad
-					playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1)
+					playsound(holder.owner, 'sound/weapons/handcuffs.ogg', 50, 1)
 					if (issilicon(MT))
 						var/mob/living/silicon/robot/R = MT
 						R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -171,7 +171,7 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] starts draining the fluids out of [H]!</b></span>",\
 		"<span class='combat'><b>You start draining the fluids out of [H]!</b></span>")
-		playsound(holder.owner, "sound/misc/pourdrink.ogg", 50, 0, pitch = 0.7)
+		playsound(holder.owner, 'sound/misc/pourdrink.ogg', 50, 0, pitch = 0.7)
 		logTheThing(LOG_COMBAT, S, "used their [src.name] ability on [H] at [log_loc(S)]")
 		disabled = 1
 		SPAWN(0)
@@ -193,7 +193,7 @@
 				H.real_name = "Unknown"
 				if (H.bioHolder)
 					H.bioHolder.AddEffect("husk")
-				playsound(holder.owner, "sound/misc/fuse.ogg", 50, 1)
+				playsound(holder.owner, 'sound/misc/fuse.ogg', 50, 1)
 				var/list/turf/neightbors = getNeighbors(get_turf(holder.owner), alldirs)
 				if(length(neightbors))
 					holder.owner.set_loc(pick(neightbors))
@@ -316,7 +316,7 @@
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pounces on top of [MT]!</b></span>",\
 		"<span class='combat'><b>You pounce onto [MT]!</b></span>")
-		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
+		playsound(holder.owner, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0)
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")

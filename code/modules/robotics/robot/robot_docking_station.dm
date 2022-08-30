@@ -645,7 +645,7 @@
 			return
 		else
 			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
@@ -828,7 +828,7 @@
 
 					H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
-					playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
@@ -891,6 +891,6 @@
 		if (!anchored)
 			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
 		return
 	..()

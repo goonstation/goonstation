@@ -23,7 +23,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		if (src.blood <= 0) return ..()
 
 		if (istype(T))
@@ -41,7 +41,7 @@
 		. = ..(newloc)
 		if(!meatsource)
 			return
-		src.subjectname = meatsource.real_name
+		src.subjectname = meatsource.disfigured ? "Unknown" : meatsource.real_name
 		src.subjectjob = "Stowaway"
 		if (meatsource?.mind?.assigned_role)
 			src.subjectjob = meatsource.mind.assigned_role
@@ -94,7 +94,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		if (src.cybermeat == 1)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			if (istype(T))
 				make_cleanable(/obj/decal/cleanable/oil,T)
 				..()
@@ -171,7 +171,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
 		qdel (src)
 
@@ -397,7 +397,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pizza1/P = new /obj/item/reagent_containers/food/snacks/ingredient/pizza1(src.loc)
 			user.u_equip(src)
@@ -408,7 +408,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			for(var/i = 1, i <= 2, i++)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
@@ -418,7 +418,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
@@ -429,7 +429,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/pancake/F = new /obj/item/reagent_containers/food/snacks/pancake(src.loc)
 			user.u_equip(src)
@@ -440,7 +440,7 @@
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
-						playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1) //bit quieter than a baton hit
+						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1) //bit quieter than a baton hit
 						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
 						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
 						user.u_equip(src)
@@ -450,7 +450,7 @@
 						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
 				else
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
-					playsound(src, "sound/impact_sounds/Energy_Hit_3.ogg", 30, 1, -1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
 					user.emote("scream")
 			else
@@ -468,7 +468,7 @@
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
-				playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 			var/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet/P = new /obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet(src.loc)
 			user.u_equip(src)
@@ -507,7 +507,7 @@
 		if (prob(25))
 			JOB_XP(user, "Chef", 1)
 		if(prob(1))
-			playsound(src.loc, "sound/voice/screams/male_scream.ogg", 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough_circle(get_turf(src))
 		qdel (src)
@@ -645,22 +645,7 @@
 	var/toppingstext = null
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom))
-			var/pizzam = new /obj/item/reagent_containers/food/snacks/ingredient/pizzam
-			user.put_in_hand_or_drop(pizzam)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/meatball))
-			var/pizzab = new /obj/item/reagent_containers/food/snacks/ingredient/pizzab
-			user.put_in_hand_or_drop(pizzab)
-			qdel (W)
-			qdel (src)
-		else if (istype(W,/obj/item/reagent_containers/food/snacks/ingredient/pepperoni))
-			var/pizzap = new /obj/item/reagent_containers/food/snacks/ingredient/pizzap
-			user.put_in_hand_or_drop(pizzap)
-			qdel (W)
-			qdel (src)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/))
+		if (istype(W, /obj/item/reagent_containers/food/snacks/))
 			var/obj/item/reagent_containers/food/snacks/F = W
 			if(!F.custom_food)
 				return

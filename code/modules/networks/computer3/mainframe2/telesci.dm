@@ -616,7 +616,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
+				playsound(src.loc, 'sound/weapons/flashbang.ogg', 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (GET_DIST(N, src) <= 6)
 						N.apply_flash(30, 5)
@@ -625,7 +625,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
 				var/list/turfs = new
@@ -991,7 +991,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()

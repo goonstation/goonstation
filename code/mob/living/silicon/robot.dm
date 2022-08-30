@@ -245,7 +245,7 @@
 				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
-			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
+			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 
 	set_pulling(atom/movable/A)
 		. = ..()
@@ -1131,7 +1131,7 @@
 						logTheThing(LOG_STATION, src, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
 						var/area/A = get_area(src.law_rack_connection)
 						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 						src.show_laws()
 			else
@@ -2187,7 +2187,7 @@
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
 
-		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions))
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions, /proc/cmp_text_asc))
 		if (!newFace) return 0
 		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
 		if (!newMode) return 0

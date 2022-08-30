@@ -95,7 +95,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
