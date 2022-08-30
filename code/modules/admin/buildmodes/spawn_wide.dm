@@ -34,7 +34,7 @@ change the direction of created objects.<br>
 
 		if (!objpath)
 			objpath = /obj/critter/domestic_bee/heisenbee
-		objpath = get_one_match(input("Type path", "Type path", "[objpath]"), /atom)
+		objpath = text2path(get_one_match(input("Type path", "Type path", "[objpath]"), /atom))
 		update_button_text(objpath)
 		A = null
 		usr.client?.images -= marker
