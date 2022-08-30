@@ -282,16 +282,16 @@
 	proc/build_missing_image()
 		// loc doesn't matter since we aren't showing these directly, just adding as overlays to another image
 		var/image/missing_image = image(icon = src.icon, icon_state = src.icon_state, layer = src.layer - 0.01, dir = src.dir)
-		missing_image.plane = PLANE_SCREEN_OVERLAYS
+		missing_image.plane = PLANE_FLOOR
 		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
-		missing_image.alpha = 120
+		missing_image.alpha = 180
 		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
 
 		var/turf/simulated/T = get_turf(src)
 		if (!T.disposal_image)
 			T.disposal_image = missing_image
 		else
-			T.disposal_image.overlays += missing_image
+			T.disposal_image.underlays += missing_image
 		return missing_image
 
 	// expel the held objects into a turf
