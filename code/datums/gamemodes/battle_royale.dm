@@ -86,14 +86,8 @@ var/global/area/current_battle_spawn = null
 	current_battle_spawn = drop_locations[current_battle_spawn_name]
 
 	// Remove monkeys
-	for (var/mob/M in world)
-		var/turf/T = get_turf(M)
-		if (!T)
-			continue
-		if (T.z != Z_LEVEL_STATION)
-			continue
-		if (isnpcmonkey(M))
-			qdel(M)
+	for_by_tcl(VICTIM, /mob/living/carbon/human/npc/monkey)
+		qdel(VICTIM)
 
 	for_by_tcl(SV, /obj/submachine)
 		if (istype(SV, /obj/submachine/weapon_vendor/security))
