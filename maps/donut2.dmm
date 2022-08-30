@@ -2216,7 +2216,7 @@
 "ahp" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/sci,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ahq" = (
@@ -2249,9 +2249,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "ahw" = (
@@ -2426,7 +2426,7 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "ahR" = (
@@ -2555,7 +2555,7 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aic" = (
@@ -2665,7 +2665,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "ain" = (
@@ -2879,9 +2879,9 @@
 /area/station/science/artifact)
 "aiV" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aiW" = (
@@ -2914,7 +2914,7 @@
 "ajf" = (
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/sci,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -2929,11 +2929,11 @@
 /area/station/science/bot_storage)
 "aji" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "ajj" = (
@@ -25428,13 +25428,13 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/research,
 /obj/forcefield/energyshield/perma{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
 "bGN" = (
@@ -28445,7 +28445,7 @@
 "dMh" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -31317,8 +31317,8 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
-/obj/access_spawn/research,
 /obj/firedoor_spawn,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "gvH" = (
@@ -45820,7 +45820,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/red,
 /area/station/science/lobby)
 "uCU" = (

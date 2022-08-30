@@ -2544,7 +2544,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
 "axm" = (
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
@@ -10046,7 +10046,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "telesci_inner";
@@ -19587,7 +19587,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "fsc" = (
@@ -19926,7 +19926,7 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/crew_quarters/garden)
 "fwl" = (
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -21041,7 +21041,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -26164,7 +26164,7 @@
 /area/station/security/hos)
 "hpe" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/cable{
@@ -26317,7 +26317,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -27646,7 +27646,7 @@
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "hJo" = (
@@ -34770,7 +34770,7 @@
 /obj/machinery/door/airlock/pyro/classic,
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -36371,7 +36371,7 @@
 	icon_state = "glass_locked";
 	locked = 1
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
@@ -44737,7 +44737,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/engine,
@@ -46613,7 +46613,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/cable{
@@ -50200,7 +50200,7 @@
 	pixel_x = -23;
 	pixel_y = -8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -78932,7 +78932,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
