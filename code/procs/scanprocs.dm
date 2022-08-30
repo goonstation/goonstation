@@ -174,7 +174,7 @@
 
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
-
+				organ_data1 += organ_health_scan("butt", H, obfuscate)
 				organ_data1 += organ_health_scan("left_kidney", H, obfuscate)
 				organ_data1 += organ_health_scan("right_kidney", H, obfuscate)
 				organ_data1 += organ_health_scan("liver", H, obfuscate)
