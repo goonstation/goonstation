@@ -402,12 +402,15 @@
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
-	icon_state = "rifle_clip"
+	icon_state = "rifle_clip-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
 
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
@@ -422,12 +425,15 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
-	desc = "A box of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
+	desc = "A stripper clip of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
 	ammo_type = new/datum/projectile/bullet/tranq_dart
-	icon_state = "tranq_clip"
+	icon_state = "rifle_clip_dart-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_TRANQ_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip_dart"
+	icon_empty = "rifle_clip_empty"
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
