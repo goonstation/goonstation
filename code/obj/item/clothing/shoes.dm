@@ -188,13 +188,13 @@
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
-		playsound(src.loc, "sound/items/miningtool_on.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
-		playsound(src.loc, "sound/items/miningtool_off.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
@@ -594,13 +594,13 @@
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
-	step_sound = list("sound/voice/screams/male_scream.ogg", "sound/voice/screams/mascream6.ogg", "sound/voice/screams/mascream7.ogg")
+	step_sound = list('sound/voice/screams/male_scream.ogg', 'sound/voice/screams/mascream6.ogg', 'sound/voice/screams/mascream7.ogg')
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
-	step_sound = list("sound/voice/farts/poo2.ogg", "sound/voice/farts/fart4.ogg", "sound/voice/farts/poo2_robot.ogg")
+	step_sound = list('sound/voice/farts/poo2.ogg', 'sound/voice/farts/fart4.ogg', 'sound/voice/farts/poo2_robot.ogg')
 	desc = "Do I really need to tell you what these do?"
 
 /obj/item/clothing/shoes/crafted

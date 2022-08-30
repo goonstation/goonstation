@@ -73,7 +73,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(user, "sound/items/penclick.ogg", 50, 1)
+			playsound(user, 'sound/items/penclick.ogg', 50, 1)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -605,7 +605,7 @@
 	attack(mob/M, mob/user, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
-			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
+			playsound(user.loc, 'sound/items/eatfoodshort.ogg', rand(30, 60), 1)
 			src.chalk_health -= rand(2,5)
 			if (src.chalk_health <= 1)
 				src.chalk_break(user)
@@ -772,7 +772,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
-		playsound(src, "sound/items/hand_label.ogg", 40, 1)
+		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
 		if (user && !no_message)
 			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
@@ -1241,7 +1241,7 @@
 			if(ON_COOLDOWN(src, "create_paper", src.paper_creation_cooldown))
 				boutput(user, "<span class='alert'>\The [src]'s paper-manufacturing mechanism is recharging.</span>")
 				return
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
+			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
 			src.UpdateIcon()
 			src.stored_paper.Attackby(src.pen, user)
@@ -1267,7 +1267,7 @@
 			return FALSE
 		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
 		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
-			playsound(src.loc, "sound/machines/typewriter.ogg", 60, 0)
+			playsound(src.loc, 'sound/machines/typewriter.ogg', 60, 0)
 			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null

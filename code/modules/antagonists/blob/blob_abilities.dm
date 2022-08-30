@@ -256,7 +256,7 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
@@ -417,7 +417,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -648,7 +648,7 @@
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2
-			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
+			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -1000,11 +1000,11 @@
 		if (repeatable == 0)
 			owner.available_upgrades -= src
 		if (prob(80))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup1.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
 		else if (prob(50))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup2.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
 		else
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup3.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
 		owner.update_buttons()
 

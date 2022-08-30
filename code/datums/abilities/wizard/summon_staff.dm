@@ -6,9 +6,9 @@
 	targeted = 0
 	cooldown = 600
 	requires_robes = 1
-	voice_grim = "sound/voice/wizard/StaffGrim.ogg"
-	voice_fem = "sound/voice/wizard/StaffFem.ogg"
-	//voice_other = "sound/voice/wizard/notdoneyet.ogg"
+	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
+	voice_fem = 'sound/voice/wizard/StaffFem.ogg'
+	//voice_other = 'sound/voice/wizard/notdoneyet.ogg'
 	maptext_colors = list("#b320c3", "#5a1d8a")
 
 

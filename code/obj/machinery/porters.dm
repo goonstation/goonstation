@@ -431,7 +431,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		else if (ispryingtool(W))
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(15 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.locked = 0

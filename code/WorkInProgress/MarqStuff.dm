@@ -135,7 +135,7 @@
 			//		break
 			if (kname)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
 					overlays -= ol[kname]
@@ -150,7 +150,7 @@
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
 					overlays -= ol["key lime pie"]
@@ -179,10 +179,10 @@
 	proc/open()
 		if (unlocked.len != expected.len)
 			return
-		playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/door_open.ogg', 50, 1)
 		icon_state = "hld1"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		overlays.len = 0
 
 	meteorhit()

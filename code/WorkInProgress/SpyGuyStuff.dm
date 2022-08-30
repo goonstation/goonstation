@@ -473,6 +473,8 @@ proc/Create_Tommyname()
 		INIT_CHECK //Initialize the SpyGUI instance on use
 		if((target in connecting))
 			return
+		if(!target.client)
+			return
 		connecting[target] = initData
 		var/retries = max_retries
 		var/extrasleep = 0
@@ -768,7 +770,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
@@ -807,7 +809,7 @@ proc/Create_Tommyname()
 	src.icon = initial(T.icon)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
-	src.opacity = initial(T.opacity)
+	src.set_opacity(initial(T.opacity))
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE

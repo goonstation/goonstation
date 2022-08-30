@@ -51,7 +51,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 
 	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
@@ -70,7 +70,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/list/candidates = list()
 
 	for(var/C in creatures)

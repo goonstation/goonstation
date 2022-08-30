@@ -949,6 +949,21 @@
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
+/atom/proc/set_opacity(var/newopacity)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (newopacity == src.opacity)
+		return // Why even bother
+
+	var/oldopacity = src.opacity
+	src.opacity = newopacity
+
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+
+	if (isturf(src.loc))
+		// Not a turf, so we must send a signal to the turf
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+
 // standardized damage procs
 
 /// Does x blunt damage to the atom
@@ -1003,24 +1018,23 @@
 		return FALSE
 
 	for (var/connect in connect_to)
-		var/list/matches= list()
+		var/list/matches = list()
 		if(istype(T, connect))
 			matches.Add(T)
 		else
-			for (var/atom/A in T)
-				if (!isnull(A))
-					if (istype(A, /atom/movable))
-						var/atom/movable/M = A
-						if (!M.anchored)
-							continue
-						if (istype(A, connect))
-							matches.Add(A)
+			for (var/atom/movable/AM in T)
+				if (!AM.anchored)
+					continue
+				if (istype(AM, connect))
+					matches.Add(AM)
+		// TODO: do typecache here, make exceptions a joined typecacheof() list - `if(exceptions[match.type]) isvalid = FALSE`
 		for (var/match in matches)
 			var/valid = TRUE
 			if (exceptions && islist(exceptions))
 				for (var/exception in exceptions)
 					if (istype(match, exception))
 						valid = FALSE
+						break
 			if (valid)
 				return TRUE
 	return FALSE
