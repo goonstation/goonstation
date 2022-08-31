@@ -1,5 +1,9 @@
 
 (t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
 (u)Amylizzle
 (p)9741
 (e)|
