@@ -7,7 +7,7 @@
 	var/image_expansion
 	var/holograms = 0
 	var/const/max_holograms = 8
-	var/text_expansion
+	var/list/text_expansion = list()
 	var/text_holograms = 0
 	var/const/max_text_holograms = 3
 
@@ -29,7 +29,7 @@
 			if(HOLOGRAM_TEXT)
 				src.text_holograms = max(src.text_holograms - H.hologram_value, 0)
 
-	proc/check(holotype_string, mob/dead/aieye/E)
+	proc/check(holotype_string, mob/living/intangible/aieye/E)
 		. = TRUE
 		if(!istype(E))
 			. = FALSE
@@ -42,10 +42,6 @@
 				if (src.holograms >= src.max_holograms)
 					boutput(E, "Not enough V-RAM to project more holograms. Delete others to make room.")
 					. = FALSE
-
-	proc/expansion(string)
-		text_expansion = string
-
 
 /mob/living/silicon/ai
 	contextLayout = new /datum/contextLayout/experimentalcircle(36)
@@ -71,14 +67,15 @@
 			return
 
 		if(holo_type == "write")
-			var/list/holo_setences = list()
+			var/list/holo_sentences = list()
 			var/list/holo_actions = list()
 			var/list/holo_nouns = list()
-			holo_setences += strings("hologram.txt", "sentences")
+			holo_sentences += strings("hologram.txt", "sentences")
 			if(src.holoHolder.text_expansion)
-				holo_setences += strings("hologram.txt", "sentences_[src.holoHolder.text_expansion]")
-			holo_setences = sortList(holo_setences)
-			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_setences, allowIllegal=TRUE)
+				for(var/te in src.holoHolder.text_expansion)
+					holo_sentences += strings("hologram.txt", "sentences_[te]")
+			sortList(holo_sentences, /proc/cmp_text_asc)
+			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_sentences, allowIllegal=TRUE)
 			if(!text)
 				return
 
@@ -86,15 +83,17 @@
 				if("Remember to ...", "Employees must ...")
 					holo_actions += strings("hologram.txt", "verbs")
 					if(src.holoHolder.text_expansion)
-						holo_actions += strings("hologram.txt", "verbs_[src.holoHolder.text_expansion]")
-					holo_actions = sortList(holo_actions)
+						for(var/te in src.holoHolder.text_expansion)
+							holo_actions += strings("hologram.txt", "verbs_[te]")
+					sortList(holo_actions, /proc/cmp_text_asc)
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					sortList(strings("hologram.txt", "nouns"), /proc/cmp_text_asc)
 					if(src.holoHolder.text_expansion)
-						holo_nouns += strings("hologram.txt", "nouns_[src.holoHolder.text_expansion]")
-					holo_nouns = sortList(holo_nouns)
+						for(var/te in src.holoHolder.text_expansion)
+							holo_nouns += strings("hologram.txt", "nouns_[te]")
+					sortList(holo_nouns, /proc/cmp_text_asc)
 					var/blank_found = findtext(text,"...")
 					while(blank_found)
 						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
@@ -107,7 +106,7 @@
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
-		showContextActions(hologramContextActions, T, contextLayout)
+		src.eyecam.showContextActions(hologramContextActions, T, contextLayout)
 
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
@@ -215,13 +214,13 @@
 		// 	if ("sad_face")
 		// 	if ("angry_face")
 
-		SPAWN_DBG(duration)
+		SPAWN(duration)
 			qdel(src)
 		..()
 
 	attack_ai(mob/user as mob)
 		..()
-		var/mob/dead/aieye/eye = user
+		var/mob/living/intangible/aieye/eye = user
 		if (owner == user || (istype(eye) && eye.mainframe == owner))
 			boutput(src, "<span class='notice'>You stop projecting [src].</span>")
 			qdel(src)
@@ -249,7 +248,8 @@
 				icon_state = pick("d_glitch2", "d_glitch3")
 				distort_size = 10
 
-#define MAX_TILES_PER_HOLOGRAM 3
+#define MAX_TILES_PER_HOLOGRAM_HORIZONTAL 3
+#define MAX_TILES_PER_HOLOGRAM_VERTICAL 2
 /obj/hologram/text
 	var/message
 	var/original_color
@@ -267,15 +267,19 @@
 		var/rgb = hex_to_rgb_list(original_color)
 		src.hsv = rgb2hsv(rgb[1], rgb[2], rgb[3])
 
-		maptext_width = MAX_TILES_PER_HOLOGRAM * 32
+		maptext_width = MAX_TILES_PER_HOLOGRAM_HORIZONTAL * 32
+		maptext_height = MAX_TILES_PER_HOLOGRAM_VERTICAL * 32
 		maptext_x = -(maptext_width / 2) + 16
 
 		maptext = {"<a href="#"><span class='vm c ps2p sh' style='color:white;text-shadow: silver;'>[message]</span></a>"}
 
 		// Add displacement filter for scanline/glitch
-		SPAWN_DBG(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
+		SPAWN(1 DECI SECOND) //delayed to resolve issue where color didn't settle yet
 			E = new
 			if(length(msg) > 11)
 				E.icon_state = "d_fast"
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
+
+#undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
+#undef MAX_TILES_PER_HOLOGRAM_VERTICAL

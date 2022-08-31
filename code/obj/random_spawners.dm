@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -18,7 +18,7 @@
 	// TODO: initialize
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.spawn_items()
 			sleep(10 SECONDS)
 			qdel(src)
@@ -27,7 +27,7 @@
 		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
-					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
+					logTheThing(LOG_DEBUG, src, "has a non-path item in its guaranteed list, [new_item]")
 					DEBUG_MESSAGE("[src] has a non-path item in its guaranteed list, [new_item]")
 					continue
 				var/amt = 1
@@ -37,11 +37,11 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing("debug", src, null, "has an invalid items2spawn list")
+			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
+				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
@@ -54,14 +54,14 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing("debug", src, null, "has an invalid rare spawn list, [rare_items2spawn]")
+					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
 					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing("debug", src, null, "has a non-path item in its spawn list, [new_item]")
+				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
 
@@ -791,7 +791,7 @@
 	/obj/item/clothing/mask/gas,
 	/obj/item/clothing/mask/medical,
 	/obj/item/clothing/mask/surgical,
-	/obj/item/clothing/shoes,
+	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
 	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
@@ -920,7 +920,7 @@
 		/obj/item/material_piece/plasmastone,
 		/obj/item/material_piece/uqill,
 		/obj/item/material_piece/koshmarite,
-		/obj/item/material_piece/gold,
+		/obj/item/stamped_bullion,
 		/obj/item/raw_material/cotton,
 		/obj/item/raw_material/miracle,
 		/obj/item/raw_material/uqill,
@@ -935,14 +935,14 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.set_up()
 			sleep(1 SECOND)
 			qdel(src)
@@ -1340,7 +1340,7 @@
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
@@ -1860,7 +1860,7 @@
 /obj/random_item_spawner/organs/bloody
 	New()
 		. = ..()
-		SPAWN_DBG(1 DECI SECOND) //sync with the organs spawn
+		SPAWN(1 DECI SECOND) //sync with the organs spawn
 			make_cleanable(/obj/decal/cleanable/blood/gibs, src.loc)
 
 	one_to_three

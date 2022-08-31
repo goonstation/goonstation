@@ -33,7 +33,7 @@
 				if (speaker_type == "invisible")
 					speaker.invisibility = INVIS_ADVENTURE
 				else
-					SPAWN_DBG(1 SECOND)
+					SPAWN(1 SECOND)
 						speaker.color = color_rgb
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/speaker))

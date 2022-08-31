@@ -4,7 +4,7 @@
 	desc = "A station which allows cyborgs to repair damage, recharge their cells, and have upgrades installed if they are present in the station."
 	icon_state = "station"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -35,17 +35,14 @@
 
 /obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
-		// todo / at some point id like to fix the disparity between cells and 'normal power'
-		if (src.occupant)
-			src.power_usage = 500
-		else
-			src.power_usage = 50
+		src.power_usage = src.occupant ? 500 : 50
+		// syndicate gear is nuclear powered or something
+		if (src.conversion_chamber) src.power_usage = 0
 		..()
-	if (src.status & (NOPOWER | BROKEN) || !src.anchored)
+	if (src.status & BROKEN || (src.status & NOPOWER && !conversion_chamber))
 		if (src.occupant)
 			boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 			src.go_out()
-			src.build_icon()
 		return
 
 	if (src.occupant)
@@ -71,7 +68,7 @@
 	if (src.status & BROKEN)
 		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
-	if (src.status & NOPOWER)
+	if (src.status & NOPOWER && !src.conversion_chamber)
 		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
@@ -272,11 +269,7 @@
 	if (usr.stat || usr.restrained() || isghostcritter(usr))
 		return
 
-	if (!src.anchored)
-		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
-		return
-
-	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))))
+	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
 		if (href_list["refresh"])
@@ -311,7 +304,7 @@
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/newname = copytext(strip_html(sanitize(input(usr, "What do you want to rename [R]?", "Cyborg Maintenance", R.name) as null|text)), 1, 64)
-			if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !newname)
+			if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !newname)
 				return
 			if (url_regex?.Find(newname))
 				boutput(usr, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
@@ -319,7 +312,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing(LOG_COMBAT, usr, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
@@ -347,7 +340,7 @@
 					boutput(usr, "<span class='alert'>Not enough welding fuel for repairs.</span>")
 					return
 				var/usage = input(usr, "How much welding fuel do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(1))
 					usage = R.compborg_get_total_damage(1)
@@ -363,7 +356,7 @@
 					boutput(usr, "<span class='alert'>Not enough wiring for repairs.</span>")
 					return
 				var/usage = input(usr, "How much wiring do you want to use?", "Docking Station", 0) as num
-				if ((!issilicon(usr) && (get_dist(usr, src) > 1)) || usr.stat || !isnum_safe(usage))
+				if ((!issilicon(usr) && (BOUNDS_DIST(usr, src) > 0)) || usr.stat || !isnum_safe(usage))
 					return
 				if (usage > R.compborg_get_total_damage(2))
 					usage = R.compborg_get_total_damage(2)
@@ -427,10 +420,12 @@
 					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
+					R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
+				R.part_chest?.cell = O
 				boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 				R.hud.update_charge()
 
@@ -503,8 +498,9 @@
 			src.cells.Add(R.cell)
 			C.set_loc(src)
 			R.cell = null
+			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
+			logTheThing(LOG_COMBAT, usr, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
 
 		if (href_list["eject"])
@@ -599,59 +595,47 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/recharge_station/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing) && src.allow_clothes)
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
 			return
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.clothes)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.clothes.Add(W)
-		return
-	if (istype(W, /obj/item/robot_module))
+
+	else if (istype(W, /obj/item/robot_module))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.modules)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.modules.Add(W)
-		return
-	if (istype(W, /obj/item/roboupgrade))
+
+	else if (istype(W, /obj/item/roboupgrade))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.upgrades)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.upgrades.Add(W)
-		return
-	if (istype(W, /obj/item/cell))
+
+	else if (istype(W, /obj/item/cell))
 		if (user.contents.Find(W))
 			user.drop_item()
-		if (W in src.cells)
-			qdel(W)
-			return
 		W.set_loc(src)
 		boutput(user, "You insert [W].")
 		src.cells.Add(W)
-		return
-	if (istype(W, /obj/item/cable_coil))
+
+	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
 		src.cabling += C.amount
 		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 		if (user.contents.Find(W))
 			user.drop_item()
 		qdel(W)
-		return
-	if (istype(W, /obj/item/reagent_containers/glass))
+
+	else if (istype(W, /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/G = W
 		if (!G.reagents.total_volume)
 			boutput(user, "<span class='alert'>There is nothing in [G] to pour!</span>")
@@ -661,30 +645,65 @@
 			return
 		else
 			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
 			src.reagents.isolate_reagent("fuel")
-			return
-	..()
 
-/obj/machinery/recharge_station/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (get_dist(O, user) > 1 || get_dist(src, user) > 1)
+	else if (istype(W, /obj/item/grab))
+		var/obj/item/grab/G = W
+		if (G.state == GRAB_PASSIVE)
+			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+			return
+		if (src.move_human_inside(user, G.affecting))
+			qdel(G)
+
+	else
+		..()
+
+/// check if we may put this human inside the chamber
+/// on success returns true, else returns false
+/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+	if (!src.conversion_chamber)
+		boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
+		return FALSE
+	if (!ishuman(victim))
+		boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
+		return FALSE
+	if (isdead(victim))
+		boutput(user, "<span class='alert'>[victim] is dead and cannot be forced inside.</span>")
+		return FALSE
+	if (!src.anchored)
+		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
+		return FALSE
+
+	var/mob/living/carbon/human/H = victim
+	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
+	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
+
+	H.remove_pulling()
+	H.set_loc(src)
+	src.add_fingerprint(user)
+	src.occupant = H
+	src.build_icon()
+
+/obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
 		return
 	if (!isliving(user) || isAI(user))
 		return
 
-	if (isitem(O) && !user.stat)
-		src.Attackby(O, user)
+	if (isitem(AM) && !user.stat)
+		src.Attackby(AM, user)
 		return
 
-	if (isliving(O) && src.occupant)
+	if (isliving(AM) && src.occupant)
 		boutput(user, "<span class='alert'>\The [src] is already occupied!</span>")
 		return
 
-	if (isrobot(O))
-		var/mob/living/silicon/robot/R = O
+	if (isrobot(AM))
+		var/mob/living/silicon/robot/R = AM
 		if (isdead(R))
 			boutput(user, "<span class='alert'>[R] is dead and cannot enter [src].</span>")
 			return
@@ -701,8 +720,8 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	if (isshell(O))
-		var/mob/living/silicon/hivebot/H = O
+	if (isshell(AM))
+		var/mob/living/silicon/hivebot/H = AM
 		if (isdead(H))
 			boutput(user, "<span class='alert'>[H] is dead and cannot enter [src].</span>")
 			return
@@ -719,37 +738,8 @@
 		src.add_fingerprint(user)
 		src.build_icon()
 
-	else if (ishuman(O) && !user.stat)
-		if (!src.conversion_chamber)
-			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
-		else
-			var/mob/living/carbon/human/H = O
-			if (isdead(H))
-				boutput(user, "<span class='alert'>[H] is dead and cannot be forced inside.</span>")
-				return
-			var/delay = 0
-			if (user != H)
-				delay = 30
-				logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", user, H, "puts [constructTarget(H,"diary")] into a conversion chamber at [showCoords(src.x, src.y, src.z)]", "combat")
-			if (delay)
-				user.visible_message("<b>[user]</b> begins moving [H] into [src].")
-				boutput(user, "Both you and [H] will need to remain still for this action to work.")
-			var/turf/T1 = get_turf(user)
-			var/turf/T2 = get_turf(H)
-			SPAWN_DBG(delay)
-				if (user.loc != T1 || H.loc != T2)
-					return
-
-				if (user != H)
-					user.visible_message("<b>[user]</b> moves [H] into [src].")
-				else
-					user.visible_message("<b>[user]</b> climbs into [src].")
-				H.remove_pulling()
-				H.set_loc(src)
-				src.occupant = H
-				src.add_fingerprint(user)
-				src.build_icon()
+	if (ishuman(AM))
+		src.move_human_inside(user, AM)
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
@@ -807,11 +797,11 @@
 					'sound/impact_sounds/Metal_Clang_1.ogg',
 					'sound/effects/pump.ogg',
 					'sound/effects/syringeproj.ogg',
-				), 100, 1)
+				), 60, 1)
 				if (prob(15))
 					src.visible_message("<span class='alert'>[src] [pick("whirs", "grinds", "rumbles", "clatters", "clangs")] [pick("horribly", "in a grisly manner", "horrifyingly", "scarily")]!</span>")
 				if (prob(25))
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						playsound(src.loc, pick(
 							'sound/impact_sounds/Flesh_Stab_1.ogg',
 							'sound/impact_sounds/Slimy_Hit_3.ogg',
@@ -820,32 +810,28 @@
 							'sound/impact_sounds/Flesh_Tear_1.ogg',
 							'sound/impact_sounds/Generic_Snap_1.ogg',
 							'sound/impact_sounds/Generic_Hit_1.ogg',
-						), 100, 1)
-					SPAWN_DBG(0.6 SECONDS)
-						// TODO: use character scream choice
-						if (H.gender == "female")
-							playsound(src.loc, "sound/voice/screams/female_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						else
-							playsound(src.loc, "sound/voice/screams/male_scream.ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE)
-						src.visible_message("<span class='alert'>A muffled scream comes from within [src]!</span>")
+						), 60, 1)
+					SPAWN(0.6 SECONDS)
+						occupant?.emote("scream", FALSE)
 
 			if (H.health <= 2)
 				boutput(H, "<span class='alert'>You feel... different.</span>")
 				src.go_out()
 
-				var/bdna = null // For forensics (Convair880).
-				var/btype = null
-				if (H.bioHolder.Uid && H.bioHolder.bloodType)
-					bdna = H.bioHolder.Uid
-					btype = H.bioHolder.bloodType
-				gibs(src.loc, null, null, bdna, btype)
+				SPAWN(0)
+					var/bdna = null // For forensics (Convair880).
+					var/btype = null
+					if (H.bioHolder.Uid && H.bioHolder.bloodType)
+						bdna = H.bioHolder.Uid
+						btype = H.bioHolder.bloodType
+					gibs(src.loc, null, null, bdna, btype)
 
-				H.Robotize_MK2(1)
-				src.build_icon()
-				playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					H.Robotize_MK2(TRUE, syndicate=TRUE)
+					src.build_icon()
+					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
-				random_brute_damage(H, 3)
+				random_brute_damage(H, 10)
 				H.changeStatus("weakened", 5 SECONDS)
 				if (prob(15))
 					boutput(H, "<span class='alert'>[pick("You feel chunks of your flesh being ripped off!"," Something cold and sharp skewers you!", "You feel your organs being pulped and mashed!", "Machines shred you from every direction!")]</span>")
@@ -854,9 +840,12 @@
 /obj/machinery/recharge_station/proc/go_out()
 	if (!src.occupant)
 		return
-	src.occupant.set_loc(src.loc)
+	src.occupant.set_loc(get_turf(src))
 	src.occupant = null
 	src.build_icon()
+
+/obj/machinery/recharge_station/was_deconstructed_to_frame(mob/user)
+	src.go_out()
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set src in oview(1)
@@ -896,10 +885,12 @@
 	anchored = 0
 	p_class = 1.5
 
-/obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
+		if (!anchored)
+			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
 		return
 	..()

@@ -78,7 +78,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return
 		if (!abil.holder)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			abil.handleCast()
 
 #ifdef HALLOWEEN
@@ -114,7 +114,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// if (!usesPoints)
 		// 	return 1
 		if (spooktober_GH.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			spooktober_GH.points = 0
 		if (cost > spooktober_GH.points)
 			boutput(owner, notEnoughPointsMessage)
@@ -417,7 +417,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
-		SPAWN_DBG(rand(30,50))
+		SPAWN(rand(30,50))
 			if (!holder)
 				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
@@ -453,7 +453,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		var/turf/T = get_turf(holder.owner)
-		var/S = pick("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg", "sound/effects/glitchy1.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg", "sound/effects/kaboom.ogg")
+		var/S = pick('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg', 'sound/effects/glitchy1.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg', 'sound/effects/kaboom.ogg')
 		playsound(T, S, 30, 0, -1)
 		boutput(holder.owner, "<span class='alert'>You make a spooky sound!</span>")
 
@@ -492,7 +492,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (4)
 					new/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon(T)
 				if (5)
-					new/obj/decal/skeleton/unanchored/summon(T)
+					new/obj/decal/fakeobjects/skeleton/unanchored/summon(T)
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 
@@ -538,11 +538,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [string]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [string]")
 		G.icon_state = string
 		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -570,7 +570,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!istype(T, /turf/space) && !T.density)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
-			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+			playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
@@ -610,7 +610,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
-		REMOVE_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner)
+		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner)
 		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
 
 	//remove the filter animation when we're done.
@@ -619,7 +619,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
-		APPLY_MOB_PROPERTY(src.holder.owner, PROP_INVISIBILITY, src.holder.owner, ghost_invisibility)
+		APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner, ghost_invisibility)
 		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

@@ -43,7 +43,7 @@ datum/special_respawn
 				if(!check)
 					break
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 
@@ -77,7 +77,7 @@ datum/special_respawn
 				if(strip_antag)
 					remove_antag(M, usr, 1, 1)
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -94,7 +94,7 @@ datum/special_respawn
 				player = src.find_player("a person", TRUE)
 			if(player)
 				var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(pick_landmark(LANDMARK_LATEJOIN))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					M.JobEquipSpawned(job.name)
 
 				if(!player.mind)
@@ -104,7 +104,7 @@ datum/special_respawn
 				if(strip_antag)
 					remove_antag(M, usr, 1, 1)
 				r_number ++
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -124,9 +124,9 @@ datum/special_respawn
 
 				//M.ckey = player:ckey
 				r_number++
-				SPAWN_DBG(rand(1,10))
+				SPAWN(rand(1,10))
 					M.set_clothing_icon_dirty()
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					if(player && !player:client)
 						qdel(player)
 			else
@@ -171,7 +171,7 @@ datum/special_respawn
 		//mob.key = player.key
 		^*/
 		mob.mind.special_role = equip
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (mob)
 				eq_mob(equip,mob)
 				mob.set_clothing_icon_dirty()
@@ -248,7 +248,7 @@ datum/special_respawn
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else
-				F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
+				F.burn_tile()
 		else if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			if (was_eaten)
@@ -256,7 +256,9 @@ datum/special_respawn
 				W.icon_state = "bloodwall_2"
 				W.name = "meaty wall"
 			else
-				if(!istype(W, /turf/simulated/wall/r_wall) && !istype(W, /turf/simulated/wall/auto/reinforced))
-					W.icon_state = "r_wall-4"
+				var/overlay
+				if(istype(W,/turf/simulated/wall/auto/supernorn) || istype(W,/turf/simulated/wall/auto/reinforced/supernorn))
+					overlay = image('icons/turf/walls_damage.dmi',"burn-[W.icon_state]")
+				W.UpdateOverlays(overlay,"burn")
 		if(counter++ % 300 == 0)
 			LAGCHECK(LAG_MED)

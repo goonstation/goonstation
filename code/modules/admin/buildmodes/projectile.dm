@@ -6,18 +6,25 @@ Ctrl + RMB on buildmode button         = Edit projectile variables<br>
 Left Mouse Button                      = FIRE!<br>
 ***********************************************************"}
 	icon_state = "buildmode_zap"
-	var/datum/projectile/P
+	var/tmp/datum/projectile/P
+	var/proj_type = null
+
+	New(datum/buildmode_holder/H)
+		. = ..()
+		if(!isnull(proj_type))
+			src.P = new proj_type()
 
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if (ctrl && P)
 			usr.client.debug_variables(P)
 		else
-			var/projtype = input("Select projectile type.", "Projectile type", P) in childrentypesof(/datum/projectile)
+			proj_type = tgui_input_list(holder.owner, "Select a projectile type.", "Projectile type", childrentypesof(/datum/projectile), P?.type)
+			if (!proj_type) return
 			if (P)
-				if (projtype == P.type)
+				if (proj_type == P.type)
 					return
-			P = new projtype()
-			update_button_text(projtype)
+			P = new proj_type()
+			update_button_text(proj_type)
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!P || !object.loc) return

@@ -7,7 +7,7 @@
 	organ_name = "lung"
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 2.0
+	organ_holder_required_op_stage = 2
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
@@ -37,14 +37,14 @@
 	on_transplant(var/mob/M as mob)
 		..()
 		if (src.robotic)
-			APPLY_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state, 2)
+			APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state, 2)
 			src.donor.add_stam_mod_max(icon_state, 10)
 		return
 
 	on_removal()
 		if (donor)
 			if (src.robotic)
-				REMOVE_MOB_PROPERTY(src.donor, PROP_STAMINA_REGEN_BONUS, icon_state)
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, icon_state)
 				src.donor.remove_stam_mod_max(icon_state)
 		..()
 		return
@@ -100,7 +100,7 @@
 				donor.take_oxygen_deprivation(1.8 * mult/LUNG_COUNT) // Lets hurt em a little, let them know we mean business
 				if (world.time - donor.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					donor.take_oxygen_deprivation(7 * mult/LUNG_COUNT)
-			if (prob(percentmult(20, mult))) // Lets give them some chance to know somethings not right though I guess.
+			if (probmult(20)) // Lets give them some chance to know somethings not right though I guess.
 				update.emotes |= "cough"
 		else
 			donor.co2overloadtime = 0
@@ -113,13 +113,13 @@
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
 			if(SA)
-				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
+				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
 						donor.sleeping = max(donor.sleeping, 2)
 				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (prob(percentmult(20, mult)))
+					if (probmult(20))
 						update.emotes |= pick("giggle", "laugh")
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
@@ -133,13 +133,6 @@
 				update.emotes |= "cough"
 				if (prob(30))
 					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
-
-		if (!rad_immune)
-			var/datum/gas/rad_particles/RV = breath.get_trace_gas_by_type(/datum/gas/rad_particles)
-			if (RV)
-				var/RV_pp = (RV.moles/TOTAL_MOLES(breath))*breath_pressure
-				if(RV_pp >= 1)
-					donor.changeStatus("radiation", (1 + RV_pp) * mult/LUNG_COUNT)
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
@@ -168,7 +161,7 @@
 		if (!src.can_attach_organ(H, user))
 			return 0
 
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2.0)
+		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 			var/target_organ_location = null
 
@@ -181,27 +174,27 @@
 				target_organ_location = pick("right", "left")
 
 			if (target_organ_location == "right" && !H.organHolder.right_lung)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_lung", 2.0)
+				H.organHolder.receive_organ(src, "right_lung", 2)
 				H.update_body()
 			else if (target_organ_location == "left" && !H.organHolder.left_lung)
-				H.tri_message("<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
-				user, "<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
+					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_lung", 2.0)
+				H.organHolder.receive_organ(src, "left_lung", 2)
 				H.update_body()
 			else
-				H.tri_message("<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-				user, "<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-				H, "<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
+				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
+					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
 				return 0
 
 			return 1
@@ -236,21 +229,11 @@
 	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
+	var/grace_period = 30
 	safe_oxygen_min = 9
 	safe_co2_max = 18
 	safe_toxins_max = 5		//making it a lot higher than regular, because even doubling the regular value is pitifully low. This is still reasonably low, but it might be noticable
 	rad_immune = TRUE
-
-/obj/item/organ/lung/synth
-	name = "synthlungs"
-	icon_state = "plant"
-	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
-	synthetic = 1
-	failure_disease = /datum/ailment/disease/respiratory_failure
-	var/overloading = 0
-	New()
-		..()
-		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/rebreather) || !aholder)
@@ -283,12 +266,16 @@
 			return 0
 
 		if(overloading)
-			src.take_damage(0, 1 * mult)
+			src.grace_period = max(grace_period - 3 * mult, 0)
+			if(grace_period <= 5)
+				src.take_damage(0, 1 * mult)
+		else
+			src.grace_period = min(grace_period + 1 * mult, initial(src.grace_period))
 		return 1
 
 	disposing()
 		if(donor)
-			REMOVE_MOB_PROPERTY(donor, PROP_REBREATHING, "cyberlungs")
+			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_REBREATHING, "cyberlungs")
 		..()
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -298,6 +285,17 @@
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+/obj/item/organ/lung/synth
+	name = "synthlungs"
+	icon_state = "plant"
+	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
+	synthetic = 1
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+	New()
+		..()
+		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"

@@ -16,6 +16,12 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "portswirl"
 
+	out
+		icon_state = "portswirl_out"
+
+	error //invalid coordinates
+		icon_state = "portswirl_error"
+
 /datum/teleporter_bookmark
 	var/x = 0
 	var/y = 0

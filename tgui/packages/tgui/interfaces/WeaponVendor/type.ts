@@ -10,6 +10,7 @@ export interface WeaponVendorData {
     sidearm: number;
     loadout: number;
     utility: number;
+    ammo: number;
     assistant: number;
   };
   stock: WeaponVendorStockData[];

@@ -1,4 +1,4 @@
-/mob/living/critter/drone/cr
+/mob/living/critter/robotic/drone/cr
 	drone_designation = "CR"
 	desc = "A Syndicate scrap cutter drone, designed for automated salvage operations."
 	icon_state = "drone4"

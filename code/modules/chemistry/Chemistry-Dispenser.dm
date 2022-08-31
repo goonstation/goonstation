@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -51,7 +52,7 @@
 				A.user_id = null
 		..()
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		remove_distant_beaker()
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
@@ -77,11 +78,11 @@
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
 				src.take_damage(damage)
 				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
 			else
-				playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
 				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
 			return
 
@@ -102,7 +103,7 @@
 			if (isnull(amount) || amount <= 0)
 				return
 			amount = clamp(amount, 0, amtlimit)
-			if (get_dist(src,user) > 1)
+			if (BOUNDS_DIST(src, user) > 0)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
 			if (status & (NOPOWER|BROKEN))
@@ -134,12 +135,12 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
-				SPAWN_DBG(0)
+			if(1)
+				SPAWN(0)
 					src.take_damage(400)
 				return
-			if(2.0)
-				SPAWN_DBG(0)
+			if(2)
+				SPAWN(0)
 					src.take_damage(150)
 				return
 
@@ -153,7 +154,7 @@
 
 	proc/eject_card()
 		if (src.user_id)
-			if(IN_RANGE(usr, src, 1))
+			if((BOUNDS_DIST(usr, src) == 0))
 				usr.put_in_hand_or_drop(src.user_id)
 			else
 				src.user_id.set_loc(src.loc)
@@ -188,16 +189,16 @@
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -224,7 +225,7 @@
 	proc/remove_distant_beaker()
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
-		if(beaker && !IN_RANGE(get_turf(beaker), src, 1))
+		if(beaker && BOUNDS_DIST(beaker, src) > 0)
 			beaker = null
 			src.UpdateIcon()
 
@@ -314,7 +315,7 @@
 			if ("eject")
 				if (beaker)
 					if(beaker.loc == src)
-						if(IN_RANGE(usr, src, 1))
+						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
 						else
 							beaker.set_loc(src.loc)

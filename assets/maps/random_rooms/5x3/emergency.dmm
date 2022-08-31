@@ -1,0 +1,96 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/cart,
+/obj/item/sheet/glass/reinforced{
+	amount = 50
+	},
+/obj/item/sheet/steel/fullstack,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/item/storage/wall/emergency{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/storage/crate,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/item/device/light/glowstick,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/item/storage/wall/emergency{
+	dir = 1;
+	pixel_y = 32
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/storage/crate,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"B" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/storage/cart,
+/obj/random_item_spawner/tools/few,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+g
+B
+o
+"}
+(2,1,1) = {"
+a
+e
+w
+"}
+(3,1,1) = {"
+B
+B
+B
+"}
+(4,1,1) = {"
+E
+e
+l
+"}
+(5,1,1) = {"
+p
+B
+b
+"}

@@ -14,9 +14,18 @@
 					eyes_blinded |= EYEBLIND_L
 					eyes_blinded |= EYEBLIND_R
 				else
-					if (!human_owner.get_organ("left_eye"))
+					var/obj/item/organ/eye/left_eye = null
+					var/obj/item/organ/eye/right_eye = null
+					if (isskeleton(src.human_owner) && !src.human_owner.get_organ("head")) // get organs from the head, wherever it may be
+						var/datum/mutantrace/skeleton/skele = src.human_owner.mutantrace
+						left_eye = skele.head_tracker?.left_eye
+						right_eye = skele.head_tracker?.right_eye
+					else // get organs normally
+						left_eye = human_owner.get_organ("left_eye")
+						right_eye = human_owner.get_organ("right_eye")
+					if (!left_eye)
 						eyes_blinded |= EYEBLIND_L
-					if (!human_owner.get_organ("right_eye"))
+					if (!right_eye)
 						eyes_blinded |= EYEBLIND_R
 					if (istype(human_owner.glasses))
 						if (human_owner.glasses.block_eye)

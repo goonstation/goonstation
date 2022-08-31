@@ -255,7 +255,7 @@
 		else
 			var/blast_key = rand()
 			blast_armed = blast_key
-			SPAWN_DBG(blast_delay)
+			SPAWN(blast_delay)
 				if(src.blast_armed == blast_key && src.is_air_safe())
 					blast_release()
 
@@ -276,7 +276,7 @@
 						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		flick("pressurizer-poof", poof)
-		SPAWN_DBG(0.8 SECONDS)
+		SPAWN(0.8 SECONDS)
 			if(poof) qdel(poof)
 
 	proc/blast_release()
@@ -285,7 +285,7 @@
 
 		// Flashbang pressure wave is 30,000 psi thus 206 MPa
 		var/volume = clamp(pressure KILO PASCALS / 206 MEGA PASCAL * 35, 15, 70)
-		playsound(src, "sound/effects/exlow.ogg", volume, 1)
+		playsound(src, 'sound/effects/exlow.ogg', volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
@@ -308,8 +308,8 @@
 						T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
-				for(var/mob/living/HH in range(8, src))
-					var/checkdist = get_dist(HH.loc, T)
+				for(var/mob/living/HH in hearers(8, T))
+					var/checkdist = GET_DIST(HH.loc, T)
 
 					// Reduced sonic boom effect with increased misstep from shockwave
 					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)

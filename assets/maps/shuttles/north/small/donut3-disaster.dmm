@@ -34,7 +34,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "dq" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of the captain of this, uh, part of station. Not sure if all of the station parts are from the same place.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
@@ -105,7 +105,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -256,7 +256,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -299,7 +299,7 @@
 /area/shuttle/escape/centcom)
 "xC" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -336,7 +336,7 @@
 /area/shuttle/escape/centcom)
 "zY" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
@@ -501,7 +501,7 @@
 /obj/machinery/sleeper/compact{
 	dir = 4
 	},
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Kc" = (
@@ -543,7 +543,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "LS" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
@@ -586,7 +586,7 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "OX" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -703,7 +703,7 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "Yh" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /turf/unsimulated/floor/plating/scorched,
 /area/shuttle/escape/centcom)
 "YN" = (

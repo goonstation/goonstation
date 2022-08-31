@@ -4,14 +4,14 @@
 	icon_state = "meterX"
 	var/obj/machinery/atmospherics/pipe/target = null
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 1.0
+	anchored = 1
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
 
 /obj/machinery/meter/New()
 	..()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
@@ -47,9 +47,9 @@
 		icon_state = "meter4"
 		if(!noiselimiter)
 			if(prob(50))
-				playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 				noiselimiter = 1
-				SPAWN_DBG(6 SECONDS)
+				SPAWN(6 SECONDS)
 				noiselimiter = 0
 
 
@@ -85,7 +85,7 @@
 		return
 
 	var/t = null
-	if (get_dist(usr, src) <= 3 || isAI(usr))
+	if (GET_DIST(usr, src) <= 3 || isAI(usr))
 		if (src.target)
 			var/datum/gas_mixture/environment = target.return_air()
 			if(environment)

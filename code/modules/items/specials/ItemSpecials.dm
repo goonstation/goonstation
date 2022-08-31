@@ -215,15 +215,16 @@
 		if (istype(A, /obj/itemspecialeffect))
 			var/obj/itemspecialeffect/E = A
 			return (E.can_clash && world.time != E.create_time && E.clash_time > 0 && world.time <= E.create_time + E.clash_time)
-		.= ((istype(A, /obj/critter) || (isliving(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
+		.= ((istype(A, /obj/critter) || (isliving(A) && !isintangible(A)) || istype(A, /obj/machinery/bot)) && A != usr && A != user)
 
-	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, alpha=255)
+	proc/showEffect(var/name = null, var/direction = NORTH, var/mob/user, color="#FFFFFF", alpha=255)
 		if(name == null || master == null) return
 		if(!user) user = usr
 		var/obj/itemspecialeffect/E = new /obj/itemspecialeffect
 		if(src.animation_color)
 			E.color = src.animation_color
 		E.alpha = alpha
+		E.color = color
 		E.setup(get_turf(user))
 		E.set_dir(direction)
 		E.icon_state = name
@@ -263,7 +264,7 @@
 				H.remove_stamina(cost)
 
 		if(moveDelayDuration && moveDelay)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
 				person.apply_movement_delay_until = world.time + moveDelayDuration //handle move() started mid-delay
 				sleep(moveDelayDuration)
@@ -484,6 +485,8 @@
 	name = "Stab"
 	desc = "Attack with a 2 tile range."
 
+	var/stab_color = "#FFFFFF"
+
 	onAdd()
 		if(master)
 			//cooldown = master.click_delay
@@ -499,9 +502,21 @@
 			var/list/attacked = list()
 
 			var/turf/one = get_step(master, direction)
-			var/turf/two = get_step(one, direction)
 
-			showEffect("spear", direction)
+			var/blocked = !one.can_crossed_by(master)
+
+			var/turf/two =  blocked ? null : get_step(one, direction)
+
+			if (blocked)
+				var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+				S.color = src.stab_color
+				S.setup(one)
+
+			else
+				var/obj/itemspecialeffect/spear/S = new /obj/itemspecialeffect/spear
+				S.color = src.stab_color
+				S.set_dir(direction)
+				S.setup(one)
 
 			var/hit = 0
 			for(var/turf/T in list(one, two))
@@ -621,9 +636,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(master, "sound/effects/flame.ogg", 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -707,8 +722,8 @@
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"
-			P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
-			P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+			P.shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+			P.hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 			P.name = "monkey"
 
 /datum/item_special/slam
@@ -1050,7 +1065,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						user.unlock_medal("High Five!", 1)
 					break
 			if (!hit)
-				SPAWN_DBG(secondhit_delay)
+				SPAWN(secondhit_delay)
 					step(spark, direction, 2)
 					for(var/atom/movable/A in spark.loc)
 						if(A in attacked) continue
@@ -1079,7 +1094,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(master && istype(master, /obj/item/baton) && !master:can_stun())
+		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
 			return
 		..()
@@ -1090,7 +1106,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/gloves
 	pixelaction(atom/target, params, mob/user, reach)
 		..()
-		if(master && istype(master, /obj/item/clothing/gloves) && master:uses)
+		if(!istype(master, /obj/item/clothing/gloves) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(master:uses)
 			var/obj/item/clothing/gloves/G = master
 			G.uses = max(0, G.uses - 1)
 			if (G.uses < 1)
@@ -1109,8 +1126,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	staminaCost = 0
 	moveDelay = 5
 	moveDelayDuration = 5
-	damageMult = 0.80
-
+	damageMult = 0.8
 	image = "dagger"
 	name = "Slice"
 	desc = "Attack twice in rapid succession."
@@ -1143,7 +1159,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
 
-			SPAWN_DBG(secondhitdelay)
+			SPAWN(secondhitdelay)
 
 				turf = get_step(master, direction)
 				var/obj/itemspecialeffect/simple2/SS = new /obj/itemspecialeffect/simple2
@@ -1169,7 +1185,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelayDuration = 6
 	damageMult = 1
 	restrainDuration = 3
-
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
@@ -1227,10 +1242,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "flame"
 	name = "Flame"
 	desc = "Pop out a flame 1 tile away from you in a direction."
@@ -1247,7 +1259,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && !QDELETED(master) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 
@@ -1256,6 +1268,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
 
 			var/turf/turf = get_step(master, direction)
+
+			if(!turf.gas_cross(turf)) return
 
 			var/obj/itemspecialeffect/flame/S = new /obj/itemspecialeffect/flame
 			S.set_dir(direction)
@@ -1310,10 +1324,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "pulse"
 	name = "Pulse"
 	desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
@@ -1331,7 +1342,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
-
 
 			var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 			C.setup(turf)
@@ -1521,7 +1531,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				flick(K.end.icon_state, K.end)
 
 			//Reset the effects after they're drawn and put back into master for re-use later
-			SPAWN_DBG(0.8 SECONDS)
+			SPAWN(0.8 SECONDS)
 				K.start.loc = master
 				K.mid1.loc = master
 				K.mid2.loc = master
@@ -1722,7 +1732,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if(A in attacked) continue
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
-					SPAWN_DBG(0.5 SECONDS)
+					SPAWN(0.5 SECONDS)
 						A.Attackby(master, user, params, 1)
 					attacked += A
 					hit = 1
@@ -1772,11 +1782,14 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (!hit)
 				if (istype(turf,/turf/simulated/floor))
 					var/turf/simulated/floor/F = turf
+					if (istype(F, /turf/simulated/floor/feather))
+						boutput(user, "<span class='alert'><b>The tile stays stuck to the floor!</b></span>")
+						return
 					var/obj/item/tile = F.pry_tile(master, user, params)
 					if (tile)
 						hit = 1
 						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-						logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
+						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
@@ -1813,7 +1826,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			flick(icon_state,src)
 		create_time = world.time //mbc : kind of janky lightweight way of making us not clash with ourselves. compare spawn time.
 		if (del_self)
-			SPAWN_DBG(del_time)
+			SPAWN(del_time)
 				qdel(src)
 
 	attackby()
@@ -1929,7 +1942,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		density = 1
 		del_self = 0
 		clash_time = -1
-	
+		explosion_resistance = 10
+
 
 		//mouse_opacity = 1
 		var/bump_count = 0
@@ -1971,6 +1985,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				//was_clashed()
 				return
 
+		blob_act(power)
+			. = ..()
+			was_clashed()
+
 	poof
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "poof"
@@ -1982,7 +2000,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		setup(atom/location, forced = 0)
 			loc = location
 			if (del_self)
-				SPAWN_DBG(5 SECONDS)
+				SPAWN(5 SECONDS)
 					qdel(src)
 
 		was_clashed(var/playsound = 1)
@@ -2041,6 +2059,22 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = -32
 		pixel_y = -32
 		can_clash = 1
+
+	spear
+		icon = 'icons/effects/64x64.dmi'
+		icon_state = "spear"
+		can_clash = 0
+		pixel_x = 0
+		pixel_y = 0
+
+
+		set_dir(new_dir)
+			. = ..()
+			if (new_dir & SOUTH)
+				pixel_y = -32
+			if (new_dir & WEST)
+				pixel_x = -32
+
 
 /obj/itemspecialeffect/impact
 	icon = 'icons/effects/impacts.dmi'

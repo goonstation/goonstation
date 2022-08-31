@@ -10,8 +10,8 @@
 //As long as this is working, solar panels on same powernet will track automatically
 
 /obj/machinery/power/tracker
-	name = "solar tracker"
-	desc = "A solar directional tracker."
+	name = "Houyi stellar tracker"
+	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
 	anchored = 1
@@ -43,6 +43,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -67,8 +71,8 @@
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 /obj/machinery/power/solar
-	name = "solar panel"
-	desc = "A solar electrical generator."
+	name = "Kuafu photoelectric panel"
+	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "solar_panel"
 	anchored = 1
@@ -76,7 +80,7 @@
 	directwired = 1
 	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
 	power_usage = 10
-	var/health = 10.0
+	var/health = 10
 	var/id = 1
 	var/obscured = 0
 	var/sunfrac = 0
@@ -107,11 +111,15 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 
 /obj/machinery/power/solar/New()
 	..()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		UpdateIcon()
 		update_solar_exposure()
 
@@ -172,7 +180,7 @@
 	if(adir != ndir)
 		var/old_adir = adir
 		var/max_move = rand(8, 12)
-		adir = (360 + adir + clamp(ndir - adir, -max_move, max_move)) % 360
+		adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 		if(adir != old_adir)
 			use_power(power_usage)
 			UpdateIcon()
@@ -193,16 +201,16 @@
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			if(prob(15))
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				broken()
 	return
@@ -215,8 +223,8 @@
 /////////////////////////////////////////////////// Solar control computer /////////////////////////////////////////
 
 /obj/machinery/computer/solar_control
-	name = "solar panel control"
-	desc = "A controller for solar panel arrays."
+	name = "Xihe photo-electric generator controller"
+	desc = "The XIANG|GIESEL model '羲和' controller for articulated photo-electric panel arrays."
 	icon_state = "solar"
 	circuit_type = /obj/item/circuitboard/solar_control
 	can_reconnect = TRUE
@@ -253,10 +261,14 @@
 		solar_id = "diner"
 	silverglass
 		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
-	SPAWN_DBG(1.5 SECONDS)
+	SPAWN(1.5 SECONDS)
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		if(!powernet) return
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
@@ -295,7 +307,7 @@
 	if(..())
 		return
 
-	if ( (get_dist(src, user) > 1 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!isAI(user))
 			src.remove_dialog(user)
 			user.Browse(null, "window=solcon")
@@ -304,7 +316,7 @@
 	add_fingerprint(user)
 	src.add_dialog(user)
 
-	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
+	var/t = "<TT><B>XIANG|GIESEL Photo-Electric Generator Control</B><HR><PRE>"
 	t += "Generated power : [round(lastgen)] W<BR><BR>"
 	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
 
@@ -338,13 +350,13 @@
 
 	if(href_list["dir"])
 		cdir = text2num_safe(href_list["dir"])
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			set_panels(cdir)
 
 	if(href_list["rate control"])
 		if(href_list["cdir"])
 			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				set_panels(cdir)
 		if(href_list["tdir"])
 			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
@@ -386,11 +398,11 @@
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && get_dist(src, S) >= closest_solar_distance)
+		if (closest_solar_distance != null && GET_DIST(src, S) >= closest_solar_distance)
 			continue
 
 		closest_solar_id = S.id
-		closest_solar_distance = get_dist(src, S)
+		closest_solar_distance = GET_DIST(src, S)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)
@@ -413,13 +425,17 @@
 			return
 
 		var/sgen = SOLARGENRATE * sunfrac
+		sgen *= PROCESSING_TIER_MULTI(src)
 		add_avail(sgen)
 		if(powernet && control)
-			if(control.get_direct_powernet() == powernet) //this line right here...
+			if(control.get_direct_powernet() == powernet) // this line right here...
 				control.gen += sgen
 
 		if(adir != ndir)
-			SPAWN_DBG(10+rand(0,15))
-				adir = (360+adir+clamp(ndir-adir,-10,10))%360
+			var/old_adir = adir
+			var/max_move = rand(8, 12)
+			adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
+			if(adir != old_adir)
 				UpdateIcon()
-				update_solar_exposure()
+
+			update_solar_exposure()

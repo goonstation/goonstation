@@ -19,12 +19,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -33,59 +33,53 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the handspider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the handspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_arm || owner.limbs.r_arm) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no arms to detach!"))
+			boutput(holder.owner, "<span class='notice'>We have no arms to detach!</span>")
 			return 1
 
-		var/arm_type = 0
+		var/obj/item/parts/original_arm = null
 
 		if (owner.limbs.l_arm && owner.limbs.r_arm) //if both arms are available, remove the inactive one
 			if (owner.hand)
-				arm_type = owner.limbs.r_arm.type
-				owner.limbs.r_arm.delete()
+				original_arm = owner.limbs.r_arm.remove(FALSE)
 				owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 			else
-				arm_type = owner.limbs.l_arm.type
-				owner.limbs.l_arm.delete()
+				original_arm = owner.limbs.l_arm.remove(FALSE)
 				owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else if (owner.limbs.l_arm)
-			arm_type = owner.limbs.l_arm.type
-			owner.limbs.l_arm.delete()
+			original_arm = owner.limbs.l_arm.remove(FALSE)
 			owner.changeStatus("c_regrow-l_arm", 75 SECONDS)
 		else
-			arm_type = owner.limbs.r_arm.type
-			owner.limbs.r_arm.delete()
+			original_arm = owner.limbs.r_arm.remove(FALSE)
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a handspider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc))
-
+		var/mob/living/critter/changeling/handspider/spider = new /mob/living/critter/changeling/handspider(get_turf(owner.loc), original_arm)
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
 		else if (use_mob.client)
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
-		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
-		if (arm_type && istype(arm_type, /obj/item/parts/robot_parts))
+		if (original_arm && istype(original_arm, /obj/item/parts/robot_parts))
 			spider.icon_prefix = "robo"
 			spider.UpdateIcon()
 
-		spider.Browse(grabResource("html/mindslave/handspider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("handspider")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</font>")
 
@@ -125,12 +119,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -139,38 +133,40 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the eyespider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the eyespider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.left_eye || owner.organHolder.right_eye) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no eyes to eject!")) // what a terrifying fate you've given yourself
+			boutput(holder.owner, "<span class='notice'>We have no eyes to eject!</span>") // what a terrifying fate you've given yourself
 			return 1
+
+		var/original_eye = null
 
 		if (owner.organHolder.left_eye && owner.organHolder.right_eye) // if both eyes are available, pick one at random
 			if (prob(50))
-				qdel(owner.drop_organ("left_eye"))
+				original_eye = owner.drop_organ("left_eye")
 				owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 			else
-				qdel(owner.drop_organ("right_eye"))
+				original_eye = owner.drop_organ("right_eye")
 				owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 		else if (owner.organHolder.left_eye)
-			qdel(owner.drop_organ("left_eye"))
+			original_eye = owner.drop_organ("left_eye")
 			owner.changeStatus("c_regrow-l_eye", 40 SECONDS)
 		else
-			qdel(owner.drop_organ("right_eye"))
+			original_eye = owner.drop_organ("right_eye")
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops an eyespider [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc))
+		var/mob/living/critter/changeling/eyespider/spider = new /mob/living/critter/changeling/eyespider(get_turf(owner.loc), original_eye)
 
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
@@ -178,10 +174,9 @@
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
-		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
-		spider.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("eyespider")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</font>")
 
@@ -222,12 +217,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -236,49 +231,50 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the legworm: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the legworm:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.limbs.l_leg || owner.limbs.r_leg) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no legs to detach!"))
+			boutput(holder.owner, "<span class='notice'>We have no legs to detach!</span>")
 			return 1
+
+
+		var/obj/item/parts/original_leg = null
 
 		if (owner.limbs.l_leg && owner.limbs.r_leg) //remove leg opposite of active hand
 			if (owner.hand)
-				owner.limbs.r_leg.delete()
+				original_leg = owner.limbs.r_leg.remove()
 				owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 			else
-				owner.limbs.l_leg.delete()
+				original_leg = owner.limbs.l_leg.remove()
 				owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else if (owner.limbs.l_leg)
-			owner.limbs.l_leg.delete()
+			original_leg = owner.limbs.l_leg.remove()
 			owner.changeStatus("c_regrow-l_leg", 75 SECONDS)
 		else
-			owner.limbs.r_leg.delete()
+			original_leg = owner.limbs.r_leg.remove()
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a legworm [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc))
-
+		var/mob/living/critter/changeling/legworm/spider = new /mob/living/critter/changeling/legworm(get_turf(owner.loc), original_leg)
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(spider)
 		else if (use_mob.client)
 			use_mob.client.mob = spider
 		H.hivemind -= use_mob
 		H.hivemind += spider
-		spider.real_name = use_mob.real_name
 		spider.hivemind_owner = H
 
-		spider.Browse(grabResource("html/mindslave/legworm.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		spider.show_antag_popup("legworm")
 		boutput(spider, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(spider, "<font color=red>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</font>")
 
@@ -318,12 +314,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot release a sub-form!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot release a sub-form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -332,27 +328,27 @@
 				eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability. We need to absorb another."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability. We need to absorb another.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to transfer into the buttspider: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to transfer into the buttspider:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 
 		var/mob/living/carbon/human/owner = holder.owner
 		if (!(owner.organHolder.butt) || !ishuman(holder.owner))
-			boutput(holder.owner, __blue("We have no ass!")) // what a terrifying fate you've given yourself
+			boutput(holder.owner, "<span class='notice'>We have no ass!</span>") // what a terrifying fate you've given yourself
 			return 1
 
-		qdel(owner.drop_organ("butt"))
+		var/obj/item/clothing/head/butt/original_butt = owner.drop_organ("butt")
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
-		logTheThing("combat", holder.owner, use_mob, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "drops a buttcrab [use_mob] as a changeling [log_loc(holder.owner)].")
 
-		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc))
+		var/mob/living/critter/changeling/buttcrab/crab = new /mob/living/critter/changeling/buttcrab(get_turf(owner.loc), original_butt)
 
 		if (use_mob.mind)
 			use_mob.mind.transfer_to(crab)
@@ -360,10 +356,9 @@
 			use_mob.client.mob = crab
 		H.hivemind -= use_mob
 		H.hivemind += crab
-		crab.real_name = use_mob.real_name
 		crab.hivemind_owner = H
 
-		crab.Browse(grabResource("html/mindslave/eyespider.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		crab.show_antag_popup("buttcrab")
 		boutput(crab, "<h2><font color=red>You have reawakened to serve your host [holder.owner]! You must follow their commands!</font></h2>")
 		boutput(crab, "<font color=red>You are a very small, very smelly, and weak creature. You are still connected to the hivemind.</font>")
 
@@ -403,8 +398,8 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
-		//logTheThing("diary", holder.owner, null, "(HIVEMIND): [message]", "hivesay")
+		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
+		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
 		.= holder.owner.say_hive(message, holder)
 
 		return 0
@@ -431,12 +426,12 @@
 		var/datum/abilityHolder/changeling/H = holder
 		//Sanity check
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot boot other members of the hivemind!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -444,20 +439,20 @@
 			eligible[O.real_name] = O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		var/use_mob_name = input("Select the mind to silence: ", "Select Mind", null) as null|anything in eligible
+		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		//RIP
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
 		H.hivemind -= use_mob
-		boutput(use_mob, __red("You have been cut off from the hivemind by [holder.owner.real_name]!"))
+		boutput(use_mob, "<span class='alert'>You have been cut off from the hivemind by [holder.owner.real_name]!</span>")
 		use_mob.boot()
-		boutput(holder.owner, __red("You have silenced [use_mob_name]'s consciousness from your hivemind."))
+		boutput(holder.owner, "<span class='alert'>You have silenced [use_mob_name]'s consciousness from your hivemind.</span>")
 		return 0
 
 
@@ -483,12 +478,12 @@
 		var/datum/abilityHolder/changeling/H = holder
 		//Sanity check
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, __red("A slave cannot relinquish control of the shared form!."))
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
 			return 1
 
 		var/list/eligible = list()
@@ -497,22 +492,25 @@
 				eligible += O
 
 		if (eligible.len < 1)
-			boutput(holder.owner, __red("There are no minds eligible for this ability."))
+			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
 			return 1
 
-		//Get a dirty HO. HA HA HA haaaa...
-		var/mob/dead/target_observer/hivemind_observer/HO = input("Select the mind to grant control: ", "Select Mind", null) as null|mob in eligible
+		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if(!HO)
-			boutput(holder.owner, __blue("We change our mind."))
-			return 1
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			return TRUE
+		if (!(HO in eligible))
+			boutput(holder.owner, "<span class='alert'>Something fucked up, ahelp about this. Mind transfer aborted.</span>")
+			stack_trace("[holder.owner] tried to grant control of a changeling body to [HO], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
+			return TRUE
 
 		//Do the actual control-granting here.
-		logTheThing("combat", holder.owner, HO, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
+		logTheThing(LOG_COMBAT, holder.owner, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
 		//Transfer the owner's mind into a hivemind observer and grant it the recovery verb
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
 		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control
 		H.master = master //Make it the controller of the mob
-		boutput(master, __blue("We relinquish control of our form to [HO]!"))
+		boutput(master, "<span class='notice'>We relinquish control of our form to [HO]!</span>")
 
 		//Transfer the hivemind member's mind into the body.
 		H.original_controller_name = HO.name

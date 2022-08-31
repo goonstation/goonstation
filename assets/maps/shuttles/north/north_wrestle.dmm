@@ -28,7 +28,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -901,7 +901,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge/south,
 /area/shuttle/escape/centcom)
 "Fv" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/red,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -1217,7 +1217,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -1327,7 +1327,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"

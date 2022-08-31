@@ -1,0 +1,42 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/bed/moveable,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/bluegreen,
+/area/dmm_suite/clear_area)
+"c" = (
+/turf/simulated/floor/bluegreen,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/bluegreen,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/table/auto,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/reagent_containers/syringe/haloperidol,
+/obj/item/device/analyzer/healthanalyzer,
+/turf/simulated/floor/bluegreen,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/turf/simulated/floor/bluegreen,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+M
+c
+a
+"}
+(2,1,1) = {"
+c
+n
+c
+"}
+(3,1,1) = {"
+U
+c
+c
+"}

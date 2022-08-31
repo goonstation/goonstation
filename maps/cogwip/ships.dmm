@@ -304,7 +304,7 @@
 /area/space)
 "aR" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -2348,7 +2348,7 @@
 /area/space)
 "gz" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue2"
 	},
@@ -3153,7 +3153,7 @@
 /area/space)
 "iN" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	on = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -3404,7 +3404,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/radio_tape/advertisement/dans_tickets,
 /obj/item/radio_tape/advertisement/grones{
 	pixel_x = 6;
 	pixel_y = 4
@@ -3416,10 +3415,6 @@
 /obj/item/radio_tape/advertisement/quik_noodles{
 	pixel_x = 2;
 	pixel_y = -6
-	},
-/obj/item/radio_tape/advertisement/pope_crunch{
-	pixel_x = -3;
-	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/space)
@@ -4236,7 +4231,7 @@
 /turf/space,
 /area/space)
 "lA" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/paper/printout/emerg1,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
@@ -4926,7 +4921,7 @@
 /obj/item/storage/secure/ssafe/pilot_cargo1{
 	pixel_y = 32
 	},
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Rest in peace.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -5447,7 +5442,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ou" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "ov" = (
 /obj/stocking{
@@ -5647,7 +5642,7 @@
 /area/space)
 "pb" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -5729,7 +5724,7 @@
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
 /obj/machinery/optable,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
 	icon = 'icons/mob/human.dmi';
 	icon_state = "husk_l";
@@ -6215,7 +6210,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "qF" = (
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
 	layer = 2.5;
 	pixel_y = 8
@@ -6348,7 +6343,7 @@
 /area/space)
 "qV" = (
 /obj/stool/bed,
-/obj/decal/skeleton{
+/obj/decal/fakeobjects/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body6";
@@ -7757,7 +7752,7 @@
 /area/space)
 "ud" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/red,
 /area/space)
 "ue" = (
@@ -10953,7 +10948,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/storage/crate{
-	desc = "A small, cuboid object with a hinged top and empty interior. It smells kinda bad and seems to have an odd stain on it.";
+	desc = "A big metal box that you can put things into. It smells kinda bad and seems to have an odd stain on it.";
 	icon = 'icons/misc/halloween.dmi';
 	name = "dented crate"
 	},

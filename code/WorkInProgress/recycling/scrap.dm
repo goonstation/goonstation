@@ -10,7 +10,7 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 10.0
+	throwforce = 10
 	m_amt = 1
 	g_amt = 1
 	w_amt = 1
@@ -244,7 +244,7 @@
 // when dropped, try to make a pile if scrap is already there
 /obj/item/scrap/dropped()
 
-	SPAWN_DBG(0.2 SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
+	SPAWN(0.2 SECONDS)	// delay to allow drop postprocessing (since src may be destroyed)
 		for(var/obj/item/scrap/S in oview(0,src))	// excludes src itself
 			S.add_scrap(src)
 

@@ -195,7 +195,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		src.RL_SetOpacity(1)
 		src.set_density(1)
 		flick("wizard_false_wall_closing", src)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.icon_state = "wizard_false_wall"
 			src.opening = 0
 
@@ -207,7 +207,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		src.opening = 1
 		flick("wizard_false_wall_opening", src)
 		src.icon_state = "wizard_floor"
-		SPAWN_DBG(1.2 SECONDS)
+		SPAWN(1.2 SECONDS)
 			src.set_density(0)
 			src.opening = 0
 			src.RL_SetOpacity(0)
@@ -556,16 +556,16 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (!reagent)
 			boutput(user, "<span class='alert'>The potion flask is empty.</span>")
 		if (user == target)
-			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down \his throat.</span>")
-			logTheThing("combat", user, null, "drinks [src] ([potion_name] -- [reagent])")
+			user.visible_message("<span class='notice'>[user] uncorks the potion and pours it down [his_or_her(user)] throat.</span>")
+			logTheThing(LOG_COMBAT, user, "drinks [src] ([potion_name] -- [reagent])")
 			drink(user)
 		else if (ishuman(target))
 			user.visible_message("<span class='alert'>[user] attempts to force [target] to drink [src].</span>")
-			logTheThing("combat", user, target, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
+			logTheThing(LOG_COMBAT, user, "tries to force [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 			if (do_after(user, 3 SECONDS))
 				if (reagent)
 					user.visible_message("<span class='alert'>[user] forces [target] to drink [src].</span>")
-					logTheThing("combat", user, target, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
+					logTheThing(LOG_COMBAT, user, "forces [constructTarget(target,"combat")] to drink [src] ([potion_name] -- [reagent]).")
 					drink(target)
 
 	identified

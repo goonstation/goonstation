@@ -18,7 +18,7 @@ var/global/list/adventure_elements_by_id = list()
 
 	New()
 		if (src.opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 			RL_SetOpacity(1)
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
@@ -104,7 +104,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -163,7 +163,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -240,7 +240,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -301,7 +301,7 @@ var/global/list/adventure_elements_by_id = list()
 	proc/post_untrigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered_unpress)
 			var/act = src.triggered_unpress[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	special_triggers_required()

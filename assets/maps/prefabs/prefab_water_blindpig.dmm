@@ -1,107 +1,1000 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/blind_pig)
-"ab" = (/turf/variableTurf/clear,/area/space)
-"ac" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/nw,/area/prefab/blind_pig)
-"ad" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/rum_spaced{pixel_x = -3; pixel_y = 5},/obj/item/reagent_containers/food/drinks/skull_chalice{pixel_x = 6; pixel_y = 2},/turf/simulated/floor/carpet/purple/fancy/edge/north,/area/prefab/blind_pig)
-"ae" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/purple/fancy/edge/ne,/area/prefab/blind_pig)
-"af" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ag" = (/obj/shrub{icon_state = "shrub"; dir = 10},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ah" = (/obj/stool/chair/comfy,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ai" = (/obj/table/reinforced/bar/auto,/obj/drink_rack/cup{pixel_y = 32},/obj/machinery/espresso_machine,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aj" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/purple/fancy/edge/sw,/area/prefab/blind_pig)
-"ak" = (/obj/table/reinforced/bar/auto,/obj/item/card_group/plain,/turf/simulated/floor/carpet/purple/fancy/edge/south,/area/prefab/blind_pig)
-"al" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/purple/fancy/edge/se,/area/prefab/blind_pig)
-"am" = (/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"an" = (/obj/item/storage/toilet,/turf/simulated/floor/sanitary,/area/prefab/blind_pig)
-"ao" = (/obj/submachine/chef_sink/chem_sink{layer = 3; pixel_y = 8},/turf/simulated/floor/sanitary,/area/prefab/blind_pig)
-"ap" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/sanitary,/area/prefab/blind_pig)
-"aq" = (/turf/simulated/floor/sanitary,/area/prefab/blind_pig)
-"ar" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1},/turf/simulated/floor/stairs/wood2,/area/prefab/blind_pig)
-"as" = (/obj/shrub{icon_state = "shrub"; dir = 8},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"at" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"au" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/flute{pixel_x = 6},/obj/item/reagent_containers/food/drinks/drinkingglass/flute{pixel_x = -6},/obj/item/reagent_containers/food/drinks/bottle/champagne,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"av" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aw" = (/turf/variableTurf/clear,/area/noGenerate)
-"ax" = (/obj/item/instrument/large/piano/grand,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ay" = (/obj/machinery/door/unpowered/wood/pyro{dir = 1},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"az" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aA" = (/obj/machinery/chem_dispenser/soda,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aB" = (/turf/simulated/floor/carpet/red/fancy/edge/nw,/area/prefab/blind_pig)
-"aC" = (/turf/simulated/floor/carpet/red/fancy/edge/north,/area/prefab/blind_pig)
-"aD" = (/turf/simulated/floor/carpet/red/fancy/edge/ne,/area/prefab/blind_pig)
-"aE" = (/obj/stool/chair/wooden{dir = 1},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aF" = (/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aG" = (/obj/storage/closet/dresser,/obj/item/clothing/under/suit,/obj/item/clothing/under/shirt_pants,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aH" = (/obj/storage/closet/dresser,/obj/item/clothing/suit/johnny_coat{desc = "This outfit just looks smug as hell."; name = "overcoat and scarf"},/obj/item/clothing/suit/tuxedo_jacket,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aI" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aJ" = (/turf/simulated/floor/carpet/red/fancy/edge/west,/area/prefab/blind_pig)
-"aK" = (/turf/simulated/floor/carpet/red/fancy/innercorner/se,/area/prefab/blind_pig)
-"aL" = (/obj/stool/chair/wooden,/turf/simulated/floor/carpet/red/fancy/innercorner/sw,/area/prefab/blind_pig)
-"aM" = (/turf/simulated/floor/carpet/red/fancy/innercorner/sw,/area/prefab/blind_pig)
-"aN" = (/turf/simulated/floor/carpet/red/fancy/edge/east,/area/prefab/blind_pig)
-"aO" = (/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aP" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/bottle/bojackson{pixel_x = -5; pixel_y = 6},/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{pixel_x = 4},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"aQ" = (/turf/simulated/floor/carpet/red/fancy/innercorner/ne,/area/prefab/blind_pig)
-"aR" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{pixel_x = -3; pixel_y = 5},/turf/simulated/floor/carpet/red/fancy/innercorner/nw,/area/prefab/blind_pig)
-"aS" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,/turf/simulated/floor/carpet/red/fancy/innercorner/ne,/area/prefab/blind_pig)
-"aT" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{pixel_x = 3; pixel_y = 5},/turf/simulated/floor/carpet/red/fancy/innercorner/nw,/area/prefab/blind_pig)
-"aU" = (/turf/simulated/floor/carpet/red/fancy/innercorner/nw,/area/prefab/blind_pig)
-"aV" = (/obj/machinery/door/unpowered/wood/pyro{dir = 8},/turf/simulated/floor/stairs/wood2/wide{icon_state = "wood2_stairs2"; dir = 9},/area/prefab/blind_pig)
-"aW" = (/obj/machinery/door/unpowered/wood/pyro{dir = 8},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aX" = (/obj/machinery/drainage/big,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aY" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"aZ" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"ba" = (/obj/stool/chair/wooden{dir = 1},/turf/simulated/floor/carpet/red/fancy/innercorner/se,/area/prefab/blind_pig)
-"bb" = (/obj/machinery/door/unpowered/wood/pyro{dir = 8},/turf/simulated/floor/stairs/wood2/wide{icon_state = "wood2_stairs2"; dir = 8},/area/prefab/blind_pig)
-"bc" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{pixel_y = 6},/turf/simulated/floor/carpet/red/fancy/innercorner/nw,/area/prefab/blind_pig)
-"bd" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,/turf/simulated/floor/carpet/red/fancy/edge/east,/area/prefab/blind_pig)
-"be" = (/turf/simulated/floor/carpet/red/fancy/edge/sw,/area/prefab/blind_pig)
-"bf" = (/turf/simulated/floor/carpet/red/fancy/edge/south,/area/prefab/blind_pig)
-"bg" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/red/fancy/edge/south,/area/prefab/blind_pig)
-"bh" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{pixel_x = -4; pixel_y = 4},/obj/item/reagent_containers/food/drinks/drinkingglass,/turf/simulated/floor/carpet/red/fancy/edge/south,/area/prefab/blind_pig)
-"bi" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/red/fancy/edge/south,/area/prefab/blind_pig)
-"bj" = (/obj/stool/chair/wooden{dir = 1},/turf/simulated/floor/carpet/red/fancy/edge/se,/area/prefab/blind_pig)
-"bk" = (/obj/shrub{icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"; dir = 4},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"bl" = (/obj/shrub{desc = "It's probably not suspicious that this plant is not only still alive, but thriving."; dir = 2; icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"bm" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"bn" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled{pixel_x = 6},/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{pixel_x = -6},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"bo" = (/obj/stool/chair/wooden{dir = 8},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"bp" = (/turf/simulated/wall/false_wall/reinforced,/area/prefab/blind_pig)
-"bq" = (/obj/table/reinforced/bar/auto,/obj/item/storage/box/glassbox,/obj/machinery/light/incandescent/warm/very,/obj/item/reagent_containers/food/drinks/curacao,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"br" = (/obj/machinery/door/unpowered/wood/pyro,/turf/simulated/floor/stairs/wood2{icon_state = "wood2_stairs"; dir = 1},/area/prefab/blind_pig)
-"bs" = (/turf/simulated/floor/plating/random,/area/prefab/blind_pig)
-"bt" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/random,/area/prefab/blind_pig)
-"bu" = (/obj/table/reinforced/bar/auto,/obj/item/storage/box/fruit_wedges{pixel_x = -3},/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/cocktail_doodads{pixel_x = 3},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"bv" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/bottle/tequila{pixel_x = 4},/obj/item/reagent_containers/food/drinks/bottle/gin{pixel_x = -4},/turf/simulated/floor/black,/area/prefab/blind_pig)
-"bw" = (/obj/storage/crate/freezer,/obj/item/raw_material/ice,/obj/item/raw_material/ice,/obj/item/raw_material/ice,/obj/item/raw_material/ice,/obj/item/raw_material/ice,/obj/item/reagent_containers/food/drinks/bottle/vodka,/turf/simulated/floor/black,/area/prefab/blind_pig)
-"bx" = (/obj/item/storage/secure/ssafe/theblindpig{pixel_x = -32},/turf/simulated/floor/plating/random,/area/prefab/blind_pig)
-"by" = (/obj/stool/chair/wooden{icon_state = "chair_wooden"; dir = 4},/turf/simulated/floor/carpet/blue/fancy/edge/nw,/area/prefab/blind_pig)
-"bz" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/drinkingglass/shot{pixel_x = -6},/turf/simulated/floor/carpet/blue/fancy/edge/north,/area/prefab/blind_pig)
-"bA" = (/turf/simulated/floor/carpet/blue/fancy/edge/ne,/area/prefab/blind_pig)
-"bB" = (/obj/landmark/spawner{name = "waiter"},/turf/simulated/floor/plating/random,/area/prefab/blind_pig)
-"bC" = (/obj/shrub{icon_state = "shrub"; dir = 1},/turf/simulated/floor/wood,/area/prefab/blind_pig)
-"bD" = (/turf/simulated/floor/carpet/blue/fancy/edge/sw,/area/prefab/blind_pig)
-"bE" = (/obj/table/reinforced/bar/auto,/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{pixel_y = 8},/obj/item/reagent_containers/food/drinks/drinkingglass/shot{pixel_x = 6},/obj/machinery/light/incandescent/warm/very,/turf/simulated/floor/carpet/blue/fancy/edge/south,/area/prefab/blind_pig)
-"bF" = (/obj/stool/chair/wooden{dir = 8},/turf/simulated/floor/carpet/blue/fancy/edge/se,/area/prefab/blind_pig)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/blind_pig)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/prefab/blind_pig)
+"ad" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/skull_chalice{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/blind_pig)
+"ae" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/prefab/blind_pig)
+"af" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"ag" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 10
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"ah" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"ai" = (
+/obj/table/reinforced/bar/auto,
+/obj/drink_rack/cup{
+	pixel_y = 32
+	},
+/obj/machinery/espresso_machine,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aj" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/prefab/blind_pig)
+"ak" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/card_group/plain,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/prefab/blind_pig)
+"al" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/prefab/blind_pig)
+"am" = (
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"an" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor/sanitary,
+/area/prefab/blind_pig)
+"ao" = (
+/obj/submachine/chef_sink/chem_sink{
+	layer = 3;
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/blind_pig)
+"ap" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/sanitary,
+/area/prefab/blind_pig)
+"aq" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/blind_pig)
+"ar" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/stairs/wood2,
+/area/prefab/blind_pig)
+"as" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"at" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"au" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"av" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aw" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ax" = (
+/obj/item/instrument/large/piano/grand,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"ay" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"az" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aA" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aB" = (
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/prefab/blind_pig)
+"aC" = (
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/blind_pig)
+"aD" = (
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/prefab/blind_pig)
+"aE" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aF" = (
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aG" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/suit,
+/obj/item/clothing/under/shirt_pants,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aH" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/johnny_coat{
+	desc = "This outfit just looks smug as hell.";
+	name = "overcoat and scarf"
+	},
+/obj/item/clothing/suit/tuxedo_jacket,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aI" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aJ" = (
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab/blind_pig)
+"aK" = (
+/turf/simulated/floor/carpet/red/fancy/innercorner/se,
+/area/prefab/blind_pig)
+"aL" = (
+/obj/stool/chair/wooden,
+/turf/simulated/floor/carpet/red/fancy/innercorner/sw,
+/area/prefab/blind_pig)
+"aM" = (
+/turf/simulated/floor/carpet/red/fancy/innercorner/sw,
+/area/prefab/blind_pig)
+"aN" = (
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/blind_pig)
+"aO" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aP" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"aQ" = (
+/turf/simulated/floor/carpet/red/fancy/innercorner/ne,
+/area/prefab/blind_pig)
+"aR" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/nw,
+/area/prefab/blind_pig)
+"aS" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/turf/simulated/floor/carpet/red/fancy/innercorner/ne,
+/area/prefab/blind_pig)
+"aT" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/nw,
+/area/prefab/blind_pig)
+"aU" = (
+/turf/simulated/floor/carpet/red/fancy/innercorner/nw,
+/area/prefab/blind_pig)
+"aV" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/stairs/wood2/wide{
+	icon_state = "wood2_stairs2";
+	dir = 9
+	},
+/area/prefab/blind_pig)
+"aW" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aX" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aY" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"aZ" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"ba" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/se,
+/area/prefab/blind_pig)
+"bb" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/stairs/wood2/wide{
+	icon_state = "wood2_stairs2";
+	dir = 8
+	},
+/area/prefab/blind_pig)
+"bc" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/nw,
+/area/prefab/blind_pig)
+"bd" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/blind_pig)
+"be" = (
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/prefab/blind_pig)
+"bf" = (
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"bg" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"bh" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"bi" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/blind_pig)
+"bj" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab/blind_pig)
+"bk" = (
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"bl" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 2;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"bm" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"bn" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = -6
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"bo" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"bp" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/prefab/blind_pig)
+"bq" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/storage/box/glassbox,
+/obj/machinery/light/incandescent/warm/very,
+/obj/item/reagent_containers/food/drinks/curacao,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"br" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/stairs/wood2{
+	icon_state = "wood2_stairs";
+	dir = 1
+	},
+/area/prefab/blind_pig)
+"bs" = (
+/turf/simulated/floor/plating/random,
+/area/prefab/blind_pig)
+"bt" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/prefab/blind_pig)
+"bu" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/storage/box/fruit_wedges{
+	pixel_x = -3
+	},
+/obj/item/storage/box/cocktail_umbrellas,
+/obj/item/storage/box/cocktail_doodads{
+	pixel_x = 3
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"bv" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -4
+	},
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"bw" = (
+/obj/storage/crate/freezer,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/simulated/floor/black,
+/area/prefab/blind_pig)
+"bx" = (
+/obj/item/storage/secure/ssafe/theblindpig{
+	pixel_x = -32
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/blind_pig)
+"by" = (
+/obj/stool/chair/wooden{
+	icon_state = "chair_wooden";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/prefab/blind_pig)
+"bz" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = -6
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/prefab/blind_pig)
+"bA" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/prefab/blind_pig)
+"bB" = (
+/obj/landmark/spawner{
+	name = "waiter"
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/blind_pig)
+"bC" = (
+/obj/shrub{
+	icon_state = "shrub";
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/blind_pig)
+"bD" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/prefab/blind_pig)
+"bE" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot{
+	pixel_x = 6
+	},
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/prefab/blind_pig)
+"bF" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/prefab/blind_pig)
 
 (1,1,1) = {"
-ababababababababababababababababababababababab
-ababababababababaaaaaaaaaaaaaaabababababababab
-ababababaaaaaaaaaaacadaeafagaaaaaaaaababababab
-ababababaaahaiahaaajakalamamaaanaoaaababababab
-ababababaaafamamaaamafamamamaaapaqaaababababab
-ababababaaaaaaaraaaaaaaaaraaaaaaaqaaababababab
-abaaaaaaaaasamamamatauavamamaxaaayaaaaaaababab
-abaaazaAaaafaBaCaCaCaCaCaCaDaEaaaFaGaHaaababab
-abaaamamaIavaJaKaLaKaLaKaMaNamaaaOaFaFaaaaaaaw
-abaaafamaPavaJaQaRaSaTaQaUaNamaVaFaFaFaWaXaYaw
-abaaamamaZavaJaKaMbaaMaKaLaNambbaFaFaFaWaXaYaw
-abaaamamaIavaJaQaUaQaUaQbcbdamaaaFaFaOaaaaaaaw
-abaaaraaaaafbebfbgbhbibfbfbjafaabkaFblaaababab
-abaaaFaFaaasamambmbnboamamamamaaaabpaaaaababab
-abaaaFbqaaaaaabraaaaaaaabraaaaaabsbtaaabababab
-abaaaFbubvbwaFaFaaamafamamamaabxbsbsaaabababab
-abaaaFaFaFaOaFaFaaamambybzbAaabsbBbsaaabababab
-abaaaaaaaaaaaaaaaabCambDbEbFaaaaaaaaaaabababab
-ababababababababaaaaaaaaaaaaaaabababababababab
-ababababababababababababababababababababababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+az
+am
+af
+am
+am
+ar
+aF
+aF
+aF
+aF
+aa
+ab
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aA
+am
+am
+am
+am
+aa
+aF
+bq
+bu
+aF
+aa
+ab
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aI
+aP
+aZ
+aI
+aa
+aa
+aa
+bv
+aF
+aa
+ab
+ab
+"}
+(6,1,1) = {"
+ab
+ab
+aa
+ah
+af
+aa
+as
+af
+av
+av
+av
+av
+af
+as
+aa
+bw
+aO
+aa
+ab
+ab
+"}
+(7,1,1) = {"
+ab
+ab
+aa
+ai
+am
+aa
+am
+aB
+aJ
+aJ
+aJ
+aJ
+be
+am
+aa
+aF
+aF
+aa
+ab
+ab
+"}
+(8,1,1) = {"
+ab
+ab
+aa
+ah
+am
+ar
+am
+aC
+aK
+aQ
+aK
+aQ
+bf
+am
+br
+aF
+aF
+aa
+ab
+ab
+"}
+(9,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+am
+aC
+aL
+aR
+aM
+aU
+bg
+bm
+aa
+aa
+aa
+aa
+aa
+ab
+"}
+(10,1,1) = {"
+ab
+aa
+ac
+aj
+am
+aa
+at
+aC
+aK
+aS
+ba
+aQ
+bh
+bn
+aa
+am
+am
+bC
+aa
+ab
+"}
+(11,1,1) = {"
+ab
+aa
+ad
+ak
+af
+aa
+au
+aC
+aL
+aT
+aM
+aU
+bi
+bo
+aa
+af
+am
+am
+aa
+ab
+"}
+(12,1,1) = {"
+ab
+aa
+ae
+al
+am
+aa
+av
+aC
+aK
+aQ
+aK
+aQ
+bf
+am
+aa
+am
+by
+bD
+aa
+ab
+"}
+(13,1,1) = {"
+ab
+aa
+af
+am
+am
+ar
+am
+aC
+aM
+aU
+aL
+bc
+bf
+am
+br
+am
+bz
+bE
+aa
+ab
+"}
+(14,1,1) = {"
+ab
+aa
+ag
+am
+am
+aa
+am
+aD
+aN
+aN
+aN
+bd
+bj
+am
+aa
+am
+bA
+bF
+aa
+ab
+"}
+(15,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+ax
+aE
+am
+am
+am
+am
+af
+am
+aa
+aa
+aa
+aa
+aa
+ab
+"}
+(16,1,1) = {"
+ab
+ab
+aa
+an
+ap
+aa
+aa
+aa
+aa
+aV
+bb
+aa
+aa
+aa
+aa
+bx
+bs
+aa
+ab
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+aa
+ao
+aq
+aq
+ay
+aF
+aO
+aF
+aF
+aF
+bk
+aa
+bs
+bs
+bB
+aa
+ab
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aG
+aF
+aF
+aF
+aF
+aF
+bp
+bt
+bs
+bs
+aa
+ab
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aH
+aF
+aF
+aF
+aO
+bl
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aW
+aW
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aX
+aX
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(22,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aY
+aY
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(23,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aw
+aw
+aw
+aw
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

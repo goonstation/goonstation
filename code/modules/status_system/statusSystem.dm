@@ -8,7 +8,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 
 /proc/testStatus()
 	var/inp = input(usr,"Which status?","Test status","airrit") as text
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for(var/datum/statusEffect/status as anything in usr.statusEffects)
 			usr.delStatus(status)
 		usr.changeStatus(inp, 15 MINUTES)
@@ -131,7 +131,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else
-		if(duration > 0)
+		if(isnull(duration) || duration > 0)
 			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
 /**
@@ -188,7 +188,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 					localInstance.owner = src
 					if (duration)
 						duration = localInstance.duration + localInstance.modify_change(duration - localInstance.duration)
-						if (!duration) //if we ended up reducing it to 0, just clear it without ever applying
+						if (duration <= 0) //if we ended up reducing it to or past 0, just clear it without ever applying
 							localInstance.owner = null
 							return null
 					localInstance.duration = (isnull(localInstance.maxDuration) ? (duration):(min(duration, localInstance.maxDuration)))
@@ -225,6 +225,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	else
 		throw EXCEPTION("Unknown status type passed: [statusId]")
 		return null
+
+// Sets the status duration of the passed statusId to the larger of the existing status of that ID and the passed {maxDuration}
+/atom/proc/setStatusMin(statusId, minDuration, optional) //this is probably inefficient
+	src.setStatus(statusId, max(src.getStatusDuration(statusId), minDuration), optional)
 
 /**
 	* Returns duration of status with given {statusId}, or null if not found.

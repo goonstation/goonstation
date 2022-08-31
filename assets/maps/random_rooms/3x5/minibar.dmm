@@ -1,0 +1,58 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/stool/bar,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/machinery/chem_dispenser/soda,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler{
+	density = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/box/glassbox{
+	pixel_y = 6
+	},
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"M" = (
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/bar,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+h
+b
+a
+R
+a
+"}
+(2,1,1) = {"
+M
+V
+M
+V
+M
+"}
+(3,1,1) = {"
+a
+R
+a
+M
+e
+"}

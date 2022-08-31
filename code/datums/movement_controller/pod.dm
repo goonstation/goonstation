@@ -108,13 +108,13 @@
 		velocity_magnitude = 0
 		if (can_user_act)
 			if (owner?.engine?.active)
+				//We're on autopilot before the warp, NO FUCKING IT UP!
+				if (owner.engine.warp_autopilot)
+					return FALSE
 
 				velocity_x	+= input_x * accel
 				velocity_y  += input_y * accel
 
-				//We're on autopilot before the warp, NO FUCKING IT UP!
-				if (owner.engine.warp_autopilot)
-					return FALSE
 
 				if (owner.rcs && input_x == 0 && input_y == 0)
 					braking = 1
@@ -147,7 +147,6 @@
 
 				velocity_dir = vector_to_dir(velocity_x,velocity_y)
 				owner.flying = velocity_dir
-
 		if (!velocity_magnitude)
 			velocity_magnitude = vector_magnitude(velocity_x, velocity_y)
 

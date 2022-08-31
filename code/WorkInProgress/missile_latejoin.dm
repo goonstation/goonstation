@@ -146,8 +146,10 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.loc = start
 
-proc/launch_with_missile(atom/movable/thing, turf/target, dir=null)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
+	if(missile_sprite)
+		missile.icon_state = "[missile_sprite]"
 	if(!target)
 		missile.reset_to_random_pos()
 	else
@@ -161,5 +163,5 @@ proc/latejoin_missile_spawn(var/mob/character)
 	var/turf/T = pick_landmark(LANDMARK_LATEJOIN_MISSILE)
 	var/missile_dir = landmarks[LANDMARK_LATEJOIN_MISSILE][T]
 	M.set_loc(T)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		M.lunch(character, missile_dir)

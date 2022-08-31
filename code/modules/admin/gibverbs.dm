@@ -9,8 +9,8 @@
 		return
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has gibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has gibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has gibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has gibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has gibbed [key_name(M)]")
 		M.transforming = 1
 
@@ -22,9 +22,9 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(0.5 SECONDS)
+		//SPAWN(0.5 SECONDS)
 		M.gib()
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			if (O)
 				O.delaydispose()
 
@@ -40,8 +40,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has partygibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has partygibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has partygibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has partygibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
 
 		M.partygib()
@@ -57,8 +57,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has owlgibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has owlgibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has owlgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has owlgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
 
 		M.owlgib()
@@ -74,8 +74,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has firegibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has firegibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has firegibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has firegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
 
 		M.firegib()
@@ -91,8 +91,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has elecgibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has elecgibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has elecgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has elecgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
 
 		M.elecgib()
@@ -112,8 +112,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has icegibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has icegibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has icegibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
 		M.become_statue_ice()
@@ -133,8 +133,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has goldgibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has goldgibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has goldgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
@@ -157,8 +157,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has spidergibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has spidergibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has spidergibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
 		spiderman.spidergib()
@@ -178,8 +178,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has imploded [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has imploded [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has imploded [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has imploded [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
 
 		M.implode()
@@ -195,11 +195,28 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has buttgibbed [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has buttgibbed [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has buttgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has buttgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
 
 		M.buttgib()
+
+/client/proc/cmd_admin_flockgib(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Flockbit gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has flockbit gibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has flockbit gibbed [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has flockbit gibbed [key_name(M)]")
+
+		M.flockbit_gib()
 
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -215,11 +232,11 @@
 		var/duration = input("Input duration in 1/10ths of seconds (10 - 100)", "The Honkening", 30) as num
 		if(!duration) return
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has set a floor cluwne upon [constructTarget(M,"admin")]")
-			logTheThing("diary", usr, M, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, usr, "has set a floor cluwne upon [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
+		SPAWN(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -233,11 +250,11 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to damn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has damned [constructTarget(M,"admin")] to hell")
-			logTheThing("diary", usr, M, "has damned [constructTarget(M,"diary")] to hell", "admin")
+			logTheThing(LOG_ADMIN, usr, "has damned [constructTarget(M,"admin")] to hell")
+			logTheThing(LOG_DIARY, usr, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.damn()
+		SPAWN(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -251,8 +268,8 @@
 
 	if (tgui_alert(src.mob, "Are you sure you want to undamn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has undamned [constructTarget(M,"admin")] from hell")
-			logTheThing("diary", usr, M, "has undamned [constructTarget(M,"diary")] from hell", "admin")
+			logTheThing(LOG_ADMIN, usr, "has undamned [constructTarget(M,"admin")] from hell")
+			logTheThing(LOG_DIARY, usr, "has undamned [constructTarget(M,"diary")] from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
 		M.un_damn()
@@ -272,7 +289,7 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			qdel(O)
 	src.mob.gib(FALSE, TRUE)
 
@@ -317,7 +334,7 @@
 				Q.tysonreason = reason
 				Q.timelimit = time
 				Q.tysonspeed = speed
-				logTheThing("diary", usr, tysontarget, "has tysoned [constructTarget(tysontarget,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
+				logTheThing(LOG_DIARY, usr, "has tysoned [constructTarget(tysontarget,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -360,15 +377,15 @@
 	var/tysonspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
@@ -384,7 +401,7 @@
 				src.z = tysontarget2.z
 				banproc()
 				return
-			else if (get_dist(src, src.tysontarget2) <= 1)
+			else if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -417,8 +434,8 @@
 			addBan(addData)
 			boutput(tysontarget2, "<span class='alert'><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
 			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
-			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
-			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned [constructTarget(tysontarget2,"diary")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
+			logTheThing(LOG_ADMIN, caller:client, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
+			logTheThing(LOG_DIARY, caller:client, "has tysonbanned [constructTarget(tysontarget2,"diary")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
 			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
@@ -438,22 +455,22 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
 	bump(atom/M as turf|obj|mob)
 		if(M.density)
 			M.density = 0
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				M.density = 1
-		SPAWN_DBG(0.1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			var/turf/T = get_turf(M)
 			src.x = T.x
 			src.y = T.y
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.tysontarget2) <= 1)
+			if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
@@ -471,12 +488,12 @@
 	proc/gibproc()
 		// drsingh for various cannot read null.
 		sleep(1.5 SECONDS)
-		if (get_dist(src, src.tysontarget2) <= 1)
+		if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 			for(var/mob/O in AIviewers(src, null))
 				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-			logTheThing("admin", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"admin")]")
-			logTheThing("diary", caller:client, tysontarget2, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
+			logTheThing(LOG_ADMIN, caller:client, "tysongibbed [constructTarget(tysontarget2,"admin")]")
+			logTheThing(LOG_DIARY, caller:client, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
 			message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2] ([tysontarget2.ckey]).</span>")
 			tysontarget2.gib()
 			sleep(0.5 SECONDS)

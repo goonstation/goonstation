@@ -519,7 +519,7 @@
 	proc/used()
 		charge = 0
 		has_crystal--
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (charge < 100)
 				charge++
 				sleep(0.1 SECONDS)
@@ -532,7 +532,7 @@
 		else
 			. += "<span class='alert'>The pad's telecrystal socket is empty!</span>"
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/raw_material/telecrystal))
 			qdel(I)
 			has_crystal++
@@ -609,7 +609,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			recheck()
 
 	proc/is_sellable(var/obj/O)

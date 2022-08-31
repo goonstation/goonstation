@@ -1,4 +1,4 @@
-/mob/living/critter/gunbot
+/mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
@@ -17,30 +17,31 @@
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
 	metabolizes = 0
+	var/eye_light_icon = "mars_sec_bot_eye"
 
 	New()
 		. = ..()
-		APPLY_MOB_PROPERTY(src, PROP_THERMALVISION, src)
-		var/image/eye_light = image(icon, "mars_sec_bot_eye")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
+		var/image/eye_light = image(icon, "[eye_light_icon]")
 		eye_light.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(eye_light, "eye_light")
 
 	death(var/gibbed)
 		..(gibbed, 0)
 		if (!gibbed)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			ghostize()
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -95,6 +96,9 @@
 	get_disorient_protection()
 		return max(..(), 80)
 
+	get_disorient_protection_eye()
+		return(50)
+
 	attack_hand(mob/user)
 		user.lastattacked = src
 		if(!user.stat)
@@ -133,3 +137,36 @@
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
 					else
 						return ..()
+
+/mob/living/critter/robotic/gunbot/syndicate
+	name = "Syndicate robot"
+	real_name = "Syndicate robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_nuke_bot"
+	eye_light_icon = "mars_nuke_bot_eye"
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/rifle
+		HH.name = "5.56 Rifle Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handrifle"
+		HH.limb_name = "5.56 Rifle Arm"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
+
+	setup_healths()
+		add_hh_robot(100, 1)
+		add_hh_robot_burn(100, 1)
+
+	get_melee_protection(zone, damage_type)
+		return 7
+
+	get_ranged_protection()
+		return 2.5

@@ -1,7 +1,7 @@
 /mob/living/critter/fire_elemental
 	name = "fire elemental"
 	real_name = "fire elemental"
-	desc = "Oh god."
+	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	density = 1
 	icon_state = "fire_elemental"
 	custom_gib_handler = /proc/gibs
@@ -16,7 +16,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] wails!</span></b>"
 
 		return null
@@ -69,7 +69,7 @@
 
 	death(var/gibbed)
 		..(gibbed, 0)
-		playsound(src.loc, "sound/impact_sounds/burn_sizzle.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/ash,src.loc)
 		if (!gibbed)
 			ghostize()

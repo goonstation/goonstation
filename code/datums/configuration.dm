@@ -102,7 +102,7 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
-	var/whitelist_path = "strings/whitelist.txt"
+	var/whitelist_path = "config/whitelist.txt"
 
 	//Which server can ghosts join by clicking on an on-screen link
 	var/server_buddy_id = null
@@ -424,13 +424,10 @@
 	return src.pick_mode(mode_name)
 
 /datum/configuration/proc/get_used_mode_names()
-	var/list/names = list()
-
+	. = list()
 	for (var/M in src.modes)
 		if (src.probabilities[M] > 0)
-			names += src.mode_names[M]
-
-	return names
+			. += src.mode_names[M]
 
 //return 0 to block the mode from being chosen for whatever reason
 /datum/configuration/proc/getSpecialModeCase(mode)

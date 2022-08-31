@@ -10,22 +10,22 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	permeability_coefficient = 0.90
 	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
 	burn_possible = 1
-	health = 50
+	health = 10
 	var/team_num
 
-	duration_remove = 6.5 SECONDS
+	duration_remove = 7.5 SECONDS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 1)
+		setProperty("chemprot", 10)
 
 
 /obj/item/clothing/under/crafted
@@ -188,6 +188,30 @@
 		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of the lesbian pride flag."
 		icon_state ="lesb"
 		item_state = "lesb"
+
+	gaymasc
+		name = "MLM pride jumpsuit"
+		desc = "A corporate token of inclusivity, made in a sweatshop. It's based off of vincian pride flag, but can be flipped inside-out to change it to the achillean one."
+		icon_state ="mlm"
+		item_state = "mlm"
+		var/isachily = FALSE
+		var/ach_descstate = "A corporate token of inclusivity, made in a sweatshop. It's based off of achillean pride flag, but can be flipped inside-out to change it to the vincian one."
+
+		attack_self(mob/user as mob)
+			user.show_text("You flip the [src] inside out.")
+			if(!src.isachily)
+				src.isachily = TRUE
+				src.desc = ach_descstate
+				src.icon_state = "[src.icon_state]alt"
+				src.item_state = "mlmalt"
+			else
+				src.isachily = FALSE
+				src.desc = initial(src.desc)
+				src.icon_state = initial(src.icon_state)
+				src.item_state = "mlm"
+			src.UpdateIcon()
+
+
 
 	nb
 		name = "nb pride jumpsuit"
@@ -408,7 +432,6 @@
 	desc = "It's got a red plus on it, that's a good thing right?"
 	icon_state = "medical"
 	item_state = "medical"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -419,7 +442,6 @@
 	desc = "Black and white, like ethics."
 	icon_state = "robotics"
 	item_state = "robotics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "robotics-alt"
@@ -430,7 +452,6 @@
 	desc = "A research jumpsuit, supposedly more resistant to biohazards. It had better be!"
 	icon_state = "scientist"
 	item_state = "scientist"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "scientist-alt"
@@ -441,7 +462,6 @@
 	desc = "Genetics is very green these days, isn't it?"
 	icon_state = "genetics"
 	item_state = "genetics"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "genetics-alt"
@@ -452,7 +472,6 @@
 	desc = "Scientifically proven to block up to 99% of pathogens."
 	icon_state = "pathology"
 	item_state = "pathology"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "medical-alt"
@@ -520,7 +539,6 @@
 	desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
 	icon_state = "hydro"
 	item_state = "hydro"
-	permeability_coefficient = 0.50
 
 	april_fools
 		icon_state = "hydro-alt"
@@ -531,7 +549,6 @@
 	desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
 	icon_state = "rancher"
 	item_state = "rancher"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/rank/janitor
 	name = "janitor's jumpsuit"
@@ -667,6 +684,12 @@
 	icon_state = "souschef"
 	item_state = "souschef"
 
+/obj/item/clothing/under/misc/itamae
+	name = "itamae uniform"
+	desc = "A coat and apron worn commonly worn by Japanese Chefs, waiting to be ruined with the blood you'll inevitably cover it in."
+	icon_state = "itamae"
+	item_state = "itamae"
+
 /obj/item/clothing/under/misc/lawyer
 	name = "lawyer's suit"
 	desc = "A rather objectionable piece of clothing."
@@ -709,8 +732,8 @@
 	#endif
 
 /obj/item/clothing/under/misc/turds
-	name = "NT-SO Jumpsuit"
-	desc = "A Nanotrasen Special Operations jumpsuit."
+	name = "NT combat uniform"
+	desc = "A Nanotrasen security jumpsuit."
 	icon_state = "turdsuit"
 	item_state = "turdsuit"
 	team_num = TEAM_NANOTRASEN
@@ -773,6 +796,12 @@
 	desc = "A sweater and slacks that defy God."
 	icon_state = "atheist"
 	item_state = "atheist"
+
+/obj/item/clothing/under/misc/chaplain/nun
+	name = "nun robe"
+	desc = "A long, black robe, traditonally worn by nuns. Ruler not included."
+	icon_state = "nun_robe"
+	item_state = "nun_robe"
 
 // Athletic Gear
 
@@ -1131,11 +1160,6 @@
 		icon_state = "scrub-v"
 		item_state = "lightpurple"
 
-		New()
-			..()
-			if(prob(50))
-				src.icon_state = "scrub-pr"
-
 	orange
 		icon_state = "scrub-o"
 		item_state = "orange"
@@ -1178,7 +1202,6 @@
 	burn_point = 450
 	burn_output = 800
 	burn_possible = 1
-	health = 20
 	rand_pos = 0
 
 	setupProperties()
@@ -1208,20 +1231,9 @@
 				return
 
 			if ("Rip up")
-				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				else
-					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
-						CF.set_loc(get_turf(src))
-					boutput(user, "You rip up [src].")
-					user.u_equip(src)
-					qdel(src)
-					return
+				try_rip_up(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			boutput(user, "You begin cutting up [src].")
 			if (!do_after(user, 3 SECONDS))
@@ -1230,7 +1242,7 @@
 			else
 				for (var/i=3, i>0, i--)
 					new /obj/item/bandage(get_turf(src))
-				playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 				boutput(user, "You cut [src] into bandages.")
 				user.u_equip(src)
 				qdel(src)
@@ -1238,7 +1250,7 @@
 		else
 			return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
 			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
@@ -1426,7 +1438,7 @@
     icon_state = "bandshirt"
     item_state = "bandshirt"
 
-/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user as mob)
+/obj/item/clothing/under/misc/bandshirt/attack_hand(mob/user)
 	if  ( ..() && !disturbed )
 		new /obj/item/clothing/mask/cigarette/dryjoint(get_turf(user))
 		boutput(user, "Something falls out of the shirt as you pick it up!")
@@ -1716,3 +1728,23 @@
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
+
+//Crate Loot
+
+/obj/item/clothing/under/misc/tiedye
+    name = "tiedye shirt"
+    desc = "Featuring a pretty inky pattern."
+    icon_state = "tiedye"
+    item_state = "tiedye"
+
+/obj/item/clothing/under/misc/neapolitan
+    name = "neapolitan shirt"
+    desc = "Like the icecream, not made in Naples."
+    icon_state = "neapolitan"
+    item_state = "neapolitan"
+
+/obj/item/clothing/under/misc/mint_chip
+    name = "mint chip shirt"
+    desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
+    icon_state = "mint_chip"
+    item_state = "mint_chip"

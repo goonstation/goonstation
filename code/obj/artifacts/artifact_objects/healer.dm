@@ -5,6 +5,7 @@
 /datum/artifact/healer_bio
 	associated_object = /obj/artifact/healer_bio
 	type_name = "Single Target Healer"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -53,6 +54,6 @@
 				C.HealDamage("All", heal_amt, heal_amt)
 				O.ArtifactFaultUsed(C)
 				boutput(C, "<span class='notice'>Waves of soothing energy wash over you, making you feel refreshed and healthy.</span>")
-		SPAWN_DBG(recharge_time)
+		SPAWN(recharge_time)
 			recharging = 0
 			T.visible_message("<b>[O]</b> becomes energized.")

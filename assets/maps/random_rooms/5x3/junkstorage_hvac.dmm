@@ -1,0 +1,42 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+x
+a
+q
+"}
+(2,1,1) = {"
+a
+a
+a
+"}
+(3,1,1) = {"
+G
+G
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+"}

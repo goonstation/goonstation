@@ -1,3 +1,6 @@
+TYPEINFO(/datum/component/biodegradable)
+	initialization_args = list()
+
 /datum/component/biodegradable
 /datum/component/biodegradable/Initialize()
 	if(!istype(parent, /obj))

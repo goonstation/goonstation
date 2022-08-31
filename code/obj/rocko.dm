@@ -30,7 +30,16 @@ obj/item/rocko
 
 		src.rocko_is = list("a great listener", "a good friend", "trustworthy", "wise", "sweet", "great at parties")
 		src.hat = new /obj/item/clothing/head/helmet/hardhat(src)
+
+		if (prob(10))
+			var/new_material = pick(childrentypesof(/datum/material/metal))
+			var/datum/material/dummy = new new_material
+			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
+		else
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+
 		UpdateIcon()
+
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
@@ -151,6 +160,9 @@ obj/item/rocko
 			. = "The Chief Engineer loves this rock.  Maybe it's to make up for their lack of a pet."
 		else
 			. = "A rock with a [src.smile ? "smiley" : "frowny"] face painted on it."
+
+		if (src.material?.mat_id != "rock")
+			. += "<br>Wait, that isn't a rock. It's a [pick("hunk", "chunk")] of [src.material.name]!"
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/clothing/head))

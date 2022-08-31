@@ -17,17 +17,17 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to bite there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to bite."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target,"sound/items/drink.ogg", rand(10,50), 1, pitch = 1.4)
+		playsound(target,'sound/items/drink.ogg', rand(10,50), 1, pitch = 1.4)
 		var/mob/M = target
 
-		holder.owner.visible_message(__red("<b>[holder.owner] sucks some blood from [M]!</b>"), __red("You suck some blood from [M]!"))
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] sucks some blood from [M]!</b></span>", "<span class='alert'>You suck some blood from [M]!</span>")
 		holder.owner.reagents.add_reagent("blood", 1)
 		if (isliving(M))
 			if (M.reagents)

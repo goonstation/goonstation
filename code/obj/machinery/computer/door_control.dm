@@ -7,20 +7,20 @@
 	id = 1
 
 /obj/machinery/computer/door_control/proc/alarm()
-	if(status & (NOPOWER|BROKEN))
+	if(src.status & (NOPOWER|BROKEN))
 		return
 	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
 			if(M.density)
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.open()
 			else
-				SPAWN_DBG( 0 )
+				SPAWN( 0 )
 					M.close()
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/door_control/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/door_control/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>Brig Computer</B><br><br>"

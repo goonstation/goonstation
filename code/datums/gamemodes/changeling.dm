@@ -42,7 +42,7 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_changelings = max(0, num_changelings - 1)
 
@@ -71,7 +71,7 @@
 				boutput(changeling.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/changeling/send_intercept()

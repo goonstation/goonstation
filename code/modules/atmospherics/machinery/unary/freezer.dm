@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
@@ -76,7 +76,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
@@ -97,7 +97,7 @@
 		onclose(user, "freezer")
 
 	Topic(href, href_list)
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on

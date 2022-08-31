@@ -6,7 +6,7 @@
 	name = "Ocular Implanter (SecHUD)"
 	icon_state = "ocular_implanter-full"
 	desc = "A worrying looking medical device for automated eye implants, this model is for SecHUDs. The suction cup fills you with dread."
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	is_syndicate = 1
 	var/implant = /obj/item/organ/eye/cyber/sechud
 	var/implants_available = EYE_LEFT | EYE_RIGHT
@@ -17,9 +17,10 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Which eye would you like to operate on with [src]?",,"Left Eye","Right Eye","Cancel"))
-				if ("Cancel")
-					return
+			var/choice = tgui_alert(user, "Which eye would you like to operate on with [src]?", "Pick eye", list("Left Eye", "Right Eye", "Cancel"))
+			if (!choice || choice == "Cancel")
+				return
+			switch (choice)
 				if ("Right Eye")
 					if (implants_available & EYE_RIGHT)
 						start_replace_eye(EYE_RIGHT, H)
@@ -53,14 +54,14 @@
 			if(bodypart)
 				parts_to_remove += part_loc
 		boutput(H, "<span class='alert'>Caution! Remain stationary!</span>")
-		SPAWN_DBG(1 SECOND)
-			playsound(H.loc, "sound/items/ocular_implanter_start", 50, 0, -1)
+		SPAWN(1 SECOND)
+			playsound(H.loc, 'sound/items/ocular_implanter_start.ogg', 50, 0, -1)
 			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(target, H), src.icon, src.icon_state,"[src] finishes replacing your eye.", null)
 
 	proc/end_replace_eye(var/target, var/mob/living/carbon/human/H)
 		if(!H)
 			return
-		playsound(H.loc, "sound/items/ocular_implanter_end", 50, 0, -1)
+		playsound(H.loc, 'sound/items/ocular_implanter_end.ogg', 50, 0, -1)
 		var/turf/T = H.loc
 		for(var/part_loc in parts_to_remove)
 			if (T)
@@ -77,7 +78,7 @@
 			implants_available = implants_available ^ EYE_LEFT
 		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
 		bleed(H, 5, 5)
-		SPAWN_DBG(5 DECI SECOND)
+		SPAWN(5 DECI SECOND)
 			H.emote("scream")
 		if (implants_available & EYE_RIGHT)
 			icon_state = "ocular_implanter-R"

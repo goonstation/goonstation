@@ -9,8 +9,8 @@
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL
 
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
 
@@ -75,5 +75,5 @@
 		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			boutput(user, "<span class='alert'>ERR#NOLINK</span>")
 	if (test_link)
-		if (length(test_link.powernet.cables) < 1)
+		if (length(test_link.powernet?.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
