@@ -36,6 +36,14 @@
 		..()
 		update_account()
 		recording_queue = list()
+
+		if(!starting_groups && current_state <= GAME_STATE_PREGAME)
+			var/area/A = get_area(src)
+			if(istype(A,/area/station/medical))
+				starting_groups = list(/datum/reagent_group/default/potassium_iodide,
+									   /datum/reagent_group/default/styptic,
+								       /datum/reagent_group/default/silver_sulfadiazine)
+
 		if(starting_groups)
 			for(var/P in starting_groups)
 				var/datum/reagent_group/default/G = new P
@@ -547,10 +555,11 @@
 
 	default
 		var/reaction_id
+		var/default_scale = 5
 
 		New()
 			..()
-			build_reagent_group_by_reaction(reaction_id)
+			build_reagent_group_by_reaction(reaction_id, default_scale)
 
 		potassium_iodide
 			reaction_id = "anti_rad"
