@@ -1,5 +1,9 @@
 
 (t)wed aug 31 22
+(u)RubberRats
+(p)10490
+(e)|
+(+)Captains now always spawn with an emergency oxygen tank in their bag.
 (u)ZWRh3
 (p)10529
 (e)|
