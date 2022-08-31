@@ -1012,7 +1012,7 @@
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
 /atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
-	if (!connect_to || !islist(connect_to)) // nothing to connect to
+	if (!islist(connect_to)) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE

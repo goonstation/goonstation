@@ -45,6 +45,7 @@
 
 	the_tuff_stuff
 		explosion_resistance = 7
+
 	update_icon()
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_across_areas, connect_diagonal)
 

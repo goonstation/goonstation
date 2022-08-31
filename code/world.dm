@@ -131,7 +131,7 @@ var/f_color_selector_handler/F_Color_Selector
 		renderSourceHolder.render_target = "*renderSourceHolder"
 
 /proc/buildMaterialCache()
-	//material_cache
+	material_cache = list()
 	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
