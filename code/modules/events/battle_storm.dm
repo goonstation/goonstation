@@ -72,7 +72,7 @@
 				else
 					break
 	#endif
-			for_by_tcl(area,/area)
+			for_by_tcl(area, /area)
 				if (area.z != Z_LEVEL_STATION)
 					continue
 				var/will_storm = TRUE
