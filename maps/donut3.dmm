@@ -19330,21 +19330,18 @@
 /area/station/maintenance/outer/west)
 "fnV" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/jetpack{
-	pixel_x = -10;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 6;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/cable{
 	d1 = 1;
@@ -35252,17 +35249,15 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 10
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -1
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4;
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 10
-	},
+/obj/item/tank/jetpack/micro,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -63920,21 +63915,18 @@
 /area/station/hallway/primary/west)
 "seH" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/jetpack{
-	pixel_x = -10;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 6;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)

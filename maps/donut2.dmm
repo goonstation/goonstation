@@ -10453,7 +10453,7 @@
 /area/station/ai_monitored/storage/eva)
 "aIO" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
@@ -10662,7 +10662,7 @@
 /area/station/ai_monitored/storage/eva)
 "aJt" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
@@ -17632,9 +17632,8 @@
 /area/station/engine/inner)
 "ben" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
@@ -17656,9 +17655,8 @@
 /area/station/engine/inner)
 "beo" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
@@ -31605,8 +31603,8 @@
 /area/station/security/main)
 "gMJ" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -6
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 3;
@@ -32413,8 +32411,8 @@
 /area/station/mining/staff_room)
 "hAR" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -6
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 3;
@@ -32639,9 +32637,8 @@
 	pixel_y = -24
 	},
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
