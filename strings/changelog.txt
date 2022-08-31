@@ -1,5 +1,9 @@
 
 (t)wed aug 31 22
+(u)Wisemonster
+(p)10550
+(e)|
+(+)Destiny qm can now print barcodes to the shipping market.
 (u)Sovexe & Emily
 (*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
 (u)Emily
