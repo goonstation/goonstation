@@ -2438,8 +2438,8 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		for (var/obj/HI in helditems)
 			HI.set_loc(src.loc)
 
-		helditems.len = 0
-		update_overlays()
+	helditems.len = 0
+	update_overlays()
 	return
 
 obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
