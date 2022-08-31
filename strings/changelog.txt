@@ -1,5 +1,7 @@
 
 (t)wed aug 31 22
+(u)Sovexe & Emily
+(*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
 (u)Emily
 (*)Wizard Chickens now accept credits to fund their education. They will gain more powerful spells with more funding.
 (u)Sord
