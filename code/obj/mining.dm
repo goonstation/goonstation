@@ -1171,14 +1171,6 @@
 		return
 
 	proc/build_icon(var/wipe_overlays = 0)
-		/*
-		if (wipe_overlays)
-			src.overlays = list()
-		var/image/coloration = image(src.icon,"color_overlay")
-		coloration.blend_mode = 4
-		coloration.color = src.stone_color
-		src.overlays += coloration
-		*/
 		src.color = src.stone_color
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
