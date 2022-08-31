@@ -692,14 +692,14 @@ Contents:
 
 	New()
 		. = ..()
-		connects_to = list(/turf/unsimulated/wall/auto/sengoku)
+		connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 
 /turf/unsimulated/wall/auto/paper
 	icon = 'icons/turf/walls_paper.dmi'
 
 	New()
 		. = ..()
-		connects_to = list(/turf/unsimulated/wall/auto/paper)
+		connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 
 /turf/unsimulated/wall/sengoku_tall
 	icon = 'icons/turf/walls_sengoku.dmi'

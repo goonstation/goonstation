@@ -86,10 +86,10 @@
 	New()
 		. = ..()
 		connect_overlay = 1
-		connects_to = list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window)
+		connects_to = typecacheof(list(/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window))
 		// override parent so we can connect to ourselves
 		connects_to_exceptions = list()
-		connects_with_overlay = list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window)
+		connects_with_overlay = typecacheof(list(/turf/simulated/wall/false_wall/reinforced, /obj/machinery/door, /obj/window))
 		connect_across_areas = FALSE
 
 // ---------------------------------------------- OBJECTS -------------------------------------
@@ -169,16 +169,16 @@
 	New()
 		. = ..()
 		connect_overlay = 1
-		connects_to = list(
+		connects_to = typecacheof(list(
 			/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
 			/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 			/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
-		)
+		))
 
-		connects_with_overlay = list(
+		connects_with_overlay = typecacheof(list(
 			/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
 			/obj/machinery/door, /obj/window, /obj/wingrille_spawn
-		)
+		))
 
 	attackby()
 	attack_hand()

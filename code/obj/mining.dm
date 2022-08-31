@@ -883,12 +883,12 @@
 		. = ..()
 		connect_overlay = 0
 		connect_diagonal = 1
-		connects_to = list(
+		connects_to = typecacheof(list(
 			/turf/simulated/wall/auto/asteroid,
 			/turf/simulated/wall/false_wall,
 			/obj/structure/woodwall,
 			/obj/machinery/door/poddoor/blast/asteroid
-		)
+		))
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"

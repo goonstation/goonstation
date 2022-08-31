@@ -208,16 +208,16 @@
 			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
 			src.icon = initial(wall_path.icon)
 
-			var/static/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+			var/static/list/s_connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
+			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn))
 
-			var/static/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
-			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+			var/static/list/s_connects_with_overlay = typecacheof(list(/turf/simulated/wall/auto/shuttle,
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn))
 
 			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
 				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced

@@ -22,7 +22,7 @@
 
 	New()
 		. = ..()
-		connects_to = list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather)
+		connects_to = typecacheof(list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather))
 
 // DECALS/FAKEOBJS
 

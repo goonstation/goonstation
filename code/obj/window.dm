@@ -723,7 +723,7 @@
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
-	var/static/list/connects_to = list(
+	var/static/list/connects_to = typecacheof(list(
 		/obj/machinery/door,
 		/obj/window,
 		/turf/simulated/wall/auto/supernorn,
@@ -752,7 +752,7 @@
 		/turf/unsimulated/wall/auto/adventure/shuttle,
 		/turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/wall/false_wall,
-	)
+	))
 
 	/// Gotta be a typecache list
 	var/static/list/connects_to_exceptions = typecacheof(list(
@@ -760,10 +760,10 @@
 		/obj/window/cubicle,
 		/turf/unsimulated/wall/auto/lead/blue,
 	))
-	var/static/list/connects_with_overlay_exceptions = list(
+	var/static/list/connects_with_overlay_exceptions = typecacheof(list(
 		/obj/window,
 		/obj/machinery/door/poddoor
-	)
+	))
 
 	New()
 		..()

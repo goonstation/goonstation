@@ -1012,26 +1012,21 @@
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
 /atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
-	if (!islist(connect_to)) // nothing to connect to
+	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE
 
-	for (var/connect in connect_to)
-		var/list/matches = list()
-		if(istype(T, connect))
-			matches.Add(T)
-		else
-			for (var/atom/movable/AM in T)
-				if (!AM.anchored)
-					continue
-				if (istype(AM, connect))
-					matches.Add(AM)
+	// quick path, basically istype(T, anything in connect-except)
+	if (connect_to[T.type] && !exceptions[T.type])
+		return TRUE
 
-		// fast-returning typecache_filter_list()
-		for (var/atom/match as anything in matches)
-			if (!(exceptions[match.type]))
-				return TRUE
+	// slow 😩
+	for (var/atom/movable/AM in T)
+		if (!AM.anchored)
+			continue
+		if (connect_to[AM.type] && !exceptions[AM.type])
+			return TRUE
 	return FALSE
 
 /**

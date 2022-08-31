@@ -228,7 +228,7 @@ var/list/miningModifiers = list()
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
 			logTheThing(LOG_DEBUG, null, "Setting up tile lists for asteroid.")
-			while(edgeTiles.len)
+			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
 
@@ -271,9 +271,9 @@ var/list/miningModifiers = list()
 			Turfspawn_Asteroid_SeedEvents(placed)
 
 			logTheThing(LOG_DEBUG, null, "Making holes or something idk.")
-			if(placed.len)
+			if(length(placed))
 				generated.Add(placed)
-				if(placed.len > 9)
+				if(length(placed) > 9)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()

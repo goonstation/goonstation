@@ -182,8 +182,8 @@
 		. = ..()
 		connect_overlay = TRUE
 		connect_diagonal = TRUE
-		connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window)
-		connects_with_overlay = list(/obj/machinery/door, /obj/window)
+		connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
+		connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
 
 	update_icon()
 		..()
