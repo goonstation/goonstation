@@ -359,27 +359,8 @@
 				if (isnull(name) || !length(name) || name == " ")
 					return
 
-#if FALSE
-				var/list/reagentlist = params2list(reagents)
-				var/datum/reagent_group/G = new /datum/reagent_group()
-				for (var/reagent in reagentlist)
-					if (lowertext(reagent) in src.dispensable_reagents)
-						G.reagents += lowertext(reagent)
-						var/reagentAmmount = reagentlist[reagent]
-
-						if (istext(reagentAmmount))
-							var/ammount = text2num_safe(reagentAmmount)
-							G.reagents[lowertext(reagent)] = clamp(round(ammount), 1, 100)
-						// If the input is more than 1 of the same reagent we have a list instead of just text
-						else
-							var/reagentValue = 0
-							for (var/num in reagentAmmount)
-								reagentValue += text2num_safe(num)
-							G.reagents[lowertext(reagent)] = clamp(round(reagentValue), 1, 100)
-#else
 				var/datum/reagent_group/G = new /datum/reagent_group()
 				G.reagents = src.recording_queue.Copy()
-#endif
 
 				if(!length(G.reagents))
 					return
@@ -402,13 +383,6 @@
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
 					for (var/reagent in group.reagents)
-#if FALSE
-						if ((reagent in dispensable_reagents))
-							var/amt = 10
-							if (isnum(group.reagents[reagent]))
-								amt = group.reagents[reagent]
-							beaker.reagents.add_reagent(reagent,amt)
-#else
 						var/tuple = params2list(reagent)
 						var/key = tuple[1]
 						var/value = text2num_safe(tuple[tuple[1]])
@@ -417,7 +391,6 @@
 							if (isnum(value))
 								amt = value
 							beaker.reagents.add_reagent(key,amt)
-#endif
 							beaker.reagents.handle_reactions()
 					src.UpdateIcon()
 					use_power(length(group.reagents) * 10)
@@ -446,6 +419,7 @@
 	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
 								/datum/reagent_group/default/styptic,
 								/datum/reagent_group/default/silver_sulfadiazine)
+
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents artificially produced using industrial ethanol. Not recommended for human consumption."
@@ -570,6 +544,7 @@
 				src.name = R.name
 			for(var/reagent in C.required_reagents)
 				reagents += "[reagent]=[C.required_reagents[reagent] * scale]"
+
 	default
 		var/reaction_id
 
@@ -584,6 +559,7 @@
 		styptic
 			reaction_id = "styptic_powder"
 			custom_desc = "Control bleeding and heal physical wounds"
+
 		silver_sulfadiazine
 			reaction_id = "silver_sulfadiazine"
 			custom_desc = "This antibacterial compound is used to treat burn victims"
