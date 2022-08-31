@@ -47,6 +47,8 @@ WET FLOOR SIGN
 /obj/item/spraybottle/pepperspray
 	name = "Pepper Spray"
 	desc = "A container of capsaicin designed to be sprayed on people that might wish you harm."
+	icon_state = "tsunami"
+	item_state = "tsunami" //TODO: make an actual sprite for this
 
 	New()
 		..()
