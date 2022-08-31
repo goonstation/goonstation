@@ -175,12 +175,15 @@
 	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	connect_overlay = TRUE
-	connect_diagonal = TRUE
-	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 	var/broken = FALSE
 	var/on = FALSE
+
+	New()
+		. = ..()
+		connect_overlay = TRUE
+		connect_diagonal = TRUE
+		connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window)
+		connects_with_overlay = list(/obj/machinery/door, /obj/window)
 
 	update_icon()
 		..()

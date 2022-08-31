@@ -19,7 +19,10 @@
 	name = "strange glowing wall"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "0"
-	connects_to = list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather)
+
+	New()
+		. = ..()
+		connects_to = list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather)
 
 // DECALS/FAKEOBJS
 

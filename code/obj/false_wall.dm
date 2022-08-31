@@ -208,7 +208,7 @@
 			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
 			src.icon = initial(wall_path.icon)
 
-			var/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+			var/static/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
@@ -216,7 +216,7 @@
 			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
 			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
 
-			var/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
+			var/static/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
 			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
 
 			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
@@ -230,8 +230,8 @@
 
 			/// basically this is doing what an autowall of the path wall_path would do
 			var/s_connect_overlay = initial(wall_path.connect_overlay)
-			var/list/s_connects_with_overlay_exceptions = list()
-			var/list/s_connects_to_exceptions = list(/turf/simulated/wall/auto/shuttle)
+			var/static/list/s_connects_with_overlay_exceptions = list()
+			var/static/list/s_connects_to_exceptions = typecacheof(/turf/simulated/wall/auto/shuttle)
 
 			var/s_connect_diagonal =  initial(wall_path.connect_diagonal)
 			var/image/s_connect_image = initial(wall_path.connect_image)
