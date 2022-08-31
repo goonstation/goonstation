@@ -44,25 +44,26 @@ if there are any violations).
 var/global/list/cached_concrete_types
 
 /**
-	* typesof() but only for concrete (not abstract) types,
-	* it caches the result so you don't need to worry about doing that manually
-	* so subsequent calls on the same type will be very fast.
-	*
-	* just don't modify the result of the call directly
-	* OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
-	*
-	* ALSO OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*
-	* NOT OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*/
+ * [/proc/typesof()] but only for concrete (not abstract) types,
+ * it caches the result so you don't need to worry about doing that manually
+ * so subsequent calls on the same type will be very fast.
+ *
+ * just don't modify the result of the call directly
+ *
+ * OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
+ *
+ * ALSO OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ *
+ * NOT OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head)
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ */
 proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()

@@ -104,6 +104,8 @@ var/global/list/mapNames = list(
 	var/shuttle_map_turf = /turf/space
 	var/space_turf_replacement = null
 
+	var/has_hotspots = FALSE
+
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
 	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
