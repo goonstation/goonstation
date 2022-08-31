@@ -437,10 +437,10 @@
 				shoot_reflected_bounce(O, hit)
 
 			if(prob(hit.material.getProperty("n_radioactive")*10))
-				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, TRUE, 1)
+				hit.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
 			if(prob(hit.material.getProperty("radioactive")*10))
-				hit.AddComponent(/datum/component/radioactive, min(power,20), TRUE, FALSE, 1)
-		hit.AddComponent(/datum/component/radioactive, min(power,5), TRUE, FALSE, 1)
+				hit.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
+		hit.AddComponent(/datum/component/radioactive, min(power,25), TRUE, FALSE, 1)
 		return
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
