@@ -139,15 +139,15 @@ const OccupantType = (props) => {
   const { kind, user } = props;
   switch (kind) {
     case "robot":
-      if (user === "brain") return "Mk.2-Type Cyborg";
-      if (user === "ai") return "Mk.2-Type AI Shell";
+      if (user === "brain") return <>Mk.2-Type Cyborg</>;
+      if (user === "ai") return <>Mk.2-Type AI Shell</>;
       break;
     case "human":
-      return "Mk.2-Type Carbon";
+      return <>Mk.2-Type Carbon</>;
     case "eyebot":
-      return "Mk.1-Type Eyebot";
+      return <>Mk.1-Type Eyebot</>;
     default:
-      return "Unknown type";
+      return <>Unknown type</>;
   }
 };
 const ClothingReport = (props) => {
