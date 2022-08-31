@@ -411,7 +411,7 @@ Contains:
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
-	item_state = "microjetpack"
+	item_state = "microjetpack0"
 	base_icon_state = "microjetpack"
 	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
 	mats = 8
