@@ -287,7 +287,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/spongecaps/syndicate
 	cost = 3
 	desc = "A pack of sponge capsules that react with water and produce nasty critters."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
@@ -309,7 +308,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/disguiser
 	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
@@ -367,7 +365,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
@@ -1036,7 +1033,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
 	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
