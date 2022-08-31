@@ -408,6 +408,20 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack"
+	item_state = "microjetpack"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	mats = 8
+	force = 6
+
+	New()
+		..()
+		src.air_contents.volume = 18
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/oxygen

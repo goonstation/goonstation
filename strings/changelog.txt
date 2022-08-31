@@ -1,4 +1,7 @@
 
+(t)wed aug 31 22
+(u)Sord
+(*)Added new micro jetpack to all maps, standard size jetpack can be produced by the miners at greater cost
 (t)tue aug 30 22
 (u)Cherman0
 (p)10534
