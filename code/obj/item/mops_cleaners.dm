@@ -44,6 +44,14 @@ WET FLOOR SIGN
 		..()
 		reagents.add_reagent("luminol", initial_volume)
 
+/obj/item/spraybottle/pepperspray
+	name = "Pepper Spray"
+	desc = "A container of capsaicin designed to be sprayed on people that might wish you harm."
+
+	New()
+		..()
+		reagents.add_reagent("capsaicin", initial_volume)
+
 /obj/item/spraybottle/cleaner/
 	name = "cleaner spray bottle"
 	desc = "A spray bottle labeled 'Poo-b-Gone Space Cleaner'."
