@@ -1541,7 +1541,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.reagents?.add_reagent("radium", damage) //fuckit //power 100 shots will give lethal radiation poisoning instantly without protection - 3Sv
+			src.reagents?.add_reagent("radium", damage/4) //fuckit
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)

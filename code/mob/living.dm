@@ -1935,7 +1935,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.reagents?.add_reagent("radium", damage) //fuckit
+				src.reagents?.add_reagent("radium", damage/4) //fuckit
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
