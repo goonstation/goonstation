@@ -91,11 +91,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
-///datum/syndicate_buylist/generic/radbow
-//	name = "Rad Poison Crossbow"
-//	item = /obj/item/gun/energy/crossbow
-//	cost = 3
-//	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
+/datum/syndicate_buylist/generic/radbow
+	name = "Rad Poison Crossbow"
+	item = /obj/item/gun/energy/crossbow
+	cost = 3
+	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
