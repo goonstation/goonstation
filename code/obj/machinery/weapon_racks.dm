@@ -236,6 +236,8 @@
 		try // : is bad, but let's try and do it anyway.
 			myWeapon:UpdateIcon() // Update the icon of the weapon, so it shows the right level of charge.
 		catch // Did : throw an exception? Catch it! Before it gets loose!
+		if (src.amount <= 0) //prevents a runtime if it's empty
+			return
 
 	proc/update()
 		src.icon_state = "[src.stand_type][src.amount]"
