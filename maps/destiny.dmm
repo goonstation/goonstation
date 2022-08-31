@@ -27054,7 +27054,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 8
 	},
 /turf/simulated/floor,
