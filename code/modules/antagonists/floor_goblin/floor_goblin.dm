@@ -28,7 +28,7 @@
 	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
 	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
 	H.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
-	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+	H.equip_new_if_possible(/obj/item/tank/mini_oxygen, SLOT_R_STORE)
 	H.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
 	H.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
 	H.equip_new_if_possible(/obj/item/shoethief_bag, SLOT_IN_BELT)

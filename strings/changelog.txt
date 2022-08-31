@@ -1,5 +1,9 @@
 
 (t)wed aug 31 22
+(u)Sord
+(*)Added new pocket sized oxygen tank. All backpacks/boxes will now spawn with these.
+(*)Pocket tanks hold roughly 3 minutes worth of air on spawn, more if filled up to maximum.
+(*)The old emergency oxygen tanks are now "mini oxygen tanks", found where you'd find them normally. They also hold slightly more air volume.
 (u)RubberRats
 (p)10490
 (e)|

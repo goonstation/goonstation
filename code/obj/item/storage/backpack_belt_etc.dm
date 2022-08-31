@@ -12,7 +12,7 @@
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/storage/box/starter)
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
 
@@ -628,7 +628,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/mini_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
