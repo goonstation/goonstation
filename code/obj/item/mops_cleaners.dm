@@ -49,10 +49,17 @@ WET FLOOR SIGN
 	desc = "A container of capsaicin designed to be sprayed on people that might wish you harm."
 	icon_state = "tsunami"
 	item_state = "tsunami" //TODO: make an actual sprite for this
+	var/list/whitelist = list("capsaicin")
 
 	New()
 		..()
 		reagents.add_reagent("capsaicin", initial_volume)
+
+	on_reagent_change(add)
+		..()
+		if(add) // It doesn't work without this
+			check_whitelist(src, src.whitelist)
+
 
 /obj/item/spraybottle/cleaner/
 	name = "cleaner spray bottle"

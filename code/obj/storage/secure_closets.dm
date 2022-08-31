@@ -240,7 +240,8 @@
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
 	req_access = list(access_head_of_personnel)
-	spawn_contents = list(/obj/item/device/flash,
+	spawn_contents = list(/obj/item/spraybottle/pepperspray,
+	/obj/item/device/flash,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/hop,
 	/obj/item/clothing/shoes/brown,
