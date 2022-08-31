@@ -322,10 +322,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
 			var/list/data
 			try
-
-#ifdef SECRETS_ENABLED
-				if (prescan()) return
-#endif
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 				// Goonhub API error encountered
 				if (data["error"])
