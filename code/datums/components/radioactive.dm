@@ -106,10 +106,10 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
-			M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
+			M.take_radiation_dose(mult * (neutron ? 0.4 SIEVERTS: 0.1 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 0.4 SIEVERTS: 0.1 SIEVERTS) * (radStrength/100) * (src.effect_range - GET_DIST(M, PA)) / src.effect_range) //should be inverse square or something but idc
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 		if(!src.radStrength)
@@ -119,12 +119,12 @@ TYPEINFO(/datum/component/radioactive)
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
 			if(!ON_COOLDOWN(toucher, "radiation_exposure", 0.5 SECONDS))
-				toucher.take_radiation_dose((neutron ? 1.8 SIEVERTS: 0.6 SIEVERTS) * (radStrength/100))
+				toucher.take_radiation_dose((neutron ? 0.9 SIEVERTS: 0.3 SIEVERTS) * (radStrength/100))
 
 	/// Called when a radioactive thing is eaten. High dose to account for radioactive things continuing to irradiate you from the stomach.
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 6 SIEVERTS: 3 SIEVERTS) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 4 SIEVERTS: 2 SIEVERTS) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
 	/// Adds a line to examine text to indicate level of radiation produced
 	proc/examined(atom/owner, mob/examiner, list/lines)
