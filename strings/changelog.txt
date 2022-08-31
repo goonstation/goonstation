@@ -7,6 +7,7 @@
 (*)You now have an accumulated dose, which starts to make you sick over time.
 (*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
 (*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
+(+)Mini rad-crossbows unavailible pending future rework.
 (t)mon aug 29 22
 (u)Sord
 (*)Added 4 new Research accesses, view minor changes for details
