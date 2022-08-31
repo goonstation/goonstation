@@ -1693,7 +1693,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	var/image/icon
 	var/label
 	product_amount = 1
-	icon_panel = "standard-panel"
 	New(obj/item/product,price)
 		. = ..()
 		contents = list()
@@ -1892,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
+	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
