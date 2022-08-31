@@ -51655,7 +51655,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Teleporter Pad";
-	req_access_txt = "24"
+	req_access_txt = "87"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine,
@@ -54451,7 +54451,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Science Teleporter";
-	req_access_txt = "8"
+	req_access_txt = "87"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
@@ -59614,7 +59614,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = "85"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
@@ -59638,7 +59638,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = "85"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
@@ -68438,7 +68438,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Artifact Lab";
-	req_access_txt = "24"
+	req_access_txt = "86"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,

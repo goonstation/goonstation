@@ -28,6 +28,8 @@
 	var/audible_ahelps = PM_NO_ALERT
 	var/buildmode_view = 0 //change view when using buildmode?
 	var/spawn_in_loc = 0 //spawn verb spawning in loc?
+	/// toggles seeing the Topic log entires on or off by default
+	var/show_topic_log = FALSE
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
 
@@ -146,13 +148,14 @@
 		HTML += "<b>Hide ATags?: <a href='?src=\ref[src];action=toggle_atags'>[(src.see_atags ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Change view when using buildmode?: <a href='?src=\ref[src];action=toggle_buildmode_view'>[(src.buildmode_view ? "No" : "Yes")]</a></b><br>"
 		HTML += "<b>Spawn verb spawns in your loc?: <a href='?src=\ref[src];action=toggle_spawn_in_loc'>[(src.spawn_in_loc ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Show Topic log?: <a href='?src=\ref[src];action=toggle_topic_log'>[(src.show_topic_log ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
 		for(var/cat in toggleable_admin_verb_categories)
 			HTML += "<b>Hide [cat] verbs?: <a href='?src=\ref[src];action=toggle_category;cat=[cat]'>[(cat in src.hidden_categories) ? "Yes" : "No"]</a></b><br>"
 		HTML += "<hr><b><a href='?src=\ref[src];action=load_admin_prefs'>LOAD</a></b> | <b><a href='?src=\ref[src];action=save_admin_prefs'>SAVE</a></b>"
 		HTML += "</body></html>"
 
-		user.Browse(HTML.Join(),"window=aprefs;size=375x520")
+		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
 		if (!src.owner)
@@ -277,6 +280,11 @@
 			saved_spawn_in_loc = 0
 		spawn_in_loc = saved_spawn_in_loc
 
+		var/saved_show_topic_log = AP["show_topic_log"]
+		if (isnull(saved_show_topic_log))
+			saved_show_topic_log = FALSE
+		show_topic_log = saved_show_topic_log
+
 		src.hidden_categories = list()
 		for(var/cat in toggleable_admin_verb_categories)
 			var/cat_hidden = AP["hidden_[cat]"]
@@ -331,6 +339,7 @@
 		AP["audible_ahelps"] = audible_ahelps
 		AP["buildmode_view"] = buildmode_view
 		AP["spawn_in_loc"] = spawn_in_loc
+		AP["show_topic_log"] = show_topic_log
 
 		for(var/cat in toggleable_admin_verb_categories)
 			AP["hidden_[cat]"] = (cat in src.hidden_categories)

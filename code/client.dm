@@ -869,7 +869,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		return 0
 
 /client/proc/is_mentor()
-	return player.mentor
+	return player?.mentor
 
 /client/proc/can_see_mentor_pms()
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms

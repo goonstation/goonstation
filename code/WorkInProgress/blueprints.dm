@@ -644,6 +644,8 @@
 
 
 	attack_self(mob/user as mob)
+		if(!user.client)
+			return
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
 		var/input = tgui_input_list(user, "Select option:", "Option", options)
 		if (!input)

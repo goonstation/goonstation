@@ -637,7 +637,7 @@
 									thing = src.l_hand
 								else if (src.r_hand)
 									thing = src.r_hand
-							if (thing)
+							if (thing && !thing.cant_drop)
 								if (src.juggling())
 									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 										src.drop_juggle()

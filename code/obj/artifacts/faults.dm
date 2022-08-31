@@ -36,13 +36,13 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// irradiates the victim
 	type_name = "Radiation"
 	trigger_prob = 8
-	var/rads_amount = 20
+	var/rads_amount = 2 SIEVERTS
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
 		if (..())
 			return
 		boutput(user, "<span class='alert'>You feel strange.</span>")
-		user.changeStatus("radiation", (src.rads_amount) SECONDS, 3)
+		user.take_radiation_dose(src.rads_amount)
 
 /datum/artifact_fault/shutdown
 	// deactivates the artifact

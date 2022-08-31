@@ -471,8 +471,6 @@
 			take_damage(damage)
 		if(D_BURNING)
 			take_damage(damage/2)
-		if(D_RADIOACTIVE)
-			take_damage(damage/4)
 	return
 
 /obj/machinery/door/update_icon(var/toggling = 0)

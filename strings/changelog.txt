@@ -1,5 +1,22 @@
 
+(t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
+(u)Amylizzle
+(p)9741
+(e)|
+(*)Changes how radiation works. All radiation sources are now visible, with a green or blue highlight and a glowing light!
+(*)You now have an accumulated dose, which starts to make you sick over time.
+(*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
+(*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
 (t)mon aug 29 22
+(u)Sord
+(*)Added 4 new Research accesses, view minor changes for details
+(u)Sord
+(e)|
+(+)New Research accesses are "Research Foyer", "Telescience", "Artifact Lab", and "Robot Depot"
 (u)Roddy
 (p)9442
 (e)|

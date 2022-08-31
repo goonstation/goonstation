@@ -995,7 +995,7 @@ WET FLOOR SIGN
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
-				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)
+				F.group.drain(F, amt / max(1, F.group.amt_per_tile), src.bucket)
 				if(src.bucket.reagents.is_full())
 					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
 				success = TRUE
