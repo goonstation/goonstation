@@ -148,13 +148,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, min(75 * power, 100))
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 75 * power)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, min(75 * newval, 100))
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 75 * newval)
 
 	OnRemove()
 		. = ..()

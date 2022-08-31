@@ -55,7 +55,7 @@
 
 		src.icon_state = "bowling_ball"
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))

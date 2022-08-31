@@ -217,7 +217,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "[src.name] - [src.real_name]: [message]", "say")
+			logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -384,7 +384,7 @@
 /mob/proc/zoldize()
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a zoldorf.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a zoldorf.")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a zoldorf.")
 		return make_zoldorf()
 	return null
 

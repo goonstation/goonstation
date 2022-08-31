@@ -185,7 +185,7 @@
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
 			SPAWN(8 SECONDS)
-				playsound(target, "sound/ambience/loop/Static_Horror_Loop.ogg", 100)
+				playsound(target, 'sound/ambience/loop/Static_Horror_Loop.ogg', 100)
 				sleep(rand(100,400))
 				if(target)
 					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)
@@ -652,11 +652,11 @@
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(master,signal.source.loc)
+			var/dist = GET_DIST(master,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 					nearest_beacon = recv
 					nearest_beacon_loc = signal.source.loc
 					next_destination = signal.data["next_patrol"]

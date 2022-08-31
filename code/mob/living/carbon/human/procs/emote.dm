@@ -116,9 +116,9 @@
 
 
 						if (iscluwne(src))
-							playsound(src, "sound/voice/farts/poo.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 						else
@@ -619,7 +619,7 @@
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
-						logTheThing("combat", src, null, "was gibbed by emoting uguu at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by emoting uguu at [log_loc(src)].")
 						src.gib()
 						return
 				else
@@ -637,7 +637,7 @@
 									thing = src.l_hand
 								else if (src.r_hand)
 									thing = src.r_hand
-							if (thing)
+							if (thing && !thing.cant_drop)
 								if (src.juggling())
 									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 										src.drop_juggle()
@@ -682,7 +682,7 @@
 						src.say ("M'lady")
 						SPAWN(1 SECOND)
 							src.add_karma(-10)
-							logTheThing("combat", src, null, "was gibbed by emoting fedora tipping at [log_loc(src)].")
+							logTheThing(LOG_COMBAT, src, "was gibbed by emoting fedora tipping at [log_loc(src)].")
 							src.gib()
 
 			if ("hatstomp", "stomphat")
@@ -1689,7 +1689,7 @@
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
 								boutput(src, "<span class='notice'>The ants arachnify.</span>")
-								playsound(src, "sound/effects/bubbles.ogg", 80, 1)
+								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))
@@ -1822,7 +1822,7 @@
 											src.stamina_stun()
 										combatflipped |= M
 										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
-										logTheThing("combat", src, M, "flips into [constructTarget(M,"combat")]")
+										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
 										M.changeStatus("weakened", 2 SECONDS)
@@ -2171,7 +2171,7 @@
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 50,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
@@ -2199,7 +2199,7 @@
 						src.limbs.l_leg?.sever()
 						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
 						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
-						playsound(src.loc,"sound/misc/deepfrieddabs.ogg",50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 50,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 
@@ -2237,7 +2237,7 @@
 							I.bump_up(chat_text.measured_height)
 
 			if (message)
-				logTheThing("say", src, null, "EMOTE: [message]")
+				logTheThing(LOG_SAY, src, "EMOTE: [message]")
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
@@ -2254,7 +2254,7 @@
 	else
 
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			act = lowertext(act)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
@@ -2361,7 +2361,7 @@
 
 	src.emote("scream")
 	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
-	logTheThing("combat", src, G.affecting, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
+	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time
 	if (iswrestler(src))
@@ -2369,7 +2369,7 @@
 		G.affecting.force_laydown_standup()
 		G.affecting.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 		src.changeStatus("weakened", 1.5 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	else
 		src.changeStatus("weakened", 3.9 SECONDS)
 
@@ -2382,7 +2382,7 @@
 			qdel(G)
 
 		G.affecting.TakeDamage("head", 9, 0, 0, DAMAGE_BLUNT)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 	if (istype(tabl, /obj/table/glass))
 		var/obj/table/glass/g_tabl = tabl
 		if (!g_tabl.glass_broken)

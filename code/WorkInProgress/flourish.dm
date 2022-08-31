@@ -78,3 +78,5 @@ TYPEINFO(/datum/component/pet)
 	UnregisterSignal(parent, COMSIG_ATTACKHAND)
 	UnregisterSignal(critter_parent, COMSIG_MOB_DEATH)
 	. = ..()
+
+/datum/betting_controller

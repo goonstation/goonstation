@@ -99,10 +99,11 @@ Contains:
 			var/mob/living/carbon/location = loc
 			if (!location)
 				return
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-					T.icon_state = "airoff"
+					if(T.the_item == src)
+						T.icon_state = "airoff"
 				location.internal = null
 				if (location.internals)
 					location.internals.icon_state = "internal0"
@@ -110,16 +111,21 @@ Contains:
 				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+					if(!isnull(location.internal)) //you're already using a tank and it's not this one
+						location.internal.toggle_valve()
+						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
 					location.internal = src
+
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						T.icon_state = "airon"
+						if(T.the_item == src)
+							T.icon_state = "airon"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
 					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
 					return TRUE
 				else
 					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
-					playsound(src.loc, "sound/items/penclick.ogg", 50, TRUE)
+					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
 	proc/remove_air_volume(volume_to_return)
@@ -143,7 +149,7 @@ Contains:
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
@@ -157,13 +163,13 @@ Contains:
 				for_by_tcl(B, /obj/item/storage/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing("bombing", src, null, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
+						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
 			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 			qdel(src)
@@ -173,14 +179,14 @@ Contains:
 				loc.assume_air(air_contents)
 				air_contents = null
 				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, TRUE)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
 			if(integrity <= 0)
-				playsound(src.loc, "sound/effects/spray.ogg", 50, TRUE)
+				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
 			else
@@ -341,7 +347,7 @@ Contains:
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
-		playsound(src.loc, "sound/machines/click.ogg", 30, TRUE)
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		update_icon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
@@ -473,7 +479,7 @@ Contains:
 			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20

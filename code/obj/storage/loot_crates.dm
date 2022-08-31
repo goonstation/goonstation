@@ -33,7 +33,7 @@
 	// mining
 		/obj/item/clothing/shoes/industrial = 10,\
 	// qm
-		/obj/item/material_piece/gold = 20,\
+		/obj/item/stamped_bullion = 20,\
 		/obj/item/plant/herb/cannabis/omega/spawnable = 20,\
 		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper) = 20,
 	)
@@ -46,6 +46,8 @@
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\
+		/obj/item/gun/energy/phaser_small = 20,\
+		/obj/item/gun/energy/phaser_huge = 10,\
 		/obj/item/clothing/ears/earmuffs/yeti = 20,\
 	// fun
 		/obj/item/gun/bling_blaster = 20,\
@@ -210,7 +212,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			return
 
 	proc/inputter_check(var/mob/living/opener)
-		if (get_dist(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
+		if (GET_DIST(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
 			boutput(opener, "You try really hard to press the button all the way over there. Using your mind. Way to go, champ!")
 			return 0
 
@@ -375,7 +377,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
-			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(opener.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		return
 
 /datum/loot_crate_trap/zap
@@ -393,7 +395,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 
 	trigger_trap(var/mob/living/opener)
 		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
-		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
+		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
 			if (istype(I,/obj/critter/cat/))

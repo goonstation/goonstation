@@ -46,12 +46,12 @@
 		else
 			M.update_burning(-1.2)
 			H.TakeDamage(prob(50) ? "l_arm" : "r_arm", 0, rand(1,2))
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, 1)
 			boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
 	else
 		M.update_burning(-1.2)
 		src.TakeDamage("All", 0, rand(1,2))
-		playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30, 1)
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30, 1)
 		boutput(src, "<span class='alert'>Your hands burn from patting the flames!</span>")
 
 
@@ -93,7 +93,7 @@
 			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
 			src.changeStatus("shivering", -1 SECONDS)
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
-			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick_string("tweak_yo_self.txt", "moustache")]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick("diabolically","madly","evilly","strangely","scarily","awkwardly","excitedly","hauntingly","ominously","nonchalantly","gloriously","hairily")]!</B></span>")
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
@@ -242,7 +242,7 @@
 
 	var/mob/living/carbon/human/H = src
 
-	logTheThing("combat", src, target, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "grabs [constructTarget(target,"combat")] at [log_loc(src)].")
 
 	if (target)
 		target.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
@@ -542,7 +542,7 @@
 		src.lastattacked = target
 		target.lastattacker = src
 		target.lastattackertime = world.time
-		logTheThing("combat", src, target, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "touches [constructTarget(target,"combat")] with stun gloves at [log_loc(src)].")
 		target.add_fingerprint(src) // Some as the other 'empty hand' melee attacks (Convair880).
 		src.unlock_medal("High Five!", 1)
 
@@ -774,7 +774,7 @@
 				BORG.compborg_lose_limb(BORG.part_head)
 			else
 				user.visible_message("<span class='alert'><B>[user] pounds on [BORG.name]'s head furiously!</B></span>")
-				playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
@@ -783,12 +783,12 @@
 
 	else if (isAI(target))
 		user.visible_message("<span class='alert'><B>[user] [pick("wails", "pounds", "slams")] on [target]'s terminal furiously!</B></span>")
-		playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 		damage = 10
 
 	else
 		user.visible_message("<span class='alert'><B>[user] smashes [target] furiously!</B></span>")
-		playsound(user.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1)
+		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
 			user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
@@ -803,7 +803,7 @@
 		random_brute_damage(target, damage)
 		target.UpdateDamageIcon()
 
-	logTheThing("combat", user, target, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "punches [constructTarget(target,"combat")] at [log_loc(user)].")
 	return
 
 /////////////////////////////////////////////////////// attackResult datum ////////////////////////////////////////
@@ -887,12 +887,12 @@
 	proc/flush(var/suppress = 0)
 		if (!target)
 			clear(null)
-			logTheThing("debug", owner, null, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
+			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
 			return
 
 		if (!affecting)
 			clear(null)
-			logTheThing("debug", owner, null, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
+			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
 			return
 
 		if (!msg_group)
@@ -941,10 +941,10 @@
 				// message_admins("[owner] just committed friendly fire against [target]!")
 
 			for (var/message in logs)
-				logTheThing("combat", owner, target, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "[friendly_fire ? "<span class='alert'>Friendly Fire!</span>":""][message] at [log_loc(owner)].")
 #else
 			for (var/message in logs)
-				logTheThing("combat", owner, target, "[message] at [log_loc(owner)].")
+				logTheThing(LOG_COMBAT, owner, "[message] at [log_loc(owner)].")
 #endif
 
 		if (stamina_self)
@@ -1067,17 +1067,23 @@
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
 						for (var/datum/mind/M in R.get_living_heads())
 							if (M.current)
-								if (get_dist(owner,M.current) <= 7)
+								if (GET_DIST(owner,M.current) <= 7)
 									if (owner in viewers(7,M.current))
 										M.current.changeStatus("mutiny", 10 SECONDS)
 
 				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
 					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
 						if (R.add_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 					else
 						if (R.remove_revolutionary(target.mind))
+							for (var/datum/mind/M in target)
+								if (M.current)
+									M.current.changeStatus("newcause", 5 SECONDS)
 							target.HealDamage("All", max(30 - target.health,0), 0)
 							target.HealDamage("All", 0, max(30 - target.health,0))
 		clear(null)
@@ -1301,7 +1307,7 @@
 	.= 0
 	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
 		src.set_dir(get_dir(src, M))
-		playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
@@ -1312,7 +1318,7 @@
 			else
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
-		playsound(src.loc, "sound/weapons/thudswoosh.ogg", 65, 1)
+		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
 		.= 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)

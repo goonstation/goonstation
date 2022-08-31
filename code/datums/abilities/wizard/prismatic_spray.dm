@@ -10,9 +10,9 @@
 	offensive = 1
 	sticky = 1
 	/*
-	voice_grim = "sound/voice/wizard/weneed.ogg"
-	voice_fem = "sound/voice/wizard/someoneto.ogg"
-	voice_other = "sound/voice/wizard/recordthese.ogg"
+	voice_grim = 'sound/voice/wizard/weneed.ogg'
+	voice_fem = 'sound/voice/wizard/someoneto.ogg'
+	voice_other = 'sound/voice/wizard/recordthese.ogg'
 	*/
 	//set spread equal to half of the desired angle of effect in degrees. 90 becomes 180, 180 becomes 360, etc.
 	var/spread = 26.565 //approximately equivalent to half the angle of a dnd 5e cone AoE spell
@@ -43,7 +43,7 @@
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
 				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner
-			logTheThing("combat", holder.owner, target, "casts Prismatic spray at [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "casts Prismatic spray at [constructTarget(target,"combat")].")
 			// Put voice stuff here in the future
 			if(src.random == 0)
 				for(var/i=0, i<num_projectiles, i++)

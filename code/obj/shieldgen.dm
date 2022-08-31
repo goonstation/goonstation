@@ -85,7 +85,7 @@ Shield and graivty well generators
 	return
 
 /obj/shield/meteorhit(obj/O as obj)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50, 1)
 	return
 
 /obj/shieldgen/ex_act(severity)
@@ -230,7 +230,7 @@ Shield and graivty well generators
 			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
-			var/dist = get_dist(src,X)
+			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
 			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))

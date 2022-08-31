@@ -11,13 +11,13 @@
 
 /obj/ability_button/jetpack_toggle_kyle
 	name = "Toggle jetpack"
-	icon_state = "jeton"
+	icon_state = "jetoff"
 
 	execute_ability()
 		var/obj/item/tank/jetpack/kyle/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jetoff"
-		else  icon_state = "jeton"
+		if(J.on) icon_state = "jeton"
+		else  icon_state = "jetoff"
 
 		J.jetpack_controller = new/datum/movement_controller/jetpack(the_mob, J)
 		..()

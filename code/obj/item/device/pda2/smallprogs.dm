@@ -62,14 +62,6 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/list/stored = list()
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		if(length(stored))
-			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
-
 		return dat
 
 //Status Display
@@ -216,7 +208,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -328,7 +320,7 @@ Code:
 			return
 		if (last_honk && world.time < last_honk + 20)
 			return
-		playsound(src.master.loc, "sound/musical_instruments/Bikehorn_1.ogg", (src.honk_volume * 25), 1)
+		playsound(src.master.loc, 'sound/musical_instruments/Bikehorn_1.ogg', (src.honk_volume * 25), 1)
 		src.last_honk = world.time
 
 		return
@@ -1030,8 +1022,8 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
@@ -1077,10 +1069,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
@@ -1097,7 +1089,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"

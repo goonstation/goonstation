@@ -95,7 +95,7 @@
 			return
 
 		src.on = !src.on
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -105,7 +105,7 @@
 						var/mob/living/target = M
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
-							logTheThing("combat", user, target, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
+							logTheThing(LOG_COMBAT, user, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
@@ -191,12 +191,12 @@
 	attack_self(mob/user as mob)
 		if (!on)
 			boutput(user, "<span class='notice'>You crack [src].</span>")
-			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
 				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
-				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				if (user.reagents)
 					if (heated > 0)
 						user.reagents.add_reagent("radium", 10, null, T0C + heated * 200)
@@ -451,7 +451,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)

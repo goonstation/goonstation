@@ -166,6 +166,9 @@
 	/obj/item/reagent_containers/food/snacks/donut,\
 	/obj/item/instrument/whistle)
 
+	empty
+		spawn_contents = list()
+
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
@@ -253,6 +256,15 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/beartrap = 4)
+
+/obj/item/storage/landmine_pouch
+	name = "landmine pouch"
+	desc = "A large pouch for keeping your highly unethical landmines in."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 3
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/random_item_spawner/landmine/surplus = 3)
 
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"

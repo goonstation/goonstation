@@ -24,7 +24,7 @@
 			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
+		if (GET_DIST(M, target) > src.max_range)
 			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
@@ -45,13 +45,13 @@
 		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
 		E.setup(M.loc)
-		playsound(M.loc,"sound/effects/glare.ogg", 50, 1, pitch = 1, extrarange = -4)
+		playsound(M.loc, 'sound/effects/glare.ogg', 50, 1, pitch = 1, extrarange = -4)
 
 		SPAWN(1 DECI SECOND)
 			var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 			EE.color = "#FFFFFF"
 			EE.setup(target.loc)
-			playsound(target.loc,"sound/effects/glare.ogg", 50, 1, pitch = 0.8, extrarange = -4)
+			playsound(target.loc, 'sound/effects/glare.ogg', 50, 1, pitch = 0.8, extrarange = -4)
 
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
 			boutput(target, "<span class='notice'>[M]'s foul gaze falters as it stares upon your righteousness!</span>")
@@ -63,5 +63,5 @@
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

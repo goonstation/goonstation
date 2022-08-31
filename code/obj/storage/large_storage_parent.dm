@@ -27,8 +27,8 @@
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/icon_welded = "welded-closet"
-	var/open_sound = "sound/machines/click.ogg"
-	var/close_sound = "sound/machines/click.ogg"
+	var/open_sound = 'sound/machines/click.ogg'
+	var/close_sound = 'sound/machines/click.ogg'
 	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
@@ -201,8 +201,8 @@
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - get_dist(src, M))]>THUD, thud!</font>")
-				playsound(src, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -789,7 +789,7 @@
 		if (!src || !occupant || !ismob(occupant) || !action)
 			return
 
-		logTheThing("station", user, occupant, "[action] [src] with [constructTarget(occupant,"station")] inside at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "[action] [src] with [constructTarget(occupant,"station")] inside at [log_loc(src)].")
 		return
 
 	verb/toggle_verb()
@@ -873,12 +873,12 @@
 
 	onStart()
 		..()
-		playsound(the_storage, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)

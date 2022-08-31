@@ -351,12 +351,13 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_area_value()
 		var/value = 0
-		for (var/turf/simulated/floor/F in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt || F.icon_state == "plating")
 				continue
 			value++
 
-		for (var/obj/machinery/M in src.contents)
+		for (var/obj/machinery/M in our_contents)
 			if (M.status & BROKEN || M.status & NOPOWER)
 				continue
 			value++
@@ -365,17 +366,18 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_structure_value()
 		var/value = 0
-		for (var/turf/simulated/wall/W in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/wall/W in our_contents)
 			value++
-		for (var/turf/simulated/floor/F in src.contents)
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt)
 				continue
 			value++
-		for (var/obj/machinery/light/L in src.contents)
+		for (var/obj/machinery/light/L in our_contents)
 			if (L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
-		for (var/obj/window/W in src.contents)
+		for (var/obj/window/W in our_contents)
 			value++
 
 		return value
@@ -475,7 +477,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/jerk = O
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -535,7 +537,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/jerk = O
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
@@ -556,7 +558,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (ismob(O))
 			var/mob/jerk = O
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
-			if (isnull(found_areas))
+			if (length(found_areas) == 0)
 				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			else
@@ -1570,7 +1572,8 @@ ABSTRACT_TYPE(/area/station/atmos)
 	do_not_irradiate = 1
 
 /area/station/atmos/highcap_storage
-  name = "High-Capacity Atmospherics Storage"
+	name = "High-Capacity Atmospherics Storage"
+	do_not_irradiate = 0
 
 ABSTRACT_TYPE(/area/station/atmos/hookups)
 /area/station/atmos/hookups
@@ -2859,6 +2862,14 @@ ABSTRACT_TYPE(/area/station/solar)
 
 /area/station/solar/small_backup3
 	name = "Emergency Solar Array 3"
+	icon_state = "yellow"
+
+/area/station/solar/aisat
+	name = "AI Satellite Solar Array"
+	icon_state = "yellow"
+
+/area/station/solar/zeta
+	name = "Research Outpost Solar Array"
 	icon_state = "yellow"
 
 ABSTRACT_TYPE(/area/station/quartermaster)

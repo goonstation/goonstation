@@ -61,7 +61,7 @@
 		sleep(lifespan)
 		if (!stable)
 			src.visible_message("<span class='alert'><b>[src] collapses into a black hole!</b></span>")
-			playsound(src,'sound/machines/satcrash.ogg',100,0,5,0.5)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 			new /obj/bhole(get_turf(src),300,12)
 		else
 			src.visible_message("<span class='alert'><b>[src]</b> dissipates quietly into nothing.</span>")
@@ -78,7 +78,7 @@
 				qdel(A)
 			else if (isliving(A))
 				var/mob/living/L = A
-				logTheThing("combat", L, null, "was elecgibbed by [src] ([src.type]) at [log_loc(L)].")
+				logTheThing(LOG_COMBAT, L, "was elecgibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.elecgib()
 				src.get_fed(10)
 
@@ -130,7 +130,7 @@
 
 	Bumped(atom/A)
 		if (isliving(A))
-			logTheThing("combat", A, null, "was gibbed by [src] ([src.type]) at [log_loc(A)].")
+			logTheThing(LOG_COMBAT, A, "was gibbed by [src] ([src.type]) at [log_loc(A)].")
 			A:gib()
 		else if(isobj(A))
 			var/obj/O = A
@@ -154,7 +154,7 @@
 				if(O.anchored == 2) continue
 				var/pull_prob = 0
 				var/hit_strength = 0
-				var/distance = get_dist(src,O)
+				var/distance = GET_DIST(src,O)
 				switch(distance)
 					if (-INFINITY to 0)
 						src.Bumped(O)
@@ -182,13 +182,13 @@
 			if (ismob(X))
 				var/mob/M = X
 				step_towards(M,src)
-				if (get_dist(src, M) <= 0)
+				if (GET_DIST(src, M) <= 0)
 					src.Bumped(M)
 
 			if (isturf(X))
 				var/turf/T = X
 				var/shred_prob = 0
-				var/distance = get_dist(src,T)
+				var/distance = GET_DIST(src,T)
 				switch(distance)
 					if (-INFINITY to 0)
 						T.ReplaceWithSpace()

@@ -26,7 +26,7 @@
 				D[text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))] = C
 			LAGCHECK(LAG_LOW)
 
-		var/t = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(D))
+		var/t = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(D, /proc/cmp_text_asc))
 
 		if(!t)
 			user.set_eye(null)

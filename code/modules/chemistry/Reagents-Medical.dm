@@ -427,7 +427,7 @@ datum
 
 				if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 			/*reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item/parts/robot_parts/robot_frame))
@@ -605,12 +605,13 @@ datum
 			transparency = 40
 			value = 2 // 1c + 1c
 			target_organs = list("left_kidney", "right_kidney", "liver")
-			threshold = 5
+			threshold = THRESHOLD_INIT
+			threshold_volume = 5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.radiation_dose && prob(75))
-					M.take_radiation_dose(-0.01 * mult)
+					M.take_radiation_dose(-0.01 SIEVERTS * mult)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -668,7 +669,7 @@ datum
 					if (M.health < -5 && M.health > -30)
 						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
-					M.take_radiation_dose(-0.005 * mult)
+					M.take_radiation_dose(-0.005 SIEVERTS * mult)
 				if (prob(5))
 					M.take_toxin_damage(1 * mult)
 				..()
@@ -858,11 +859,11 @@ datum
 				if (severity == 1) //lesser
 					if (effect <= 2)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
@@ -878,11 +879,11 @@ datum
 							H.set_clothing_icon_dirty()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
 		medical/proconvertin // old name for factor VII, which is a protein that causes blood to clot. this stuff is seemingly just used for people with hemophilia but this is ss13 so let's give it to everybody who's bleeding a little, it's fine.
@@ -942,7 +943,7 @@ datum
 						L.emote("cough")
 					else if (severity > 1 && prob(50))
 						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
-						playsound(L, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(L, rand(2,8) * mult, 3 * mult)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1140,7 +1141,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 5 * mult) //flushes all chemicals but itself
-				M.take_radiation_dose(-0.05 * mult)
+				M.take_radiation_dose(-0.05 SIEVERTS * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))

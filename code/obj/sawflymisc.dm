@@ -23,6 +23,7 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
 	is_dangerous = TRUE
 	is_syndicate = TRUE
+	issawfly = TRUE
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 
@@ -146,7 +147,7 @@
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 1 SECONDS))
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
-			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
+			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, 1)
 			if(prob(3))
 				user.communalbeep()
 			take_bleeding_damage(target, null, 17, DAMAGE_STAB)

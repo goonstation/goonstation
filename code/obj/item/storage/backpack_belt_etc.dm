@@ -41,6 +41,9 @@
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
+/obj/item/storage/backpack/empty
+	spawn_contents = list()
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -457,13 +460,16 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	proc/can_use()
 		.= 1
 		if (!ismob(loc))
 			return 0
-
-
 
 	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
@@ -545,7 +551,7 @@
 				H.attached_objs.Add(overlay)
 
 
-			playsound(src.loc, "sound/machines/shieldup.ogg", 60, 1)
+			playsound(src.loc, 'sound/machines/shieldup.ogg', 60, 1)
 		return
 
 	dropped(mob/user as mob)
@@ -568,7 +574,7 @@
 			qdel(overlay)
 			overlay = null
 
-		playsound(src.loc, "sound/machines/shielddown.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/shielddown.ogg', 60, 1)
 		return
 
 	process()
@@ -846,7 +852,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher)
+	/obj/item/extinguisher/large)
 
 
 /* -------------------- Wrestling Belt -------------------- */

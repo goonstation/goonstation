@@ -383,7 +383,7 @@ datum
 							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
-							playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
@@ -573,7 +573,7 @@ datum
 						B.desc = "This bee looks very much like [M.real_name]. How peculiar."
 						B.beeKid = "#ffdddd"
 						B.UpdateIcon()
-						logTheThing("combat", M, null, "was gibbed by reagent [name].")
+						logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name].")
 						M.gib()
 				..()
 
@@ -650,7 +650,7 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								take_bleeding_damage(H, null, rand(10,30) * mult, DAMAGE_STAB)
 								H.visible_message("<span class='alert'><B>A bee bursts out of [H]'s chest! Oh fuck!</B></span>", \
 								"<span class='alert'><b>A bee bursts out of your chest! OH FUCK!</b></span>")
@@ -731,11 +731,11 @@ datum
 								B.beeKid = DEFAULT_BLOOD_COLOR
 								B.UpdateIcon()
 
-								playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								bleed(H, 500, 5) // you'll be gibbed in a moment you don't need it anyway
 								H.visible_message("<span class='alert'><B>A huge bee bursts out of [H]! OH FUCK!</B></span>")
 								qdel(H.organHolder.heart)
-								logTheThing("combat", H, null, "was gibbed by reagent [name].")
+								logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name].")
 								H.gib()
 				..()
 
@@ -854,16 +854,16 @@ datum
 				..()
 				return
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					. = 0
-				if (method == TOUCH && volume >= 10)
+				if (method == TOUCH && raw_volume >= 10)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						var/blocked = 0
 						if (!H.wear_mask && !H.head)
-							H.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
+							H.TakeDamage("head", 0, clamp((raw_volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 							H.emote("scream")
 							if(!H.disfigured)
 								boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
@@ -874,7 +874,7 @@ datum
 						else
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID))
+								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") * 2 < raw_volume)
 									if(!D.hasStatus("acid"))
 										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
 										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -884,7 +884,7 @@ datum
 							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID))
+									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") * 3 < raw_volume)
 										if(!K.hasStatus("acid"))
 											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
 											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -896,37 +896,9 @@ datum
 								return
 					else
 						random_brute_damage(M, min(15,volume))
-				else if (method == TOUCH && volume <= 10 && prob(20))
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/blocked = 0
-						if (H.wear_mask || H.head)
-							if (H.head)
-								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID))
-									if(!D.hasStatus("acid"))
-										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
-										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
-								else
-									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-								blocked = 1
-							if (!(H.head?.c_flags & SPACEWEAR))
-								if (H.wear_mask)
-									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID))
-										if(!K.hasStatus("acid"))
-											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
-											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
-									else
-										H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-									blocked = 1
-
-							if (blocked)
-								return
-						M.TakeDamage("head", 0, clamp((volume - 5) * 2, 8, 50), 0, DAMAGE_BURN)
 				else if (volume >= 5)
 					M.emote("scream")
-					M.TakeDamage("All", 0, clamp((volume - 5) * 3, 8, 75), 0, DAMAGE_BURN)
+					M.TakeDamage("All", 0, clamp((volume - 5) * 2, 8, 75), 0, DAMAGE_BURN)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
 						if (!H.vdisfigured)
@@ -1026,7 +998,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose(0.1 * mult, internal=TRUE)
+				M.take_radiation_dose(0.125 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -1233,7 +1205,7 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (M) //ZeWaka: Fix for null.gib
-							logTheThing("combat", M, null, "was gibbed by reagent [name].")
+							logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name].")
 							M.gib()
 					return
 
@@ -1253,21 +1225,24 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(1*mult)
-				random_brute_damage(M, 1*mult, FALSE)
+				M.take_toxin_damage(0.5*mult)
+				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
+				if (probmult(6))
+					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
+											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
+											"<span class='alert'><B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!</span>"))
 
-				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+				if (prob(15))
+					M.reagents.add_reagent("histamine", rand(8,10) * mult)
 
 				if (probmult(10))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 5 SECONDS))
+					M.setStatus("staggered", max(M.getStatusDuration("staggered"), 5 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
-					bleed(M, rand(30,60), rand(3,9))
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
 
 				if (probmult(10))
-					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 10 SECONDS))
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
 					M.take_toxin_damage(8)
 					if (!isdead(M))
@@ -1404,7 +1379,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose(0.02 * mult, internal=TRUE)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
 				if (probmult(mutChance))
@@ -1440,7 +1415,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_radiation_dose( 0.05 * mult, internal=TRUE)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
@@ -1525,14 +1500,14 @@ datum
 
 				if (!M) M = holder.my_atom
 				if (prob(10))
-					M.take_toxin_damage(rand(2.4) * mult)
+					M.take_toxin_damage(rand(2,4) * mult)
 				if (prob(7))
 					boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 					M.setStatusMin("stunned", 3 SECONDS * mult)
 				if (probmult(7))
 					for(var/mob/O in AIviewers(M, null))
 						O.show_message("<span class='alert'>[M] vomits up some green goo.</span>", 1)
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					make_cleanable( /obj/decal/cleanable/greenpuke,M.loc)
 				..()
 
@@ -1617,7 +1592,7 @@ datum
 						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if (effect <= 7)
 						boutput(M, "<span class='alert'><b>Your heartbeat is pounding inside your head!</b></span>")
-						M.playsound_local(M.loc, "sound/effects/heartbeat.ogg", 50, 1)
+						M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 						M.emote("collapse")
 						M.take_oxygen_deprivation(8 * mult)
 						M.take_toxin_damage(3 * mult)
@@ -1824,7 +1799,7 @@ datum
 					H.ai_init() //:getin:
 					H.ai_aggressive = 1 //Fak
 					H.ai_calm_down = 0
-					logTheThing("combat", H, null, "has their AI enabled by [src.id]")
+					logTheThing(LOG_COMBAT, H, "has their AI enabled by [src.id]")
 					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
 					lastSpook = world.time
 
@@ -1908,7 +1883,7 @@ datum
 					H.ai_suicidal = 0
 					if (ticks >= 30)
 						REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, src.id) //Not so buff
-						logTheThing("combat", H, null, "has their AI disabled by [src.id]")
+						logTheThing(LOG_COMBAT, H, "has their AI disabled by [src.id]")
 						H.show_text("It's okay... it's okay... breathe... calm... it's okay...", "blue")
 				..()
 
@@ -2043,7 +2018,7 @@ datum
 					else if (prob(5))
 						var/damage = rand(1,10)
 						H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-						playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 

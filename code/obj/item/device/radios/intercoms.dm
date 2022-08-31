@@ -67,16 +67,6 @@
 	var/maptext = generateMapText(msg, textLoc, style = "color:#7F7FE2;", alpha = 255)
 	target.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
-/obj/item/device/radio/intercom/putt
-	name = "Colosseum Intercommunicator"
-	frequency = R_FREQ_INTERCOM_COLOSSEUM
-	broadcasting = 1
-	device_color = "#aa5c00"
-	protected_radio = 1
-
-	initialize()
-		set_frequency(frequency)
-
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
 	desc = "Virtual radio for all your beeps and bops."

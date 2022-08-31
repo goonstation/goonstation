@@ -400,7 +400,7 @@
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
-		owner.AddComponent(/datum/component/radioactive,50,FALSE,FALSE)
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
 	OnRemove()
@@ -488,7 +488,7 @@
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
 				var/turf/destination = pick(randomturfs)
-				logTheThing("combat", L, null, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
 				L.set_loc(pick(destination))
 
 //////////////
@@ -754,8 +754,8 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
-			owner.playsound_local(owner.loc, "sound/machines/phones/ring_incoming.ogg", 40, 1)
+			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"
@@ -877,7 +877,7 @@
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
-	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
+	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordturnon.ogg')
 	icon_state  = "bad"
 
 	New(var/for_global_list = 0)

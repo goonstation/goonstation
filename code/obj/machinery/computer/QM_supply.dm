@@ -532,10 +532,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						var/default_comment = ""
+						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
-						logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+						if(O.comment && O.comment != default_comment)
+							phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -561,10 +564,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							var/default_comment = ""
+							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
-							logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+							if(O.comment && O.comment != default_comment)
+								phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -851,7 +857,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			for(var/datum/commodity/cartcom in T.shopping_cart)
 				total_stuff_in_cart += cartcom.amount
@@ -989,7 +995,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
 				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
@@ -1082,7 +1088,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
-	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
