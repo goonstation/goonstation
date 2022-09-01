@@ -52,7 +52,7 @@
 			if (!(locate(/obj/cable) in T))
 				boutput(src.holder.owner, "<span class='alert'>You must use this ability on top of a cable!</span>")
 				return TRUE
-			playsound(src.holder.owner, "sound/machines/ArtifactBee2.ogg", 30, TRUE, -2)
+			playsound(src.holder.owner, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			actions.start(new/datum/action/bar/private/voltron(src), src.holder.owner)
 
 	proc/activate()

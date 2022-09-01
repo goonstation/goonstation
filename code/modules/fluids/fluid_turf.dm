@@ -332,7 +332,7 @@
 						var/mob/M = AM
 						random_brute_damage(M, 6)
 						M.changeStatus("weakened", 2 SECONDS)
-						playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 10, 1)
+						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10, 1)
 						M.emote("scream")
 
 					AM.set_loc(pick(L))
@@ -502,7 +502,7 @@
 				random_brute_damage(M, 25)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			A.set_loc(T)
 			return
 		else ..()
@@ -544,7 +544,7 @@
 				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
+					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 				SPAWN(5 SECONDS)
 					call_shuttle()
 
@@ -572,7 +572,7 @@
 				random_brute_damage(M, 30)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 90, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
 		start_location.move_contents_to(end_location, /turf/simulated/floor/specialroom/sea_elevator_shaft, ignore_fluid = 1)
 		location = 0
 

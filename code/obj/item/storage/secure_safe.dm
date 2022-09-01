@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		return
 
 	if (!ON_COOLDOWN(src, "playsound", 0.2 SECONDS))
-		playsound(src.loc, "sound/machines/keypress.ogg", 55, 1)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 55, 1)
 
 	if (src.disabled || src.emagged)
 		return
@@ -236,13 +236,13 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		src.locked = !src.locked
 		src.overlays = src.locked ? null : list(image('icons/obj/items/storage.dmi', icon_open))
 		boutput(user, "<span class='alert'>[src]'s lock mechanism clicks [src.locked ? "locked" : "unlocked"].</span>")
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 	else
 		if (length(guess) == src.code_len)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)
 				boutput(user, "<span class='alert'>[src]'s lock panel emits [desctext].</span>")
-				playsound(src.loc, "sound/machines/twobeep.ogg", 55, 1)
+				playsound(src.loc, 'sound/machines/twobeep.ogg', 55, 1)
 
 		src.pad_msg = KEYPAD_ERR
 		src.guess= ""

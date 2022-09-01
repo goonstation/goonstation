@@ -4058,7 +4058,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "0-8"
@@ -24636,7 +24636,7 @@
 /area/station/ai_monitored/storage/eva)
 "bmx" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "bmy" = (
@@ -41089,7 +41089,9 @@
 /area/station/mining/staff_room)
 "cdR" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 7;
 	pixel_y = -1
@@ -41106,7 +41108,9 @@
 /area/station/mining/staff_room)
 "cdS" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 7;
 	pixel_y = -1
@@ -41577,7 +41581,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/tox_storage,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/artifact)
@@ -50693,7 +50697,7 @@
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -51001,7 +51005,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "dmC" = (
@@ -51323,7 +51327,7 @@
 /area/station/security/main)
 "dGz" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},
@@ -52934,10 +52938,6 @@
 	},
 /obj/table/auto,
 /obj/machinery/recharger,
-/obj/item/storage/box/stinger_kit{
-	pixel_x = -6;
-	pixel_y = 8
-	},
 /obj/item/reagent_containers/food/snacks/donut/custom/frosted{
 	pixel_x = 7;
 	pixel_y = -6
@@ -53032,7 +53032,7 @@
 	dir = 4;
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -54684,7 +54684,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/lobby)
@@ -59807,7 +59807,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/plate,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
@@ -60372,7 +60372,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -60560,7 +60560,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/storage/box/donkpocket_kit,
 /obj/machinery/door/firedoor/pyro,
@@ -61424,7 +61424,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/access_spawn/tox,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/science/teleporter)
@@ -63903,7 +63903,7 @@
 	name = "Research Sector";
 	req_access_txt = null
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "vUo" = (

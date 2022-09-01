@@ -345,22 +345,24 @@
 				tickCount -= (round(times) * tickSpacing)
 				for(var/i in 1 to times)
 					var/mob/M = owner
-					M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
+					if(damage_brute || damage_burn || damage_tox) //only hittwitch if you're really taking damage
+						M.TakeDamage("All", damage_brute, damage_burn, damage_tox, damage_type)
 
 	simpledot/radiation
 		id = "radiation"
 		name = "Irradiated"
 		desc = ""
-		icon_state = "radiation1"
+		icon_state = "trefoil"
 		unique = 1
 		visible = 0
 
 		tickSpacing = 3 SECONDS
 
 		damage_tox = 0
+		damage_burn = 0
 		damage_type = DAMAGE_BURN
 
-		maxDuration = 4 MINUTES
+		duration = null
 
 		var/howMuch = ""
 		var/stage = 1
@@ -368,186 +370,78 @@
 		modify_change(change)
 			. = change
 
-			if (owner && ismob(owner) && change > 0)
-				var/mob/M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
-				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
-				. *= percent_protection
-
 		getTooltip()
-			. = "You are [howMuch]irradiated.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
+			. = "You are [howMuch]irradiated."
 
 		preCheck(var/atom/A)
-			. = 1
+			. = TRUE
 			if(issilicon(A) || isobserver(A) || isintangible(A))
-				. = 0
+				. = FALSE
 
 		proc/get_stage(val)
-			. = 1
-			switch(val/(1 SECOND))
-				if(0 to 10)
-					. = 1
-				if(10 to 20)
-					. = 2
-				if(20 to 45)
-					. = 3
-				if(45 to 90)
-					. = 4
-				if(90 to INFINITY)
-					. = 5
+			. = 0
+			switch(val) //0.4 Sv is radiation poisoning, 2 Sv is fatal in some cases, 4 Sv is fatal without treatment
+				if(0 to 0.35)
+					. = 0
+				if(0.35 to 0.6)
+					. = 1 //you might feel sick
+				if(0.6 to 1.2)
+					. = 2 //you're getting into dangerous teritory
+				if(1.2 to 2)
+					. = 3 //you're at a 50/50 of kicking it
+				if(2 to 3)
+					. = 4 //more like 70/30 now
+				if(3 to 4)
+					. = 5 //you will die without treatment
+				if(4 to INFINITY)
+					. = 6 //you will die.
 
 		onUpdate(timePassed)
-			if(locate(/obj/item/implant/health) in owner)
-				src.visible = 1
-			else
-				src.visible = 0
-
 			var/mob/M = null
 			if(ismob(owner))
 				M = owner
-			if(!ismobcritter(M))
-				damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 1)
-			stage = get_stage(duration)
-			switch(stage)
-				if(1)
-					howMuch = ""
-				if(2)
-					howMuch = "significantly "
-				if(3)
-					howMuch = "very much "
-				if(4)
-					howMuch = "extremely "
-				if(5)
-					howMuch = "horribly "
+			else
+				return ..(timePassed)
 
-			if(M)
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
-				if (prob(stage - 2 - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+			stage = get_stage(M.radiation_dose)
+			switch(stage)
+				if(0)
+					howMuch = ""
+					damage_tox = 0
+					damage_burn = 0
+				if(1)
+					howMuch = "barely " //you'll be fine
+				if(2)
+					howMuch = "slightly " //you don't feel so good
+				if(3)
+					howMuch = "moderately " // not great, not terrible
+				if(4)
+					howMuch = "extremely " //oh no, you're very sick
+				if(5)
+					howMuch = "fatally " //congrats, you're dead in a minute
+				if(6)
+					howMuch = "totally " // you are literally dying in seconds
+			if(stage > 0)
+				visible = TRUE
+				var/damage_total = 5 * (M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6))
+				damage_tox = prob(70) * damage_total
+				damage_burn = prob(30) * damage_total
+			else
+				visible = FALSE
+
+
+			if(stage > 0 && !isdead(M) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+				if(!ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECOND) && prob(stage - 1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
+				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
 					M.changeStatus("weakened", 3 SECONDS)
 					boutput(M, "<span class='alert'>You feel weak.</span>")
 					M.emote("collapse")
-
-			icon_state = "radiation[stage]"
-
-			return ..(timePassed)
-
-	simpledot/n_radiation
-		id = "n_radiation"
-		name = "Neutron Irradiated"
-		desc = ""
-		icon_state = "nradiation1"
-		unique = 1
-		visible = 0
-
-		tickSpacing = 2 SECONDS
-
-		damage_tox = 2
-		damage_brute = 2
-		damage_type = DAMAGE_STAB | DAMAGE_BURN
-
-		maxDuration = 4 MINUTES
-
-		var/howMuch = ""
-		var/stage = 1
-
-		getTooltip()
-			. = "You are [howMuch]irradiated by neutrons.<br>Taking [round(damage_tox, 0.1)] toxin damage every [tickSpacing/(1 SECOND)] sec and [round(damage_brute, 0.1)] brute damage every [tickSpacing/(1 SECOND)] sec.<br>Damage reduced by radiation resistance on gear."
-
-		preCheck(var/atom/A)
-			. = 1
-			if(issilicon(A) || isobserver(A) || isintangible(A))
-				. = 0
-		proc/get_stage(val)
-			. = 1
-			switch(val/(1 SECOND))
-				if(0 to 10)
-					. = 1
-				if(10 to 20)
-					. = 2
-				if(20 to 30)
-					. = 3
-				if(30 to 60)
-					. = 4
-				if(60 to INFINITY)
-					. = 5
-
-		modify_change(change)
-			. = change
-
-			if (owner && ismob(owner) && change > 0)
-				var/mob/M = owner
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, get_stage(duration + change))
-				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_RADPROT), 0, 100)
-				percent_protection = 1 - (percent_protection/100) //scale from 0 to 1
-				. *= percent_protection
-
-		proc/update_lights(add = 1)
-			owner.remove_simple_light("neutron_rad")
-			owner.remove_medium_light("neutron_rad")
-			if(add)
-				if(stage < 4)
-					owner.add_simple_light("neutron_rad", list(4, 62, 155, stage * 50))
-				else
-					owner.add_medium_light("neutron_rad", list(4, 62, 155, stage * 50))
-
-		onAdd(optional=null)
-			. = ..()
-			update_lights()
-
-		onRemove()
-			update_lights(0)
-			. = ..()
-
-		onChange(optional=null)
-			. = ..()
-			update_lights()
-
-		onUpdate(timePassed)
-
-			var/mob/M = null
-			if(ismob(owner))
-				M = owner
-
-
-			damage_tox = (sqrt(min(duration, 2 MINUTES)/20 + 5) - 0.5)
-			damage_brute = damage_tox/2
-
-			stage = get_stage(duration)
-			switch(stage)
-				if(1)
-					howMuch = ""
-				if(2)
-					howMuch = "significantly "
-				if(3)
-					howMuch = "very much "
-				if(4)
-					howMuch = "extremely "
-				if(5)
-					howMuch = "horribly "
-
-			if(M)
-				SEND_SIGNAL(M, COMSIG_MOB_GEIGER_TICK, stage)
-				if(locate(/obj/item/implant/health) in M)
-					src.visible = 1
-				else
-					src.visible = 0
-				if (prob(stage - !!(M.traitHolder?.hasTrait("stablegenes"))) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
-					boutput(M, "<span class='alert'>You mutate!</span>")
-					M.bioHolder.RandomEffect("either")
-				if(!ON_COOLDOWN(M, "n_radiation_stun_check", 1 SECOND) && prob(stage-1) && M.bioHolder && !M.bioHolder.HasEffect("revenant"))
-					M.changeStatus("weakened", 5 SECONDS)
-					boutput(M, "<span class='alert'>You feel weak.</span>")
-					M.emote("collapse")
-			update_lights()
-			icon_state = "nradiation[stage]"
+				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
+					M.changeStatus("weakened", 3 SECONDS)
+					boutput(M, "<span class='alert'>You feel sick.</span>")
+					M.vomit()
 
 			return ..(timePassed)
 
@@ -920,7 +814,7 @@
 		unique = 1
 		maxDuration = 15 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 		movement_modifier = /datum/movement_modifier/disoriented
 
@@ -942,7 +836,7 @@
 		unique = 1
 		maxDuration = 30 SECONDS
 		var/counter = 0
-		var/sound = "sound/effects/electric_shock_short.ogg"
+		var/sound = 'sound/effects/electric_shock_short.ogg'
 		var/count = 7
 
 		onUpdate(timePassed)
@@ -1213,7 +1107,7 @@
 				ON_COOLDOWN(owner, "unlying_speed_cheesy", 0.3 SECONDS)
 
 		clicked(list/params)
-			if(ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
+			if(!owner || ON_COOLDOWN(src.owner, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
 			L.delStatus("resting")
 			L.force_laydown_standup()
 			if (ishuman(L))
@@ -1550,7 +1444,7 @@
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
-			playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
 

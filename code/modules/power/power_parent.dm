@@ -5,9 +5,11 @@
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
 	var/tmp/netnum = 0
-	var/use_datanet = 0		// If set to 1, communicate with other devices over cable network.
-	var/directwired = 1		// by default, power machines are connected by a cable in a neighbouring turf
-							// if set to 0, requires a 0-X cable on this turf
+	/// If set to 1, communicate with other devices over cable network.
+	var/use_datanet = 0
+	/// by default, power machines are connected by a cable in a neighbouring turf
+	/// if set to 0, requires a 0-X cable on this turf
+	var/directwired = 1
 
 /obj/machinery/power/New(var/new_loc)
 	..()
@@ -41,8 +43,7 @@
 
 // common helper procs for all power machines
 /obj/machinery/power/proc/add_avail(var/amount)
-	if(powernet)
-		powernet.newavail += amount
+	powernet?.newavail += amount
 
 #ifdef MACHINE_PROCESSING_DEBUG
 	var/area/A = get_area(src)
@@ -58,8 +59,7 @@
 #endif
 
 /obj/machinery/power/proc/add_load(var/amount)
-	if(powernet)
-		powernet.newload += amount
+	powernet?.newload += amount
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
@@ -122,7 +122,7 @@ var/makingpowernetssince = 0
 			stack_trace("Tried to add cable [C] \ref[C] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
-		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
+		if(M.netnum <= 0)		// APCs have netnum=-1 so they don't count as network nodes directly
 			continue
 
 		M.powernet = powernets[M.netnum]
@@ -163,12 +163,10 @@ var/makingpowernetssince = 0
 				if(!unmarked || !P.netnum)
 					. += P
 
-
 	for(var/obj/cable/C in T)
 		if(C.d1 == fdir || C.d2 == fdir)
 			if(!unmarked || !C.netnum)
 				. += C
-
 	. -= source
 
 
@@ -204,7 +202,6 @@ var/makingpowernetssince = 0
 			. += C
 
 /obj/machinery/power/proc/get_connections(unmarked = 0)
-
 	if(!directwired)
 		return get_indirect_connections(unmarked)
 
@@ -212,23 +209,17 @@ var/makingpowernetssince = 0
 	var/cdir
 
 	for(var/turf/T in orange(1, src))
-
 		cdir = get_dir(T, src)
-
 		for(var/obj/cable/C in T)
-
 			if(C.netnum && unmarked)
 				continue
-
 			if(C.d1 == cdir || C.d2 == cdir)
 				. += C
 
 /obj/machinery/power/proc/get_indirect_connections(unmarked = 0)
-
 	. = list()
 
 	for(var/obj/cable/C in src.loc)
-
 		if(C.netnum && unmarked)
 			continue
 
@@ -237,65 +228,63 @@ var/makingpowernetssince = 0
 
 //LummoxJR patch:
 /proc/powernet_nextlink(var/obj/O, var/num)
-    var/list/P
-    var/list/more
+	var/list/P
+	var/list/more
+	//world.log << "start: [O] at [O.x].[O.y]"
+	while(1)
+		if(istype(O, /obj/cable))
+			var/obj/cable/C = O
+			if(C.netnum > 0)
+				if(!more || !length(more))
+					return
+				O = more[length(more)]
+				more -= O
+				continue
 
-    //world.log << "start: [O] at [O.x].[O.y]"
+			C.netnum = num
+			P = C.get_connections(1)
 
-    while(1)
-        if( istype(O, /obj/cable) )
-            var/obj/cable/C = O
-            if(C.netnum > 0)
-                if(!more || !length(more)) return
-                O = more[more.len]
-                more -= O
-                continue
+		else if(istype(O, /obj/machinery/power))
 
-            C.netnum = num
-            P = C.get_connections(1)
+			var/obj/machinery/power/M = O
+			if(M.netnum > 0)
+				if(!more || !length(more))
+					return
+				O = more[length(more)]
+				more -= O
+				continue
 
-        else if( istype(O, /obj/machinery/power) )
+			M.netnum = num
+			P = M.get_connections(1)
 
-            var/obj/machinery/power/M = O
-            if(M.netnum > 0)
-                if(!more || !length(more)) return
-                O = more[more.len]
-                more -= O
-                continue
+		if(length(P) == 0)
+			if(length(more))
+				O = more[length(more)]
+				more -= O
+				continue
+			return
 
-            M.netnum = num
-            P = M.get_connections(1)
+		O = P[1]
 
-        if(P.len == 0)
-            if(length(more))
-                O = more[more.len]
-                more -= O
-                continue
-            return
-
-        O = P[1]
-
-        if(P.len > 1)
-            if(!more) more = P.Copy(2)
-            else
-                for(var/X in P)
-                    X:netnum = -1
-                more += P.Copy(2)
+		if(length(P) > 1)
+			if(!more)
+				more = P.Copy(2)
+			else
+				for(var/X in P)
+					X:netnum = -1
+				more += P.Copy(2)
 // cut a powernet at this cable object
 
 /datum/powernet/proc/cut_cable(var/obj/cable/C)
-
 	var/turf/T1 = C.loc
 	if(C.d1)
 		T1 = get_step(C, C.d1)
 
 	var/turf/T2 = get_step(C, C.d2)
-
 	var/list/P1 = power_list(T1, C, C.d1)	// what joins on to cut cable in dir1
-
 	var/list/P2 = power_list(T2, C, C.d2)	// what joins on to cut cable in dir2
 
-	if(P1.len == 0 || P2.len ==0)			// if nothing in either list, then the cable was an endpoint
+	if(length(P1) == 0 || length(P2) ==0)			// if nothing in either list, then the cable was an endpoint
 											// no need to rebuild the powernet, just remove cut cable from the list
 		cables -= C
 		return
@@ -309,7 +298,6 @@ var/makingpowernetssince = 0
 		OC.netnum = 0
 	for(var/obj/machinery/power/OM as anything in nodes)
 		OM.netnum = 0
-
 
 	// remove the cut cable from the network
 	C.netnum = -1
@@ -335,7 +323,6 @@ var/makingpowernetssince = 0
 				break
 
 	if(notlooped)
-
 		// not looped, so make a new powernet
 
 		var/datum/powernet/PN = new()
@@ -403,7 +390,7 @@ var/makingpowernetssince = 0
 
 	netexcess = avail - load
 
-	if( netexcess > 100)		// if there was excess power last cycle
+	if(netexcess > 100)		// if there was excess power last cycle
 		for(var/obj/machinery/power/smes/S in nodes)	// find the SMESes in the network
 			S.restore()				// and restore some of the power that was used
 		for(var/obj/machinery/power/sword_engine/SW in nodes)	//Finds the SWORD Engines in the network.

@@ -99,7 +99,7 @@
 
 	proc/mindswap()
 		src.visible_message("<span class='alert'>The [src] activates!</span>")
-		playsound(src.loc,"sound/effects/ghost2.ogg", 100, 1)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
@@ -171,7 +171,7 @@
 		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
-			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
 
@@ -496,7 +496,7 @@
 	anchored = 1
 	density = 0
 	pixel_y = 7
-	var/trigger_sound = "sound/effects/ExtremelyScaryGhostNoise.ogg"
+	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
 	var/trigger_duration = 118 // should be about as long as the sound clip
 	var/spam_flag = 0
 	var/spam_timer = 150

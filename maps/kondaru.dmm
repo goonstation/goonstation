@@ -18370,7 +18370,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -18385,7 +18385,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -18398,7 +18398,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -19276,7 +19276,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "bff" = (
@@ -26945,7 +26945,7 @@
 	dir = 4;
 	name = "Robot Depot"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -27529,12 +27529,12 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
 "bHd" = (
-/obj/machinery/manufacturer/personnel,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/manufacturer/hop_and_uniform,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "bHe" = (
@@ -28204,7 +28204,7 @@
 	req_access = null
 	},
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -28240,7 +28240,7 @@
 	name = "Research Sector";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bJa" = (
@@ -29242,7 +29242,7 @@
 	dir = 4;
 	name = "Artifact Lab"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29292,7 +29292,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -29308,9 +29308,8 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
-/obj/access_spawn/research,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-8"
@@ -29702,7 +29701,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -29727,7 +29726,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 2;
@@ -30224,7 +30223,7 @@
 	name = "Research Dock Access";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -30373,9 +30372,9 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -30724,7 +30723,7 @@
 	name = "Teleporter Lab";
 	req_access_txt = "24"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -31135,7 +31134,7 @@
 	})
 "bQW" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/darkblue/checker,
 /area/station/routing/medsci{
@@ -32303,7 +32302,7 @@
 	name = "Experimental Teleporter";
 	req_access_txt = "24"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purplewhite{
 	dir = 4
@@ -33338,7 +33337,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
@@ -38229,7 +38228,7 @@
 	name = "Experimental Teleporter";
 	req_access_txt = "24"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 2;
@@ -38494,7 +38493,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/firedoor_spawn,
@@ -39024,7 +39023,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -42765,7 +42764,7 @@
 "fKr" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -42938,7 +42937,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
@@ -47023,7 +47022,7 @@
 "kkN" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -51836,7 +51835,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
@@ -58198,7 +58197,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
@@ -59450,7 +59449,7 @@
 "wwB" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -60002,7 +60001,7 @@
 "wVb" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -60540,7 +60539,6 @@
 	pixel_x = 20
 	},
 /obj/rack,
-/obj/item/storage/box/stinger_kit,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,

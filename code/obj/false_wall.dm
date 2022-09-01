@@ -281,7 +281,7 @@
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.opacity = 0
+			src.set_opacity(0)
 			src.RL_SetOpacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
@@ -386,12 +386,12 @@
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(picked)
 
 		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
+			picked.set_opacity(1)
 
 		SPAWN(rand(50,80)) update()

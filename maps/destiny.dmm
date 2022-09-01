@@ -4504,8 +4504,8 @@
 /area/station/hallway/primary/central)
 "asc" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 8
+	dir = 8;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -4664,8 +4664,8 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue4";
-	dir = 4
+	dir = 4;
+	icon_state = "blue4"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -5516,7 +5516,7 @@
 	icon_state = "line1"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -7379,7 +7379,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aEH" = (
@@ -7818,8 +7818,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay";
-	id = "medbay_door"
+	id = "medbay_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -7875,7 +7875,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aGl" = (
@@ -8696,7 +8696,7 @@
 "aJA" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{
@@ -11640,8 +11640,8 @@
 	pixel_x = -13
 	},
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 10
+	dir = 10;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -12109,7 +12109,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "baE" = (
@@ -13023,8 +13023,8 @@
 	name = "Station Intercom"
 	},
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 9
+	dir = 9;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -13512,7 +13512,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bkW" = (
@@ -17848,6 +17848,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "clt" = (
@@ -18442,8 +18443,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/botany{
 	dir = 8;
-	name = "Cloning";
-	id = "Cloning"
+	id = "Cloning";
+	name = "Cloning"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -19300,8 +19301,8 @@
 /area/station/security/equipment)
 "cUy" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 4
+	dir = 4;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -20100,7 +20101,7 @@
 "dkN" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -20230,9 +20231,9 @@
 "dnb" = (
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	dir = 1;
 	name = "Television";
-	network = "Zeta";
-	dir = 1
+	network = "Zeta"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -21688,7 +21689,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -22410,8 +22411,8 @@
 /area/station/crew_quarters/lounge/starboard)
 "eql" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 6
+	dir = 6;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -24210,6 +24211,7 @@
 	name = "Test Chamber"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/tox,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "eYq" = (
@@ -26431,6 +26433,7 @@
 	dir = 4;
 	name = "Toxins"
 	},
+/obj/access_spawn/tox_storage,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "fZr" = (
@@ -26924,7 +26927,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/neutral/side{
@@ -27051,7 +27054,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -30586,8 +30589,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -31932,7 +31935,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "iWP" = (
@@ -32933,7 +32936,7 @@
 	pixel_y = 21
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -33534,7 +33537,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/disposalpipe/segment{
@@ -34004,7 +34007,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/decal/mule/beacon,
@@ -34309,7 +34312,7 @@
 "kkl" = (
 /obj/decal/mule/beacon,
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -36972,9 +36975,9 @@
 /area/station/security/hos)
 "lIU" = (
 /obj/machinery/door/unpowered/wood/stall{
+	dir = 4;
 	lock_dir = 2;
-	name = "changing room door";
-	dir = 4
+	name = "changing room door"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/showers)
@@ -37435,7 +37438,6 @@
 /area/station/science/chemistry)
 "lSZ" = (
 /obj/rack,
-/obj/item/storage/box/stinger_kit,
 /obj/item/chem_grenade/flashbang,
 /obj/item/chem_grenade/pepper,
 /obj/item/chem_grenade/pepper,
@@ -38302,7 +38304,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light{
@@ -38860,7 +38862,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mFb" = (
@@ -39438,6 +39440,9 @@
 /obj/decal/tile_edge/line/white{
 	dir = 1;
 	icon_state = "line1"
+	},
+/obj/landmark/start{
+	name = "Security Officer"
 	},
 /turf/simulated/floor/red/checker,
 /area/station/security/main)
@@ -42053,8 +42058,8 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Psychiatrist's Office";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Psychiatrist's Office"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -42309,8 +42314,8 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/south,
 /turf/simulated/floor/stairs{
-	icon_state = "wood_stairs";
-	dir = 4
+	dir = 4;
+	icon_state = "wood_stairs"
 	},
 /area/station/crew_quarters/sauna)
 "ouE" = (
@@ -42887,7 +42892,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/neutral/side{
@@ -43810,7 +43815,7 @@
 "pht" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/machinery/light/emergency,
@@ -44056,8 +44061,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -44534,8 +44539,8 @@
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 5
+	dir = 5;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -45005,6 +45010,9 @@
 /obj/stool/chair/red{
 	anchored = 0;
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Security Officer"
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -46232,8 +46240,8 @@
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
 	dir = 4;
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -47310,9 +47318,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/landmark/start{
-	name = "Security Officer"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -48019,7 +48024,7 @@
 "rtz" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{
@@ -48460,9 +48465,6 @@
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/landmark/start{
-	name = "Security Officer"
 	},
 /obj/decal/tile_edge/line/red{
 	dir = 10;
@@ -50259,7 +50261,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "sJu" = (
@@ -52154,7 +52156,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tHw" = (
@@ -52638,8 +52640,8 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "Medbay";
-	id = "medbay_door"
+	id = "medbay_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -53143,8 +53145,8 @@
 "uiW" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass/med{
-	name = "Medbay";
-	id = "hallway_door"
+	id = "hallway_door";
+	name = "Medbay"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -54220,8 +54222,8 @@
 "uIi" = (
 /obj/landmark/start/latejoin,
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 1
+	dir = 1;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -55309,7 +55311,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "vgb" = (
@@ -57966,8 +57968,8 @@
 /area/station/maintenance/southwest)
 "wAa" = (
 /turf/unsimulated/floor/carpet/blue{
-	icon_state = "blue2";
-	dir = 1
+	dir = 1;
+	icon_state = "blue2"
 	},
 /area/station/hallway/secondary/oshan_arrivals{
 	name = "Destiny Arrivals"
@@ -60027,7 +60029,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "xBL" = (
