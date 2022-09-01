@@ -2,8 +2,6 @@
 (t)thu sep 01 22
 (u)Emily & Walpvrgis
 (*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
-(u)Emily
-(+)Fixed a bug where certain cyborg disorients lasted forever.
 (u)CrystalClover
 (p)10551
 (e)|
