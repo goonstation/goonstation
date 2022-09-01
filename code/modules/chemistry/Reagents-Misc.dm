@@ -648,7 +648,7 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -30 SECONDS)
-						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.8)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
@@ -659,7 +659,7 @@ datum
 						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
 						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
 						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
-						playsound(L, "sound/impact_sounds/burn_sizzle.ogg", 50, 1, pitch = 0.5)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.5)
 				return
 
 			grenade_effects(var/obj/grenade, var/atom/A)
@@ -1348,7 +1348,7 @@ datum
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						switch(volume)
 							if (0 to 0.5)
 								if (prob(volume * 10))
@@ -1394,9 +1394,7 @@ datum
 					playsound(M, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, M.get_age_pitch())
 					fakedeathed = 1
 				..()
-			on_mob_life_complete()
-				message_admins("")
-				return
+
 		capulettium_plus
 			name = "capulettium plus"
 			id = "capulettium_plus"
@@ -1688,7 +1686,7 @@ datum
 							something_changed = 1
 						if (something_changed)
 							boutput(H, "<span class='alert'>HOOT HOOT HOOT HOOT!</span>")
-							playsound(H.loc, "sound/voice/animal/hoot.ogg", 80, 1)
+							playsound(H.loc, 'sound/voice/animal/hoot.ogg', 80, 1)
 				..()
 				return
 
@@ -1800,25 +1798,20 @@ datum
 						new /obj/reagent_dispensers/cleanable/spiders(target)
 						var/obj/critter/S
 						if (prob(10))
-							S = new /obj/critter/spider/baby(target)
+							S = new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(2))
-							S = new /obj/critter/nicespider(target)
+							S = new /mob/living/critter/spider/nice(target)
 							S.name = "spider"
 							S.set_density(0)
-					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/obj/critter) in target)
-						var/obj/critter/S
+					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/mob/living/critter/spider) in target)
 						if (prob(25))
-							S = new /obj/critter/spider/baby(target)
 							if (prob(2))
-								S.aggressive = 1
+								new /mob/living/critter/spider/baby(target)
+							else
+								new /mob/living/critter/spider/baby/nice(target)
 						else if (prob(5))
-							S = new /obj/critter/nicespider(target)
-							S.name = "spider"
-							S.set_density(0)
-						else if (prob(10))
-							S = new /obj/critter/spider(target)
-							if (prob(1))
-								S.aggressive = 1
+							new /mob/living/critter/spider/nice(target)
+
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1845,9 +1838,10 @@ datum
 						M.visible_message("<span class='alert'><b>[M]</b> [pick("barfs", "hurls", "pukes", "vomits")] up some [pick("spiders", "weird black stuff", "strange black goop", "wriggling black goo")]![pick("", " Gross!", " Ew!", " Nasty!")]</span>",\
 						"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] YOU JUST [pick("BARFED", "HURLED", "PUKED", "VOMITED")] SPIDERS[pick("!", " FUCK THAT'S GROSS!", " SHIT THAT'S NASTY!", " OH GOD EW!")][pick("", "!", "!!", "!!!", "!!!!")]</b></span>")
 						if (prob(33))
-							var/obj/critter/spider/baby/S = new /obj/critter/spider/baby(M)
 							if (prob(5))
-								S.aggressive = 1
+								new /mob/living/critter/spider/baby(M)
+							else
+								new /mob/living/critter/spider/baby/nice(M)
 				..()
 				return
 
@@ -2139,11 +2133,11 @@ datum
 			flushing_multiplier = 2
 			var/conversion_rate = 0.7
 			var/gib_threshold = 200
-			var/list/sounds = list("sound/machines/ArtifactFea1.ogg", "sound/machines/ArtifactFea2.ogg", "sound/machines/ArtifactFea3.ogg",
-							"sound/misc/flockmind/flockmind_cast.ogg", "sound/misc/flockmind/flockmind_caw.ogg",
-							"sound/misc/flockmind/flockdrone_beep1.ogg", "sound/misc/flockmind/flockdrone_beep2.ogg", "sound/misc/flockmind/flockdrone_beep3.ogg", "sound/misc/flockmind/flockdrone_beep4.ogg",
-							"sound/misc/flockmind/flockdrone_grump1.ogg", "sound/misc/flockmind/flockdrone_grump2.ogg", "sound/misc/flockmind/flockdrone_grump3.ogg",
-							"sound/effects/radio_sweep1.ogg", "sound/effects/radio_sweep2.ogg", "sound/effects/radio_sweep3.ogg", "sound/effects/radio_sweep4.ogg", "sound/effects/radio_sweep5.ogg")
+			var/list/sounds = list('sound/machines/ArtifactFea1.ogg', 'sound/machines/ArtifactFea2.ogg', 'sound/machines/ArtifactFea3.ogg',
+							'sound/misc/flockmind/flockmind_cast.ogg', 'sound/misc/flockmind/flockmind_caw.ogg',
+							'sound/misc/flockmind/flockdrone_beep1.ogg', 'sound/misc/flockmind/flockdrone_beep2.ogg', 'sound/misc/flockmind/flockdrone_beep3.ogg', 'sound/misc/flockmind/flockdrone_beep4.ogg',
+							'sound/misc/flockmind/flockdrone_grump1.ogg', 'sound/misc/flockmind/flockdrone_grump2.ogg', 'sound/misc/flockmind/flockdrone_grump3.ogg',
+							'sound/effects/radio_sweep1.ogg', 'sound/effects/radio_sweep2.ogg', 'sound/effects/radio_sweep3.ogg', 'sound/effects/radio_sweep4.ogg', 'sound/effects/radio_sweep5.ogg')
 
 			on_add()
 				active_reagent_holders |= src
@@ -2196,6 +2190,7 @@ datum
 						if(probmult(1)) // i hate you all, players
 							H.flockbit_gib()
 							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
+							return
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))
 							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
@@ -3188,7 +3183,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/blood) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood,T)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -3312,7 +3307,7 @@ datum
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						// no mob to vomit, so this gets to stay - cirr
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable( /obj/decal/cleanable/vomit,T)
 
 		gvomit
@@ -3334,7 +3329,7 @@ datum
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/greenpuke) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 		urine
@@ -3365,7 +3360,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		triplepiss
@@ -3387,7 +3382,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		poo
@@ -3490,8 +3485,8 @@ datum
 				M.ex_act(1)
 				if (isliving(M))
 					logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name] at [log_loc(M)].")
-				M.gib()
 				M.reagents.del_reagent(src.id)
+				M.gib()
 
 		cyclopentanol
 			name = "cyclopentanol"
@@ -3608,7 +3603,7 @@ datum
 					if (!isliving(M))
 						return
 					src.music_given_to = M	// Lets just add all this to on_add instead of on reaction
-					M.playsound_local(M, "sound/misc/yee_music.ogg", 50, 0) // why the fuck was this playing sound with << and to repeat forever? never do this
+					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0) // why the fuck was this playing sound with << and to repeat forever? never do this
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
 						src.the_bioeffect_you_had_before_it_was_affected_by_yee = H?.mutantrace?.name			// then write down what your whatsit was
@@ -3619,7 +3614,7 @@ datum
 							boutput(H, "You have a strange feeling for a moment.")
 						H.bioHolder.AddEffect("accent_yee", timeleft = 180)
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-						playsound(H, "sound/misc/yee.ogg", 50, 1)
+						playsound(H, 'sound/misc/yee.ogg', 50, 1)
 
 			on_remove()
 				var/atom/A = holder.my_atom
@@ -3645,14 +3640,14 @@ datum
 					M = holder.my_atom
 				if (!src.music_given_to) // only do this one time!!
 					src.music_given_to = M
-					M.playsound_local(M, "sound/misc/yee_music.ogg", 50, 0)  // same comment as the other instance of this being played, yeesh
+					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0)  // same comment as the other instance of this being played, yeesh
 				if (M.bioHolder)
 					if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")	// Just for consistency
 						M.bioHolder.AddEffect("lizard", timeleft = 180)
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (probmult(20))
 					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-					playsound(M, "sound/misc/yee.ogg", 50, 1)
+					playsound(M, 'sound/misc/yee.ogg', 50, 1)
 				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
 				if (probmult(8))
@@ -3856,7 +3851,7 @@ datum
 						var/starty = 1
 						var/mob/badmantarget = M
 						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
-						badmantarget.playsound_local(get_turf(badmantarget), "sound/misc/american_patriot.ogg", 50)
+						badmantarget.playsound_local(get_turf(badmantarget), 'sound/misc/american_patriot.ogg', 50)
 						SPAWN(10 SECONDS)
 							startx = badmantarget.x - rand(-11, 11)
 							starty = badmantarget.y - rand(-11, 11)
@@ -3984,7 +3979,7 @@ datum
 					..()
 					if (holder && ismob(holder.my_atom))
 						var/mob/bipbip = holder.my_atom
-						bipbip.playsound_local(bipbip.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+						bipbip.playsound_local(bipbip.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 
 		sakuride
 			name = "sakuride"

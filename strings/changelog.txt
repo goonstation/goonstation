@@ -1,4 +1,170 @@
 
+(t)thu sep 01 22
+(u)Emily & Walpvrgis
+(*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
+(u)CrystalClover
+(p)10551
+(e)|
+(+)Restructured Donut 2 Janitorial, added biohazard locker and removed redundant disposal chute.
+(t)wed aug 31 22
+(u)Wisemonster
+(p)10549
+(e)|
+(+)Forklifts are no longer being haunted by ghost crates
+(u)Wisemonster
+(p)10550
+(e)|
+(+)Destiny qm can now print barcodes to the shipping market.
+(u)Sovexe & Emily
+(*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
+(u)Emily
+(*)Wizard Chickens now accept credits to fund their education. They will gain more powerful spells with more funding.
+(u)Sord
+(*)Added new pocket sized oxygen tank. All backpacks/boxes will now spawn with these.
+(*)Pocket tanks hold roughly 3 minutes worth of air on spawn, more if filled up to maximum.
+(*)The old emergency oxygen tanks are now "mini oxygen tanks", found where you'd find them normally. They hold more volume, but no longer fit in your pocket, only on your belt slot.
+(u)RubberRats
+(p)10490
+(e)|
+(+)Captains now always spawn with an emergency oxygen tank in their bag.
+(u)ZWRh3
+(p)10529
+(e)|
+(+)On the battle royale gamemode people will now start with armory/HOS office access.
+(u)Sord
+(*)Added new micro jetpack to all maps, standard size jetpack can be produced by the miners at greater cost
+(t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
+(u)Amylizzle
+(p)9741
+(e)|
+(*)Changes how radiation works. All radiation sources are now visible, with a green or blue highlight and a glowing light!
+(*)You now have an accumulated dose, which starts to make you sick over time.
+(*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
+(*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
+(t)mon aug 29 22
+(u)Sord
+(*)Added 4 new Research accesses, view minor changes for details
+(u)Sord
+(e)|
+(+)New Research accesses are "Research Foyer", "Telescience", "Artifact Lab", and "Robot Depot"
+(u)Roddy
+(p)9442
+(e)|
+(+)Adds a cheese wheel to the game.
+(u)Azrun
+(p)10499
+(e)|
+(+)Head Access no longer required to deconstruct fabricators and Genetics booth.
+(t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
+(u)CrystalClover
+(p)10469
+(e)|
+(+)Fixed custom pizzas so that Pepperoni, Meatball and Mushroom can be added alongside other toppings
+(u)flappybat
+(e)⚖|balance
+(+)Upgrade the single landmine given by the surplus crate to a landmine pouch with three random mines.
+(+)Add beartrap pouch to the surplus crate loot table.
+(+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
+(+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
+(+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
+(+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
+(+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
+(t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
+(u)ZeWaka
+(p)10484
+(e)|
+(*)Reworked internal list sorting code - be sure to report any bugs you see (hopefully less, as this fixed a lot)
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
+(u)LeahTheTech
+(p)10325
+(e)|
+(+)Gunbots no longer take eye damage from welding
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
+(t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
+(t)wed aug 24 22
+(u)Mr. Moriarty
+(p)9908
+(e)|
+(*)Added Ctrl-I as the *twirl hotkey.
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
+(t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
+(u)Sord
+(e)|
+(+)Donut 2 now has a public refinery near mining
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
+(t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
 (t)thu aug 18 22
 (u)Roddy
 (p)10340

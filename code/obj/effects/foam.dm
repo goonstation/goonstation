@@ -43,7 +43,7 @@
 
 	metal = ismetal
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
-	//playsound(src, "sound/effects/bubbles2.ogg", 80, 1, -3)
+	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
 
 	UpdateIcon()
 	if(metal)

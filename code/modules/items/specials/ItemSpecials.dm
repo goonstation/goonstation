@@ -636,9 +636,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(master, "sound/effects/flame.ogg", 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -722,8 +722,8 @@
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"
-			P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
-			P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+			P.shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+			P.hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 			P.name = "monkey"
 
 /datum/item_special/slam
@@ -1259,7 +1259,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && !QDELETED(master) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 

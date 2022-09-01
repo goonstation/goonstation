@@ -101,6 +101,13 @@ toxic - poisons
 	power = 45
 	dissipation_rate = 6
 
+/datum/projectile/energy_bolt/diffuse
+	sname = "diffuse energy bolt"
+	max_range = 7
+	dissipation_delay = 1
+	dissipation_rate = 2
+	cost = 25
+
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
 	cost = 75

@@ -521,7 +521,7 @@ Contents:
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)

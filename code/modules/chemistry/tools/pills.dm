@@ -111,7 +111,7 @@
 			if (src.reagents.total_volume)
 				src.reagents.reaction(target, INGEST)
 				sleep(0.1 SECONDS)
-				reagents.trans_to(target, src.reagents.total_volume)
+				reagents?.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)
 

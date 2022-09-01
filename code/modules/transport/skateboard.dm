@@ -235,7 +235,7 @@
 
 	if(crashed)
 		if(crashed > 30)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 70, 1)
 
 		src.messageNearby("<span class='alert'><B>You are flung off the [src]!</B></span>", "<span class='alert'><B>[rider] is flung off the [src]!</B></span>")
 
@@ -311,13 +311,13 @@
 	switch(M.a_intent)
 		if("harm", "disarm")
 			if(prob(60))
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of the [src]!</B></span>")
 				src.log_me(src.rider, M, "shoved_off")
 				rider.weakened = 2
 				eject_rider()
 			else
-				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	*/
 	return

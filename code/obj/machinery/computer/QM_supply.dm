@@ -532,10 +532,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						var/default_comment = ""
+						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+						if(O.comment && O.comment != default_comment)
+							phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -561,10 +564,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							var/default_comment = ""
+							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+							if(O.comment && O.comment != default_comment)
+								phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -1082,7 +1088,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
-	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"

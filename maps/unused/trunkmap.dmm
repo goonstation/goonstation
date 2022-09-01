@@ -12736,7 +12736,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -12752,7 +12752,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -12766,7 +12766,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -21406,7 +21406,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -21422,7 +21422,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -21451,7 +21451,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -27583,7 +27583,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -27828,7 +27828,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28661,7 +28661,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29530,7 +29530,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29653,7 +29653,7 @@
 	id = "Disposal Entrance";
 	name = "Crusher Blast Door";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -29689,7 +29689,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29957,7 +29957,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -30111,7 +30111,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -30211,7 +30211,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30309,7 +30309,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Commander's Office";
@@ -30385,7 +30385,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30492,7 +30492,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30597,7 +30597,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30947,7 +30947,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -31344,7 +31344,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -32241,7 +32241,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -32903,7 +32903,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33014,7 +33014,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -33404,7 +33404,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -33991,7 +33991,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -34366,7 +34366,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	name = "Secure Transport";
@@ -34571,7 +34571,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -35173,7 +35173,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 1;

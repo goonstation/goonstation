@@ -9,17 +9,21 @@ datum
 		var/list/inhibitors = list()
 		var/instant = 1
 #ifdef CHEM_REACTION_PRIORITIES
-		//lower priorities happen last
-		//higher priorities happen first
+		/// lower priorities happen last
+		/// higher priorities happen first
 		var/priority = 10
 #endif
 
-		var/min_temperature = -INFINITY		//Will not react if below this
-		var/required_temperature = -1 //Not used by default. -1 = not used. //Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
-		var/max_temperature = INFINITY //Will not react if above this
+		/// Will not react if below this
+		var/min_temperature = -INFINITY
+		/// Not used by default. -1 = not used.
+		/// Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
+		var/required_temperature = -1
+		/// Will not react if above this
+		var/max_temperature = INFINITY
 
-
-		var/reaction_speed = 5 // units produced per second
+		/// units produced per second
+		var/reaction_speed = 5
 		var/base_reaction_temp = T20C
 		var/reaction_temp_divider = 10
 
@@ -32,14 +36,9 @@ datum
 		var/mix_sound = 'sound/effects/bubbles.ogg'
 		var/drinkrecipe = 0
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
+
 		///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 		var/hidden = FALSE
-
-
-#ifdef CHEM_REACTION_PRIORITIES
-		proc/operator<(var/datum/chemical_reaction/reaction)
-			return priority > reaction.priority
-#endif
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
@@ -77,7 +76,7 @@ datum
 					holder.del_reagent("hydrogen")
 					holder.del_reagent("platinum")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -105,7 +104,7 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("propellant")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -135,7 +134,7 @@ datum
 					holder.del_reagent("phosphorus")
 					holder.del_reagent("potassium")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -163,7 +162,7 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("smokepowder")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -191,7 +190,7 @@ datum
 					holder.del_reagent("fluorosurfactant")
 					holder.del_reagent("water")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
@@ -3847,7 +3846,7 @@ datum
 			// has to be <50C, as changeling blood boils off at that
 			required_temperature = T0C + 45
 			mix_phrase = "The reagents combine with an audible ho0t."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
 
 		hootagen_stable
 			name = "stable hootagen"
@@ -3856,7 +3855,7 @@ datum
 			required_reagents = list("sonicpowder" = 1, "egg" = 1, "bloodc" = 1, "strange_reagent" = 1, "sorium" = 1, "dna_mutagen" = 3)
 			result_amount = 3
 			mix_phrase = "The reagents combine with an audible hoot."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
 
 		colors
 			name = "colorful reagent"
