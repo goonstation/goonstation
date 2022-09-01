@@ -1306,7 +1306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if(istype(mover, /obj/projectile))
 			if(prob(30))
 				src.smash()
-		return ..()
+		..()
 
 	proc/smash(var/atom/A)
 		if (src.smashed)
