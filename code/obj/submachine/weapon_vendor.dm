@@ -216,17 +216,13 @@
 	name = "Black Jack's Swashbuckling Surplus"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-surplus"
-	desc = "A secure trading interface with a lesser-known space pirate."
+	desc = "A secure trading interface with a space pirate turned arms dealer."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
-
-	ex_act()
-		return
 
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		// List of avaliable objects for purchase
 		materiel_stock += new/datum/materiel/loadout/longgun
 		materiel_stock += new/datum/materiel/loadout/shortgun
 		materiel_stock += new/datum/materiel/loadout/melee
@@ -661,8 +657,8 @@
 			icon_state = "req-token-surplus"
 
 		surplusutility
-			name = "Bronze dubloon"
-			desc = "A bronze dubloon, from a spacefaring pirate. It should be enough to afford you another utility credit."
+			name = "Copper dubloon"
+			desc = "A crude coin, made for intrading between space pirates. It should be enough to afford you another utility credit."
 			icon_state = "req-token-surplusutil"
 		vr
 			name = "syndicoin requisition token"
