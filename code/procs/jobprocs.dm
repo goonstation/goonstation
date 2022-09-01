@@ -604,7 +604,7 @@
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
-		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)

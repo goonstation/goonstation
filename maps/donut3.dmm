@@ -21176,25 +21176,33 @@
 "fNJ" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -9;
-	pixel_y = 11
+	pixel_y = 10;
+	pixel_x = -10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 11
+	pixel_y = 10;
+	pixel_x = -5
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = 9;
-	pixel_y = 11
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -11
+	pixel_y = 10;
+	pixel_x = 5
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -2
+	pixel_y = 10;
+	pixel_x = 10
 	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 7
+/obj/item/tank/mini_oxygen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
+/obj/item/tank/mini_oxygen{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/tank/mini_oxygen,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "fNL" = (
@@ -49967,13 +49975,8 @@
 /area/station/hallway/primary/west)
 "onD" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/emergency_oxygen{
-	pixel_x = -8
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 3;
-	pixel_y = 4
-	},
+/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini_oxygen,
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "onI" = (

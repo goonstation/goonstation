@@ -280,7 +280,7 @@ WET FLOOR SIGN
 // MOP
 
 /obj/item/mop
-	desc = "The world of janitalia wouldn't be complete without a mop."
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop."
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -298,7 +298,7 @@ WET FLOOR SIGN
 	stamina_crit_chance = 10
 
 /obj/item/mop/orange
-	desc = "The world of janitalia wouldn't be complete without a mop. This one comes in orange!"
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop. This one comes in orange!"
 	name = "orange mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop_orange"
