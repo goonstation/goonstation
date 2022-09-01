@@ -22007,8 +22007,6 @@
 /obj/machinery/light_switch{
 	pixel_y = 25
 	},
-/obj/vehicle/floorbuffer,
-/obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -22019,6 +22017,7 @@
 	dir = 8;
 	pixel_x = 4
 	},
+/obj/vehicle/floorbuffer,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "buZ" = (
@@ -22655,24 +22654,22 @@
 	},
 /area/station/hallway/primary/south)
 "bxi" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
-"bxj" = (
-/obj/machinery/light/incandescent,
 /obj/rack,
 /obj/item/mop,
 /obj/item/sponge,
 /obj/item/storage/box/lightbox/bulbs,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
+"bxj" = (
+/obj/mopbucket,
+/obj/item/sponge,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -22685,18 +22682,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/junction,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
 /area/station/janitor/office)
 "bxl" = (
-/obj/stool,
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
-/obj/item/sponge,
-/obj/mopbucket,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
