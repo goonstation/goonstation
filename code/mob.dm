@@ -2205,7 +2205,7 @@
 			if (istype(G3.gift, /obj/item/storage))
 				var/obj/item/storage/S6 = G3.gift
 				var/list/T6 = S6.get_all_contents()
-				for (var/obj/O6, in T6)
+				for (var/obj/O6 in T6)
 					. |= O6
 
 	for (var/obj/item/storage/box/syndibox/SB in .) // For those "belt-in-stealth storage-in-backpack" situations.
