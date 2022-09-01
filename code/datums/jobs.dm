@@ -1783,6 +1783,18 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Psychiatrist")
 		return
 
+/datum/job/special/random/artist
+	name = "Artist"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeansblue)
+	slot_head = list(/obj/item/clothing/head/mime_beret)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/spacecash/twenty)
+	slot_poc2 = list(/obj/item/pen/pencil)
+	slot_lhan = list(/obj/item/storage/toolbox/artistic)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
+
 #ifdef HALLOWEEN
 /*
  * Halloween jobs
