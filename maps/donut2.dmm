@@ -2268,6 +2268,7 @@
 	network = "Zeta"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ahx" = (
@@ -2618,7 +2619,6 @@
 	network = "bombtest";
 	pixel_y = 11
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aih" = (
@@ -2739,7 +2739,6 @@
 	name = "Mixing Vent Control";
 	pixel_x = 24
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aiz" = (
@@ -6295,7 +6294,10 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
-/obj/item_dispenser/latex_gloves,
+/obj/item_dispenser/latex_gloves{
+	pixel_y = 0;
+	pixel_x = -28
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avS" = (
@@ -24109,9 +24111,6 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/multitool,
-/obj/item/device/radio/intercom/engineering{
-	dir = 1
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bCo" = (
@@ -24703,6 +24702,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEQ" = (
@@ -24718,19 +24721,11 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bES" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
@@ -28767,6 +28762,13 @@
 "ecM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/ptl)
+"ecU" = (
+/obj/machinery/rkit,
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "ecY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
@@ -33179,6 +33181,7 @@
 /obj/random_item_spawner/tools,
 /obj/item/cargotele,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "iss" = (
@@ -34143,7 +34146,6 @@
 "jnx" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
-/obj/machinery/light/incandescent,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
@@ -34428,14 +34430,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "jDc" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -34970,11 +34964,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "kgq" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -35972,12 +35965,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/observatory)
-"lis" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "liN" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/corner/misc{
@@ -39606,6 +39593,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -43238,14 +43226,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"sih" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "siN" = (
 /obj/cable/black{
 	icon_state = "2-4"
@@ -45305,6 +45285,13 @@
 	},
 /turf/space,
 /area/space)
+"udF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/refinery)
 "udT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74481,7 +74468,7 @@ mln
 btx
 bAK
 bBr
-bAE
+ecU
 bzg
 bDF
 vse
@@ -76606,7 +76593,7 @@ sRd
 eWy
 bGC
 tXY
-sih
+jDc
 vgX
 skk
 lCb
@@ -77509,7 +77496,7 @@ bEP
 bFo
 bFo
 bCr
-drU
+udF
 bHs
 xMe
 ulZ
@@ -79321,7 +79308,7 @@ bDg
 bFr
 bFP
 bCr
-lis
+bGX
 bGX
 cCY
 lmm
