@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		return data
 
-	proc/special_attack(var/mob/target)
+	proc/special_attack(var/mob/target, var/mob/living/user)
 		boutput(usr, "Your gloves do nothing special")
 		return
 
@@ -478,6 +478,45 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+
+/obj/item/clothing/gloves/bladed
+	name = "bladed gloves"
+	desc = "These transparent gloves have blades protruding from them."
+	icon_state = "bladed"
+	item_state = "gloves_bladed"
+	activeweapon = 1
+	hide_prints = 0
+	hit_type = DAMAGE_CUT
+	force = 11
+	stamina_damage = 25
+	stamina_cost = 10
+	attack_verbs = "slashes"
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+
+	New()
+		..()
+		setSpecialOverride(/datum/item_special/double, src)
+
+	special_attack(mob/living/target, mob/living/user)
+		if(check_target_immunity( target ))
+			return 0
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0)
+		user.attack_effects(target, affecting)
+		var/action = pick("stab", "slashe")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
+/obj/item/clothing/gloves/bladed_retracted
+	desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
+	name = "transparent gloves"
+	icon_state = "transparent"
+	item_state = "transparent"
+	hide_prints = 0
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"

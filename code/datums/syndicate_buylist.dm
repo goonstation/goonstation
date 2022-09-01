@@ -103,6 +103,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
 
+/datum/syndicate_buylist/generic/bladed_gloves
+	name = "Bladed Gloves"
+	item = /obj/item/clothing/gloves/bladed_retracted
+	cost = 3
+	desc = "A pair of transparent gloves with a concealed blade on the back of each hand that cannot be disarmed. Deploy and retract with a finger snap, perfect for the killer-on-the-go!"
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
+
+
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
 	item = /obj/item/storage/emp_grenade_pouch

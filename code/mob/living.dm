@@ -1550,7 +1550,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				return
 			*/
 			if (gloves?.activeweapon)
-				gloves.special_attack(src)
+				gloves.special_attack(src, M)
 				return
 
 			if (src.parry_or_dodge(M))
