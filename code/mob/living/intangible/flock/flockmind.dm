@@ -48,7 +48,7 @@
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()
 	if (length(eligible_traces))
-		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces))
+		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces, /proc/cmp_text_asc))
 	else
 		return -1
 
@@ -71,7 +71,7 @@
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
 		new /obj/flock_structure/rift(get_turf(src), src.flock)
-		playsound(src, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return

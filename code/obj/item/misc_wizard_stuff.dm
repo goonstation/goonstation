@@ -187,7 +187,7 @@
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				JOB_XP(M, "Chaplain", 2)
 				return
 

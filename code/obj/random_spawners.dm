@@ -840,6 +840,7 @@
 	/obj/item/storage/toolbox/emergency,
 	/obj/item/tank/air,
 	/obj/item/tank/emergency_oxygen,
+	/obj/item/tank/mini_oxygen,
 	/obj/item/weldingtool,
 	/obj/item/wrench)
 

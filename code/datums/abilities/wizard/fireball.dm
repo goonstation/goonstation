@@ -35,9 +35,9 @@
 	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/FireballGrim.ogg"
-	voice_fem = "sound/voice/wizard/FireballFem.ogg"
-	voice_other = "sound/voice/wizard/FireballLoud.ogg"
+	voice_grim = 'sound/voice/wizard/FireballGrim.ogg'
+	voice_fem = 'sound/voice/wizard/FireballFem.ogg'
+	voice_other = 'sound/voice/wizard/FireballLoud.ogg'
 
 	var/datum/projectile/fireball/fb_proj = new
 	maptext_colors = list("#fcdf74", "#eb9f2b", "#d75015")

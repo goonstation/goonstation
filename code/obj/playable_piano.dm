@@ -88,7 +88,7 @@
 				user.visible_message("[user] starts loosening the piano's castors...", "You start loosening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
-				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 				src.anchored = 0
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
@@ -97,7 +97,7 @@
 				user.visible_message("[user] starts tightening the piano's castors...", "You start tightening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
-				playsound(user, "sound/items/Screwdriver2.ogg", 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 				src.anchored = 1
 				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
 				return
@@ -110,7 +110,7 @@
 				user.visible_message("[user] starts prying off the piano's maintenance panel...", "You begin to pry off the maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 0)
 					return
-				playsound(user, "sound/items/Crowbar.ogg", 65, 1)
+				playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
 				user.visible_message("[user] prys off the piano's maintenance panel.","You pry off the maintenance panel.")
 				var/obj/item/plank/P = new(get_turf(user))
 				P.name = "Piano Maintenance Panel"
@@ -125,7 +125,7 @@
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
-				playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
+				playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
 				panel_exposed = 0
 				UpdateIcon(0)
@@ -139,7 +139,7 @@
 			if (!do_after(user, 7 SECONDS) || is_looping == 2)
 				return
 			is_looping = 2
-			playsound(user, "sound/items/Wirecutter.ogg", 65, 1)
+			playsound(user, 'sound/items/Wirecutter.ogg', 65, 1)
 			user.visible_message("<span class='alert'>[user] snips the looping control wire!</span>", "You snip the looping control wire!")
 
 		else if (ispulsingtool(W)) //resetting piano the hard way

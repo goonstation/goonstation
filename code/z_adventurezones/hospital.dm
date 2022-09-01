@@ -185,7 +185,7 @@
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
 			SPAWN(8 SECONDS)
-				playsound(target, "sound/ambience/loop/Static_Horror_Loop.ogg", 100)
+				playsound(target, 'sound/ambience/loop/Static_Horror_Loop.ogg', 100)
 				sleep(rand(100,400))
 				if(target)
 					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)

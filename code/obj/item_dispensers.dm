@@ -127,7 +127,7 @@
 
 	attack_hand(mob/user)
 		if (!src.cant_withdraw && src.amount >= 1)
-			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
+			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 25, 1)
 		..()
 
 /obj/item_dispenser/icedispenser

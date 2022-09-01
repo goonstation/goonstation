@@ -563,7 +563,7 @@ var/global/debug_messages = 0
 	for (var/V in prefs.vars)
 		names += V
 
-	names = sortList(names)
+	sortList(names, /proc/cmp_text_asc)
 
 	for (var/V in names)
 		body += debug_variable(V, prefs.vars[V], 0)

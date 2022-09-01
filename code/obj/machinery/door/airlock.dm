@@ -151,7 +151,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	deconstruct_flags = DECON_NULL_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
 	var/image/panel_image = null
@@ -1549,7 +1549,7 @@ About the new airlock wires panel:
 
 			if (!istype(src, /obj/machinery/door/airlock/glass))
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
@@ -1566,7 +1566,7 @@ About the new airlock wires panel:
 
 			if (src.visible)
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0
