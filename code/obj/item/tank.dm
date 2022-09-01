@@ -455,6 +455,26 @@ Contains:
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
+/obj/item/tank/emergency_oxygen/extended
+	name = "extended capacity pocket oxygen tank"
+	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	icon_state = "ex_pocket_oxtank"
+
+	New()
+		..()
+		src.air_contents.volume = 6
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+
+
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
