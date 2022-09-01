@@ -3,9 +3,7 @@
 (u)CrystalClover
 (p)10551
 (e)|
-(+)Restructured Donut 2 Janitorial
-(+)Added Level 3 Biohazard Locker to Donut 2 Janitorial
-(+)Removed unnecessary Disposal Unit in Donut 2 Janitorial
+(+)Restructured Donut 2 Janitorial, added biohazard locker and removed redundant disposal chute.
 (t)wed aug 31 22
 (u)Wisemonster
 (p)10549
