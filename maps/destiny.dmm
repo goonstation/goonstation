@@ -5516,7 +5516,7 @@
 	icon_state = "line1"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -7379,7 +7379,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aEH" = (
@@ -7875,7 +7875,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aGl" = (
@@ -8696,7 +8696,7 @@
 "aJA" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{
@@ -12109,7 +12109,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "baE" = (
@@ -13512,7 +13512,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bkW" = (
@@ -17848,6 +17848,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "clt" = (
@@ -20100,7 +20101,7 @@
 "dkN" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -21688,7 +21689,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "medstairs_alone"
@@ -24210,6 +24211,7 @@
 	name = "Test Chamber"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/tox,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "eYq" = (
@@ -26431,6 +26433,7 @@
 	dir = 4;
 	name = "Toxins"
 	},
+/obj/access_spawn/tox_storage,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "fZr" = (
@@ -26924,7 +26927,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/neutral/side{
@@ -27051,7 +27054,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -31932,7 +31935,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "iWP" = (
@@ -32933,7 +32936,7 @@
 	pixel_y = 21
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -33534,7 +33537,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/disposalpipe/segment{
@@ -34004,7 +34007,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/decal/mule/beacon,
@@ -34309,7 +34312,7 @@
 "kkl" = (
 /obj/decal/mule/beacon,
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -38301,7 +38304,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light{
@@ -38859,7 +38862,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "mFb" = (
@@ -42889,7 +42892,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/neutral/side{
@@ -43812,7 +43815,7 @@
 "pht" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/machinery/light/emergency,
@@ -48021,7 +48024,7 @@
 "rtz" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{
@@ -50258,7 +50261,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "sJu" = (
@@ -52153,7 +52156,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tHw" = (
@@ -55308,7 +55311,7 @@
 	req_access_txt = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "vgb" = (
@@ -60026,7 +60029,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "xBL" = (

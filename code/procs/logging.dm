@@ -427,6 +427,11 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (logType == "alls")
 		for (var/log in logs)
 			if(log == "audit") continue
+			if(log == "topic")
+				if (requesting_admin.tempmin)
+					continue
+				if (!requesting_admin.show_topic_log)
+					continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
 			var/list/searchData = list()

@@ -29095,7 +29095,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "bra" = (
@@ -29109,7 +29109,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -29986,7 +29986,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -30849,7 +30849,7 @@
 	name = "EVA Secure Shutters";
 	pixel_x = 28
 	},
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "buI" = (
@@ -51655,7 +51655,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Teleporter Pad";
-	req_access_txt = "24"
+	req_access_txt = "87"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine,
@@ -54451,7 +54451,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Science Teleporter";
-	req_access_txt = "8"
+	req_access_txt = "87"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
@@ -59614,7 +59614,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = "85"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
@@ -59638,7 +59638,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
 	name = "Research Sector";
-	req_access_txt = "24"
+	req_access_txt = "85"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
@@ -63018,7 +63018,7 @@
 "cNh" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -65731,7 +65731,7 @@
 "cTd" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -68438,7 +68438,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
 	name = "Artifact Lab";
-	req_access_txt = "24"
+	req_access_txt = "86"
 	},
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,

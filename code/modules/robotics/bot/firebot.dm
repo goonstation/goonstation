@@ -387,8 +387,9 @@
 	src.oldtarget = null
 	src.oldloc = null
 	src.path = null
-	src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
-	src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
+	if(src.cooldowns)
+		src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
+		src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
 	src.icon_state = "firebot[src.on]"
 	src.updateUsrDialog()
 	return
