@@ -896,7 +896,7 @@ Code:
 		return
 
 /datum/computer/file/text/bomb_manual
-	name = "Self-destruct Readme"
+	name = "Bomb Readme"
 
 	data = {"
 Electronic Self-destruct Program Manual<hr>
