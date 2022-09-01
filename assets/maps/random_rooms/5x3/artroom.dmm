@@ -20,7 +20,7 @@
 /obj/stool/chair/wooden/scrap{
 	dir = 8
 	},
-/turf/unsimulated/floor/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "l" = (
 /obj/item/cigbutt{
@@ -33,7 +33,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /obj/item/raw_material/shard/glass,
-/turf/unsimulated/floor/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "m" = (
 /obj/item/brick,
@@ -53,14 +53,14 @@
 	pixel_y = -3
 	},
 /obj/decal/cleanable/dirt/dirt4,
-/turf/unsimulated/floor/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/item/cigbutt{
 	pixel_x = 9;
 	pixel_y = 6
 	},
-/turf/unsimulated/floor/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "I" = (
 /obj/machinery/vending/snack{
@@ -70,7 +70,7 @@
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/decal/cleanable/dirt/dirt2,
-/turf/unsimulated/floor/grime,
+/turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/item/cigbutt{
