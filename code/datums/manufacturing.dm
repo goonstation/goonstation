@@ -1968,10 +1968,19 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jetpack
 	name = "Jetpack"
-	item_paths = list("MET-3","CON-1")
-	item_amounts = list(2,10)
+	item_paths = list("MET-3","CON-2")
+	item_amounts = list(10,20)
 	item_outputs = list(/obj/item/tank/jetpack)
 	time = 60 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/microjetpack
+	name = "Micro Jetpack"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,10)
+	item_outputs = list(/obj/item/tank/jetpack/micro)
+	time = 30 SECONDS
 	create = 1
 	category = "Clothing"
 

@@ -192,7 +192,7 @@
 									continue
 								pdaOwnerNames += P_name
 								pdaOwnerNames[P_name] = P_id
-							pdaOwnerNames = sortList(pdaOwnerNames)
+							sortList(pdaOwnerNames, /proc/cmp_text_asc)
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 

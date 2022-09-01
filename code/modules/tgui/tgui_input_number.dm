@@ -28,7 +28,7 @@
 			user = client.mob
 		else
 			return
-	if(!user)
+	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
 	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout)
 	numbox.ui_interact(user)
@@ -71,6 +71,8 @@
  * a message and has an input for text entry.
  */
 /datum/tgui_input_number
+	/// The user of the TGUI window
+	var/mob/user
 	/// Boolean field describing if the tgui_input_number was closed by the user.
 	var/closed
 	/// The default (or current) value, shown as a default. Users can press reset with this.
@@ -92,6 +94,7 @@
 
 
 /datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout)
+	src.user = user
 	src.default = default
 	src.max_value = max_value
 	src.message = message
@@ -109,7 +112,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_input_number/proc/wait()
-	while (!entry && !closed && !QDELETED(src))
+	while (user.client && !entry && !closed && !QDELETED(src))
 		sleep(1)
 
 /datum/tgui_input_number/disposing(force, ...)

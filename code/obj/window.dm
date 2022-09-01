@@ -127,9 +127,9 @@
 			corrode_resist 	= material.getProperty("chemical") * 10
 
 			if (material.alpha > 220)
-				opacity = 1 // useless opaque window
+				set_opacity(1) // useless opaque window)
 			else
-				opacity = 0
+				set_opacity(0)
 
 		if (istype(reinforcement))
 
@@ -392,7 +392,7 @@
 			if (state == 10) // ???
 				return
 			else if (state >= 1)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -404,7 +404,7 @@
 				else
 					assembly_handler(user, W)
 			else
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -462,10 +462,10 @@
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
-		else if(ispryingtool(W))
+		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 
 	proc/align_window()
 		update_nearby_tiles(need_rebuild=1)
@@ -580,7 +580,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
-		playsound(the_window.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
 		..()
@@ -774,7 +774,7 @@
 			return
 
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
@@ -1055,7 +1055,7 @@
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return
 
@@ -1074,6 +1074,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
@@ -1089,8 +1090,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/auto/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/auto/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
@@ -1117,6 +1120,7 @@
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
+	var/repair_per_resource = 1
 	density = TRUE
 
 /obj/window/feather/New()
@@ -1132,8 +1136,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/feather/north
 	dir = NORTH

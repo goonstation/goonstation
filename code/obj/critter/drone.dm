@@ -177,7 +177,7 @@
 	CritterAttack(atom/M)
 		if(target)
 			src.attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
@@ -198,7 +198,7 @@
 	ChaseAttack(atom/M)
 		if(target)
 			src.attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
@@ -550,7 +550,7 @@
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
-			playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
+			playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
 			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
@@ -559,7 +559,7 @@
 				else
 					target_r = new/obj/railgun_trg_dummy(target)
 
-				playsound(src, "sound/weapons/railgun.ogg", 50, 1)
+				playsound(src, 'sound/weapons/railgun.ogg', 50, 1)
 				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -623,7 +623,7 @@
 		CritterAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+				//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
 
 				var/tturf = get_turf(M)
@@ -789,7 +789,7 @@
 		process()
 			..()
 			if(prob(3))
-				playsound(src,"sound/machines/signal.ogg", 60, 0)
+				playsound(src, 'sound/machines/signal.ogg', 60, 0)
 			return
 
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
@@ -879,7 +879,7 @@
 	process()
 		..()
 		if(prob(3))
-			playsound(src,"sound/machines/signal.ogg", 60, 0)
+			playsound(src, 'sound/machines/signal.ogg', 60, 0)
 
 		return
 
@@ -992,7 +992,7 @@
 			P2.launch()
 
 	proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1011,12 +1011,12 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		for (var/obj/machinery/cruiser/C in range(src, 5))
 			lineObjs += DrawLine(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-			playsound(C.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(C.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			C.ex_act(3)
 
 		SPAWN(0.6 SECONDS)
@@ -1119,7 +1119,7 @@
 
 
 	/*proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1129,7 +1129,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:weakened += rand(3,5)
 			if (isdead(poorSoul) && prob(25))
@@ -1138,7 +1138,7 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		SPAWN(0.6 SECONDS)
@@ -1171,7 +1171,7 @@
 	process()
 		..()
 		if(prob(3))
-			playsound(src,"sound/effects/heartbeat.ogg", 60, 0) //for the spooky effect
+			playsound(src,'sound/effects/heartbeat.ogg', 60, 0) //for the spooky effect
 		return
 
 	New()
@@ -1264,7 +1264,7 @@
 
 	select_target(var/atom/newtarget)
 		..()
-		playsound(src, (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, (voice_gender == "male" ? 'sound/voice/screams/male_scream.ogg' : 'sound/voice/screams/female_scream.ogg'), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 
 	ex_act(severity)
 		return
