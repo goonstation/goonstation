@@ -87,7 +87,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
 			for(var/turf/T in range(3,W))
 				turfs_to_fix |= T
-		clear_out_turfs(turfs_to_fix)
+		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
 
 	proc/get_mass_driver_turfs()
 		var/list/turfs_to_fix = list()
@@ -104,7 +104,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
 		clear_out_turfs(turfs_to_fix)
 
-	proc/clear_out_turfs(list/turf/to_clear)
+	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list)
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/auto/asteroid))
@@ -119,6 +119,8 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
 					continue
 				if(A.density)
+					if(A in ignore_list)
+						continue
 					qdel(A)
 
 			if(station_repair.allows_vehicles)
@@ -224,8 +226,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a desert.")
-			logTheThing("diary", ui.user, null, "turned space into a desert.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a desert.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a desert.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a desert.")
 
 
@@ -249,8 +251,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into an THE VOID.")
-			logTheThing("diary", ui.user, null, "turned space into an THE VOID.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into an THE VOID.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into an THE VOID.", "admin")
 			message_admins("[key_name(ui.user)] turned space into THE VOID.")
 
 
@@ -310,8 +312,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 
-			logTheThing("admin", ui.user, null, "turned space into an another outpost on Theta.")
-			logTheThing("diary", ui.user, null, "turned space into an another outpost on Theta.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Theta.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into an another outpost on Theta.", "admin")
 			message_admins("[key_name(ui.user)] turned space into an another outpost on Theta.")
 
 
@@ -364,8 +366,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a swamp.")
-			logTheThing("diary", ui.user, null, "turned space into a swamp.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a swamp.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a swamp.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a swamp.")
 
 
@@ -414,8 +416,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			ambient_value = lerp(20,80,0.5)
 			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
-			logTheThing("admin", ui.user, null, "turned space into Mars.")
-			logTheThing("diary", ui.user, null, "turned space into Mars.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into Mars.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into Mars.", "admin")
 			message_admins("[key_name(ui.user)] turned space into Mars.")
 
 	special_repair(list/turf/TS)
@@ -492,8 +494,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 				LAGCHECK(LAG_MED)
 			station_repair.clean_up_station_level(add_sub=params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
-			logTheThing("diary", ui.user, null, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
+			logTheThing(LOG_DIARY, ui.user, "generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].", "admin")
 			message_admins("[key_name(ui.user)] generated a trench on station Z[hostile_mob_toggle ? " with hostile mobs" : ""].")
 
 
@@ -538,8 +540,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
-			logTheThing("admin", ui.user, null, "turned space into a snowscape.")
-			logTheThing("diary", ui.user, null, "turned space into a snowscape.", "admin")
+			logTheThing(LOG_ADMIN, ui.user, "turned space into a snowscape.")
+			logTheThing(LOG_DIARY, ui.user, "turned space into a snowscape.", "admin")
 			message_admins("[key_name(ui.user)] turned space into a snowscape.")
 
 

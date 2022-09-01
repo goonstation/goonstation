@@ -25,6 +25,8 @@
 	var/slots = 7
 	/// Initial contents when created
 	var/list/spawn_contents = list()
+	/// specify if storage should grab other items on turf
+	var/grab_stuff_on_spawn = FALSE
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
@@ -48,6 +50,13 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
+
+		if (grab_stuff_on_spawn)
+			for (var/obj/item/I in src.loc)
+				if (I == src) continue
+				if (I.anchored) continue
+				if (check_can_hold(I) > 0)
+					add_contents(I)
 
 	Entered(Obj, OldLoc)
 		. = ..()
@@ -94,7 +103,7 @@
 			for (amt, amt>0, amt--)
 				new thing(src)
 		if (total_amt > slots)
-			logTheThing("debug", null, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
+			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
 		total_amt = null
 		return 1
 

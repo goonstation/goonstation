@@ -67,7 +67,7 @@
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		logTheThing("combat", user, null, "plays instrument [src]")
+		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
 		if(ON_COOLDOWN(user, "instrument_play", src.note_time)) // on user because not just clients do music
@@ -245,7 +245,7 @@
 	icon = 'icons/obj/instruments.dmi'
 	icon_state = "bagpipe"
 	item_state = "bagpipe"
-	sounds_instrument = list()
+	sounds_instrument = list('sound/musical_instruments/Bagpipes_1.ogg', 'sound/musical_instruments/Bagpipes_2.ogg','sound/musical_instruments/Bagpipes_3.ogg')
 	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1

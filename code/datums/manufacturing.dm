@@ -46,11 +46,11 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/sanity_check()
 		if (item_paths.len != item_amounts.len || !isnull(item_names) && (item_paths.len != item_names.len || item_names.len != item_amounts.len))
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
 			qdel(src)
 			return
 		if (!item_outputs.len)
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
 			qdel(src)
 			return
 
@@ -1122,6 +1122,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/floppydisk //Cloning disks
+	name = "Floppy Disk"
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/disk/data/floppy)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
 
 /******************** Robotics **************************/
 

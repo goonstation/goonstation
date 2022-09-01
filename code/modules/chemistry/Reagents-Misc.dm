@@ -43,7 +43,7 @@ datum
 					if (length(fh)) //Wire: Fix for: bad text or out of bounds
 						context = "Fingerprints: [jointext(fh, "")]"
 
-				logTheThing("combat", usr, null, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)]. Context: [context].")
+				logTheThing(LOG_COMBAT, usr, "is associated with a nitroglycerin explosion (volume = [volume]) due to [expl_reason] at [log_loc(T)]. Context: [context].")
 				explosion_new(usr, T, (12.5 * min(volume, 1000))**(2/3), 0.4) // Because people were being shit // okay its back but harder to handle // okay sci can have a little radius, as a treat
 				holder.del_reagent("nitroglycerin")
 
@@ -64,9 +64,9 @@ datum
 				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(T), "splash on turf")
 
-			reaction_mob(var/mob/M, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
-				if(reagent_state == LIQUID || prob(2 * volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
+				if(reagent_state == LIQUID || prob(2 * raw_volume - min(14 + T0C - holder.total_temperature, 100) * 0.1))
 					explode(list(get_turf(M)), "splash on [key_name(M)]")
 
 			reaction_obj(var/obj/O, var/volume)
@@ -82,7 +82,7 @@ datum
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_volume)
 				var/datum/reagent/nitroglycerin/target_ng = target.get_reagent("nitroglycerin")
-				logTheThing("combat", usr, null, "caused physical shock to nitroglycerin by transferring [trans_volume]u from [source.my_atom] to [target.my_atom].")
+				logTheThing(LOG_COMBAT, usr, "caused physical shock to nitroglycerin by transferring [trans_volume]u from [source.my_atom] to [target.my_atom].")
 				// mechanical dropper transfer (1u): solid at 14°C: 0%, liquid: 0%
 				// classic dropper transfer (5u): solid at 14°C: 0% (due to min force cap), liquid: 15%
 				// beaker transfer (10u): solid at -36°C: 0%, solid: 5%, liquid: 30%
@@ -864,18 +864,18 @@ datum
 			block_slippy = 1
 			var/counter
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if(method == TOUCH)
 					var/mob/living/L = M
 					. = 0
 
 					if(L.getStatusDuration("slowed")>=10 SECONDS)
-						L.setStatusMin("staggered", (0.3 SECONDS)*volume_passed)
+						L.setStatusMin("staggered", (0.3 SECONDS)*raw_volume)
 						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
 							boutput(M, "<span class='notice'>You get stuck in the glue!</span>")
 					else
-						L.changeStatus("slowed", min((0.4 SECONDS)*volume_passed, 10 SECONDS))
+						L.changeStatus("slowed", min((0.4 SECONDS)*raw_volume, 10 SECONDS))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -1009,10 +1009,10 @@ datum
 					if(glued_comp?.glued_to == A)
 						qdel(glued_comp)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
 				if (method == TOUCH)
-					remove_stickers(M, volume)
+					remove_stickers(M, raw_volume)
 				unglue_attached_to(M)
 
 			reaction_obj(var/obj/O, var/volume)
@@ -1594,7 +1594,7 @@ datum
 					SPAWN(rand(20, 100))
 						var/turf/Mturf = get_turf(M)
 						if (ishuman(M))
-							logTheThing("combat", M, null, "was transformed into a dog by reagent [name] at [log_loc(M)].")
+							logTheThing(LOG_COMBAT, M, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
 						new /obj/critter/dog/george (Mturf)
 					return
@@ -1634,7 +1634,7 @@ datum
 					M.make_jittery(1000)
 					SPAWN(rand(20, 100))
 						if (ishuman(M))
-							logTheThing("combat", M, null, "was owlgibbed by reagent [name] at [log_loc(M)].")
+							logTheThing(LOG_COMBAT, M, "was owlgibbed by reagent [name] at [log_loc(M)].")
 						M.owlgib(control_chance = 100)
 					return
 				..()
@@ -2195,7 +2195,7 @@ datum
 						// oh no
 						if(probmult(1)) // i hate you all, players
 							H.flockbit_gib()
-							logTheThing("combat", H, null, "was gibbed by reagent [name] at [log_loc(H)].")
+							logTheThing(LOG_COMBAT, H, "was gibbed by reagent [name] at [log_loc(H)].")
 					else
 						if (!istype(M.loc, /obj/flock_structure/cage))
 							M.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit)
@@ -3228,7 +3228,7 @@ datum
 					pathogens_processed = 1
 					for (var/uid in src.pathogens)
 						var/datum/pathogen/P = src.pathogens[uid]
-						logTheThing("pathology", M, null, "metabolizing [src] containing pathogen [P].")
+						logTheThing(LOG_PATHOLOGY, M, "metabolizing [src] containing pathogen [P].")
 						M.infected(P)
 				..()
 
@@ -3455,7 +3455,7 @@ datum
 				#else
 				M.ex_act(1)
 				if (ishuman(M))
-					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				#endif
 				M.reagents.del_reagent(src.id)
@@ -3489,7 +3489,7 @@ datum
 				..()
 				M.ex_act(1)
 				if (isliving(M))
-					logTheThing("combat", M, null, "was gibbed by reagent [name] at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by reagent [name] at [log_loc(M)].")
 				M.gib()
 				M.reagents.del_reagent(src.id)
 
