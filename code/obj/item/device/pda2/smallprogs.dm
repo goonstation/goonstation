@@ -899,7 +899,7 @@ Code:
 	name = "Bomb Readme"
 
 	data = {"
-Electronic Self-destruct Program Manual<hr>
+Electronic Bomb Program Manual<hr>
 Using electronic "Detomatix" MISSILE program is simple!<br>
 <ul>
 <li>Open PDA MESSENGER and SCAN FOR PDAS!</li>
