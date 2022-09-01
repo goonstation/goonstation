@@ -232,7 +232,7 @@ var/mutable_appearance/fluid_ma
 
 		src.group.reagents.skip_next_update = 1
 		src.group.update_amt_per_tile()
-		var/amt = min(src.group.contained_amt, container.reagents.maximum_volume - container.reagents.total_volume)
+		var/amt = min(src.group.amt_per_tile, container.reagents.maximum_volume - container.reagents.total_volume)
 		boutput(usr, "<span class='notice'>You fill [container] with [amt] units of [src].</span>")
 		src.group.drain(src, amt / src.group.amt_per_tile, container) // drain uses weird units
 
