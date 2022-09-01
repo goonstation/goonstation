@@ -1361,7 +1361,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5) && !istype(src:gloves, /obj/item/clothing/gloves/bladed) && !istype(src:gloves, /obj/item/clothing/gloves/bladed_retracted))
+						if (prob(5) && !istype(gloves, /obj/item/clothing/gloves/bladed) && !istype(gloves, /obj/item/clothing/gloves/bladed_retracted))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
@@ -1380,12 +1380,12 @@
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
-								if(istype(src:gloves, /obj/item/clothing/gloves/bladed))
+								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									src.visible_message("<span class='alert'><B>[src]'s hand blades retract!</B></span>")
 									playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 									qdel(src.gloves)
 									src.equip_if_possible(new /obj/item/clothing/gloves/bladed_retracted, src.slot_gloves)
-								else if(istype(src:gloves, /obj/item/clothing/gloves/bladed_retracted))
+								else if(istype(gloves, /obj/item/clothing/gloves/bladed_retracted))
 									src.visible_message("<span class='alert'><B>Blades spring out of [src]'s hands!</B></span>")
 									playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 									qdel(src.gloves)

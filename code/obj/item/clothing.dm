@@ -4,6 +4,7 @@
 	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
+	var/nodescripition = FALSE
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I

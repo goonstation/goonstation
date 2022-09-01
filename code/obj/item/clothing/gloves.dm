@@ -484,8 +484,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "These transparent gloves have blades protruding from them."
 	icon_state = "bladed"
 	item_state = "gloves_bladed"
-	activeweapon = 1
-	hide_prints = 0
+	activeweapon = TRUE
+	hide_prints = FALSE
 	hit_type = DAMAGE_CUT
 	force = 11
 	stamina_damage = 25
@@ -516,7 +516,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "transparent gloves"
 	icon_state = "transparent"
 	item_state = "transparent"
-	hide_prints = 0
+	hide_prints = FALSE
+
+	nodescripition = TRUE
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
