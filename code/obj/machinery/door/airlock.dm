@@ -229,7 +229,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if(0 to 24)
 				. += "It is barely intact!"
 
-	disposing()
+/obj/machinery/door/airlock/disposing()
 		. = ..()
 		STOP_TRACKING
 
