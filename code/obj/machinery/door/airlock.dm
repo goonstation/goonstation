@@ -214,7 +214,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
 		req_access = list()
-get_desc()
+
+	get_desc()
 		var/healthpercent = src.health/src.health_max * 100
 		switch(healthpercent)
 			if(90 to 99) //dont want to clog up the description unless it's actually damaged
