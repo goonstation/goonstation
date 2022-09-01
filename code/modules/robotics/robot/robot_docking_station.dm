@@ -625,7 +625,7 @@
 			else
 				boutput(user, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				return
-			C.painted = 1
+			C.painted = TRUE
 			C.paint = input(user) as color
 			R.update_appearance()
 			R.update_bodypart()
@@ -640,7 +640,7 @@
 			else
 				boutput(user, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
 				return
-			C.painted = 0
+			C.painted = FALSE
 			R.update_appearance()
 			R.update_bodypart()
 			. = TRUE
@@ -774,13 +774,11 @@
 				return
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat )
 				return
-			var/usage = R.compborg_get_total_damage(1)
-			if (usage > src.reagents.get_reagent_amount("fuel"))
-				usage = src.reagents.get_reagent_amount("fuel")
+			var/usage = min(src.reagents.get_reagent_amount("fuel"), R.compborg_get_total_damage(1))
 			if (usage < 1)
 				return
 			for (var/obj/item/parts/robot_parts/RP in R.contents)
-				RP.ropart_mend_damage( usage,0)
+				RP.ropart_mend_damage(usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
 			R.update_appearance()
 			. = TRUE
@@ -792,18 +790,9 @@
 			if (src.cabling < 1)
 				boutput(user, "<span class='alert'>Not enough wiring for repairs.</span>")
 				return
-			var/usage = tgui_input_number(
-				user,
-				message="How much wiring do you want to use?",
-				title="Wiring Repairs",
-				default=0,
-				max_value=src.cabling)
 			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !isnum_safe(usage))
 				return
-			if (usage > R.compborg_get_total_damage(2))
-				usage = R.compborg_get_total_damage(2)
-			if (usage > src.cabling)
-				usage = src.cabling
+			var/usage =  min(src.cabling, R.compborg_get_total_damage(2))
 			if (usage < 1)
 				return
 			for (var/obj/item/parts/robot_parts/RP in R.contents)

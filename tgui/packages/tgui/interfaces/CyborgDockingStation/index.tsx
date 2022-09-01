@@ -93,7 +93,7 @@ const OccupantStatusRobot = (props) => {
             onClick={() => act("module-remove")}
             icon="minus"
             tooltip="Remove the occupant's module"
-            disabled={occupant.module? false : true} />
+            disabled={!occupant.module} />
         }>
           {occupant.module || <Box as="span" color="red">No Module Installed</Box>}
         </LabeledList.Item>
@@ -180,20 +180,20 @@ const DecorationReport = (props) => {
         <LabeledList.Item label="Head" buttons={
           <Button icon="sync-alt" tooltip="Change head decoration" onClick={() => act("cosmetic-change-head")} />
         }>
-          {cosmetics.head ? cosmetics.head : "None"}
+          {cosmetics.head || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Chest" buttons={
           <Button icon="sync-alt" tooltip="Change chest decoration" onClick={() => act("cosmetic-change-chest")} />
         }>
-          {cosmetics.chest ? cosmetics.chest : "None"}
+          {cosmetics.chest || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Arms" buttons={
           <Button icon="sync-alt" tooltip="Change arms decoration" onClick={() => act("cosmetic-change-arms")} />
-        }>{cosmetics.arms ? cosmetics.arms : "None"}
+        }>{cosmetics.arms || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Legs" buttons={
           <Button icon="sync-alt" tooltip="Change legs decoration" onClick={() => act("cosmetic-change-legs")} />
-        }>{cosmetics.legs ? cosmetics.legs : "None"}
+        }>{cosmetics.legs || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Paint" buttons={
           <>
@@ -202,7 +202,7 @@ const DecorationReport = (props) => {
             {cosmetics.paint && <Button icon="minus" tooltip="Remove paint" onClick={() => act("occupant-paint-remove")} />}
           </>
         }>
-          {cosmetics.paint? <ColorBox color={cosmetics.paint} /> : "No paint applied"}
+          {cosmetics.paint ? <ColorBox color={cosmetics.paint} /> : "No paint applied"}
         </LabeledList.Item>
         <LabeledList.Item label="Eyes" buttons={
           <Button icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
