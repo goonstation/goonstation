@@ -330,9 +330,6 @@
 			src.icon_state = "phaser-xl[ratio]"
 			return
 
-	shoot_point_blank(atom/target, var/mob/user as mob, var/second_shot = 0)
-		return FALSE
-
 ///////////////////////////////////////Rad Crossbow
 /obj/item/gun/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
