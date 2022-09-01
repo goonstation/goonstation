@@ -230,8 +230,8 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 				. += "It is barely intact!"
 
 /obj/machinery/door/airlock/disposing()
-		. = ..()
-		STOP_TRACKING
+	. = ..()
+	STOP_TRACKING
 
 /obj/machinery/door/airlock/check_access(obj/item/I)
 	if (no_access) //nope :)
