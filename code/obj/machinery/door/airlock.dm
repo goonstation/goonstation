@@ -225,13 +225,13 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 			if(90 to 99) //dont want to clog up the description unless it's actually damaged
 				. += "It seems to be in mostly good condition"
 			if(75 to 89)
-				. += "[src] seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
 			if(50 to 74)
-				. += "[src] looks [pick("busted", "damaged", "messed up", "dented")]."
+				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
 			if(25 to 49)
-				. += "[src] looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
 			if(0 to 24)
-				. += "[src] is barely intact!"
+				. += "It is barely intact!"
 
 /obj/machinery/door/airlock/check_access(obj/item/I)
 	if (no_access) //nope :)
