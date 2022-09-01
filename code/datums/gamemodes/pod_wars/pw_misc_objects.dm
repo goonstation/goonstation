@@ -272,14 +272,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	//just "deactivates"
 	die()
 		if (!destroyed)
-			playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			destroyed = 1
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
-			src.opacity = 0
+			src.set_opacity(0)
 			if (reconstruction_time)
 				sleep(reconstruction_time)
-				src.opacity = 1
+				src.set_opacity(1)
 				src.alpha = 255
 				health = initial(health)
 				destroyed = 0
@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
-					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
 					ship.locked = 0
@@ -595,11 +595,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
+			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
@@ -711,14 +711,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			var/obj/machinery/vehicle/V = AM
 			V.health -= round(src.health/4)
 			V.checkhealth()
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			qdel(src)
 		..()
 
 	attackby(var/obj/item/W, var/mob/user)
 		attack_particle(user,src)
 		take_damage(W.force)
-		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 20, 1)
+		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
 		user.lastattacked = src
 		..()
 
@@ -736,7 +736,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 						take_damage(20)
 					else
 						take_damage(5)
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+					playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 					attack_particle(user,src)
 
 
@@ -843,7 +843,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)

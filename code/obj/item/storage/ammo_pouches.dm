@@ -257,6 +257,15 @@
 	does_not_open_in_pocket = 0
 	spawn_contents = list(/obj/item/beartrap = 4)
 
+/obj/item/storage/landmine_pouch
+	name = "landmine pouch"
+	desc = "A large pouch for keeping your highly unethical landmines in."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 3
+	does_not_open_in_pocket = 0
+	spawn_contents = list(/obj/random_item_spawner/landmine/surplus = 3)
+
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"
 	desc = "A large pouch for carrying multiple miscellaneous things at once."

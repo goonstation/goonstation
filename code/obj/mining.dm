@@ -395,7 +395,7 @@
 				wall_bits = target.generate_walls()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 1
+				M.set_opacity(1)
 				M.set_density(1)
 				M.invisibility = INVIS_NONE
 
@@ -435,7 +435,7 @@
 				MC.generate(target)
 			else
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-					M.opacity = 0
+					M.set_opacity(0)
 					M.set_density(0)
 					M.invisibility = INVIS_INFRA
 				active = 0
@@ -450,7 +450,7 @@
 			build_icon()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_ALWAYS
 
@@ -555,7 +555,7 @@
 			C.use(1)
 			src.damage(-10)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 				src.malfunctioning = 0
@@ -614,7 +614,7 @@
 		switch(picker)
 			if (1)
 				src.visible_message("<b>[src] makes a loud bang! That didn't sound too good...</b>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 				src.damage(rand(5,10))
 			if (2)
 				if (istype(mining_apc))
@@ -623,7 +623,7 @@
 
 	proc/pull_new_source(var/selectable_encounter_id = null)
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 1
+			M.set_opacity(1)
 			M.set_density(1)
 			M.invisibility = INVIS_NONE
 
@@ -644,11 +644,11 @@
 			for(var/image/i in cig.images)
 				cig.remove_image(i)
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
-				T.ReplaceWithSpace()
+				T.ReplaceWith(/turf/space)
 				//qdel(T)
 		if(station_repair.station_generator)
 			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
-				UT.ReplaceWith("Space", force=TRUE)
+				UT.ReplaceWith(/turf/space, force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.ClearAllOverlays()
 
@@ -677,7 +677,7 @@
 			MC.generate(null)
 		else
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_INFRA
 			active = 0
@@ -698,7 +698,7 @@
 		build_icon()
 
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 0
+			M.set_opacity(0)
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
@@ -1096,7 +1096,7 @@
 				return
 			else if (H.is_hulk())
 				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
-				playsound(H.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 100, 1)
+				playsound(H.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
 				src.damage_asteroid(3)
 				return
 		..()
@@ -1319,7 +1319,7 @@
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
 		src.stone_color = new_color
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
 			A.ClearAllOverlays() // i know theres probably a better way to handle this
@@ -1524,7 +1524,7 @@
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
@@ -1610,7 +1610,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1676,7 +1676,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
 
 	borg
@@ -1727,7 +1727,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1847,7 +1847,7 @@ obj/item/clothing/gloves/concussive
 		else ..()
 
 	proc/concussive_blast()
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src.expl_flash,src))
 			if(GET_DIST(src,A) <= src.expl_heavy)
 				A.damage_asteroid(4)
@@ -1963,7 +1963,7 @@ obj/item/clothing/gloves/concussive
 			return FALSE
 
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
-		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
 		return TRUE
 
@@ -2030,7 +2030,7 @@ obj/item/clothing/gloves/concussive
 			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
 		src.target = pick(src.possible_targets)
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
-		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 
 		// Logs for good measure (Convair880).
 		for (var/mob/M in cargo.contents)

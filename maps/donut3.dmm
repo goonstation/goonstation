@@ -2544,7 +2544,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/engine/inner)
 "axm" = (
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
@@ -3114,7 +3114,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -5675,6 +5675,11 @@
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "fblue3"
@@ -10041,13 +10046,13 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -10776,7 +10781,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -14663,7 +14668,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -19325,21 +19330,18 @@
 /area/station/maintenance/outer/west)
 "fnV" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/jetpack{
-	pixel_x = -10;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 6;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/cable{
 	d1 = 1;
@@ -19582,7 +19584,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "fsc" = (
@@ -19921,7 +19923,7 @@
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/crew_quarters/garden)
 "fwl" = (
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -21036,7 +21038,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -21174,25 +21176,33 @@
 "fNJ" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -9;
-	pixel_y = 11
+	pixel_y = 10;
+	pixel_x = -10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 11
+	pixel_y = 10;
+	pixel_x = -5
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = 9;
-	pixel_y = 11
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -11
+	pixel_y = 10;
+	pixel_x = 5
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_x = -2
+	pixel_y = 10;
+	pixel_x = 10
 	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 7
+/obj/item/tank/mini_oxygen{
+	pixel_x = -5;
+	pixel_y = 4
 	},
+/obj/item/tank/mini_oxygen{
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/tank/mini_oxygen,
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
 "fNL" = (
@@ -26159,7 +26169,7 @@
 /area/station/security/hos)
 "hpe" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/cable{
@@ -26312,7 +26322,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
@@ -27641,7 +27651,7 @@
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
 "hJo" = (
@@ -27951,7 +27961,7 @@
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -34765,7 +34775,7 @@
 /obj/machinery/door/airlock/pyro/classic,
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/tox_storage,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -35247,17 +35257,15 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 10
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -1
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4;
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 10
-	},
+/obj/item/tank/jetpack/micro,
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -36366,7 +36374,7 @@
 	icon_state = "glass_locked";
 	locked = 1
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating/jen,
@@ -40338,7 +40346,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -44732,7 +44740,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/engine,
@@ -46210,7 +46218,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -46608,7 +46616,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/cable{
@@ -49967,13 +49975,8 @@
 /area/station/hallway/primary/west)
 "onD" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/emergency_oxygen{
-	pixel_x = -8
-	},
-/obj/item/tank/emergency_oxygen{
-	pixel_x = 3;
-	pixel_y = 4
-	},
+/obj/item/tank/mini_oxygen,
+/obj/item/tank/mini_oxygen,
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/secondary/exit)
 "onI" = (
@@ -50195,7 +50198,7 @@
 	pixel_x = -23;
 	pixel_y = -8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -51165,7 +51168,7 @@
 	id = "telesci_inner";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -63915,21 +63918,18 @@
 /area/station/hallway/primary/west)
 "seH" = (
 /obj/table/reinforced/auto,
-/obj/item/tank/jetpack{
-	pixel_x = -10;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8;
+	pixel_x = -8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 6;
-	pixel_y = 9
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
 	},
-/obj/item/tank/jetpack{
-	pixel_x = -9;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_y = 8
 	},
-/obj/item/tank/jetpack{
-	pixel_x = 7;
-	pixel_y = 3
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/ai_monitored/storage/eva)
@@ -65028,7 +65028,7 @@
 	id = "telesci_public";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -67236,7 +67236,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "thh" = (
@@ -69968,7 +69968,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -70674,7 +70674,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/storage/secure/closet/brig_automatic/genpop_n,
+/obj/storage/secure/closet/brig_automatic/genpop_s,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "ufs" = (
@@ -78927,7 +78927,7 @@
 	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -85166,7 +85166,7 @@
 	id = "telesci_hall";
 	layer = 4;
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)

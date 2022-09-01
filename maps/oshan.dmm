@@ -10496,14 +10496,14 @@
 /area/station/medical/medbay/pharmacy)
 "ayR" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "ayS" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -11897,7 +11897,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "aCb" = (
@@ -12111,7 +12111,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Telescience"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -13015,7 +13015,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/science/teleporter)
@@ -13111,7 +13111,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -13307,7 +13307,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -13965,7 +13965,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -14462,7 +14462,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
@@ -14580,7 +14580,7 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 1
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor/purple,
@@ -14589,7 +14589,7 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 1
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -15103,7 +15103,7 @@
 /area/station/science/lobby)
 "aJO" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -15514,7 +15514,7 @@
 /area/station/engine/engineering)
 "aKV" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -31167,7 +31167,7 @@
 /area/station/ai_monitored/storage/eva)
 "bCe" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bCf" = (
@@ -31652,7 +31652,7 @@
 	icon_state = "2-4"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
@@ -32203,7 +32203,7 @@
 	icon_state = "1-2"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bEH" = (
@@ -33128,7 +33128,6 @@
 /area/station/hallway/primary/south)
 "bGZ" = (
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -39924,9 +39923,6 @@
 /area/station/ai_monitored/armory)
 "bYq" = (
 /obj/rack,
-/obj/item/storage/box/stinger_kit{
-	pixel_x = 4
-	},
 /obj/item/storage/box/flashbang_kit,
 /obj/item/storage/box/flashbang_kit{
 	pixel_x = -4
@@ -47390,7 +47386,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "shL" = (

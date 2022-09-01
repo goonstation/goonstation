@@ -227,6 +227,22 @@
 				return
 		system.reply("Could not locate [ckey].", user)
 
+/datum/spacebee_extension_command/kick
+	name = "kick"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	help_message = "Kick a given ckey off the specified server."
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				del(C)
+				logTheThing(LOG_ADMIN, "[user] (Discord)", null, "kicked [constructTarget(C,"admin")].")
+				logTheThing(LOG_DIARY, "[user] (Discord)", null, "kicked [constructTarget(C,"diary")].", "admin")
+				system.reply("Kicked [ckey].", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
 /datum/spacebee_extension_command/alert
 	name = "alert"
 	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
@@ -242,7 +258,7 @@
 				logTheThing(LOG_DIARY, "[user] (Discord)", null, "displayed an alert to  [constructTarget(C,"diary")] with the message \"[message]\"", "admin")
 				if (C?.mob)
 					SPAWN(0)
-						C.mob.playsound_local(C.mob, "sound/voice/animal/goose.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						C.mob.playsound_local(C.mob, 'sound/voice/animal/goose.ogg', 100, flags = SOUND_IGNORE_SPACE)
 						if (alert(C.mob, message, "!! Admin Alert !!", "OK") == "OK")
 							message_admins("[ckey] acknowledged the alert from [user] (Discord).")
 							system.reply("[ckey] acknowledged the alert.", user)
@@ -312,7 +328,7 @@
 			C.add_centcom_report(ALERT_GENERAL, body)
 		body = discord_emojify(body)
 		headline = discord_emojify(headline)
-		command_alert(body, headline, "sound/misc/announcement_1.ogg")
+		command_alert(body, headline, 'sound/misc/announcement_1.ogg')
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "has created a command report: [body]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "has created a command report: [body]", "admin")
 		message_admins("[user] (Discord) has created a command report")
@@ -532,7 +548,7 @@
 		if(!length(result))
 			system.reply("No results.", user)
 		else
-			system.reply(reverse_list(result).Join("\n"), user)
+			system.reply(reverse_list_range(result).Join("\n"), user)
 
 /datum/spacebee_extension_command/crate
 	name = "crate"

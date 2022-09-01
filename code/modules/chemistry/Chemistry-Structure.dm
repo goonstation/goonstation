@@ -10,12 +10,12 @@
 		if(CR.id)
 			chem_reactions_by_id[CR.id] = CR
 
-		CR.required_reagents = sortList(CR.required_reagents)
+		sortList(CR.required_reagents, /proc/cmp_text_asc)
 		for(var/reagent in CR.required_reagents)
 			if(!total_chem_reactions[reagent]) total_chem_reactions[reagent] = list()
 			total_chem_reactions[reagent] += CR
 
-	total_chem_reactions = sortList(total_chem_reactions)
+	sortList(total_chem_reactions, /proc/cmp_text_asc)
 
 	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/chem_struct</B> Finished building reaction structure. Took [(world.timeofday - startTime)/10] seconds.")
 
@@ -39,7 +39,7 @@
 			for(var/R in reagent_list)
 				possible_reactions |= total_chem_reactions[R]
 #ifdef CHEM_REACTION_PRIORITIES
-		SortList(possible_reactions)//see: /datum/chemical_reaction/operator<()
+		sortList(possible_reactions, /proc/cmp_chemical_reaction_priotity)
 #endif
 
 	proc/append_possible_reactions(var/reagent_id)
@@ -49,7 +49,8 @@
 			. = 1
 #ifdef CHEM_REACTION_PRIORITIES
 		// sorting it each time anew is bad and slow, especially since your sorting algorithm doesn't even work nicely with almost sorted lists!!
-		SortList(possible_reactions)//see: /datum/chemical_reaction/operator<()
+		// above is no longer true i think, timsort is really good with near-sorted lists
+		sortList(possible_reactions, /proc/cmp_chemical_reaction_priotity)
 #endif
 
 	proc/remove_possible_reactions(var/reagent_id)

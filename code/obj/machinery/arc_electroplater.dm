@@ -143,7 +143,7 @@
 			src.cooktime++
 
 		if (src.cooktime == 5)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='notice'>[src] dings!</span>")
 			eject_item()
 

@@ -14,6 +14,7 @@
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 	var/health = 50
+	var/repair_per_resource = 1
 	var/col_r = 0.1
 	var/col_g = 0.7
 	var/col_b = 0.6
@@ -49,7 +50,7 @@
 		grab_smash(C, user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.break_tile_to_plating()
 		return
 	if(src.broken)
@@ -60,11 +61,11 @@
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C], shattering it!</span>")
 		src.name = "weird broken floor"
 		src.desc = "It's broken. You could probably use a crowbar to pull the remnants out."
-		playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 		break_tile()
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 25, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 25, 1)
 	user.lastattacked = src
 
 /turf/simulated/floor/feather/break_tile_to_plating()
@@ -80,13 +81,15 @@
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
 
-/turf/simulated/floor/feather/proc/repair()
+/turf/simulated/floor/feather/proc/repair(resources_available)
 	if (src.broken)
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
 		src.icon_state = initial(src.icon_state)
 		src.broken = FALSE
-	src.health = min(src.health + 10, initial(src.health))
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, initial(src.health) - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /turf/simulated/floor/feather/burn_tile()
 	return
@@ -134,7 +137,7 @@
 	src.name = "weird glowing floor"
 	src.desc = "Looks like disco's not dead after all."
 	on = TRUE
-	//playsound(src.loc, "sound/machines/ArtifactFea3.ogg", 25, 1)
+	//playsound(src.loc, 'sound/machines/ArtifactFea3.ogg', 25, 1)
 	src.light.enable()
 
 /turf/simulated/floor/feather/proc/off()
@@ -167,6 +170,7 @@
 	mod = "flock"
 	health = 250
 	var/max_health = 250
+	var/repair_per_resource = 5
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
@@ -218,7 +222,7 @@
 	if(!C || !user)
 		return
 	if(ispryingtool(C) && src.broken)
-		playsound(src, "sound/items/Crowbar.ogg", 80, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 		src.destroy()
 		return
 	if(src.broken)
@@ -270,7 +274,7 @@
 /turf/simulated/wall/auto/feather/proc/takeDamage(damageType, amount, playAttackSound = TRUE)
 	src.health = max(src.health - amount, 0)
 	if (src.health > 0 && playAttackSound)
-		playsound(src, "sound/impact_sounds/Crystal_Hit_1.ogg", 80, 1)
+		playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 80, 1)
 
 	if (!src.broken && src.health <= 0)
 		src.name = "weird broken wall"
@@ -279,7 +283,7 @@
 		src.UpdateIcon()
 		src.material.setProperty("reflective", 3)
 		if (playAttackSound)
-			playsound(src, "sound/impact_sounds/Crystal_Shatter_1.ogg", 25, 1)
+			playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, 1)
 
 		for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 			if (flockdrone.floorrunning)
@@ -311,14 +315,16 @@
 		for (var/turf/simulated/wall/auto/feather/W in orange(1, src))
 			W.UpdateIcon()
 
-/turf/simulated/wall/auto/feather/proc/repair()
+/turf/simulated/wall/auto/feather/proc/repair(resources_available)
 	if (src.broken)
 		src.name = initial(src.name)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
 		src.setMaterial(getMaterial("gnesis"))
-	src.health = min(src.health + 50, src.max_health)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /turf/simulated/wall/auto/feather/Entered(var/mob/living/critter/flock/drone/F, atom/oldloc)
 	..()

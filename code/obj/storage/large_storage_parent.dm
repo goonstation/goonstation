@@ -27,8 +27,8 @@
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/icon_welded = "welded-closet"
-	var/open_sound = "sound/machines/click.ogg"
-	var/close_sound = "sound/machines/click.ogg"
+	var/open_sound = 'sound/machines/click.ogg'
+	var/close_sound = 'sound/machines/click.ogg'
 	var/volume = 15
 	var/max_capacity = 100 //Won't close past this many items.
 	var/open = 0
@@ -202,7 +202,7 @@
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
-				playsound(src, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -502,8 +502,6 @@
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
-					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") * 2, 20))) SECONDS)
 					if (thing in user)
 						continue
 					if (!check_if_enterable(thing))
@@ -511,6 +509,7 @@
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
 					thing.set_loc(T)
+					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
 					sleep(0.5)
 					if (!src.open)
 						break
@@ -874,12 +873,12 @@
 
 	onStart()
 		..()
-		playsound(the_storage, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)

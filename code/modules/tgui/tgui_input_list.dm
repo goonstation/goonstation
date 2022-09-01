@@ -28,11 +28,11 @@
 		if (istype(user, /client))
 			var/client/client = user
 			user = client.mob
-	if (!user)
+	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
 	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal)
 	input.ui_interact(user)
-	UNTIL(input.choice || input.closed)
+	UNTIL(!user.client || input.choice || input.closed)
 	if (input)
 		. = input.choice
 		qdel(input)
@@ -79,7 +79,7 @@
 	var/default
 
 /datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, autofocus = TRUE, allowIllegal = FALSE)
-	. = ..()
+	. = ..(user, message, title, items, timeout, autofocus)
 	src.items = list()
 	src.items_map = list()
 	src.default = default

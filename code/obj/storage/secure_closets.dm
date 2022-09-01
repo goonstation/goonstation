@@ -33,7 +33,7 @@
 				if (user)
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 				return
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 			return
@@ -379,12 +379,7 @@
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2,
-	/obj/item/clothing/glasses/nightvision = 2,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/ammo/bullets/abg,
-	/obj/item/ammo/bullets/abg,)
+	/obj/item/turret_deployer/riot = 2)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"

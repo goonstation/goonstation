@@ -129,7 +129,7 @@
 					boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 					boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
+			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
 				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
 				var/default = M.real_name + " the " + src.name
 				var/orig_real = M.real_name
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_suit = list(/obj/item/clothing/suit/armor/centcomm)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/centhat)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
+		slot_belt = list(/obj/item/tank/mini_oxygen)
 		slot_glov = list(/obj/item/clothing/gloves/fingerless)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_mask = list(/obj/item/clothing/mask/gas)
@@ -296,7 +296,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_suit = list(/obj/item/clothing/suit/armor/NT)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/NTberet)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
+		slot_belt = list(/obj/item/tank/mini_oxygen)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -1027,8 +1027,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.AddComponent(/datum/component/death_confetti)
 
 		M.bioHolder.AddEffect("clumsy", magical=1)
-		if (prob(50))
-			M.bioHolder.AddEffect("accent_comic", magical=1)
+		M.bioHolder.AddEffect("accent_comic", magical=1)
 
 // AI and Cyborgs
 
@@ -1240,7 +1239,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_poc1 = list(/obj/item/device/analyzer/atmospheric)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	items_in_backpack = list(/obj/item/tank/emergency_oxygen,/obj/item/crowbar)
+	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 
 	New()
 		..()
@@ -2774,7 +2773,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
 		slot_mask = list(/obj/item/clothing/mask/breath)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-		slot_poc1 = list(/obj/item/tank/emergency_oxygen)
+		slot_poc1 = list(/obj/item/tank/mini_oxygen)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
 		items_in_backpack = list(/obj/item/survival_machete, /obj/item/spacecash/hundred)
 
@@ -2814,7 +2813,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
 		slot_mask = list(/obj/item/clothing/mask/breath)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
-		slot_poc1 = list(/obj/item/tank/emergency_oxygen)
+		slot_poc1 = list(/obj/item/tank/mini_oxygen)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
 		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/spacecash/hundred)
 

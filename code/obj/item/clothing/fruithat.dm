@@ -16,7 +16,7 @@
 				"<span class='notice'>You take a bite of [src]!</span>")
 				src.bites--
 				M.nutrition += 20
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.bites)
 					user.u_equip(src)
 					qdel(src)
@@ -38,7 +38,7 @@
 					"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 				src.bites--
 				M.nutrition += 20
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.amount)
 					user.u_equip(src)
 					qdel(src)
