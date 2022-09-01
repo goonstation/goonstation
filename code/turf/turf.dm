@@ -106,6 +106,7 @@
 
 	proc/selftilenotify()
 
+	/// Gets called after the world is finished loading and the game is basically ready to start
 	proc/generate_worldgen()
 
 	proc/inherit_area() //jerko built a thing
@@ -227,7 +228,7 @@
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
 
-	UpdateIcon()
+	UpdateIcon() // ZEWAKA: why is this called lmao
 
 proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)

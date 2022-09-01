@@ -28,7 +28,7 @@
 		..()
 
 		if (map_setting && ticker)
-			src.update_neighbors()
+			src.update_neighbors() // lessen these calls
 
 		if (current_state > GAME_STATE_WORLD_INIT)
 			SPAWN(0) //worldgen overrides ideally
@@ -42,9 +42,6 @@
 	Del()
 		src.RL_SetSprite(null)
 		..()
-
-	the_tuff_stuff
-		explosion_resistance = 7
 
 	update_icon()
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_across_areas, connect_diagonal)
@@ -73,6 +70,9 @@
 			T.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+/turf/simulated/wall/auto/the_tuff_stuff
+	explosion_resistance = 7
 
 /turf/simulated/wall/auto/reinforced
 	name = "reinforced wall"
@@ -827,11 +827,7 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 	icon = 'icons/turf/walls_overgrown.dmi'
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	New()
-		. = ..()
-		connect_overlay = 1
-		connect_diagonal = 1
-		connects_to = typecacheof(list(
+	connects_to = typecacheof(list(
 			/turf/cordon,
 			/turf/unsimulated/wall/auto/adventure,
 			/obj/machinery/door, /obj/window, /turf/unsimulated/wall/,
@@ -839,7 +835,13 @@ ABSTRACT_TYPE(turf/unsimulated/wall/auto/adventure)
 			/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 			/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 			/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner
-		))
+		)) // need to setup typecaches in a way that can be overridden but called once per type
+		// ALSO KNOWN AS TYPEINFO!!!!
+	New()
+		. = ..()
+		connect_overlay = 1
+		connect_diagonal = 1
+
 		connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
 
 /turf/unsimulated/wall/auto/adventure/overgrown1
