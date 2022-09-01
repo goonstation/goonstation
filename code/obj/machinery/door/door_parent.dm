@@ -652,7 +652,7 @@
 	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)
-	if (src.operating || isintangible(user))
+	if (src.operating || isintangible(user) || isdead(user))
 		return
 	src.add_fingerprint(user)
 	if (src.allowed(user))
