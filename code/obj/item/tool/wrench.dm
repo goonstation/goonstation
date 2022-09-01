@@ -48,7 +48,7 @@
 	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon. Can be applied to the Nuclear bomb to repair it in small increments."
 	icon_state = "wrench-battle" //todo: new sprites
 	item_state = "wrench-battle"
-	force = 10
+	force = 15
 	stamina_damage = 55
 
 	New()
