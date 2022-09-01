@@ -1302,7 +1302,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.smash()
 
 
-	Cross(atom/movable/mover) //epic barfights
+	Crossed(atom/movable/mover) //Makes barfights cooler
 		if(istype(mover, /obj/projectile))
 			if(prob(30))
 				src.smash()
