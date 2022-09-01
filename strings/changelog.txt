@@ -1,6 +1,10 @@
 
 (t)wed aug 31 22
 (u)Wisemonster
+(p)10549
+(e)|
+(+)Forklifts are no longer being haunted by ghost crates
+(u)Wisemonster
 (p)10550
 (e)|
 (+)Destiny qm can now print barcodes to the shipping market.
