@@ -3847,7 +3847,7 @@
 	layer = 3;
 	name = "floor-mounted light fixture"
 	},
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bfQ" = (
 /obj/machinery/vending/cigarette,
@@ -8979,7 +8979,7 @@
 	name = "floor-mounted light fixture";
 	pixel_x = -1
 	},
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "cEC" = (
 /obj/machinery/camera{
@@ -17002,7 +17002,7 @@
 /obj/fluid_spawner{
 	amount = 11000
 	},
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "eKg" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -63968,7 +63968,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -75270,7 +75270,7 @@
 "tKI" = (
 /obj/critter/sealpup,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "tKL" = (
 /turf/simulated/floor/blueblack/corner,
@@ -77785,7 +77785,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -80994,7 +80994,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -87284,7 +87284,7 @@
 	})
 "wBx" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/bridge/captain)
 "wBC" = (
 /obj/cable{
@@ -91368,7 +91368,7 @@
 /obj/fluid_spawner{
 	amount = 600
 	},
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/bridge/captain)
 "xzg" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -91636,7 +91636,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "xCv" = (
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/bridge/captain)
 "xCA" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -92040,7 +92040,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -93090,7 +93090,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/engine/engineering/private)
 "xUn" = (
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "xUq" = (
 /turf/simulated/floor/orangeblack/side,
@@ -94371,7 +94371,7 @@
 /area/listeningpost)
 "yjN" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/pool/no_animate,
+/turf/simulated/pool/no_animate,
 /area/station/crew_quarters/pool)
 "yjO" = (
 /obj/stool/chair{

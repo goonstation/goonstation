@@ -691,10 +691,16 @@
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
-/obj/machinery/networked/printer,
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Broken Printer";
+	true_name = "printer?";
+	desc = "It looks like it was never even plugged in. Did this ever work?!"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
@@ -1575,7 +1581,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/caution/west,
 /area/radiostation/podbay)
 "aeY" = (
@@ -1652,7 +1658,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -6356,7 +6362,7 @@
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
@@ -8498,6 +8504,13 @@
 /obj/decal/cleanable/robot_debris,
 /turf/space,
 /area/space)
+"azn" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "azq" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/engineering{
@@ -13260,10 +13273,6 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "aRL" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 5
-	},
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
@@ -19161,14 +19170,6 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bjz" = (
-/obj/mopbucket,
-/obj/item/mop,
-/obj/item/caution,
-/obj/submachine/chef_sink/chem_sink{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -5
-	},
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
 "bjA" = (
@@ -21538,6 +21539,15 @@
 	dir = 4
 	},
 /area/timewarp/ship)
+"lYW" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "lZu" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -22214,6 +22224,12 @@
 	},
 /turf/simulated/floor,
 /area/derelict_ai_sat)
+"pOT" = (
+/obj/mopbucket,
+/obj/item/mop,
+/obj/item/caution,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "pPj" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -23041,6 +23057,15 @@
 "vue" = (
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
+"vuG" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "vuQ" = (
 /obj/decal/cleanable/oil,
 /obj/decal/fakeobjects/shuttleengine{
@@ -104399,13 +104424,13 @@ adY
 adY
 adY
 adO
-aeH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oro
+aga
+aga
+aga
+aga
+boO
+bjA
 aaa
 aaa
 aaa
@@ -104701,13 +104726,13 @@ adZ
 aeA
 aeW
 adO
-oro
+akS
+asy
+lYW
+biR
 aga
-aga
-aga
-aga
-boO
-bjA
+bjl
+bjB
 aaa
 aaa
 aaa
@@ -105006,9 +105031,9 @@ aej
 akS
 asx
 bjz
-biR
+pOT
 aga
-bjl
+bjw
 bjB
 aaa
 aaa
@@ -108630,9 +108655,9 @@ aej
 arr
 aGy
 aRL
-bja
+vuG
 agJ
-bjx
+bjw
 bjB
 aaa
 aaa
@@ -108929,13 +108954,13 @@ aes
 aeS
 afi
 adO
-dQS
+arr
+aGx
+azn
+bja
 agJ
-agJ
-agJ
-agJ
-boP
-bjA
+bjx
+bjB
 aaa
 aaa
 aaa
@@ -109231,13 +109256,13 @@ aet
 aeT
 adY
 adO
-agV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dQS
+agJ
+agJ
+agJ
+agJ
+boP
+bjA
 aaa
 aaa
 aaa
