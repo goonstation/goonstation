@@ -98,6 +98,7 @@
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
+				new /obj/item/tank/emergency_oxygen(src)
 				if (prob(40))
 					new /obj/item/tank/mini_oxygen(src)
 				if (prob(40))
