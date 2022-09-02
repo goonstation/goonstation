@@ -12,6 +12,7 @@
 	config_tag = "revolution"
 	shuttle_available = 0
 
+	antag_token_support = TRUE
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0

@@ -3,6 +3,7 @@
 	config_tag = "blob"
 	shuttle_available = 2
 
+	antag_token_support = TRUE
 	var/const/blobs_minimum = 2
 	var/const/blobs_possible = 4
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
