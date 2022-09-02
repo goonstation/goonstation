@@ -379,14 +379,6 @@
 	..()
 
 /obj/machinery/recharge_station/ui_interact(mob/user, datum/tgui/ui)
-	if (isrobot(user))
-		if (user != src.occupant)
-			boutput(user, "<span class='alert'>You must be inside the docking station to use the functions.</span>")
-			return
-	else
-		if (user == src.occupant)
-			boutput(user, "<span class='alert'>Non-cyborgs cannot use the docking station functions.</span>")
-			return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "CyborgDockingStation")
@@ -587,6 +579,15 @@
 		return
 
 	var/mob/user = ui.user
+
+	if (isrobot(user))
+		if (user != src.occupant)
+			boutput(user, "<span class='alert'>You must be inside the docking station to use the functions.</span>")
+			return
+	else
+		if (user == src.occupant)
+			boutput(user, "<span class='alert'>Non-cyborgs cannot use the docking station functions.</span>")
+			return
 
 	if (!src.allow_self_service && user == src.occupant)
 		boutput(user, "<span class='alert'>Self-service has been disabled at this station.</span>")
