@@ -810,7 +810,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
-ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead)
+//ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree
 TYPEINFO(/turf/unsimulated/wall/auto/lead)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 	. = ..()
@@ -864,7 +864,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner
 	))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
-ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure)
+//ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure)
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
 	name = "lead wall"
 	icon = 'icons/turf/walls_overgrown.dmi'
@@ -1105,7 +1105,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	connect_diagonal = 1
 	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/hedge, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/))
 // Some fun walls by Walpvrgis
-ABSTRACT_TYPE(/turf/unsimulated/wall/auto/hedge)
+//ABSTRACT_TYPE(/turf/unsimulated/wall/auto/hedge)
 /turf/unsimulated/wall/auto/hedge
 	name = "hedge"
 	desc = "This hedge is sturdy! No light seems to pass through it..."
