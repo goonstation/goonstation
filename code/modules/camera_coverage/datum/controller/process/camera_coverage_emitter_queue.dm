@@ -5,6 +5,7 @@
 	schedule_interval = CAM_PROCESS_QUEUE_INTERVAL
 
 /datum/controller/process/camera_coverage_emitter_queue/doWork()
-	var/list/queue = camera_coverage_controller.emitter_update_queue.Copy()
-	camera_coverage_controller.emitter_update_queue = null
-	camera_coverage_controller.update_emitters(queue)
+	var/list/queue = camera_coverage_controller.emitter_update_queue?.Copy()
+	if (islist(queue))
+		camera_coverage_controller.emitter_update_queue = null
+		camera_coverage_controller.update_emitters(queue)
