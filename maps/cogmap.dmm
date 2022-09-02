@@ -24636,7 +24636,7 @@
 /area/station/ai_monitored/storage/eva)
 "bmx" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "bmy" = (
@@ -41089,7 +41089,9 @@
 /area/station/mining/staff_room)
 "cdR" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 7;
 	pixel_y = -1
@@ -41106,7 +41108,9 @@
 /area/station/mining/staff_room)
 "cdS" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 7;
 	pixel_y = -1
@@ -51323,7 +51327,7 @@
 /area/station/security/main)
 "dGz" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
 	},

@@ -408,6 +408,20 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack0"
+	item_state = "microjetpack0"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	mats = 8
+	force = 6
+
+	New()
+		..()
+		src.air_contents.volume = 18
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/oxygen
@@ -424,22 +438,60 @@ Contains:
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/emergency_oxygen
-	name = "emergency oxygen tank"
-	icon_state = "em_oxtank"
+	name = "pocket oxygen tank"
+	icon_state = "pocket_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	health = 5
+	w_class = W_CLASS_TINY
+	force = 1
+	stamina_damage = 20
+	stamina_cost = 8
+	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.volume = 3
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/emergency_oxygen/extended
+	name = "extended capacity pocket oxygen tank"
+	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	icon_state = "ex_pocket_oxtank"
+
+	New()
+		..()
+		src.air_contents.volume = 6
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+
+
+/obj/item/tank/mini_oxygen
+	name = "mini oxygen tank"
+	icon_state = "mini_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	health = 5
-	w_class = W_CLASS_SMALL
+	w_class = W_CLASS_NORMAL
 	force = 3
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A small personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 
 	New()
 		..()
-		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4.5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.volume = 8
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 ////////////////////////////////////////////////////////////

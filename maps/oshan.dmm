@@ -31167,7 +31167,7 @@
 /area/station/ai_monitored/storage/eva)
 "bCe" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bCf" = (
@@ -31652,7 +31652,7 @@
 	icon_state = "2-4"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
@@ -32203,7 +32203,7 @@
 	icon_state = "1-2"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bEH" = (

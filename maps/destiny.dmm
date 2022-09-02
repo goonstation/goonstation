@@ -5516,7 +5516,7 @@
 	icon_state = "line1"
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -8696,7 +8696,7 @@
 "aJA" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{
@@ -20101,7 +20101,7 @@
 "dkN" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -26927,7 +26927,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/engineer,
 /turf/simulated/floor/neutral/side{
@@ -27054,7 +27054,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -32936,7 +32936,7 @@
 	pixel_y = 21
 	},
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -33537,7 +33537,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/disposalpipe/segment{
@@ -34007,7 +34007,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/decal/mule/beacon,
@@ -34312,7 +34312,7 @@
 "kkl" = (
 /obj/decal/mule/beacon,
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
@@ -38304,7 +38304,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/machinery/light{
@@ -42892,7 +42892,7 @@
 /obj/rack,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/shoes/magnetic,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/neutral/side{
@@ -43815,7 +43815,7 @@
 "pht" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/machinery/light/emergency,
@@ -48024,7 +48024,7 @@
 "rtz" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
 /obj/decal/tile_edge/line/blue{

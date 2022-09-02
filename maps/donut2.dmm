@@ -2268,6 +2268,7 @@
 	network = "Zeta"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ahx" = (
@@ -2618,7 +2619,6 @@
 	network = "bombtest";
 	pixel_y = 11
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aih" = (
@@ -2739,7 +2739,6 @@
 	name = "Mixing Vent Control";
 	pixel_x = 24
 	},
-/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aiz" = (
@@ -6295,7 +6294,10 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
-/obj/item_dispenser/latex_gloves,
+/obj/item_dispenser/latex_gloves{
+	pixel_y = 0;
+	pixel_x = -28
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avS" = (
@@ -10453,7 +10455,7 @@
 /area/station/ai_monitored/storage/eva)
 "aIO" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
@@ -10662,7 +10664,7 @@
 /area/station/ai_monitored/storage/eva)
 "aJt" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
@@ -17632,9 +17634,8 @@
 /area/station/engine/inner)
 "ben" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
@@ -17656,9 +17657,8 @@
 /area/station/engine/inner)
 "beo" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
@@ -22009,8 +22009,6 @@
 /obj/machinery/light_switch{
 	pixel_y = 25
 	},
-/obj/vehicle/floorbuffer,
-/obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -22021,6 +22019,7 @@
 	dir = 8;
 	pixel_x = 4
 	},
+/obj/vehicle/floorbuffer,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "buZ" = (
@@ -22657,24 +22656,22 @@
 	},
 /area/station/hallway/primary/south)
 "bxi" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/janitor/office)
-"bxj" = (
-/obj/machinery/light/incandescent,
 /obj/rack,
 /obj/item/mop,
 /obj/item/sponge,
 /obj/item/storage/box/lightbox/bulbs,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/radio,
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
-	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/office)
+"bxj" = (
+/obj/mopbucket,
+/obj/item/sponge,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/obj/item/chem_grenade/cleaner,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -22687,18 +22684,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/junction,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
 /area/station/janitor/office)
 "bxl" = (
-/obj/stool,
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
-/obj/item/chem_grenade/cleaner,
-/obj/item/sponge,
-/obj/mopbucket,
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/white/checker{
 	dir = 4
 	},
@@ -24119,9 +24111,6 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/device/multitool,
-/obj/item/device/radio/intercom/engineering{
-	dir = 1
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "bCo" = (
@@ -24713,6 +24702,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEQ" = (
@@ -24728,19 +24721,11 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bES" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
@@ -28777,6 +28762,13 @@
 "ecM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/ptl)
+"ecU" = (
+/obj/machinery/rkit,
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "ecY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIsat)
@@ -31605,8 +31597,8 @@
 /area/station/security/main)
 "gMJ" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -6
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 3;
@@ -32413,8 +32405,8 @@
 /area/station/mining/staff_room)
 "hAR" = (
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = -6
+/obj/item/tank/jetpack/micro{
+	pixel_x = 4
 	},
 /obj/item/clothing/suit/space/engineer{
 	pixel_x = 3;
@@ -32639,9 +32631,8 @@
 	pixel_y = -24
 	},
 /obj/rack,
-/obj/item/tank/jetpack{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/item/tank/jetpack/micro{
+	pixel_x = 8
 	},
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/suit/space/engineer,
@@ -33190,6 +33181,7 @@
 /obj/random_item_spawner/tools,
 /obj/item/cargotele,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "iss" = (
@@ -34154,7 +34146,6 @@
 "jnx" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
-/obj/machinery/light/incandescent,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
@@ -34439,14 +34430,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "jDc" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -34981,11 +34964,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "kgq" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -35983,12 +35965,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/observatory)
-"lis" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/quartermaster/refinery)
 "liN" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/caution/corner/misc{
@@ -39617,6 +39593,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/grime{
 	dir = 8
 	},
@@ -43249,14 +43226,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"sih" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "siN" = (
 /obj/cable/black{
 	icon_state = "2-4"
@@ -45316,6 +45285,13 @@
 	},
 /turf/space,
 /area/space)
+"udF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/refinery)
 "udT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74492,7 +74468,7 @@ mln
 btx
 bAK
 bBr
-bAE
+ecU
 bzg
 bDF
 vse
@@ -76617,7 +76593,7 @@ sRd
 eWy
 bGC
 tXY
-sih
+jDc
 vgX
 skk
 lCb
@@ -77520,7 +77496,7 @@ bEP
 bFo
 bFo
 bCr
-drU
+udF
 bHs
 xMe
 ulZ
@@ -79332,7 +79308,7 @@ bDg
 bFr
 bFP
 bCr
-lis
+bGX
 bGX
 cCY
 lmm

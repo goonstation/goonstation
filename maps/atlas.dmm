@@ -9421,7 +9421,7 @@
 	},
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/suit/space/engineer,
 /obj/cable{
@@ -9717,7 +9717,7 @@
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "xw" = (
@@ -12013,11 +12013,11 @@
 /obj/item/old_grenade/oxygen{
 	pixel_y = 8
 	},
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

@@ -3901,6 +3901,8 @@ datum
 					step_towards(V,M)
 
 				for (var/mob/living/N in orange(clamp(our_amt / 5, 2,10),M))
+					if (isintangible(N) || N.anchored)
+						continue
 					step_towards(N,M)
 					if(ishuman(N) && probmult(1))
 						N.say("[M.name] is an ocean of muscle.")

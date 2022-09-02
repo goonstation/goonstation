@@ -963,6 +963,16 @@ This is basically useless for anyone but miners.
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/chicken_grenade
+	name = "Chicken Grenade"
+	item = /obj/item/old_grenade/chicken
+	cost = 1
+	vr_allowed = 0
+	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
+	job = list("Rancher")
+	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)

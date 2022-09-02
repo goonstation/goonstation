@@ -29095,7 +29095,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "bra" = (
@@ -29109,7 +29109,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -29986,7 +29986,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -30849,7 +30849,7 @@
 	name = "EVA Secure Shutters";
 	pixel_x = 28
 	},
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "buI" = (
@@ -63018,7 +63018,7 @@
 "cNh" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,
@@ -65731,7 +65731,7 @@
 "cTd" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/device/gps,

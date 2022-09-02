@@ -644,11 +644,11 @@
 			for(var/image/i in cig.images)
 				cig.remove_image(i)
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
-				T.ReplaceWithSpace()
+				T.ReplaceWith(/turf/space)
 				//qdel(T)
 		if(station_repair.station_generator)
 			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
-				UT.ReplaceWith("Space", force=TRUE)
+				UT.ReplaceWith(/turf/space, force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.ClearAllOverlays()
 
