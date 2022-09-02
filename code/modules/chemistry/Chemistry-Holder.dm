@@ -387,6 +387,7 @@ datum
 
 			var/mult_per_reagent = 1
 			for (var/current_id in reagent_list)
+				if(QDELETED(src)) return
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				if (current_reagent)
 					mult_per_reagent = min(multiplier,current_reagent.how_many_depletions(target)) //limit the multiplier by how many depletions we have left

@@ -20663,7 +20663,7 @@
 	name = "Research"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/research_foyer,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aRz" = (
@@ -22184,7 +22184,7 @@
 /area/station/ai_monitored/storage/eva)
 "aUm" = (
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -22277,7 +22277,7 @@
 	name = "Teleporter Pad"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "aUx" = (
@@ -22346,7 +22346,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aUD" = (
@@ -22392,7 +22392,7 @@
 	name = "Toxins"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aUI" = (
@@ -22778,7 +22778,7 @@
 "aVJ" = (
 /obj/machinery/light,
 /obj/rack,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/suit/space,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space,
@@ -25237,7 +25237,7 @@
 	name = "Teleporter Pad"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /turf/simulated/floor/orangeblack,
 /area/station/science/teleporter)
 "baS" = (
@@ -25252,7 +25252,7 @@
 	name = "Guardbot Depot"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/robotdepot,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "baV" = (
@@ -28510,7 +28510,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -28542,7 +28542,7 @@
 	dir = 4;
 	name = "Chemistry"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
@@ -28578,7 +28578,7 @@
 	dir = 4;
 	name = "Artifact Lab"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
@@ -28997,7 +28997,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -30589,7 +30589,7 @@
 	name = "Chamber Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "boa" = (
@@ -31869,7 +31869,7 @@
 /obj/machinery/door/airlock/pyro/sci_alt{
 	name = "Artifact Lab"
 	},
-/obj/access_spawn/research,
+/obj/access_spawn/artlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
@@ -32650,7 +32650,7 @@
 	name = "Chamber Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "brR" = (
@@ -37190,7 +37190,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/yellow/side{
@@ -37317,7 +37317,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /obj/machinery/power/apc{
@@ -37930,7 +37930,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
@@ -40323,7 +40323,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/yellow/side{
@@ -40334,7 +40334,7 @@
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
 /obj/item/clothing/suit/space/engineer,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/head/helmet/space/engineer,
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor/yellow/side,
@@ -46852,7 +46852,7 @@
 	name = "Teleporter Pad"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/access_spawn/telesci,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
 	dir = 4;

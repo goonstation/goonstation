@@ -161,7 +161,7 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
+		playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
 		logTheThing(LOG_COMBAT, usr, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
@@ -210,7 +210,7 @@
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
+			playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
 			owner.death(FALSE) // todo: add custom death
 			return
 
@@ -315,7 +315,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
+		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -357,7 +357,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revshock.ogg', 30, 0)
 		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -434,7 +434,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -492,7 +492,7 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1

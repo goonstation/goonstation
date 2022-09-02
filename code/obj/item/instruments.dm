@@ -70,11 +70,12 @@
 		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
 		if (note != clamp(note, 1, length(sounds_instrument)))
 			return FALSE
-		if(ON_COOLDOWN(user, "instrument_play", src.note_time)) // on user because not just clients do music
+		var/atom/player = user || src
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
 			return FALSE
 
 		if (special_index && note >= special_index) // Add additional time if we just played a special note
-			user.cooldowns["instrument_play"] += 10 SECONDS
+			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
@@ -87,7 +88,7 @@
 							continue
 						george.howl()
 
-			src.post_play_effect(user)
+		src.post_play_effect(user)
 		. = TRUE
 
 	proc/play(var/mob/user)
@@ -134,7 +135,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -469,7 +470,7 @@
 	detonator_act(event, var/obj/item/assembly/detonator/det)
 		switch (event)
 			if ("pulse")
-				playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("cut")
 				det.attachedTo.visible_message("<span class='bold' style='color:#B7410E'>The buzzing stops.</span>")
 				det.attachments.Remove(src)
@@ -478,11 +479,11 @@
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
 						SPAWN(4*i)
-							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+							playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
 					SPAWN(4*i)
-						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
+						playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 500, 1)
 
 /* -------------------- Trumpet -------------------- */
 
@@ -545,13 +546,13 @@
 			return
 		if (S.mob_flags & IS_BONEY)
 			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
-			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
+			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
-			playsound(S, S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
-			playsound(S, "sound/effects/bubbles.ogg", 50, 0)
-			playsound(S, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
+			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
+			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
+			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)

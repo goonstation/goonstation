@@ -59560,7 +59560,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 4
 	},
 /area/centcom/gallery)
@@ -67954,6 +67954,9 @@
 	name = "the high ground"
 	},
 /area/centcom/offices/enakai)
+"dYr" = (
+/turf/unsimulated/floor/stairs/wood/wide,
+/area/centcom/gallery)
 "dYP" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -70326,6 +70329,11 @@
 "iJj" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/retentioncenter)
+"iJN" = (
+/turf/unsimulated/floor/stairs/wood{
+	dir = 6
+	},
+/area/centcom/gallery)
 "iLT" = (
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
@@ -71582,7 +71590,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 4
 	},
 /area/centcom/gallery)
@@ -71908,6 +71916,11 @@
 /obj/storage/closet/office,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
+"mjk" = (
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/centcom/gallery)
 "mkm" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
@@ -74104,7 +74117,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 8
 	},
 /area/centcom/gallery)
@@ -74521,16 +74534,68 @@
 "rcr" = (
 /obj/machinery/light,
 /obj/rack,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
-/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6;
+	pixel_y = -8
+	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "rcQ" = (
@@ -74919,7 +74984,7 @@
 	layer = 3
 	},
 /obj/railing/velvet,
-/turf/simulated/floor/marble/border_wb{
+/turf/unsimulated/floor/marble/border_wb{
 	dir = 8
 	},
 /area/centcom/gallery)
@@ -76091,12 +76156,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
-"uiV" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor{
-	name = "plating"
-	},
-/area/space)
 "ujf" = (
 /obj/shrub{
 	dir = 10
@@ -76167,9 +76226,6 @@
 	},
 /turf/unsimulated/floor/carpet/darkcarpet/border,
 /area/centcom/gallery)
-"uti" = (
-/turf/space,
-/area/centcom/lobby)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -142486,7 +142542,7 @@ sWb
 dMu
 dMu
 dMu
-uiV
+dKL
 aES
 aES
 aES
@@ -143992,7 +144048,7 @@ rXi
 ohW
 pQk
 pKN
-dMu
+dYr
 dMu
 dMT
 dZt
@@ -144294,7 +144350,7 @@ cbS
 ohW
 pVO
 qTn
-dMu
+iJN
 dMu
 dMu
 dMu
@@ -144596,7 +144652,7 @@ oDT
 ohW
 pXL
 qeA
-dMu
+mjk
 dMu
 dMu
 dMu
@@ -147620,7 +147676,7 @@ dLh
 dLh
 dMU
 dLh
-uti
+dLh
 dLe
 dKL
 dKL

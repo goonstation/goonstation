@@ -74,7 +74,7 @@
 				else
 					boutput(O, "<span class='notice'> [bicon(src)] *beep* *beep*</span>")
 			src.visible_message("<span class='notice'>The [src.name]'s occupant alarm clock dings!</span>")
-			playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 		return
 
 	process()
@@ -96,7 +96,7 @@
 						var/mob/living/carbon/human/O = occupant
 						if (isdead(O))
 							src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Alert! No further life signs detected from occupant.\"")
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+							playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 							src.timing = 0
 							src.time_started = 0
 						else
@@ -366,7 +366,7 @@
 				continue
 			O.set_loc(src.loc)
 		qdel(G)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 30, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 30, 1)
 		return
 
 	// Makes sense, I suppose. They're on the shuttles too.
@@ -430,7 +430,7 @@
 				injected_anything = TRUE
 
 		if (injected_anything)
-			playsound(src.loc, "sound/items/hypo.ogg", 25, 1)
+			playsound(src.loc, 'sound/items/hypo.ogg', 25, 1)
 
 		src.no_med_spam = world.time // So they can't combine this with manual injections.
 		return
@@ -503,7 +503,7 @@
 			src.no_med_spam = world.time
 
 			if (injected_anything)
-				playsound(src.loc, "sound/items/hypo.ogg", manual_injection ? 50 : 25, 1)
+				playsound(src.loc, 'sound/items/hypo.ogg', manual_injection ? 50 : 25, 1)
 
 		return
 
@@ -529,7 +529,7 @@
 			src.occupant.force_laydown_standup()
 			src.occupant = null
 			src.UpdateIcon()
-			playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	relaymove(mob/user as mob, dir)
 		eject_occupant(user)
@@ -590,7 +590,7 @@
 			if (O == src.our_console) // don't barf out the internal sleeper console tia
 				continue
 			O.set_loc(src.loc)
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		return
 
 	attack_hand(mob/user)
