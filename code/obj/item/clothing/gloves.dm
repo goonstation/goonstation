@@ -68,8 +68,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (length(newID))
 			return newID
 
-	proc/sheathe_blades()
-
 	attack(var/atom/target, var/atom/challenger)
 		// you, sir, have offended my honour!
 		if (!isliving(target))
@@ -512,7 +510,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 
-	sheathe_blades()
+	proc/sheathe_blades()
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 
 		if(deployed)

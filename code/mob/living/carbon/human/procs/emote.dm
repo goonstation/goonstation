@@ -1381,7 +1381,8 @@
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
-									src.gloves.sheathe_blades()
+									var/obj/item/clothing/gloves/bladed/blades = src.gloves
+									blades.sheathe_blades()
 									src.update_clothing()
 
 			if ("airquote","airquotes")
