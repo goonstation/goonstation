@@ -1382,7 +1382,7 @@
 							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									var/obj/item/clothing/gloves/bladed/blades = src.gloves
-									blades.sheathe_blades()
+									blades.sheathe_blades_toggle()
 									src.update_clothing()
 
 			if ("airquote","airquotes")

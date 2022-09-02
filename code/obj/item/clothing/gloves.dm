@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 
-	proc/sheathe_blades()
+	proc/sheathe_blades_toggle()
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 
 		if(deployed)
