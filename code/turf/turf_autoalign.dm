@@ -613,7 +613,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
 	))
-ABSTRACT_TYPE(/turf/simulated/wall/auto/hedge)
 /turf/simulated/wall/auto/hedge // Some fun walls by Walpvrgis
 	name = "hedge"
 	desc = "This hedge is sturdy! No light seems to pass through it..."
