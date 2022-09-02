@@ -711,12 +711,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced)
 	mod = "R"
 	icon_state = "mapwall_r"
 
-
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn)
-	connect_overlay = 1
-	connect_diagonal = 1
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 	. = ..()
+	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -730,12 +729,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-
 TYPEINFO(/turf/unsimulated/wall/auto/reinforced/supernorn)
-	connect_overlay = 1
-	connect_diagonal = 1
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 	. = ..()
+	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -755,9 +753,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn/wood)
-	connect_diagonal = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 	. = ..()
+	connect_diagonal = 0
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -814,10 +812,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead)
 TYPEINFO(/turf/unsimulated/wall/auto/lead)
-	connect_overlay = 1
-	connect_diagonal = 1
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 	. = ..()
+	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/lead,
 		/obj/machinery/door,
@@ -834,7 +832,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-
+TYPEINFO(/turf/unsimulated/wall/auto/lead/blue)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead/blue)
 	. = ..()
 	connects_to_exceptions = typecacheof(/obj/window/auto) // fixes shuttle wall alignment
@@ -852,10 +850,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead/blue)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure)
-	connect_overlay = 1
-	connect_diagonal = 1
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 	. = ..()
+	connect_overlay = 1
+	connect_diagonal = 1
 	connects_to = typecacheof(list(
 		/turf/cordon,
 		/turf/unsimulated/wall/auto/adventure,
@@ -884,6 +882,8 @@ ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/overgrown2)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/overgrown2)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/overgrown2
 	name = "Rock Wall"
@@ -909,6 +909,8 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/overgrown2)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/shuttle // fancy walls part 2: enough for debris field
 	name = "shuttle wall"
@@ -916,6 +918,8 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle)
 	mod = "shuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/shuttle/dark
 	mod = "dshuttle-"
@@ -923,9 +927,9 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/bee)
-	connect_overlay = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	. = ..()
+	connect_overlay = 0
 	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/adventure/bee, /turf/simulated/wall/false_wall/hive, /turf/unsimulated/wall/auto/adventure/bee/exterior))
 /turf/unsimulated/wall/auto/adventure/bee
 	name = "hive wall"
@@ -939,9 +943,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/martian)
-	connect_overlay = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 	. = ..()
+	connect_overlay = 0
 	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian, /turf/unsimulated/wall/auto/adventure/martian/exterior,/obj/indestructible/shuttle_corner))
 /turf/unsimulated/wall/auto/adventure/martian
 	name = "organic wall"
@@ -953,6 +957,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/iomoon)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/iomoon)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/iomoon // fancy walls part 3: the rest of z2
 	name = "silicate crust"
@@ -967,6 +973,8 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/iomoon)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/hospital)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/hospital
 	name = "asteroid"
@@ -974,6 +982,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/hospital)
 	mod = "exterior-"
 	icon_state = "exterior-0"
 
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 	. = ..()
 	connects_to = typecacheof(list(/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door,
@@ -989,6 +998,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/icemoon)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/icemoon
 	name = "ice wall"
@@ -1001,7 +1012,10 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/icemoon)
 		mod = "interior-"
 		icon_state = "interior-0"
 
+
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/moon)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/moon)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/moon
 	name = "moon rock"
@@ -1009,8 +1023,9 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/moon)
 	mod = "moon-"
 	icon_state = "moon-0"
 
-
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/mars)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/mars)
+	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/mars
 	name = "martian rock"
@@ -1020,6 +1035,8 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/mars)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/mars/interior)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/mars/interior)
+	. = ..()
 	connect_overlay = 1
 /turf/unsimulated/wall/auto/adventure/mars/interior
 	name = "wall"
@@ -1029,9 +1046,9 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/mars/interior)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/meat)
-	connect_overlay = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/meat)
 	. = ..()
+	connect_overlay = 0
 	connects_to = typecacheof(list(
 		/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door,
 		/obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
@@ -1058,9 +1075,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/meat)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/old)
-	connect_overlay = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	. = ..()
+	connect_overlay = 0
 	connects_to = typecacheof(list(
 	/turf/cordon, /turf/unsimulated/wall/auto/adventure, /obj/machinery/door,
 	/obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
@@ -1083,9 +1100,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/hedge)
-	connect_diagonal = 1
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	. = ..()
+	connect_diagonal = 1
 	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/hedge, /obj/machinery/door, /obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/))
 // Some fun walls by Walpvrgis
 ABSTRACT_TYPE(/turf/unsimulated/wall/auto/hedge)

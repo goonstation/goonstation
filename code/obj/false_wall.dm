@@ -17,7 +17,6 @@
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
-	var/dont_follow_map_settings_for_icon_state = 0
 
 	temp
 		var/was_rwall = 0
@@ -199,8 +198,6 @@
 
 	update_icon()
 		..()
-		if(dont_follow_map_settings_for_icon_state)
-			return
 		if (!map_settings)
 			return
 
@@ -229,11 +226,12 @@
 			/// this was borrowed from autowalls as the code that was barely worked
 
 			/// basically this is doing what an autowall of the path wall_path would do
-			var/s_connect_overlay = initial(wall_path.connect_overlay)
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(wall_path)
+			var/s_connect_overlay = typinfo.connect_overlay
 			var/static/list/s_connects_with_overlay_exceptions = list()
 			var/static/list/s_connects_to_exceptions = typecacheof(/turf/simulated/wall/auto/shuttle)
 
-			var/s_connect_diagonal =  initial(wall_path.connect_diagonal)
+			var/s_connect_diagonal =  typinfo.connect_diagonal
 			var/image/s_connect_image = initial(wall_path.connect_image)
 
 			var/light_mod = initial(wall_path.light_mod)
