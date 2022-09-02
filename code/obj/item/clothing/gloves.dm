@@ -68,6 +68,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if (length(newID))
 			return newID
 
+	proc/sheathe_blades()
+
 	attack(var/atom/target, var/atom/challenger)
 		// you, sir, have offended my honour!
 		if (!isliving(target))
@@ -480,22 +482,21 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/clothing/gloves/bladed
-	name = "bladed gloves"
-	desc = "These transparent gloves have blades protruding from them."
-	icon_state = "bladed"
-	item_state = "gloves_bladed"
-	activeweapon = TRUE
+	desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
+	name = "transparent gloves"
+	icon_state = "transparent"
+	item_state = "transparent"
+	activeweapon =FALSE
 	hide_prints = FALSE
 	hit_type = DAMAGE_CUT
-	force = 11
-	stamina_damage = 25
-	stamina_cost = 10
+	force = 0
+	stamina_damage = 0
+	stamina_cost = 0
 	attack_verbs = "slashes"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	var/deployed = FALSE
 
-	New()
-		..()
-		setSpecialOverride(/datum/item_special/double, src)
+	nodescripition = TRUE
 
 	special_attack(mob/living/target, mob/living/user)
 		if(check_target_immunity( target ))
@@ -511,14 +512,41 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 
-/obj/item/clothing/gloves/bladed_retracted
-	desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
-	name = "transparent gloves"
-	icon_state = "transparent"
-	item_state = "transparent"
-	hide_prints = FALSE
+	sheathe_blades()
+		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 
-	nodescripition = TRUE
+		if(deployed)
+			deployed = FALSE
+			force = 0
+			stamina_damage = 0
+			stamina_cost = 0
+			activeweapon = FALSE
+			setSpecialOverride(null, src)
+
+			name = "transparent gloves"
+			desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
+			icon_state = "transparent"
+			item_state = "transparent"
+
+			nodescripition = TRUE
+
+			src.visible_message("<span class='alert'><B>[src]'s hand blades retract!</B></span>")
+		else
+			deployed = TRUE
+			force = 11
+			stamina_damage = 25
+			stamina_cost = 10
+			activeweapon = TRUE
+			setSpecialOverride(/datum/item_special/double, src)
+
+			name = "bladed gloves"
+			desc = "These transparent gloves have blades protruding from them."
+			icon_state = "bladed"
+			item_state = "gloves_bladed"
+
+			nodescripition = FALSE
+
+			src.visible_message("<span class='alert'><B>Blades spring out of [src]'s hands!</B></span>")
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
