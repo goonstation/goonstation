@@ -13,14 +13,17 @@ import { CyborgDockingStationData } from './type';
 export const CyborgDockingStation = (props, context) => {
   const { act, data } = useBackend<CyborgDockingStationData>(context);
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+  let theme = "neutral";
 
+  if (data.conversion_chamber && data.occupant.kind === "human") theme = "syndicate";
+  if (!data.allow_current_user) theme = "noninteractive";
 
   return (
     <Window
       width={500}
       height={640}
       title="Cyborg Docking Station"
-      theme={data.occupant.kind === "human" && data.conversion_chamber ? "syndicate" : "neutral"}>
+      theme={theme}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item>

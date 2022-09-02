@@ -386,6 +386,18 @@
 
 /obj/machinery/recharge_station/ui_data(mob/user)
 	. = list()
+
+	.["allow_current_user"] = TRUE
+
+	if (isrobot(user))
+		if (user != src.occupant)
+			.["allow_current_user"] = FALSE
+	else
+		if (user == src.occupant)
+			.["allow_current_user"] = FALSE
+	if (!src.allow_self_service && user == src.occupant)
+		.["allow_current_user"] = FALSE
+
 	var/list/occupant_data = list()
 	if (isrobot(src.occupant))
 		var/mob/living/silicon/robot/R = src.occupant

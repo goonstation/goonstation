@@ -13,6 +13,7 @@ import './styles/themes/genetek-disabled.scss';
 // import './styles/themes/hackerman.scss';
 // import './styles/themes/malfunction.scss';
 // import './styles/themes/neutral.scss';
+import './styles/themes/noninteractive.scss';
 import './styles/themes/ntos.scss';
 import './styles/themes/paper.scss';
 import './styles/themes/retro-dark.scss';
