@@ -1,5 +1,9 @@
 
 (t)fri sep 02 22
+(u)Ikea
+(p)10405
+(e)|
+(+)You now have to be able to see the singulo in order to get irradiated by the singulo.
 (u)NightmarechaMillian
 (p)10568
 (e)|
