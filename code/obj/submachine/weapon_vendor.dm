@@ -248,11 +248,11 @@
 	accepted_token(var/token)
 
 		if (istype(token, /obj/item/requisition_token/syndicate/surplusutility))
-			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
 		else
-			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=20
-			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=10
-			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
+			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=1
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
+			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=1
 		..()
 
 	disposing()
@@ -593,7 +593,7 @@
 	name = "Healing items"
 	path = /obj/surplusopspawner/medical
 	description = "Some medicinal supplies me lads have scrounged up."
-	cost = 2
+	cost = 1
 /datum/materiel/utility/grenade
 	name = "Grenades"
 	path = /obj/random_item_spawner/surplus/grenades
@@ -610,7 +610,7 @@
 	name = "Defensive items"
 	path = /obj/random_item_spawner/surplus/defensive
 	description = "If anyone be wantin' to harm ye, this'll help."
-	cost = 2
+	cost = 1
 /datum/materiel/utility/melee
 	name = "Additional item of hand in hand combat"
 	path = /obj/random_item_spawner/surplus/melee
@@ -628,12 +628,12 @@
 	name = "Backup"
 	path = /obj/random_item_spawner/surplus/backup
 	description = "Somethin' to help even the odds if ye be outnumbered."
-	cost = 1 //6
+	cost = 3
 /datum/materiel/utility/expensive
 	name = "Expensive toy"
 	path = /obj/random_item_spawner/surplus/expensive
 	description = "Somethin' nice an' shiny, from me private stash."
-	cost = 1 //6
+	cost = 4
 
 /datum/materiel/utility/change
 	name = "Utility return"

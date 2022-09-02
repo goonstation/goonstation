@@ -47,7 +47,7 @@
 /obj/surplusopspawner/suitandhelm
 	var/helmetlist = list(/obj/item/clothing/head/emerg,  //We want to heaviliy skew this towards more common helmets, so include repeats
 		/obj/item/clothing/head/emerg,
-		/obj/item/clothing/suit/space/soviet,
+		/obj/item/clothing/head/helmet/space/soviet,
 		/obj/item/clothing/head/helmet/space/engineer,
 		/obj/item/clothing/head/helmet/space/engineer,
 		/obj/item/clothing/head/helmet/space,
@@ -58,7 +58,7 @@
 		)
 	var/suitlist = list(/obj/item/clothing/suit/space/emerg, //ditto
 		/obj/item/clothing/suit/space/emerg,
-		/obj/item/clothing/head/helmet/space/soviet,
+		/obj/item/clothing/suit/space/soviet,
 		/obj/item/clothing/suit/space/syndicate,
 		/obj/item/clothing/suit/space/engineer,
 		/obj/item/clothing/suit/space/engineer,
@@ -155,10 +155,13 @@
 					authorize()
 
 	proc/authorize()
+
 		if(src.authed)
 			return
-		ourportal.active = TRUE //FLIP THE LEVER, KRONK!
-		ourportal.icon_state = "syndtele1"
+
+		for_by_tcl(D, /obj/submachine/surplusopdeployer)
+			D.active = TRUE //FLIP THE LEVER, KRONK!
+			D.icon_state = "syndtele1"
 
 	proc/print_auth_needed(var/mob/author)
 		if (author)
@@ -179,5 +182,5 @@
 
 	Bumped(atom/movable/M as mob|obj)
 		if(active)
-			do_teleport(M, pick_landmark(LANDMARK_LATEJOIN)) //put them at the latejoin for now- CHANGE THIS LATER
+			do_teleport(M, pick_landmark(LANDMARK_BOXING_RING)) //put them at the latejoin for now- CHANGE THIS LATER
 

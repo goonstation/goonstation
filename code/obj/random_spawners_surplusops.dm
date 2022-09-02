@@ -130,7 +130,7 @@
 		/obj/item/spongecaps/syndicate,
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/gun/energy/wasp,
-		/obj/item/implanter/mindslave,
+		/obj/item/implanter/mindhack,
 		///obj/item/toy/plush/small/kitten,
 		/obj/machinery/recharge_station/syndicate)
 
@@ -144,13 +144,13 @@
 		/obj/item/card/emag,
 		/obj/item/storage/belt/wrestling,
 		/obj/item/clothing/head/bighat/syndicate,
-		/obj/item/implanter/super_mindslave,
+		/obj/item/implanter/super_mindhack,
 		/obj/item/katana_sheath,
 		/obj/item/sword,
 		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
 		/obj/item/storage/box/donkpocket_w_kit,
 		/obj/storage/crate/syndicate_surplus/spawnable, //yo dawg, I heard you like surplus
-		/obj/item/storage/box/mindslave_module_kit)
+		/obj/item/storage/box/mindhack_module_kit)
 	spawn_items()
 		var/obj/item/thingy = pick(src.items2spawn)
 		new thingy(get_turf(src))

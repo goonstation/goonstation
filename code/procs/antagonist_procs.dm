@@ -294,6 +294,7 @@
 	M.implanted = 1
 	synd_mob.implant.Add(M)
 	M.implanted(synd_mob)
+
 /proc/equip_shitty_syndicate(mob/living/carbon/human/synd_mob)
 	if (!ishuman(synd_mob))
 		return
