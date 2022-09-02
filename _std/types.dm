@@ -109,9 +109,7 @@ proc/filtered_concrete_typesof(type, filter)
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
 
-/**
-	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
-	*/
+/// Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 proc/get_singleton(type)
 	RETURN_TYPE(type)
 	if(!(type in singletons))
@@ -239,6 +237,8 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+
 /**
  * Declares typeinfo for some type.
  *
@@ -263,6 +263,7 @@ var/list/list/by_cat = list()
 	} \
 	/typeinfo ## TYPE
 
+#define TYPEINFO_NEW(TYPE) /typeinfo ## TYPE/New()
 
 /// var storing the subtype of /typeinfo relevant for this object
 /datum/var/typeinfo_type = /typeinfo/datum
