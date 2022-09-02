@@ -486,7 +486,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "transparent gloves"
 	icon_state = "transparent"
 	item_state = "transparent"
-	activeweapon =FALSE
+	activeweapon = FALSE
 	hide_prints = FALSE
 	hit_type = DAMAGE_CUT
 	force = 0
