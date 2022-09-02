@@ -1,5 +1,9 @@
 
 (t)fri sep 02 22
+(u)NightmarechaMillian
+(p)10568
+(e)|
+(+)Drinking glasses now have a 33% chance to break when shot at - spectate a bar fight today!
 (u)LeahTheTech
 (p)10563
 (e)|
