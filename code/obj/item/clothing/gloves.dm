@@ -510,7 +510,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 
-	proc/sheathe_blades_toggle()
+	proc/sheathe_blades_toggle(mob/living/user)
 		playsound(src.loc, 'sound/effects/sword_unsheath1.ogg', 50, 1)
 
 		if(deployed)
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			nodescripition = TRUE
 
-			src.visible_message("<span class='alert'><B>[src]'s hand blades retract!</B></span>")
+			user.visible_message("<span class='alert'><B>[user]'s hand blades retract!</B></span>")
 		else
 			deployed = TRUE
 			force = 11
@@ -544,7 +544,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			nodescripition = FALSE
 
-			src.visible_message("<span class='alert'><B>Blades spring out of [src]'s hands!</B></span>")
+			user.visible_message("<span class='alert'><B>Blades spring out of [user]'s hands!</B></span>")
 
 /obj/item/clothing/gloves/powergloves
 	desc = "Now I'm playin' with power!"
