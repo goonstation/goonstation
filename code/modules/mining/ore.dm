@@ -159,13 +159,13 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 5 SECONDS, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 10 SECONDS, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)
 
 /datum/ore/plasmastone
 	name = "plasmastone"
@@ -206,6 +206,7 @@
 /datum/ore/miracle
 	name = "miraclium"
 	output = /obj/item/raw_material/miracle
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
 	hardness_mod = 2
@@ -244,6 +245,7 @@
 /datum/ore/nanite
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
+	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15
 	hardness_mod = 2

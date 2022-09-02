@@ -320,7 +320,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0.0
+			src.donor.butt_op_stage = 0
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -500,10 +500,10 @@
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.key)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
@@ -511,7 +511,7 @@
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.key)
-						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
@@ -611,7 +611,7 @@
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4.0
+				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt
@@ -995,6 +995,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
+				src.donor.butt_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1158,6 +1159,7 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
 		switch (working_lungs)
 			if (0)
@@ -1409,11 +1411,11 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam

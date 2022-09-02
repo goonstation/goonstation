@@ -10,8 +10,8 @@
 	health = 5
 	w_class = W_CLASS_SMALL
 
-	force = 5.0
-	throwforce = 7.0
+	force = 5
+	throwforce = 7
 	stamina_damage = 40
 	stamina_cost = 14
 	stamina_crit_chance = 15
@@ -48,8 +48,8 @@
 	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon. Can be applied to the Nuclear bomb to repair it in small increments."
 	icon_state = "wrench-battle" //todo: new sprites
 	item_state = "wrench-battle"
-	force = 10.0
-	stamina_damage = 35
+	force = 15
+	stamina_damage = 55
 
 	New()
 		..()

@@ -65,7 +65,7 @@
 /datum/computer/file/pda_program/bot_control/secbot
 	name = "Securitron Access"
 	var/header_thing = "Securitron Interlink"
-	size = 8.0
+	size = 8
 	var/menumode = 1
 	var/all_guard = 0
 	var/lockdown = 0
@@ -242,14 +242,14 @@
 			src.master.updateSelfDialog()
 /datum/computer/file/pda_program/bot_control/secbot/pro
 	name = "Securitron Access PRO"
-	size = 8.0
+	size = 8
 	header_thing = "Securitron Interlink PRO"
 	can_summon_all = 1
 	can_force_proc = 1
 
 /datum/computer/file/pda_program/bot_control/mulebot
 	name = "MULE Bot Control"
-	size = 16.0
+	size = 16
 	var/list/beacons
 
 	return_text()

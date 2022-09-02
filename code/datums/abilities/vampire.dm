@@ -213,7 +213,7 @@
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.vamp_blood = 0
@@ -223,7 +223,7 @@
 		else
 			if (src.points < 0)
 				src.points = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.points = 0
@@ -336,7 +336,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", sender, null, "(GHOULSPEAK): [message]", "ghoulsay")
+		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
 
 		if (sender.client && sender.client.ismuted())
 			boutput(sender, "You are currently muted and may not speak.")
@@ -346,7 +346,7 @@
 
 
 	proc/remove_thrall(var/mob/victim)
-		remove_mindslave_status(victim)
+		remove_mindhack_status(victim)
 		thralls -= victim
 
 	proc/make_thrall(var/mob/victim)
@@ -409,12 +409,12 @@
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindslave")
+			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
-			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 

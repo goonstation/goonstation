@@ -378,7 +378,7 @@
 			gib.streak_cleanable(M.dir)
 			boutput(M, "<span class='alert'>You drip some meat on the floor</span>")
 			M.visible_message("<span class='alert'>[M] drips some meat on the floor!</span>")
-			playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		else
 			..()

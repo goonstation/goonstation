@@ -17,12 +17,12 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute()
-	var/mob/living/intangible/flock/flockmind/F = owner
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
-		return //someone made a flockmind without a flock, or gave this ability holder to something else.
-	src.totalCompute = F.flock.total_compute()
-	src.points = src.totalCompute - F.flock.used_compute()
+		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
+	src.points = totalCompute - usedCompute
+	src.totalCompute = totalCompute
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
@@ -126,7 +126,7 @@
 /datum/targetable/flockmindAbility/designateTile/cast(atom/target)
 	if(..())
 		return TRUE
-	var/mob/living/intangible/flock/flockmind/F = holder.owner
+	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
 	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
@@ -218,7 +218,7 @@
 		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
 		return TRUE
 
-	playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	target.HealDamage("All", 200, 200)
 	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
@@ -267,7 +267,7 @@
 		if(A.canAIControl())
 			targets += A
 	if(length(targets))
-		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
@@ -296,10 +296,10 @@
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
 	if(length(targets))
-		playsound(holder.get_controlling_mob(), "sound/misc/flockmind/flockmind_cast.ogg", 80, 1)
+		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
 		for(var/mob/living/M in targets)
-			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 100, 1)
+			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
 			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
 	else
@@ -332,10 +332,10 @@
 				R = M.find_in_equipment(/obj/item/device/radio)
 		if(R)
 			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
-			logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
+			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
-			var/mob/living/intangible/flock/flockmind/F = holder.owner
+			var/mob/living/intangible/flock/F = holder.owner
 			var/datum/flock/flock = F.flock
 			if(flock)
 				flockName = flock.name
@@ -347,7 +347,7 @@
 	else if(istype(target, /obj/item/device/radio))
 		R = target
 		message = html_encode(input("What would you like to broadcast to [R]?", "Transmission", "") as text)
-		logTheThing("say", usr, target, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
+		logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		//set up message
@@ -467,4 +467,6 @@
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task
+	if(drone.ai_paused)
+		drone.wake_from_ai_pause()
 	drone.ai.interrupt()

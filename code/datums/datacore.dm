@@ -8,7 +8,7 @@
 	var/list/datum/ticket/tickets = list()
 	var/obj/machinery/networked/mainframe/mainframe = null
 
-/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "")
+/datum/datacore/proc/addManifest(var/mob/living/carbon/human/H as mob, var/sec_note = "", var/med_note = "", var/pda_net_id = null)
 	if (!H || !H.mind)
 		return
 
@@ -84,8 +84,8 @@
 	if(H.traitHolder)
 		for(var/id in H.traitHolder.traits)
 			var/obj/trait/T = H.traitHolder.traits[id]
-			if(length(traitStr)) traitStr += " | [T.cleanName]"
-			else traitStr = T.cleanName
+			if(length(traitStr)) traitStr += " | [T.name]"
+			else traitStr = T.name
 			if (istype(T, /obj/trait/random_allergy))
 				var/obj/trait/random_allergy/AT = T
 				if (M["alg"] == "None") //is it in its default state?
@@ -203,7 +203,8 @@
 
 
 	B["job"] = H.job
-	B["current_money"] = 100.0
+	B["current_money"] = 100
+	B["pda_net_id"] = pda_net_id
 	B["notes"] = "No notes."
 
 	// If it exists for a job give them the correct wage
@@ -271,8 +272,8 @@
 			return
 		return
 
-///Returns the crew manifest, but sorted according to the individual's rank.
-/proc/get_manifest()
+///Returns the crew manifest, but sorted according to the individual's rank. include_cryo includes a list of individuals in cryogenic storage
+/proc/get_manifest(include_cryo = TRUE)
 	var/list/sorted_manifest
 	var/list/Command = list()
 	var/list/Security = list()
@@ -282,6 +283,8 @@
 	var/list/Unassigned = list()
 	var/medsci_integer = 0 // Used to check if one of medsci's two heads has already been added to the manifest
 	for(var/datum/db_record/staff_record as anything in data_core.general.records)
+		if (staff_record["p_stat"] == "In Cryogenic Storage")
+			continue
 		var/rank = staff_record["rank"]
 		if(rank in command_jobs)
 			if(rank == "Captain")
@@ -352,6 +355,14 @@
 	sorted_manifest += "<b><u>Unassigned and Civilians:</u></b><br>"
 	for(var/crew in Unassigned)
 		sorted_manifest += crew
+
+	if (include_cryo)
+		var/stored = ""
+		if(length(by_type[/obj/cryotron]))
+			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
+			for(var/L as anything in cryo_unit.stored_crew_names)
+				stored += "<i>- [L]<i><br>"
+		sorted_manifest += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 
 	return sorted_manifest
 

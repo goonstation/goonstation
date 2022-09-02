@@ -59,7 +59,7 @@
 		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
 		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
 		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/tank/emergency_oxygen(M), slot_l_store)
+		M.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(M), slot_l_store)
 		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
 		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_in_backpack)
 		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_in_backpack)
@@ -69,7 +69,7 @@
 		M.update_clothing()
 
 		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
-		logTheThing("combat", M, null, "transformed into a hunter at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "transformed into a hunter at [log_loc(M)].")
 		return 1
 
 	else
@@ -259,8 +259,8 @@
 /////////////////////////////////////////////// Hunter spell parent ////////////////////////////
 
 /datum/targetable/hunter
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "template"  // No custom sprites yet.
+	icon = 'icons/mob/hunter_abilities.dmi'
+	icon_state = "trophycount"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0

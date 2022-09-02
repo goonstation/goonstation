@@ -75,7 +75,7 @@
 	if (isliving)
 		var/mob/living/L = M
 
-		if (blood_system)
+		if (blood_system && L.can_bleed)
 			var/bp_col
 			switch (L.blood_pressure["total"])
 				if (-INFINITY to 299) // very low (70/50)
@@ -198,11 +198,9 @@
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
-	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("n_radiation")
-	if (R)
-		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
-	if (NR)
-		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+	if (R?.stage)
+		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
+
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
@@ -279,7 +277,7 @@
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
 	else if (damage >= O.MAX_DAMAGE*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.30)
+	else if (damage >= O.MAX_DAMAGE*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"

@@ -142,9 +142,9 @@
 			throw_range = max(throw_range,0)
 
 		if (intensity <= 2.4)
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		else
-			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip_big.ogg', 50, 1, -3)
 		src.remove_pulling()
 		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
 		var/throw_speed = 2
@@ -484,9 +484,6 @@
 	return subject.get_pronouns().reflexive
 
 /mob/proc/get_explosion_resistance()
-	return 0
-
-/mob/living/carbon/human/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
 /mob/proc/spread_blood_clothes(mob/whose)
@@ -964,7 +961,7 @@
 					can_see.Add(I)
 			for (var/datum/mind/M in spies)
 				if (M.current)
-					var/I = image(antag_spyslave, loc = M.current)
+					var/I = image(antag_spyminion, loc = M.current)
 					can_see.Add(I)
 
 		else if (src.mind in spies)
@@ -1024,7 +1021,7 @@
 
 
 	if (can_see.len > 0)
-		//logTheThing("debug", src, null, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
+		//logTheThing(LOG_DEBUG, src, "<b>Convair880 antag overlay:</b> [can_see.len] added with parameters all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Overlay parameters for [src]: all ([see_everything]), T ([see_traitors]), S ([see_nukeops]), W ([see_wizards]), R ([see_revs]), SP ([see_special])")
 		//DEBUG_MESSAGE("Added [can_see.len] overlays to [src].")
 		src.client.images.Add(can_see)
@@ -1054,7 +1051,7 @@
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
-				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
 
@@ -1066,7 +1063,7 @@
 
 		if (S == "table" && istype(target, /obj/table))
 			var/obj/table/table = target
-			playsound(table.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(table.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			table.deconstruct()
 			return TRUE
 

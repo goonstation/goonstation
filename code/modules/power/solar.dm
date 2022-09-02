@@ -43,6 +43,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -76,7 +80,7 @@
 	directwired = 1
 	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
 	power_usage = 10
-	var/health = 10.0
+	var/health = 10
 	var/id = 1
 	var/obscured = 0
 	var/sunfrac = 0
@@ -107,6 +111,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 
 /obj/machinery/power/solar/New()
@@ -193,16 +201,16 @@
 
 /obj/machinery/power/solar/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			if(prob(15))
 				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 				G.set_loc(src.loc)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				broken()
 	return
@@ -253,6 +261,10 @@
 		solar_id = "diner"
 	silverglass
 		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
@@ -386,11 +398,11 @@
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
 	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && get_dist(src, S) >= closest_solar_distance)
+		if (closest_solar_distance != null && GET_DIST(src, S) >= closest_solar_distance)
 			continue
 
 		closest_solar_id = S.id
-		closest_solar_distance = get_dist(src, S)
+		closest_solar_distance = GET_DIST(src, S)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)

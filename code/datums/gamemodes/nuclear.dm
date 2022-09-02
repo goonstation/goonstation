@@ -90,14 +90,14 @@
 			"the robotics lab" = list(/area/station/medical/robotics))
 
 		else if (ismap ("DONUT2"))
-			target_locations = list("the bridge" = list(/area/station/bridge),
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"the public market" = list(/area/station/crew_quarters/market),
+			"the stock exchange" = list(/area/station/crew_quarters/stockex),
 			"the chapel" = list(/area/station/chapel/sanctuary),
-			"the medbay" = list(/area/station/medical/medbay),
-			"the genetic lab" = list(/area/station/medical/research),
-			"the public tool storage" = list(/area/station/storage/tools),
-			"the brig" = list(/area/station/security/brig),
-			"the cargo bay(QM)" = list(/area/station/quartermaster/office),
-			"the hydroponics bay(Botany)" = list(/area/station/hydroponics/bay))
+			"the bridge" = list(/area/station/bridge),
+			"the crew lounge" = list(/area/station/crew_quarters/quarters),
+			"the main brig area" = list(/area/station/security/brig),
+			"the main station pod bay" = list(/area/station/hangar/main))
 
 
 		else // COG1
@@ -116,7 +116,7 @@
 	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
-		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
+		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 
 
@@ -141,7 +141,7 @@
 		token_players.Remove(tplayer)
 		num_synds--
 		num_synds = max(num_synds, 0)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_syndicates = antagWeighter.choose(pool = possible_syndicates, role = ROLE_NUKEOP, amount = num_synds, recordChosen = 1)
@@ -430,7 +430,7 @@ var/syndicate_name = null
 	name = "Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 

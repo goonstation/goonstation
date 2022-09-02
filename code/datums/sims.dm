@@ -396,7 +396,7 @@
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
 					H.death()
-					logTheThing("combat", usr, null, "died from the sims fun motive at [log_loc(H)].")
+					logTheThing(LOG_COMBAT, usr, "died from the sims fun motive at [log_loc(H)].")
 
 		onLife()
 			if (value < 10)
@@ -493,7 +493,7 @@
 		name = "Sanity"
 		icon_state = "sanity"
 		desc = "Your sanity slowly increases by itself, but you can speed that up with certain substances or by making sure that your mind won't be further afflicted."
-		depletion_rate = 0.0
+		depletion_rate = 0
 
 		gain_rate = 0.1
 
@@ -585,7 +585,7 @@
 
 	proc/set_global_sims_var(var/datum/simsMotive/M, var/var_name, var/new_value) //Change one value on every simsHolder
 		if(!(var_name in M.vars))
-			logTheThing("debug", null, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
 			return
 		for(var/datum/simsMotive/SM in simsMotives)
 			if(SM.type == M.type)
@@ -761,7 +761,7 @@ var/global/datum/simsControl/simsController = new()
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "plum-desat"
 	mouse_opacity = 0
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 32
 	var/mob/living/owner
 

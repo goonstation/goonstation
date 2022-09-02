@@ -269,15 +269,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_blunt(40)
 				src.damage_heat(40)
 
-			if(2.0)
+			if(2)
 				src.damage_blunt(15)
 				src.damage_heat(15)
 
-			if(3.0)
+			if(3)
 				src.damage_blunt(7)
 				src.damage_heat(7)
 
@@ -391,7 +391,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
+					logTheThing(LOG_STATION, usr, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -411,7 +411,7 @@
 		if (src.material && src.material.getProperty("electrical") < 4)
 			OSHA_is_crying = 0
 
-		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
 			return
 
 		// Things that will electrocute you

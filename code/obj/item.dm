@@ -38,7 +38,7 @@
 	var/force = 0
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1
-	var/r_speed = 1.0
+	var/r_speed = 1
 	var/hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/stamina_damage = STAMINA_ITEM_DMG //amount of stamina removed from target per hit.
 	var/stamina_cost = STAMINA_ITEM_COST  //amount of stamina removed from USER per hit. This cant bring you below 10 points and you will not be able to attack if it would.
@@ -141,7 +141,7 @@
 		. = list()
 		if(showTooltipDesc)
 			. += capitalize(src.desc)
-			var/extra = src.get_desc(get_dist(src, usr), usr)
+			var/extra = src.get_desc(GET_DIST(src, usr), usr)
 			if(extra)
 				. += "<br>" + extra
 
@@ -212,7 +212,7 @@
 			if (!lastTooltipContent || !lastTooltipTitle || tooltip_flags & REBUILD_ALWAYS\
 			 || (HAS_ATOM_PROPERTY(usr, PROP_MOB_SPECTRO) && tooltip_flags & REBUILD_SPECTRO)\
 			 || (usr != lastTooltipUser && tooltip_flags & REBUILD_USER)\
-			 || (get_dist(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
+			 || (GET_DIST(src, usr) != lastTooltipDist && tooltip_flags & REBUILD_DIST))
 				tooltip_rebuild = 1
 
 			//If user has tooltips to always show, and the item is in world, and alt key is NOT pressed, deny
@@ -396,7 +396,7 @@
 			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
-		playsound(M.loc,"sound/items/eatfood.ogg", rand(10, 50), 1)
+		playsound(M.loc,'sound/items/eatfood.ogg', rand(10, 50), 1)
 		eat_twitch(M)
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
@@ -411,7 +411,7 @@
 		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 			"<span class='alert'>You try to feed [M] [src]!</span>",\
 			"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-		logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
+		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
 			return 0
@@ -421,7 +421,7 @@
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
-		logTheThing("combat", user, M, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
+		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (src.material && src.material.edible)
 			src.material.triggerEat(M, src)
@@ -431,7 +431,7 @@
 			SPAWN(0.5 SECONDS) // Necessary.
 				src.reagents.trans_to(M, src.reagents.total_volume)
 
-		playsound(M.loc, "sound/items/eatfood.ogg", rand(10, 50), 1)
+		playsound(M.loc, 'sound/items/eatfood.ogg', rand(10, 50), 1)
 		eat_twitch(M)
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
@@ -475,7 +475,7 @@
 				if (W?.firesource)
 					msg += " by item ([W]). Last touched by: [key_name(W.fingerprintslast)]"
 				message_admins(msg)
-				logTheThing("bombing", W?.fingerprintslast, null, msg)
+				logTheThing(LOG_BOMBING, W?.fingerprintslast, msg)
 	if (src.burn_output >= 1000)
 		UpdateOverlays(image('icons/effects/fire.dmi', "2old"),"burn_overlay")
 	else
@@ -660,7 +660,7 @@
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("paralysis") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -718,16 +718,16 @@
 			if (W.weak_tk && !IN_RANGE(src, W, 2))
 				src.throw_at(over_object, 1, 1)
 				boutput(W, "<span class='alert'>You're too far away to properly manipulate this physical item!</span>")
-				logTheThing("combat", usr, null, "moves [src] with wtk.")
+				logTheThing(LOG_COMBAT, usr, "moves [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 				return
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with wtk.")
+			logTheThing(LOG_COMBAT, usr, "throws [src] [dir2text(get_dir(usr, over_object))] with wtk.")
 		else if (ismegakrampus(usr))
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with k_tk.")
-		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && get_dist(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
+			logTheThing(LOG_COMBAT, usr, "throws [src] [dir2text(get_dir(usr, over_object))] with k_tk.")
+		else if(usr.bioHolder && usr.bioHolder.HasEffect("telekinesis_drag") && isturf(src.loc) && isalive(usr) && usr.canmove && GET_DIST(src,usr) <= 7 && !src.anchored && src.w_class < W_CLASS_GIGANTIC)
 			src.throw_at(over_object, 7, 1)
-			logTheThing("combat", usr, null, "throws [src] with tk.")
+			logTheThing(LOG_COMBAT, usr, "throws [src] [dir2text(get_dir(usr, over_object))] with tk.")
 
 #ifdef HALLOWEEN
 		else if (istype(usr, /mob/dead/observer))	//ghost
@@ -738,7 +738,7 @@
 				var/datum/abilityHolder/ghost_observer/GH = usr:abilityHolder
 				if (GH.spooking)
 					src.throw_at(over_object, 7-I.w_class, 1)
-					logTheThing("combat", usr, null, "throws [src] with g_tk.")
+					logTheThing(LOG_COMBAT, usr, "throws [src] with g_tk.")
 #endif
 
 //equip an item, given an inventory hud object or storage item UI thing
@@ -985,7 +985,7 @@
 
 /obj/item/ex_act(severity)
 	switch(severity)
-		if (2.0)
+		if (2)
 			if (src.material)
 				src.material.triggerTemp(src ,7500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 7500)
@@ -994,7 +994,7 @@
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-		if (3.0)
+		if (3)
 			if (src.material)
 				src.material.triggerTemp(src, 3500)
 			if (src.burn_possible && !src.burning && src.burn_point <= 3500)
@@ -1176,7 +1176,7 @@
 		return
 
 	if (src.flags & SUPPRESSATTACK)
-		logTheThing("combat", user, M, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
+		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
 	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
@@ -1185,7 +1185,7 @@
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
 		if (!user.process_stamina(src.stamina_cost))
-			logTheThing("combat", user, M, "tries to attack [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
+			logTheThing(LOG_COMBAT, user, "tries to attack [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
 	if (chokehold)
@@ -1201,7 +1201,7 @@
 	var/d_zone = affecting
 
 	if (!M.melee_attack_test(user, src, d_zone))
-		logTheThing("combat", user, M, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
 	if(hasProperty("frenzy"))
@@ -1419,9 +1419,9 @@
 		if (O == (attacher || attachee))
 			continue
 		if (attacher == attachee)
-			O.show_message("<span class='alert'>[attacher] attaches [src] to \his own stump!</span>", 1)
+			O.show_message("<span class='alert'>[attacher] attaches [src] to [his_or_her(attacher)] own stump!</span>", 1)
 		else
-			O.show_message("<span class='alert'>[attachee] has [src] attached to \his stump by [attacher].</span>", 1)
+			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
 	if (attachee != attacher)
 		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
@@ -1563,7 +1563,7 @@
 		var/obj/item/W = locate(/obj/item) in T.contents
 		if (istype(W.material, /datum/material/crystal/plasmastone))
 			msg += " Turf contains <b>plasmastone</b>."
-	logTheThing("bombing", M, null, "[msg]")
+	logTheThing(LOG_BOMBING, M, "[msg]")
 
 /obj/item/proc/dropped(mob/user)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead

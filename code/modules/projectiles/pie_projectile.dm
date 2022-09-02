@@ -13,6 +13,6 @@
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		if (ismob(hit))
 			var/mob/M = hit
-			playsound(hit, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(hit, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)

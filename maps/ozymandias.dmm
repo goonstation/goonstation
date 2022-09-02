@@ -63968,7 +63968,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -77785,7 +77785,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -80994,7 +80994,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/firedoor_spawn,
@@ -82322,7 +82322,7 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -85887,7 +85887,7 @@
 /obj/item/clipboard{
 	pixel_x = -4
 	},
-/obj/artifact_paper_dispenser{
+/obj/item/paper_bin/artifact_paper{
 	pixel_x = 13
 	},
 /turf/simulated/floor/engine/caution/west,
@@ -92040,7 +92040,7 @@
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)

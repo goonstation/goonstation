@@ -684,18 +684,7 @@
 				src.layer = EFFECTS_LAYER_BASE-1
 				return
 			if ("Rip up")
-				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				else
-					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
-						CF.set_loc(get_turf(src))
-					boutput(user, "You rip up [src].")
-					user.u_equip(src)
-					qdel(src)
-					return
+				try_rip_up(user)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -723,19 +712,19 @@
 					else
 						for (var/i=3, i>0, i--)
 							new /obj/item/bandage(get_turf(src))
-						playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 						boutput(user, "You cut [src] into bandages.")
 						user.u_equip(src)
 						qdel(src)
 						return
 				if ("Cut cable")
 					src.cut_cape()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut the cable that's tying the bedsheet into a cape.")
 					return
 				if ("Cut eyeholes")
 					src.cut_eyeholes()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut eyeholes in the bedsheet.")
 					return
 		else
@@ -1283,29 +1272,27 @@
 	item_state = "spacemat"
 	name = "bespoke space suit"
 	desc = "A custom built suit that protects your fragile body from hard vacuum."
-	var/datum/material/renf=null
 
-	proc/setupReinforcement(var/datum/material/R) // passes the reinforcement variable, sets up protection
-		renf = R
-		if (src.material && renf)
-
+	onMaterialChanged()
+		. = ..()
+		if (istype(src.material))
 			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
 			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
+		return
 
-			prot = max(0, renf.getProperty("density") - 3) / 2
-			setProperty("meleeprot", 3 + prot)
-			setProperty("rangedprot", 0.3 + prot / 5)
-			setProperty("space_movespeed", 0.15 + prot / 5)
 
-	UpdateName()
-		if (src.material && renf)
-			name = "[renf]-reinforced [src.material] bespoke space suit"
-		else if (src.material)
-			name = " [src.material] bespoke space suit"
+	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
+		src.setMaterial(fabrMat)
+		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
+		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		setProperty("meleeprot", 3 + prot)
+		setProperty("rangedprot", 0.3 + prot / 5)
+		setProperty("space_movespeed", 0.15 + prot / 5)
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving

@@ -691,10 +691,16 @@
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
-/obj/machinery/networked/printer,
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Broken Printer";
+	true_name = "printer?";
+	desc = "It looks like it was never even plugged in. Did this ever work?!"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
@@ -1575,7 +1581,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/caution/west,
 /area/radiostation/podbay)
 "aeY" = (
@@ -1652,7 +1658,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -6356,7 +6362,7 @@
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{
@@ -13260,10 +13266,6 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "aRL" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 5
-	},
 /obj/machinery/light_switch/west{
 	dir = 4;
 	pixel_x = -22
@@ -19161,14 +19163,6 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bjz" = (
-/obj/mopbucket,
-/obj/item/mop,
-/obj/item/caution,
-/obj/submachine/chef_sink/chem_sink{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -5
-	},
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
 "bjA" = (
@@ -20355,12 +20349,6 @@
 /turf/space,
 /turf/space,
 /area/helldrone)
-"bwV" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "bAc" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20434,10 +20422,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttlebay,
 /area/buddyfactory)
-"cbM" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/industrial,
-/area/space)
 "cdo" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -20576,7 +20560,6 @@
 /area/helldrone)
 "dIz" = (
 /obj/item/device/radio,
-/obj/landmark/spawner/loot,
 /obj/item/device/radio,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/damaged3,
@@ -20616,6 +20599,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"ery" = (
+/obj/mopbucket,
+/obj/item/mop,
+/obj/item/caution,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "erR" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -21153,7 +21142,6 @@
 	name = "dirty bag of swedish fisk";
 	open = 1
 	},
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged2,
 /area/spyshack)
 "jmg" = (
@@ -21178,6 +21166,10 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
+"jsq" = (
+/obj/landmark/spawner/loot,
+/turf/space,
+/area/space)
 "jvm" = (
 /obj/decal/fakeobjects/airlock_broken,
 /turf/simulated/floor/black,
@@ -21219,7 +21211,6 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/landmark/spawner/loot,
 /turf/space,
 /area/abandonedship)
 "jLM" = (
@@ -21485,13 +21476,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/space)
-"lDv" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/industrial,
 /area/space)
 "lGA" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -22126,6 +22110,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"pfi" = (
+/obj/submachine/chef_sink/chem_sink{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/purple,
+/area/radiostation/engineering)
 "pfn" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -22177,7 +22170,6 @@
 /obj/item/fish/red_herring,
 /obj/item/reagent_containers/food/snacks/burger,
 /obj/decal/cleanable/dirt,
-/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "pBN" = (
@@ -22257,6 +22249,13 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
+"qdj" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "qdV" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
@@ -22839,7 +22838,7 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "tPA" = (
-/obj/landmark/spawner/loot,
+/obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "tRk" = (
@@ -22898,12 +22897,6 @@
 	},
 /turf/space,
 /area/space)
-"unw" = (
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/plating/damaged2,
-/area/evilreaver/storage/engineering{
-	name = "GLOMAR Salvager"
-	})
 "uqs" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -22942,7 +22935,7 @@
 /area/abandonedship)
 "uGl" = (
 /obj/machinery/light/small,
-/obj/landmark/spawner/loot,
+/obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "uGv" = (
@@ -22969,6 +22962,15 @@
 	icon_state = "floor4"
 	},
 /area/helldrone)
+"uLu" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/radiostation/bedroom)
 "uNg" = (
 /obj/item/clothing/head/helmet/space/donk,
 /turf/simulated/floor/white/grime,
@@ -26208,7 +26210,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jsq
 aaa
 aaa
 aaa
@@ -26512,7 +26514,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+jsq
 aaa
 aaa
 aaa
@@ -56108,7 +56110,7 @@ amm
 amx
 amE
 amX
-lDv
+and
 anj
 anu
 afR
@@ -56412,7 +56414,7 @@ amF
 amB
 anf
 ank
-cbM
+amB
 afR
 afR
 acS
@@ -72531,7 +72533,7 @@ aaa
 asf
 aIz
 aJN
-unw
+aKX
 aKx
 aKG
 aKW
@@ -72833,7 +72835,7 @@ aaa
 asf
 aIz
 oSn
-bwV
+aKx
 aKx
 aKx
 aKx
@@ -73135,7 +73137,7 @@ aaa
 aIz
 aIz
 aJN
-unw
+aKX
 aKx
 aKx
 aKx
@@ -79766,7 +79768,7 @@ aab
 aab
 aab
 paS
-paS
+aac
 aaA
 aab
 aac
@@ -80066,7 +80068,7 @@ aaa
 aaa
 aab
 aab
-paS
+aac
 aac
 aac
 aac
@@ -80368,7 +80370,7 @@ aaa
 aaa
 aab
 aab
-paS
+aac
 aap
 aav
 aap
@@ -80973,8 +80975,8 @@ aaa
 aaa
 aab
 aab
-paS
-paS
+aac
+aac
 aac
 aac
 aab
@@ -91047,8 +91049,8 @@ aTQ
 mOG
 aTQ
 aTQ
-tPA
-tPA
+bap
+aUe
 aUe
 tPA
 uGl
@@ -104422,13 +104424,13 @@ adY
 adY
 adY
 adO
-aeH
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oro
+aga
+aga
+aga
+aga
+boO
+bjA
 aaa
 aaa
 aaa
@@ -104724,13 +104726,13 @@ adZ
 aeA
 aeW
 adO
-oro
+akS
+asy
+pfi
+biR
 aga
-aga
-aga
-aga
-boO
-bjA
+bjl
+bjB
 aaa
 aaa
 aaa
@@ -105029,9 +105031,9 @@ aej
 akS
 asx
 bjz
-biR
+ery
 aga
-bjl
+bjw
 bjB
 aaa
 aaa
@@ -108653,9 +108655,9 @@ aej
 arr
 aGy
 aRL
-bja
+uLu
 agJ
-bjx
+bjw
 bjB
 aaa
 aaa
@@ -108952,13 +108954,13 @@ aes
 aeS
 afi
 adO
-dQS
+arr
+aGx
+qdj
+bja
 agJ
-agJ
-agJ
-agJ
-boP
-bjA
+bjx
+bjB
 aaa
 aaa
 aaa
@@ -109254,13 +109256,13 @@ aet
 aeT
 adY
 adO
-agV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dQS
+agJ
+agJ
+agJ
+agJ
+boP
+bjA
 aaa
 aaa
 aaa

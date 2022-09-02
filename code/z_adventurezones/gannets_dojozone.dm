@@ -283,7 +283,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || GET_DIST(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -477,7 +477,7 @@ Contents:
 			if(istype(O,/obj/item/unfinished_katana))
 				var/obj/item/unfinished_katana/K = O
 				K.temperature = lerp(K.temperature, src.temperature, 0.3)
-				if(K.temperature >= src.temperature * 0.90)
+				if(K.temperature >= src.temperature * 0.9)
 					effect.spark_up()
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
@@ -521,7 +521,7 @@ Contents:
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)

@@ -60,10 +60,10 @@
 		return
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
 				return
-			if (2.0)
+			if (2)
 				if(prob(25))
 					src.dispose()
 					return
@@ -71,7 +71,7 @@
 				src.welded=false
 				src.UpdateIcon()
 				return
-			if (3.0)
+			if (3)
 				if(prob(50) && !src.welded)
 					src.open=true
 					src.UpdateIcon()
@@ -83,7 +83,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/effects/mindkill.ogg", 50)
+			playsound(user, 'sound/effects/mindkill.ogg', 50)
 			user.take_brain_damage(69*420)
 		SPAWN(20 SECONDS)
 			if (user && !isdead(user))
@@ -436,7 +436,7 @@
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
 					clear_owner()
@@ -457,7 +457,7 @@
 						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
 						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					set_owner(user)
@@ -495,7 +495,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
@@ -693,14 +693,14 @@
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
 
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -730,7 +730,7 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
 			P.info = strip_html(html_decode(input.signal))
 			P.name = paper_name
@@ -745,7 +745,7 @@
 		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -764,7 +764,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",.proc/toggleThermal)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -787,7 +787,7 @@
 				return 0
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
-			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
 			var/saniStr = strip_html(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
@@ -877,7 +877,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -916,7 +916,7 @@
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
-				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
@@ -925,7 +925,7 @@
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -977,7 +977,7 @@
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
-		thr?.user = (owner || usr)
+		thr?.user = (owner)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -1832,13 +1832,13 @@
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
 			if(X == "command" && converted[X] == "text_message")
-				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
+				logTheThing(LOG_PDAMSG, usr, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1864,7 +1864,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
@@ -2311,7 +2311,7 @@
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
+		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
@@ -2333,7 +2333,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2616,12 +2616,12 @@
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
@@ -2726,7 +2726,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
-				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2764,7 +2764,7 @@
 
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
-			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [Gun] from [src] at [log_loc(src)].")
 			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
@@ -2783,7 +2783,7 @@
 		if(gun_fits)
 			if(!Gun)
 				boutput(user, "You put the [W] inside the [src].")
-				logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 				user.drop_item()
 				Gun = W
 				Gun.set_loc(src)
@@ -2815,10 +2815,10 @@
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No gun installed.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	update_icon()
@@ -2863,7 +2863,7 @@
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
 			UpdateIcon()
@@ -2916,7 +2916,7 @@
 
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
-			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [instrument] from [src] at [log_loc(src)].")
 			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
@@ -2957,7 +2957,7 @@
 
 		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
 			boutput(user, "You put [W] inside [src].")
-			logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1

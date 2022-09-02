@@ -64,14 +64,16 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONEY)
-						M.HealDamage("All", 1 * mult, 1 * mult)
-						if(probmult(15))
-							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				..()
+				if(M.mob_flags & IS_BONEY)
+					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
+					if(prob(15))
+						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -541,7 +543,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 200
-			alch_strength = 0.30
+			alch_strength = 0.3
 
 		fooddrink/alcoholic/snakebite
 			name = "Snakebite"
@@ -648,7 +650,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
-						logTheThing("combat", src, null, "was gibbed by the reagent [name].")
+						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -698,7 +700,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (probmult(15))
-					if (isrestrictedz(M.z))
+					var/turf/mob_turf = get_turf(M)
+					if (isrestrictedz(mob_turf?.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
@@ -711,7 +714,7 @@ datum
 						..()
 						return
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
-					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 					M.set_loc(pick(randomturfs))
 				..()
 				return
@@ -1126,7 +1129,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -2043,16 +2046,21 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M))
-						if(!M.wear_mask)
-							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-							if(prob(50))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-								M.take_eye_damage(1, 1)
-							M.change_eye_blurry(3)
-							M.changeStatus("stunned", 2 SECONDS)
-							M.change_misstep_chance(10)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))))
+							return
+					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
+						return
+					else
+						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							M.take_eye_damage(1, 1)
+						M.change_eye_blurry(3)
+						M.changeStatus("stunned", 2 SECONDS)
+						M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
@@ -2209,7 +2217,7 @@ datum
 
 				if(volume >= 5 && prob(10))
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2789,7 +2797,7 @@ datum
 
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/ketchup) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/ketchup,T)
 
 		fooddrink/mustard
@@ -3042,7 +3050,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
 					if (prob(10))
-						M.take_toxin_damage(rand(2.4) * mult)
+						M.take_toxin_damage(rand(2,4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatusMin("stunned", 4 SECONDS * mult)
@@ -3057,6 +3065,7 @@ datum
 			fluid_g = 220
 			fluid_b = 0
 			transparency = 225
+			overdose = 10
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 			hunger_value = 1
 			viscosity = 0.2
@@ -3065,12 +3074,13 @@ datum
 				if(!M) M = holder.my_atom
 				M.nutrition += 1 * mult
 
-				if(probmult(8))
-					M.emote("fart")
-
 				if(prob(3))
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(probmult(16))
+					M.emote("fart")
 
 		fooddrink/beff
 			name = "beff"
@@ -3195,7 +3205,7 @@ datum
 						boutput(M, "<span class='alert'>My goodness, that was tasty!</span>")
 					else
 						boutput(M, "<span class='alert'>A slice of pepperoni slaps you!</span>")
-						playsound(M.loc, "sound/impact_sounds/Generic_Slap_1.ogg", 50, 1)
+						playsound(M.loc, 'sound/impact_sounds/Generic_Slap_1.ogg', 50, 1)
 						M.TakeDamage("head", 1, 0, 0, DAMAGE_BLUNT)
 
 			reaction_turf(var/turf/T, var/volume)
@@ -3643,7 +3653,7 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
-					M.playsound_local(M, "sound/effects/bigwave.ogg", 50, 1)
+					M.playsound_local(M, 'sound/effects/bigwave.ogg', 50, 1)
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
 			on_remove()
@@ -3679,7 +3689,7 @@ datum
 					boutput(M, "<span class='alert'><B>Gotta get a grip!<B></span>")
 				if(probmult(10))
 					boutput(M, "<span class='alert'><B>I can only think of citrus!!<B></span>")
-				M.playsound_local(M, "sound/effects/heartbeat.ogg", 50, 1)
+				M.playsound_local(M, 'sound/effects/heartbeat.ogg', 50, 1)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -4119,7 +4129,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
-								logTheThing("combat", M, null, "was fire-gibbed by the reagent [name].")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 
@@ -4170,8 +4180,8 @@ datum
 					boutput(M, "<span class='alert'>Your body feels like it's being tickled from the inside out!</span>")
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
-					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
-					playsound(M.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+					M.visible_message("<span class='alert'>[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!</span>")
+					playsound(M.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
 					var/message = null
@@ -4410,6 +4420,66 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 3 * mult, flushed_reagents)
 				..()
+
+		fooddrink/iced/coconutmilkespresso
+			name = "iced coconut milk espresso"
+			id = "icedcoconutmilkespresso"
+			fluid_r = 177
+			fluid_g = 143
+			fluid_b = 106
+			transparency = 200
+			taste = list("sweet", "cold")
+			description = "A creamy iced espresso, mixed with coconut milk."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/pineapplematcha
+			name = "iced pineapple matcha"
+			id = "icedpineapplematcha"
+			fluid_r = 152
+			fluid_g = 184
+			fluid_b = 96
+			transparency = 200
+			taste = list("earthy")
+			description = "Tangy, yet refreshingly earthy."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/thaicoffee
+			name = "Thai iced coffee"
+			id = "thaiicedcoffee"
+			fluid_r = 218
+			fluid_g = 172
+			fluid_b = 140
+			transparency = 200
+			taste = list("bittersweet", "cold")
+			description = "A local favorite, now available on demand."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/pepperminthotchocolate
+			name = "peppermint hot chocolate"
+			id = "pepperminthotchocolate"
+			fluid_r = 147
+			fluid_g = 94
+			fluid_b = 43
+			transparency = 200
+			taste = list("minty", "chocolatey")
+			description = "Minty, creamy, and chocolatey; delicious!"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/mexicanhotchocolate
+			name = "Mexican hot chocolate"
+			id = "mexicanhotchocolate"
+			fluid_r = 76
+			fluid_g = 29
+			fluid_b = 3
+			transparency = 200
+			taste = list("spicy", "chocolatey")
+			description = "Hot! Yet, very tasty."
+			reagent_state = LIQUID
+			thirst_value = 0.75
 
 		fooddrink/pumpkinspicelatte
 			name = "pumpkin spice latte"

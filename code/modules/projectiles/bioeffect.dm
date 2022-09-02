@@ -12,11 +12,11 @@
 	//How many tiles till it starts to lose power
 	dissipation_delay = 10
 	//Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 	//name of the projectile setting, used when you change a guns setting
 	sname = "mutation beam"
 	//file location for the sound you want it to play
-	shot_sound = "sound/effects/splort.ogg"
+	shot_sound = 'sound/effects/splort.ogg'
 	//How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 	//What is our damage type

@@ -21,10 +21,10 @@
 	var/image/display_active = null
 	var/image/display_battery = null
 	var/image/display_panel = null
-	var/sound/sound_on = "sound/effects/shielddown.ogg"
-	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
-	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
+	var/sound/sound_on = 'sound/effects/shielddown.ogg'
+	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
+	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
@@ -68,11 +68,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				shield_off(1) //1 for failed
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if(PCEL && !connected && active)
 					src.PCEL.use(120 * src.range * (src.power_level * src.power_level))
 				else if(connected && active)
@@ -80,7 +80,7 @@
 				if(prob(50))
 					shield_off(1)
 				return
-			if(3.0)
+			if(3)
 				if(PCEL && !connected && active)
 					src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
 					return
@@ -254,7 +254,7 @@
 				src.anchored = !src.anchored
 				src.backup = 0
 				src.visible_message("<b>[user.name]</b> [src.connected ? "connects" : "disconnects"] [src.name] [src.connected ? "to" : "from"] the wire.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				boutput(user, "There is no cable to connect to.")
 
@@ -346,7 +346,7 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
 
 	attackby(obj/item/W, mob/user)
@@ -400,19 +400,19 @@
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					MS.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(120 * MS.range)
 					else if(MS.connected && MS.active)
 						MS.use_power(MS.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(60 * MS.range)
 					else if(MS.connected && MS.active)
@@ -443,7 +443,7 @@
 	var/isactive = TRUE
 	density = 0
 
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
 	var/update_tiles
@@ -576,19 +576,19 @@
 			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					ES.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(60 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(30 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)

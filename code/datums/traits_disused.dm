@@ -3,9 +3,8 @@
 
 /*
 /obj/trait/lizard
-	name = "Lizard (-1) \[Race\]"
 	desc = "You spawn as a lizard. Remember; you have no rights as a human if you choose this trait!"
-	cleanName = "Lizard"
+	name = "Lizard"
 	id = "lizard"
 	points = -1
 	isPositive = 1
@@ -19,8 +18,7 @@
 */
 
 /obj/trait/color_shift
-	name = "Color Shift (0)"
-	cleanName = "Color Shift"
+	name = "Color Shift"
 	desc = "You are more depressing on the outside but more colorful on the inside."
 	id = "color_shift"
 	unselectable = TRUE
@@ -39,8 +37,7 @@
 	unselectable = TRUE
 
 /obj/trait/phobia/space
-	name = "Spacephobia (+1) \[Phobia\]"
-	cleanName = "Spacephobia"
+	name = "Spacephobia"
 	desc = "Being in space scares you. A lot. While in space you might panic or faint."
 	id = "spacephobia"
 	points = 1
@@ -58,16 +55,14 @@
 // People use this to identify changelings and people wearing disguises and I can't be bothered
 // to rewrite a whole bunch of stuff for what is essentially something very specific and minor.
 /obj/trait/observant
-	name = "Observant (-1)"
-	cleanName = "Observant"
+	name = "Observant"
 	desc = "Examining people will show you their traits."
 	id = "observant"
 	points = -1
 	unselectable = 1
 
 /obj/trait/roboears
-	name = "Robotic ears (-4) \[Body\]"
-	cleanName = "Robotic ears"
+	name = "Robotic ears"
 	desc = "You can hear, understand and speak robotic languages."
 	id = "roboears"
 	category = "body"
@@ -95,8 +90,7 @@
 */
 
 /obj/trait/deathwish
-	name = "Death wish (+8) \[Stats\]"
-	cleanName = "Death wish"
+	name = "Death wish"
 	desc = "You take double damage from most things and have half your normal health."
 	id = "deathwish"
 	category = "stats"
@@ -117,8 +111,7 @@
 		return
 
 /obj/trait/glasscannon
-	name = "Glass cannon (-2) \[Stats\]"
-	cleanName = "Glass cannon"
+	name = "Glass cannon"
 	desc = "You have 1 stamina max. Attacks no longer cost you stamina and\nyou deal double the normal damage with most melee weapons."
 	id = "glasscannon"
 	category = "stats"
@@ -132,8 +125,7 @@
 		return
 
 /obj/trait/soggy
-	name = "Overly soggy (-1)"
-	cleanName = "Overly soggy"
+	name = "Overly soggy"
 	desc = "When you die you explode into gibs and drop everything you were carrying."
 	id = "soggy"
 	points = -1
@@ -141,15 +133,13 @@
 
 /obj/trait/reversal
 	name = "Damage Reversal"
-	cleanName = "Damage Reversal"
 	desc = "You are now healed by things that would otherwise cause brute, burn, toxin, or brain damage. On the flipside, you are harmed by medicines."
 	id = "reversal" //We can't have oxydamage in there, otherwise they'd immediately start suffocating.
 	points = -1
 	unselectable = 1
 
 /obj/trait/badgenes
-	name = "Bad Genes (+2) \[Genetics\]"
-	cleanName = "Bad Genes"
+	name = "Bad Genes"
 	desc = "You spawn with 2 random, permanent, bad mutations."
 	id = "badgenes"
 	points = 2
@@ -177,8 +167,7 @@
 		return
 
 /obj/trait/goodgenes
-	name = "Good Genes (-3) \[Genetics\]"
-	cleanName = "Good Genes"
+	name = "Good Genes"
 	desc = "You spawn with 2 random good mutations."
 	id = "goodgenes"
 	points = -3

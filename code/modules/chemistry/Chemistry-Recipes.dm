@@ -9,17 +9,21 @@ datum
 		var/list/inhibitors = list()
 		var/instant = 1
 #ifdef CHEM_REACTION_PRIORITIES
-		//lower priorities happen last
-		//higher priorities happen first
+		/// lower priorities happen last
+		/// higher priorities happen first
 		var/priority = 10
 #endif
 
-		var/min_temperature = -INFINITY		//Will not react if below this
-		var/required_temperature = -1 //Not used by default. -1 = not used. //Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
-		var/max_temperature = INFINITY //Will not react if above this
+		/// Will not react if below this
+		var/min_temperature = -INFINITY
+		/// Not used by default. -1 = not used.
+		/// Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
+		var/required_temperature = -1
+		/// Will not react if above this
+		var/max_temperature = INFINITY
 
-
-		var/reaction_speed = 5 // units produced per second
+		/// units produced per second
+		var/reaction_speed = 5
 		var/base_reaction_temp = T20C
 		var/reaction_temp_divider = 10
 
@@ -32,14 +36,9 @@ datum
 		var/mix_sound = 'sound/effects/bubbles.ogg'
 		var/drinkrecipe = 0
 		var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
+
 		///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 		var/hidden = FALSE
-
-
-#ifdef CHEM_REACTION_PRIORITIES
-		proc/operator<(var/datum/chemical_reaction/reaction)
-			return priority > reaction.priority
-#endif
 
 		proc/on_reaction(var/datum/reagents/holder, var/created_volume)
 			return
@@ -77,17 +76,17 @@ datum
 					holder.del_reagent("hydrogen")
 					holder.del_reagent("platinum")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -105,17 +104,17 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("propellant")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -135,17 +134,17 @@ datum
 					holder.del_reagent("phosphorus")
 					holder.del_reagent("potassium")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -163,17 +162,17 @@ datum
 					holder.del_reagent("lumen")
 					holder.del_reagent("smokepowder")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -191,17 +190,17 @@ datum
 					holder.del_reagent("fluorosurfactant")
 					holder.del_reagent("water")
 				var/location = get_turf(holder.my_atom)
-				playsound(location, "sound/weapons/flashbang.ogg", 25, 1)
+				playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
 				elecflash(location)
 				for (var/mob/living/M in all_viewers(5, location))
 					if (issilicon(M) || isintangible(M))
 						continue
 
-					var/dist = get_dist(M, location)
+					var/dist = GET_DIST(M, location)
 					M.apply_flash(60, 0, (3 - dist), 0, ((5 - dist) * 2), (2 - dist))
 
 				for (var/mob/living/silicon/M in all_viewers(world.view, location))
-					var/checkdist = get_dist(M, location)
+					var/checkdist = GET_DIST(M, location)
 
 					M.apply_flash(30, max(2 * (3 - checkdist), 0), max(2 * (5 - checkdist), 0))
 				return
@@ -1844,6 +1843,65 @@ datum
 					holder.del_reagent("blood")
 					holder.del_reagent("bloodc")
 
+		iced/coconutmilkespresso
+			name = "Iced Coconut Milk Espresso"
+			id = "icedcoconutmilkespresso"
+			result = "icedcoconutmilkespresso"
+			required_reagents = list("espresso" = 1, "ice" = 3, "coconut_milk" =2, "sugar" = 2)
+			result_amount = 8
+			mix_phrase = "The ice clinks against the container as you blend everything together."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/pineapplematcha
+			name = "Iced Pineapple Matcha"
+			id = "icedpineapplematcha"
+			result = "icedpineapplematcha"
+			required_reagents = list("matcha" = 1, "juice_pineapple" = 1, "coconut_milk" = 2, "ice" = 1)
+			result_amount = 5
+			mix_phrase = "The milk mixes with the matcha in a soothing green."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee
+			name = "Thai Iced Coffee"
+			id = "thaiicedcoffee"
+			result = "thaiicedcoffee"
+			required_reagents = list("coffee" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		iced/thaiicedcoffee/thaiicedcoffee2
+			id = "thaiicedcoffee2"
+			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
+			result_amount = 6
+
+		pepperminthotchocolate
+			name = "Peppermint Hot Chocolate"
+			id = "pepperminthotchocolate"
+			result = "pepperminthotchocolate"
+			required_reagents = list("chocolate" = 2, "mint" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "The mixture smells like a warm hug, or possibly toothpaste."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		pepperminthotchocolate/pepperminthotchocolate2
+			id = "pepperminthotchocolate2"
+			required_reagents =list("mint" = 1, "chocolate_milk" = 3)
+			result_amount = 4
+
+		mexicanhotchocolate
+			name = "Mexican Hot Chocolate"
+			id = "mexicanhotchocolate"
+			result = "mexicanhotchocolate"
+			required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
+			result_amount = 4
+			mix_phrase = "A spicy smell drifts up from the chocolate."
+
+		mexicanhotchocolate/mexicanhotchocolate2
+			id = "mexicanhotchocolate2"
+			required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
+			result_amount = 4
+
 		pumpkinspicelatte
 			name = "Pumpkin Spice Latte"
 			id = "pumpkinspicelatte"
@@ -2639,11 +2697,6 @@ datum
 					var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 					for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 						flashpowder_reaction(get_turf(pick(holder.covered_cache)), created_volume)
-
-
-
-
-// Don't forget to update Reagents-ExplosiveFire.dm too, we have duplicate code for sonic and flash powder there (Convair880).
 
 		sonic_powder
 			name = "Hootingium"
@@ -3793,7 +3846,7 @@ datum
 			// has to be <50C, as changeling blood boils off at that
 			required_temperature = T0C + 45
 			mix_phrase = "The reagents combine with an audible ho0t."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
 
 		hootagen_stable
 			name = "stable hootagen"
@@ -3802,7 +3855,7 @@ datum
 			required_reagents = list("sonicpowder" = 1, "egg" = 1, "bloodc" = 1, "strange_reagent" = 1, "sorium" = 1, "dna_mutagen" = 3)
 			result_amount = 3
 			mix_phrase = "The reagents combine with an audible hoot."
-			mix_sound = "sound/voice/animal/hoot.ogg"
+			mix_sound = 'sound/voice/animal/hoot.ogg'
 
 		colors
 			name = "colorful reagent"

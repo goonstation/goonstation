@@ -1,7 +1,7 @@
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
 	icon_state = "shuttle"
-	var/auth_need = 3.0
+	var/auth_need = 3
 	var/list/authorized = list(  )
 	desc = "A computer that controls the movement of the nearby shuttle."
 
@@ -170,7 +170,7 @@
 		if (choice == "Launch")
 			boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 			emergency_shuttle.settimeleft( 10 )
-			logTheThing("admin", user, null, "shortens Emergency Shuttle launch time to 10 seconds.")
+			logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
 	else
 		boutput(world, "<span class='notice'><B>Alert: Shuttle launch time shortened to 10 seconds!</B></span>")
 		emergency_shuttle.settimeleft( 10 )
@@ -579,7 +579,7 @@
 			for(var/x in end_location)
 				if(isliving(x) && !isintangible(x))
 					var/mob/living/M = x
-					logTheThing("combat", M, null, "was gibbed by an arriving shuttle at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by an arriving shuttle at [log_loc(M)].")
 					M.gib(1)
 				if(istype(x, /obj/storage))
 					var/obj/storage/S = x
@@ -629,7 +629,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
+					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 				SPAWN(5 SECONDS)
 					call_shuttle()
 
@@ -655,7 +655,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
-					logTheThing("combat", L, null, "was gibbed by an elevator at [log_loc(L)].")
+					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 		start_location.move_contents_to(end_location, /turf/simulated/floor/arctic_elevator_shaft)
 		location = 0
@@ -697,7 +697,7 @@
 				for(var/obj/machinery/computer/icebase_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
+					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 				SPAWN(5 SECONDS)
 					call_shuttle()
 
@@ -726,7 +726,7 @@
 		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
-					logTheThing("combat", L, null, "was gibbed by an elevator at [log_loc(L)].")
+					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 			bioele_accident()
 		start_location.move_contents_to(end_location, /turf/unsimulated/floor/setpieces/ancient_pit/shaft)
@@ -883,58 +883,58 @@ var/bombini_saved = 0
 				for(var/obj/machinery/computer/shuttle_bus/embedded/B in machine_registry[MACHINES_SHUTTLECOMPS])
 					T = get_turf(B)
 					SPAWN(1 DECI SECOND)
-						playsound(T, "sound/effects/ship_charge.ogg", 60, 1)
+						playsound(T, 'sound/effects/ship_charge.ogg', 60, 1)
 						sleep(3 SECONDS)
-						playsound(T, "sound/machines/weaponoverload.ogg", 60, 1)
+						playsound(T, 'sound/machines/weaponoverload.ogg', 60, 1)
 						src.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
 						sleep(5 SECONDS)
-						playsound(T, "sound/impact_sounds/Machinery_Break_1.ogg", 60, 1)
+						playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
 							shake_camera(M, 5, 8)
 							M.add_karma(0.1)
 
 						sleep(2 SECONDS)
-						playsound(T, "sound/effects/creaking_metal2.ogg", 70, 1)
+						playsound(T, 'sound/effects/creaking_metal2.ogg', 70, 1)
 						sleep(3 SECONDS)
 						src.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
-						playsound(T, "sound/machines/pod_alarm.ogg", 60, 1)
+						playsound(T, 'sound/machines/pod_alarm.ogg', 60, 1)
 						var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
 						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 						smoke.set_up(5, 0, smokyEngine)
 						smoke.start()
 						sleep(4 SECONDS)
-						playsound(T, "sound/machines/boost.ogg", 60, 1)
+						playsound(T, 'sound/machines/boost.ogg', 60, 1)
 						for(var/mob/living/M in range(src.loc, 10))
 							shake_camera(M, 10, 16)
 
 				T = get_turf(src)
 				SPAWN(25 SECONDS)
-					playsound(T, "sound/effects/flameswoosh.ogg", 70, 1)
+					playsound(T, 'sound/effects/flameswoosh.ogg', 70, 1)
 					call_shuttle()
 
 		else if (href_list["dine"])
 			if(!johnbus_active)
 				johnbus_destination = 0
 				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+				playsound(T, 'sound/machines/glitch1.ogg', 60, 1)
 
 		else if (href_list["owle"])
 			if(!johnbus_active)
 				johnbus_destination = 1
 				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+				playsound(T, 'sound/machines/glitch1.ogg', 60, 1)
 
 		else if (href_list["mine"])
 			if(!johnbus_active)
 				johnbus_destination = 2
 				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+				playsound(T, 'sound/machines/glitch1.ogg', 60, 1)
 
 		else if (href_list["fart"])
 			if(!johnbus_active)
 				johnbus_destination = 3
 				var/turf/T = get_turf(src)
-				playsound(T, "sound/machines/glitch1.ogg", 60, 1)
+				playsound(T, 'sound/machines/glitch1.ogg', 60, 1)
 
 
 		else if (href_list["close"])

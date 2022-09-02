@@ -8,7 +8,7 @@
 	cost = 30
 	dissipation_rate = 1
 	dissipation_delay = 20
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "claw"
 	shot_sound = 'sound/items/wirecutter.ogg'
 	shot_number = 1
@@ -52,7 +52,7 @@
 				flick("implode", animation)
 
 				H.unequip_all()
-				logTheThing("combat", H, null, "is transformed into a crab by the crab gun at [log_loc(H)].")
+				logTheThing(LOG_COMBAT, H, "is transformed into a crab by the crab gun at [log_loc(H)].")
 				var/mob/living/critter/C = H.make_critter(/mob/living/critter/small_animal/crab)
 				if (istype(C))
 

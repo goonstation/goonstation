@@ -356,12 +356,12 @@ var/zapLimiter = 0
 				if (0)
 					src.repair_status = 1
 					boutput(user, "You loosen the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (1)
 					src.repair_status = 0
 					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (2)
 					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
@@ -372,7 +372,7 @@ var/zapLimiter = 0
 				if (4)
 					src.repair_status = 0
 					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 					if (!src.terminal)
 						var/obj/machinery/power/terminal/newTerm = locate(/obj/machinery/power/terminal) in src.loc
@@ -544,12 +544,12 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	W.change_stack_amount(-4)
 	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status = 3
 
 /obj/machinery/power/apc/attack_ai(mob/user)
@@ -694,7 +694,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		equipment = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -717,7 +717,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		lighting = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -740,7 +740,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		environ = (val==1) ? 0 :val
 
 		UpdateIcon()
@@ -859,7 +859,7 @@ var/zapLimiter = 0
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 		message_admins("[key_name(usr)] overloaded the lights at [log_loc(src)].")
-		logTheThing("station", usr, null, "overloaded the lights at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "overloaded the lights at [log_loc(src)].")
 		src.overload_lighting()
 		return TRUE
 	else
@@ -1387,14 +1387,14 @@ var/zapLimiter = 0
 			qdel(src)
 	else
 		switch(severity)
-			if(1.0)
+			if(1)
 				set_broken()
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else return

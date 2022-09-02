@@ -28,8 +28,6 @@
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/C = owner.loc
 			loc_temp = C.air_contents.temperature
-		else if (istype(owner.loc, /obj/machinery/colosseum_putt))
-			loc_temp = T20C
 		else
 			loc_temp = environment.temperature
 

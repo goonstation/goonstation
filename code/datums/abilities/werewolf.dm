@@ -72,7 +72,7 @@
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
-			M.delStatus("n_radiation")
+			M.take_radiation_dose(-INFINITY)
 			M.delStatus("burning")
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
@@ -125,7 +125,7 @@
 
 			which_way = 1
 
-		logTheThing("combat", M, null, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
 		return
 
 // There used to be more stuff here, most of which was moved to limb datums.
@@ -312,15 +312,15 @@
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
 			SPAWN(0.1 SECONDS)
-				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
+				if (src) playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
 		if ("feast")
 			if (prob(60))
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
+				playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 
 			if (prob(40))
-				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			if (prob(30))
 				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
@@ -383,7 +383,7 @@
 
 		return
 
-//percent, give number 0.0-1.0
+//percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
 		A.cooldown = A.cooldown * (1-percent)

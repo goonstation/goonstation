@@ -99,7 +99,7 @@
 
 	proc/mindswap()
 		src.visible_message("<span class='alert'>The [src] activates!</span>")
-		playsound(src.loc,"sound/effects/ghost2.ogg", 100, 1)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
@@ -171,7 +171,7 @@
 		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
-			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
 
@@ -327,7 +327,7 @@
 		if (ishuman(user) && !user.stat)
 			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
 			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
 			if(M.mind)
@@ -496,7 +496,7 @@
 	anchored = 1
 	density = 0
 	pixel_y = 7
-	var/trigger_sound = "sound/effects/ExtremelyScaryGhostNoise.ogg"
+	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
 	var/trigger_duration = 118 // should be about as long as the sound clip
 	var/spam_flag = 0
 	var/spam_timer = 150
