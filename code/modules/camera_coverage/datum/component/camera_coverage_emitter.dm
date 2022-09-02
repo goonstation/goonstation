@@ -55,16 +55,6 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 
 	camera_coverage_controller.update_emitter(src)
 
-/**
- * Returns everything this emitter can see, including non-turfs.
- */
-/datum/component/camera_coverage_emitter/proc/get_coverage()
-	var/atom/parent_atom = src.parent
-	if (QDELETED(src) || !src.active)
-		return list()
-
-	return view(parent_atom.loc, src.range)
-
 /datum/component/camera_coverage_emitter/proc/set_active(active = TRUE)
 	src.active = active
 
