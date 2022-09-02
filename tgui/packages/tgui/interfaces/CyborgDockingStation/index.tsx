@@ -426,6 +426,7 @@ const DockingTabView = (props) => {
             <LabeledList.Item label="Wire Cabling">
               {data.wire}
             </LabeledList.Item>
+            <LabeledList.Item label="Self Service"><Button.Checkbox checked={data.allow_self_service} onClick={() => act("self-service")} /> { data.allow_self_service ? "Enabled" : "Disabled"}</LabeledList.Item>
           </LabeledList>
           <AvailableModulesDisplay modules={data.modules} act={act} />
           <AvailableUpgradesDisplay upgrades={data.upgrades} act={act} />

@@ -588,6 +588,10 @@
 
 	var/mob/user = ui.user
 
+	if (!src.allow_self_service && user == src.occupant)
+		boutput(user, "<span class='alert'>Self-service has been disabled at this station.</span>")
+		return
+
 	switch(action)
 		if("occupant-rename")
 			if (!isrobot(src.occupant))
@@ -772,7 +776,7 @@
 			if (src.reagents.get_reagent_amount("fuel") < 1)
 				boutput(user, "<span class='alert'>Not enough welding fuel for repairs.</span>")
 				return
-			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat )
+			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat)
 				return
 			var/usage = min(src.reagents.get_reagent_amount("fuel"), R.compborg_get_total_damage(1))
 			if (usage < 1)
@@ -790,7 +794,7 @@
 			if (src.cabling < 1)
 				boutput(user, "<span class='alert'>Not enough wiring for repairs.</span>")
 				return
-			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !isnum_safe(usage))
+			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat)
 				return
 			var/usage =  min(src.cabling, R.compborg_get_total_damage(2))
 			if (usage < 1)
