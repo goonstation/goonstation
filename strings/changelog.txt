@@ -1,5 +1,9 @@
 
 (t)thu sep 01 22
+(u)LeahTheTech
+(p)10577
+(e)|
+(+)Cows can now walk on mousetraps without hurting their hooves.
 (u)Emily & Walpvrgis
 (*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
 (u)CrystalClover
