@@ -61,7 +61,7 @@
 			clear_armer()
 
 		src.armed = !src.armed
-		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
 	proc/clear_armer()
@@ -304,7 +304,7 @@
 
 		else if (istype(AM, /obj/critter/mouse) && (src.armed))
 			var/obj/critter/mouse/M = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
 			src.armed = 0
 			clear_armer()
@@ -329,7 +329,7 @@
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
-					if (!H.shoes)
+					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						affecting = H.organs[pick("l_leg", "r_leg")]
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")
@@ -345,7 +345,7 @@
 			C.TakeDamage("All", 1)
 
 		if (target)
-			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		src.icon_state = "mousetrap"
 		src.armed = 0
 
@@ -388,7 +388,7 @@
 			if (src.butt.sound_fart)
 				playsound(target, src.butt.sound_fart, 50)
 			else
-				playsound(target, "sound/voice/farts/poo2.ogg", 50)
+				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
 		else if (src.buttbomb)
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")

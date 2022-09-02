@@ -383,7 +383,7 @@
 	user.remove_item(W)
 	qdel(W)
 	sleep(1 SECOND)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_2.ogg", 70, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 70, 1)
 	sleep(0.5 SECONDS)
 	if(trader)
 		trader.donate(user, gained_resources)

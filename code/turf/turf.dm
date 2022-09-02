@@ -650,7 +650,7 @@ proc/generate_space_color()
 	//The following is required for when turfs change opacity during replace. Otherwise nearby lights will not be applying to the correct set of tiles.
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
 	if (new_turf.opacity != old_opacity)
-		new_turf.opacity = old_opacity
+		new_turf.set_opacity(old_opacity)
 		new_turf.RL_SetOpacity(!new_turf.opacity)
 
 
@@ -1026,7 +1026,7 @@ proc/generate_space_color()
 	var/obj/item/rods/R = C
 	if (istype(R) && R.change_stack_amount(-1))
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		ReplaceWithLattice()
 		if (R.material)
 			src.setMaterial(C.material)
@@ -1038,7 +1038,7 @@ proc/generate_space_color()
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in src)
 				qdel(L)
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -1101,25 +1101,25 @@ proc/generate_space_color()
 /turf/unsimulated/wall/bombvr/ex_act(severity)
 	switch(severity)
 		if(1)
-			opacity = 0
+			set_opacity(0)
 			set_density(0)
 			src.icon_state = "vrspace"
 		if(2)
 			switch(pick(1;75,2))
 				if(1)
-					opacity = 0
+					set_opacity(0)
 					set_density(0)
 					src.icon_state = "vrspace"
 				if(2)
 					if(prob(80))
-						opacity = 0
+						set_opacity(0)
 						set_density(0)
 						src.icon_state = "vrplating"
 
 		if(3)
 			if (prob(50))
 				src.icon_state = "vrwallbroken"
-				opacity = 0
+				set_opacity(0)
 	return
 
 
