@@ -3175,21 +3175,10 @@
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
-		if(isliving(src))
-			var/mob/living/lp_owner = src
-			if(!lp_owner.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
-				return
-		else
-			return //only /mob/living can actually process radiation properly, so any other mob types will just have to use their own radiation logic on their dose
-
-		if(radres_mult*Sv > 0.2 && !internal)
-			src.TakeDamage("All",0,20*clamp((radres_mult*Sv)/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
-			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
-				src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
-		else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
-			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
+		. = radres_mult*Sv
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+		. = Sv
 	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
