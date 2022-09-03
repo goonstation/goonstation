@@ -29090,35 +29090,11 @@
 /obj/storage/crate/rcd,
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
-"bqZ" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/turf/simulated/floor/bot,
-/area/station/ai_monitored/storage/eva)
 "bra" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
-/area/station/ai_monitored/storage/eva)
-"brb" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "brc" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -29981,19 +29957,6 @@
 	dir = 1
 	},
 /area/station/ai_monitored/storage/eva)
-"bsP" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/bot,
-/area/station/ai_monitored/storage/eva)
 "bsQ" = (
 /obj/disposalpipe/junction{
 	dir = 4;
@@ -30838,19 +30801,6 @@
 /area/station/ai_monitored/storage/eva)
 "buG" = (
 /turf/simulated/floor,
-/area/station/ai_monitored/storage/eva)
-"buH" = (
-/obj/rack,
-/obj/item/clothing/suit/space,
-/obj/item/clothing/head/helmet/space,
-/obj/item/clothing/mask/breath,
-/obj/machinery/door_control{
-	id = "eva";
-	name = "EVA Secure Shutters";
-	pixel_x = 28
-	},
-/obj/item/tank/jetpack/micro,
-/turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
 "buI" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
@@ -51640,26 +51590,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"cmL" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "scienceteleporter";
-	name = "Pad Shutters";
-	panel_open = 1
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Teleporter Pad";
-	req_access_txt = "87"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "cmM" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/telepad,
@@ -54439,23 +54369,6 @@
 	dir = 5
 	},
 /area/station/science/lobby)
-"ctj" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Science Teleporter";
-	req_access_txt = "87"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
-/area/station/science/teleporter)
 "ctk" = (
 /obj/cable{
 	d1 = 4;
@@ -58924,20 +58837,6 @@
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /turf/simulated/floor/caution/south,
 /area/station/science/lobby)
-"cDr" = (
-/obj/item/device/radio/intercom/science,
-/obj/stool/chair,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26;
-	pixel_y = -1
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/purple/side{
-	dir = 9
-	},
-/area/station/medical/medbay/lobby)
 "cDs" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side{
@@ -59607,18 +59506,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
-"cFe" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Research Sector";
-	req_access_txt = "85"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/purple,
-/area/station/science/lobby)
 "cFf" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -59630,18 +59517,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
-/area/station/science/lobby)
-"cFh" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Research Sector";
-	req_access_txt = "85"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/purple,
 /area/station/science/lobby)
 "cFi" = (
 /obj/disposalpipe/junction{
@@ -60210,21 +60085,6 @@
 	dir = 8
 	},
 /area/station/science/lobby)
-"cGx" = (
-/obj/shrub,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
-/turf/simulated/floor/purple/side{
-	dir = 10
-	},
-/area/station/medical/medbay/lobby)
 "cGy" = (
 /turf/simulated/floor/purple/side,
 /area/station/medical/medbay/lobby)
@@ -61308,25 +61168,6 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"cJd" = (
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/decal/poster/wallsign/poster_ptoe{
-	pixel_y = 28
-	},
-/obj/storage/crate{
-	desc = "Wow! Crate may or may not still contain bottles.";
-	name = "Bottles in a Crate"
-	},
-/turf/simulated/floor/purple,
-/area/station/science/chemistry)
 "cJe" = (
 /obj/stool/chair/office{
 	dir = 4
@@ -62074,13 +61915,6 @@
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
-/area/station/science/chemistry)
-"cKO" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 8
-	},
-/turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cKP" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -63015,16 +62849,6 @@
 /obj/machinery/launcher_loader/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"cNh" = (
-/obj/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/device/gps,
-/obj/item/storage/belt/mining,
-/turf/simulated/floor/delivery,
-/area/station/mining/staff_room)
 "cNi" = (
 /obj/cable{
 	d1 = 1;
@@ -63866,16 +63690,6 @@
 /obj/machinery/disposal/mail/small/autoname/research/chemistry/west,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"cPf" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "cPg" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -65723,21 +65537,6 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
-	},
-/turf/simulated/floor/engine{
-	icon_state = "engine_caution_south"
-	},
-/area/station/mining/staff_room)
-"cTd" = (
-/obj/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/device/gps,
-/obj/item/storage/belt/mining,
-/obj/disposalpipe/segment/mineral{
-	dir = 4
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_south"
@@ -68429,20 +68228,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"cYL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Artifact Lab";
-	req_access_txt = "86"
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/purple,
-/area/station/science/artifact)
 "cYM" = (
 /obj/cable{
 	d1 = 4;
@@ -76054,6 +75839,24 @@
 	icon_state = "fblue3"
 	},
 /area/station/medical/head)
+"eoN" = (
+/obj/item/device/radio/intercom/science,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment,
+/obj/shrub,
+/obj/landmark{
+	icon_state = "kudzu-start";
+	name = "kudzustart"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/medical/medbay/lobby)
 "etE" = (
 /obj/machinery/sim/vr_bed{
 	dir = 4;
@@ -76266,6 +76069,23 @@
 	icon_state = "engine_caution_north"
 	},
 /area/station/mining/staff_room)
+"fGj" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Science Teleporter";
+	req_access_txt = "87"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/delivery,
+/area/station/science/teleporter)
 "fHh" = (
 /obj/machinery/light_switch/west,
 /obj/machinery/light{
@@ -76369,6 +76189,18 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/arrival/station)
+"gqC" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Research Sector";
+	req_access_txt = "85"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "gtQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -76449,6 +76281,20 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/security/checkpoint/podbay)
+"gTA" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Artifact Lab";
+	req_access_txt = "86"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/purple,
+/area/station/science/artifact)
 "gTO" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/light{
@@ -76571,6 +76417,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"hCN" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/computer/chem_requester/science{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/station/medical/medbay/lobby)
 "hEd" = (
 /obj/machinery/power/tracker/east,
 /obj/cable{
@@ -76842,6 +76701,19 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"iuC" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/machinery/door_control{
+	id = "eva";
+	name = "EVA Secure Shutters";
+	pixel_x = 28
+	},
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/bot,
+/area/station/ai_monitored/storage/eva)
 "izF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -77332,6 +77204,21 @@
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
+"kMs" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/device/gps,
+/obj/item/storage/belt/mining,
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_south"
+	},
+/area/station/mining/staff_room)
 "kOo" = (
 /obj/machinery/shuttle/engine/heater/seaheater_left{
 	pixel_y = -14;
@@ -77423,6 +77310,19 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/hangar/main)
+"liV" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "lka" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -77683,6 +77583,18 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
+"mde" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Research Sector";
+	req_access_txt = "85"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/purple,
+/area/station/science/lobby)
 "mey" = (
 /obj/machinery/light/runway_light/delay3,
 /obj/lattice{
@@ -77996,6 +77908,26 @@
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
 	})
+"nvi" = (
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/storage/crate{
+	desc = "Wow! Crate may or may not still contain bottles.";
+	name = "Bottles in a Crate"
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "nCq" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
@@ -78126,6 +78058,13 @@
 	dir = 8
 	},
 /area/shuttle/research/outpost)
+"ois" = (
+/obj/decal/poster/wallsign/poster_ptoe{
+	pixel_y = 28
+	},
+/obj/machinery/computer/chem_request_receiver,
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "oje" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
@@ -78274,6 +78213,14 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"oPZ" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/bot,
+/area/station/ai_monitored/storage/eva)
 "oQS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_caution{
@@ -78422,6 +78369,16 @@
 	icon_state = "blue2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"pMU" = (
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/device/gps,
+/obj/item/storage/belt/mining,
+/turf/simulated/floor/delivery,
+/area/station/mining/staff_room)
 "pPS" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -78480,6 +78437,26 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"qkC" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "scienceteleporter";
+	name = "Pad Shutters";
+	panel_open = 1
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Teleporter Pad";
+	req_access_txt = "87"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "qlm" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -78679,6 +78656,22 @@
 	icon_state = "blue1"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"raS" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/bot,
+/area/station/ai_monitored/storage/eva)
 "rbn" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -78760,6 +78753,19 @@
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
 /area/space)
+"rNR" = (
+/obj/rack,
+/obj/item/clothing/suit/space,
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/bot,
+/area/station/ai_monitored/storage/eva)
 "rOo" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
@@ -108146,7 +108152,7 @@ cTA
 cVb
 cQu
 cTD
-cYL
+gTA
 cTD
 cTD
 cTD
@@ -108434,7 +108440,7 @@ cUS
 cAp
 cBW
 cDo
-cFe
+mde
 cBW
 cHW
 cIY
@@ -109634,7 +109640,7 @@ cjw
 cjw
 cjw
 cjw
-ctj
+fGj
 cuH
 cvY
 cuH
@@ -109642,7 +109648,7 @@ cyY
 cyY
 cuH
 cDo
-cFh
+gqC
 cBW
 cHW
 cJc
@@ -109943,11 +109949,11 @@ cuI
 cyZ
 cAs
 cuI
-cDr
+eoN
 cFi
-cGx
+hCN
 cHW
-cJd
+ois
 cKL
 cMn
 cNG
@@ -110552,7 +110558,7 @@ clg
 cGz
 cHW
 cJf
-cKO
+nvi
 cMp
 cNI
 cPe
@@ -111159,7 +111165,7 @@ cJg
 cKP
 cMr
 cNJ
-cPf
+liV
 cQA
 cSn
 cTG
@@ -112046,7 +112052,7 @@ chg
 cij
 cjw
 ckZ
-cmL
+qkC
 ckZ
 cjw
 crX
@@ -136525,7 +136531,7 @@ cHB
 cIG
 cKf
 cLJ
-cNh
+pMU
 cOz
 cIG
 cRF
@@ -136831,7 +136837,7 @@ cLP
 cOA
 cQa
 cRI
-cTd
+kMs
 cUL
 aaF
 cLy
@@ -137133,7 +137139,7 @@ cLP
 cLP
 exg
 fFb
-cTd
+kMs
 cUL
 aaF
 cLy
@@ -138337,7 +138343,7 @@ cHC
 cII
 cKl
 cLM
-cNh
+pMU
 cOC
 cIG
 cRJ
@@ -142812,7 +142818,7 @@ bkK
 bmj
 bnK
 bjq
-bqZ
+oPZ
 bsN
 buG
 bwp
@@ -143114,7 +143120,7 @@ bhR
 bhR
 bjj
 bjq
-bqZ
+oPZ
 bsN
 gGV
 bwq
@@ -144020,9 +144026,9 @@ bkN
 bmm
 bkN
 bjq
-brb
-bsP
-buH
+raS
+rNR
+iuC
 bws
 byu
 bzZ
