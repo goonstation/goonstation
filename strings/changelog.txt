@@ -1,4 +1,17 @@
 
+(t)fri sep 02 22
+(u)Ikea
+(p)10405
+(e)|
+(+)You now have to be able to see the singulo in order to get irradiated by the singulo.
+(u)NightmarechaMillian
+(p)10568
+(e)|
+(+)Drinking glasses now have a 33% chance to break when shot at - spectate a bar fight today!
+(u)LeahTheTech
+(p)10563
+(e)|
+(+)The nuke ops combat engineer battle wrench now hits a lot harder.
 (t)thu sep 01 22
 (u)LeahTheTech
 (p)10577
