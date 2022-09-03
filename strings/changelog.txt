@@ -1,5 +1,7 @@
 
 (t)sat sep 03 22
+(u)Emily
+(*)New Chicken Grenade sprite by Walpvrgis!
 (u)LeahTheTech
 (p)10517
 (e)|
