@@ -1,4 +1,9 @@
 
+(t)sat sep 03 22
+(u)Wisemonster
+(p)10557
+(e)|
+(+)The detomax bomb program has be renamed to self-destruct.
 (t)fri sep 02 22
 (u)Ikea
 (p)10405
