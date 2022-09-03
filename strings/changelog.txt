@@ -13,6 +13,7 @@
 (e)|
 (*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
 (u)Emily
+(*)Floating Chat for Ghosts! OooOOooO! Yeah this will probably be buggy.
 (*)New Chicken Grenade sprite by Walpvrgis!
 (*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
 (+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
