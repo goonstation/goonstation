@@ -240,16 +240,16 @@
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = src.atmos_drain_rate * average_volatility
+			payload.carbon_dioxide = src.atmos_drain_rate * average_volatility * src.output_multiplier
 			payload.temperature = T20C
 			T.assume_air(payload)
 
 		if (src.inlet_tank)
-			src.inlet_tank.air_contents.remove(src.atmos_drain_rate * average_volatility)
+			src.inlet_tank.air_contents.remove(src.atmos_drain_rate * average_volatility * src.output_multiplier)
 		else
-			T.air.remove(src.atmos_drain_rate * average_volatility)
+			T.air.remove(src.atmos_drain_rate * average_volatility * src.output_multiplier)
 
-		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate)
+		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate * src.output_multiplier)
 
 		src.UpdateIcon()
 		src.updateDialog()
