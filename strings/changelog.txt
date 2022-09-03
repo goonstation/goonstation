@@ -1,5 +1,9 @@
 
 (t)sat sep 03 22
+(u)TheTrueMunchkin
+(p)10561
+(e)|
+(+)Artist is now a playable gimmick job. Go paint your dreams!
 (u)Wisemonster
 (p)10557
 (e)|
