@@ -96,21 +96,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/mechanics/clonepod
 	name = "cloning pod"
-	item_amounts = list(6,5,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
-	item_amounts = list(3,3,4)
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
-	item_amounts = list(5,6,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
