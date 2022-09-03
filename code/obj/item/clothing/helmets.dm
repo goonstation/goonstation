@@ -309,6 +309,11 @@
 		seal_hair = 0
 		see_face = 1
 		team_num = TEAM_SYNDICATE
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
+
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -326,6 +331,10 @@
 		desc = "A modified combat helmet for syndicate operative specialists."
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
 
 		infiltrator
 			name = "specialist combat helmet"
@@ -420,7 +429,6 @@
 				..()
 				setProperty("meleeprot_head", 6)
 				setProperty("rangedprot", 1)
-				setProperty("exploprot", 10)
 				setProperty("disorient_resist_eye", 50)
 				setProperty("disorient_resist_ear", 50)
 				setProperty("space_movespeed", 0.3)
