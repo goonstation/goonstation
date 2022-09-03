@@ -691,8 +691,7 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
-	name = "Pad Shutters";
-	p_open = 1
+	name = "Pad Shutters"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black,
@@ -4651,8 +4650,7 @@
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
-	name = "Pad Shutters";
-	p_open = 1
+	name = "Pad Shutters"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -11156,8 +11154,7 @@
 	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /obj/machinery/cashreg{
 	pixel_x = -6
@@ -21183,8 +21180,7 @@
 	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
@@ -23003,8 +22999,7 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
-	name = "Pad Shutters";
-	p_open = 1
+	name = "Pad Shutters"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/purpleblack,
@@ -39039,8 +39034,7 @@
 	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -39456,8 +39450,7 @@
 	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
@@ -39681,8 +39674,7 @@
 	id = "kitchen";
 	layer = 4;
 	name = "Kitchen Shutter";
-	opacity = 0;
-	p_open = 1
+	opacity = 0
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
