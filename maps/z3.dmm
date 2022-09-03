@@ -1581,7 +1581,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /turf/simulated/floor/caution/west,
 /area/radiostation/podbay)
 "aeY" = (
@@ -1658,7 +1658,7 @@
 /obj/item/clothing/suit/space,
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -6362,7 +6362,7 @@
 	desc = "Looks pretty old.";
 	name = "cosmonaut suit"
 	},
-/obj/item/tank/jetpack,
+/obj/item/tank/jetpack/micro,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/helmet/space/soviet,
 /turf/simulated/floor/shuttlebay{

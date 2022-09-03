@@ -488,11 +488,11 @@
 								qdel(C)
 							else
 								qdel(C)
-							playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+							playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 							src.reagents.add_reagent("blood", 120)
 							SPAWN(2.5 SECONDS)
 								if(src)
-									playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+									playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 							return
 						else
 							user.show_text("You were interrupted!", "red")
@@ -522,11 +522,11 @@
 			// These allow you to unanchor the plantpots to move them around, or re-anchor them.
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 0
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				src.anchored = 1
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
@@ -652,7 +652,7 @@
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!(user in src.contributors))
 					src.contributors += user
@@ -778,24 +778,27 @@
 
 			if(growing.growthmode == "weed")
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
-					src.growth = 0
-					src.reagents.clear_reagents()
-					// The idea here is you gotta use weedkiller or something else to get rid of the
-					// weeds since you can't just clear them out by hand.
+					if(!QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
+						src.growth = 0
+						src.reagents.clear_reagents()
+						// The idea here is you gotta use weedkiller or something else to get rid of the
+						// weeds since you can't just clear them out by hand.
 			else
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					src.reagents.clear_reagents()
-					logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
-					HYPdestroyplant()
+					if(!QDELETED(current) && !QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						src.reagents.clear_reagents()
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-				src.reagents.clear_reagents()
-				UpdateIcon()
-				update_name()
+				if(!QDELETED(src))
+					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+					src.reagents.clear_reagents()
+					UpdateIcon()
+					update_name()
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
@@ -1869,7 +1872,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 			else
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !src.anchored
 
 /obj/machinery/hydro_mister
@@ -1915,7 +1918,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				return
 			else
 				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -1939,7 +1942,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 				src.visible_message("\The [src] goes quiet.")
 
 		src.icon_state = "fogmachine[src.active]"
-		playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	is_open_container()
 		return 1 // :I

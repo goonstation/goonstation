@@ -87,7 +87,7 @@ var/global/obj/flashDummy
 	if (!flashDummy)
 		flashDummy = new /obj(null)
 		flashDummy.set_density(0)
-		flashDummy.opacity = 0
+		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
 		flashDummy.mouse_opacity = 0
 	return flashDummy
@@ -95,7 +95,7 @@ var/global/obj/flashDummy
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage, var/volume = 30)
 	var/obj/O = getFlashDummy()
 	O.set_loc(target)
-	playsound(target, "sound/effects/elec_bigzap.ogg", volume, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', volume, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -135,7 +135,7 @@ var/global/obj/flashDummy
 					target_r = L
 					continue
 
-	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -396,39 +396,6 @@ proc/get_angle(atom/a, atom/b)
 		t = "[t] "
 	. = t
 
-/proc/sortList(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	. = mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
-
-/proc/sortNames(var/list/L)
-	var/list/Q = new()
-	for(var/atom/x in L)
-		Q[x.name] = x
-	. = sortList(Q)
-
-/proc/mergeLists(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	. = list()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			var/key = R[Ri]
-			var/ass = !isnum(key) ? R[key] : null //Associative lists. (also hurf durf)
-			. += R[Ri++]
-			if(ass) .[key] = ass
-		else
-			var/key = L[Li]
-			var/ass = !isnum(key) ? L[key] : null //Associative lists. (also hurf durf)
-			. += L[Li++]
-			if(ass) .[key] = ass
-
-	if(Li <= L.len)
-		. += L.Copy(Li, 0)
-	else
-		. += R.Copy(Ri, 0)
-
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
 		separator = "\n"
@@ -479,29 +446,6 @@ proc/get_angle(atom/a, atom/b)
 		message = copytext(message, 2)
 
 	return list(prefix, message)
-
-/**
-	* Given a list, returns a text string representation of the list's contents.
-	*/
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = length(input)
-	if (!total)
-		return "[nothing_text]"
-	else if (total == 1)
-		return "[input[1]]"
-	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
-	else
-		var/output = ""
-		var/index = 1
-		while (index < total)
-			if (index == total - 1)
-				comma_text = final_comma_text
-
-			output += "[input[index]][comma_text]"
-			index++
-
-		return "[output][and_text][input[index]]"
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -1099,7 +1043,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			if(client)
+				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
@@ -1863,7 +1808,7 @@ proc/countJob(rank)
 					continue
 
 				SPAWN(0) // Don't lock up the entire proc.
-					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
+					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
 					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
 					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)

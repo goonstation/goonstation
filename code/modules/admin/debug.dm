@@ -563,7 +563,7 @@ var/global/debug_messages = 0
 	for (var/V in prefs.vars)
 		names += V
 
-	names = sortList(names)
+	sortList(names, /proc/cmp_text_asc)
 
 	for (var/V in names)
 		body += debug_variable(V, prefs.vars[V], 0)
@@ -608,7 +608,7 @@ body
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Profiling Scenario"
 
-	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza")
+	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear")
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
@@ -649,6 +649,41 @@ body
 				for(var/obj/brighter in brighters)
 					brighter.set_loc(locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION))
 				sleep(0.2 SECONDS)
+		if ("Monkey Business")
+			var/list/station_areas = get_accessible_station_areas()
+			var/turf/location
+			for(var/i in 1 to 100)
+				LAGCHECK(LAG_LOW)
+				if(prob(25))
+					var/list/turfs = get_area_turfs(station_areas[pick(station_areas)],TRUE)
+					if(!length(turfs)) continue
+					location = pick(turfs)
+				else
+					var/job = pick(job_start_locations)
+					location = pick(job_start_locations[job])
+				var/mob/living/carbon/human/npc/monkey/M = new /mob/living/carbon/human/npc/monkey(location)
+				if(prob(10))
+					var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(M)
+					implant.implanted(M, M)
+				M.ai_offhand_pickup_chance = rand(20,80)
+				M.ai_poke_thing_chance = rand(20,50)
+		if ("Monkey Chemistry")
+			while(TRUE)
+				var/mob/M = pick(by_type[/mob/living/carbon/human/npc/monkey])
+				var/reagent_id = pick(reagents_cache)
+				M.reagents.add_reagent(reagent_id, rand(1,10))
+				sleep(0.2 SECONDS)
+		if ("Monkey Gear")
+			var/obj/item/I
+			for_by_tcl(monkey, /mob/living/carbon/human/npc/monkey)
+				I = pick(concrete_typesof(/obj/item))
+				new I(get_turf(monkey))
+			while(TRUE)
+				var/mob/M = pick(by_type[/mob/living/carbon/human/npc/monkey])
+				I = pick(concrete_typesof(/obj/item))
+				new I(get_turf(M))
+				sleep(1 SECONDS)
+
 /*
 /client/proc/icon_print_test()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

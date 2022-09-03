@@ -107,7 +107,7 @@
 		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
-			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key

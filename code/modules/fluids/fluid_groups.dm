@@ -390,6 +390,7 @@
 		var/reagents = 0
 
 		for(var/reagent_id in src.reagents.reagent_list)
+			if (QDELETED(src.reagents)) return
 			var/datum/reagent/current_reagent = src.reagents.reagent_list[reagent_id]
 
 			if (isnull(current_reagent))
@@ -470,6 +471,7 @@
 				break
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/datum/color/last_color = src.average_color
 		src.average_color = src.reagents?.get_average_color()
@@ -485,6 +487,7 @@
 			return 1
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)

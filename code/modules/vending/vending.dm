@@ -479,7 +479,7 @@
 			src.generate_HTML(1)
 
 			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
-			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(W)
 			qdel(W)
 			return
@@ -489,7 +489,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
@@ -802,7 +802,7 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
-	playsound(src.loc, "sound/machines/vending_crash.ogg", 50, 0)
+	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
@@ -1767,7 +1767,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		else if (state == "BOARDINSTALLED")
 			var/obj/item/machineboard/vending/V = target
 			vendingtype = V.machinepath
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
 			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
@@ -1776,7 +1776,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			targetcoil.use(5)
 			wiresinstalled = TRUE
 			icon_state = "standard-frame-wired"
@@ -1784,7 +1784,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			S.change_stack_amount(-2)
 			glassed = TRUE
 			icon_state = "standard-frame-glassed"
@@ -1794,7 +1794,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 			A.amount = 2
 			glassed = FALSE
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
 			boutput(user, "<span class='notice'>You remove the glass panel.</span>")
@@ -1806,7 +1806,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			E.set_loc(src.loc)
 			boardinstalled = FALSE
 		else if (state == "WIRESREMOVED")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
@@ -1831,11 +1831,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	attackby(obj/item/target, mob/user)
 		if (iswrenchingtool(target))
 			if (!wrenched)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("WRENCHED", user), target.icon, target.icon_state, null, null)
 			else if (!boardinstalled && wrenched)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/machineboard/vending))
@@ -1891,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
+	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
@@ -2654,11 +2655,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	"Style over substance.")
 
 	prevend_effect()
-		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 		return
 
 	postvend_effect()
-		playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		return
 
 	create_products()

@@ -44,7 +44,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		if (2)
 			//activate
 			if (src.working) return
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.toggleActivate(user)
 
 /obj/machinery/shipalert/attackby(obj/item/W, mob/user)
@@ -56,7 +56,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			//break glass
 			var/area/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
-			playsound(T, pick("sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Glass_Shatter_2.ogg","sound/impact_sounds/Glass_Shatter_3.ogg"), 100, 1)
+			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
 			src.usageState = 2

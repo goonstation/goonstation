@@ -300,10 +300,10 @@
 
 	flick("firebot-c", src)
 	if (src.setup_party)
-		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
+		playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src.loc, 'sound/effects/spray.ogg', 30, 1, -3)
 
 	for(var/a in 0 to 5)
 		var/obj/effects/water/W = new /obj/effects/water
@@ -363,7 +363,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -387,8 +387,9 @@
 	src.oldtarget = null
 	src.oldloc = null
 	src.path = null
-	src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
-	src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
+	if(src.cooldowns)
+		src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
+		src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
 	src.icon_state = "firebot[src.on]"
 	src.updateUsrDialog()
 	return

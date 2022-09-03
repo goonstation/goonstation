@@ -122,7 +122,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		boutput(world, "<B>Have fun and RP!</B>")
 
 		#else
-		var/modes = sortList(config.get_used_mode_names())
+		var/modes = sortList(config.get_used_mode_names(), /proc/cmp_text_asc)
 		boutput(world, "<B>The current game mode is a secret!</B>")
 		boutput(world, "<B>Possibilities:</B> [english_list(modes)]")
 

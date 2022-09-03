@@ -92,7 +92,7 @@
 		src.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, "sound/weapons/scope.ogg", 50, 1)
+		playsound(src, 'sound/weapons/scope.ogg', 50, 1)
 		break
 
 /obj/item/device/laser_designator/syndicate
@@ -131,7 +131,7 @@
 
 		if(!src.linked_gun)
 			boutput(user, "<span class='alert'>The [src] makes a grumpy beep. It seems there's no artillery guns in position currently.</span>")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			return FALSE
 
 		return src.airstrike(target, params, user, reach)
@@ -202,8 +202,8 @@
 		while(sound_offset_length > 0)
 			sound_turf = get_step(src, sound_offset_dir)
 			sound_offset_length--
-		playsound(user, "sound/machines/whistlebeep.ogg", 50, 1)
-		playsound(sound_turf, "sound/weapons/energy/howitzer_firing.ogg", 50, 1)
+		playsound(user, 'sound/machines/whistlebeep.ogg', 50, 1)
+		playsound(sound_turf, 'sound/weapons/energy/howitzer_firing.ogg', 50, 1)
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
 		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 5 seconds.","Central Command Alert")
@@ -217,7 +217,7 @@
 			flick("152mm-flash", animation)
 			sleep(1.2 SECONDS)
 			qdel(animation)
-		playsound(sound_turf, "sound/weapons/energy/howitzer_shot.ogg", 50, 1)
+		playsound(sound_turf, 'sound/weapons/energy/howitzer_shot.ogg', 50, 1)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		if(!isnull(src.target_overlay))
 			target_turf.overlays -= src.target_overlay

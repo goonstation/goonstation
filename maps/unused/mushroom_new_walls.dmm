@@ -20296,7 +20296,7 @@
 	dir = 9;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -24557,7 +24557,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -28459,7 +28459,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -28927,7 +28927,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Pad";

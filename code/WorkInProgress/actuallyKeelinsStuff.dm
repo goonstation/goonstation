@@ -1560,11 +1560,11 @@ Returns:
 	New()
 		..()
 		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -2296,7 +2296,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2809,7 +2809,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
@@ -2823,7 +2823,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
@@ -3163,7 +3163,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 

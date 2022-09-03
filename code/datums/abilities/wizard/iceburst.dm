@@ -7,9 +7,9 @@
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
-	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
-	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
+	voice_grim = 'sound/voice/wizard/IceBurstGrim.ogg'
+	voice_fem = 'sound/voice/wizard/IceBurstFem.ogg'
+	voice_other = 'sound/voice/wizard/IceBurstLoud.ogg'
 	maptext_colors = list("#55eec2", "#62a5ee", "#3c6dc3", "#12135b", "#3c6dc3", "#62a5ee")
 
 	cast()
@@ -47,7 +47,7 @@
 				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 				continue
 
-			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
+			playsound(holder.owner.loc, 'sound/effects/mag_iceburstlaunch.ogg', 25, 1, -1)
 			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
 			SPAWN(0)
@@ -73,7 +73,7 @@
 					if (GET_DIST(A,M) == 0)
 						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
-						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
+						playsound(holder.owner.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time
