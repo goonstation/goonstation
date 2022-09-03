@@ -413,7 +413,7 @@
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
-	dissipation_delay = 10
+	dissipation_delay = 4
 //Kill/Stun ratio
 	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
@@ -421,7 +421,7 @@
 //file location for the sound you want it to play
 	shot_sound = null
 	shot_number = 1
-	damage_type = D_RADIOACTIVE
+	damage_type = D_SPECIAL
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	window_pass = FALSE
@@ -441,6 +441,9 @@
 			if(prob(hit.material.getProperty("radioactive")*10))
 				hit.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
 		hit.AddComponent(/datum/component/radioactive, min(power,25), TRUE, FALSE, 1)
+		if(ismob(hit))
+			var/mob/hitmob = hit
+			hitmob.take_radiation_dose(power/200)
 		return
 
 	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
