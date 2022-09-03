@@ -3222,7 +3222,7 @@ datum
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
 						var/datum/effects/system/foam_spread/s = new()
-						s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = created_volume / holder.covered_cache.len)
+						s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 						s.start()
 					holder.clear_reagents()
 				return
