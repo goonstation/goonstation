@@ -168,9 +168,9 @@
 			var/input_num = params["entry"]
 			if (src.round_input)
 				input_num = round(input_num, 1)
-			if(!isnull(max_value) && input_num > max_value)
+			if(input_num > (!isnull(max_value) ? max_value : 1000))
 				return FALSE
-			if(!isnull(min_value) && input_num < min_value)
+			if(input_num < min_value)
 				return FALSE
 			set_entry(input_num)
 			tgui_process.close_uis(src)
