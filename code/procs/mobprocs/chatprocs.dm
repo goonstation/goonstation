@@ -266,7 +266,7 @@
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
 			if(!M.client.preferences.flying_chat_hidden)
-				chat_text.show_to(src.client)
+				chat_text.show_to(C)
 			boutput(M, rendered)
 
 
