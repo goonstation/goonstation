@@ -10,13 +10,14 @@
 		clone.render_source = src.render_target
 		usr.vis_contents += clone
 /obj/map_icon
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "arcade"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x"
 	var/obj/station_map/map = null
 
-	New(var/obj/station_map/map)
-		..(map.loc)
+	New(var/atom/location, var/obj/station_map/map)
+		..()
 		src.map = map
+		src.layer = map.layer + 1
 
 	proc/set_position(var/x, var/y)
 		//the first term is the scaled location of 0,0 on the map
@@ -27,7 +28,7 @@
 		src.pixel_y = round(-(world.maxy * src.map.scale - world.maxy)/2.0 + y * src.map.scale + src.map.pixel_y, 1) - 18
 
 /obj/map_icon/tracking
-	New(var/obj/station_map/map, var/atom/movable/target)
+	New(var/atom/location, var/obj/station_map/map, var/atom/movable/target)
 		..()
 		// src.Scale(0.25,0.25)
 		src.icon = target.icon
@@ -65,9 +66,12 @@
 			#ifdef UPSCALED_MAP
 			map_icon.Scale(world.maxx, world.maxy)
 			#endif
-			render_map()
-			zoom_map()
+		render_map()
+		zoom_map()
 		icon = map_icon
+		// var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
+		// // mask_icon.Scale(1/src.scale, 1/src.scale)
+		// src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
 
 	//generates the map from the current station layout
 	proc/render_map()
@@ -85,6 +89,10 @@
 				y_max = max(y_max, y)
 				y_min = min(y_min, y)
 				map_icon.DrawBox(turf_color(turf), x,y)
+		map_icon.DrawBox(null, 0,0, x_min - border_width, world.maxy)
+		map_icon.DrawBox(null, 0,0, world.maxx, src.y_min - border_width)
+		map_icon.DrawBox(null, x_max + border_width,0, world.maxx,world.maxy)
+		map_icon.DrawBox(null, 0,y_max + border_width, world.maxx,world.maxy)
 
 	//zooms and centers the map on the station
 	proc/zoom_map()
@@ -150,5 +158,23 @@
 	var/obj/map_icon/plant_site
 	New()
 		..()
-		src.plant_site = new(src)
-		src.plant_site.set_position(100,100)
+		src.Scale(0.5,0.5)
+		src.scale *= 0.5
+		var/datum/game_mode/nuclear/gamemode = ticker?.mode
+		var/x_max = 0
+		var/y_max = 0
+		var/x_min = world.maxx
+		var/y_min = world.maxy
+		if (istype(gamemode))
+			for (var/area_type in gamemode.target_location_type)
+				var/list/area/areas = get_areas(area_type)
+				for (var/area/area in areas)
+					for (var/turf/turf in area)
+						x_max = max(turf.x, x_max)
+						y_max = max(turf.y, y_max)
+						x_min = min(turf.x, x_min)
+						y_min = min(turf.y, y_min)
+		var/target_x = (x_max + x_min) / 2
+		var/target_y = (y_max + y_min) / 2
+		src.plant_site = new(src.loc, src)
+		src.plant_site.set_position(target_x,target_y)
