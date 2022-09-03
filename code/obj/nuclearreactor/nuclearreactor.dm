@@ -158,7 +158,7 @@
 	proc/processCaseRadiation(var/rads)
 		if(rads <= 0)
 			return
-		neutron_projectile.power = rads
+		neutron_projectile.power = min(rads*5,100)
 		for(var/i = min(rads,20),i>0,i--)
 			shoot_projectile_XY(src, neutron_projectile, rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 		rads -= min(rads,20)
@@ -166,7 +166,7 @@
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, rads, TRUE, FALSE, 5)
+		src.AddComponent(/datum/component/radioactive, min(rads*5, 100), TRUE, FALSE, 5)
 
 	proc/catastrophicOverload()
 		logTheThing("station", src, null, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
