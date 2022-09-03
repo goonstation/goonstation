@@ -1,11 +1,12 @@
 ///This is exclusively for the AI map right now
 
 /obj/map_icon
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "bucket"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "arcade"
 	var/obj/station_map/map = null
 	New(var/atom/movable/target, var/obj/station_map/map)
 		..(null)
+		src.Scale(0.25,0.25)
 		src.map = map
 		// target.render_target = ref(target)
 		// src.render_source = target.render_target
@@ -14,8 +15,12 @@
 
 	proc/handle_move(var/atom/movable/target)
 		var/turf/T = get_turf(target)
-		src.pixel_x = src.map.pixel_x + (T.x - src.map.center_x) * src.map.scale
-		src.pixel_y = src.map.pixel_y + (T.y - src.map.center_y) * src.map.scale
+		//the first term is the scaled location of 0,0
+		//then add the actual position scaled
+		//subtract the offset of the map's center
+		//add some values to deal with cursed byond UI magic numbers
+		src.pixel_x = round(-(world.maxx * src.map.scale - world.maxx)/2.0 + T.x * src.map.scale + src.map.pixel_x, 1) - 16
+		src.pixel_y = round(-(world.maxy * src.map.scale - world.maxy)/2.0 + T.y * src.map.scale + src.map.pixel_y, 1) - 16
 
 /obj/station_map
 	name = "Station map"
@@ -98,6 +103,10 @@
 			return "#ffffff"
 		else
 			return "#808080"
+
+	proc/add_icon(var/atom/movable/target)
+		var/obj/map_icon/new_icon = new(target, src)
+		new_icon.loc = src.loc
 
 /obj/station_map/ai
 	name = "AI station map"
