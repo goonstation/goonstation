@@ -1269,7 +1269,13 @@
 					var/obj/item/spacecash/S = CROP
 					S.amount = max(1, DNA.potency * rand(2,4))
 					S.update_stack_appearance()
-
+				else if (istype(CROP,/obj/item/device/light/glowstick))
+					var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
+					var/obj/item/device/light/glowstick/newstick = new type(CROP.loc)
+					newstick.light_c.a = clamp(DNA.potency/60, 0.33, 1) * 255
+					newstick.turnon()
+					qdel(CROP)
+					CROP = newstick
 				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
