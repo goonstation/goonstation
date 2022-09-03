@@ -910,7 +910,7 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
-		else if (W.cant_drop)
+		else if (W?.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 		else if (load_reclaim(W, user))

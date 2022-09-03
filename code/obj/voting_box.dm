@@ -65,7 +65,7 @@
 
 			if ((S.amount > bribeAmount) || (user.real_name == bribeJerk))
 				var/list/voted_maps = map_vote_holder.get_client_votes(C)
-				if(voted_maps.len > 0)
+				if(length(voted_maps))
 					var/chosen = input("Money Talks", "Which Map?") as null|anything in voted_maps
 					if (chosen)
 						if (user.real_name == bribeJerk)

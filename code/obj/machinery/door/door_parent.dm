@@ -218,19 +218,12 @@
 #ifdef HALLOWEEN
 	user.emote("scream")
 #endif
-	if (do_after(user, 100) && !(user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis") > 0 || !isalive(user) || user.restrained()))
-		var/success = 0
-		SPAWN(0.6 SECONDS)
-			success = try_force_open(user)
-			if (success != 0)
-				src.operating = -1 // It's broken now.
-				src.visible_message("<span class='alert'>[user] pries open [src]!</span>")
-	else
-		user.show_text("You were interrupted.", "red")
+	SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/door/proc/try_force_open, list(user, TRUE), src.icon, src.icon_state, \
+	"<span class='alert'>[user] pries open [src]!</span>", \
+	INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
-	return
 
-/obj/machinery/door/proc/try_force_open(mob/user as mob)
+/obj/machinery/door/proc/try_force_open(mob/user as mob, var/break_door = FALSE)
 	var/success = 0
 	if (src)
 		if (istype(src, /obj/machinery/door/poddoor))
@@ -270,7 +263,8 @@
 				else
 					AL.open()
 				success = 1
-
+	if(success && break_door)
+		src.operating = -1
 	return success
 
 /obj/machinery/door/proc/requiresID()
@@ -471,8 +465,6 @@
 			take_damage(damage)
 		if(D_BURNING)
 			take_damage(damage/2)
-		if(D_RADIOACTIVE)
-			take_damage(damage/4)
 	return
 
 /obj/machinery/door/update_icon(var/toggling = 0)
@@ -654,13 +646,13 @@
 	cant_emag = TRUE
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.Attackhand(user)
+	return
 
 /obj/machinery/door/unpowered/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)
-	if (src.operating)
+	if (src.operating || isintangible(user) || isdead(user))
 		return
 	src.add_fingerprint(user)
 	if (src.allowed(user))
@@ -806,6 +798,8 @@
 	set category = "Local"
 	set src in oview(1)
 
+	if (isdead(user) || isintangible(user))
+		return
 	if (!src.density || src.operating)
 		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return

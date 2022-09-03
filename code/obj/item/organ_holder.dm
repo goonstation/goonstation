@@ -1159,6 +1159,7 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
 		switch (working_lungs)
 			if (0)

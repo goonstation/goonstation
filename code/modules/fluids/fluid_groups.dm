@@ -471,6 +471,7 @@
 				break
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/datum/color/last_color = src.average_color
 		src.average_color = src.reagents?.get_average_color()
@@ -486,6 +487,7 @@
 			return 1
 
 		LAGCHECK(LAG_MED)
+		if (src.qdeled) return 1
 
 		var/targetalpha = max(25, (src.average_color.a / 255) * src.max_alpha)
 		var/targetcolor = rgb(src.average_color.r, src.average_color.g, src.average_color.b)

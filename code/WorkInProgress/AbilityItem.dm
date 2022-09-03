@@ -442,24 +442,24 @@
 
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jet2on"
+	icon_state = "jetoff"
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jet2off"
-		else  icon_state = "jet2on"
+		if(J.on) icon_state = "jet2on"
+		else  icon_state = "jet2off"
 		..()
 
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
-	icon_state = "jeton"
+	icon_state = "jetoff"
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jetoff"
-		else  icon_state = "jeton"
+		if(J.on) icon_state = "jeton"
+		else  icon_state = "jetoff"
 		..()
 
 ////////////////////////////////////////////////////////////

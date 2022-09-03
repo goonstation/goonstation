@@ -1301,6 +1301,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	ex_act(severity)
 		src.smash()
 
+
+	Crossed(atom/movable/mover) //Makes barfights cooler
+		if(istype(mover, /obj/projectile))
+			if(prob(30))
+				src.smash()
+		. = ..()
+
 	proc/smash(var/atom/A)
 		if (src.smashed)
 			return

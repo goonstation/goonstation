@@ -1935,7 +1935,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.changeStatus("radiation", damage SECONDS)
+				src.reagents?.add_reagent("radium", damage/4) //fuckit
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
@@ -2104,3 +2104,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (G.state > GRAB_PASSIVE)
 				return FALSE
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
+
+/mob/living/take_radiation_dose(Sv,internal=FALSE)
+	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+		return
+	var/actual_dose = ..()
+	if(actual_dose > 0.2 && !internal)
+		src.TakeDamage("All",0,20*clamp(actual_dose/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
+		if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
+			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+	else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+		src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")

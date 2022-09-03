@@ -137,7 +137,7 @@ MATERIAL
 
 	split_stack(toRemove)
 		. = ..()
-		if(src.reinforcement)
+		if(. && src.reinforcement)
 			var/obj/item/sheet/S = .
 			S.set_reinforcement(src.reinforcement)
 			. = S

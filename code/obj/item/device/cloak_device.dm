@@ -32,9 +32,10 @@
 			src.deactivate(user)
 		else
 			if (src.activate(user))
-				user.show_text("You can't have more than one active [src.name] on your person.", "red")
-			else
 				user.show_text("The [src.name] is now active.", "blue")
+			else
+				user.show_text("You can't have more than one active [src.name] on your person.", "red")
+
 
 	update_icon()
 		if (src.active)
@@ -97,6 +98,11 @@
 	emp_act()
 		if (src.active && ismob(src.loc))
 			src.deactivate(src.loc)
+
+	disposing()
+		if (src.active && ismob(src.loc))
+			src.deactivate(src.loc)
+		..()
 
 	limited
 		name = "limited-use cloaking device"

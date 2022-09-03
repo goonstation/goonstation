@@ -778,24 +778,27 @@
 
 			if(growing.growthmode == "weed")
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
-					src.growth = 0
-					src.reagents.clear_reagents()
-					// The idea here is you gotta use weedkiller or something else to get rid of the
-					// weeds since you can't just clear them out by hand.
+					if(!QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
+						src.growth = 0
+						src.reagents.clear_reagents()
+						// The idea here is you gotta use weedkiller or something else to get rid of the
+						// weeds since you can't just clear them out by hand.
 			else
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-					src.reagents.clear_reagents()
-					logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
-					HYPdestroyplant()
+					if(!QDELETED(current) && !QDELETED(src))
+						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+						src.reagents.clear_reagents()
+						logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current.name] at [log_loc(src)]")
+						HYPdestroyplant()
 		else
 			if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
-				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-				src.reagents.clear_reagents()
-				UpdateIcon()
-				update_name()
+				if(!QDELETED(src))
+					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
+					src.reagents.clear_reagents()
+					UpdateIcon()
+					update_name()
 		return
 
 	MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code

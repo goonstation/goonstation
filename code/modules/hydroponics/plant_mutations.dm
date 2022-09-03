@@ -619,7 +619,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
-	mutation_sfx = 'sound/effects/fireworks1.ogg'
+	mutation_sfx = 'sound/effects/redweedpop.ogg'
 
 // Slurrypod Mutations
 
