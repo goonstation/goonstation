@@ -300,7 +300,7 @@
 			if(is_teleportation_allowed(T))
 				if(prob(15))
 					if(prob(10))
-						boutput(holder.owner, "<span class='alert'>Recalculating...</span>"))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
 					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.send(T)
 			else
