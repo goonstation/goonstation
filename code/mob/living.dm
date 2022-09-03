@@ -1719,9 +1719,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (running)
 
-		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		var/runScaling = src.lying ? SPRINT_SCALING_LYING : SPRINT_SCALING
 		if (src.hasStatus(list("staggered","blocking")))
-			runScaling = max(runScaling, RUN_SCALING_STAGGER)
+			runScaling = max(runScaling, SPRINT_SCALING_STAGGER)
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
