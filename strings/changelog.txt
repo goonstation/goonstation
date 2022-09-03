@@ -1,5 +1,9 @@
 
 (t)sat sep 03 22
+(u)LeahTheTech
+(p)10517
+(e)|
+(*)Added chemical request consoles for requesting chemicals. Find them outside science and in medbay, with another terminal in chemistry to let scientists decide whether to fulfil or deny the clown's request for 200u of space lube.
 (u)TheTrueMunchkin
 (p)10561
 (e)|
