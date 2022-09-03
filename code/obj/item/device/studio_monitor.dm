@@ -280,7 +280,7 @@
 				if(is_rock_immune(HH))
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
-				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
+				HH.organHolder?.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
 			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, 1, 5)
 			. = ..()
 
