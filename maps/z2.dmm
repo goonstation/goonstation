@@ -73649,6 +73649,20 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"ozX" = (
+/obj/machinery/power/data_terminal,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station)
 "oAm" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/secure/closet/fridge,
@@ -143791,7 +143805,7 @@ cnw
 cnw
 iZy
 iZN
-xDx
+ozX
 jHl
 mFr
 xDx

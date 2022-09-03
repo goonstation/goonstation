@@ -5,6 +5,7 @@
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
 #define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_NUKEOP)
+#define issurplusop(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:special_role == ROLE_SURPLUS_OPERATIVE)
 #define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
 #define isvampiricthrall(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_thrall) != null)
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)

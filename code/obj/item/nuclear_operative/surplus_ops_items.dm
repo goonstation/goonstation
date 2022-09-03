@@ -158,13 +158,10 @@
 
 		if(src.authed)
 			return
-		for(var/obj/submachine/surplusopdeployer/D in range(get_turf(src), 16)) //this is insanely stupid but I
+		for(var/obj/submachine/surplusopdeployer/D in range(get_turf(src), 16)) //this is insanely stupid but it actually functions
 			D.active = TRUE //FLIP THE LEVER, KRONK!
-			D.icon_state = "syndtele1"
-
-		for_by_tcl(D, /obj/submachine/surplusopdeployer)
-			D.active = TRUE //FLIP THE LEVER, KRONK!
-			D.icon_state = "syndtele1"
+			D.icon_state = "tele1"
+			src.desc = "An authorization computer. The display shows a green check mark."
 
 	proc/print_auth_needed(var/mob/author)
 		if (author)
@@ -176,7 +173,7 @@
 
 /obj/submachine/surplusopdeployer
 	icon = 'icons/obj/teleporter.dmi'
-	icon_state = "syndtele"
+	icon_state = "tele0"
 	name = "Old portal ring"
 	desc = "An outdated and unstable portal ring model, locked in to a preset location."
 	density = TRUE
@@ -185,5 +182,5 @@
 
 	Bumped(atom/movable/M as mob|obj)
 		if(active)
-			do_teleport(M, pick_landmark(LANDMARK_BOXING_RING)) //put them at the latejoin for now- CHANGE THIS LATER
+			do_teleport(M, pick_landmark(LANDMARK_PESTSTART)) //put them at the latejoin for now- CHANGE THIS LATER
 

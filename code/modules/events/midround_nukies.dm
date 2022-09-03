@@ -23,37 +23,42 @@
 
 		if (!candidates)
 			return
-		var/datum/mind/lucky_dude = pick(candidates)
+		if(candidates.len < 3)
+			message_admins("Less than three candidates for surplus ops, this will cause issues!") //once build is final, it won't ever trigger if theres less than 3 dead folks
+		for (var/i in 1 to 3)
+			var/datum/mind/lucky_dude = pick(candidates)
 
-		var/mob/M3
-		if (!M3)
-			M3 = lucky_dude.current
-		else
-			return
+					if (lucky_dude.special_role)
+				if (lucky_dude in ticker.mode.traitors)
+					ticker.mode.traitors.Remove(lucky_dude)
+				if (lucky_dude in ticker.mode.Agimmicks)
+					ticker.mode.Agimmicks.Remove(lucky_dude)
+				if (!lucky_dude.former_antagonist_roles.Find(lucky_dude.special_role))
+					lucky_dude.former_antagonist_roles.Add(lucky_dude.special_role)
+				if (!(lucky_dude in ticker.mode.former_antagonists))
+					ticker.mode.former_antagonists.Add(lucky_dude)
 
-		if (lucky_dude.special_role)
-			if (lucky_dude in ticker.mode.traitors)
-				ticker.mode.traitors.Remove(lucky_dude)
-			if (lucky_dude in ticker.mode.Agimmicks)
-				ticker.mode.Agimmicks.Remove(lucky_dude)
-			if (!lucky_dude.former_antagonist_roles.Find(lucky_dude.special_role))
-				lucky_dude.former_antagonist_roles.Add(lucky_dude.special_role)
-			if (!(lucky_dude in ticker.mode.former_antagonists))
-				ticker.mode.former_antagonists.Add(lucky_dude)
+			var/mob/M3
+			if (!M3)
+				M3 = lucky_dude.current
+			else
+				return
 
-		var/mob/living/carbon/human/R = M3.humanize()
-		if (R && istype(R))
-			M3 = R
-			R.unequip_all(1)
+			var/mob/living/carbon/human/R = M3.humanize()
 
+			if (R && istype(R))
+				M3 = R
+				R.unequip_all(1)
 
-			//objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			R.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
-			SPAWN(0)
-				R.choose_name(3, "Surplus Operative")
+				//objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
+				R.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
+				SPAWN(0)
+					R.choose_name(3, "Surplus Operative")
 
-				lucky_dude.special_role = ROLE_NUKEOP
+					lucky_dude.special_role = ROLE_NUKEOP //for now
+					R.antagonist_overlay_refresh(1, 0)
 
-			equip_shitty_syndicate(R, 1)//do this after to prevent ID card from getting changed
-		else
-			return
+			boutput(R, "<span class='notice'>You are a surplus operative!</span>")
+
+				equip_shitty_syndicate(R, 1)//do this after to prevent ID card from getting changed
+			candidates -= lucky_dude

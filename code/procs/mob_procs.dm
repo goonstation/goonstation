@@ -911,6 +911,11 @@
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)
 						can_see.Add(I)
+				if (ROLE_SURPLUS_OPERATIVE)
+						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
+						see_nukeops = 1
+
 				else
 					if (see_everything)
 						var/I = image(antag_generic, loc = M.current) // Default to this.
