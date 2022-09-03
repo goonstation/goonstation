@@ -144,7 +144,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
-	var/obj/map_icon/map_icon
+	var/obj/map_icon/tracking/map_icon
 
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
@@ -207,7 +207,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
 	..(loc)
 	START_TRACKING
-	src.map_icon = new(src, ai_station_map)
+	src.map_icon = new(ai_station_map, src)
+	src.map_icon.icon = 'icons/mob/ai.dmi'
+	src.map_icon.icon_state = "ai"
+	src.map_icon.Scale(0.5,0.5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point

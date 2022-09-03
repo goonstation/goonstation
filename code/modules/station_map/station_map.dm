@@ -1,27 +1,46 @@
 ///This is exclusively for the AI map right now
 
+//TODO: remove this
+/atom
+	proc/make_icon_clone()
+		var/obj/clone = new(get_turf(usr))
+		clone.icon = src.icon
+		clone.icon_state = src.icon_state
+		src.render_target = ref(src)
+		clone.render_source = src.render_target
+		usr.vis_contents += clone
 /obj/map_icon
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "arcade"
 	var/obj/station_map/map = null
-	New(var/atom/movable/target, var/obj/station_map/map)
-		..(null)
-		src.Scale(0.25,0.25)
+
+	New(var/obj/station_map/map)
+		..(map.loc)
 		src.map = map
+
+	proc/set_position(var/x, var/y)
+		//the first term is the scaled location of 0,0 on the map
+		//then add the actual position scaled by the map scale
+		//add the pixel offset of the parent map
+		//subtract 18 because ???
+		src.pixel_x = round(-(world.maxx * src.map.scale - world.maxx)/2.0 + x * src.map.scale + src.map.pixel_x, 1) - 18
+		src.pixel_y = round(-(world.maxy * src.map.scale - world.maxy)/2.0 + y * src.map.scale + src.map.pixel_y, 1) - 18
+
+/obj/map_icon/tracking
+	New(var/obj/station_map/map, var/atom/movable/target)
+		..()
+		// src.Scale(0.25,0.25)
+		src.icon = target.icon
+		src.icon_state = target.icon_state
 		// target.render_target = ref(target)
 		// src.render_source = target.render_target
 		src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/handle_move)
+		src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 		src.handle_move(target)
 
 	proc/handle_move(var/atom/movable/target)
 		var/turf/T = get_turf(target)
-		//the first term is the scaled location of 0,0
-		//then add the actual position scaled
-		//subtract the offset of the map's center
-		//add some values to deal with cursed byond UI magic numbers
-		src.pixel_x = round(-(world.maxx * src.map.scale - world.maxx)/2.0 + T.x * src.map.scale + src.map.pixel_x, 1) - 16
-		src.pixel_y = round(-(world.maxy * src.map.scale - world.maxy)/2.0 + T.y * src.map.scale + src.map.pixel_y, 1) - 16
-
+		src.set_position(T.x, T.y)
 /obj/station_map
 	name = "Station map"
 	var/static/icon/map_icon
@@ -103,11 +122,6 @@
 			return "#ffffff"
 		else
 			return "#808080"
-
-	proc/add_icon(var/atom/movable/target)
-		var/obj/map_icon/new_icon = new(target, src)
-		new_icon.loc = src.loc
-
 /obj/station_map/ai
 	name = "AI station map"
 	New()
@@ -131,3 +145,10 @@
 				mainframe.eyecam.loc = clicked //then tele it, not our core
 		if ("right" in param_list)
 			return TRUE
+
+/obj/station_map/nukie
+	var/obj/map_icon/plant_site
+	New()
+		..()
+		src.plant_site = new(src)
+		src.plant_site.set_position(100,100)
