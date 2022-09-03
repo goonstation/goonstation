@@ -89,7 +89,7 @@
 			for (var/client/C as anything in clients)
 				if (C?.holder?.adminwho_alerts && !C.player_mode)
 					var/msg = "<span class='admin'>ADMIN LOG: [key_name(usr)] used Who and saw [length(whoAdmins)] admins.</span>"
-					boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[usr.client.holder]"), "%client_ref%", "\ref[usr.client]"))
+					boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[C?.holder]"), "%client_ref%", "\ref[C]"))
 
 /client/verb/adminwho()
 	set category = "Commands"
@@ -131,4 +131,4 @@
 		for(var/client/C as anything in clients)
 			if(C?.holder?.adminwho_alerts && !C.player_mode)
 				var/msg = "<span class='admin'>ADMIN LOG: [key_name(usr)] used adminwho and saw [adwnum] admins.</span>"
-				boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[usr.client.holder]"), "%client_ref%", "\ref[usr.client]"))
+				boutput(C, replacetext(replacetext(msg, "%admin_ref%", "\ref[C?.holder]"), "%client_ref%", "\ref[C]"))
