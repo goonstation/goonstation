@@ -3,6 +3,7 @@
 (u)Emily
 (*)New Chicken Grenade sprite by Walpvrgis!
 (*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
+(+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
 (u)LeahTheTech
 (p)10517
 (e)|
