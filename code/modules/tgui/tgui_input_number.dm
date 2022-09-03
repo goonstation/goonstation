@@ -31,7 +31,7 @@
 			return
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	if (!isnum_safe(default)) // check null
+	if (!isnum_safe(default))
 		CRASH("TGUI input number prompt opened with default number that is not a number.")
 	if (default > (!isnull(max_value) ? max_value : 1000) || default < min_value)
 		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
