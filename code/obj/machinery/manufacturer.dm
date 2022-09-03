@@ -2268,6 +2268,7 @@
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
