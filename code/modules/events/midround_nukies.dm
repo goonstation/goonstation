@@ -45,7 +45,7 @@
 		if (R && istype(R))
 			M3 = R
 			R.unequip_all(1)
-			equip_shitty_syndicate(R, 1)
+
 
 			//objective_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 			R.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
@@ -53,5 +53,7 @@
 				R.choose_name(3, "Surplus Operative")
 
 				lucky_dude.special_role = ROLE_NUKEOP
+
+			equip_shitty_syndicate(R, 1)//do this after to prevent ID card from getting changed
 		else
 			return

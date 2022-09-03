@@ -158,6 +158,9 @@
 
 		if(src.authed)
 			return
+		for(var/obj/submachine/surplusopdeployer/D in range(get_turf(src), 16)) //this is insanely stupid but I
+			D.active = TRUE //FLIP THE LEVER, KRONK!
+			D.icon_state = "syndtele1"
 
 		for_by_tcl(D, /obj/submachine/surplusopdeployer)
 			D.active = TRUE //FLIP THE LEVER, KRONK!
