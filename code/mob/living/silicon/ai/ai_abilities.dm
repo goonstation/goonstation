@@ -318,8 +318,8 @@
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
 				if(prob(85))
-					if(prob(10)
-						boutput(holder.owner, "<span class='alert'>Recalculating...</span>"))
+					if(prob(10))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
 					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.receive(T)
 			else
