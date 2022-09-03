@@ -122,7 +122,7 @@
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
