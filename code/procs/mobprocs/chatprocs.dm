@@ -1031,7 +1031,7 @@
 		structure_speaking = speaker
 
 	var/name = ""
-	var/class = "flocksay"
+	var/class = "flocksay sentient"
 	var/is_npc = FALSE
 	var/is_flockmind = istype(mob_speaking, /mob/living/intangible/flock/flockmind)
 
@@ -1055,7 +1055,7 @@
 			name = mob_speaking.real_name
 
 	if(is_flockmind)
-		class = "flocksay flockmindsay"
+		class = "flocksay sentient flockmind"
 	else if(is_npc)
 		class = "flocksay flocknpc"
 	else if(isnull(mob_speaking))
