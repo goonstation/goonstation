@@ -841,6 +841,3 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 		src.client.mob = newobs
 	set_loc(newobs)
 	return newobs
-
-mob/dead/observer/say(message)
-	. = ..()
