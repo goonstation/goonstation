@@ -614,14 +614,8 @@
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
-	if (!target.pixel_point)
-		pixel_x = target.pixel_x
-		pixel_y = target.pixel_y
-	else
-		pixel_x -= 16 - target.pixel_x
-		pixel_y -= 16 - target.pixel_y
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)

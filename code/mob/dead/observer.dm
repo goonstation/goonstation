@@ -90,14 +90,8 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	if (!target.pixel_point)
-		pixel_x = target.pixel_x
-		pixel_y = target.pixel_y
-	else
-		pixel_x -= 16 - target.pixel_x
-		pixel_y -= 16 - target.pixel_y
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity

@@ -57,17 +57,18 @@
 	point_at(atom/target, var/pixel_x, var/pixel_y)
 		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
 			return
+		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
+
+	/// Like make_point, but the point is an image that is only displayed to hivemind members
+	proc/make_hive_point(atom/movable/target, var/pixel_x, var/pixel_y, color="#ffffff", time=2 SECONDS)
+		var/turf/target_turf = get_turf(target)
+		var/image/point = image(point_img, loc = target_turf, layer = EFFECTS_LAYER_1)
 		if (!target.pixel_point)
 			pixel_x = target.pixel_x
 			pixel_y = target.pixel_y
 		else
 			pixel_x -= 16 - target.pixel_x
 			pixel_y -= 16 - target.pixel_y
-		make_hive_point(get_turf(target), pixel_x, pixel_y, color="#e2a059")
-
-	/// Like make_point, but the point is an image that is only displayed to hivemind members
-	proc/make_hive_point(atom/movable/target, var/pixel_x, var/pixel_y, color="#ffffff", time=2 SECONDS)
-		var/image/point = image(point_img, loc = target, layer = EFFECTS_LAYER_1)
 		point.pixel_x = pixel_x
 		point.pixel_y = pixel_y
 		point.color = color
@@ -81,7 +82,7 @@
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
-		M.Translate((hivemind_owner.owner.x - target.x)*32 - pixel_x, (hivemind_owner.owner.y - target.y)*32 - pixel_y)
+		M.Translate((hivemind_owner.owner.x - target_turf.x)*32 - pixel_x, (hivemind_owner.owner.y - target_turf.y)*32 - pixel_y)
 		point.transform = M
 		animate(point, transform=null, time=2)
 		SPAWN(time)
