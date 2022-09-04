@@ -6,25 +6,23 @@
  */
 
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ColorBox, Flex, LabeledList, ProgressBar, Section, Stack, Tabs } from '../../components';
+import { COLORS } from '../../constants';
+import { Box, Button, ColorBox, Divider, Flex, LabeledList, ProgressBar, Section, Stack, Tabs, Tooltip } from '../../components';
 import { Window } from '../../layouts';
 import { CyborgDockingStationData } from './type';
 
 export const CyborgDockingStation = (props, context) => {
   const { act, data } = useBackend<CyborgDockingStationData>(context);
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
-  let theme = "neutral";
-
-  if (data.conversion_chamber && data.occupant.kind === "human") theme = "syndicate";
-  if (!data.allow_current_user) theme = "noninteractive";
 
   return (
     <Window
       width={500}
       height={640}
       title="Cyborg Docking Station"
-      theme={theme}>
+      theme={(data.conversion_chamber && data.occupant.kind === "human") ?"syndicate" : "neutral"}>
       <Window.Content scrollable>
+        <DisabledDisplayReason />
         <Stack>
           <Stack.Item>
             <Tabs vertical width="100px">
@@ -48,26 +46,51 @@ export const CyborgDockingStation = (props, context) => {
     </Window>
   );
 };
+const DisabledDisplayReason = (props, context) => {
+  const { act, data } = useBackend<CyborgDockingStationData>(context);
+  if (data.disabled) {
+    return (
+      <>
+        <Box backgroundColor="#773333" p="5px" mb="5px" bold textAlign="center">
+          {(data.viewer_is_robot && !data.viewer_is_occupant) && "You must be inside the docking station to use the functions." || ""}
+          {(data.viewer_is_occupant && !data.viewer_is_robot) && "Non-cyborgs cannot use the docking station functions." || ""}
+          {(data.viewer_is_occupant && !data.allow_self_service) && "Self-service has been disabled at this station." || ""}
+        </Box>
+        <Divider />
+      </>
+    );
+  }
+};
+const DockingAllowedButton = (props, context) => {
+  const {
+    disabled,
+    ...rest
+  } = props;
+  const { act, data } = useBackend<CyborgDockingStationData>(context);
+  return <Button disabled={disabled || data.disabled} {...rest} />;
+};
 const OccupantTab = (props) => {
-  const { occupant, fuel, wire, act } = props;
+  const { occupant, fuel, cabling, act } = props;
   return (
     <Section title="Occupant">
       <Stack>
-        <Stack.Item grow={1}><OccupantTabContents occupant={occupant} act={act} fuel={fuel} wire={wire} /></Stack.Item>
+        <Stack.Item grow={1}>
+          <OccupantTabContents occupant={occupant} act={act} fuel={fuel} cabling={cabling} />
+        </Stack.Item>
       </Stack>
     </Section>
   );
 };
 const OccupantTabContents = (props) => {
-  const { occupant, fuel, wire, act } = props;
+  const { occupant, fuel, cabling, act } = props;
   if (occupant.name) {
     return (
       <>
         <LabeledList>
           <LabeledList.Item label="Name" buttons={(
             <>
-              {occupant.kind ==="robot" && <Button onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
-              {<Button onClick={() => act("occupant-eject")} icon="eject" tooltip="Eject the occupant" />}
+              {occupant.kind ==="robot" && <DockingAllowedButton onClick={() => act("occupant-rename")} icon="edit" tooltip="Change the occupant's designation" />}
+              {<DockingAllowedButton onClick={() => act("occupant-eject")} icon="eject" tooltip="Eject the occupant" /> }
             </>
           )}>
             {occupant.name}
@@ -75,7 +98,7 @@ const OccupantTabContents = (props) => {
           <LabeledList.Item label="Type"><OccupantType kind={occupant.kind} user={occupant.user} /></LabeledList.Item>
         </LabeledList>
         <Section title="Status">
-          {occupant.kind === "robot" && <OccupantStatusRobot occupant={occupant} fuel={fuel} wire={wire} act={act} />}
+          {occupant.kind === "robot" && <OccupantStatusRobot occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
           {occupant.kind === "human" && <OccupantStatusHuman occupant={occupant} />}
           {occupant.kind === "eyebot" && <OccupantStatusEyebot occupant={occupant} />}
         </Section>
@@ -86,13 +109,13 @@ const OccupantTabContents = (props) => {
   }
 };
 const OccupantStatusRobot = (props) => {
-  const { occupant, fuel, wire, act } = props;
+  const { occupant, fuel, cabling, act } = props;
   return (
     <>
       <LabeledList>
         <OccupantCellDisplay cellData={occupant.cell} act={act} />
         <LabeledList.Item label="Module" buttons={
-          <Button
+          <DockingAllowedButton
             onClick={() => act("module-remove")}
             icon="minus"
             tooltip="Remove the occupant's module"
@@ -101,7 +124,7 @@ const OccupantStatusRobot = (props) => {
           {occupant.module || <Box as="span" color="red">No Module Installed</Box>}
         </LabeledList.Item>
       </LabeledList>
-      <DamageReport parts={occupant.parts} fuel={fuel} wire={wire} act={act} />
+      <DamageReport parts={occupant.parts} fuel={fuel} cabling={cabling} act={act} />
       <OccupantUpgradeDisplay
         upgrades={occupant.upgrades}
         upgrades_max={occupant.upgrades_max}
@@ -134,7 +157,7 @@ const OccupantStatusEyebot = (props) => {
   const { occupant } = props;
   return (
     <LabeledList>
-      <LabeledList.Item label={occupant.cell.name}>{occupant.cell.current} / {occupant.cell.max}</LabeledList.Item>
+      <LabeledList.Item label={occupant.cell.name}><CellChargeBar cellData={occupant.cell} /></LabeledList.Item>
     </LabeledList>
   );
 };
@@ -163,7 +186,7 @@ const ClothingReport = (props) => {
             clothes.map(cloth => {
               return (
                 <Box key={cloth.ref}>
-                  {cloth.name} <Button onClick={() => act("clothing-remove", { clothingRef: cloth.ref })} icon="minus-circle" color="transparent" tooltip="Remove from occupant" />
+                  {cloth.name} <DockingAllowedButton onClick={() => act("clothing-remove", { clothingRef: cloth.ref })} icon="minus-circle" color="transparent" tooltip="Remove from occupant" />
                 </Box>
               );
             })
@@ -181,34 +204,34 @@ const DecorationReport = (props) => {
     <Section title="Decoration">
       <LabeledList>
         <LabeledList.Item label="Head" buttons={
-          <Button icon="sync-alt" tooltip="Change head decoration" onClick={() => act("cosmetic-change-head")} />
+          <DockingAllowedButton icon="sync-alt" tooltip="Change head decoration" onClick={() => act("cosmetic-change-head")} />
         }>
           {cosmetics.head || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Chest" buttons={
-          <Button icon="sync-alt" tooltip="Change chest decoration" onClick={() => act("cosmetic-change-chest")} />
+          <DockingAllowedButton icon="sync-alt" tooltip="Change chest decoration" onClick={() => act("cosmetic-change-chest")} />
         }>
           {cosmetics.chest || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Arms" buttons={
-          <Button icon="sync-alt" tooltip="Change arms decoration" onClick={() => act("cosmetic-change-arms")} />
+          <DockingAllowedButton icon="sync-alt" tooltip="Change arms decoration" onClick={() => act("cosmetic-change-arms")} />
         }>{cosmetics.arms || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Legs" buttons={
-          <Button icon="sync-alt" tooltip="Change legs decoration" onClick={() => act("cosmetic-change-legs")} />
+          <DockingAllowedButton icon="sync-alt" tooltip="Change legs decoration" onClick={() => act("cosmetic-change-legs")} />
         }>{cosmetics.legs || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Paint" buttons={
           <>
-            {!cosmetics.paint && <Button icon="plus" tooltip="Add paint" onClick={() => act("occupant-paint-add")} />}
-            {cosmetics.paint && <Button icon="tint" tooltip="Change colour" onClick={() => act("occupant-paint-change")} />}
-            {cosmetics.paint && <Button icon="minus" tooltip="Remove paint" onClick={() => act("occupant-paint-remove")} />}
+            {!cosmetics.paint && <DockingAllowedButton icon="plus" tooltip="Add paint" onClick={() => act("occupant-paint-add")} />}
+            {cosmetics.paint && <DockingAllowedButton icon="tint" tooltip="Change colour" onClick={() => act("occupant-paint-change")} />}
+            {cosmetics.paint && <DockingAllowedButton icon="minus" tooltip="Remove paint" onClick={() => act("occupant-paint-remove")} />}
           </>
         }>
           {cosmetics.paint ? <ColorBox color={cosmetics.paint} /> : "No paint applied"}
         </LabeledList.Item>
         <LabeledList.Item label="Eyes" buttons={
-          <Button icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
+          <DockingAllowedButton icon="tint" tooltip="Change eye glow" onClick={() => act("occupant-fx")} />
         }>
           <ColorBox color={"rgb(" + cosmetics.fx[0] + "," + cosmetics.fx[1] + "," + cosmetics.fx[2] + ")"} />
         </LabeledList.Item>
@@ -217,12 +240,12 @@ const DecorationReport = (props) => {
   );
 };
 const DamageReport = (props) => {
-  const { parts, fuel, wire, act } = props;
+  const { parts, fuel, cabling, act } = props;
   return (
     <Section title="Damage Report" buttons={
       <>
-        <Button disabled={fuel < 1} icon="wrench" color="red" tooltip="Fix structural damage" onClick={() => act("repair-fuel")} />
-        <Button disabled={wire < 1} icon="fire" color="yellow" tooltip="Fix wiring damage" onClick={() => act("repair-wiring")} />
+        <DockingAllowedButton disabled={fuel < 1} icon="wrench" backgroundColor={COLORS.damageType.brute} tooltip="Fix structural damage" onClick={() => act("repair-fuel")} />
+        <DockingAllowedButton disabled={cabling < 1} icon="fire" backgroundColor={COLORS.damageType.burn} tooltip="Fix wiring damage" onClick={() => act("repair-wiring")} />
       </>
     }>
       <LabeledList>
@@ -251,15 +274,15 @@ const PartDisplay = (props) => {
           <Flex>
             <Flex.Item grow={1}>
               <Flex>
-                <Flex.Item backgroundColor={"#990000"} width={partBluntPercent + "%"} />
-                <Flex.Item backgroundColor={"#cc9900"} width={partBurnsPercent + "%"} />
+                <Flex.Item backgroundColor={COLORS.damageType.brute} width={partBluntPercent + "%"} />
+                <Flex.Item backgroundColor={COLORS.damageType.burn} width={partBurnsPercent + "%"} />
                 <Flex.Item grow={1} backgroundColor={"#000000"} stretch >&nbsp;</Flex.Item>
               </Flex>
             </Flex.Item>
             <Flex.Item shrink>
               <Flex>
-                <Flex.Item shrink width="25px" backgroundColor={"#330000"} color={"#ff0000"} bold><Box textAlign={"center"}>{partBluntPercent > 0 ? partBluntPercent : "--"}</Box></Flex.Item>
-                <Flex.Item shrink width="25px" backgroundColor={"#331100"} color={"#ffcc00"} bold><Box textAlign={"center"}>{partBurnsPercent > 0 ? partBurnsPercent : "--" }</Box></Flex.Item>
+                <Flex.Item shrink width="25px" backgroundColor={"#330000"} color={COLORS.damageType.brute} bold><Box textAlign={"center"}>{partBluntPercent > 0 ? partBluntPercent : "--"}</Box></Flex.Item>
+                <Flex.Item shrink width="25px" backgroundColor={"#331100"} color={COLORS.damageType.burn} bold><Box textAlign={"center"}>{partBurnsPercent > 0 ? partBurnsPercent : "--" }</Box></Flex.Item>
               </Flex>
             </Flex.Item>
           </Flex>
@@ -282,12 +305,12 @@ const AvailableCellsDisplay = (props) => {
                     <LabeledList.Item label={cell.name}
                       buttons={
                         <>
-                          <Button onClick={() => act("cell-install", { cellRef: cell.ref })} icon="plus" tooltip="Add to occpuant" />
-                          <Button onClick={() => act("cell-eject", { cellRef: cell.ref })} icon="eject" tooltip="Eject from station" />
+                          <DockingAllowedButton onClick={() => act("cell-install", { cellRef: cell.ref })} icon="plus" tooltip="Add to occpuant" />
+                          <DockingAllowedButton onClick={() => act("cell-eject", { cellRef: cell.ref })} icon="eject" tooltip="Eject from station" />
                         </>
                       }
                     >
-                      {cell.current} / {cell.max}
+                      <CellChargeBar cellData={cell} />
                     </LabeledList.Item>
                   </div>);
               })
@@ -310,8 +333,8 @@ const AvailableModulesDisplay = (props) => {
           modules.map(modu => {
             return (
               <div key={modu.ref}>{modu.name}
-                <Button onClick={() => act("module-install", { moduleRef: modu.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
-                <Button onClick={() => act("module-eject", { moduleRef: modu.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
+                <DockingAllowedButton onClick={() => act("module-install", { moduleRef: modu.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("module-eject", { moduleRef: modu.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </div>
             );
           })
@@ -332,8 +355,8 @@ const AvailableUpgradesDisplay = (props) => {
           upgrades.map(upgrade => {
             return (
               <div key={upgrade.ref}>{upgrade.name}
-                <Button onClick={() => act("upgrade-install", { upgradeRef: upgrade.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
-                <Button onClick={() => act("upgrade-eject", { upgradeRef: upgrade.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
+                <DockingAllowedButton onClick={() => act("upgrade-install", { upgradeRef: upgrade.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("upgrade-eject", { upgradeRef: upgrade.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </div>
             );
           })
@@ -353,8 +376,8 @@ const AvailableClothingDisplay = (props) => {
           clothes.map(cloth => {
             return (
               <Box key={cloth.ref}>{cloth.name}
-                <Button onClick={() => act("clothing-install", { clothingRef: cloth.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
-                <Button onClick={() => act("clothing-eject", { clothingRef: cloth.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
+                <DockingAllowedButton onClick={() => act("clothing-install", { clothingRef: cloth.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("clothing-eject", { clothingRef: cloth.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </Box>
             );
           })
@@ -373,16 +396,35 @@ const OccupantCellDisplay = (props) => {
       label="Power Cell"
       color={cellData ? "white" : "red"}
       buttons={
-        <Button
+        <DockingAllowedButton
           onClick={() => act("cell-remove")}
           icon="minus"
           tooltip="Remove the occpuant's power cell"
           disabled={cellData ? false : true} />
       }>
-      { cellData
-        ? <span>{cellData.name} ({cellData.current} / {cellData.max})</span>
-        : <span>No Power Cell Installed</span>}
+      { cellData && <CellChargeBar cellData={cellData} />}
+      { !cellData && <Box bold>No Power Cell Installed</Box>}
     </LabeledList.Item>
+  );
+};
+const CellChargeBar = (props) => {
+  const { cellData } = props;
+  const charge = cellData.current / cellData.max;
+  return (
+    <Tooltip
+      position="bottom"
+      content={Math.floor(cellData.current) + "/" + cellData.max}
+    >
+      <ProgressBar
+        position="relative"
+        value={charge}
+        ranges={{ good: [0.5, Infinity], average: [0.25, 0.5],
+          bad: [-Infinity, 0.25] }}>
+        {
+          Math.floor(charge*100)
+        }%
+      </ProgressBar>
+    </Tooltip>
   );
 };
 const OccupantUpgradeDisplay = (props) => {
@@ -397,7 +439,7 @@ const OccupantUpgradeDisplay = (props) => {
               <Stack key={upgrade.ref}>
                 <Stack.Item>{upgrade.name}</Stack.Item>
                 <Stack.Item>
-                  <Button
+                  <DockingAllowedButton
                     compact
                     icon="minus-circle"
                     color="transparent"
@@ -417,7 +459,7 @@ const DockingTabView = (props) => {
   switch (tabIndex) {
     case 1:
       return (
-        <OccupantTab occupant={data.occupant} wire={data.wire} fuel={data.fuel} act={act} />
+        <OccupantTab occupant={data.occupant} cabling={data.cabling} fuel={data.fuel} act={act} />
       );
     case 2:
       return (
@@ -427,9 +469,11 @@ const DockingTabView = (props) => {
               {data.fuel}
             </LabeledList.Item>
             <LabeledList.Item label="Wire Cabling">
-              {data.wire}
+              {data.cabling}
             </LabeledList.Item>
-            <LabeledList.Item label="Self Service"><Button.Checkbox checked={data.allow_self_service} onClick={() => act("self-service")} /> { data.allow_self_service ? "Enabled" : "Disabled"}</LabeledList.Item>
+            <LabeledList.Item label="Self Service">
+              <Button.Checkbox tooltip="Toggle self-service." checked={data.allow_self_service} disabled={data.viewer_is_robot} onClick={() => act("self-service")} /> { data.allow_self_service ? "Enabled" : "Disabled"}
+            </LabeledList.Item>
           </LabeledList>
           <AvailableModulesDisplay modules={data.modules} act={act} />
           <AvailableUpgradesDisplay upgrades={data.upgrades} act={act} />

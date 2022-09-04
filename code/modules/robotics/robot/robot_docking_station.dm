@@ -15,7 +15,6 @@
 	var/list/upgrades = list()
 	var/list/modules = list()
 	var/list/clothes = list()
-	var/allow_clothes = TRUE
 	var/allow_self_service = TRUE
 	var/conversion_chamber = FALSE
 	var/mob/occupant = null
@@ -79,7 +78,7 @@
 	ui_interact(user)
 
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/clothing) && src.allow_clothes)
+	if (istype(W, /obj/item/clothing))
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
 			return
@@ -387,16 +386,24 @@
 /obj/machinery/recharge_station/ui_data(mob/user)
 	. = list()
 
-	.["allow_current_user"] = TRUE
+	.["viewer_is_occupant"] = (user == src.occupant)
+	.["viewer_is_robot"] = isrobot(user)
+	.["allow_self_service"] = src.allow_self_service
+	.["conversion_chamber"] = src.conversion_chamber
 
+	.["cabling"] = src.cabling
+	var/fuelamt = src.reagents.get_reagent_amount("fuel")
+	.["fuel"] = fuelamt
+
+	.["disabled"] = FALSE
 	if (isrobot(user))
 		if (user != src.occupant)
-			.["allow_current_user"] = FALSE
+			.["disabled"] = TRUE
 	else
 		if (user == src.occupant)
-			.["allow_current_user"] = FALSE
+			.["disabled"] = TRUE
 	if (!src.allow_self_service && user == src.occupant)
-		.["allow_current_user"] = FALSE
+		.["disabled"] = TRUE
 
 	var/list/occupant_data = list()
 	if (isrobot(src.occupant))
@@ -539,14 +546,6 @@
 
 	.["occupant"] = occupant_data
 
-	.["allow_clothes"] = src.allow_clothes
-	.["allow_self_service"] = src.allow_self_service
-	.["conversion_chamber"] = src.conversion_chamber
-
-	var/fuelamt = src.reagents.get_reagent_amount("fuel")
-	.["fuel"] = fuelamt
-	.["wire"] = src.cabling
-
 	var/list/power_cells_available = list()
 	if (length(src.cells))
 		for (var/obj/item/cell/C in src.cells)
@@ -597,7 +596,7 @@
 			boutput(user, "<span class='alert'>You must be inside the docking station to use the functions.</span>")
 			return
 	else
-		if (user == src.occupant)
+		if (user == src.occupant && !isshell(user))
 			boutput(user, "<span class='alert'>Non-cyborgs cannot use the docking station functions.</span>")
 			return
 
@@ -910,7 +909,7 @@
 			var/clothingRef = params["clothingRef"]
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
-				if (src.allow_clothes && istype(cloth, /obj/item/clothing))
+				if (istype(cloth, /obj/item/clothing))
 					if (istype(cloth, /obj/item/clothing/under))
 						if (R.clothes["under"] != null)
 							var/obj/old = R.clothes["under"]
@@ -974,6 +973,9 @@
 		if("cell-install")
 			if (!isrobot(src.occupant))
 				return
+			if (user == src.occupant)
+				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
+				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/cellRef = params["cellRef"]
 			if(cellRef)
@@ -994,6 +996,9 @@
 			. = TRUE
 		if("cell-remove")
 			if (!isrobot(src.occupant))
+				return
+			if (user == src.occupant)
+				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/obj/item/cell_to_remove = R.cell

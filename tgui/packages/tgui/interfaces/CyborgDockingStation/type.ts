@@ -8,13 +8,14 @@
 export interface CyborgDockingStationData {
   occupant?: OccupantData,
 
-  allow_current_user: boolean;
-  allow_clothes: boolean,
+  disabled: boolean;
+  viewer_is_occupant: boolean;
+  viewer_is_robot: boolean;
   allow_self_service: boolean,
   conversion_chamber: boolean,
 
+  cabling: number,
   fuel: number,
-  wire: number,
 
   cells?: Array<PowerCellData>,
   modules?: Array<ModuleData>,
