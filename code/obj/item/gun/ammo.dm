@@ -435,6 +435,28 @@
 	icon_short = "rifle_clip_dart"
 	icon_empty = "rifle_clip_empty"
 
+	var/image/reagent_image
+
+	New()
+		..()
+		src.update_icon()
+
+	update_icon()
+		..()
+		if (!src.icon_dynamic || !src.ammo_type.reagent_payload)
+			return
+
+		src.underlays = null
+		if (!src.reagent_image)
+			src.reagent_image = image(src.icon, "rifle_clip_dart_underlay-[src.amount_left]", -1)
+		else
+			src.reagent_image.icon_state = "rifle_clip_dart_underlay-[src.amount_left]"
+
+
+		var/datum/reagent/reagent = reagents_cache[src.ammo_type.reagent_payload]
+		src.reagent_image.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b, reagent.transparency)
+		src.underlays += src.reagent_image
+
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
 		ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate
@@ -446,6 +468,7 @@
 			icon_state = "pistol_tranq"
 			amount_left = 10
 			max_amount = 15
+			icon_dynamic = 0
 			ammo_cat = AMMO_TRANQ_9MM//i prefer having tranqs grouped up- owari.
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
 
