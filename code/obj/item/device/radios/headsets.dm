@@ -17,38 +17,62 @@
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
-	var/haswiretap
+	var/obj/item/device/radio_upgrade/wiretap = null
 	hardened = 0
 
 	attackby(obj/item/R, mob/user)
 		if (istype(R, /obj/item/device/radio_upgrade))
-			if (haswiretap)
-				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! What good could possibly come from having two?!</span>")
+			if (wiretap)
+				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! It doesn't have room for any more!</span>")
 				return
-			src.haswiretap = 1
-			src.secure_frequencies = list(
-				"h" = R_FREQ_COMMAND,
-				"g" = R_FREQ_SECURITY,
-				"e" = R_FREQ_ENGINEERING,
-				"r" = R_FREQ_RESEARCH,
-				"m" = R_FREQ_MEDICAL,
-				"c" = R_FREQ_CIVILIAN,
-				"z" = R_FREQ_SYNDICATE,
-				)
-			src.secure_classes = list(
-				"h" = RADIOCL_COMMAND,
-				"g" = RADIOCL_SECURITY,
-				"e" = RADIOCL_ENGINEERING,
-				"r" = RADIOCL_RESEARCH,
-				"m" = RADIOCL_MEDICAL,
-				"c" = RADIOCL_CIVILIAN,
-				"z" = RADIOCL_SYNDICATE,
-				)
-			boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from all station frequencies.</span>")
+			src.wiretap = R
+			if (istype(R, /obj/item/device/radio_upgrade/conspirator))
+				var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
+				if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+					C = ticker.mode
+				var/the_frequency = C.agent_radiofreq
+				src.secure_classes["z"] = RADIOCL_SYNDICATE
+				src.set_secure_frequency("z", the_frequency)
+				boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from a private secure radio channel.</span>")
+			else
+				src.secure_frequencies = list(
+					"h" = R_FREQ_COMMAND,
+					"g" = R_FREQ_SECURITY,
+					"e" = R_FREQ_ENGINEERING,
+					"r" = R_FREQ_RESEARCH,
+					"m" = R_FREQ_MEDICAL,
+					"c" = R_FREQ_CIVILIAN,
+					"z" = R_FREQ_SYNDICATE,
+					)
+				src.secure_classes = list(
+					"h" = RADIOCL_COMMAND,
+					"g" = RADIOCL_SECURITY,
+					"e" = RADIOCL_ENGINEERING,
+					"r" = RADIOCL_RESEARCH,
+					"m" = RADIOCL_MEDICAL,
+					"c" = RADIOCL_CIVILIAN,
+					"z" = RADIOCL_SYNDICATE,
+					)
+				boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from all station frequencies.</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			set_secure_frequencies(src)
-			qdel(R)
+			R.set_loc(src)
+			user.u_equip(R)
 
+		if (issnippingtool(R) && wiretap)
+			boutput(user, "<span class='notice'>You begin removing [src.wiretap] from [src].</span>")
+			if (!do_after(user, 2 SECONDS))
+				boutput(user, "<span class='alert'>You were interrupted!.</span>")
+				return
+			boutput(user, "<span class='notice'>You remove [src.wiretap] from [src].</span>")
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+			user.put_in_hand_or_drop(src.wiretap)
+			src.wiretap = null
+
+			var/obj/item/device/radio/headset/headset = new src.type
+			src.secure_frequencies = headset.secure_frequencies
+			src.secure_classes = headset.secure_classes
+			set_secure_frequencies(src)
 		..()
 
 
@@ -522,3 +546,7 @@ Secure Frequency:
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
 	mats = 12
+
+	conspirator
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
