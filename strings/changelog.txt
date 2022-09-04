@@ -1,5 +1,10 @@
 
 (t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
 (u)tarmunora
 (+)firebrands get a little firebot buddie that puts out (mostly) only allies.
 (u)LeahTheTech
