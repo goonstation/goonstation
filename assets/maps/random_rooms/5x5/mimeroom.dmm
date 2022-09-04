@@ -1,0 +1,239 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 2;
+	pixel_y = 19
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/turf/simulated/floor/blackwhite,
+/area/space)
+"b" = (
+/turf/simulated/wall/auto/supernorn,
+/area/space)
+"i" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/stool/chair/office/red{
+	dir = 4;
+	tag = "icon-office_chair_red (EAST)"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/space)
+"j" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/stamp/mime{
+	rand_pos = 0;
+	pixel_y = 1;
+	pixel_x = 5
+	},
+/obj/item/clothing/head/mime_bowler{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/space)
+"k" = (
+/obj/table/auto,
+/obj/item/baguette,
+/obj/item/baguette{
+	pixel_x = -15;
+	pixel_y = 4
+	},
+/obj/item/cigpacket/propuffs{
+	pixel_x = 9;
+	pixel_y = -4;
+	rand_pos = 0
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
+/area/space)
+"n" = (
+/obj/storage,
+/obj/item/clothing/under/misc/mimefancy,
+/obj/item/clothing/under/misc/mimedress,
+/obj/item/clothing/mask/mime,
+/obj/item/pen/crayon/white,
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
+/area/space)
+"p" = (
+/obj/stool/chair/comfy/red{
+	dir = 8;
+	icon_state = "chair_comfy-red"
+	},
+/turf/simulated/floor/blackwhite,
+/area/space)
+"r" = (
+/turf/simulated/floor/carpet/regalcarpet/border,
+/area/space)
+"u" = (
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/space)
+"w" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/space)
+"x" = (
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/space)
+"B" = (
+/obj/critter/domestic_bee/mimebee,
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/space)
+"H" = (
+/obj/critter/domestic_bee/mimebee,
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/space)
+"I" = (
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/space)
+"K" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/space)
+"L" = (
+/obj/shrub{
+	dir = 10;
+	icon_state = "shrub"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/space)
+"M" = (
+/obj/critter/domestic_bee/mimebee,
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	icon_state = "bulb1"
+	},
+/turf/simulated/floor/blackwhite,
+/area/space)
+"N" = (
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/space)
+"P" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/space)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/regalcarpet,
+/area/space)
+"R" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "S APC";
+	pixel_y = -24
+	},
+/obj/cable,
+/obj/shrub{
+	dir = 10;
+	icon_state = "shrub"
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/space)
+"X" = (
+/obj/table/auto,
+/obj/item/baguette,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 1
+	},
+/area/space)
+
+(1,1,1) = {"
+b
+L
+i
+R
+b
+"}
+(2,1,1) = {"
+n
+B
+j
+u
+M
+"}
+(3,1,1) = {"
+X
+N
+Q
+r
+a
+"}
+(4,1,1) = {"
+k
+H
+P
+I
+p
+"}
+(5,1,1) = {"
+b
+x
+w
+K
+b
+"}
