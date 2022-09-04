@@ -132,7 +132,7 @@
 						boutput(usr, "<span class='alert'>There appears to be a tank loaded already!</span>")
 						return
 
-					if (src.check_tank_oxygen(I))
+					if (!src.check_tank_oxygen(I))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
 						return
 
