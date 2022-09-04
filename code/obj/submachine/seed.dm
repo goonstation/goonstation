@@ -122,7 +122,7 @@
 		switch(action)
 			if("change_tab")
 				src.mode = params["tab"]
-				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				update_static_data(ui.user, ui)
 
 			if("ejectbeaker")
@@ -190,7 +190,7 @@
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
-				playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 
 				if (istype(I,/obj/item/seed/))
 					var/obj/item/seed/S = I
@@ -280,7 +280,7 @@
 					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
 
 			if("splice_select")
-				playsound(src, "sound/machines/keypress.ogg", 50, 1)
+				playsound(src, 'sound/machines/keypress.ogg', 50, 1)
 				var/obj/item/I = locate(params["splice_select_ref"]) in src
 				if (!istype(I))
 					return
@@ -332,19 +332,19 @@
 							for(var/datum/reagent/R in usable_reagents)
 								switch(S.HYPinfusionS(R.id,src))
 									if (1)
-										playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+										playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
 										break
 									if (2)
-										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
 										break
 									if (3)
-										playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 										boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
 										break
 									else
-										playsound(src, "sound/effects/zzzt.ogg", 50, 1)
+										playsound(src, 'sound/effects/zzzt.ogg', 50, 1)
 										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 								src.inserted.reagents.remove_reagent(R.id,10)
 					update_static_data(ui.user, ui)
@@ -467,7 +467,7 @@
 					DNA.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 					boutput(usr, "<span class='notice'>Splice successful.</span>")
-					playsound(src, "sound/machines/ping.ogg", 50, 1)
+					playsound(src, 'sound/machines/ping.ogg', 50, 1)
 					//0 xp for a 100% splice, 4 xp for a 10% splice
 					JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 					if (!src.seedoutput) src.seeds.Add(S)
@@ -476,7 +476,7 @@
 				else
 					// It fucked up - we don't need to do anything else other than tell the user
 					boutput(usr, "<span class='alert'>Splice failed.</span>")
-					playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
 
 				// Now get rid of the old seeds and go back to square one
 				src.seeds.Remove(seed1)
@@ -561,7 +561,7 @@
 			for(var/obj/item/P in view(1,user))
 				if (user.loc != staystill) break
 				if (P.type != itemtype) continue
-				playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				if (istype(O, /obj/item/seed/))
 					src.seeds.Add(P)
 				else
