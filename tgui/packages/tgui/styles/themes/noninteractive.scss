@@ -1,8 +1,0 @@
-@use 'sass:color';
-@use 'sass:meta';
-
-.theme-noninteractive {
-  .Button { // gray out buttons even when technically not disabled
-    background-color: #999999 !important;
-  }
-}
