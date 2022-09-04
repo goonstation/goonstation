@@ -144,7 +144,9 @@
 		return
 	if (ismob(M))
 		var/mob/T = M
-		boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+		if (!issilicon(M)) // Borgs don't care about rads (for the meantime)
+			boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)

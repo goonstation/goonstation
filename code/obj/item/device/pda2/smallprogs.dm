@@ -802,7 +802,7 @@ Code:
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
-	name = "BOMB"
+	name = "SELF-DESTRUCT"
 	size = 8
 	var/detonating = 0
 
@@ -906,15 +906,15 @@ Using electronic "Detomatix" MISSILE program is simple!<br>
 <li>now run MISSILE.PPROG and select IMPORT PDA LIST</li>
 <li>select up to four (4) PDAs you want EXPLODED from DISTANCE!</li>
 </ul><br>
-Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
+Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 <ul>
-<li>Copy BOMB.PPROG to main drive, as cart programs cannot be edited!</li>"
-<li>Simply rename new BOMB.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
+<li>Copy SELF-DESTRUCT.PPROG to main drive, as cart programs cannot be edited!</li>"
+<li>Simply rename new SELF-DESTRUCT.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
 <li>Now, COPY renamed file and open MESSENGER.  Select your target and SEND THEM the file!</li>
 <li>Finally, they run file expecting some attractive plants, but instead get EXPLODED PDA!</li>
 </ul>
 <br>
-<b>Caution: </b>Do not run BOMB.PPROG on your own system!  It will explode!
+<b>Caution: </b>Do not run SELF-DESTRUCT.PPROG on your own system!  It will explode!
 "}
 
 //Security ticket writer - not really a small prog any more but oh well

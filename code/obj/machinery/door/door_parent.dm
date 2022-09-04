@@ -646,13 +646,13 @@
 	cant_emag = TRUE
 
 /obj/machinery/door/unpowered/attack_ai(mob/user as mob)
-	return src.Attackhand(user)
+	return
 
 /obj/machinery/door/unpowered/attack_hand(mob/user)
 	return src.Attackby(null, user)
 
 /obj/machinery/door/unpowered/attackby(obj/item/I, mob/user)
-	if (src.operating)
+	if (src.operating || isintangible(user) || isdead(user))
 		return
 	src.add_fingerprint(user)
 	if (src.allowed(user))
@@ -798,6 +798,8 @@
 	set category = "Local"
 	set src in oview(1)
 
+	if (isdead(user) || isintangible(user))
+		return
 	if (!src.density || src.operating)
 		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return

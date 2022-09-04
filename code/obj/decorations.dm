@@ -1495,8 +1495,9 @@ obj/decoration/pottedfern
 		anchored = 1
 
 		SPAWN(0)
-			for(var/i=0, i<rand(30,40), i++)
+			for(var/i=0, i<rand(15,25), i++)
 				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
 				sleep(rand(2, 15))
 
 			for(var/mob/O in oviewers(world.view, src))

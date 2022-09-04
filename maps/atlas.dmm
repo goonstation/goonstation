@@ -1570,6 +1570,14 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"dQ" = (
+/obj/rack,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
 "dS" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 5
@@ -3136,6 +3144,20 @@
 	},
 /turf/space,
 /area/space)
+"in" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "io" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -9026,6 +9048,14 @@
 /obj/machinery/manufacturer/uniform,
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/lounge)
+"vG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/station/hallway/primary/east)
 "vH" = (
 /obj/table/auto,
 /obj/item/aiModule/freeform,
@@ -9412,24 +9442,6 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/medical/medbay/cloner)
-"wN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/clothing/suit/space/engineer,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/yellow/side,
-/area/station/mining/staff_room)
 "wO" = (
 /obj/machinery/clone_scanner,
 /obj/cable{
@@ -9712,14 +9724,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
-"xv" = (
-/obj/rack,
-/obj/item/clothing/suit/space/engineer,
-/obj/item/clothing/head/helmet/space/engineer,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/jetpack/micro,
-/turf/simulated/floor/yellow/side,
-/area/station/mining/staff_room)
 "xw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10413,6 +10417,18 @@
 	dir = 6
 	},
 /area/station/mining/refinery)
+"ze" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Research Wing"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/access_spawn/artlab,
+/obj/firedoor_spawn,
+/turf/simulated/floor/purple,
+/area/station/science/artifact)
 "zf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/united_command)
@@ -10499,14 +10515,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"zq" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "zr" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary,
@@ -10886,6 +10894,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tech)
+"Al" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Teleporter Pad"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "tele";
+	name = "Teleporter Lockdown Shutter"
+	},
+/obj/access_spawn/telesci,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/science/teleporter)
 "An" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced,
@@ -11355,20 +11375,6 @@
 "Bx" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay)
-"By" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "Bz" = (
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -12005,26 +12011,6 @@
 "Di" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"Dj" = (
-/obj/table/auto,
-/obj/item/old_grenade/oxygen{
-	pixel_y = 8
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_y = 8
-	},
-/obj/item/tank/jetpack/micro,
-/obj/item/tank/jetpack/micro,
-/obj/item/tank/jetpack/micro,
-/obj/item/tank/jetpack/micro,
-/obj/item/tank/jetpack/micro,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/storage/eva)
 "Dk" = (
 /obj/table/auto,
 /obj/machinery/light{
@@ -12116,6 +12102,26 @@
 "Dz" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/refinery)
+"DA" = (
+/obj/table/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_y = 8
+	},
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/item/tank/jetpack/micro,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/storage/eva)
 "DC" = (
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/plating/random,
@@ -12150,24 +12156,6 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/science/teleporter)
-"DK" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "tele";
-	name = "Teleporter Lockdown Shutter";
-	tag = "icon-pdoor1 (EAST)"
-	},
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4;
-	name = "Science Teleporter"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/telesci,
-/obj/firedoor_spawn,
-/turf/simulated/floor/purple,
-/area/station/science/teleporter)
 "DL" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -12178,11 +12166,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
-"DN" = (
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/chemistry)
 "DO" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -12202,32 +12185,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"DQ" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/chemistry)
-"DR" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Research Wing"
-	},
-/obj/access_spawn/artlab,
-/obj/firedoor_spawn,
-/obj/machinery/secscanner{
-	icon_state = "scanner_off";
-	pixel_y = 10
-	},
-/turf/simulated/floor/purple,
-/area/station/science/artifact)
 "DS" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -13266,6 +13223,15 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"Gm" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/computer/chem_requester/science,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "Gn" = (
 /obj/cable{
 	d1 = 4;
@@ -13303,6 +13269,24 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"Gq" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tele";
+	name = "Teleporter Lockdown Shutter";
+	tag = "icon-pdoor1 (EAST)"
+	},
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4;
+	name = "Science Teleporter"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/access_spawn/telesci,
+/obj/firedoor_spawn,
+/turf/simulated/floor/purple,
+/area/station/science/teleporter)
 "Gr" = (
 /obj/shrub{
 	dir = 6
@@ -13321,6 +13305,12 @@
 "Gu" = (
 /turf/simulated/floor/stairs/wide/other,
 /area/station/medical/robotics)
+"Gv" = (
+/obj/machinery/computer/chem_requester/medical,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "Gw" = (
 /obj/shrub{
 	dir = 4
@@ -13448,18 +13438,6 @@
 	dir = 4
 	},
 /area/station/science/teleporter)
-"GO" = (
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4;
-	name = "Research Wing"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/artlab,
-/obj/firedoor_spawn,
-/turf/simulated/floor/purple,
-/area/station/science/artifact)
 "GP" = (
 /obj/cable{
 	d1 = 1;
@@ -16862,10 +16840,37 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
+"Pp" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/rack,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/jetpack/micro,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/clothing/suit/space/engineer,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
 "Ps" = (
 /obj/lattice,
 /turf/space,
 /area/space)
+"Pt" = (
+/obj/stool/chair{
+	dir = 4;
+	tag = "icon-chair (EAST)"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/hallway/primary/east)
 "Pu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17229,6 +17234,14 @@
 	dir = 10
 	},
 /area/station/science/lab)
+"Qd" = (
+/obj/machinery/computer/chem_request_receiver{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "Qe" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "chamber_2";
@@ -17644,18 +17657,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/heads)
-"Rf" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "Rg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -17763,6 +17764,18 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"Rw" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Research Wing"
+	},
+/obj/access_spawn/artlab,
+/obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	icon_state = "scanner_off";
+	pixel_y = 10
+	},
+/turf/simulated/floor/purple,
+/area/station/science/artifact)
 "Rx" = (
 /obj/cable{
 	d1 = 1;
@@ -17920,12 +17933,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
-"RX" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "RY" = (
 /obj/item/reagent_containers/food/snacks/burger/moldy{
 	pixel_x = -9;
@@ -18995,6 +19002,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"UV" = (
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "UW" = (
 /obj/landmark/start{
 	name = "Research Director"
@@ -19449,6 +19461,20 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"We" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "Wg" = (
 /turf/simulated/floor/red,
 /area/station/bridge/united_command)
@@ -19565,13 +19591,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
-"Wy" = (
-/obj/stool/chair{
-	dir = 4;
-	tag = "icon-chair (EAST)"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "Wz" = (
 /obj/stool/chair/office/blue,
 /obj/machinery/camera{
@@ -20123,6 +20142,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"XV" = (
+/turf/simulated/floor/purpleblack/corner{
+	dir = 1
+	},
+/area/station/hallway/primary/east)
 "XX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -20299,6 +20323,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
+"Yr" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "Ys" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -20323,18 +20361,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"Yv" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Teleporter Pad"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "tele";
-	name = "Teleporter Lockdown Shutter"
-	},
-/obj/access_spawn/telesci,
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/science/teleporter)
 "Yw" = (
 /obj/item/sheet/steel/fullstack,
 /obj/table/auto,
@@ -56649,7 +56675,7 @@ ru
 ru
 ru
 SV
-wN
+Pp
 cJ
 iZ
 jZ
@@ -56951,7 +56977,7 @@ ru
 ru
 ru
 Qm
-xv
+dQ
 cJ
 ja
 ka
@@ -57253,7 +57279,7 @@ ru
 ru
 ru
 Qm
-xv
+dQ
 cJ
 iZ
 ka
@@ -60905,7 +60931,7 @@ Dc
 DI
 Ey
 Fg
-Yv
+Al
 GI
 UE
 GG
@@ -61506,7 +61532,7 @@ Zg
 nP
 Pv
 Da
-DK
+Gq
 EA
 EA
 Da
@@ -62714,7 +62740,7 @@ ny
 Rp
 CA
 qh
-DN
+in
 EC
 Cz
 Gb
@@ -63009,8 +63035,8 @@ uM
 vH
 qD
 Tu
-Rf
-RX
+Yr
+vG
 WD
 zB
 XO
@@ -63311,8 +63337,8 @@ rw
 rw
 qD
 qD
-By
-Zy
+Gm
+UV
 RJ
 Ui
 Rp
@@ -63613,8 +63639,8 @@ uN
 vI
 qj
 qD
-Wy
-Zy
+Pt
+XV
 nu
 RZ
 Rp
@@ -63922,7 +63948,7 @@ Xk
 XF
 CA
 Dg
-DQ
+Qd
 EF
 Fl
 Gf
@@ -64228,7 +64254,7 @@ CA
 Cz
 Cz
 DU
-GO
+ze
 DU
 DU
 Cs
@@ -64519,14 +64545,14 @@ vv
 vJ
 wJ
 qD
-zq
+We
 Zy
 RJ
 RZ
 Rp
 op
 pn
-DR
+Rw
 EG
 Fm
 Gg
@@ -70568,7 +70594,7 @@ PN
 Dl
 Eb
 yg
-Bz
+FC
 Go
 GV
 HA
@@ -70870,7 +70896,7 @@ PO
 yg
 Bx
 Bx
-FC
+Gv
 SP
 GW
 HB
@@ -77194,7 +77220,7 @@ je
 ct
 po
 qz
-Dj
+DA
 pp
 ve
 fl

@@ -255,6 +255,13 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	mutations = list(/datum/plantmutation/tree/money, /datum/plantmutation/tree/rubber,/datum/plantmutation/tree/sassafras, /datum/plantmutation/tree/dog,/datum/plantmutation/tree/paper)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/resistance_drought)
 
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		if (reagent == "radium")
+			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/glowstick)
+
 /datum/plant/crop/coffee
 	name = "Coffee"
 	seedcolor = "#302013"
