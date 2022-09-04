@@ -1,5 +1,7 @@
 
 (t)sun sep 04 22
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
 (u)LeahTheTech
 (p)10361
 (e)|
