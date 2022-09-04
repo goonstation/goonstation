@@ -354,7 +354,7 @@
 	proc/get_output_cable()
 		var/list/cables = src.get_connections()
 
-		if (!cables.len)
+		if (!length(cables) )
 			return
 
 		for (var/obj/cable/C in cables)
