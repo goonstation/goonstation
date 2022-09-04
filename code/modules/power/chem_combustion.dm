@@ -8,7 +8,7 @@
 	mats = list("MET-2" = 12, "CON-1" = 8)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
-	var/active = 0
+	var/active = FALSE
 	var/fuel_drain_rate = 0.3
 	var/atmos_drain_rate = 0.02
 	var/output_multiplier = 1 // for bigger generators?
@@ -118,7 +118,7 @@
 					I.set_loc(src)
 					src.fuel_tank = I
 					src.UpdateIcon()
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else if (href_list["inlet"])
 			if (src.inlet_tank)
@@ -141,7 +141,7 @@
 					I.set_loc(src)
 					src.inlet_tank = I
 					src.UpdateIcon()
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		src.updateUsrDialog()
 		return
@@ -165,7 +165,7 @@
 			W.set_loc(src)
 			src.inlet_tank = W
 			src.UpdateIcon()
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 		// fuel tank
@@ -183,7 +183,7 @@
 			W.set_loc(src)
 			src.fuel_tank = W
 			src.UpdateIcon()
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else if (iswrenchingtool(W))
 			if (src.anchored)
@@ -191,15 +191,15 @@
 					src.visible_message("<span class='notice'>The [src] stops as it was unachored by [user].</span>")
 					src.stop_engine()
 				else
-					src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
+					src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
 
-				src.anchored = 0
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				src.anchored = FALSE
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				return
 
-			src.anchored = 1
-			src.visible_message("<span class='notice'>[user] removes the [src]'s bolts from the floor.</span>")
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			src.anchored = TRUE
+			src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 		src.updateUsrDialog()
 		return
@@ -284,7 +284,7 @@
 							average += 3
 
 		if (!average)
-			return 0
+			return FALSE
 
 		return average / R.total_volume
 
@@ -297,36 +297,36 @@
 	proc/start_engine()
 		if (!src.active)
 			if (!src.ready_to_start())
-				return 1
+				return TRUE
 
-			src.active = 1
+			src.active = TRUE
 			src.UpdateIcon()
 			src.updateDialog()
 
 			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
-				playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+				playsound(src.loc, 'sound/machines/tractorrev.ogg', 40, pitch=2)
 
-			return 0
+			return FALSE
 
 	proc/stop_engine()
 		if (src.active)
-			src.active = 0
+			src.active = FALSE
 			src.UpdateIcon()
 			src.updateDialog()
 
 			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
-				playsound(src.loc, "sound/machines/tractorrev.ogg", 40, pitch=2)
+				playsound(src.loc, 'sound/machines/tractorrev.ogg', 40, pitch=2)
 
-			return 0
+			return FALSE
 
 	proc/ready_to_start()
 		if (!anchored || !src.fuel_tank)
-			return 0
+			return FALSE
 
 		if (!src.get_average_volatility(src.fuel_tank.reagents) || !src.check_available_oxygen())
-			return 0
+			return FALSE
 
-		return 1
+		return TRUE
 
 	// Returns the concentration of oxygen in the available gas_mixture
 	proc/check_available_oxygen()
@@ -335,19 +335,19 @@
 
 		var/turf/simulated/T = get_turf(src)
 		if (!istype(T))
-			return 0
+			return FALSE
 
 		if (!T.air || T.air.oxygen <= 0)
-			return 0
+			return FALSE
 
 		return T.air.oxygen / TOTAL_MOLES(T.air)
 
 	proc/check_tank_oxygen(obj/item/tank/T)
 		if (!src || !T || !T.air_contents)
-			return 0
+			return FALSE
 
 		if (T.air_contents.oxygen <= 0)
-			return 0
+			return FALSE
 
 		return T.air_contents.oxygen / TOTAL_MOLES(T.air_contents)
 
@@ -377,7 +377,7 @@
 
 		src.fuel_tank = null
 		src.UpdateIcon()
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 	proc/eject_inlet_tank(var/mob/user)
@@ -391,4 +391,4 @@
 		src.inlet_tank = null
 
 		src.UpdateIcon()
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
