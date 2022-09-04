@@ -22458,6 +22458,7 @@
 /obj/item/suture{
 	pixel_y = 5
 	},
+/obj/item/surgical_spoon,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "bxE" = (
@@ -37765,6 +37766,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/light/incandescent,
+/obj/item/surgical_spoon,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -103308,7 +103310,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+apU
 aaa
 aaa
 aaa
@@ -103610,7 +103612,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aJS
 aaa
 aaa
 aaa

@@ -27,6 +27,7 @@
 	dir = 4;
 	tag = "icon-office_chair_red (EAST)"
 	},
+/obj/critter/dog/george,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},

@@ -1,83 +1,68 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/railing/cyan,
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 1
-	},
+/turf/simulated/floor/carpet/clowncarpet,
 /area/space)
 "d" = (
+/obj/stool/bar,
 /turf/simulated/floor/carpet/clowncarpet/innercorner{
 	dir = 5
 	},
 /area/space)
 "e" = (
-/obj/table/clothred/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
-	pixel_y = 2
+/obj/submachine/chef_sink{
+	pixel_y = 22
 	},
-/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/ash,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 9
 	},
 /area/space)
 "f" = (
-/turf/simulated/floor/carpet/clowncarpet/border,
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_y = 11;
+	pixel_x = 4;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	rand_pos = 0;
+	pixel_y = -9;
+	pixel_x = -7
+	},
+/obj/item/shaker/ketchup{
+	pixel_y = 12;
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/clowncarpet,
 /area/space)
 "g" = (
-/obj/table/clothred/auto,
-/obj/item/reagent_containers/food/drinks/milk/clownspider{
-	pixel_y = 13
+/obj/item/reagent_containers/food/snacks/cookie/peanut{
+	rand_pos = 0
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
 	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 6
 	},
 /area/space)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/critter/dog/george,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/space)
 "k" = (
-/obj/critter/domestic_bee/cluwnebee,
-/obj/item/clothing/mask/clown_hat,
+/obj/stool/chair/comfy/wheelchair{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 6
 	},
 /area/space)
 "t" = (
-/turf/simulated/floor/carpet/clowncarpet/innercorner{
-	dir = 9
-	},
-/area/space)
-"u" = (
-/obj/table/clothred/auto,
-/obj/item/reagent_containers/food/snacks/candy/caramel{
-	rand_pos = 0;
-	pixel_y = 13;
-	pixel_x = 8
-	},
-/obj/item/reagent_containers/food/snacks/candy/chocolate{
-	rand_pos = 0;
-	pixel_y = -1;
-	pixel_x = 3
-	},
-/obj/item/storage/goodybag,
-/obj/cable,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 10
-	},
-/area/space)
-"x" = (
-/obj/stool/bee_bed,
-/obj/random_item_spawner/organs/bloody/one_to_three,
-/turf/simulated/floor/carpet/clowncarpet/border,
-/area/space)
-"B" = (
-/obj/table/clothred/auto,
-/obj/decal/poster/wallsign/poster_clown{
-	pixel_x = -4;
-	pixel_y = 42
-	},
 /obj/item/storage/box/costume/clown/recycled{
 	pixel_y = 5;
 	pixel_x = 1
@@ -85,6 +70,57 @@
 /obj/item/disk/data/cartridge/clown{
 	pixel_y = 3;
 	pixel_x = -8
+	},
+/obj/item/clothing/suit/cardboard_box/colorful/clown,
+/obj/decal/cleanable/ketchup,
+/turf/simulated/floor/carpet/clowncarpet/innercorner{
+	dir = 9
+	},
+/area/space)
+"u" = (
+/obj/cable,
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "S APC";
+	pixel_y = -24
+	},
+/obj/storage/secure/closet/fridge/opened,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/reagent_containers/food/drinks/milk/rancid,
+/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie,
+/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar,
+/obj/item/reagent_containers/food/snacks/ingredient/sugar,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/drinks/milk,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/space)
+"x" = (
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style{
+	pixel_y = 11;
+	pixel_x = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/cookie/peanut{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/condiment/syrup{
+	rand_pos = 0;
+	pixel_y = 17;
+	pixel_x = -7
+	},
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/space)
+"B" = (
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_x = -4;
+	pixel_y = 42
 	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 5
@@ -94,25 +130,50 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/carpet/clowncarpet/border{
-	dir = 8
-	},
+/obj/stool/bar,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/carpet/clowncarpet,
 /area/space)
 "D" = (
-/obj/critter/domestic_bee/clownbee,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	rand_pos = 0;
+	pixel_y = 8;
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	rand_pos = 0;
+	pixel_y = 12;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	rand_pos = 0;
+	pixel_y = 6;
+	pixel_x = 4
 	},
 /turf/simulated/floor/carpet/clowncarpet,
 /area/space)
 "E" = (
-/obj/item/clothing/suit/cardboard_box/colorful/clown,
+/obj/table/clothred/auto,
+/obj/machinery/glass_recycler{
+	density = 1;
+	pixel_y = 7
+	},
+/obj/item/storage/box/glassbox{
+	pixel_x = -2;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 9
 	},
 /area/space)
 "G" = (
-/obj/railing/cyan,
 /turf/simulated/floor/carpet/clowncarpet/innercorner{
 	dir = 8
 	},
@@ -121,44 +182,46 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "L" = (
-/obj/railing/cyan,
 /turf/simulated/floor/carpet/clowncarpet/innercorner,
 /area/space)
 "P" = (
-/obj/cabinet/taffy,
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/drinks/milk/clownspider{
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/cookie/oatmeal{
+	rand_pos = 0;
+	pixel_y = -8;
+	pixel_x = -5
+	},
+/obj/item/storage/box/cookie_tin/sugar{
+	pixel_x = -14;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 1
 	},
 /area/space)
 "Q" = (
-/obj/fitness/speedbag/clown,
+/obj/stool/bar,
+/obj/item/reagent_containers/food/snacks/cookie/bacon{
+	rand_pos = 0
+	},
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 5
 	},
 /area/space)
 "S" = (
-/obj/table/clothred/auto,
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	rand_pos = 0
-	},
-/obj/item/reagent_containers/food/snacks/candy/candy_apple{
-	rand_pos = 0;
-	pixel_y = -12;
-	pixel_x = -8
-	},
-/obj/item/reagent_containers/food/snacks/candy/candy_corn{
-	rand_pos = 0;
-	pixel_y = -6;
-	pixel_x = 2
-	},
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup{
-	pixel_x = -6;
-	pixel_y = 12;
-	rand_pos = 0
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/submachine/chef_oven,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 8
 	},
@@ -172,8 +235,14 @@
 	},
 /area/space)
 "X" = (
-/obj/critter/domestic_bee/cluwnebee,
-/obj/decal/cleanable/blood/splatter,
+/obj/stool/chair/green{
+	dir = 4
+	},
+/obj/decal/cleanable/paper,
+/obj/machinery/light/small{
+	dir = 8;
+	icon_state = "bulb1"
+	},
 /turf/simulated/floor/carpet/clowncarpet/border{
 	dir = 10
 	},
@@ -189,7 +258,7 @@ I
 (2,1,1) = {"
 E
 t
-V
+h
 G
 X
 "}
