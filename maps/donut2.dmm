@@ -3378,9 +3378,15 @@
 	},
 /obj/item/guardbot_frame,
 /obj/item/guardbot_core,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
 /obj/random_item_spawner/buddytool/three,
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/parts/robot_parts/arm/right/standard{
+	pixel_x = 9;
+	pixel_y = 1
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "alt" = (
