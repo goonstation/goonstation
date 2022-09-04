@@ -69,9 +69,9 @@
 		render_map()
 		zoom_map()
 		icon = map_icon
-		// var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
-		// // mask_icon.Scale(1/src.scale, 1/src.scale)
-		// src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
+		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
+		mask_icon.Scale((1/src.scale) * 300, (1/src.scale) * 300)
+		src.add_filter("map_cutoff", 1, alpha_mask_filter(center_x - (world.maxx/2),center_y - (world.maxy/2), mask_icon))
 
 	//generates the map from the current station layout
 	proc/render_map()
@@ -89,10 +89,6 @@
 				y_max = max(y_max, y)
 				y_min = min(y_min, y)
 				map_icon.DrawBox(turf_color(turf), x,y)
-		map_icon.DrawBox(null, 0,0, x_min - border_width, world.maxy)
-		map_icon.DrawBox(null, 0,0, world.maxx, src.y_min - border_width)
-		map_icon.DrawBox(null, x_max + border_width,0, world.maxx,world.maxy)
-		map_icon.DrawBox(null, 0,y_max + border_width, world.maxx,world.maxy)
 
 	//zooms and centers the map on the station
 	proc/zoom_map()
@@ -160,6 +156,7 @@
 		..()
 		src.Scale(0.5,0.5)
 		src.scale *= 0.5
+
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		var/x_max = 0
 		var/y_max = 0
