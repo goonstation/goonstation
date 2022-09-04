@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")
-				playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 				if (istype(src.loc,/turf/)) make_cleanable( /obj/decal/cleanable/robot_debris/limb,src.loc)
 				del(src)
 				return 0
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			B.set_loc(src)
 			src.brain = B
 			boutput(user, "<span class='notice'>You insert the brain.</span>")
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
@@ -227,14 +227,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			I.set_loc(src)
 			src.ai_interface = I
 			boutput(user, "<span class='notice'>You insert [I].</span>")
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			return
 
 		else if (iswrenchingtool(W))
 			if (!src.brain && !src.ai_interface)
 				boutput(user, "<span class='alert'>There's no brain or AI interface chip in there to remove.</span>")
 				return
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			if (src.ai_interface)
 				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.ai_interface].</span>")
 				user.put_in_hand_or_drop(src.ai_interface)
@@ -418,7 +418,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 				W.set_loc(src)
 				src.cell = W
 				boutput(user, "<span class='notice'>You insert [W].</span>")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 		else if(istype(W, /obj/item/cable_coil))
 			if (src.ropart_get_damage_percentage(2) > 0) ..()
@@ -431,13 +431,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 					coil.use(1)
 					src.wires = 1
 					boutput(user, "<span class='notice'>You insert some wire.</span>")
-					playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 		else if (iswrenchingtool(W))
 			if(!src.cell)
 				boutput(user, "<span class='alert'>There's no cell in there to remove.</span>")
 				return
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You remove the cell from it's slot in the chest unit.</span>")
 			src.cell.set_loc( get_turf(src) )
 			src.cell = null
@@ -446,7 +446,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			if(src.wires < 1)
 				boutput(user, "<span class='alert'>There's no wiring in there to remove.</span>")
 				return
-			playsound(src, "sound/items/Wirecutter.ogg", 40, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You cut out the wires and remove them from the chest unit.</span>")
 			// i don't know why this would get abused
 			// but it probably will
@@ -981,7 +981,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					boutput(user, "<span class='alert'>You can't seem to fit this piece anywhere on the frame.</span>")
 					return
 
-			playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
 			user.drop_item()
 			P.set_loc(src)
@@ -1025,36 +1025,36 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					user.unlock_medal("Weird Science", 1)
 					src.finish_cyborg()
 				if("Remove the Right leg")
-					src.r_leg.set_loc( get_turf(src) )
+					src.r_leg?.set_loc( get_turf(src) )
 					if (src.r_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.r_leg = null
 				if("Remove the Left leg")
-					src.l_leg.set_loc( get_turf(src) )
+					src.l_leg?.set_loc( get_turf(src) )
 					if (src.l_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.l_leg = null
 				if("Remove the Right arm")
-					src.r_arm.set_loc( get_turf(src) )
+					src.r_arm?.set_loc( get_turf(src) )
 					if (src.r_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.r_arm = null
 				if("Remove the Left arm")
-					src.l_arm.set_loc( get_turf(src) )
+					src.l_arm?.set_loc( get_turf(src) )
 					if (src.l_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.l_arm = null
 				if("Remove the Head")
-					src.head.set_loc( get_turf(src) )
+					src.head?.set_loc( get_turf(src) )
 					src.head = null
 				if("Remove the Chest")
-					src.chest.set_loc( get_turf(src) )
+					src.chest?.set_loc( get_turf(src) )
 					src.chest = null
-			playsound(src, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			src.UpdateIcon()
 			return
 
@@ -1134,7 +1134,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.shell = 1
 		else if (istype(borg.part_head.brain, /obj/item/organ/brain/latejoin))
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
-			playsound(src, "sound/weapons/radxbow.ogg", 40, 1)
+			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
 			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
 			borg.death()

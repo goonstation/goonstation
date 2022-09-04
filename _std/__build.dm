@@ -143,6 +143,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CLONING_IS_A_SIN
 #define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
+#define NO_RANDOM_ROOMS
 #endif
 
 var/global/vcs_revision = "1"

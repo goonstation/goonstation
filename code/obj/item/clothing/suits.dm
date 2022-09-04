@@ -712,19 +712,19 @@
 					else
 						for (var/i=3, i>0, i--)
 							new /obj/item/bandage(get_turf(src))
-						playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+						playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 						boutput(user, "You cut [src] into bandages.")
 						user.u_equip(src)
 						qdel(src)
 						return
 				if ("Cut cable")
 					src.cut_cape()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut the cable that's tying the bedsheet into a cape.")
 					return
 				if ("Cut eyeholes")
 					src.cut_eyeholes()
-					playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 					boutput(user, "You cut eyeholes in the bedsheet.")
 					return
 		else
@@ -1058,6 +1058,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0.6)
+		setProperty("radprot", 10)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"

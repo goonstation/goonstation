@@ -98,7 +98,7 @@
 		return thermal_protection
 
 	proc/get_rad_protection()
-		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
+		return (tanh(0.02*(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT)+GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT)))**2)
 
 	proc/get_chem_protection()
 		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_CHEMPROT), 0, 100)
@@ -137,6 +137,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/human/New()
 	..()
@@ -160,6 +161,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/cube/New()
 	..()
@@ -172,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/silicon/ai/New()
 	..()

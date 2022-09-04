@@ -118,11 +118,12 @@
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
+	SHOULD_CALL_PARENT(1)
 
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
@@ -142,9 +143,9 @@
 			throw_range = max(throw_range,0)
 
 		if (intensity <= 2.4)
-			playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		else
-			playsound(src.loc, "sound/misc/slip_big.ogg", 50, 1, -3)
+			playsound(src.loc, 'sound/misc/slip_big.ogg', 50, 1, -3)
 		src.remove_pulling()
 		var/turf/T = get_ranged_target_turf(src, src.move_dir, throw_range)
 		var/throw_speed = 2
@@ -161,6 +162,7 @@
 						return 1
 		else
 			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		game_stats.Increment("slips")
 		. = src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
 /mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
@@ -1051,7 +1053,7 @@
 			if (!G.shock(src, 70))
 				if (show_message)
 					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
-				playsound(G.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
 
@@ -1063,7 +1065,7 @@
 
 		if (S == "table" && istype(target, /obj/table))
 			var/obj/table/table = target
-			playsound(table.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(table.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			table.deconstruct()
 			return TRUE
 

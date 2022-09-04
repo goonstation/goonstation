@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_taketrophy
 	name = "Take trophy"
 	desc = "Retrieves a trophy skull from the victim or severed head, mutilating them in the process."
+	icon_state = "taketrophy"
 	targeted = 1
 	target_anything = 1
 	target_nodamage_check = 1

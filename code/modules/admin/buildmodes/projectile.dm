@@ -18,7 +18,8 @@ Left Mouse Button                      = FIRE!<br>
 		if (ctrl && P)
 			usr.client.debug_variables(P)
 		else
-			proj_type = input("Select projectile type.", "Projectile type", P) in childrentypesof(/datum/projectile)
+			proj_type = tgui_input_list(holder.owner, "Select a projectile type.", "Projectile type", childrentypesof(/datum/projectile), P?.type)
+			if (!proj_type) return
 			if (P)
 				if (proj_type == P.type)
 					return

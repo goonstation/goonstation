@@ -193,7 +193,7 @@ var/list/genetek_hair_styles = list()
 		return
 
 	proc/togglelock(var/forceunlock = 0)
-		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if (src.locked || forceunlock)
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
@@ -228,7 +228,7 @@ var/list/genetek_hair_styles = list()
 		if (istype(C))
 			C.ui_interact(M, null)
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		return
 
 	proc/go_out()
@@ -248,7 +248,7 @@ var/list/genetek_hair_styles = list()
 
 		src.icon_state = "scanner_0"
 
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 

@@ -70,7 +70,10 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/storage/crate/loot(AST)
+		if(prob(10))
+			new /obj/storage/crate/loot(AST)
+		else
+			new/obj/storage/crate(AST)
 
 /datum/ore/event/artifact
 	analysis_string = "Caution! Large object embedded in rock!"
@@ -141,10 +144,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 5 SECONDS, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 10 SECONDS, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)

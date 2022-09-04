@@ -83,7 +83,7 @@
 		if (src.used_up)
 			return
 
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 		src.armed = TRUE
 		src.UpdateIcon()
 
@@ -201,7 +201,7 @@
 		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 60 SECONDS)
+					L.take_radiation_dose(2.5 SIEVERTS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -290,6 +290,6 @@
 
 		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
 		gibs(src.loc)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 
 		return

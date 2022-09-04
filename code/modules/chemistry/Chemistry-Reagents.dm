@@ -237,7 +237,7 @@ datum
 				initial_metabolized = TRUE
 				initial_metabolize(M)
 
-			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
+			holder?.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return
@@ -353,7 +353,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

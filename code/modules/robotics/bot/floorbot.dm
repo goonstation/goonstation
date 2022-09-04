@@ -470,7 +470,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/tile/steel(src.loc)
 	new /obj/item/device/prox_sensor(src.loc)
@@ -524,7 +524,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -532,7 +532,7 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -592,7 +592,7 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)

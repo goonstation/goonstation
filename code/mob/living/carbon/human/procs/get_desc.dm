@@ -380,20 +380,9 @@
 
 	. += "<br><span class='notice'>*---------*</span>"
 
-	if (GET_DIST(usr, src) < 4 && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if (istype(H.glasses, /obj/item/clothing/glasses/healthgoggles))
-			var/obj/item/clothing/glasses/healthgoggles/G = H.glasses
-			if (G.scan_upgrade && G.health_scan)
-				. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-				scan_health_overhead(src, usr)
-			update_medical_record(src)
-		else if (H.organ_istype("left_eye", /obj/item/organ/eye/cyber/prodoc) && H.organ_istype("right_eye", /obj/item/organ/eye/cyber/prodoc)) // two prodoc eyes = scan upgrade because that's cool
-			. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-			scan_health_overhead(src, usr)
-			update_medical_record(src)
-		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
-			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = TRUE)]"
+	if (GET_DIST(usr, src) < 4)
+		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH) || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))
+			. += "<br><span class='alert'>You analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)
 
