@@ -79,7 +79,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		if(href_list["close"])
 			using = null
 
-		else if(href_list["jscall"])
+		else if(href_list["jscall"] && using)
 			switch(href_list["jscall"])
 				if("track")
 					var/id = href_list["id"]

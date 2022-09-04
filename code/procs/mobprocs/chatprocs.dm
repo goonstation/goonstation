@@ -221,6 +221,30 @@
 	game_stats.ScanText(message)
 #endif
 
+	var/image/chat_maptext/chat_text = null
+	if (speechpopups && src.chat_text)
+
+		var/turf/T = get_turf(src)
+		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
+		for(var/i = 0; i < 5; i++)
+			for(var/mob/M in T)
+				if(M != src)
+					for(var/image/chat_maptext/I in M.chat_text?.lines)
+						I.bump_up()
+			T = get_step(T, EAST)
+
+		var/singing_italics = singing ? " font-style: italic;" : ""
+		var/maptext_color
+		maptext_color = "#8d3aa1"
+
+		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
+
+		if(chat_text)
+			chat_text.measure(src.client)
+			for(var/image/chat_maptext/I in src.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
+
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
@@ -233,13 +257,19 @@
 		if (istype(M, /mob/new_player)) continue
 
 		if(try_render_chat_to_admin(C, rendered))
+			if(!M.client.preferences.flying_chat_hidden)
+				chat_text.show_to(C)
 			continue
 
 		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
 		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+			if(!M.client.preferences.flying_chat_hidden)
+				chat_text.show_to(C)
 			boutput(M, rendered)
+
+
 
 //changeling hivemind say
 /mob/proc/say_hive(var/message, var/datum/abilityHolder/changeling/hivemind_owner)

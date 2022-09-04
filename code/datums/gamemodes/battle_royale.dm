@@ -31,12 +31,15 @@ var/global/area/current_battle_spawn = null
 	var/list/datum/mind/recently_deceased = list()
 	var/datum/hud/battlersleft/battlersleft_hud
 	do_antag_random_spawns = 0
+	latejoin_antag_compatible = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")
 	boutput(world, "<B>You are approaching [station_name(1)] in the Battle Shuttle! Jump out of the ship to land on the station!</B>")
 
 /datum/game_mode/battle_royale/pre_setup()
+	for(var/datum/mind/mind in antag_token_list())
+		mind.current?.client?.using_antag_token = FALSE
 	// EVERYONE IS A BATTLER
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
