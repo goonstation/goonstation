@@ -223,6 +223,8 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
+		var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
 
 		var/turf/T = get_turf(src)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -234,9 +236,6 @@
 			T = get_step(T, EAST)
 
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		var/maptext_color
-		maptext_color = "#8d3aa1"
-
 		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
 
 		if(chat_text)
@@ -257,7 +256,7 @@
 		if (istype(M, /mob/new_player)) continue
 
 		if(try_render_chat_to_admin(C, rendered))
-			if(!M.client.preferences.flying_chat_hidden)
+			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			continue
 
@@ -265,7 +264,7 @@
 		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
-			if(!M.client.preferences.flying_chat_hidden)
+			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
 
