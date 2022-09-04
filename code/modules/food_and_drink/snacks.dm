@@ -2892,3 +2892,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+
+/obj/item/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A giant wheel of cheese. It seems a slice is already missing."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "cheesewheel"
+	throwforce = 6
+	real_name = "cheesewheel"
+	throw_speed = 2
+	throw_range = 5
+	stamina_cost = 5
+	stamina_damage = 2
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	initial_volume = 40
+	initial_reagents = "cheese"
+	food_effects = list("food_warm")
+
+	attack(mob/M, mob/user, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+

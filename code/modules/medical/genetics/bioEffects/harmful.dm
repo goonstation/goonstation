@@ -400,17 +400,13 @@
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
-	OnLife(var/mult)
-		if(..()) return
-		owner.changeStatus("radiation", 3 SECONDS*mult, 1)
-		for(var/mob/living/L in range(1, owner))
-			if (L == owner)
-				continue
-			boutput(L, "<span class='alert'>You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 5 SECONDS*mult, 1)
-		return
+	OnRemove()
+		. = ..()
+		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"

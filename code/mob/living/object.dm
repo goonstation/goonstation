@@ -95,6 +95,7 @@
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	// Relay these procs
 

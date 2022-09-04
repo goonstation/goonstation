@@ -2288,7 +2288,7 @@
 						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
-					target_r:Virus_ShockCure(target_r, 100)
+					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
 						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))

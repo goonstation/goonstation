@@ -640,7 +640,7 @@
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe

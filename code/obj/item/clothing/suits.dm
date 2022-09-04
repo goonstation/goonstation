@@ -1058,6 +1058,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0.6)
+		setProperty("radprot", 10)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"

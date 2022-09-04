@@ -213,6 +213,7 @@ var/list/miningModifiers = list()
 		numAsteroidSeed *= 4
 		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
+			logTheThing(LOG_DEBUG, null, "Generating asteroid #[i+1]/[numAsteroidSeed].")
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
@@ -226,6 +227,7 @@ var/list/miningModifiers = list()
 
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
+			logTheThing(LOG_DEBUG, null, "Setting up tile lists for asteroid.")
 			while(edgeTiles.len)
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
@@ -251,6 +253,7 @@ var/list/miningModifiers = list()
 					edgeTiles.Add(west)
 				LAGCHECK(LAG_REALTIME)
 
+			logTheThing(LOG_DEBUG, null, "Placing asteroid turfs for asteroid.")
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
@@ -259,6 +262,7 @@ var/list/miningModifiers = list()
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
 
+			logTheThing(LOG_DEBUG, null, "Seeding ores and events.")
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
 			else
@@ -266,6 +270,7 @@ var/list/miningModifiers = list()
 
 			Turfspawn_Asteroid_SeedEvents(placed)
 
+			logTheThing(LOG_DEBUG, null, "Making holes or something idk.")
 			if(placed.len)
 				generated.Add(placed)
 				if(placed.len > 9)
@@ -280,6 +285,8 @@ var/list/miningModifiers = list()
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
+			logTheThing(LOG_DEBUG, null, "Sucessfully generated asteroid #[i+1]/[numAsteroidSeed].")
+
 		return miningZ
 
 /proc/makeMiningLevel()
@@ -342,9 +349,11 @@ var/list/miningModifiers = list()
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	hotspot_controller.generate_map()
+	logTheThing(LOG_DEBUG, null, "Generated hotspot map or something.")
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae
 /datum/bioluminescent_algae

@@ -950,13 +950,13 @@
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity)
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
-			if (O.deconstruct_flags & DECON_ACCESS)
+			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
 			return
-		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
+		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
@@ -1033,7 +1033,7 @@
 /obj/proc/build_deconstruction_buttons()
 	.= 0
 
-	if (deconstruct_flags & DECON_ACCESS)
+	if (deconstruct_flags & DECON_NULL_ACCESS)
 		if (src.has_access_requirements())
 			return
 

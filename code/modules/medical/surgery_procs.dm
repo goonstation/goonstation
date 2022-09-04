@@ -1991,7 +1991,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ================================ */
 
 /obj/item/proc/pry_surgery(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
-	if (!patient.organHolder || surgeon.a_intent == INTENT_HARM || !isskeleton(patient))
+	if (!isskeleton(patient) || !patient.organHolder || surgeon.a_intent == INTENT_HARM)
 		return FALSE
 
 	if (surgeon.bioHolder.HasEffect("clumsy") && prob(50))

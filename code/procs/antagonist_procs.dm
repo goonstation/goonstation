@@ -279,7 +279,7 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(synd_mob), synd_mob.slot_wear_mask)
 	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
-	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen(synd_mob), synd_mob.slot_l_store)
+	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(synd_mob), synd_mob.slot_l_store)
 
 	synd_mob.equip_sensory_items()
 

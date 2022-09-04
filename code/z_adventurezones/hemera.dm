@@ -484,6 +484,7 @@ Obsidian Crown
 			humHost.delStatus("stunned")
 			humHost.delStatus("weakened")
 			humHost.delStatus("radiation")
+			humHost.take_radiation_dose(-INFINITY)
 			humHost.take_eye_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY, 1)

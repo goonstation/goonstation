@@ -329,7 +329,7 @@
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
-					if (!H.shoes)
+					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
 						affecting = H.organs[pick("l_leg", "r_leg")]
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")

@@ -1741,7 +1741,7 @@ TYPEINFO(/datum/mutantrace)
 			M.blood_id = "hemolymph"
 			//H.blood_color = "#009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 
 
 
@@ -1757,7 +1757,7 @@ TYPEINFO(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.blood_id = initial(src.mob.blood_id)
 		if(src.mob)
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
