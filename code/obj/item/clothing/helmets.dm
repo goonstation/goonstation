@@ -34,6 +34,7 @@
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 		setProperty("space_movespeed", 0.2)
+		setProperty("radprot", 5)
 
 	oldish
 		icon_state = "space-OLD"
@@ -275,6 +276,7 @@
 	New()
 		..()
 		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS

@@ -1,5 +1,34 @@
 
+(t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
+(u)LeahTheTech
+(p)10361
+(e)|
+(+)Messages from sentient elements of the flock are now much easier to pick out.
 (t)sat sep 03 22
+(u)LeahTheTech and JulyJade
+(p)10564
+(e)|
+(*)Added a glowstick tree mutation, obtained from infusion with radium.
+(u)Amylizzle
+(p)10610
+(e)|
+(+)Space suits provide a little bit of radiation protection.
+(u)Ikea
+(p)10622
+(e)|
+(*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
+(u)Emily
+(*)Floating Chat for Ghosts! OooOOooO! Yeah this will probably be buggy.
+(*)New Chicken Grenade sprite by Walpvrgis!
+(*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
+(+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
 (u)LeahTheTech
 (p)10517
 (e)|
