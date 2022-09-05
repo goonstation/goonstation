@@ -20,46 +20,28 @@
 	var/obj/item/device/radio_upgrade/wiretap = null
 	hardened = 0
 
-	attackby(obj/item/R, mob/user)
-		if (istype(R, /obj/item/device/radio_upgrade))
+	attackby(obj/item/O, mob/user)
+		if (istype(O, /obj/item/device/radio_upgrade))
+			var/obj/item/device/radio_upgrade/R = O
 			if (wiretap)
 				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! It doesn't have room for any more!</span>")
 				return
 			src.wiretap = R
-			if (istype(R, /obj/item/device/radio_upgrade/conspirator))
-				var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
-				if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
-					C = ticker.mode
-				var/the_frequency = C.agent_radiofreq
-				src.secure_classes["z"] = RADIOCL_SYNDICATE
-				src.set_secure_frequency("z", the_frequency)
-				boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from a private secure radio channel.</span>")
-			else
-				src.secure_frequencies = list(
-					"h" = R_FREQ_COMMAND,
-					"g" = R_FREQ_SECURITY,
-					"e" = R_FREQ_ENGINEERING,
-					"r" = R_FREQ_RESEARCH,
-					"m" = R_FREQ_MEDICAL,
-					"c" = R_FREQ_CIVILIAN,
-					"z" = R_FREQ_SYNDICATE,
-					)
-				src.secure_classes = list(
-					"h" = RADIOCL_COMMAND,
-					"g" = RADIOCL_SECURITY,
-					"e" = RADIOCL_ENGINEERING,
-					"r" = RADIOCL_RESEARCH,
-					"m" = RADIOCL_MEDICAL,
-					"c" = RADIOCL_CIVILIAN,
-					"z" = RADIOCL_SYNDICATE,
-					)
-				boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from all station frequencies.</span>")
+
+			for (var/frequency in R.secure_frequencies)
+				if (!(frequency in src.secure_frequencies))
+					src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
+			for (var/class in R.secure_classes)
+				if (!(class in src.secure_classes))
+					src.secure_classes[class] = R.secure_classes[class]
+
+			boutput(user, "<span class='notice'>You install [R] into [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			set_secure_frequencies(src)
 			R.set_loc(src)
 			user.u_equip(R)
 
-		if (issnippingtool(R) && wiretap)
+		if (issnippingtool(O) && wiretap)
 			boutput(user, "<span class='notice'>You begin removing [src.wiretap] from [src].</span>")
 			if (!do_after(user, 2 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!.</span>")
@@ -546,7 +528,35 @@ Secure Frequency:
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
 	mats = 12
+	var/secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		"z" = R_FREQ_SYNDICATE,
+		)
+	var/secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		"z" = RADIOCL_SYNDICATE,
+		)
 
 	conspirator
 		name = "private radio channel upgrade"
 		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New()
+			..()
+			var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+				C = ticker.mode
+			src.secure_frequencies = list("z" = C.agent_radiofreq)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
