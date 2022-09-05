@@ -103,19 +103,27 @@
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
 				logTheThing("station", src, null, "[src] is at 2000K and may meltdown")
+				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
+					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
 			if(temperature >= 2500 && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
 				logTheThing("station", src, null, "[src] is at 2500K and is likely to meltdown")
+				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
+					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
 			else if(temperature < 2500 && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
 				logTheThing("station", src, null, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
+				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
+					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
 				logTheThing("station", src, null, "[src] is cooling from 2000K")
 				src.ClearSpecificParticles("overheat_smoke")
+				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
+					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
 
 		src.radiationLevel = tmpRads
 		if(tmpRads > 1000 || temperature > 15000)
@@ -134,6 +142,20 @@
 			src.Attackhand(user)
 		else
 			. = ..()
+
+	proc/alertPDA(msg, crisis=FALSE)
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["command"] = "text_message"
+		signal.data["sender_name"] = "ENGINE-MAILBOT"
+		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+		if(crisis)
+			signal.data["group"] += MGA_CRISIS
+		signal.data["message"] = msg
+		signal.data["sender"] = "00000000"
+		signal.data["address_1"] = "00000000"
+
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
@@ -169,6 +191,13 @@
 		src.AddComponent(/datum/component/radioactive, min(rads*5, 100), TRUE, FALSE, 5)
 
 	proc/catastrophicOverload()
+		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
+		alarm.repeat = TRUE
+		alarm.volume = 50
+		alarm.channel = 5
+		world << alarm //ew
+		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
+
 		logTheThing("station", src, null, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
@@ -180,8 +209,10 @@
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 		explosion_new(src,current_loc,2500,1,0,360,TRUE)
-
-
+		SPAWN(15 SECONDS)
+			alarm.repeat = FALSE //haha this is horrendous, this cannot be the way to do this
+			alarm.status = SOUND_UPDATE
+			world << alarm
 
 	proc/getGridNeighbors(var/x,var/y)
 		. = list()
