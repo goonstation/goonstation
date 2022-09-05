@@ -116,8 +116,11 @@
 		spawn_contents = list(/obj/item/old_grenade/stinger = 6)
 
 	incendiary
-		name = "incendiary grenade pouch"
-		spawn_contents = list(/obj/item/chem_grenade/incendiary = 6)
+		name = "incendiary supplies pouch"
+		can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/firebot_deployer)
+		spawn_contents = list(/obj/item/chem_grenade/incendiary = 3,
+		/obj/item/chem_grenade/very_incendiary = 2,
+		/obj/item/firebot_deployer = 1)
 
 	high_explosive
 		name = "high explosive grenade pouch"
