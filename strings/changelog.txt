@@ -1,5 +1,9 @@
 
 (t)mon sep 05 22
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
 (u)ZWRh3
 (p)10660
 (e)|
