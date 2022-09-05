@@ -295,7 +295,6 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 
 	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
 		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
-		H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
