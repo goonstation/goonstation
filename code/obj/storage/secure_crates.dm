@@ -131,7 +131,7 @@
 
 	interdictor
 		name = "interdictor assembly kit"
-		desc = "Contains mainboards, blueprints and a usage guide for spatial interdictors."
+		desc = "Contains mainboards, a manudrive and a usage guide for spatial interdictors."
 		req_access = list(access_engineering)
 
 		make_my_stuff()
