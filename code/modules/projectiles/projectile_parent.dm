@@ -1,7 +1,8 @@
-/proc/roundTZ(var/i)
-	if (i < 0)
-		return -round(-i)
-	return round(i)
+/**
+ * This file is not good
+ * Fucked up var names lie ahead
+ * Caution, traveler
+ */
 
 /obj/projectile
 	name = "projectile"
