@@ -521,7 +521,7 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || isabomination(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
