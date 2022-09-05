@@ -48,7 +48,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// PROFILING OPTIONS
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init()
+//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
