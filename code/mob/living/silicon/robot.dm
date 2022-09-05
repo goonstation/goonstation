@@ -204,6 +204,8 @@
 					break
 
 			src.botcard.access = get_all_accesses()
+			src.botcard.registered = "Cyborg"
+			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio(src)
 			if (src.shell)
 				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
