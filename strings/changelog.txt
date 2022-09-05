@@ -1,4 +1,10 @@
 
+(t)mon sep 05 22
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
 (t)sun sep 04 22
 (u)Roddy
 (p)10639
