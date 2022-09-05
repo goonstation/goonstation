@@ -2,63 +2,114 @@
  * This file is not good
  * Fucked up var names lie ahead
  * Caution, traveler
+ *
+ * General cleanup todo:
+ * Go through undocumented math and document it
+ * Remove bad vars, fill in gaps then created
+ * Deduplicate info between this and proj_data
  */
 
 /obj/projectile
 	name = "projectile"
 	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
-	anchored = 1
+	anchored = TRUE
+	animate_movement = FALSE
 
+	/// Projectile data; almost all specific projectile information and functionality lives here
+	var/datum/projectile/proj_data = null
+
+	/// List of all targets this projectile can go after; useful for homing projectiles and the like
+	var/list/targets = list()
+	/// Does this projectile pierce armor?
+	var/armor_ignored = FALSE
+	/// Maximum range this projectile can travel before impacting a (non-dense) turf
+	var/max_range = PROJ_INFINITE_RANGE
+	/// What kind of implant this projectile leaves in impacted mobs
+	var/implanted = null
+	/// Forensic ID of the gun, etc that shot this projectile, used for forensics on implanted projectiles
+	var/forensic_ID = null
+	/// The mob/thing that fired this projectile
+	var/atom/shooter = null
+	/// Mob-typed copy of `shooter` var to save time on casts later
+	var/mob/mob_shooter = null
+	/// Number of tiles this projectile has travelled
+	var/travelled = 0
+	/// Angle of this shot. For reference @see setup()
+	var/angle
+	/// Original turf this projectiles was fired from
+	var/turf/orig_turf
+
+	///Default dir, set to in do_step()
+	var/facing_dir = 1
+	/// Whether this projectile was shot point-blank style (clicking an adjacent mob). Adjusts the log entry accordingly
+	var/was_pointblank = FALSE
+
+	/// Bullshit var for storing special data for niche cases. Sucks, is probably necessary nonetheless
+	var/list/special_data = list()
+
+	/// Tracks the number of steps before a piercing projectile is allowed to hit a mob after hitting another one. Scarcely used. TODO remove?
+	var/ticks_until_can_hit_mob = 0
+	/// Whether this projectile can freely pass through dense turfs
+	var/goes_through_walls = FALSE
+	/// Whether this projectile can freely pass through mobs
+	var/goes_through_mobs = FALSE
+	/// List of atoms collided with this tick
+	var/list/hitlist = list()
+	/// Number of times this projectile has been reflected off of things. Used to cap reflections
+	var/reflectcount = 0
+	/// For disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
+	var/has_died = FALSE
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
+
+	/// TODO dunno what these are. guessing 'original x' and 'original y' but all the code involving them is mathy and i don't have the patience rn
+	/// Fill in if u know ty
 	var/xo
 	var/yo
 
-	// I have no idea what to do with these.
-	var/target = null
-	var/datum/projectile/proj_data = null
-	//var/obj/o_shooter = null
-	var/list/targets = list()
-	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
-	var/armor_ignored = 0
-	var/max_range = PROJ_INFINITE_RANGE //max range
-	var/initial_power = 20 // local copy of power for determining power when hitting things
-	var/implanted = null
-	var/forensic_ID = null
-	var/atom/shooter = null // Who/what fired this?
-	var/mob/mob_shooter = null
-	// We use shooter to avoid self collision, however, the shot may have been initiated through a proxy object. This is for logging.
-	var/travelled = 0 // track distance
-	var/angle // for reference @see setup()
-	animate_movement = 0
-	var/turf/orig_turf
-
-	var/facing_dir = 1 //default dir we set to in do_step()
-
-	var/data = 0
-	var/was_pointblank = 0 // Adjusts the log entry accordingly.
-
-	var/was_setup = 0
-	var/far_border_hit
-
-	var/incidence = 0 // reflection normal on the current tile (NORTH if projectile came from the north, etc.)
-	var/list/crossing = list()
-	var/list/special_data = list()
-	var/curr_t = 0
-
+	/// What the fuck is this comment your shit jesus christ ????? TODO
 	var/wx = 0
 	var/wy = 0
 
-	var/internal_speed = null // experimental
+	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
+	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
+	var/incidence = 0
+	/// No clue. Assoc list seems like? Also accessed as a non-assoc list sometimes. fuck. TODO
+	var/list/crossing = list()
+	/// No clue. Related to curr_t. TODO
+	var/curr_t = 0
+
+	/// One of the two below vars needs to be renamed or removed. Fucking confusing
+
+	/// I don't know why this var is here it just stores the result of a proc called on the proj data. TODO revisit
+	var/power = 20 // temp var to store what the current power of the projectile should be when it hits something
+	/// TODO this var also feels dumb. convert to initial() prolly (on data not on this)
+	var/initial_power = 20
+
+	// ------------------- VARS TO BE TAKEN OUT BACK AND SHOT ----------------------------
+
+	/// Yeah this sucks. TODO remove. I don't care bring the bug back so we can actually fix it
+	var/is_processing = FALSE //MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
+
+	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
+
+	// TODO axe this var, only used for witch gimmick abilities which can be reworked
+	var/target = null
+
+	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
+	var/data = 0
+
+	/// Number of impassable atoms this projectile can pierce. Decremented on pierce. Can probably be axed in favor of the component. TODO remove
 	var/pierces_left = 0
-	var/ticks_until_can_hit_mob = 0
-	var/goes_through_walls = 0
-	var/goes_through_mobs = 0
+
+	/// TODO axe this after testing. Used very infrequently, looks redundant
+	var/was_setup = 0
+
+	/// Below stuff but also this is dumb and only used for frost bats and I don't even know why it's used there. TODO remove
 	var/collide_with_other_projectiles = 0 //allow us to pass canpass() function to proj_data as well as receive bullet_act events
-	var/list/hitlist = list() //list of atoms collided with this tick
-	var/reflectcount = 0
-	var/is_processing = 0//MBC BANDAID FOR BAD BUG : Sometimes Launch() is called twice and spawns two process loops, causing DOUBLEBULLET speed and collision. this fix is bad but i cant figure otu the real issue
-	var/is_detonating = 0//to start modeling fuses
-	var/has_died = FALSE // for disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
+
+
 
 	proc/rotateDirection(var/angle)
 		var/oldxo = xo
@@ -372,7 +423,7 @@
 
 		if (proj_data.precalculated)
 			var/incidence_turf = curr_turf
-			for (var/i = 1, i < crossing.len, i++)
+			for (var/i = 1, i < length(crossing), i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
