@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/miraclium
 	name = "Direct Extraction"
-	tick_req = 120
+	tick_req = 60
 	x_torque = 0
 	y_torque = 0
 	shear = 0
@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
-	tick_req = 50
+	tick_req = 40
 	x_torque = 88
 	shear = 6
 	sens_window = 1
@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/erebite
 	name = "Erebite"
-	tick_req = 90
+	tick_req = 60
 	x_torque = 6
 	y_torque = -22
 	shear = 33
@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/cerenkite
 	name = "Cerenkite"
-	tick_req = 60
+	tick_req = 50
 	x_torque = -24
 	y_torque = 8
 	shear = 16
@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/plasmastone
 	name = "Plasmastone"
-	tick_req = 70
+	tick_req = 60
 	x_torque = -16
 	y_torque = 13
 	shear = 4
@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/koshmarite
 	name = "Koshmarite"
-	tick_req = 40
+	tick_req = 35
 	shear = 58
 	product = /obj/item/raw_material/eldritch
 
@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
-	tick_req = 150
+	tick_req = 80
 	x_torque = 0
 	y_torque = 0
 	shear = 64
@@ -234,7 +234,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/uqill
 	name = "Uqill"
-	tick_req = 190
+	tick_req = 100
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 //shear of 65 or higher should probably do Bad Things unless precisely set.
 /datum/siphon_mineral/gold
 	name = "Gold"
-	tick_req = 300
+	tick_req = 90
 	y_torque = 0
 	shear = 100
 	sens_window = 0
@@ -275,13 +275,13 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/starstone
 
 	New()
-		src.tick_req = rand(100,120) * 10
+		src.tick_req = rand(70,90) * 10
 		src.shear = rand(130,230)
 		..()
 
 /datum/siphon_mineral/blob
 	name = "Biomatter (NOT RECOMMENDED)"
-	tick_req = 150
+	tick_req = 62
 	shear = 127
 	sens_window = 0
 	product = /obj/item/material_piece/wad/blob
@@ -294,7 +294,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral/pizza
 	indexed = FALSE
 	name = "Pizza"
-	tick_req = 42
+	tick_req = 21
 	shear = 69
 	sens_window = 0
 	product = /obj/item/reagent_containers/food/snacks/pizza

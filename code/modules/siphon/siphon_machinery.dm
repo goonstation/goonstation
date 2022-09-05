@@ -145,6 +145,20 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	///total intensity of all connected resonators; increases power draw and production progress per tick
 	var/resofactor = 0
 
+	custom_suicide = 1
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		if (src.mode != "active")
+			return 0
+		var/mob/living/L = user
+		if (!istype(L))
+			return 0
+		L.visible_message("<span class='alert'><b>[L] shoves their head into [src]'s beam, ripping it off in the matter stream! Holy shit!</b></span>")
+		playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+		L.organHolder.drop_organ("head",src) //you've met a terrible fate
+		return 1
+
 	New()
 		..()
 		src.beamlight = new /obj/overlay/siphonglow()

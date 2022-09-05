@@ -1004,7 +1004,7 @@ datum
 									H.UpdateName()
 									H.unlock_medal("Red Hood", 1)
 					else //just a gasp of pain
-						if(H && do_an_ouch)
+						if(H && do_an_ouch && damage2deal)
 							H.emote("gasp")
 					if(damage2deal)
 						random_burn_damage(M, damage2deal)

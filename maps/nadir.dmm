@@ -3787,15 +3787,18 @@
 "bSm" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife{
-	pixel_x = -4;
+	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/food/snacks/condiment/syrup{
-	pixel_x = 4;
-	pixel_y = 13
+/obj/item/kitchen/rollingpin{
+	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter{
-	pixel_x = 7
+/obj/item/reagent_containers/food/snacks/condiment/syrup{
+	pixel_x = -15;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_x = -15
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -7440,10 +7443,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = -20
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
@@ -7991,14 +7990,14 @@
 /area/station/maintenance/southeast)
 "ehv" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/rollingpin,
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/food/snacks/breadloaf{
-	pixel_x = 13
-	},
 /obj/item/device/radio/intercom/catering,
+/obj/submachine/mixer{
+	pixel_x = -2;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "ehQ" = (
@@ -9554,9 +9553,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -9572,11 +9568,9 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "eXG" = (
-/obj/machinery/clonegrinder,
-/obj/cable{
-	icon_state = "0-8"
+/obj/stool/chair/blue{
+	dir = 8
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -11640,6 +11634,10 @@
 /obj/item/plate,
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/machinery/light,
+/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter{
+	pixel_x = 12;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "gbA" = (
@@ -14130,8 +14128,8 @@
 /obj/decal/tile_edge/floorguide/security{
 	dir = 8
 	},
-/obj/decal/tile_edge/floorguide/arrow_n,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/decal/tile_edge/floorguide/arrow_s,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/northeast)
 "hhJ" = (
@@ -15472,6 +15470,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/secscanner,
 /turf/simulated/floor/blackwhite/side,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -15928,10 +15927,6 @@
 /obj/access_spawn/cargo,
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/machinery/secscanner{
-	dir = 8;
-	pixel_x = 20
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
@@ -28571,7 +28566,11 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/monkeyplant,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/clonegrinder,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -37241,6 +37240,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
+"sYs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "sZh" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/green,
@@ -45195,9 +45203,6 @@
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/secscanner{
-	pixel_y = 10
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
@@ -96499,7 +96504,7 @@ dBU
 uUW
 eye
 eWC
-fmd
+sYs
 fwF
 vji
 bkQ

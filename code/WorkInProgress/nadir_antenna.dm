@@ -360,7 +360,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 						if(istype(O,/mob/living/carbon/human) && prob(25))
 							oofed_nerds += O
 						continue
-					if(istype(O,/obj/storage/crate) || istype(O,/obj/artifact))
+					if(istype(O,/obj/storage/crate) || istype(O,/obj/artifact) || istype(O,/obj/machinery/artifact))
 						thing2send = O
 						break //only one thing at a time!
 				for(var/nerd in oofed_nerds)
