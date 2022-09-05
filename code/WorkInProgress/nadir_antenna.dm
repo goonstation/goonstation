@@ -351,18 +351,19 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN(0.3 SECONDS)
-				var/atom/movable/thing2send
+				var/obj/thing2send
 				var/list/oofed_nerds = list()
-				for(var/atom/movable/O as obj|mob in src.loc)
-					if(O.anchored) continue
-					if(O == src) continue
-					if(istype(O,/mob)) //no mobs
-						if(istype(O,/mob/living/carbon/human) && prob(25))
-							oofed_nerds += O
+				for(var/atom/movable/AM as obj|mob in src.loc)
+					if(AM.anchored) continue
+					if(AM == src) continue
+					if(istype(AM,/mob/living/carbon/human) && prob(25)) //telefrag
+						oofed_nerds += AM
 						continue
-					if(istype(O,/obj/storage/crate) || istype(O,/obj/artifact) || istype(O,/obj/machinery/artifact))
-						thing2send = O
-						break //only one thing at a time!
+					if(isobj(AM))
+						var/obj/O = AM
+						if(istype(O,/obj/storage/crate) || O.artifact)
+							thing2send = O
+							break //only one thing at a time!
 				for(var/nerd in oofed_nerds)
 					telefrag(nerd) //did I mention NO MOBS
 				if(thing2send && transception_array.transceive(netnumber))
@@ -382,7 +383,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 							if(!sold_to_trader)
 								shippingmarket.sell_crate(thing2send)
 
-						else if(istype(thing2send,/obj/artifact))
+						else if(thing2send.artifact)
 							shippingmarket.sell_artifact(thing2send)
 
 						else //how even
