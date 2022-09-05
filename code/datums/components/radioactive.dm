@@ -55,10 +55,10 @@ TYPEINFO(/datum/component/radioactive)
 	proc/do_filters()
 		var/atom/PA = parent
 		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
-		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
-		if(isnull(src._backup_color))
+		if(PA.color && isnull(src._backup_color))
 			src._backup_color = PA.color
-		PA.color = null
+			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+			PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
 		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
