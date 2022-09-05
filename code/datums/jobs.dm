@@ -10,6 +10,7 @@
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
 	var/allow_spy_theft = 1
+	var/allow_miscreant = TRUE
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
@@ -56,7 +57,7 @@
 	var/spawn_z = 0
 	var/bio_effects = null
 	var/objective = null
-	var/spawn_miscreant = 0
+	var/spawn_miscreant = 0 // for admin-made jobs to force miscreant status
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
@@ -1038,6 +1039,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	no_late_join = 1
 	high_priority_job = 1
 	allow_traitors = 0
+	allow_miscreant = FALSE
 	cant_spawn_as_rev = 1
 	slot_ears = list()
 	slot_card = null
@@ -1057,6 +1059,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 8
 	no_late_join = 1
 	allow_traitors = 0
+	allow_miscreant = FALSE
 	cant_spawn_as_rev = 1
 	slot_ears = list()
 	slot_card = null
@@ -1782,6 +1785,18 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Psychiatrist")
 		return
+
+/datum/job/special/random/artist
+	name = "Artist"
+	wages = PAY_UNTRAINED
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeansblue)
+	slot_head = list(/obj/item/clothing/head/mime_beret)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/spacecash/twenty)
+	slot_poc2 = list(/obj/item/pen/pencil)
+	slot_lhan = list(/obj/item/storage/toolbox/artistic)
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
 
 #ifdef HALLOWEEN
 /*

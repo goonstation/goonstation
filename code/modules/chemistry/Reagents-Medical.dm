@@ -660,14 +660,13 @@ datum
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt")
 				..()
 
-			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
+			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 				flush(M, 3 * mult, flushed_reagents)
 
-				if(method == INGEST)
-					if (M.health < -5 && M.health > -30)
-						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
+				if (M.health < -5 && M.health > -30)
+					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
 					M.take_radiation_dose(-0.005 SIEVERTS * mult)
 				if (prob(5))

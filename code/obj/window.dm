@@ -279,6 +279,19 @@
 
 	get_desc()
 		var/the_text = ""
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99)//dont want to clog up the description unless it's actually damaged
+				the_text += "It seems to be in mostly good condition"
+			if(75 to 89)
+				the_text += "[src] is barely [pick("chipped", "cracked", "scratched")]"
+			if(50 to 74)
+				the_text += "[src] looks [pick("cracked", "damaged", "messed up", "chipped")]."
+			if(25 to 49)
+				the_text += "[src] looks [pick("quite", "pretty", "rather", "notably")] [pick("spiderwebbed", "fractured", "cracked", "busted")]."
+			if(0 to 24)
+				the_text += "[src] is barely intact!"
+
 		switch(src.state)
 			if(0)
 				if (!src.anchored)
