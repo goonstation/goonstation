@@ -73,26 +73,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M?.bodytemperature = 310
 		return
 
-/datum/materialProc/radioactive_on_enter
-	desc = "It glows faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.changeStatus("radiation", owner.material.getProperty("radioactive") SECONDS)
-		return
-
-/datum/materialProc/n_radioactive_on_enter
-	desc = "It glows blue faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.changeStatus("n_radiation", owner.material.getProperty("n_radioactive") SECONDS)
-		return
-
 /datum/materialProc/generic_reagent_onattacked
 	var/trigger_chance = 100
 	var/limit = 0
@@ -447,37 +427,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/radioactive_add
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE)
 		return
 
-/datum/materialProc/radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.changeStatus("radiation", max(I.material.getProperty("radioactive") / 4, 1) SECONDS * mult)
-		return
-
-/datum/materialProc/radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.changeStatus("radiation", I.material.getProperty("radioactive") * 2 SECONDS)
+/datum/materialProc/radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#4279D1",-1,40)
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE)
 		return
 
-/datum/materialProc/n_radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.changeStatus("n_radiation", max(I.material.getProperty("n_radioactive") / 4, 1) SECONDS * mult)
-		return
-
-/datum/materialProc/n_radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.changeStatus("n_radiation", I.material.getProperty("n_radioactive") * 2 SECONDS)
+/datum/materialProc/n_radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/erebite_flash

@@ -463,7 +463,7 @@
 			flick("bluedoor_opening",src)
 			src.icon_state = "bluedoor_0"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
@@ -478,7 +478,7 @@
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
+			set_opacity(1)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
@@ -587,7 +587,7 @@
 						random_burn_damage(poorSoul, 15) // let's not be too mean
 						boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 						poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-						poorSoul:Virus_ShockCure(poorSoul, 100)
+						poorSoul:Virus_ShockCure(100)
 						poorSoul:shock_cyberheart(100)
 						poorSoul:weakened += rand(1,2)*/
 						if (isdead(poorSoul) && prob(15))

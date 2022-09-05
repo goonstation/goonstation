@@ -171,7 +171,8 @@ var/list/rollList = list()
 			src.colorcache = src.color //removes src color, then overlays a decoy image to make the icon look unchanged
 			src.color = null
 			src.decoyimageicon = new /icon(src.icon,src.icon_state)
-			decoyimageicon.Blend(colorcache, ICON_MULTIPLY)
+			if(src.colorcache)
+				decoyimageicon.Blend(src.colorcache, ICON_MULTIPLY)
 			src.decoyimage = image(decoyimageicon)
 			src.UpdateOverlays(src.decoyimage,"0") //dats a zero :P
 

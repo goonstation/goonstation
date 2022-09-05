@@ -118,11 +118,12 @@
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
+	SHOULD_CALL_PARENT(1)
 
 	if (!src.can_slip())
 		return
 
-	var/slip_delay = BASE_SPEED_SUSTAINED + (WALK_DELAY_ADD*0.14) //we need to fall under this movedelay value in order to slip :O
+	var/slip_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order to slip :O
 
 	if (walking_matters)
 		slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
@@ -161,6 +162,7 @@
 						return 1
 		else
 			params += list("stun"=clamp(1.1 SECONDS * intensity, 1 SECOND, 5 SECONDS))
+		game_stats.Increment("slips")
 		. = src.throw_at(T, intensity, throw_speed, params, src.loc, throw_type = throw_type)
 
 /mob/living/carbon/human/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)

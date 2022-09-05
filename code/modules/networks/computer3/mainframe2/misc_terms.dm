@@ -925,7 +925,7 @@
 					VT.icon_state = initial(VT.icon_state)
 				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
 					VT.icon_state = initial(VT.icon_state)
-					VT.opacity = 1
+					VT.set_opacity(1)
 					VT.set_density(1)
 
 			if(results)
@@ -3308,7 +3308,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 100 SECONDS)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3316,7 +3316,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 100 SECONDS)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)

@@ -1510,7 +1510,7 @@ obj/item/whetstone
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
 	flags = ONBACK | FPRINT | TABLEPASS
-	hit_type = DAMAGE_CUT | DAMAGE_STAB
+	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
 	w_class = W_CLASS_BULKY
@@ -1562,14 +1562,14 @@ obj/item/whetstone
 	if (t.loc:sanctuary)
 		return
 
-	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
-		src.force += 5
-		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-		src.tooltip_rebuild = TRUE
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
 	..()
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
+		src.force += 5
+		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+		src.tooltip_rebuild = TRUE
 
 /obj/item/heavy_power_sword/dropped(mob/user)
 	..()
@@ -1586,12 +1586,14 @@ obj/item/whetstone
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
 			src.mode = STAB_MODE
+			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
 		if(2)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
 			src.mode = SWIPE_MODE
+			hit_type = DAMAGE_CUT
 			src.setItemSpecial(/datum/item_special/swipe)
 	user.update_inhands()
 	tooltip_rebuild = TRUE

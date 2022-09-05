@@ -41,7 +41,7 @@
 		. = ..(newloc)
 		if(!meatsource)
 			return
-		src.subjectname = meatsource.real_name
+		src.subjectname = meatsource.disfigured ? "Unknown" : meatsource.real_name
 		src.subjectjob = "Stowaway"
 		if (meatsource?.mind?.assigned_role)
 			src.subjectjob = meatsource.mind.assigned_role

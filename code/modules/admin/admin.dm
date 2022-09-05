@@ -243,6 +243,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
 				src.show_pref_window(usr)
+		if ("toggle_topic_log")
+			if (src.level >= LEVEL_MOD)
+				src.show_topic_log = !show_topic_log
+				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
 				src.auto_stealth = !(src.auto_stealth)
@@ -4368,7 +4372,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log'>Topic Log</A>
+				Topic Log <!-- Viewing the entire log will usually just crash the admin's client, so let's not allow that -->
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log_string'><small>(Search)</small></A><br>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
@@ -4839,7 +4843,7 @@ var/global/noir = 0
 
 	var/chosen
 	if(length(matches) == 1)
-		chosen = matches[1]
+		chosen = text2path(matches[1])
 	else
 		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
 		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))

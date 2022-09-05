@@ -122,7 +122,7 @@ datum
 					M.emote("faint")
 					//var/mob/living/carbon/human/H = M
 					//if (istype(H))
-					M.changeStatus("radiation", 3 SECONDS, 2)
+					M.take_radiation_dose(0.001 SIEVERTS * volume, internal=TRUE)
 					M.take_toxin_damage(5)
 					M.take_brain_damage(10)
 				else

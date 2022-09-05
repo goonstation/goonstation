@@ -33,6 +33,7 @@
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
+			if (iszombie(C)) continue // For admin gimmicks mixing player zombies and critters
 			if (iscarbon(C) && !src.atkcarbon) continue
 			if (issilicon(C) && !src.atksilicon) continue
 			if (C in src.friends) continue
@@ -226,7 +227,8 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN(2 SECONDS) playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
+						SPAWN(2 SECONDS) 
+							playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
 				src.attacking = 0
@@ -333,7 +335,7 @@
 
 	after_attack_special(mob/living/M)
 		boutput(M, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
-		M.changeStatus("radiation", 8 SECONDS, 4)
+		M.take_radiation_dose(1 SIEVERTS)
 
 	CritterDeath()
 		..()

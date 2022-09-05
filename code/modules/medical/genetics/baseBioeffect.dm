@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		return removed
 
 	proc/OnLife(var/mult)    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
-		return removed
+		return removed || QDELETED(owner)
 
 	proc/GetCopy()
 		//Gets a copy of this effect. Used to build local effect pool from global instance list.

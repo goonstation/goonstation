@@ -229,7 +229,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
@@ -247,11 +247,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 		else if (task == "attacking")
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			src.opacity = initial(src.opacity)
+			src.set_opacity(initial(src.opacity))
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
@@ -305,7 +305,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
@@ -1451,7 +1451,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		flick("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		src.name = "unsealed door"
 		SPAWN(1.3 SECONDS)
 			changing_state = 0
@@ -1467,7 +1467,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		active = (opened != default_state)
 
 		set_density(1)
-		opacity = 1
+		set_opacity(1)
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))

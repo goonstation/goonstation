@@ -87,7 +87,7 @@ var/global/obj/flashDummy
 	if (!flashDummy)
 		flashDummy = new /obj(null)
 		flashDummy.set_density(0)
-		flashDummy.opacity = 0
+		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
 		flashDummy.mouse_opacity = 0
 	return flashDummy
@@ -1043,7 +1043,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			if(client)
+				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 

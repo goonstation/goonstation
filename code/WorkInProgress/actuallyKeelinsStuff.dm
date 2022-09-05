@@ -1560,11 +1560,11 @@ Returns:
 	New()
 		..()
 		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -3163,7 +3163,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 

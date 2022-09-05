@@ -647,7 +647,7 @@
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
 		SPAWN(5 SECONDS)
-			if(src.connected.currentStatusMessage == message)
+			if(src?.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
 				tgui_process.update_uis(src)
