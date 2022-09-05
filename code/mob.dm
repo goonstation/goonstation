@@ -1840,6 +1840,7 @@
 		animation.delaydispose()
 	qdel(src)
 
+
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
 #ifdef DATALOGGER
