@@ -1,5 +1,9 @@
 
 (t)mon sep 05 22
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
 (u)glowbold
 (p)10653
 (e)|
