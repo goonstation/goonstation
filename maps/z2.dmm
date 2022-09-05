@@ -69949,11 +69949,11 @@
 	pixel_x = 9;
 	pixel_y = -2
 	},
-/obj/item/storage/lunchbox/food1,
 /obj/item/reagent_containers/food/drinks/fruitmilk{
 	pixel_x = -7;
 	pixel_y = 9
 	},
+/obj/item/storage/lunchbox/food5,
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)
 "hJD" = (
@@ -73689,6 +73689,9 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/bee{
 	pixel_x = 4;
 	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = -8
 	},
 /turf/unsimulated/floor/grime,
 /area/syndicate_station)

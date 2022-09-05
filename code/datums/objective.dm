@@ -235,6 +235,10 @@ proc/create_fluff(datum/mind/target)
 			else
 				return 0
 
+/datum/objective/regular/steal/authdisc
+	set_up()
+		steal_target = /obj/item/disk/data/floppy/read_only/authentication
+
 /datum/objective/regular/multigrab
 	var/obj/item/multigrab_target
 	var/multigrab_num

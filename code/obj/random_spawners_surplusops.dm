@@ -145,8 +145,10 @@
 		/obj/item/storage/belt/wrestling,
 		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/implanter/super_mindhack,
+		/obj/item/clothing/suit/space/industrial/syndicate,
 		/obj/item/katana_sheath,
 		/obj/item/sword,
+		/obj/item/saw/syndie,
 		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
 		/obj/item/storage/box/donkpocket_w_kit,
 		/obj/storage/crate/syndicate_surplus/spawnable, //yo dawg, I heard you like surplus

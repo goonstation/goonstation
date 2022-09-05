@@ -40,8 +40,8 @@
 
 /obj/random_item_spawner/surplus/longgun/loadout
 	New()
-		SPAWN(1 DECI SECOND)
-			new /obj/surplusopspawner/suitandhelm(src.loc)
+
+		new /obj/surplusopspawner/suitandhelm(src.loc)
 		..()
 
 /obj/surplusopspawner/suitandhelm
