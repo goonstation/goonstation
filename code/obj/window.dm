@@ -280,8 +280,6 @@
 	get_desc()
 		var/the_text = ""
 		var/healthpercent = src.health/src.health_max * 100
-
-		var/the_text = ""
 		switch(healthpercent)
 			if(90 to 99)//dont want to clog up the description unless it's actually damaged
 				the_text += "It seems to be in mostly good condition"
