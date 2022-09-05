@@ -20,12 +20,12 @@
 		src.layer = map.layer + 1
 
 	proc/set_position(var/x, var/y)
-		//the first term is the scaled location of 0,0 on the map
-		//then add the actual position scaled by the map scale
+		//the first term is the distance to the map's center scaled
+		//then add the position of the true center
 		//add the pixel offset of the parent map
-		//subtract 18 because ???
-		src.pixel_x = round(-(world.maxx * src.map.scale - world.maxx)/2.0 + x * src.map.scale + src.map.pixel_x, 1) - 18
-		src.pixel_y = round(-(world.maxy * src.map.scale - world.maxy)/2.0 + y * src.map.scale + src.map.pixel_y, 1) - 18
+		//subtract half the icon size
+		src.pixel_x = (x - src.map.center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - src.icon.Width()/2
+		src.pixel_y = (y - src.map.center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - src.icon.Width()/2
 
 /obj/map_icon/tracking
 	New(var/atom/location, var/obj/station_map/map, var/atom/movable/target)
@@ -66,29 +66,47 @@
 			#ifdef UPSCALED_MAP
 			map_icon.Scale(world.maxx, world.maxy)
 			#endif
+		find_center()
 		render_map()
 		zoom_map()
 		icon = map_icon
 		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
 		mask_icon.Scale((1/src.scale) * 300, (1/src.scale) * 300)
-		src.add_filter("map_cutoff", 1, alpha_mask_filter(center_x - (world.maxx/2),center_y - (world.maxy/2), mask_icon))
+		src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
 
-	//generates the map from the current station layout
-	proc/render_map()
+	proc/valid_turf(var/turf/turf)
+		if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
+			return FALSE
+		//the Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
+		if (map_settings.name == "KONDARU" && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+			return FALSE
+		return TRUE
+
+	proc/find_center()
 		for (var/y in world.maxy to 1 step -1)
 			for (var/x in 1 to world.maxx)
 				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
-				if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
-					continue
-				//the Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
-				if (map_settings.name == "KONDARU" && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+				if (!src.valid_turf(turf))
 					continue
 				//keep track of the outer bounds of the station
 				x_max = max(x_max, x)
 				x_min = min(x_min, x)
 				y_max = max(y_max, y)
 				y_min = min(y_min, y)
-				map_icon.DrawBox(turf_color(turf), x,y)
+
+		src.center_x = (x_max + x_min)/2
+		src.center_y = (y_max + y_min)/2
+
+	//generates the map from the current station layout
+	proc/render_map()
+		var/x_offset = src.center_x - world.maxx/2
+		var/y_offset = src.center_y - world.maxy/2
+		for (var/y in world.maxy to 1 step -1)
+			for (var/x in 1 to world.maxx)
+				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
+				if (!src.valid_turf(turf))
+					continue
+				map_icon.DrawBox(turf_color(turf), x - x_offset, y - y_offset)
 
 	//zooms and centers the map on the station
 	proc/zoom_map()
@@ -97,13 +115,6 @@
 		src.scale = min(scale_x, scale_y)
 		//scale the whole thing to the largest axis
 		src.Scale(src.scale, src.scale)
-
-		//work out the center of the station
-		src.center_x = (x_max + x_min)/2
-		src.center_y = (y_max + y_min)/2
-		//adjust by distance to real center
-		src.pixel_x = -(center_x - (world.maxx/2)) * src.scale
-		src.pixel_y = -(center_y - (world.maxy/2)) * src.scale
 
 	proc/turf_color(turf/turf)
 		if (istype(turf.loc, /area/station/hydroponics) || istype(turf.loc, /area/station/ranch))
@@ -138,8 +149,8 @@
 			return
 		var/list/param_list = params2list(params)
 		if ("left" in param_list)
-			var/x = text2num(param_list["icon-x"])
-			var/y = text2num(param_list["icon-y"])
+			var/x = text2num(param_list["icon-x"]) + (src.center_x - world.maxx/2)
+			var/y = text2num(param_list["icon-y"]) + (src.center_y - world.maxy/2)
 			var/turf/clicked = locate(x, y, Z_LEVEL_STATION)
 			if (isAIeye(usr))
 				usr.loc = clicked
