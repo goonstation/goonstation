@@ -493,7 +493,6 @@ proc/give_mob_item(mob/person as mob, obj/item/gift as obj)
 <span style="color: green">Good:</span>
 ```csharp
 proc/give_mob_item(mob/person, obj/item/gift)
-    
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
@@ -517,6 +516,17 @@ Guide to the categories:
 * Overtime: How much was spent past 100 tick_usage. This results in what we know as 'lag'.
 
 If total cpu and real time are the same the proc never sleeps, otherwise real time will be higher as it counts the time while the proc is waiting.
+
+## Even Better Profiler
+There exists a project to provide an incredibly more advanced real-time profiler for DM, named [byond-tracy](https://github.com/mafemergency/byond-tracy), capable of providing incredible resolution.
+
+![](https://i.imgur.com/1CEwo0g.png)
+
+To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
+* The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+
+If you're on Linux you need to compile both yourself manually, obviously.
 
 ## Target Dummy
 You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.
