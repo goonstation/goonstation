@@ -1631,7 +1631,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tool\wrench.dm"
 #include "code\obj\machinery\access_button.dm"
 #include "code\obj\machinery\air_sensor.dm"
-#include "code\obj\machinery\air_vendor.dm"
 #include "code\obj\machinery\airlock_sensor.dm"
 #include "code\obj\machinery\alarm.dm"
 #include "code\obj\machinery\arc_electroplater.dm"
