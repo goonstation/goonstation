@@ -1,5 +1,13 @@
 
 (t)mon sep 05 22
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
 (u)Caio029
 (p)10380
 (e)|
