@@ -11,7 +11,7 @@
 #endif
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
-	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
+	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
@@ -25,7 +25,6 @@
 	var/pin = null
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/under/w_uniform = null
-//	var/obj/item/device/radio/w_radio = null
 	var/obj/item/clothing/shoes/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/clothing/gloves/gloves = null
@@ -42,7 +41,6 @@
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
 	var/image/fire_standing = null
-	//var/image/face_standing = null
 	var/image/hands_standing = null
 
 	var/image/body_damage_standing = null
