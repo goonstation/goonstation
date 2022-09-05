@@ -48,16 +48,16 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// PROFILING OPTIONS
 
+// enable tracy profiler stuff
+// requires compiled prof.dll in the root folder etc etc
+//#define TRACY_ENABLE
+
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
 //#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
 
 
 //////////// DEBUGGING TOGGLES
-
-// enable tracy profiler stuff
-// requires compiled prof.dll in the root folder etc etc
-//#define TRACY_ENABLE
 
 // Delete queue debug toggle
 // This is expensive. don't turn it on on the server unless you want things to be bad and slow
