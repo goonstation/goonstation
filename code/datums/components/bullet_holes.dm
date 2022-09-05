@@ -19,7 +19,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	/// Image which holds all of the impact decals (as overlays) to display them
 	var/image/impact_image_base
 	/// Used to track where in the list we insert the impact decals
-	var/insert_idx = 1
+	var/decal_num = 0
 
 /datum/component/bullet_holes/Initialize(max_holes, req_damage)
 	if (!isatom(src.parent))
@@ -62,7 +62,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	impact.pixel_y += impact_side_dir & SOUTH ?  rand(0, -MAX_OFFSET) : (impact_side_dir & NORTH ? rand(MAX_OFFSET) : rand(-MAX_OFFSET, MAX_OFFSET))
 
 	// Add bullet hole to list, then increment index to insert at. Modulo ensures that we don't go out of bounds and replace from the head of the list first.
-	src.impact_images[insert_idx++ % max_holes] = impact
+	src.impact_images[(decal_num++ % max_holes) + 1] = impact
 	src.redraw_impacts()
 
 /datum/component/bullet_holes/proc/redraw_impacts()
