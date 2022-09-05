@@ -172,6 +172,9 @@
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
 				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
 
+				organ_data1 += organ_health_scan("left_eye", H, obfuscate)
+				organ_data1 += organ_health_scan("right_eye", H, obfuscate)
+
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
 

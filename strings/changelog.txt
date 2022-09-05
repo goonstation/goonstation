@@ -1,4 +1,30 @@
 
+(t)mon sep 05 22
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
 (t)sun sep 04 22
 (u)Roddy
 (p)10639
