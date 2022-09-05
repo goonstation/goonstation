@@ -126,7 +126,7 @@
 					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
 
 		src.radiationLevel = tmpRads
-		if(tmpRads > 1000 || temperature > 15000)
+		if(tmpRads > 1000 || temperature > 5000)
 			src.catastrophicOverload() //we need this, otherwise neutron interactions go exponential and processing does too
 			return
 
