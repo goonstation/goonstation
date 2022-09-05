@@ -1011,42 +1011,37 @@
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
-/atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
-	if (!connect_to || !islist(connect_to)) // nothing to connect to
+/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
+	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE
 
-	for (var/connect in connect_to)
-		var/list/matches = list()
-		if(istype(T, connect))
-			matches.Add(T)
-		else
-			for (var/atom/movable/AM in T)
-				if (!AM.anchored)
-					continue
-				if (istype(AM, connect))
-					matches.Add(AM)
-		// TODO: do typecache here, make exceptions a joined typecacheof() list - `if(exceptions[match.type]) isvalid = FALSE`
-		for (var/match in matches)
-			var/valid = TRUE
-			if (exceptions && islist(exceptions))
-				for (var/exception in exceptions)
-					if (istype(match, exception))
-						valid = FALSE
-						break
-			if (valid)
-				return TRUE
+	// quick path, basically istype(T, anything in connect-except)
+	if (connect_to[T.type] && !exceptions[T.type])
+		return TRUE
+
+	// slow 😩
+	for (var/atom/movable/AM in T)
+		if (!AM.anchored)
+			continue
+		if (connect_to[AM.type] && !exceptions[AM.type])
+			return TRUE
 	return FALSE
 
-/// Return a bitflag that represents all potential connected icon_states
-/*
-connecting with diagonal tiles require additional bitflags
-i.e. there is a difference between N & E, and N & E & NE
-N, S, E, W, NE, SE, SW, NW
-1, 2, 4, 8, 16, 32, 64, 128
-*/
-/atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+/**
+ * Return a bitflag that represents all potential connected icon_states
+ *
+ * connecting with diagonal tiles require additional bitflags
+ * i.e. there is a difference between N & E, and N & E & NE
+ *
+ * N, S, E, W, NE, SE, SW, NW
+ *
+ * 1, 2, 4, 8, 16, 32, 64, 128
+ *
+ * connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+ */
+/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0)
 	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
@@ -1058,7 +1053,6 @@ N, S, E, W, NE, SE, SW, NW
 		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
 			connected_directions |= dir
 
-	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	if (connect_diagonal)
 		for (var/i = 1 to 4)  // needed for bitshift
 			ordir = ordinal[i]
