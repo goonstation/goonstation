@@ -82,7 +82,7 @@
 
 	var/yeet_chance = 0.1 //yeet
 
-	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
+	var/decomp_stage = DECOMP_STAGE_NO_ROT
 	var/time_until_decomposition = 0
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
@@ -1210,14 +1210,14 @@
 			src.update_name_tag("")
 	else
 		if (id_name != src.real_name)
-			if (src.decomp_stage > 2 || src.disfigured)
+			if (src.decomp_stage > DECOMP_STAGE_DECAYED || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 		else
-			if (src.decomp_stage > 2 || src.disfigured)
+			if (src.decomp_stage > DECOMP_STAGE_DECAYED || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
