@@ -253,7 +253,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-#define CLUWNE_NOISE_DELAY 50
+#define CLUWNE_NOISE_DELAY 5 SECONDS
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
 	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
@@ -282,18 +282,20 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				messageEffects += "Muffled by [H.grabbed_by]"
 				break
 
+	var/do_laugh = FALSE
 	if (iscluwne(H))
 		message = honk(message)
 		messageEffects += "Cluwne Honk"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
 	if (ishorse(H))
 		message = neigh(message)
 		messageEffects += "Horse"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
+	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
+		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
+		H.last_cluwne_noise = world.time
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
@@ -355,6 +357,8 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
+
+#undef CLUWNE_NOISE_DELAY
 
 
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
