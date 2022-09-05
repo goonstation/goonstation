@@ -1,5 +1,9 @@
 
 (t)mon sep 05 22
+(u)Wisemonster
+(p)10554
+(e)|
+(+)The interdictor blueprints are now on a single manudrive.
 (u)Ikea
 (p)10625
 (e)|
