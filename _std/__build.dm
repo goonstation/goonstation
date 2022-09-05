@@ -55,6 +55,10 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// DEBUGGING TOGGLES
 
+// enable tracy profiler stuff
+// requires compiled prof.dll in the root folder etc etc
+//#define TRACY_ENABLE
+
 // Delete queue debug toggle
 // This is expensive. don't turn it on on the server unless you want things to be bad and slow
 //#define DELETE_QUEUE_DEBUG

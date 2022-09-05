@@ -142,6 +142,9 @@ var/f_color_selector_handler/F_Color_Selector
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef TRACY_ENABLE
+		call("prof.dll", "init")()
+#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
 #endif
