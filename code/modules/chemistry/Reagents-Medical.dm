@@ -49,6 +49,7 @@ datum
 			fluid_g = 180
 			fluid_b = 120
 			transparency = 255
+			overdose = 30
 			depletion_rate = 0.2
 			value = 3 // 2c + 1c
 
@@ -61,6 +62,31 @@ datum
 					M.changeStatus("poisoned", -10 SECONDS * mult)
 				..()
 				return
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				var/effect = ..(severity, M)
+				M.druggy = max(M.druggy, 15)
+				M.stuttering += rand(0,2)
+				if(severity == 1)
+					if(effect <= 4)
+						M.emote(pick("blink","shiver","drool"))
+						M.change_misstep_chance(8 * mult)
+					else if (effect <= 9)
+						M.emote("twitch")
+						M.setStatusMin("weakened", 3 SECONDS * mult)
+					else if(effect <= 12)
+						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.druggy ++
+				else if (severity == 2)
+					if(effect <= 4)
+						M.emote(pick("shiver","moan","groan","laugh"))
+						M.change_misstep_chance(14 * mult)
+					else if (effect <= 10)
+						M.emote("twitch")
+						M.setStatusMin("weakened", 3 SECONDS * mult)
+					else if (effect <= 13)
+						M.setStatusMin("weakened", 5 SECONDS * mult)
+						M.druggy ++
 
 		medical/morphine // // COGWERKS CHEM REVISION PROJECT. roll the antihistamine effects into this?
 			name = "morphine"
