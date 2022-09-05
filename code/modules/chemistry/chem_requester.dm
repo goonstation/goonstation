@@ -63,10 +63,10 @@ var/list/datum/chem_request/chem_requests = list()
 				. = TRUE
 			if ("silicon_login")
 				//usr is bad, but it should be safe here
-				var/mob/living/silicon/silicon = usr
+				var/mob/living/silicon/silicon = ui.user
 				//handle AIeyes
-				if (isAIeye(usr))
-					var/mob/living/intangible/aieye/eye = usr
+				if (isAIeye(ui.user))
+					var/mob/living/intangible/aieye/eye = ui.user
 					silicon = eye.mainframe
 				if (istype(silicon))
 					//handle shells
