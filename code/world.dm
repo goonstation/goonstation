@@ -579,10 +579,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
-	UPDATE_TITLE_STATUS("Reticulating splines")
+	UPDATE_TITLE_STATUS("Initializing worldgen setup")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
