@@ -277,6 +277,7 @@
 			if (!proj_data.override_color)
 				src.color = "#ffffff"
 
+	// Awful var names. TODO rename pretty much everything here, or at least document the functions
 	proc/setup()
 		if(QDELETED(src))
 			return
@@ -290,7 +291,7 @@
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
 
-		var/len = sqrt(src.xo * src.xo + src.yo * src.yo)
+		var/len = sqrt(src.xo**2 + src.yo**2)
 
 		if (len == 0)
 			die()
@@ -365,8 +366,6 @@
 
 	Crossed(var/atom/movable/A)
 		..()
-		if (!istype(A))
-			return // can't happen will happen
 		if (!A.Cross(src))
 			src.collide(A)
 
@@ -504,7 +503,7 @@
 		return
 
 ABSTRACT_TYPE(/datum/projectile)
-datum/projectile
+/datum/projectile
 	// These vars were copied from the an projectile datum. I am not sure which version, probably not 4407.
 	var/name = "projectile"
 	var/icon = 'icons/obj/projectiles.dmi'
@@ -522,7 +521,7 @@ datum/projectile
 	var/dissipation_rate = 2     // How fast the power goes away
 	var/dissipation_delay = 10   // How many tiles till it starts to lose power - not exactly tiles, because falloff works on ticks, and doesn't seem to quite match 1-1 to tiles.
 									// When firing in a straight line, I was getting doubled falloff values on the fourth tile from the shooter, as well as others further along. -Tarm
-	var/ks_ratio = 1.0           /* Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
+	var/ks_ratio = 1.0           /** Kill/Stun ratio, when it hits a mob the damage/stun is based upon this and the power
 	                                eg 1.0 will cause damage = to power while 0.0 would cause just stun = to power */
 
 	var/armor_ignored = 0		 // Percentage of armor to ignore. Old-style AP is 0.66 = ignore 66% of target's armor
@@ -537,7 +536,7 @@ datum/projectile
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
 	var/window_pass = 0          // Can we pass windows
-	var/obj/projectile/master = null
+	var/obj/projectile/master = null // The projectile obj that we're associated with
 	var/silentshot = 0           // Standard visible message upon bullet_act.
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
