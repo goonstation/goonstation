@@ -1,5 +1,13 @@
 
 (t)mon sep 05 22
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
 (u)ZWRh3
 (p)10660
 (e)|
