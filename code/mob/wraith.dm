@@ -604,7 +604,7 @@
 			if (!isdead(H))
 				boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
 				return 1
-			if (H.decomp_stage == 4)
+			if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 				boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
 				return 1
 			if (ischangeling(H))
@@ -690,7 +690,7 @@
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new
 	for (var/mob/living/carbon/human/H in view(M))
-		if (istype(H) && isdead(H) && H.decomp_stage < 4)
+		if (istype(H) && isdead(H) && H.decomp_stage < DECOMP_STAGE_SKELETONIZED)
 			ret += H
 	return ret
 

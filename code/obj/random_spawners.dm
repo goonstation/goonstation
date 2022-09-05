@@ -1377,7 +1377,8 @@
 		/obj/item/clothing/under/gimmick/hakama/random,
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
-		/obj/item/clothing/under/gimmick/ziggy)
+		/obj/item/clothing/under/gimmick/ziggy,
+		/obj/item/clothing/under/gimmick/jcdenton)
 
 	one
 		amt2spawn = 1

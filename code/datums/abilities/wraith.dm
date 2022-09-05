@@ -113,7 +113,7 @@
 			for (var/mob/living/carbon/human/target in T.contents)
 				if (isdead(target))
 					error = 1
-					if (target:decomp_stage != 4)
+					if (target:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 						M = target
 						break
 		else if (ishuman(T))
@@ -123,7 +123,7 @@
 				return 1
 
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-			else if (M.decomp_stage != 4)
+			else if (M.decomp_stage != DECOMP_STAGE_SKELETONIZED)
 				if (M.reagents)
 					var/mob/wraith/W = src.holder.owner
 					var/amt = M.reagents.get_reagent_amount("formaldehyde")
@@ -132,7 +132,7 @@
 						boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
 						particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
 						return 0
-			else if (M.decomp_stage == 4)
+			else if (M.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 				M = null
 				error = 1
 			else
@@ -150,7 +150,7 @@
 		logTheThing(LOG_COMBAT, usr, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 		//Make the corpse all grody and skeleton-y
-		M.decomp_stage = 4
+		M.decomp_stage = DECOMP_STAGE_SKELETONIZED
 		if (M.organHolder && M.organHolder.brain)
 			qdel(M.organHolder.brain)
 		M.set_face_icon_dirty()
@@ -244,7 +244,7 @@
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
 			for (var/mob/living/carbon/human/target in T.contents)
-				if (isdead(target) && target:decomp_stage != 4)
+				if (isdead(target) && target:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					T = target
 					break
 
@@ -368,13 +368,13 @@
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
 			for (var/mob/living/carbon/human/target in T.contents)
-				if (isdead(target) && target:decomp_stage == 4)
+				if (isdead(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
 					T = target
 					break
 
 		if (ishuman(T))
 			var/mob/living/carbon/human/H = T
-			if (!isdead(H) || H.decomp_stage != 4)
+			if (!isdead(H) || H.decomp_stage != DECOMP_STAGE_SKELETONIZED)
 				boutput(usr, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
 				return 1
 			var/personname = H.real_name

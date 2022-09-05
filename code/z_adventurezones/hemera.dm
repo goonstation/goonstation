@@ -496,7 +496,7 @@ Obsidian Crown
 
 			humHost.full_heal()
 
-			humHost.decomp_stage = 4
+			humHost.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			humHost.bioHolder.RemoveEffect("eaten")
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()

@@ -35,7 +35,7 @@ export const TextInputModal = (_, context) => {
   const [inputIsValid, setInputIsValid] = useSharedState<Validator>(
     context,
     'inputIsValid',
-    { isValid: false, error: null }
+    { isValid: !!message.length, error: null }
   );
   const onType = (event) => {
     event.preventDefault();

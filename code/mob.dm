@@ -248,6 +248,7 @@
 	render_special = new
 	traitHolder = new(src)
 
+
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
@@ -267,6 +268,7 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new
+	src.vis_contents += src.chat_text
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -343,6 +345,9 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
+
+	qdel(chat_text)
+	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -777,6 +782,8 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+	var/atom/oldloc = src.loc
+
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -794,6 +801,17 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
+
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -1821,6 +1839,7 @@
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
+
 
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
@@ -3170,21 +3189,15 @@
 	if(!internal)
 		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
 	if(Sv > 0)
+		if(isdead(src))
+			return //no rads for the dead
 		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
 		src.radiation_dose += radres_mult*Sv
 		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
-		if(isliving(src))
-			var/mob/living/lp_owner = src
-			if(!lp_owner.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
-				return
-		if(radres_mult*Sv > 0.2 && !internal)
-			src.TakeDamage("All",0,20*clamp((radres_mult*Sv)/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
-			if(!ON_COOLDOWN(src,"radiation_feel_message",5 SECONDS))
-				src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
-		else if(prob(10) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
-			src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
+		. = radres_mult*Sv
 	else
 		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+		. = Sv
 	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
