@@ -4,8 +4,9 @@
 	spread = "Airborne"
 	virulence = 30 // Reduced from 100 %. Station-wide, basically incurable and unavoidable epidemics weren't fun (Convair880).
 	resistance_prob = 25 // Increased from 0 %.
-	cure = "Sleep"
+	cure = "Sleep, Spaceacillin"
 	associated_reagent = "green mucus"
+	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
 
 /datum/ailment/disease/flu/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

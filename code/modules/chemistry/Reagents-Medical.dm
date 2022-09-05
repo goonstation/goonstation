@@ -158,59 +158,6 @@ datum
 				..()
 				return
 
-		medical/cold_medicine
-			name = "robustissin"
-			id = "cold_medicine"
-			description = "A pharmaceutical compound used to treat minor colds, coughs, and other ailments."
-			reagent_state = LIQUID
-			fluid_r = 107
-			fluid_g = 29
-			fluid_b = 122
-			transparency = 70
-			addiction_prob = 6
-			overdose = 30
-			value = 7 // Okay there are two recipes, so two different values... I'll just go with the lower one.
-
-			on_mob_life(var/mob/living/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(probmult(8))
-					M.emote(pick("smile","giggle","yawn"))
-				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/cold))
-						M.cure_disease(virus)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/flu))
-						M.cure_disease(virus)
-					if(probmult(25) && istype(virus.master,/datum/ailment/disease/food_poisoning))
-						M.cure_disease(virus)
-				..()
-				return
-
-			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				var/effect = ..(severity, M)
-				M.druggy = max(M.druggy, 15)
-				M.stuttering += rand(0,2)
-				if(severity == 1)
-					if(effect <= 4)
-						M.emote(pick("blink","shiver","drool"))
-						M.change_misstep_chance(8 * mult)
-					else if (effect <= 9)
-						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
-					else if(effect <= 12)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
-						M.druggy ++
-				else if (severity == 2)
-					if(effect <= 4)
-						M.emote(pick("shiver","moan","groan","laugh"))
-						M.change_misstep_chance(14 * mult)
-					else if (effect <= 10)
-						M.emote("twitch")
-						M.setStatusMin("weakened", 3 SECONDS * mult)
-					else if (effect <= 13)
-						M.setStatusMin("weakened", 5 SECONDS * mult)
-						M.druggy ++
-
-
 		medical/teporone // COGWERKS CHEM REVISION PROJECT. marked for revision
 			name = "teporone"
 			id = "teporone"

@@ -2099,17 +2099,6 @@ datum
 			required_reagents = list("mutadone" = 3, "lithium" = 1)
 			result_amount = 4
 
-		cold_medicine
-			name = "Robustissin"
-			id = "cold_medicine"
-			result = "cold_medicine"
-			required_reagents = list("menthol" = 1, "morphine" = 1, "hydrogen" = 1, "acetone" = 1)
-			result_amount = 4
-			mix_phrase = "The chemicals fizz together and a strange grape scent rises from the container."
-
-		cold_medicine/cold_medicine2
-			id = "cold_medicine2"
-			required_reagents = list("antihistamine" = 1, "oil" = 1, "salicylic_acid" = 1, "menthol" = 1)
 
 		cyanide
 			name = "Cyanide"

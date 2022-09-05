@@ -2,9 +2,9 @@
 	name = "Frog Flu"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Robustissin, Robust Coffee, getting robusted"
+	cure = "Robust Coffee, getting robusted"
 	associated_reagent = "sheltestgrog"
-	reagentcure = list("robustissin", "coffee")
+	reagentcure = list("coffee")
 	affected_species = list("Human")
 	stage_prob = 5
 
