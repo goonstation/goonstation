@@ -629,7 +629,7 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
-//for makeshift shotgun shells- don't ever use these directly- use the group spawners in special.dm
+//for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
 
 /datum/projectile/bullet/improvplasglass
 	name = "plasmaglass fragments"
@@ -637,8 +637,8 @@ toxic - poisons
 	icon_state = "plasglass"
 	dissipation_delay = 3
 	dissipation_rate = 2
-	damage_type = D_PIERCING //hee hee
-	armor_ignored = 0.66 //hoo hoo
+	damage_type = D_PIERCING
+	armor_ignored = 0.8 //this is higher than the usual .66 to compensate for how hard pipeshot gets gimped by armor otherwise. It's still bad.
 	implanted = null
 	power = 6
 

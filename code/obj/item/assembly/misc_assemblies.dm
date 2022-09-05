@@ -900,6 +900,29 @@ obj/item/assembly/radio_horn/receive_signal()
 
 			//consume material
 			craftingitem.change_stack_amount(-consumed)
+
+
+/datum/pipeshotrecipe/plasglass //was tricky figuring this out in a non-abusable way but we got there
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/plasglass
+	accepteditem = /obj/item/raw_material/shard
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user) //overwritten to change the typecheck to a material check
+		var/consumed = min(src.thingsneeded, craftingitem.amount)
+		thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
+		if (craftingitem.material.getProperty("hard") >= 7)// unhappy about overriding for this one statement but that's how it is
+
+			if (thingsneeded > 0)
+				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
+
+			if (thingsneeded <= 0)
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+			//consume material
+			craftingitem.change_stack_amount(-consumed)
+
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/scrap/
@@ -920,7 +943,10 @@ obj/item/assembly/radio_horn/receive_signal()
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
 			if (istype(W, /obj/item/raw_material/shard))
-				recipe = new/datum/pipeshotrecipe/glass
+				if(W.material.getProperty("hard") >= 7)
+					recipe = new/datum/pipeshotrecipe/plasglass
+				else
+					recipe = new/datum/pipeshotrecipe/glass
 			if (istype(W, /obj/item/raw_material/scrap_metal))
 				recipe = new/datum/pipeshotrecipe/scrap
 		if(recipe) //probably a better way, but it works well enough
