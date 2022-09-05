@@ -27,7 +27,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	src.max_holes = max_holes
 	src.req_damage = req_damage
 
-	src.impact_images = list()[max_holes]
+	src.impact_images = new/list(max_holes)
 
 	src.impact_image_base = image('icons/obj/projectiles.dmi', "blank")
 	src.impact_image_base.blend_mode = BLEND_INSET_OVERLAY // so the holes don't go over the edge of things
