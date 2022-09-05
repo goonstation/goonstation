@@ -60,9 +60,9 @@
 
 	var/last_b_state = 1
 
-	var/chest_cavity_open = 0
+	var/chest_cavity_open = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
-	var/chest_item_sewn = 0			// Item is sewn in or is loose
+	var/chest_item_sewn = FALSE		// Item is sewn in or is loose
 
 	var/cust_icon = 'icons/mob/human_hair.dmi'	// icon for hair, in case we want something else
 	var/special_one_icon = 'icons/mob/human_hair.dmi'
@@ -76,9 +76,7 @@
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
-	var/simple_examine = 0
-
-	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
+	var/simple_examine = FALSE
 
 	var/in_throw_mode = 0
 

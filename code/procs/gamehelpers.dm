@@ -14,6 +14,7 @@ var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
 var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administrator")
 
+
 /proc/stinkString()
 	// i am five - ISN
 	switch (rand(1,4))
@@ -26,16 +27,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		else
 			return "[pick(stinkExclamations)], it smells like \a [pick(stinkThings)]'s [pick(stinkThingies)] in here!"
 
-//For fuck's sake.
-/*
-/proc/bubblesort(list/L)
-	var i, j
-	for(i=L.len, i>0, i--)
-		for(j=1, j<i, j++)
-			if(L[j] > L[j+1])
-				L.Swap(j, j+1)
-	return L
-*/
+// TODO convert the above to use a file/string picker
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
