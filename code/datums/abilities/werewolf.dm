@@ -18,7 +18,7 @@
 		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
 		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-
+		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction) //not using for now, but could be fun later ish.
 		src.resistances += /datum/ailment/disease/lycanthropy
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
