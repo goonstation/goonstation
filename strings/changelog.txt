@@ -1,5 +1,9 @@
 
 (t)mon sep 05 22
+(u)ZeWaka
+(p)10589
+(e)|
+(+)Made some large internal changes to how our walls smooth out and look pretty. Be sure to report any bugs!
 (u)Wisemonster
 (p)10554
 (e)|
