@@ -92,7 +92,7 @@ export const ChemRequester = (props, context) => {
           </Stack>
         )}
         {!card && !silicon_user && <Section>Please swipe ID to place request.</Section>}
-        {!card && silicon_user && (
+        {!card && !!silicon_user && (
           <Section>
             <Button onClick={() => act("silicon_login")}>Login to place request.</Button>
           </Section>
