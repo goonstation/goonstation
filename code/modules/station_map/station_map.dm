@@ -20,12 +20,13 @@
 		src.layer = map.layer + 1
 
 	proc/set_position(var/x, var/y)
+		var/icon/dummy_icon = new(src.icon)
 		//the first term is the distance to the map's center scaled
 		//then add the position of the true center
 		//add the pixel offset of the parent map
 		//subtract half the icon size
-		src.pixel_x = (x - src.map.center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - src.icon.Width()/2
-		src.pixel_y = (y - src.map.center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - src.icon.Width()/2
+		src.pixel_x = (x - src.map.center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - dummy_icon.Width()/2
+		src.pixel_y = (y - src.map.center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - dummy_icon.Height()/2
 
 /obj/map_icon/tracking
 	New(var/atom/location, var/obj/station_map/map, var/atom/movable/target)
@@ -78,7 +79,7 @@
 		if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
 			return FALSE
 		//the Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
-		if (map_settings.name == "KONDARU" && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+		if ((map_settings.name in list("KONDARU", "DONUT3")) && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
 			return FALSE
 		return TRUE
 
