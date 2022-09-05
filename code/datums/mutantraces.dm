@@ -1228,7 +1228,10 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANT_BE_PINNED, src)
-			if (M.grabbed_by) qdel(M.grabbed_by) // break out of existing grabs
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (!istype(grab_grabbed_by, /obj/item/grab/block))
+						qdel(grab_grabbed_by)
 		last_drain = world.time
 		return ..(M)
 
