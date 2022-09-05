@@ -12,16 +12,17 @@
 /obj/map_icon
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
+	mouse_opacity = 0
 	var/obj/station_map/map = null
 
 	New(var/atom/location, var/obj/station_map/map)
 		..()
 		src.map = map
-		src.layer = map.layer + 1
+		src.layer = map.layer + 0.1
 
 	proc/set_position(var/x, var/y)
 		var/icon/dummy_icon = new(src.icon)
-		//the first term is the distance to the map's center scaled
+		//the first term is the scaled distance to the map's center
 		//then add the position of the true center
 		//add the pixel offset of the parent map
 		//subtract half the icon size
@@ -31,11 +32,8 @@
 /obj/map_icon/tracking
 	New(var/atom/location, var/obj/station_map/map, var/atom/movable/target)
 		..()
-		// src.Scale(0.25,0.25)
 		src.icon = target.icon
 		src.icon_state = target.icon_state
-		// target.render_target = ref(target)
-		// src.render_source = target.render_target
 		src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/handle_move)
 		src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 		src.handle_move(target)
@@ -45,6 +43,7 @@
 		src.set_position(T.x, T.y)
 /obj/station_map
 	name = "Station map"
+	layer = TURF_LAYER
 	var/static/icon/map_icon
 
 	var/x_max = 1
@@ -168,6 +167,9 @@
 		..()
 		src.Scale(0.5,0.5)
 		src.scale *= 0.5
+		//center it on the tile it was spawned from
+		src.pixel_x -= 135
+		src.pixel_y -= 133
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		var/x_max = 0
