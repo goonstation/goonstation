@@ -178,7 +178,7 @@
 			var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
 			S.set_up(2, FALSE, src.holder.owner)
 			S.start()
-		playsound(owner.loc, "sound/effects/electric_shock_short.ogg", 30, TRUE, FALSE, pitch = 0.8)
+		playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 30, TRUE, FALSE, pitch = 0.8)
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)
 		src.onRestart()

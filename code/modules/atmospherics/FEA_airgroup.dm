@@ -393,6 +393,9 @@
 
 		LAGCHECK(LAG_REALTIME)
 
+	if(!length(members))  //bail to resolve div 0
+		return
+
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)
 		if (totalPressure / members.len < 65)

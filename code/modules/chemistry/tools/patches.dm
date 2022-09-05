@@ -604,6 +604,10 @@
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
 
+/obj/item/reagent_containers/mender/both/mini
+	initial_volume = 50
+	initial_reagents = "synthflesh"
+
 /datum/action/bar/icon/automender_apply
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED

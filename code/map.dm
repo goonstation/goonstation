@@ -215,7 +215,7 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the bridge" = list(/area/station/bridge),
 		"the crew lounge" = list(/area/station/crew_quarters/quarters),
-		"the main brig area" = list(/area/station/security/brig),
+		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
 		"the main station pod bay" = list(/area/station/hangar/main))
 
 /datum/map_settings/donut3

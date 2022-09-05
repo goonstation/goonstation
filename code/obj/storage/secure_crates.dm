@@ -85,6 +85,7 @@
 			name = "special grenades crate"
 			spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
 			/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
+			/obj/item/storage/box/stinger_kit,\
 			/obj/item/storage/box/stun_landmines)
 
 	sarin_grenades

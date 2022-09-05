@@ -11,7 +11,7 @@ proc/build_syndi_buylist_cache()
 		if (!LE.cost || !isnum(LE.cost) || LE.cost <= 0)
 			syndi_buylist_cache.Remove(LE)
 
-	syndi_buylist_cache = sortList(syndi_buylist_cache)
+	sortList(syndi_buylist_cache, /proc/cmp_text_asc)
 
 // How to add new items? Pick the correct path (nukeops, traitor, surplus) and go from there. Easy.
 ABSTRACT_TYPE(/datum/syndicate_buylist)
@@ -96,14 +96,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/gun/energy/crossbow
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
 	item = /obj/item/garrote
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/empgrenades
 	name = "EMP Grenades"
@@ -143,7 +141,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/card/emag
 	cost = 6
 	desc = "A sophisticated tool of sabotage and infiltration. Capable of shorting out or otherwise bypassing security on door locks, robot friend/foe identification systems, shuttle control consoles, and more!"
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/fimplant
@@ -190,7 +187,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/old_grenade/sawfly/withremote
 	cost = 2
 	vr_allowed = FALSE
-	br_allowed = TRUE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -199,7 +195,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/old_grenade/spawner/sawflycluster
 	cost = 5
 	vr_allowed = FALSE
-	br_allowed = TRUE // A smidge of tomfoolery, if you will
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
 	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
@@ -308,7 +303,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/chameleon
 	cost = 5
 	desc = "Advanced cloaking device that scans an object and, when activated, makes the bearer look like the object. Slows movement while in use."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/holographic_disguiser
 	name = "Holographic Disguiser"
@@ -601,7 +595,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/wasp_grenade_kit
 	cost = 3
 	desc = "These wasp grenades contain genetically modified extra double large hornets that will surely inspire awe in all your non-botanical friends."
-	br_allowed = TRUE
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -612,7 +605,6 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
 	not_in_crates = 1 //the value of the item goes down significantly for non-botanists since only botanists are treated kindly by wasps
-	br_allowed = TRUE
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR
@@ -645,7 +637,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/caution/traitor
 	cost = 2
 	desc = "This Wet Floor Sign spits out organic superlubricant under everyone nearby unless they are wearing galoshes. That'll teach them to ignore the signs. If you are wearing the long janitor gloves you can click with a bucket (or beaker or drinking glass etc.) to replace the payload."
-	br_allowed = TRUE
 	job = list("Janitor")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_SPY | UPLINK_HEAD_REV
 
@@ -800,7 +791,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/donkpocket_w_kit
 	cost = 2
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -810,7 +800,6 @@ This is basically useless for anyone but miners.
 	cost = 7
 	desc = "An extremely sharp knife with a weighted handle for accurate throwing. Caution: May cause extreme bleeding if the cutting edge comes into contact with human flesh."
 	not_in_crates = 1
-	br_allowed = TRUE
 	job = list("Chef")
 	can_buy = UPLINK_TRAITOR
 
@@ -974,6 +963,16 @@ This is basically useless for anyone but miners.
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/chicken_grenade
+	name = "Chicken Grenade"
+	item = /obj/item/old_grenade/chicken
+	cost = 1
+	vr_allowed = 0
+	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
+	job = list("Rancher")
+	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
@@ -988,7 +987,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/dagger/syndicate
 	cost = 2
 	desc = "An ornamental dagger for stabbing people with."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
@@ -1022,13 +1020,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/gun/kinetic/hunting_rifle
 	cost = 3
 	desc = "An old hunting rifle, comes with only four bullets. Use them wisely."
-	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
 		cost = 5
 		not_in_crates = TRUE
-		br_allowed = FALSE // Or it shows up twice in loot
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/bananagrenades
@@ -1071,10 +1067,18 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 // Why not, I guess? Cleaned up the old mine code, might as well use it (Convair880).
 /datum/syndicate_buylist/surplus/landmine
-	name = "Land Mine"
-	item = /obj/random_item_spawner/landmine/surplus // RNG picker.
+	name = "Land Mine Pouch"
+	item = /obj/item/storage/landmine_pouch
 	cost = 1
-	desc = "Some old anti-personnel mine we found in the warehouse."
+	desc = "A pouch of old anti-personnel mines we found in the warehouse."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
+
+/datum/syndicate_buylist/surplus/beartrap
+	name = "Bear Trap Pouch"
+	item = /obj/item/storage/beartrap_pouch
+	cost = 1
+	desc = "Just in case you happen to run into some space bears."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 

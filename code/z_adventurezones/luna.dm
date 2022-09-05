@@ -836,7 +836,7 @@ Contents:
 /obj/machinery/door/poddoor/blast/lunar
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
-	autoclose = 0
+	autoclose = FALSE
 	req_access_txt = ""
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -912,8 +912,8 @@ Contents:
 	anchored = 1
 	density = 1
 	opacity = 1
-	autoclose = 0
-	cant_emag = 1
+	autoclose = FALSE
+	cant_emag = TRUE
 	req_access_txt = "999"
 
 	var/broken = 0
@@ -940,7 +940,7 @@ Contents:
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
-			src.opacity = 0
+			src.set_opacity(0)
 			sleep(0.6 SECONDS)
 			elecflash(src,power=2,exclude_center = 0)
 
@@ -1045,7 +1045,7 @@ Contents:
 		src.attacking = 1
 		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		SPAWN(1 SECOND)
 			src.attacking = 0
 
@@ -1056,15 +1056,15 @@ Contents:
 			return
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.set_dir(pick(alldirs))
 
@@ -2093,12 +2093,12 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
-			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 50)
 
 			sleep(3 SECONDS)
 			//do tiny baby explosion noise
 			//Todo: a squeakier blast sound.
-			playsound(src.loc, "sound/effects/Explosion2.ogg", 40, 0, 0, 4)
+			playsound(src.loc, 'sound/effects/Explosion2.ogg', 40, 0, 0, 4)
 
 			new /obj/effects/explosion/tiny_baby (src.loc)
 			for (var/mob/living/carbon/unfortunate_jerk in range(1, src))

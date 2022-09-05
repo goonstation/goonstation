@@ -432,7 +432,10 @@
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
-		B.ActivatePoolEffect(B.effectPool[pick(B.effectPool)], 1, 0)
+		var/datum/bioEffect/E = pick(B.effectPool)
+		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
+		SPAWN (1 SECOND) // This DOES NOT WORK unless delayed but somehow the trait part is logged??
+			logTheThing(LOG_DEBUG, owner, "gets the bioeffect [E] from the trait [name].")
 
 /obj/trait/stablegenes
 	name = "Stable Genes"

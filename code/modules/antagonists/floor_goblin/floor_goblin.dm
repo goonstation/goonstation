@@ -28,7 +28,7 @@
 	H.equip_new_if_possible(/obj/item/clothing/head/helmet/viking, SLOT_HEAD)
 	H.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
 	H.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
-	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
+	H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, SLOT_R_STORE)
 	H.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
 	H.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
 	H.equip_new_if_possible(/obj/item/shoethief_bag, SLOT_IN_BELT)
@@ -170,7 +170,7 @@
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
-					playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
+					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
@@ -183,7 +183,7 @@
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
 		else
-			playsound(floorturf, "sound/impact_sounds/Flesh_Tear_3.ogg", 50, 1, pitch = 1.3)
+			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
 			target_human.changeStatus("weakened", 2 SECONDS)
 			target_human.force_laydown_standup()
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\

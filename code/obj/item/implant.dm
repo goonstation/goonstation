@@ -456,7 +456,7 @@ THROWING DARTS
 				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
-				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 2.4)
+				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
 				//src.on_remove(H)
 				//H.implant.Remove(src)
 				//src.set_loc(get_turf(H))
@@ -465,7 +465,7 @@ THROWING DARTS
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				H.emote("scream")
-				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 1.6)
+				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
 
 	do_process(var/mult = 1)
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
@@ -488,7 +488,7 @@ THROWING DARTS
 				else
 					if (prob(30))
 						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
-						playsound(H.loc, "sound/effects/electric_shock_short.ogg", 60, 0,0,pitch = 0.8)
+						playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
 						H.emote("twitch_v")
 
 		..()
@@ -605,7 +605,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (!isintangible(M))
 				var/dist = GET_DIST(src.owner, M) + 1
 				// arcflash uses some fucked up thresholds so trust me on this one
-				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(max(1,.)) + 3))
 		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
 			if (prob(. * 7))
 				var/mob/living/target
@@ -1061,11 +1061,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/turf/T = get_turf(src.owner)
 		switch(src.artifact_implant_type)
 			if ("eldritch")
-				playsound(T, pick("sound/machines/ArtifactEld1.ogg", "sound/machines/ArtifactEld2.ogg"), volume, 1)
+				playsound(T, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), volume, 1)
 			if ("ancient")
-				playsound(T, "sound/machines/ArtifactAnc1.ogg", volume, 1)
+				playsound(T, 'sound/machines/ArtifactAnc1.ogg', volume, 1)
 			if ("wizard")
-				playsound(T, "sound/machines/ArtifactWiz1.ogg", volume, 1)
+				playsound(T, 'sound/machines/ArtifactWiz1.ogg', volume, 1)
 
 		if (unremovable)
 			src.cant_take_out = TRUE
@@ -1198,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 				SPAWN(2 SECONDS)
 					if (H && src && (src in H.implant))
-						playsound(get_turf(H), "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+						playsound(get_turf(H), 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 						if (!l_arm)
 							H.limbs.replace_with("l_arm", pick(left_arm), null, 0)
 						else if (!r_arm)
@@ -1234,7 +1234,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (H && src && (src in H.implant))
 					H.say(pick(message_list))
 					if (prob(3))
-						playsound(get_turf(H), pick("sound/voice/screams/robot_scream.ogg", "sound/voice/screams/Robot_Scream_2.ogg"), 50, 1)
+						playsound(get_turf(H), pick('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg'), 50, 1)
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_bad
@@ -1250,7 +1250,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				SPAWN(3 SECONDS)
 					for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
 						if (H && src)
-							playsound(get_turf(H), pick("sound/impact_sounds/circsaw.ogg", "sound/machines/rock_drill.ogg"), 50, 1)
+							playsound(get_turf(H), pick('sound/impact_sounds/circsaw.ogg', 'sound/machines/rock_drill.ogg'), 50, 1)
 							H.sever_limb(limb)
 							sleep(1 SECOND)
 
@@ -1355,7 +1355,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 							sleep(4 SECONDS)
 							if (H && src)
 								make_cleanable(/obj/decal/cleanable/ash, get_turf(H))
-								playsound(get_turf(H), "sound/effects/mag_fireballlaunch.ogg", 50, 1)
+								playsound(get_turf(H), 'sound/effects/mag_fireballlaunch.ogg', 50, 1)
 								H.firegib(FALSE)
 						else
 							boutput(H, "<span class='alert'><b>Oh god, it's SO COLD!</b></span>")
@@ -1365,7 +1365,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 							sleep(4 SECONDS)
 							if (H && src)
-								playsound(get_turf(H), "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+								playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 								H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
 		..()
 
@@ -2089,7 +2089,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			random_brute_damage(M, 1)
 			src.set_loc(M)
 			src.implanted(M)
@@ -2118,7 +2118,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)

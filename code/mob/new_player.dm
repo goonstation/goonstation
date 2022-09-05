@@ -287,6 +287,8 @@ mob/new_player
 				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
+				if (current_state < GAME_STATE_FINISHED)
+					battlemode.battlersleft_hud.add_client(character.client)
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
 					character.ghostize()
@@ -848,7 +850,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", "Yes", "No") == "Yes")
+		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No")) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token

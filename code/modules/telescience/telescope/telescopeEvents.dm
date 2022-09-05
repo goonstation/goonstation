@@ -69,7 +69,7 @@
 
 	onContact(var/obj/machinery/computer/telescope/T)
 		..()
-		playsound(T.loc, "sound/voice/femvox.ogg", 100, 0)
+		playsound(T.loc, 'sound/voice/femvox.ogg', 100, 0)
 		return
 
 /datum/telescope_event/geminorum

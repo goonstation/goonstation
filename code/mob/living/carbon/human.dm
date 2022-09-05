@@ -1564,9 +1564,12 @@
 	forced_language = get_special_language(secure_headset_mode)
 
 	message = process_accents(src,message)
+
+	if (src.stuttering)
+		message = stutter(message)
+
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
-
 
 	switch (message_mode)
 		//MBC : now that you can whisper while dying or suffocating, let's not allow you to whisper into a radio.
@@ -2614,7 +2617,7 @@
 		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
-				new /obj/critter/spider/baby(src.loc)
+				new /mob/living/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)
 		ghostize()
