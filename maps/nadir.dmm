@@ -7362,12 +7362,16 @@
 /area/station/security/equipment)
 "dPZ" = (
 /obj/table/reinforced/auto,
-/obj/item/device/radio{
+/obj/item/paper/siphon_guide{
 	pixel_x = 5;
-	pixel_y = 4
+	pixel_y = -3
+	},
+/obj/item/paper/siphon_guide{
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/item/extinguisher{
-	pixel_x = -6;
+	pixel_x = -7;
 	pixel_y = 5
 	},
 /turf/simulated/floor/engine,
@@ -10782,6 +10786,12 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
+	})
+"fFi" = (
+/obj/mic_stand,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
 	})
 "fFG" = (
 /obj/machinery/flasher/portable,
@@ -34701,6 +34711,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"rNd" = (
+/obj/loudspeaker,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "rNn" = (
 /obj/machinery/optable,
 /turf/simulated/floor/sanitary/white,
@@ -92601,7 +92617,7 @@ jtF
 jci
 awA
 rdL
-drI
+rNd
 afE
 drI
 rdL
@@ -92910,7 +92926,7 @@ drI
 pAp
 hBK
 bvt
-drI
+fFi
 drI
 pfr
 drI
