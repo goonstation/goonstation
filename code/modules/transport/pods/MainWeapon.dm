@@ -311,7 +311,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
 				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
@@ -386,7 +386,7 @@
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
-		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
+		playsound(src.loc, 'sound/weapons/heavyioncharge.ogg', 75, 1)
 		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
 		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
 		purge.dir = ship.facing
@@ -411,7 +411,7 @@
 			var/destruction_point_x
 			var/destruction_point_y
 			ship.vis_contents -= purge
-			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
+			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 			switch (purge.dir)
 				if (NORTH)
 					for (increment in 1 to 4)
@@ -476,7 +476,7 @@
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
 			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))
 			T.ex_act(1)

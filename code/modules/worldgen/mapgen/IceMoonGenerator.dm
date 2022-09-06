@@ -125,7 +125,7 @@
 	destroy_asteroid(var/dropOre=0)
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 
 		return src
@@ -177,4 +177,3 @@
 		for(var/atom/A in src.contents)
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			qdel(A)
-

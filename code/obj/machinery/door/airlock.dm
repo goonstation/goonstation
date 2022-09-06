@@ -151,7 +151,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "door_closed"
-	deconstruct_flags = DECON_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
+	deconstruct_flags = DECON_NULL_ACCESS | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER | DECON_MULTITOOL
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS
 
 	var/image/panel_image = null
@@ -199,6 +199,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	power_usage = 50
 	operation_time = 6
 	brainloss_stumble = TRUE
+
+	get_desc()
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99) //dont want to clog up the description unless it's actually damaged
+				. += "It seems to be in mostly good condition"
+			if(75 to 89)
+				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+			if(50 to 74)
+				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+			if(25 to 49)
+				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+			if(0 to 24)
+				. += "It is barely intact!"
 
 /obj/machinery/door/airlock/New()
 	..()
@@ -1549,7 +1563,7 @@ About the new airlock wires panel:
 
 			if (!istype(src, /obj/machinery/door/airlock/glass))
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 			src.operating = 0
@@ -1566,7 +1580,7 @@ About the new airlock wires panel:
 
 			if (src.visible)
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 			src.operating = 0

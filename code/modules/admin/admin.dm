@@ -92,7 +92,7 @@ var/global/noir = 0
 
 	if (src.level < 0)
 		tgui_alert(usr,"UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-		usr << csound("sound/voice/farts/poo2.ogg")
+		usr << csound('sound/voice/farts/poo2.ogg')
 		return
 
 	if (usr.client != src.owner)
@@ -242,6 +242,10 @@ var/global/noir = 0
 		if ("toggle_spawn_in_loc")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.spawn_in_loc = !usr.client.holder.spawn_in_loc
+				src.show_pref_window(usr)
+		if ("toggle_topic_log")
+			if (src.level >= LEVEL_MOD)
+				src.show_topic_log = !show_topic_log
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -1065,7 +1069,7 @@ var/global/noir = 0
 				for (var/area/A in world)
 					areas += A
 					LAGCHECK(LAG_LOW)
-				SortList(areas, /proc/compareName)
+				sortList(areas, /proc/cmp_name_asc)
 				var/area = tgui_input_list(usr, "Area to send to", "Send", areas)
 				if (area)
 					usr.client.sendmob(M, area)
@@ -1244,7 +1248,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/statusEffect))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
 
 				if (!effect)
@@ -1572,7 +1576,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/reagent))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/type = tgui_input_list(usr, "Select Reagent:", "Select", L)
 
 				if(!type) return
@@ -1688,7 +1692,7 @@ var/global/noir = 0
 				var/list/L = list()
 				for(var/R in concrete_typesof(/datum/targetable))
 					L += R
-				L = sortList(L)
+				sortList(L, /proc/cmp_text_asc)
 				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
 				if (!ab_to_add)
 					return // user canceled
@@ -1726,7 +1730,7 @@ var/global/noir = 0
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any abilities!</span></b>")
 					return //nothing to remove
 
-				abils = sortList(abils)
+				sortList(abils, /proc/cmp_text_asc)
 				ab_to_rem = tgui_input_list(usr, "Remove which ability?", "Ability", abils)
 				if (!ab_to_rem) return //user cancelled
 				message_admins("[key_name(usr)] removed ability [ab_to_rem] from [key_name(M)].")
@@ -1803,7 +1807,7 @@ var/global/noir = 0
 		if ("managetraits_remove")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				if (!M || !trait) return
 				message_admins("[key_name(usr)] removed trait [trait.name] from [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "removed trait [trait.name] from [constructTarget(M,"admin")].")
@@ -1814,7 +1818,7 @@ var/global/noir = 0
 
 		if ("managetraits_debug_vars")
 			if (src.level >= LEVEL_PA)
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				usr.client.debug_variables(trait)
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
@@ -1827,13 +1831,13 @@ var/global/noir = 0
 				if (!M.traitHolder)
 					tgui_alert(usr,"No trait holder detected.")
 					return
-				var/list/obj/trait/all_traits = list()
+				var/list/datum/trait/all_traits = list()
 				var/list/traits_by_name = list()
-				for(var/obj/trait/trait as anything in traitList)
+				for(var/datum/trait/trait as anything in traitList)
 					all_traits[traitList[trait].name] = traitList[trait].id
 					traits_by_name.Add(traitList[trait].name)
 
-				traits_by_name = sortList(traits_by_name)
+				sortList(traits_by_name, /proc/cmp_text_asc)
 
 				var/trait_to_add_name = tgui_input_list(usr, "Add a Trait:", "Select", traits_by_name)
 				if (!trait_to_add_name)
@@ -1858,20 +1862,20 @@ var/global/noir = 0
 				var/list/traits = list()
 
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
 					boutput(usr, "<b><span class='alert'>[M] doesn't have any traits!</span></b>")
 					return //nothing to remove
 
-				traits = sortList(traits)
+				sortList(traits, /proc/cmp_text_asc)
 				trait_to_remove_name = tgui_input_list(usr, "Remove which trait?", "Trait", traits)
 				if (!trait_to_remove_name) return //user cancelled
 
 				// get the id of the selected trait
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					if(trait_obj.name == trait_to_remove_name)
 						M.traitHolder.removeTrait(trait_obj.id)
 						message_admins("[key_name(usr)] removed the trait [trait_to_remove_name] from [key_name(M)].")
@@ -2873,7 +2877,7 @@ var/global/noir = 0
 					if("traitlist_help")
 						var/tl_string = "<b>All Traits and their descriptions</b><hr>"
 						for(var/trait in traitList)
-							var/obj/trait/trait_obj = traitList[trait]
+							var/datum/trait/trait_obj = traitList[trait]
 							tl_string += "[trait_obj.name] - [trait_obj.desc]<br><br>"
 						usr.Browse(tl_string,"window=traitlist_help;size=500x600")
 
@@ -3306,7 +3310,7 @@ var/global/noir = 0
 										sawarm:set_item(new /obj/item/saw/elimbinator())
 
 
-									playsound(M, "sound/machines/chainsaw_red.ogg", 60, 1)
+									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, 1)
 									M.update_body()
 							message_admins("[key_name(usr)] has given everyone new arms.")
 							logTheThing(LOG_ADMIN, usr, "used the Saw Arms secret.")
@@ -3381,7 +3385,7 @@ var/global/noir = 0
 								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report(input2, input)
 
-								var/sound_to_play = "sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg"
+								var/sound_to_play = 'sound/musical_instruments/artifact/Artifact_Eldritch_4.ogg'
 								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing(LOG_ADMIN, usr, "has created a command report (zalgo): [input]")
@@ -3403,7 +3407,7 @@ var/global/noir = 0
 								for_by_tcl(C, /obj/machinery/communications_dish)
 									C.add_centcom_report(input2, input)
 
-								var/sound_to_play = "sound/ambience/spooky/Void_Calls.ogg"
+								var/sound_to_play = 'sound/ambience/spooky/Void_Calls.ogg'
 								command_alert(input, input2, sound_to_play, alert_origin = input3);
 
 								logTheThing(LOG_ADMIN, usr, "has created a command report (void): [input]")
@@ -3936,7 +3940,7 @@ var/global/noir = 0
 				var/client/C = M.client
 				if (!M) return
 				var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-				SortList(jobs, /proc/compareName)
+				sortList(jobs, /proc/cmp_text_asc)
 				var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 				if(!job) return
 				var/mob/new_player/newM = usr.client.respawn_target(M)
@@ -4351,6 +4355,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_TELEPATHY]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_ADMIN]_log'>Admin Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_ADMIN]_log_string'><small>(Search)</small></A><BR>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_GAMEMODE]_log'>Gamemode Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_GAMEMODE]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_DEBUG]_log'>Debug Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_DEBUG]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_AHELP]_log'>Adminhelp Log</A>
@@ -4366,7 +4372,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log'>Topic Log</A>
+				Topic Log <!-- Viewing the entire log will usually just crash the admin's client, so let's not allow that -->
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_TOPIC]_log_string'><small>(Search)</small></A><br>
 				<hr>
 				<A href='?src=\ref[src];action=view_runtimes'>View Runtimes</A>
@@ -4712,7 +4718,7 @@ var/global/noir = 0
 			if(ROLE_WEREWOLF)
 				M.mind.special_role = ROLE_WEREWOLF
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-				M.make_werewolf(1)
+				M.make_werewolf()
 			if(ROLE_GRINCH)
 				M.mind.special_role = ROLE_GRINCH
 				M.make_grinch()
@@ -4752,7 +4758,7 @@ var/global/noir = 0
 				M.verbs += /client/proc/gearspawn_wizard
 				M.make_changeling()
 				M.make_vampire()
-				M.make_werewolf(1)
+				M.make_werewolf()
 				M.make_wrestler(1)
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
@@ -4837,7 +4843,7 @@ var/global/noir = 0
 
 	var/chosen
 	if(length(matches) == 1)
-		chosen = matches[1]
+		chosen = text2path(matches[1])
 	else
 		var/safe_matches = matches - list("/database", "/client", "/icon", "/sound", "/savefile")
 		chosen = text2path(tgui_input_list(usr, "Select an atom type", "Matches for pattern", safe_matches))
@@ -5283,10 +5289,10 @@ var/global/noir = 0
 		return
 	var/list/traits = list()
 	for(var/trait in M.traitHolder.traits)
-		var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+		var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 		traits.Add(trait_obj)
 
-	for (var/obj/trait/trait as anything in traits)
+	for (var/datum/trait/trait as anything in traits)
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=managetraits_remove;target=\ref[M];trait=\ref[trait];origin=managetraits'>remove</a></td>

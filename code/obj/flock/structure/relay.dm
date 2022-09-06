@@ -36,6 +36,7 @@
 
 /obj/flock_structure/relay/New()
 	..()
+	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	// no shuttle for you, either destroy the relay or flee when it unleashes
 	if (emergency_shuttle.online)
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
@@ -53,10 +54,11 @@
 	SPAWN(10 SECONDS)
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
 		msg = radioGarbleText(msg, 7)
-		command_alert(msg, sound_to_play = "sound/misc/announcement_1.ogg", alert_origin = ALERT_ANOMALY)
+		command_alert(msg, sound_to_play = 'sound/misc/announcement_1.ogg', alert_origin = ALERT_ANOMALY)
 
 /obj/flock_structure/relay/disposing()
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
+	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
 	..()
 	if (!src.finished)
 		F?.death(relay_destroyed = TRUE)
@@ -99,7 +101,7 @@
 	src.last_time_sound_played_in_seconds = getTimeInSecondsSinceTime(src.time_started)
 	var/center_loc = get_turf(src)
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/ambience/spooky/Flock_Reactor.ogg", 35, 0, 2)
+		M.playsound_local(M, 'sound/ambience/spooky/Flock_Reactor.ogg', 35, 0, 2)
 		boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()
@@ -108,11 +110,12 @@
 		for (var/turf/T as anything in turfs)
 			if (istype(T, /turf/simulated) && !isfeathertile(T))
 				LAGCHECK(LAG_LOW)
-				src?.flock.claimTurf(flock_convert_turf(T))
+				src?.flock?.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
 	if(src.finished)
 		return
+	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
@@ -121,11 +124,11 @@
 	flock_speak(null, "!!! TRANSMITTING SIGNAL !!!", src.flock)
 	src.visible_message("<span class='flocksay bold'>[src] begins sparking wildly! The air is charged with static!</span>")
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_charge.ogg", 30, 0)
+		M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_charge.ogg', 30, 0)
 	sleep(final_charge_time_length SECONDS)
 
 	for(var/mob/M in mobs)
-		M.playsound_local(M, "sound/misc/flockmind/flock_broadcast_kaboom.ogg", 30, 0)
+		M.playsound_local(M, 'sound/misc/flockmind/flock_broadcast_kaboom.ogg', 30, 0)
 		M.flash(3 SECONDS)
 	if (!src.shuttle_departure_delayed)
 		SPAWN(1 SECOND)

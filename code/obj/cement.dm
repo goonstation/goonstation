@@ -112,7 +112,7 @@
 
 	onDestroy()
 		src.visible_message( "<span class='alert'>\The [src] crumbles to dust!</span>")
-		playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 		..()
 
 	proc/update_nearby_tiles(need_rebuild)

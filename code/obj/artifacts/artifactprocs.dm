@@ -232,9 +232,6 @@
 	return
 
 /obj/proc/Artifact_attackby(obj/item/W, mob/user)
-	if (isrobot(user))
-		src.ArtifactStimulus("silitouch", 1)
-
 	if (istype(W,/obj/item/artifact/activator_key))
 		var/obj/item/artifact/activator_key/ACT = W
 		if (!src.ArtifactSanityCheck())
@@ -285,7 +282,7 @@
 		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
-			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_3.ogg', 100, 1)
 			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
@@ -403,7 +400,7 @@
 			if(stimtype == "force")
 				if (strength >= 30)
 					T.visible_message("<span class='alert'>[src] bruises from the impact!</span>")
-					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 1)
+					playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 1)
 					ArtifactDevelopFault(33)
 					src.ArtifactTakeDamage(strength / 1.5)
 			if(stimtype == "elec")
@@ -421,7 +418,7 @@
 			if(stimtype == "force")
 				if (strength >= 20)
 					T.visible_message("<span class='alert'>[src] cracks and splinters!</span>")
-					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
+					playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 

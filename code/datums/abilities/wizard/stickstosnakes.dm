@@ -9,9 +9,9 @@
 	target_anything = 1
 	target_in_inventory = 1
 	/*
-	voice_grim = "sound/voice/wizard/weneed.ogg"
-	voice_fem = "sound/voice/wizard/someoneto.ogg"
-	voice_other = "sound/voice/wizard/recordthese.ogg"
+	voice_grim = 'sound/voice/wizard/weneed.ogg'
+	voice_fem = 'sound/voice/wizard/someoneto.ogg'
+	voice_other = 'sound/voice/wizard/recordthese.ogg'
 	*/
 	maptext_colors = list("#ee59e3", "#ee59e3", "#b320c3", "#e59e3", "#b320c3", "#ee59e3")
 
@@ -75,4 +75,4 @@
 
 		holder.owner.visible_message("<span class='alert'>[holder.owner] turns [stick] into [snake]!</span>")
 		logTheThing(LOG_COMBAT, holder.owner, "casts Sticks to Snakes on [constructTarget(stick,"combat")] turning it into [snake] at [log_loc(snake)].")
-		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

@@ -8,14 +8,19 @@
 // Fibrenet (functionally a lattice)
 // Barricade (functionally a grille, but flockdrones can pass through it)
 
-////////////////////////////
+//----------------------------
 // TABLE & PARTS
-///////////////////////////
+//----------------------------
+
+TYPEINFO(/obj/table/flock)
+TYPEINFO_NEW(/obj/table/flock)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/flock/auto)
+
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
 	icon = 'icons/obj/furniture/table_flock.dmi'
-	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
@@ -140,15 +145,15 @@
 	icon_state = "flock"
 	icon_closed = "flock"
 	icon_opened = "flock-open"
-	open_sound = "sound/misc/flockmind/flockdrone_locker_open.ogg"
-	close_sound = "sound/misc/flockmind/flockdrone_locker_close.ogg"
+	open_sound = 'sound/misc/flockmind/flockdrone_locker_open.ogg'
+	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	var/health_attack = 100
 	var/health_max = 100
 	var/repair_per_resource = 2.5
-	var/hitsound = "sound/impact_sounds/Generic_Hit_Heavy_1.ogg"
+	var/hitsound = 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg'
 
 	take_damage(var/force, var/mob/user as mob)
 		if (!isnum(force) || force <= 0)
@@ -156,7 +161,7 @@
 		src.health_attack = clamp(src.health_attack - force, 0, src.health_max)
 		if (src.health_attack <= 0)
 			var/turf/T = get_turf(src)
-			playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
 			S.setMaterial(getMaterial("gnesisglass"))
@@ -201,7 +206,7 @@
 
 /obj/storage/closet/flock/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard(T)
 	S.setMaterial(getMaterial("gnesisglass"))
 	src.dump_contents()
@@ -275,7 +280,7 @@
 /obj/machinery/light/flock/proc/deconstruct()
 	var/turf/T = get_turf(src)
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris/fluid, T)
-	playsound(T, "sound/impact_sounds/Glass_Shatter_3.ogg", 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	qdel(src)
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
@@ -312,7 +317,7 @@
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)
 			T.build(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			T.add_fingerprint(user)
 			qdel(src)
 	if (isweldingtool(C) && C:try_weld(user,0,-1,FALSE,FALSE))

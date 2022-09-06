@@ -122,7 +122,7 @@
 		if (cuts >= cuts_required)
 			..()
 		else
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
@@ -236,11 +236,11 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 		var/powernet_id = ""
 
-		if(ispulsingtool(W))
+		if(PN && ispulsingtool(W))
 			// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
 			powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
 
-		if(PN && (PN.avail > 0))		// is it powered?
+		if(PN?.avail > 0)		// is it powered?
 
 			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
 

@@ -568,13 +568,13 @@ SYNDICATE DRONE FACTORY AREAS
 		active = 1
 
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(tile)
 
 		SPAWN(0.5 SECONDS)
 			tile.invisibility = INVIS_ALWAYS_ISH
-			tile.opacity = 1
+			tile.set_opacity(1)
 			active = 0
 
 	find_suitable_tiles()
@@ -609,13 +609,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(picked)
 
 		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
+			picked.set_opacity(1)
 			active = 0
 
 		//SPAWN(rand(100,200)) update() // raised delay
@@ -983,13 +983,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 	proc/crumble()
 		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
-		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/stoneshift.ogg', 50, 1)
 		var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 		smoke.name = "dust cloud"
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		SPAWN(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
@@ -1180,14 +1180,14 @@ SYNDICATE DRONE FACTORY AREAS
 			if(blood == 1)
 				activated = 1
 				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
-				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/chanting.ogg', 50, 1)
 				sleep(1 SECOND)
 				shake_camera(usr, 15, 16, 0.2)
 				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				playsound_global(world, "sound/effects/mag_pandroar.ogg", 60) // heh
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 60) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
@@ -1267,24 +1267,24 @@ SYNDICATE DRONE FACTORY AREAS
 
 		if (satellite_crash_event_status != -1)
 			boutput(user, "<span class='alert'>The [src.name] emits a sad beep.</span>")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		var/area/crypt/graveyard/ourArea = get_area(user)
 		if (!istype(ourArea))
 			boutput(user, "<span class='alert'>The [src.name] emits a rude beep! It appears to have no signal.</span>")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		for (var/turf/T in range(user, 1))
 			if (T.density)
 				boutput(user, "<span class='alert'>The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
-				playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 				return
 
 		satellite_crash_event_status = 0
 		user.visible_message("<span class='alert'>[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
-		playsound(user.loc, "sound/machines/signal.ogg", 60, 1)
+		playsound(user.loc, 'sound/machines/signal.ogg', 60, 1)
 		new /obj/effects/sat_crash(get_turf(src))
 
 		return
@@ -1327,7 +1327,7 @@ var/satellite_crash_event_status = -1
 		light.set_brightness(0.7)
 		light.attach(satellite)
 		light.enable()
-		playsound(src.loc, "sound/machines/satcrash.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/satcrash.ogg', 50, 0)
 
 		sleep(5 SECONDS)
 		if (!satellite)
@@ -1347,7 +1347,7 @@ var/satellite_crash_event_status = -1
 		var/datum/effects/system/explosion/explode = new /datum/effects/system/explosion
 		explode.set_up( src.loc )
 		explode.start()
-		playsound(src.loc, "sound/effects/kaboom.ogg", 90, 1)
+		playsound(src.loc, 'sound/effects/kaboom.ogg', 90, 1)
 		SPAWN(1 DECI SECOND)
 			fireflash(src.loc, 4)
 		for (var/mob/living/L in range(src.loc, 2))
@@ -1414,6 +1414,3 @@ var/satellite_crash_event_status = -1
 /area/drone/assembly
 	name = "Assembly Floor"
 	icon_state = "storage"
-
-
-
