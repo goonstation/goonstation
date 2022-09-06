@@ -274,13 +274,13 @@
 		return null
 	var/list/ret = list()
 	var/damage = O.get_damage()
-	if (damage >= O.MAX_DAMAGE)
+	if (damage >= O.max_damage)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
-	else if (damage >= O.MAX_DAMAGE*0.9)
+	else if (damage >= O.max_damage*0.9)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
-	else if (damage >= O.MAX_DAMAGE*0.65)
+	else if (damage >= O.max_damage*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.3)
+	else if (damage >= O.max_damage*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"
