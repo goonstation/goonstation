@@ -1,4 +1,7 @@
 
+(t)tue sep 06 22
+(u)Sord
+(*)The Mining Outpost and Diner have swapped places.
 (t)mon sep 05 22
 (u)LeahTheTech
 (p)10656
