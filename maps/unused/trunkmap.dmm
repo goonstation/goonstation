@@ -20665,7 +20665,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "boD" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "boE" = (

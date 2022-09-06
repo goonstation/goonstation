@@ -96,21 +96,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/mechanics/clonepod
 	name = "cloning pod"
-	item_amounts = list(6,5,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
-	item_amounts = list(3,3,4)
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
-	item_amounts = list(5,6,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
@@ -1860,8 +1857,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
-	item_paths = list("MET-3","CON-2","DEN-2")
-	item_amounts = list(15,7,3)
+	item_paths = list("MET-3","CON-2","CRY-2")
+	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
 	time = 90 SECONDS
 	create = 1
@@ -1869,8 +1866,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialboots
 	name = "Mechanised Boots"
-	item_paths = list("MET-2","CON-2","POW-1")
-	item_amounts = list(15,7,3)
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
 	time = 40 SECONDS
 	create = 1

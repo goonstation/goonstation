@@ -74,6 +74,8 @@
 		return null
 	window = tgui_process.request_pooled_window(user)
 	if(!window)
+		if(istype(src_object, /datum/tgui_modal))
+			qdel(src_object)
 		return null
 	opened_at = world.time
 	window.acquire_lock(src)
