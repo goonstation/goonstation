@@ -2487,7 +2487,8 @@
 //MBC : oh god there's like 6 different code paths for the 'rip apart handcuffs' ability
 //																						pls standardize later
 /mob/living/carbon/human/resist()
-	..() // For resisting burning and grabs see living.dm
+	if (..()) // For resisting burning and grabs see living.dm
+		return TRUE
 	// Added this here (Convair880).
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return

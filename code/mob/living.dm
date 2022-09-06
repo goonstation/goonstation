@@ -1387,6 +1387,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 	src.last_resist = world.time + 20
 
+	if (isobj(src.loc))
+		var/obj/container = src.loc
+		if (container.mob_resist_inside(src))
+			return TRUE //cancel further resist code if needed
+
 	if (src.getStatusDuration("burning"))
 		if (!actions.hasAction(src, "fire_roll"))
 			src.last_resist = world.time + 25
@@ -1434,6 +1439,20 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
+
+/mob/living/set_loc(var/newloc as turf|mob|obj in world)
+	var/atom/oldloc = src.loc
+	. = ..()
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 /mob/living/proc/empty_hands()
 	. = 0
