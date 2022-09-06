@@ -34,6 +34,7 @@ var/list/datum/chem_request/chem_requests = list()
 		.["selected_reagent"] = src.request.reagent_name
 		.["notes"] = src.request.note
 		.["volume"] = src.request.volume
+		.["silicon_user"] = issilicon(user) || isAI(user)
 
 	ui_static_data(mob/user)
 		. = list()
@@ -59,6 +60,18 @@ var/list/datum/chem_request/chem_requests = list()
 				src.card = null
 				qdel(src.request)
 				src.request = new
+				. = TRUE
+			if ("silicon_login")
+				var/mob/living/silicon/silicon = ui.user
+				//handle AIeyes
+				if (isAIeye(ui.user))
+					var/mob/living/intangible/aieye/eye = ui.user
+					silicon = eye.mainframe
+				if (istype(silicon))
+					//handle shells
+					if (silicon.mainframe)
+						silicon = silicon.mainframe
+					src.card = silicon.botcard
 				. = TRUE
 			if ("set_reagent")
 				src.request.reagent_name = params["reagent_name"]

@@ -60013,8 +60013,8 @@
 	pixel_x = -26
 	},
 /obj/machinery/coffeemaker/engineering{
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
@@ -121814,15 +121814,15 @@ aay
 aap
 aaZ
 cVP
-fBp
-fBp
-fBp
-fBp
+qAl
+qAl
+qAl
+qAl
 dRb
-fBp
-fBp
-fBp
-fBp
+qAl
+qAl
+qAl
+qAl
 tMA
 aaZ
 aap
