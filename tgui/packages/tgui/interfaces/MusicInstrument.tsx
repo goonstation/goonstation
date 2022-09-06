@@ -4,12 +4,14 @@ import { Window } from '../layouts';
 
 type MusicInstrumentData = {
   name: string;
+  volume: number;
+  transpose: number;
   notes: string[];
 };
 
 export const MusicInstrument = (_props, context) => {
   const { act, data } = useBackend<MusicInstrumentData>(context);
-  const { name, notes } = data;
+  const { name, notes, volume, transpose } = data;
 
   const [noteKeysOrder, setNoteKeysOrder] = useLocalState(
     context,
@@ -20,8 +22,6 @@ export const MusicInstrument = (_props, context) => {
   const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', new Array(notes.length));
   const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
   const [keybindToggle, setKeybindToggle] = useLocalState(context, 'keybindToggle', false);
-  const [volume, setVolume] = useLocalState(context, 'keyboardVolume', 50);
-  const [transpose, setTranspose] = useLocalState(context, 'keyboardTranspose', 0);
 
   const toggleKeybind = () => {
     if (keybindToggle) {
@@ -31,6 +31,14 @@ export const MusicInstrument = (_props, context) => {
       act('play_keyboard_on');
       setKeybindToggle(true);
     }
+  };
+
+  const setVolume = (value: number) => {
+    act('set_volume', { value });
+  };
+
+  const setTranspose = (value: number) => {
+    act('set_transpose', { value });
   };
 
   const keyIndexWithinRange = (index: number) => index + transpose >= 0 && index + transpose < notes.length;

@@ -28,6 +28,7 @@
 	var/desc_sound = list("funny", "rockin'", "great", "impressive", "terrible", "awkward")
 	var/desc_music = list("riff", "jam", "bar", "tune")
 	var/volume = 50
+	var/transpose = 0
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
@@ -112,6 +113,8 @@
 		. = list(
 			"name" = src.name,
 			"notes" = src.notes,
+			"volume" = src.volume,
+			"transpose" = src.transpose,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -130,6 +133,12 @@
 			if("play_keyboard_off")
 				usr.client.mob.reset_keymap()
 				. = FALSE
+			if("set_volume")
+				src.volume = clamp(params["value"], 0, 100)
+				. = TRUE
+			if("set_transpose")
+				src.transpose = clamp(params["value"], -12, 12)
+				. = TRUE
 
 	ui_close(mob/user)
 		user.reset_keymap()
