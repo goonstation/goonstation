@@ -123,7 +123,7 @@
 			return
 		switch(action)
 			if("play_note")
-				var/note_to_play = params["note"]
+				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
 				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
 				. = FALSE
