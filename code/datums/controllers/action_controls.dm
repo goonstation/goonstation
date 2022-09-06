@@ -659,12 +659,12 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		. = ..()
-		if(QDELETED(sheet) || sheet.amount < cost)
+		if(QDELETED(sheet) || sheet.amount < cost || sheet.loc != owner)
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
-		if(QDELETED(sheet) || sheet.amount < cost)
+		if(QDELETED(sheet) || sheet.amount < cost || sheet.loc != owner)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
