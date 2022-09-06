@@ -55732,9 +55732,17 @@
 /turf/unsimulated/floor/bot/darkpurple,
 /area/syndicate_station/battlecruiser)
 "deA" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "wall3_trans"
+/obj/table/reinforced/auto,
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/security;
+	pixel_x = -10
+	},
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/security;
+	pixel_x = 10
+	},
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/security
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
@@ -55747,9 +55755,17 @@
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "deC" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon_state = "wall3_trans"
+/obj/table/reinforced/auto,
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/nukeop;
+	pixel_x = -10
+	},
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/nukeop;
+	pixel_x = 10
+	},
+/obj/item/toy/figure/spawnable{
+	info_path = /datum/figure_info/nukeop
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)

@@ -25,6 +25,11 @@
 		patreon_prob = 0
 		rare_prob = 100
 
+	///For spawning them in maps
+	spawnable
+		var/info_path = /datum/figure_info/assistant
+		New(loc)
+			..(loc, new info_path())
 
 	New(loc, var/datum/figure_info/newInfo)
 		..()
