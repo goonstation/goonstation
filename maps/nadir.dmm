@@ -29829,13 +29829,6 @@
 	dir = 4
 	},
 /area/ghostdrone_factory)
-"oSU" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	connects_to = list(/turf/unsimulated/wall/auto/reinforced/supernorn,/turf/simulated/wall/auto/supernorn,/turf/simulated/wall/auto/reinforced/supernorn,/turf/simulated/wall/auto/jen,/turf/simulated/wall/auto/reinforced/jen,/turf/simulated/wall/false_wall,/turf/simulated/wall/auto/shuttle,/obj/machinery/door,/obj/window,/obj/wingrille_spawn,/turf/simulated/wall/auto/reinforced/supernorn/yellow,/turf/simulated/wall/auto/reinforced/supernorn/blackred,/turf/simulated/wall/auto/reinforced/supernorn/orange)
-	},
-/area/station/maintenance/outer/nw{
-	name = "Northwest Breach Hull"
-	})
 "oSX" = (
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 8
@@ -42117,11 +42110,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
-"vvn" = (
-/turf/simulated/wall/auto/reinforced/supernorn{
-	connects_to = list(/turf/unsimulated/wall/auto/reinforced/supernorn,/turf/simulated/wall/auto/supernorn,/turf/simulated/wall/auto/reinforced/supernorn,/turf/simulated/wall/auto/jen,/turf/simulated/wall/auto/reinforced/jen,/turf/simulated/wall/false_wall,/turf/simulated/wall/auto/shuttle,/obj/machinery/door,/obj/window,/obj/wingrille_spawn,/turf/simulated/wall/auto/reinforced/supernorn/yellow,/turf/simulated/wall/auto/reinforced/supernorn/blackred,/turf/simulated/wall/auto/reinforced/supernorn/orange)
-	},
-/area/station/crew_quarters/quarters_west)
 "vvo" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -44823,11 +44811,6 @@
 	dir = 4
 	},
 /area/station/science/artifact)
-"xaj" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn{
-	connects_to = list(/turf/simulated/wall/auto/reinforced/supernorn,/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn,/obj/machinery/door,/obj/window)
-	},
-/area/station/crewquarters/cryotron)
 "xap" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -77426,7 +77409,7 @@ jxl
 jxl
 jxl
 jxl
-oSU
+xQv
 asM
 azl
 cPu
@@ -77723,12 +77706,12 @@ czO
 nmp
 nmp
 nmp
-vvn
-xaj
+nmp
 ldy
 ldy
 ldy
-xaj
+ldy
+ldy
 bmK
 bAs
 eNF
@@ -78327,14 +78310,14 @@ nmp
 nmp
 xcu
 nmp
-vvn
-xaj
+nmp
+ldy
 jKJ
 dYp
 dYp
 eTt
-xaj
-oSU
+ldy
+xQv
 xQv
 xQv
 boT
@@ -78931,8 +78914,8 @@ nmp
 iWv
 xcu
 nmp
-vvn
-xaj
+nmp
+ldy
 dYp
 gYX
 dYp
@@ -79535,8 +79518,8 @@ nmp
 nmp
 lAO
 nmp
-vvn
-xaj
+nmp
+ldy
 dSd
 dSd
 dSd
