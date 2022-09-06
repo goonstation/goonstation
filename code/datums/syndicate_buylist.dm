@@ -292,8 +292,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/donkpockets
 	name = "Syndicate Donk Pockets"
-	item = /obj/item/storage/box/donkpocket_w_kit
-	cost = 2
+	item = /obj/item/reagent_containers/food/snacks/donkpocket_w
+	cost = 1
 	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -341,7 +341,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 /datum/syndicate_buylist/traitor/moustache_grenade
 	name = "Moustache Grenade"
 	item = /obj/item/old_grenade/moustache
-	cost = 1
+	cost = 2
 	desc = "A disturbingly hairy grenade."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -846,6 +846,14 @@ This is basically useless for anyone but miners.
 	desc = "Our patented secret blend of herbs and spices! Guaranteed to knock even the harshest food critic right off their feet! And into the grave. Because this is poison."
 	job = list("Chef", "Bartender")
 
+/datum/syndicate_buylist/traitor/donkpocketbox
+	name = "Syndicate Donk Pockets"
+	item = /obj/item/storage/box/donkpocket_w_kit
+	cost = 2
+	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
+	job = list("Chef")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/butcherknife
 	name = "Butcher's Knife"
 	item = /obj/item/knife/butcher
@@ -924,7 +932,7 @@ This is basically useless for anyone but miners.
 	cost = 7
 	vr_allowed = 0
 	desc = "An experimental hybrid between a hand teleporter and a directed-energy weapon. Probably a very bad idea. Note -- Only works in conjunction with a stationary teleporter."
-	job = list("Scientist","Research Director")
+	job = list("Research Director")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/portapuke
