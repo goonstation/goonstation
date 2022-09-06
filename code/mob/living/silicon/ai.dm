@@ -210,7 +210,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.map_icon = new(null, ai_station_map, src)
 	src.map_icon.icon = 'icons/mob/ai.dmi'
 	src.map_icon.icon_state = "ai"
-	src.map_icon.Scale(0.5,0.5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	light = new /datum/light/point
@@ -2200,6 +2199,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			src.UpdateOverlays(get_image("brute50"), "brute")
 		if(75 to INFINITY)
 			src.UpdateOverlays(get_image("brute75"), "brute")
+
+	src.map_icon.UpdateOverlays(build_composite_icon(src), "ai_appearance")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
