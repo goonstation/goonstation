@@ -1227,6 +1227,11 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANT_BE_PINNED, src)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (!istype(grab_grabbed_by, /obj/item/grab/block))
+						qdel(grab_grabbed_by)
 		last_drain = world.time
 		return ..(M)
 
@@ -1237,6 +1242,7 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANT_BE_PINNED, src)
 		return ..()
 
 
@@ -1741,7 +1747,7 @@ TYPEINFO(/datum/mutantrace)
 			M.blood_id = "hemolymph"
 			//H.blood_color = "#009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 
 
 
@@ -1757,7 +1763,7 @@ TYPEINFO(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.blood_id = initial(src.mob.blood_id)
 		if(src.mob)
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)

@@ -693,6 +693,7 @@
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
 					M.icon_state = "security-old"
+					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
 					return 1
 

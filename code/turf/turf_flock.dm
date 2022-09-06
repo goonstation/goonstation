@@ -162,6 +162,13 @@
 // WALL
 // -----
 
+TYPEINFO(/turf/simulated/wall/auto/feather)
+TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
+	. = ..()
+	connect_overlay = TRUE
+	connect_diagonal = TRUE
+	connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
@@ -175,15 +182,11 @@
 	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	connect_overlay = TRUE
-	connect_diagonal = TRUE
-	connects_to = list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window)
-	connects_with_overlay = list(/obj/machinery/door, /obj/window)
 	var/broken = FALSE
 	var/on = FALSE
 
-	update_icon()
-		..()
+	// update_icon()
+	// 	..()
 		//TODO animate walls and put this back
 		//if (src.broken)
 		//	icon_state = icon_state + "b"

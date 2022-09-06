@@ -547,6 +547,9 @@
 
 	animate_storage_thump(src)
 
+/obj/proc/mob_resist_inside(var/mob/user)
+	return
+
 /obj/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(!.)

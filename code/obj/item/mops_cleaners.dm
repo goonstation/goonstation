@@ -263,7 +263,7 @@ WET FLOOR SIGN
 // MOP
 
 /obj/item/mop
-	desc = "The world of janitalia wouldn't be complete without a mop."
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop."
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -281,7 +281,7 @@ WET FLOOR SIGN
 	stamina_crit_chance = 10
 
 /obj/item/mop/orange
-	desc = "The world of janitalia wouldn't be complete without a mop. This one comes in orange!"
+	desc = "The world of janitorial paraphernalia wouldn't be complete without a mop. This one comes in orange!"
 	name = "orange mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop_orange"
@@ -995,7 +995,7 @@ WET FLOOR SIGN
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
-				F.group.drain(F, amt / F.group.amt_per_tile, src.bucket)
+				F.group.drain(F, amt / max(1, F.group.amt_per_tile), src.bucket)
 				if(src.bucket.reagents.is_full())
 					boutput(user, "<span class='notice'>[src]'s [src.bucket] is now full.</span>")
 				success = TRUE

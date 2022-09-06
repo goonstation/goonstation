@@ -28,6 +28,10 @@
 			user = client.mob
 		else
 			return
+	if (!user.client) // No NPCs or they hang Mob AI process
+		return
+	if (max_length && length(message) > max_length)
+		CRASH("TGUI input text window opened with a message greater than the max length.")
 	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, timeout)
 	textbox.ui_interact(user)
 	textbox.wait()
@@ -58,8 +62,10 @@
 			user = client.mob
 		else
 			return
-	if (!user?.client) // No NPCs or they hang Mob AI process
+	if (!user.client) // No NPCs or they hang Mob AI process
 		return
+	if (max_length && length(message) > max_length)
+		CRASH("TGUI input text window opened with a message greater than the max length.")
 	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
 	textbox.ui_interact(user)
 

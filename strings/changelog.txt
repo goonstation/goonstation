@@ -1,4 +1,155 @@
 
+(t)mon sep 05 22
+(u)LeahTheTech
+(p)10656
+(e)|
+(+)Silicons can now use the chemical request console.
+(u)FlameArrow57
+(p)10621
+(e)|
+(+)A Head of Security can now be picked from medium and low priority job selections.
+(u)LeahTheTech
+(p)10631
+(e)|
+(+)Canvases now support pixel-precise pointing.
+(u)ZeWaka
+(p)10589
+(e)|
+(+)Made some large internal changes to how our walls smooth out and look pretty. Be sure to report any bugs!
+(u)Wisemonster
+(p)10554
+(e)|
+(+)The interdictor blueprints are now on a single manudrive.
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
+(t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
+(u)LeahTheTech
+(p)10361
+(e)|
+(+)Messages from sentient elements of the flock are now much easier to pick out.
+(t)sat sep 03 22
+(u)LeahTheTech and JulyJade
+(p)10564
+(e)|
+(*)Added a glowstick tree mutation, obtained from infusion with radium.
+(u)Amylizzle
+(p)10610
+(e)|
+(+)Space suits provide a little bit of radiation protection.
+(u)Ikea
+(p)10622
+(e)|
+(*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
+(u)Emily
+(*)Floating Chat for Ghosts! OooOOooO! Yeah this will probably be buggy.
+(*)New Chicken Grenade sprite by Walpvrgis!
+(*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
+(+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
+(u)LeahTheTech
+(p)10517
+(e)|
+(*)Added chemical request consoles for requesting chemicals. Find them outside science and in medbay, with another terminal in chemistry to let scientists decide whether to fulfil or deny the clown's request for 200u of space lube.
+(u)TheTrueMunchkin
+(p)10561
+(e)|
+(+)Artist is now a playable gimmick job. Go paint your dreams!
+(u)Wisemonster
+(p)10557
+(e)|
+(+)The detomax bomb program has be renamed to self-destruct.
+(t)fri sep 02 22
+(u)Ikea
+(p)10405
+(e)|
+(+)You now have to be able to see the singulo in order to get irradiated by the singulo.
+(u)NightmarechaMillian
+(p)10568
+(e)|
+(+)Drinking glasses now have a 33% chance to break when shot at - spectate a bar fight today!
+(u)LeahTheTech
+(p)10563
+(e)|
+(+)The nuke ops combat engineer battle wrench now hits a lot harder.
+(t)thu sep 01 22
+(u)LeahTheTech
+(p)10577
+(e)|
+(+)Cows can now walk on mousetraps without hurting their hooves.
+(u)Emily & Walpvrgis
+(*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
+(u)CrystalClover
+(p)10551
+(e)|
+(+)Restructured Donut 2 Janitorial, added biohazard locker and removed redundant disposal chute.
+(t)wed aug 31 22
+(u)Wisemonster
+(p)10549
+(e)|
+(+)Forklifts are no longer being haunted by ghost crates
+(u)Wisemonster
+(p)10550
+(e)|
+(+)Destiny qm can now print barcodes to the shipping market.
+(u)Sovexe & Emily
+(*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
+(u)Emily
+(*)Wizard Chickens now accept credits to fund their education. They will gain more powerful spells with more funding.
+(u)Sord
+(*)Added new pocket sized oxygen tank. All backpacks/boxes will now spawn with these.
+(*)Pocket tanks hold roughly 3 minutes worth of air on spawn, more if filled up to maximum.
+(*)The old emergency oxygen tanks are now "mini oxygen tanks", found where you'd find them normally. They hold more volume, but no longer fit in your pocket, only on your belt slot.
+(u)RubberRats
+(p)10490
+(e)|
+(+)Captains now always spawn with an emergency oxygen tank in their bag.
+(u)ZWRh3
+(p)10529
+(e)|
+(+)On the battle royale gamemode people will now start with armory/HOS office access.
+(u)Sord
+(*)Added new micro jetpack to all maps, standard size jetpack can be produced by the miners at greater cost
+(t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
+(u)Amylizzle
+(p)9741
+(e)|
+(*)Changes how radiation works. All radiation sources are now visible, with a green or blue highlight and a glowing light!
+(*)You now have an accumulated dose, which starts to make you sick over time.
+(*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
+(*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
 (t)mon aug 29 22
 (u)Sord
 (*)Added 4 new Research accesses, view minor changes for details

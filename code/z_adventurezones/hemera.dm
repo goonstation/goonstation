@@ -484,6 +484,7 @@ Obsidian Crown
 			humHost.delStatus("stunned")
 			humHost.delStatus("weakened")
 			humHost.delStatus("radiation")
+			humHost.take_radiation_dose(-INFINITY)
 			humHost.take_eye_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY, 1)
@@ -495,7 +496,7 @@ Obsidian Crown
 
 			humHost.full_heal()
 
-			humHost.decomp_stage = 4
+			humHost.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			humHost.bioHolder.RemoveEffect("eaten")
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()

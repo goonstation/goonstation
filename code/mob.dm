@@ -224,6 +224,10 @@
 
 	var/last_pulled_time = 0
 
+	/// stores total accumulated radiation dose
+	var/radiation_dose = 0
+	/// natural decay of radiation exposure
+	var/radiation_dose_decay = 0.02 //at this rate, assuming no lag, it will take 40 life ticks, or ~80 seconds to recover naturally from 1st stage radiation posioning,
 	/// set to observed mob if you're currently observing a mob, otherwise null
 	var/mob/observing = null
 
@@ -244,6 +248,7 @@
 	render_special = new
 	traitHolder = new(src)
 
+
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
@@ -263,6 +268,7 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new
+	src.vis_contents += src.chat_text
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -339,6 +345,9 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
+
+	qdel(chat_text)
+	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -773,6 +782,8 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+	var/atom/oldloc = src.loc
+
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -790,6 +801,17 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
+
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -1537,7 +1559,7 @@
 		if (D_BURNING)
 			TakeDamage("All", 0, damage)
 		if (D_RADIOACTIVE)
-			src.changeStatus("radiation", (damage) SECONDS)
+			src.reagents?.add_reagent("radium", damage/4) //fuckit
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun * 2 SECONDS)
 		if (D_TOXIC)
@@ -1817,6 +1839,7 @@
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
+
 
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
@@ -2435,7 +2458,7 @@
 	src.delStatus("slowed")
 	src.delStatus("burning")
 	src.delStatus("radiation")
-	src.delStatus("n_radiation")
+	src.take_radiation_dose(-INFINITY)
 	src.change_eye_blurry(-INFINITY)
 	src.take_eye_damage(-INFINITY)
 	src.take_eye_damage(-INFINITY, 1)
@@ -3080,7 +3103,7 @@
 	set name = "Point"
 	src.point_at(A)
 
-/mob/proc/point_at(var/atom/target) //overriden by living and dead
+/mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
@@ -3158,6 +3181,24 @@
 				. = get_singleton(/datum/pronouns/itIts)
 			else
 				. = get_singleton(/datum/pronouns/theyThem)
+
+
+/// absorb radiation dose in Sieverts (note 0.4Sv is enough to make someone sick. 2Sv is enough to make someone dead without treatment, 4Sv is enough to make them dead.)
+/mob/proc/take_radiation_dose(Sv,internal=FALSE)
+	var/rad_res = GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_INT) || 0 //atom prop can return null, we need it to default to 0
+	if(!internal)
+		rad_res += GET_ATOM_PROPERTY(src,PROP_MOB_RADPROT_EXT) || 0
+	if(Sv > 0)
+		if(isdead(src))
+			return //no rads for the dead
+		var/radres_mult = 1.0 - (tanh(0.02*rad_res)**2)
+		src.radiation_dose += radres_mult*Sv
+		SEND_SIGNAL(src, COMSIG_MOB_GEIGER_TICK, min(max(round(Sv * 10),1),5))
+		. = radres_mult*Sv
+	else
+		src.radiation_dose = max(0, src.radiation_dose + Sv) //rad resistance shouldn't stop you healing
+		. = Sv
+	src.radiation_dose = clamp(src.radiation_dose, 0, 10 SIEVERTS) //put a cap on it
 
 /// set_loc(mob) and set src.observing properly - use this to observe a mob, so it can be handled properly on deletion
 /mob/proc/observeMob(mob/target)
