@@ -227,7 +227,7 @@
 						qdel(M)
 						qdel(animation)
 						sleeping = 2
-						SPAWN(2 SECONDS)
+						SPAWN(2 SECONDS) 
 							playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> gnashes its teeth in fustration!</span>")
