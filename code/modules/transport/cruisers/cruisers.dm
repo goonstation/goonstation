@@ -100,7 +100,6 @@
 	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
 
-	var/datum/particleSystem/barrelSmoke/smokeParticles
 	var/list/crew = list()
 
 	var/atmos_fail_count = 5 //counts down when life support is offline. once it his 0, life support fails.
@@ -279,7 +278,7 @@
 		upper_area = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return MouseDrop_T(user, user)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -984,10 +983,10 @@
 	ex_act(var/severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (rebooting) return
 		if (istype(W, tool_type) && (broken || health < health_max))
-			playsound(src.loc, "sound/machines/repairing.ogg", 85, 1)
+			playsound(src.loc, 'sound/machines/repairing.ogg', 85, 1)
 			var/health_adj = 1 - (health / health_max) //90% = 0,1, 10% = 0,9
 			var/repair_time_adj = round(repair_time * health_adj)
 			actions.start(new/datum/action/bar/icon/cruiser_repair(src, W, repair_time_adj), user)
@@ -1062,7 +1061,7 @@
 		if(open) icon_state = icon_state_open
 		else icon_state = icon_state_closed
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!..())
 			if(open)
 				user.drop_item()
@@ -1122,7 +1121,7 @@
 		set_density(0)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ready) return
 		if(open)
 			if(broken)
@@ -1243,12 +1242,12 @@
 	ex_act(var/severity)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
 			interior.ship.leaveShip(user)
 
-	attackby(var/obj/item/grab/G as obj, mob/user as mob)
+	attackby(var/obj/item/grab/G, mob/user)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
 		if (G.state == GRAB_PASSIVE)
@@ -1270,7 +1269,7 @@
 	density = 1
 	anchored = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		/*
 		if(1) return//todo remove
 		if(istype(user.abilityHolder, /datum/abilityHolder/composite))
@@ -1348,7 +1347,7 @@
 		for(var/T in abilities)
 			AbHolder.addAbility(T)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>This pod is broken and must be repaired before it can be used again.</span>")
 			return

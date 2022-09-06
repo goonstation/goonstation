@@ -45,7 +45,7 @@
 		src.icon_state = "bowling_ball_spin"
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = "bowling_ball"
@@ -55,7 +55,7 @@
 
 		src.icon_state = "bowling_ball"
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
@@ -84,7 +84,7 @@
 		src.icon = initial(src.icon)
 		src.icon_state = "armadillo_spin"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon = initial(src.icon)

@@ -17,7 +17,7 @@
 		V.transferOwnership(src)
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_VAMPTHRALL_TIPS(src)
+			src.show_antag_popup("vampthrall")
 
 	else return
 
@@ -106,7 +106,7 @@
 				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
 				if (V.blood_points < 0)
 					V.blood_points = 0
-					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
+					if (haine_blood_debug) logTheThing(LOG_DEBUG, M, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
 
 				if (set_null)
 					V.blood_points = 0
@@ -123,6 +123,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	New()
@@ -138,7 +139,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -193,23 +194,23 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		if (istype(get_area(M), /area/station/chapel))
-			boutput(M, __red("Your powers do not work in this holy place!"))
+			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return 0
 
 		return 1

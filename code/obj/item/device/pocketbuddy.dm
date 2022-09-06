@@ -99,7 +99,7 @@
   // TODO: subscribe to global event system/child system thereof for pocketbuddies?
   src.prev_area = get_area(src)
 
-/obj/item/device/pocketbuddy/attackby(obj/item/I as obj, mob/user as mob)
+/obj/item/device/pocketbuddy/attackby(obj/item/I, mob/user)
   if(istype(I, /obj/item/device/pda2))
     var/obj/item/device/pda2/pda = I
     if(pda.ID_card)
@@ -111,7 +111,7 @@
     ..()
 
 
-/obj/item/device/pocketbuddy/attack_hand(mob/user as mob)
+/obj/item/device/pocketbuddy/attack_hand(mob/user)
   if(..())
     return
 
@@ -133,7 +133,7 @@
 
 /obj/item/device/pocketbuddy/proc/turn_on()
   src.on = 1
-  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
   //speak("Pocketbuddy v0.9 - Copyright 2051-2053 Thinktronic Data Systems, LTD.")
   src.speak("System message. Pocketbuddy v0.9 initializing.")
   sleep(2 SECONDS)
@@ -142,7 +142,7 @@
 
 /obj/item/device/pocketbuddy/proc/turn_off()
   src.speak("Pocketbuddy shutting down.")
-  playsound(src, "sound/machines/twobeep.ogg", 50, 1)
+  playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
   src.on = 0
   processing_items -= src
 

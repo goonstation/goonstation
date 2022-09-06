@@ -45,6 +45,7 @@ var/list/globalPropList = null
 
 /obj
 	proc/setupProperties() //Should always be called by new(). This will contain all the default property initializations for objects.
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/setProperty(var/propId, var/propVal=null) //Adds or sets property.
@@ -202,23 +203,6 @@ var/list/globalPropList = null
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "[propVal]% pierce resist"
 
-	movement
-		name = "Speed"
-		id = "movespeed"
-		desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
-		tooltipImg = "movement.png"
-		defaultValue = 1
-		goodDirection = -1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal] movement delay"
-
-		space
-			name = "Speed"
-			id = "space_movespeed"
-
-			getTooltipDesc(var/obj/propOwner, var/propVal)
-				return "[propVal] movement delay - 0 when worn in space."
-
 	viralprot
 		name = "Resistance (Viral)"
 		id = "viralprot"
@@ -235,7 +219,7 @@ var/list/globalPropList = null
 		tooltipImg = "conduct.png"
 		defaultValue = 0.1
 		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "[propVal * 100]% [propVal <= 0.2 ? "(Safe)":""]"
+			return "[propVal * 100]% [propVal <= 0.29 ? "(Safe)":""]"
 
 	stammax
 		name = "Max. Stamina"
@@ -254,15 +238,6 @@ var/list/globalPropList = null
 		defaultValue = 10
 		getTooltipDesc(var/obj/propOwner, var/propVal)
 			return "-[propVal]% stamina costs."
-
-	negate_fluid_speed_penalty //important : delay added to dry land!
-		name = "Fluid movement"
-		id = "negate_fluid_speed_penalty"
-		desc = "Negates fluid speed penalties."
-		tooltipImg = "movement.png"
-		defaultValue = 1
-		getTooltipDesc(var/obj/propOwner, var/propVal)
-			return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
 
 	momentum // force increases as you attack players.
 		name = "Momentum"
@@ -445,13 +420,13 @@ to say if there's demand for that.
 /datum/objectProperty/equipment/radiationprot
 	name = "Resistance (Radiation)"
 	id = "radprot"
-	desc = "Protects from harmful radiation." //Value is % protection.
+	desc = "Protects from harmful radiation." //Value is vaguely related to % protection.
 	tooltipImg = "radiation.png"
 	defaultValue = 10
 	getTooltipDesc(var/obj/propOwner, var/propVal)
-		return "[propVal]%"
+		return "[propVal] radOhms"
 
-	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT)
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_RADPROT_EXT)
 
 /datum/objectProperty/equipment/coldprot
 	name = "Resistance (Cold)"
@@ -486,7 +461,16 @@ to say if there's demand for that.
 
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EXPLOPROT)
 
+/datum/objectProperty/equipment/chemprot
+	name = "Resistance (Chemical)"
+	id = "chemprot"
+	desc = "Protects from chemicals." //Value is % of chemicals blocked
+	tooltipImg = "chemical.png"
+	defaultValue = 10
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal]%"
 
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_CHEMPROT)
 
 /datum/objectProperty/equipment/reflection // force increases as you attack players.
 	name = "Reflection"
@@ -595,5 +579,35 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "+[propVal]x"
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_VAULT_SPEED)
+
+/datum/objectProperty/equipment/movement
+	name = "Speed"
+	id = "movespeed"
+	desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+	tooltipImg = "movement.png"
+	defaultValue = 1
+	goodDirection = -1
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay"
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED)
+
+/datum/objectProperty/equipment/movement/space
+	name = "Speed"
+	id = "space_movespeed"
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn in space."
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_SPACE)
+
+/datum/objectProperty/equipment/movement/fluid //important : delay added to dry land!
+	name = "Fluid movement"
+	id = "negate_fluid_speed_penalty"
+	desc = "Negates fluid speed penalties."
+	tooltipImg = "movement.png"
+	defaultValue = 1
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Negates fluid speed penalties.<br>+[propVal] movement delay on dry land."
+	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
+
 
 #undef ASSOCIATE_ATOM_PROPERTY

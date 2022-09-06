@@ -22,11 +22,12 @@
 	var/datum/component/packet_connected/radio/code_component
 
 	req_access = list(access_engineering,access_engineering_mechanic,access_research_director)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	mats = 4
 	mechanics_type_override = /obj/machinery/navbeacon
 
 	New()
+		START_TRACKING
 		..()
 
 		UnsubscribeProcess()
@@ -41,6 +42,10 @@
 			net_id = generate_net_id(src)
 
 		set_codes()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	// set the transponder codes assoc list from codes_txt
 	proc/set_codes()

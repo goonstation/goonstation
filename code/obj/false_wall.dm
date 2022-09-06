@@ -17,7 +17,6 @@
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
-	var/dont_follow_map_settings_for_icon_state = 0
 
 	temp
 		var/was_rwall = 0
@@ -33,7 +32,7 @@
 		src.gas_impermeable = 1
 		src.layer = src.layer - 0.1
 		SPAWN(0)
-			src.find_icon_state()
+			src.UpdateIcon()
 		SPAWN(1 SECOND)
 			// so that if it's getting created by the map it works, and if it isn't this will just return
 			src.setFloorUnderlay('icons/turf/floors.dmi', "plating", 0, 100, 0, "plating")
@@ -42,6 +41,10 @@
 					W.UpdateIcon()
 				for (var/obj/grille/G in orange(1,src))
 					G.UpdateIcon()
+				for (var/obj/window/auto/W in orange(1,src))
+					W.UpdateIcon()
+				for (var/turf/simulated/wall/false_wall/F in orange(1,src))
+					F.UpdateIcon()
 
 	Del()
 		src.RL_SetSprite(null)
@@ -80,7 +83,7 @@
 		src.floorname = Floor_Name
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (src.density)
@@ -100,7 +103,7 @@
 				boutput(user, "<span class='notice'>The wall slides shut.</span>")
 		return
 
-	attackby(obj/item/S as obj, mob/user as mob)
+	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 		var/known = (user in known_by)
 		if (isscrewingtool(S))
@@ -139,7 +142,7 @@
 					A.setMaterial(M)
 					B.setMaterial(M)
 				F.levelupdate()
-				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
+				logTheThing(LOG_STATION, user, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
 			else
 				return ..()
@@ -193,32 +196,66 @@
 			src.operating = 0
 		return 1
 
-	proc/find_icon_state()
-		if(dont_follow_map_settings_for_icon_state)
-			return
+	update_icon()
+		..()
 		if (!map_settings)
 			return
 
-		var/turf/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
-		var/turf/r_wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
-		src.icon = initial(wall_path.icon)
-		if (src.can_be_auto)
-			var/dirs = 0
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if (istype(T, /turf/simulated/wall/auto))
-					var/turf/simulated/wall/auto/W = T
-					if (istype(W, /turf/simulated/wall/false_wall) || \
-							istype(W, wall_path) || \
-							istype(W, r_wall_path) && istype(src, /turf/simulated/wall/false_wall/reinforced)
-						)
-						dirs |= dir
-					if (W.light_mod) //If the walls have a special light overlay, apply it.
-						src.RL_SetSprite("[W.light_mod][num2text(dirs)]")
-			var/turf/simulated/wall/auto/T = istype(src, /turf/simulated/wall/false_wall/reinforced) ? r_wall_path : wall_path
-			mod = initial(T.mod)
-			src.icon_state = "[mod][num2text(dirs)]"
-		return src.icon_state
+		if (src.can_be_auto) /// is the false wall able to mimic autowalls
+			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
+			src.icon = initial(wall_path.icon)
+
+			var/static/list/s_connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
+			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
+			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
+			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn))
+
+			var/static/list/s_connects_with_overlay = typecacheof(list(/turf/simulated/wall/auto/shuttle,
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn))
+
+			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
+				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
+				/// donut3 walls, remove if they ever connect together like supernorn walls
+				s_connects_with_overlay += /turf/simulated/wall/auto/jen
+			else
+				s_connects_with_overlay += /turf/simulated/wall/auto/reinforced/jen
+
+			/// this was borrowed from autowalls as the code that was barely worked
+
+			/// basically this is doing what an autowall of the path wall_path would do
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(wall_path)
+			var/s_connect_overlay = typinfo.connect_overlay
+			var/static/list/s_connects_with_overlay_exceptions = list()
+			var/static/list/s_connects_to_exceptions = typecacheof(/turf/simulated/wall/auto/shuttle)
+
+			var/s_connect_diagonal =  typinfo.connect_diagonal
+			var/image/s_connect_image = initial(wall_path.connect_image)
+
+			var/light_mod = initial(wall_path.light_mod)
+			mod = initial(wall_path.mod)
+
+
+			var/connectdir = get_connected_directions_bitflag(s_connects_to, s_connects_to_exceptions, TRUE, s_connect_diagonal)
+			var/the_state = "[mod][connectdir]"
+			icon_state = the_state
+
+			if (light_mod)
+				src.RL_SetSprite("[light_mod][connectdir]")
+
+			if (s_connect_overlay)
+				var/overlaydir = get_connected_directions_bitflag(s_connects_with_overlay, s_connects_with_overlay_exceptions, TRUE)
+				if (overlaydir)
+					if (!s_connect_image)
+						s_connect_image = image(src.icon, "connect[overlaydir]")
+					else
+						s_connect_image.icon_state = "connect[overlaydir]"
+					src.UpdateOverlays(s_connect_image, "connect")
+				else
+					src.UpdateOverlays(null, "connect")
+
 
 	get_desc()
 		if (!src.density)
@@ -242,7 +279,7 @@
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.opacity = 0
+			src.set_opacity(0)
 			src.RL_SetOpacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
@@ -259,8 +296,6 @@
 	icon_state = "hive"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 /turf/simulated/wall/false_wall/centcom
 	desc = "There seems to be markings on one of the edges, huh."
@@ -268,13 +303,93 @@
 	icon_state = "leadwall"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 /turf/simulated/wall/false_wall/tempus
 	desc = "The pattern on the wall seems to have a seam on it"
 	icon = 'icons/turf/walls_tempus-green.dmi'
 	icon_state = "0"
 
-	find_icon_state()
-		return
+/obj/shifting_wall
+	name = "r wall"
+	desc = ""
+	opacity = 1
+	density = 1
+	anchored = 1
+
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "r_wall"
+
+	New()
+		..()
+		update()
+
+	proc/update()
+		var/list/possible = new/list()
+
+		for(var/A in cardinal)
+			var/turf/current = get_step(src,A)
+			if(current.density) continue
+			if(is_blocked_turf(current)) continue
+			possible +=  current
+
+		if(!possible.len)
+			SPAWN(3 SECONDS) update()
+			return
+
+		var/turf/picked = pick(possible)
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
+		src.set_loc(picked)
+		SPAWN(0.5 SECONDS) picked.invisibility = INVIS_ALWAYS_ISH
+
+		SPAWN(rand(50,80)) update()
+
+/obj/shifting_wall/sneaky
+
+	var/sightrange = 8
+
+	proc/find_suitable_tiles()
+		var/list/possible = new/list()
+
+		for(var/A in cardinal)
+			var/turf/current = get_step(src,A)
+			if(current.density) continue
+			if(is_blocked_turf(current)) continue
+			if(someone_can_see(current)) continue
+			possible +=  current
+
+		return possible
+
+	proc/someone_can_see(var/atom/A)
+		for(var/mob/living/L in view(sightrange,A))
+			if(!L.sight_check(1)) continue
+			if(A in view(sightrange,L)) return 1
+		return 0
+
+	proc/someone_can_see_me()
+		for(var/mob/living/L in view(sightrange,src))
+			if(L.sight_check(1)) continue
+			if(src in view(sightrange,L)) return 1
+		return 0
+
+	update()
+		if(someone_can_see_me()) //Award for the most readable code GOES TO THIS LINE.
+			SPAWN(rand(50,80)) update()
+			return
+
+		var/list/possible = find_suitable_tiles()
+
+		if(!possible.len)
+			SPAWN(3 SECONDS) update()
+			return
+
+		var/turf/picked = pick(possible)
+		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
+		if(src.loc.opacity) src.loc.set_opacity(0)
+
+		src.set_loc(picked)
+
+		SPAWN(0.5 SECONDS)
+			picked.invisibility = INVIS_ALWAYS_ISH
+			picked.set_opacity(1)
+
+		SPAWN(rand(50,80)) update()

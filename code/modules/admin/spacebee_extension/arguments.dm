@@ -27,7 +27,7 @@
 	process_match()
 		return ckey(..())
 
-/// a string argument that doesn't have to exist (only supported as the last argument really)
+/// a string argument that doesn't have to exist (only supported as either the only argument or having another arg after it weirdly)
 /datum/command_argument/string/optional
 	regex = new(@{"(?:([^ \n\t"]+)|"((?:[^"\\]|\\.)*)")?"})
 	process_match()

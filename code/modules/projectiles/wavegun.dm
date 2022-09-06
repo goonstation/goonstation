@@ -10,7 +10,7 @@
 	dissipation_rate = 0 //doesn't use standard falloff
 	max_range = 24 //Range/time limiter for non-standard dissipation - long range, but not infinite
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "inversion wave"
 //file location for the sound you want it to play
@@ -31,7 +31,7 @@
 	color_blue = 0
 
 	get_power(obj/projectile/P, atom/A)
-		return 12.5 + 2.5 * clamp(get_dist(A, P.orig_turf) - 4, 0, 7)
+		return 12.5 + 2.5 * clamp(GET_DIST(A, P.orig_turf) - 4, 0, 7)
 
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything/

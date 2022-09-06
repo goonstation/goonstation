@@ -678,7 +678,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "vx" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "vN" = (

@@ -1,7 +1,19 @@
-/image/name_tag_hover
+/image/name_tag_examine
 	plane = PLANE_NOSHADOW_ABOVE
 	maptext_x = -64
-	maptext_y = -5 - 8 // -7 to accomodate extra text
+	maptext_y = -6
+	maptext_width = 160
+	maptext_height = 48
+	icon = null
+	appearance_flags = PIXEL_SCALE
+
+	proc/set_name(new_name)
+		src.maptext = "<span class='pixel c ol' style='font-size: 6px;'>[new_name]</span>"
+
+/image/name_tag_examine_hover
+	plane = PLANE_NOSHADOW_ABOVE
+	maptext_x = -64
+	maptext_y = -6 - 7 // -7 to accomodate extra text
 	maptext_width = 160
 	maptext_height = 48
 	icon = null
@@ -15,24 +27,19 @@
 	alpha = 180
 	icon = null
 	mouse_opacity = 0
-
-/atom/movable/name_tag/outer
-	var/atom/movable/name_tag/inner/inner
-	var/image/name_tag_hover/hover_image
+	var/image/name_tag_examine/ex_image
+	var/image/name_tag_examine_hover/ex_hover_image
 	var/cur_name = null
 	var/cur_extra = null
 
 	New()
 		..()
-		inner = new
-		hover_image = new(null, src)
-		src.vis_contents += inner
+		ex_image = new(null, src)
+		ex_hover_image = new(null, src)
 
 	disposing()
-		dispose(inner)
-		dispose(hover_image)
-		src.vis_contents -= inner
-		inner = null
+		dispose(ex_image)
+		dispose(ex_hover_image)
 		..()
 
 	proc/set_visibility(visible)
@@ -44,27 +51,22 @@
 			if(paren_pos)
 				new_name = copytext(new_name, 1, paren_pos)
 		if(new_name != src.cur_name)
-			src.inner.set_name(new_name)
-			src.hover_image.set_name(new_name, cur_extra)
+			src.ex_image.set_name(new_name)
+			src.ex_hover_image.set_name(new_name, cur_extra)
 			src.cur_name = new_name
 
 	proc/set_extra(new_extra)
 		if(new_extra != src.cur_extra)
-			src.hover_image.set_name(cur_name, new_extra)
+			src.ex_hover_image.set_name(cur_name, new_extra)
 			src.cur_extra = new_extra
 
-	proc/show_hover(client/client)
-		client.images |= src.hover_image
+	proc/show_images(client/client, ex, ex_hover)
+		if (ex)
+			client.images |= src.ex_image
+		else
+			client.images -= src.ex_image
 
-	proc/hide_hover(client/client)
-		client.images -= src.hover_image
-
-/atom/movable/name_tag/inner
-	plane = PLANE_EXAMINE
-	maptext_x = -64
-	maptext_y = -5
-	maptext_width = 160
-	maptext_height = 48
-
-	proc/set_name(new_name)
-		src.maptext = "<span class='pixel c ol' style='font-size: 6px;'>[new_name]</span>"
+		if (ex_hover)
+			client.images |= src.ex_hover_image
+		else
+			client.images -= src.ex_hover_image

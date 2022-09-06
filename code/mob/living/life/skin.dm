@@ -18,7 +18,7 @@
 					continue
 
 				if (A.reagents && A.reagents.total_volume)
-					A.reagents.reaction(owner, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate"))
+					A.reagents.reaction(owner, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
 					A.reagents.trans_to(owner, waste_volume/2)
 					A.reagents.remove_any(waste_volume/2)
 				else

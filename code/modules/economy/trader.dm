@@ -95,7 +95,7 @@
 		onclose(user, windowName)
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
 			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
@@ -113,7 +113,7 @@
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(dialogue != null)
@@ -474,13 +474,13 @@
 		hikeperc = (hikeperc / H.price) * 100
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
-			if (hikeperc <= negatol)
+			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
 				src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
 				src.temp += src.errormsgs[5]
 				H.haggleattempts++
 				return
 		else
-			if (hikeperc >= src.hiketolerance) // we're selling, so check hike for positive
+			if (hikeperc >= src.hiketolerance || askingprice > H.baseprice * 5) // we're selling, so check hike for positive
 				src.temp = src.errormsgs[5]
 				H.haggleattempts++
 				return
@@ -1036,7 +1036,7 @@
 
 	// OKAY we're tryin to do something here with the medal for the rescue allright?
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
@@ -1076,12 +1076,14 @@
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
+		src.goods_sell += new /datum/commodity/costume/vampire(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
 		src.goods_sell += new /datum/commodity/costume/purpwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mintwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
+		src.goods_sell += new /datum/commodity/costume/jester(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
@@ -1133,7 +1135,7 @@
 
 		pickupdialoguefailure = "You need to BUY things before you pick them up!"
 
-/obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)

@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_summongear
 	name = "Recover gear"
 	desc = "Teleports your hunting gear to your location."
+	icon_state = "summongear"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
@@ -38,7 +39,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, __red("<B>Request acknowledged. You must stand still.</B>"))
+		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
 
 	onUpdate()
 		..()

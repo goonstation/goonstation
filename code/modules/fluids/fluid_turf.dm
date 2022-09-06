@@ -100,7 +100,7 @@
 			light_g = fluid_color[2] / 255
 			light_b = fluid_color[3] / 255
 
-		//let's replicate old behaivor
+		//let's replicate old behavior
 		if (generateLight)
 			generateLight = 0
 			if (z != 3) //nono z3
@@ -260,7 +260,7 @@
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 			M.reagents.add_reagent(ocean_reagent_id, react_volume) //todo : maybe add temp var here too
 
-	attackby(obj/item/C as obj, mob/user as mob, params) //i'm sorry
+	attackby(obj/item/C, mob/user, params) //i'm sorry
 		if(istype(C, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = C
 			coil.turf_place(src, get_turf(user), user)
@@ -332,7 +332,7 @@
 						var/mob/M = AM
 						random_brute_damage(M, 6)
 						M.changeStatus("weakened", 2 SECONDS)
-						playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 10, 1)
+						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10, 1)
 						M.emote("scream")
 
 					AM.set_loc(pick(L))
@@ -502,7 +502,7 @@
 				random_brute_damage(M, 25)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			A.set_loc(T)
 			return
 		else ..()
@@ -514,7 +514,7 @@
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user as mob)
+/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
 	if(..())
 		return
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
@@ -544,7 +544,7 @@
 				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
 					active = 1
 					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, "sound/machines/elevator_move.ogg", 100, 0)
+					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 				SPAWN(5 SECONDS)
 					call_shuttle()
 
@@ -572,7 +572,7 @@
 				random_brute_damage(M, 30)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 90, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
 		start_location.move_contents_to(end_location, /turf/simulated/floor/specialroom/sea_elevator_shaft, ignore_fluid = 1)
 		location = 0
 

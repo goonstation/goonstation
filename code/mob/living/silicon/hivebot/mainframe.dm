@@ -113,7 +113,7 @@
 				if(!H.stat)
 					bodies += H
 
-	var/target_shell = input(usr, "Which body to control?") as null|anything in bodies
+	var/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
 
 	if (!target_shell)
 		return

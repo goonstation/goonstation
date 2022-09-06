@@ -76,7 +76,7 @@
 				light.disable()
 				icon_state = "powersink0"
 				processing_items.Remove(src)
-				logTheThing("combat", user, src, "deactivated [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "deactivated [src] at [log_loc(src)].")
 				return
 		else
 			..()
@@ -97,7 +97,7 @@
 				mode = POWERSINK_OPERATING
 				icon_state = "powersink1"
 				processing_items |= src
-				logTheThing("combat", user, src, "activated [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "activated [src] at [log_loc(src)].")
 				message_admins("[key_name(user)] activated [src] at [log_loc(src)].")
 
 	process()
@@ -125,7 +125,7 @@
 
 
 			if(power_drained > max_power * 0.95)
-				playsound(src, "sound/effects/screech.ogg", 50, 1, 1)
+				playsound(src, 'sound/effects/screech.ogg', 50, 1, 1)
 			if(power_drained >= max_power)
 				processing_items.Remove(src)
 				explosion(src, src.loc, 3,6,9,12)

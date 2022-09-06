@@ -92,7 +92,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -102,7 +102,7 @@
 			)
 		),
 		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/bot/cleanbot/emagged, /mob/living/critter/bot/firebot/emagged),
+			critter_types = list(/mob/living/critter/robotic/bot/cleanbot/emagged, /mob/living/critter/robotic/bot/firebot/emagged),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),

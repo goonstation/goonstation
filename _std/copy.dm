@@ -23,7 +23,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 			istype(orig, /datum/packet_network))
 		return orig
 	if(copy_flags & COPY_SKIP_EXPLOITABLE && (
-			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint)))
+			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint) || istype(orig, /obj/item/pixel_pass)))
 		return null
 	if(isnull(environment))
 		root = orig

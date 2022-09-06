@@ -2,9 +2,9 @@
 	name = "artifact energy gun power cell"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	artifact = 1
-	charge = 400.0
-	max_charge = 400.0
-	recharge_rate = 0.0
+	charge = 400
+	max_charge = 400
+	recharge_rate = 0
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -37,7 +37,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 

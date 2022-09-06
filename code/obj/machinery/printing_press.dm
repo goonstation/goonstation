@@ -148,7 +148,7 @@
 //Interaction stuff//
 /////////////////////
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper_bin))
 			var/obj/item/paper_bin/P = W
 			if (P.amount > 0 && paper_amt <= paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
@@ -218,12 +218,12 @@
 					boutput(user, "no good, asshole >:\[")
 					return
 			qdel(W)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else
 			..()
 
-	attack_hand(var/mob/user as mob) //all of our mode controls and setters here, these control what the books are/look like/have as contents
+	attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
 		if (is_running)
 			boutput(user, "\The [src] is busy.") //machine is running
 			return
@@ -355,7 +355,7 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing("say", user, null, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
 				make_books()
 				return
 
@@ -466,7 +466,7 @@
 				UpdateIcon()
 				break
 
-			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))

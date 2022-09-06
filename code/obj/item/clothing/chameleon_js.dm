@@ -7,7 +7,6 @@
 	icon_state = "black"
 	uses_multiple_icon_states = 1
 	item_state = "black"
-	permeability_coefficient = 0.50
 	var/list/clothing_choices = list()
 
 	New()
@@ -17,7 +16,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/under/U, mob/user)
 		if(istype(U, /obj/item/clothing/under/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
 			SPAWN(1 SECOND)
@@ -313,7 +312,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/head/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/head/U, mob/user)
 		if(istype(U, /obj/item/clothing/head/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
 			SPAWN(1 SECOND)
@@ -547,7 +546,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/suit/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/suit/U, mob/user)
 		if(istype(U, /obj/item/clothing/suit/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
 			SPAWN(1 SECOND)
@@ -854,7 +853,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/glasses/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/glasses/U, mob/user)
 		if(istype(U, /obj/item/clothing/glasses/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
 			SPAWN(1 SECOND)
@@ -981,7 +980,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/shoes/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/shoes/U, mob/user)
 		if(istype(U, /obj/item/clothing/shoes/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
 			SPAWN(1 SECOND)
@@ -1142,8 +1141,8 @@
 		step_sound = "step_default"
 
 /obj/item/clothing/gloves/chameleon
-	name = "Black Gloves"
-	desc = "These gloves are fire-resistant."
+	name = "black gloves"
+	desc = "These thick leather gloves are fire-resistant."
 	icon_state = "black"
 	item_state = "bgloves"
 	icon = 'icons/obj/clothing/item_gloves.dmi'
@@ -1162,7 +1161,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/gloves/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/gloves/U, mob/user)
 		if(istype(U, /obj/item/clothing/gloves/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
 			SPAWN(1 SECOND)
@@ -1229,8 +1228,8 @@
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
-	var/name = "Black Gloves"
-	var/desc = "These gloves are fire-resistant."
+	var/name = "black gloves"
+	var/desc = "These thick leather gloves are fire-resistant."
 	var/icon_state = "black"
 	var/item_state = "bgloves"
 	var/sprite_item = 'icons/obj/clothing/item_gloves.dmi'
@@ -1241,7 +1240,7 @@
 	var/scramble_prints = 0
 
 	insulated
-		desc = "These gloves are electrically insulated."
+		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
 		name = "insulated gloves"
 		icon_state = "yellow"
 		item_state = "ygloves"
@@ -1250,23 +1249,23 @@
 		scramble_prints = 0
 
 	fingerless
-		desc = "These gloves lack fingers."
-		name = "Fingerless Gloves"
+		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
+		name = "fingerless gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
 		hide_prints = 0
 		scramble_prints = 0
 
 	latex
-		name = "Latex Gloves"
+		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
-		desc = "Thin gloves that offer minimal protection."
+		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
 		scramble_prints = 1
 
 	boxing
-		name = "Boxing Gloves"
-		desc = "These gloves are for competitive boxing."
+		name = "boxing gloves"
+		desc = "Big soft gloves used in competitive boxing. Gives your punches a bit more weight, at the cost of precision."
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"
@@ -1309,7 +1308,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/storage/belt/U as obj, mob/user as mob)
+	attackby(obj/item/storage/belt/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
@@ -1418,9 +1417,11 @@
 	item_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
 	spawn_contents = list()
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
 		..()
@@ -1452,7 +1453,7 @@
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
 
-	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
+	attackby(obj/item/storage/backpack/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
@@ -1737,7 +1738,7 @@
 		backpack_type = new/datum/chameleon_backpack_pattern
 
 	research_director
-		name = "Medical Director"
+		name = "Research Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
 		suit_type = new/datum/chameleon_suit_pattern/labcoat

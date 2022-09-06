@@ -36433,7 +36433,7 @@
 /turf/space,
 /area/space)
 "bsY" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bsZ" = (
 /obj/landmark/spawner/loot,
@@ -36464,7 +36464,7 @@
 /obj/landmark{
 	name = "Artifact spawn"
 	},
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "btg" = (
 /turf/simulated/wall/r_wall,

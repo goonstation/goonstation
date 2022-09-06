@@ -31,7 +31,7 @@
 /area/dmm_suite/clear_area)
 "J" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	pixel_x = 1;
 	pixel_y = 10
 	},

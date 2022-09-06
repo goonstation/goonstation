@@ -244,7 +244,7 @@
 
 	proc/ai_process()
 		if (refresh_lists > 50 && state > 1 || length(open) + length(open_low) + length(open_medium) + length(closed) <= 1)
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Refreshing lists.")
+			logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Refreshing lists.")
 			refresh_lists = 0
 			var/list/all = open + open_low + open_medium + closed
 			open.len = 0
@@ -265,7 +265,7 @@
 				if (fireres_up.check_requirements())
 					fireres_up.take_upgrade()
 					fireres_up = null
-					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
+					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
 
 			if (absorb)
 				for (var/mob/living/carbon/human/H in (mobs + ai_mobs))
@@ -273,7 +273,7 @@
 						continue
 					if (isdead(H))
 						continue
-					if (H.decomp_stage >= 4)
+					if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 						continue
 					if (!(locate(/obj/blob) in H.loc))
 						var/turf/T = get_turf(H)
@@ -281,7 +281,7 @@
 							attack_now(T)
 							if (T.can_blob_spread_here())
 								spread_to(T, 0)
-							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
+							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
 						continue
 					else
 						var/turf/H_turf = H.loc
@@ -306,7 +306,7 @@
 						T = get_turf(pick_landmark(LANDMARK_OBSERVER)) // contingency
 					set_loc(T)
 					if (!deploy)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find deploy ability in state DEPLOYING.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find deploy ability in state DEPLOYING.")
 						state = 0
 						return
 
@@ -325,7 +325,7 @@
 						return
 					deploy.onUse(T)
 					if (deploy in abilities)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Deploy failed.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Deploy failed.")
 						return
 					state = STATE_EXPANDING
 					last_spread = T
@@ -340,7 +340,7 @@
 					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
 					gen_up = locate(/datum/blob_upgrade/extra_genrate) in available_upgrades
 					fireres_up = locate(/datum/blob_upgrade/fire_resist) in available_upgrades
-					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Deployed blob to ([T.x], [T.y], [T.z]).")
+					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Deployed blob to ([T.x], [T.y], [T.z]).")
 					counter = 0
 			if (STATE_EXPANDING)
 				refresh_lists++
@@ -353,11 +353,11 @@
 				if (gen_up)
 					if (gen_up.check_requirements())
 						gen_up.take_upgrade()
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Took generation rate upgrade while expanding.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took generation rate upgrade while expanding.")
 				if (spread_up)
 					if (spread_up.check_requirements())
 						spread_up.take_upgrade()
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Took spread upgrade while expanding.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took spread upgrade while expanding.")
 				if(length(open) + length(open_low) + length(open_medium) == 0 && length(closed) > 0)
 					destroying = pick(closed)
 				var/turf/ST = null
@@ -392,7 +392,7 @@
 						while (!ST)
 				if (ST && !destroying)
 					if (!spread)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find spread ability in state EXPANDING.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Invalid state for [src]: Cannot find spread ability in state EXPANDING.")
 					spread_to(ST, 1)
 					return
 				if ((open_medium.len && !destroying) || (destroying && destroy_level == 1))
@@ -416,7 +416,7 @@
 						destroy_level = 1
 						set_loc(ST)
 						attack.onUse(ST)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
 						var/new_score = evaluate_no_add(ST)
 						if (new_score != 1)
 							switch (new_score)
@@ -451,7 +451,7 @@
 						destroy_level = 2
 						set_loc(ST)
 						attack.onUse(ST)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Attacking tile at [log_loc(ST)].")
 						var/new_score = evaluate_no_add(ST)
 						if (new_score != 2)
 							switch (new_score)
@@ -482,7 +482,7 @@
 							break
 				if (!A)
 					state = STATE_EXPANDING
-					logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Failed to find suitable ribosome candidate in 20 attempts.")
+					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Failed to find suitable ribosome candidate in 20 attempts.")
 					return
 				var/turf/T = get_turf(A)
 				set_loc(T)
@@ -490,7 +490,7 @@
 				var/obj/blob/ribosome/L = locate() in T
 				if (L)
 					ribosome_count++
-				logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating ribosome at [log_loc(T)].")
+				logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Creating ribosome at [log_loc(T)].")
 				state = STATE_EXPANDING
 			if (STATE_FORTIFYING)
 				if (!fortifying)
@@ -543,7 +543,7 @@
 									break
 								else
 									attackers -= M
-									var/dist = get_dist(M, src)
+									var/dist = GET_DIST(M, src)
 									if (n_dist > dist)
 										n_dist = dist
 										nearest = M
@@ -580,10 +580,10 @@
 						if (has_adjacent_blob(FU.loc))
 							attack_used++
 							attack_now(FU.loc, attack_used)
-							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Attacking fuel tank at [log_loc(FU)] in response to attack force.")
+							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Attacking fuel tank at [log_loc(FU)] in response to attack force.")
 					if (has_adjacent_blob(AT))
 						attack_now(AT, attack_used)
-						logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Hitting [attacker] at [log_loc(attacker.loc)] [attacks - attack_used] times.")
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Hitting [attacker] at [log_loc(attacker.loc)] [attacks - attack_used] times.")
 					var/obj/blob/B = get_nearby_convertable_blob(attacker.loc)
 					if (B)
 						create_wall_if_possible(get_turf(B))
@@ -591,7 +591,7 @@
 						for (var/turf/T in range(2, attacker))
 							if (T.can_blob_spread_here())
 								spread_to(T, 0)
-								logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [log_loc(T)] in response to attack force.")
+								logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [log_loc(T)] in response to attack force.")
 								break
 				else if (!attacker)
 					var/obj/blob/F = null
@@ -617,7 +617,7 @@
 					for (var/turf/T in range(5, nearest))
 						if (T.can_blob_spread_here())
 							spread_to(T, 0)
-							logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [log_loc(T)] in response to attack force.")
+							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [log_loc(T)] in response to attack force.")
 							break
 
 	proc/place_extra_nucleus()
@@ -658,7 +658,7 @@
 			open -= ST
 			if (is_calm)
 				last_spread = ST
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Spreading to [log_loc(ST)].")
+			logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading to [log_loc(ST)].")
 		else
 			return
 		update_lists(ST)
@@ -678,7 +678,7 @@
 		if (bio_points >= mito.bio_point_cost && mito.last_used <= world.time)
 			set_loc(T)
 			mito.onUse(T)
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating mitochondria at [log_loc(T)].")
+			logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Creating mitochondria at [log_loc(T)].")
 			return 1
 		return 0
 
@@ -686,12 +686,12 @@
 		if (bio_points >= wall.bio_point_cost && wall.last_used <= world.time)
 			set_loc(T)
 			wall.onUse(T)
-			logTheThing("debug", src, null, "<b>Marquesas/AI Blob:</b> Creating wall at [log_loc(T)].")
+			logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Creating wall at [log_loc(T)].")
 			return 1
 		return 0
 
 	onBlobHit(var/obj/blob/B, var/mob/M)
-		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
+		if (!prob(clamp((2000 - 100 * GET_DIST(B, src)) / 13, 1, 100)))
 			return
 		if (!(M in attackers))
 			attackers += M
@@ -703,7 +703,7 @@
 		counter = 0
 
 	onBlobDeath(var/obj/blob/B, var/mob/M)
-		if (!prob(clamp((2000 - 100 * get_dist(B, src)) / 13, 1, 100)))
+		if (!prob(clamp((2000 - 100 * GET_DIST(B, src)) / 13, 1, 100)))
 			return
 		attacker = M
 		if (istype(B, /obj/blob/ribosome))

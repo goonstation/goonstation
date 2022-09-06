@@ -4,7 +4,7 @@
 	desc = "A station which allows cyborgs to repair damage, recharge their cells, and have upgrades installed if they are present in the station."
 	icon_state = "station"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -35,17 +35,14 @@
 
 /obj/machinery/recharge_station/process(mult)
 	if (!(src.status & BROKEN))
-		// todo / at some point id like to fix the disparity between cells and 'normal power'
-		if (src.occupant)
-			src.power_usage = 500
-		else
-			src.power_usage = 50
+		src.power_usage = src.occupant ? 500 : 50
+		// syndicate gear is nuclear powered or something
+		if (src.conversion_chamber) src.power_usage = 0
 		..()
-	if (src.status & (NOPOWER | BROKEN) || !src.anchored)
+	if (src.status & BROKEN || (src.status & NOPOWER && !conversion_chamber))
 		if (src.occupant)
 			boutput(src.occupant, "<span class='alert'>You are automatically ejected from [src]!</span>")
 			src.go_out()
-			src.build_icon()
 		return
 
 	if (src.occupant)
@@ -71,7 +68,7 @@
 	if (src.status & BROKEN)
 		boutput(user, "<span class='alert'>[src] is broken and cannot be used.</span>")
 		return
-	if (src.status & NOPOWER)
+	if (src.status & NOPOWER && !src.conversion_chamber)
 		boutput(user, "<span class='alert'>[src] is out of power and cannot be used.</span>")
 		return
 	if (!src.anchored)
@@ -272,10 +269,6 @@
 	if (usr.stat || usr.restrained() || isghostcritter(usr))
 		return
 
-	if (!src.anchored)
-		usr.show_text("You must attach [src]'s floor bolts before the machine will work.", "red")
-		return
-
 	if ((usr.contents.Find(src) || src.contents.Find(usr) || can_access_remotely(usr) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 
@@ -319,7 +312,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing(LOG_COMBAT, usr, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
@@ -427,10 +420,12 @@
 					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
+					R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
+				R.part_chest?.cell = O
 				boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 				R.hud.update_charge()
 
@@ -503,8 +498,9 @@
 			src.cells.Add(R.cell)
 			C.set_loc(src)
 			R.cell = null
+			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
+			logTheThing(LOG_COMBAT, usr, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
 
 		if (href_list["eject"])
@@ -599,7 +595,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/recharge_station/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing) && src.allow_clothes)
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
@@ -649,7 +645,7 @@
 			return
 		else
 			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
@@ -657,32 +653,40 @@
 
 	else if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
-		if (!src.conversion_chamber)
-			boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
-			return
-		if (!ishuman(G.affecting))
-			boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
-			return
-		if (isdead(G.affecting))
-			boutput(user, "<span class='alert'>[G.affecting] is dead and cannot be forced inside.</span>")
-			return
 		if (G.state == GRAB_PASSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
-
-		var/mob/living/carbon/human/H = G.affecting
-		logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
-		user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
-
-		H.remove_pulling()
-		H.set_loc(src)
-		src.add_fingerprint(user)
-		src.occupant = H
-		src.build_icon()
-		qdel(G)
+		if (src.move_human_inside(user, G.affecting))
+			qdel(G)
 
 	else
 		..()
+
+/// check if we may put this human inside the chamber
+/// on success returns true, else returns false
+/obj/machinery/recharge_station/proc/move_human_inside(mob/user, mob/victim)
+	if (!src.conversion_chamber)
+		boutput(user, "<span class='alert'>Humans cannot enter recharging stations.</span>")
+		return FALSE
+	if (!ishuman(victim))
+		boutput(user, "<span class='alert'>Non-Humans are not compatible with this device.</span>")
+		return FALSE
+	if (isdead(victim))
+		boutput(user, "<span class='alert'>[victim] is dead and cannot be forced inside.</span>")
+		return FALSE
+	if (!src.anchored)
+		boutput(user, "<span class='alert'>You must attach [src]'s floor bolts before the machine will work.</span>")
+		return FALSE
+
+	var/mob/living/carbon/human/H = victim
+	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
+	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
+
+	H.remove_pulling()
+	H.set_loc(src)
+	src.add_fingerprint(user)
+	src.occupant = H
+	src.build_icon()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
@@ -735,15 +739,7 @@
 		src.build_icon()
 
 	if (ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		logTheThing("combat", user, null, "puts [himself_or_herself(user)] into a conversion chamber at [log_loc(src)]")
-		user.visible_message("<span class='notice>[user] stuffs [himself_or_herself(user)] into \the [src].")
-
-		H.remove_pulling()
-		H.set_loc(src)
-		src.occupant = H
-		src.add_fingerprint(user)
-		src.build_icon()
+		src.move_human_inside(user, AM)
 
 /obj/machinery/recharge_station/proc/build_icon()
 	if (src.occupant)
@@ -832,7 +828,7 @@
 
 					H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
-					playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
@@ -844,9 +840,12 @@
 /obj/machinery/recharge_station/proc/go_out()
 	if (!src.occupant)
 		return
-	src.occupant.set_loc(src.loc)
+	src.occupant.set_loc(get_turf(src))
 	src.occupant = null
 	src.build_icon()
+
+/obj/machinery/recharge_station/was_deconstructed_to_frame(mob/user)
+	src.go_out()
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set src in oview(1)
@@ -886,10 +885,12 @@
 	anchored = 0
 	p_class = 1.5
 
-/obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
+		if (!anchored)
+			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
 		return
 	..()

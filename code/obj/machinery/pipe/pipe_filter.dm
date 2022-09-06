@@ -166,7 +166,7 @@
 /obj/machinery/pipefilter/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/pipefilter/attack_hand(mob/user as mob)
+/obj/machinery/pipefilter/attack_hand(mob/user)
 /*	if(status & NOPOWER)
 		user << browse(null, "window=pipefilter")
 		user.machine = null

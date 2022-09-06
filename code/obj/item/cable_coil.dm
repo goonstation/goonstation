@@ -23,6 +23,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 10
@@ -30,6 +31,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
+	material_amt = 1 / 30
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -61,7 +63,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -250,7 +252,7 @@ obj/item/cable_coil/dropped(mob/user)
 		return
 	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
 		return
-	if (get_dist(target, source) > 1)
+	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 
@@ -272,7 +274,7 @@ obj/item/cable_coil/dropped(mob/user)
 	var/turf/target = C.loc
 	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
-	if (get_dist(C, user) > 1)		// make sure it's close enough
+	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 	if (source == target)		// do nothing if we clicked a cable we're standing on

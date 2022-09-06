@@ -17,6 +17,42 @@
 	name = "toupée"
 	desc = "You can't tell the difference, Honest!"
 	icon_state= "wig"
+	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
+
+	///Takes a list of style ids to colors and generates a wig from it
+	proc/setup_wig(var/style_list)
+		if (!style_list)
+			return
+		var/actuallyHasHair = FALSE
+		for (var/style_id in style_list)
+			if (style_id == "none")
+				continue
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			h_image.color = style_list[style_id]
+			src.overlays += h_image
+			src.wear_image.overlays += h_image
+			actuallyHasHair = TRUE
+		if (!actuallyHasHair)
+			src.icon_state = "short"
+
+///A type to allow you to spawn custom wigs from the map editor
+/obj/item/clothing/head/wig/spawnable
+	icon = 'icons/mob/human_hair.dmi'
+	icon_state = "bald"
+	var/first_id = "none"
+	var/first_color = "#101010"
+	var/second_id = "none"
+	var/second_color = "#101010"
+	var/third_id = "none"
+	var/third_color = "#101010"
+
+	New()
+		..()
+		var/hair_list = list()
+		hair_list[first_id] = first_color
+		hair_list[second_id] = second_color
+		hair_list[third_id] = third_color
+		src.setup_wig(hair_list)
 
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
@@ -31,13 +67,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
-	force = 8.0
+	force = 8
 	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -51,7 +88,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (src.remove_bandage(M, user))
 			return 1
 		if (snip_surgery(M, user))
@@ -76,13 +113,14 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
-	force = 7.0
+	force = 7
 	health = 6
 	w_class = W_CLASS_TINY
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
@@ -96,7 +134,7 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (scalpel_surgery(M, user))
 			return 1
 		..()
@@ -122,14 +160,14 @@
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = 1
+	var/hair_group = ALL_HAIR
 	var/image/dye_image
 
 	New()
 		dye_image = image(src.icon, "dye_color", -1)
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if(dye_hair(M, user, src))
 			return
 		else // I dunno, hit them with it?
@@ -275,9 +313,9 @@
 					else
 						M.emote("scream", 0)
 						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
-			user.tri_message(result_msg1,\
-												user, result_msg2,\
-												M,result_msg3)
+			user.tri_message(M, result_msg1,\
+												result_msg2,\
+												result_msg3)
 			if (bottle.hair_group == ALL_HAIR)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.uses_left = 0
@@ -302,7 +340,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dyedispenser"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
@@ -314,10 +352,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -338,7 +376,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
 		src.add_dialog(user)

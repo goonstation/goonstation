@@ -10,7 +10,7 @@ var/global/list/bible_contents = list()
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -55,7 +55,7 @@ var/global/list/bible_contents = list()
 		else
 			..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -64,7 +64,7 @@ var/global/list/bible_contents = list()
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on \his foot.</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot.</span>")
 			random_brute_damage(user, 10)
 			user.changeStatus("stunned", 3 SECONDS)
 			JOB_XP(user, "Clown", 1)
@@ -81,7 +81,7 @@ var/global/list/bible_contents = list()
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
 				playsound(src.loc, "punch", 25, 1, -1)
-			logTheThing("combat", user, M, "biblically smote [constructTarget(M,"combat")]")
+			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
 			var/mob/H = M
@@ -94,7 +94,7 @@ var/global/list/bible_contents = list()
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, user, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					if (M.traitHolder?.hasTrait("atheist"))
@@ -102,7 +102,7 @@ var/global/list/bible_contents = list()
 					else
 						M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -116,7 +116,7 @@ var/global/list/bible_contents = list()
 				playsound(src.loc, "punch", 25, 1, -1)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
 			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
@@ -179,10 +179,18 @@ var/global/list/bible_contents = list()
 			user?.gib()
 			return TRUE
 		else
-			user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-			logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-			user.gib()
+			smite(user)
 			return TRUE
+
+	proc/smite(mob/M)
+		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
+		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		var/turf/T = get_turf(M)
+		showlightning_bolt(T)
+		playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+		M.unequip_all()
+		M.emote("scream")
+		M.gib()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
@@ -210,8 +218,8 @@ var/global/list/bible_contents = list()
 			return TRUE
 
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
-		user.gib()
+		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		smite(user)
 		return TRUE
 
 /obj/item/storage/bible/hungry
@@ -238,7 +246,7 @@ var/global/list/bible_contents = list()
 				for( var/obj/gib in gibz )
 					if(!gib.loc) continue
 					step_to( gib, src )
-					if( get_dist( gib, src ) == 0 )
+					if( GET_DIST( gib, src ) == 0 )
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
@@ -257,7 +265,7 @@ var/global/list/bible_contents = list()
 			for( var/i = 1, i <= 50, i++ )
 				for( var/obj/gib in gibz )
 					step_to( gib, src )
-					if( get_dist( gib, src ) == 0 )
+					if( GET_DIST( gib, src ) == 0 )
 						animate( src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 3 )
 						qdel( gib )
 						if(prob( 50 )) playsound( get_turf( src ), 'sound/voice/burp.ogg', 10, 1 )
@@ -276,7 +284,7 @@ var/global/list/bible_contents = list()
 		if(src.contents.len > 0)
 			. += " It feels a bit heavier than it should."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
 			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
 			if(F)

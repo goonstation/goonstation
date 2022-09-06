@@ -52,7 +52,7 @@
 
 	proc/generate_map()
 		if (!map)
-			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
+			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
@@ -75,7 +75,7 @@
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
-			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
+			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
 
 	proc/generate_map_html()
@@ -261,7 +261,7 @@
 	var/static/heat_dropoff_per_dist_unit = 0.1 // possible todo : a quad curve
 	var/static/base_heat = 1000
 	//var/static/max_activity_heat_bonus = 2000 //when mining underneath this hotspot on the trench zlevel, increase bonus heat (NOT USED)
-	//var/static/heat_polled_past_max_factor = 0.10 //When polled at cap, return heat with this multiplier applied.
+	//var/static/heat_polled_past_max_factor = 0.1 //When polled at cap, return heat with this multiplier applied.
 
 	var/static/per_activity = 95
 
@@ -388,8 +388,8 @@
 			if (recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
@@ -399,8 +399,8 @@
 			if (phenomena_flags > PH_QUAKE && recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 
 	proc/poll_capture_amt(var/turf/center)
@@ -412,7 +412,7 @@
 
 	proc/get_tile_heat(var/turf/T)
 
-		d = get_dist(T, center.turf())
+		d = GET_DIST(T, center.turf())
 		if (d > radius)
 			.= 0
 			if (d <= radius + cool_cushion)
@@ -534,12 +534,12 @@
 					if (src.loc == center)
 						true_center += 1
 
-					var/d = get_dist(src.loc,center)
+					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
 						closest_hotspot = H
-						dist_last = get_dist(src.loc,center)
+						dist_last = GET_DIST(src.loc,center)
 
-					val += get_dist(src.loc,center)
+					val += GET_DIST(src.loc,center)
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 
@@ -562,7 +562,7 @@
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
 								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
@@ -577,7 +577,7 @@
 				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
-	attackby(var/obj/item/I as obj, var/mob/M as mob)
+	attackby(var/obj/item/I, var/mob/M)
 		if (ispryingtool(I))
 			if (deployed)
 				src.undeploy()
@@ -587,7 +587,7 @@
 				src.deploy()
 		..()
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.undeploy()
 		..()
 
@@ -886,7 +886,7 @@
 	update_icon()
 		icon_state = "stomper[on]"
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		if(open)
@@ -979,7 +979,7 @@
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
-				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
@@ -990,7 +990,7 @@
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
 				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)
@@ -1143,7 +1143,7 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 100
+	health = 4
 	var/can_put_up = 1
 
 	examine(mob/user)
@@ -1157,7 +1157,7 @@
 		. = ..()
 		src.examine(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)

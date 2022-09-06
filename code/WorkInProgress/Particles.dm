@@ -179,64 +179,6 @@ var/datum/particleMaster/particleMaster = new
 			return 1
 		return 0
 
-/datum/particleType/fireTest
-	name = "fireTest"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "fpart"
-
-	MatrixInit()
-		first = matrix()
-		second = matrix()
-
-	Apply(var/obj/particle/par)
-		if (..())
-			par.blend_mode = BLEND_ADD
-			par.alpha = 0
-			par.pixel_x = rand (-3, 3)
-			par.pixel_y = -16 + rand(-3,3)
-
-			first.Turn(rand(-90, 90))
-			second.Turn(rand(-90, 90))
-
-			var/x_float = rand(-5, 5)
-
-			animate(par, time = 10, transform = first, pixel_y = 0, pixel_x = x_float, alpha = 255)
-			animate(transform = second, time = 10, pixel_y = 16, pixel_x = round(x_float / 2), alpha = 0)
-
-			first.Reset()
-
-/datum/particleType/exppart
-	name = "exppart"
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "exppart"
-
-	MatrixInit()
-		first = matrix()
-
-	Apply(var/obj/particle/par)
-		if(..())
-			par.blend_mode = BLEND_ADD
-			par.Turn(rand(90, 90))
-
-			first.Turn(rand(90, 90))
-			first.Scale(1.5, 1.5)
-
-			animate(par, transform = first, time = 20, pixel_y = rand(-64, 64), pixel_x = rand(-64, 64), easing = CUBIC_EASING|EASE_IN, alpha = 0)
-
-			MatrixInit()
-
-/datum/particleType/mechpart
-	name = "mechpart"
-	icon = 'icons/effects/particles.dmi'
-	icon_state = "2x2outline"
-
-	Apply(var/obj/particle/par)
-		if(..())
-			if (!par || !par.target) return //Wire: Fix for Cannot read null.x
-			var/move_x = (par.target.x - par.x) * 32
-			var/move_y = (par.target.y - par.y) * 32
-
-			animate(par, time = get_dist(par, par.target) * 5, pixel_y = move_y,  pixel_x = move_x , color = "#0000FF", easing = LINEAR_EASING)
 
 /datum/particleType/elecpart
 	name = "elecpart"
@@ -493,53 +435,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 			animate(par,transform = second, time = 25, pixel_y = move_y,  pixel_x = move_x , easing = SINE_EASING)
 			animate(transform = third, time = 5, easing = LINEAR_EASING|EASE_OUT)
-
-/datum/particleType/stink
-	name = "stink"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "stink"
-
-	MatrixInit()
-		first = matrix(1, 0, MATRIX_SCALE)
-		second = matrix()
-
-	Apply(var/obj/particle/par)
-		if(..())
-			par.alpha = 0
-			par.pixel_x += rand(-5,5)
-			par.pixel_y = -16
-
-			par.transform = first
-
-			animate(par, time = 10, transform = second, pixel_y = 0, alpha = 150)
-			animate(time = 10, pixel_y = 16, alpha = 0)
-
-/datum/particleType/barrelSmoke
-	name = "barrelSmoke"
-	icon = 'icons/effects/64x64.dmi'
-	icon_state = "smoke"
-
-	MatrixInit()
-		first = matrix()
-		second = matrix()
-
-	Apply(var/obj/particle/par)
-		if(..())
-			par.pixel_x += -16
-			par.pixel_y += -5
-			par.color = "#222222"
-
-			first.Turn(rand(-90, 90))
-			first.Scale(0.1, 0.1)
-			par.transform = first
-
-			first.Scale(5,5)
-			first.Turn(rand(-90, 90))
-			animate(par,transform = first, time = 5, alpha = 90)
-
-			animate(transform = second, time = 20, pixel_y = 75, alpha = 1)
-
-			first.Reset()
 
 /datum/particleType/cruiserSmoke
 	name = "cruiserSmoke"
@@ -1059,22 +954,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 		else
 			Die()
 
-/datum/particleSystem/energysp
-	New(var/atom/location = null)
-		..(location, "elecpart_green", 15, "#00DD00")
-
-	InitPar()
-		sleepCounter = 20
-
-	Run()
-		if (..())
-			if (sleepCounter > 0)
-				sleepCounter--
-				SpawnParticle()
-				Sleep(1)
-			else
-				Die()
-
 /datum/particleSystem/sparkles
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFDD")
@@ -1099,6 +978,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Sleep(1)
 			else
 				Die()
+
 /datum/particleSystem/sparkles_disco
 	New(var/atom/location = null)
 		..(location, "sparkle", 10, "#FFFFFF")
@@ -1190,16 +1070,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Sleep(1)
 			else
 				Die()
-
-
-/datum/particleSystem/barrelSmoke
-	New(var/atom/location = null)
-		..(location, "barrelSmoke", 26, "#222222")
-
-	Run()
-		if (..())
-			SpawnParticle()
-			Sleep(1)
 
 /datum/particleSystem/cruiserSmoke
 	New(var/atom/location = null)
@@ -1444,7 +1314,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 /datum/particleSystem/chemSmoke
 	var/datum/reagents/copied
 	var/list/affected
-	var/list/banned_reagents = list("smokepowder", "propellant", "thalmerite", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
+	var/list/banned_reagents = list("smokepowder", "propellant", "pyrosium", "fluorosurfactant", "salt", "poor_concrete", "okay_concrete", "good_concrete", "perfect_concrete")
 	var/smoke_size = 3
 
 	New(var/atom/location = null, var/datum/reagents/source, var/duration = 20, var/size = 3)
@@ -1505,9 +1375,9 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!issmokeimmune(L))
-					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
+					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
-						copied.copy_to(L.reagents, 1 / max((get_dist(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
+						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
 /datum/particleSystem/chemspray
 	var/datum/reagents/copied = null
@@ -1538,7 +1408,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 /datum/particleSystem/mechanic
 	New(var/atom/location, var/atom/destination)
-		..(location, "mechpart", get_dist(location, destination) * 5,  "#00FF00", destination)
+		..(location, "mechpart", GET_DIST(location, destination) * 5,  "#00FF00", destination)
 
 	InitPar()
 		sleepCounter = 10

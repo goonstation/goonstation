@@ -32,7 +32,7 @@
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 
 		//var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\"><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"pragma\" content=\"no-cache\"><style type='text/css'>body { font-family: Tahoma, sans-serif; font-size: 10pt; }</style></head><body>" : ""
@@ -167,7 +167,7 @@
 			dat += "</tbody></table>"
 
 		else if (src.mode == "splicing")
-			if (src.splicing1 && src.splicing2)
+			if (src.splicing1?.planttype && src.splicing2?.planttype)
 				dat += {"<b><u>Seed Splicing</u></b><br>
 				<table>
 					<thead>
@@ -193,11 +193,7 @@
 				var/datum/plant/P1 = src.splicing1.planttype
 				var/datum/plant/P2 = src.splicing2.planttype
 
-				var/genome_difference = 0
-				if (P1.genome > P2.genome)
-					genome_difference = P1.genome - P2.genome
-				else
-					genome_difference = P2.genome - P1.genome
+				var/genome_difference = abs(P1.genome - P2.genome)
 				splice_chance -= genome_difference * 10
 
 				splice_chance -= src.splicing1.seeddamage
@@ -250,16 +246,19 @@
 				if(2) src.mode = "extraction"
 				if(3) src.mode = "seedlist"
 				else src.mode = "overview"
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.updateUsrDialog()
 
 		else if(href_list["ejectbeaker"])
-			if (!src.inserted) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
+			var/obj/item/I = src.inserted
+			if (!I) boutput(usr, "<span class='alert'>No receptacle found to eject.</span>")
 			else
-				src.inserted.set_loc(src.loc)
-				usr.put_in_hand_or_eject(src.inserted) // try to eject it into the users hand, if we can
-				src.inserted = null
-			src.updateUsrDialog()
+				if (I.cant_drop) // cyborg/item arms
+					src.inserted = null
+					src.updateUsrDialog()
+				else
+					I.set_loc(src.loc) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 
 		else if(href_list["ejectseeds"])
 			for (var/obj/item/seed/S in src.seeds)
@@ -297,7 +296,7 @@
 				var/newName = copytext(strip_html(input(usr,"What do you want to label [I.name]?","[src.name]",I.name) ),1, 129)
 				if(newName && newName != I.name)
 					phrase_log.log_phrase("seed", newName, no_duplicates=TRUE)
-				if (newName && I && get_dist(src, usr) < 2)
+				if (newName && I && GET_DIST(src, usr) < 2)
 					I.name = newName
 			src.updateUsrDialog()
 
@@ -307,7 +306,7 @@
 
 		else if(href_list["analyze"])
 			var/obj/item/I = locate(href_list["analyze"]) in src
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 
 			if (istype(I,/obj/item/seed/))
 				var/obj/item/seed/S = I
@@ -341,10 +340,11 @@
 
 				if (!stored || !DNA)
 					give = 0
-				if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+				else if (HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					give = 0
-				if(stored.no_extract)
+				else if(stored.no_extract)
 					give = 0
+
 				if (!give)
 					boutput(usr, "<span class='alert'>No viable seeds found in [I].</span>")
 				else
@@ -391,7 +391,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_select"])
-			playsound(src, "sound/machines/keypress.ogg", 50, 1)
+			playsound(src, 'sound/machines/keypress.ogg', 50, 1)
 			var/obj/item/I = locate(href_list["splice_select"]) in src
 			if (!istype(I))
 				return
@@ -406,7 +406,7 @@
 			src.updateUsrDialog()
 
 		else if(href_list["splice_cancel"])
-			playsound(src, "sound/machines/keypress.ogg", 50, 1)
+			playsound(src, 'sound/machines/keypress.ogg', 50, 1)
 			src.splicing1 = null
 			src.splicing2 = null
 			src.mode = "seedlist"
@@ -439,16 +439,16 @@
 							return
 						switch(S.HYPinfusionS(R.id,src))
 							if (1)
-								playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+								playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
 								boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
 							if (2)
-								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 								boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
 							if (3)
-								playsound(src, "sound/machines/buzz-sigh.ogg", 50, 1)
+								playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
 								boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
 							else
-								playsound(src, "sound/effects/zzzt.ogg", 50, 1)
+								playsound(src, 'sound/effects/zzzt.ogg', 50, 1)
 								boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 						src.inserted.reagents.remove_reagent(R.id,10)
 						dialogue_open = 0
@@ -473,11 +473,7 @@
 			if (!P1 || !P2) splice_chance = 0
 			else
 				// Seeds from different families aren't easy to splice
-				var/genome_difference = 0
-				if (P1.genome > P2.genome)
-					genome_difference = P1.genome - P2.genome
-				else
-					genome_difference = P2.genome - P1.genome
+				var/genome_difference = abs(P1.genome - P2.genome)
 				splice_chance -= genome_difference * 10
 
 				// Deduct chances if the seeds are damaged from infusing or w/e else
@@ -504,35 +500,24 @@
 				var/datum/plantgenes/P1DNA = seed1.plantgenes
 				var/datum/plantgenes/P2DNA = seed2.plantgenes
 
-				var/dominance = P1DNA.alleles[1] - P2DNA.alleles[1]
+				var/dominance = P1DNA.d_species - P2DNA.d_species
 				var/datum/plant/dominantspecies = null
 				var/datum/plant/submissivespecies = null
 				var/datum/plantgenes/dominantDNA = null
 				var/datum/plantgenes/submissiveDNA = null
 
 				// Establish which species allele is dominant
-				if (dominance > 0)
+				// If neither, we pick randomly unlike the rest of the allele resolutions
+				if (dominance > 0 || (dominance == 0 && prob(50)))
 					dominantspecies = P1
 					submissivespecies = P2
 					dominantDNA = P1DNA
 					submissiveDNA = P2DNA
-				else if (dominance < 0)
+				else
 					dominantspecies = P2
 					submissivespecies = P1
 					dominantDNA = P2DNA
 					submissiveDNA = P1DNA
-				else
-					// If neither, we pick randomly unlike the rest of the allele resolutions
-					if (prob(50))
-						dominantspecies = P1
-						submissivespecies = P2
-						dominantDNA = P1DNA
-						submissiveDNA = P2DNA
-					else
-						dominantspecies = P2
-						submissivespecies = P1
-						dominantDNA = P2DNA
-						submissiveDNA = P1DNA
 
 				// Create the new seed
 				var/obj/item/seed/S = new /obj/item/seed
@@ -601,25 +586,25 @@
 				// If one is dominant and the other recessive, use the dominant value
 				// If both are dominant or recessive, average the values out
 
-				P.growtime = SpliceMK2(P1DNA.alleles[2],P2DNA.alleles[2],P1.vars["growtime"],P2.vars["growtime"])
-				DNA.growtime = SpliceMK2(P1DNA.alleles[2],P2DNA.alleles[2],P1DNA.vars["growtime"],P2DNA.vars["growtime"])
+				P.growtime = SpliceMK2(P1DNA.d_growtime,P2DNA.d_growtime,P1.vars["growtime"],P2.vars["growtime"])
+				DNA.growtime = SpliceMK2(P1DNA.d_growtime,P2DNA.d_growtime,P1DNA.vars["growtime"],P2DNA.vars["growtime"])
 
-				P.harvtime = SpliceMK2(P1DNA.alleles[3],P2DNA.alleles[3],P1.vars["harvtime"],P2.vars["harvtime"])
-				DNA.harvtime = SpliceMK2(P1DNA.alleles[3],P2DNA.alleles[3],P1DNA.vars["harvtime"],P2DNA.vars["harvtime"])
+				P.harvtime = SpliceMK2(P1DNA.d_harvtime,P2DNA.d_harvtime,P1.vars["harvtime"],P2.vars["harvtime"])
+				DNA.harvtime = SpliceMK2(P1DNA.d_harvtime,P2DNA.d_harvtime,P1DNA.vars["harvtime"],P2DNA.vars["harvtime"])
 
-				P.cropsize = SpliceMK2(P1DNA.alleles[4],P2DNA.alleles[4],P1.vars["cropsize"],P2.vars["cropsize"])
-				DNA.cropsize = SpliceMK2(P1DNA.alleles[4],P2DNA.alleles[4],P1DNA.vars["cropsize"],P2DNA.vars["cropsize"])
+				P.cropsize = SpliceMK2(P1DNA.d_cropsize,P2DNA.d_cropsize,P1.vars["cropsize"],P2.vars["cropsize"])
+				DNA.cropsize = SpliceMK2(P1DNA.d_cropsize,P2DNA.d_cropsize,P1DNA.vars["cropsize"],P2DNA.vars["cropsize"])
 
-				P.harvests = SpliceMK2(P1DNA.alleles[5],P2DNA.alleles[5],P1.vars["harvests"],P2.vars["harvests"])
-				DNA.harvests = SpliceMK2(P1DNA.alleles[5],P2DNA.alleles[5],P1DNA.vars["harvests"],P2DNA.vars["harvests"])
+				P.harvests = SpliceMK2(P1DNA.d_harvests,P2DNA.d_harvests,P1.vars["harvests"],P2.vars["harvests"])
+				DNA.harvests = SpliceMK2(P1DNA.d_harvests,P2DNA.d_harvests,P1DNA.vars["harvests"],P2DNA.vars["harvests"])
 
-				DNA.potency = SpliceMK2(P1DNA.alleles[6],P2DNA.alleles[6],P1DNA.vars["potency"],P2DNA.vars["potency"])
+				DNA.potency = SpliceMK2(P1DNA.d_potency,P2DNA.d_potency,P1DNA.vars["potency"],P2DNA.vars["potency"])
 
-				P.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1.vars["endurance"],P2.vars["endurance"])
-				DNA.endurance = SpliceMK2(P1DNA.alleles[7],P2DNA.alleles[7],P1DNA.vars["endurance"],P2DNA.vars["endurance"])
+				P.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1.vars["endurance"],P2.vars["endurance"])
+				DNA.endurance = SpliceMK2(P1DNA.d_endurance,P2DNA.d_endurance,P1DNA.vars["endurance"],P2DNA.vars["endurance"])
 
 				boutput(usr, "<span class='notice'>Splice successful.</span>")
-				playsound(src, "sound/machines/ping.ogg", 50, 1)
+				playsound(src, 'sound/machines/ping.ogg', 50, 1)
 				//0 xp for a 100% splice, 4 xp for a 10% splice
 				JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 				if (!src.seedoutput) src.seeds.Add(S)
@@ -628,7 +613,7 @@
 			else
 				// It fucked up - we don't need to do anything else other than tell the user
 				boutput(usr, "<span class='alert'>Splice failed.</span>")
-				playsound(src, "sound/machines/seed_destroyed.ogg", 50, 1)
+				playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
 
 			// Now get rid of the old seeds and go back to square one
 			src.seeds.Remove(seed1)
@@ -643,7 +628,7 @@
 		else
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			if(src.inserted)
 				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
@@ -719,12 +704,7 @@
 		else if (dominance < 0)
 			return value2
 		else
-			var/average = (value1 + value2)
-			if (average != 0) average /= 2
-			return round(average)
-
-
-
+			return round((value1 + value2)/2)
 
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
 		// Largely copied from plantpot.dm
@@ -743,16 +723,21 @@
 			generation = F.generation
 
 		return {"
-		<td class='l [DNA.alleles[1] ? "hyp-dominant" : ""]'>[P.name]</td>
+		<td class='l [DNA.d_species ? "hyp-dominant" : ""]'>[P.name]</td>
 		<td class='r'>[P.genome]</td>
 		<td class='r'>[generation]</td>
-		<td class='r [DNA.alleles[2] ? "hyp-dominant" : ""]'>[DNA.growtime]</td>
-		<td class='r [DNA.alleles[3] ? "hyp-dominant" : ""]'>[DNA.harvtime]</td>
-		<td class='r [DNA.alleles[4] ? "hyp-dominant" : ""]'>[DNA.harvests]</td>
-		<td class='r [DNA.alleles[5] ? "hyp-dominant" : ""]'>[DNA.cropsize]</td>
-		<td class='r [DNA.alleles[6] ? "hyp-dominant" : ""]'>[DNA.potency]</td>
-		<td class='r [DNA.alleles[7] ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
+		<td class='r [DNA.d_growtime ? "hyp-dominant" : ""]'>[DNA.growtime]</td>
+		<td class='r [DNA.d_harvtime ? "hyp-dominant" : ""]'>[DNA.harvtime]</td>
+		<td class='r [DNA.d_cropsize ? "hyp-dominant" : ""]'>[DNA.harvests]</td>
+		<td class='r [DNA.d_harvests ? "hyp-dominant" : ""]'>[DNA.cropsize]</td>
+		<td class='r [DNA.d_potency ? "hyp-dominant" : ""]'>[DNA.potency]</td>
+		<td class='r [DNA.d_endurance ? "hyp-dominant" : ""]'>[DNA.endurance]</td>
 		"}
+
+	Exited(Obj, newloc)
+		if(Obj == src.inserted)
+			src.inserted = null
+			src.updateUsrDialog()
 
 ////// Reagent Extractor
 
@@ -860,22 +845,18 @@
 		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
-				if (!src.inserted)
+				var/obj/item/I = src.inserted
+				if (!I)
 					return
-				if (src.inserted == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, src.inserted)
-				usr.put_in_hand_or_eject(src.inserted)
-				src.inserted = null
-				. = TRUE
+				if (I == src.extract_to) src.extract_to = null
+				TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
+				usr.put_in_hand_or_eject(I)
 			if("insertcontainer")
 				if (src.inserted)
 					return
 				var/obj/item/inserting = usr.equipped()
 				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
-					src.inserted = inserting
-					usr.drop_item()
-					inserting.set_loc(src)
-					if(!src.extract_to) src.extract_to = inserting
+					tryInsert(inserting, usr)
 					. = TRUE
 			if("ejectingredient")
 				var/id = params["ingredient_id"]
@@ -928,23 +909,30 @@
 					. = TRUE
 		src.UpdateIcon()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
-			if (isrobot(user))
-				boutput(user, "This machine does not accept containers from robots!")
-				return
-			if(src.inserted)
-				boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
-				return
-			src.inserted =  W
-			user.drop_item()
-			W.set_loc(src)
-			if(!src.extract_to) src.extract_to = W
-			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
-			src.ui_interact(user)
+			tryInsert(W, user)
 
 		..()
 
+	proc/tryInsert(var/obj/item/W, var/mob/user)
+		if (isrobot(user))
+			boutput(user, "This machine does not accept containers from robots!")
+			return
+		if(src.inserted)
+			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
+			return
+		src.inserted =  W
+		user.drop_item()
+		W.set_loc(src)
+		if(!src.extract_to) src.extract_to = W
+		boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+		src.ui_interact(user)
+
+	Exited(Obj, newloc)
+		if(Obj == src.inserted)
+			src.inserted = null
+			tgui_process.update_uis(src)
 
 /obj/submachine/chem_extractor/proc/getContainers()
 	. = list(
@@ -972,7 +960,7 @@
 /obj/submachine/chem_extractor/proc/tryLoading(atom/movable/incoming)
 	var/can_autoextract = src.autoextract && src.extract_to
 	if (can_autoextract && src.extract_to.reagents.total_volume >= src.extract_to.reagents.maximum_volume)
-		playsound(src, "sound/machines/chime.ogg", 10, 1)
+		playsound(src, 'sound/machines/chime.ogg', 10, 1)
 		src.visible_message("<span class='alert'>[src]'s tank over-fill alarm burps!</span>")
 		can_autoextract = FALSE
 
@@ -1092,7 +1080,7 @@
 		. = TRUE
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		. = ..()
 
 		if (src.panelopen || isAI(user))
@@ -1161,7 +1149,7 @@
 				boutput(user, "The [src] is already unlocked!")
 			return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (!src.panelopen)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
@@ -1239,14 +1227,14 @@
 	attack_ai(var/mob/user as mob)
 		return 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (iskudzuman(user))
 			..()
 		else
 			boutput(user, "<span class='notice'>You stare at the bit that looks most like a screen, but you can't make heads or tails of what it's saying.!</span>")
 
 	//only kudzumen can understand it.
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (!W) return
 		if (!user) return
 

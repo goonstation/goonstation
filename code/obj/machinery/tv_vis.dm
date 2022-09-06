@@ -11,7 +11,7 @@
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
 	icon_state = "wall-monitor"
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 30
 	layer = OBJ_LAYER+1
 	appearance_flags = KEEP_TOGETHER
@@ -55,7 +55,7 @@
 		use_power(power_usage)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!active)
 			detect_cameras()
 			current_camera = cameras["HUD1"]
