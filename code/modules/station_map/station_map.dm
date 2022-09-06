@@ -37,20 +37,28 @@
 	layer = TURF_LAYER
 	anchored = TRUE
 	var/static/icon/map_icon
-	///The actual size the map should be clipped to (multiple of world.maxx)
+
+	///The actual size the map should be clipped to (multiple of original icon size)
 	var/clip_scale = 1
+
+	//temporary zoom vars
 	var/zoom_level = 1
 	var/zoom_x = 0
 	var/zoom_y = 0
 
+	//the extents of the station in world coordinates
 	var/x_max = 1
 	var/x_min = null
 	var/y_max = 1
 	var/y_min = null
 
+	///The width in pixels between the edge of the station and the edge of the map
 	var/border_width = 20
 
+	//the actual scale of the map object, equivalent to transform.a
 	var/scale = 1
+
+	//the world coordinates of the center of the station
 	var/center_x = 0
 	var/center_y = 0
 
@@ -58,16 +66,18 @@
 		..()
 		x_min = world.maxx
 		y_min = world.maxy
-		find_center()
+		src.find_center()
 		if (!map_icon)
 			map_icon = icon('icons/obj/station_map.dmi', "blank")
 			#ifdef UPSCALED_MAP
 			map_icon.Scale(world.maxx, world.maxy)
 			#endif
-			render_map()
-		auto_zoom_map()
+			src.render_map()
+		src.auto_zoom_map()
+		src.Scale(src.clip_scale, src.clip_scale)
+		src.scale *= src.clip_scale
 		icon = map_icon
-		clip_area(src.center_x,src.center_y)
+		src.clip_area(src.center_x,src.center_y)
 
 	///Zoom the map to a world coordinate
 	proc/manual_zoom(var/x, var/y, var/zoom)
@@ -90,10 +100,11 @@
 		src.clip_area(src.center_x, src.center_y)
 
 	///Clip the map to size around a world coordinate
-	proc/clip_area(var/x,var/y, var/zoom = 1)
+	proc/clip_area(var/x,var/y)
 		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
-		mask_icon.Scale((src.clip_scale * 300)/zoom, (src.clip_scale * 300)/zoom)
-		src.remove_filter("map_cutoff")
+		//scale by the physical icon scale and scale factor of the map
+		var/mask_scale = (src.clip_scale / src.scale) * mask_icon.Width()
+		mask_icon.Scale(mask_scale, mask_scale)
 		src.add_filter("map_cutoff", 1, alpha_mask_filter(x - src.center_x, y - src.center_y, mask_icon))
 
 	///Should a turf be rendered on the map
@@ -193,8 +204,6 @@
 	New()
 		START_TRACKING
 		..()
-		src.Scale(0.5,0.5)
-		src.scale *= 0.5
 		//center it on the tile it was spawned from
 		src.pixel_x -= 135
 		src.pixel_y -= 133
