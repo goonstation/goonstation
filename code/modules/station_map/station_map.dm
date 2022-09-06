@@ -5,20 +5,34 @@
 	mouse_opacity = 0
 	var/obj/station_map/map = null
 
+	//the world coordinates where the map icon is rendered
+	var/pos_x = 100
+	var/pos_y = 100
+
 	New(var/atom/location, var/obj/station_map/map)
 		..()
 		src.map = map
+		src.map.map_icons |= src
 		src.layer = map.layer + 0.1
 
 	///Sets the icon's position on the map from world coordinates
 	proc/set_position(var/x, var/y)
+		src.pos_x = x
+		src.pos_y = y
+		//if we're zoomed in then use the zoomed center coordinates
+		var/center_x = src.map.zoom_level == 1 ? src.map.center_x : src.map.zoom_x
+		var/center_y = src.map.zoom_level == 1 ? src.map.center_y : src.map.zoom_y
 		var/icon/dummy_icon = new(src.icon)
 		//the first term is the scaled distance to the map's center
 		//then add the position of the true center
 		//add the pixel offset of the parent map
 		//subtract half the icon size
-		src.pixel_x = (x - src.map.center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - dummy_icon.Width()/2
-		src.pixel_y = (y - src.map.center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - dummy_icon.Height()/2
+		src.pixel_x = (x - center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - dummy_icon.Width()/2
+		src.pixel_y = (y - center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - dummy_icon.Height()/2
+
+	disposing()
+		src.map.map_icons -= src
+		. = ..()
 
 /obj/map_icon/tracking
 	New(var/atom/location, var/obj/station_map/map, var/atom/movable/target)
@@ -36,7 +50,10 @@
 	name = "Station map"
 	layer = TURF_LAYER
 	anchored = TRUE
-	var/static/icon/map_icon
+	//The generated map render, stored to avoid having to recalculate it
+	var/static/icon/map_render
+
+	var/list/obj/map_icon/map_icons = new()
 
 	///The actual size the map should be clipped to (multiple of original icon size)
 	var/clip_scale = 1
@@ -67,17 +84,21 @@
 		x_min = world.maxx
 		y_min = world.maxy
 		src.find_center()
-		if (!map_icon)
-			map_icon = icon('icons/obj/station_map.dmi', "blank")
+		if (!map_render)
+			map_render = icon('icons/obj/station_map.dmi', "blank")
 			#ifdef UPSCALED_MAP
-			map_icon.Scale(world.maxx, world.maxy)
+			map_render.Scale(world.maxx, world.maxy)
 			#endif
 			src.render_map()
 		src.auto_zoom_map()
 		src.Scale(src.clip_scale, src.clip_scale)
 		src.scale *= src.clip_scale
-		icon = map_icon
+		icon = map_render
 		src.clip_area(src.center_x,src.center_y)
+
+	proc/update_map_icons()
+		for (var/obj/map_icon/map_icon in src.map_icons)
+			map_icon.set_position(map_icon.pos_x, map_icon.pos_y)
 
 	///Zoom the map to a world coordinate
 	proc/manual_zoom(var/x, var/y, var/zoom)
@@ -89,6 +110,7 @@
 		src.pixel_x -= ceil((x - src.center_x) * src.scale)
 		src.pixel_y -= ceil((y - src.center_y) * src.scale)
 		src.clip_area(x,y, zoom)
+		src.update_map_icons()
 
 	///Stupid naive unzoom
 	proc/unzoom()
@@ -98,6 +120,7 @@
 		src.scale /= src.zoom_level
 		src.zoom_level = 1
 		src.clip_area(src.center_x, src.center_y)
+		src.update_map_icons()
 
 	///Clip the map to size around a world coordinate
 	proc/clip_area(var/x,var/y)
@@ -141,7 +164,8 @@
 				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
 				if (!src.valid_turf(turf))
 					continue
-				map_icon.DrawBox(turf_color(turf), x - x_offset, y - y_offset)
+				//offset the pixels so the station is always in the center of the icon
+				map_render.DrawBox(turf_color(turf), x - x_offset, y - y_offset)
 
 	///Zooms the map on the station
 	proc/auto_zoom_map()
@@ -197,7 +221,8 @@
 			return TRUE
 
 /obj/station_map/nukie
-	//I give up trying to fix all the jank, just click on the turfs behind it wcgw
+	//too many things break with a big scaled object so we just pass all the clicks through
+	//to the turfs underneath
 	mouse_opacity = 0
 	clip_scale = 0.5
 	var/obj/map_icon/plant_site
@@ -231,8 +256,8 @@
 		src.plant_site = new(src.loc, src)
 		src.plant_site.set_position(target_x,target_y)
 
-	proc/test()
-		src.manual_zoom(180,180,2)
+	proc/zoom_to_site()
+		src.manual_zoom(src.plant_site.pos_x, src.plant_site.pos_y, 2)
 
 	disposing()
 		STOP_TRACKING
