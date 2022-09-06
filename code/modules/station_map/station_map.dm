@@ -1,6 +1,7 @@
 /obj/map_icon
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
+	anchored = TRUE
 	mouse_opacity = 0
 	var/obj/station_map/map = null
 
@@ -34,6 +35,7 @@
 /obj/station_map
 	name = "Station map"
 	layer = TURF_LAYER
+	anchored = TRUE
 	var/static/icon/map_icon
 
 	var/x_max = 1
@@ -63,6 +65,21 @@
 		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
 		mask_icon.Scale((1/src.scale) * 300, (1/src.scale) * 300)
 		src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
+
+	//very hacky solution to not being able to click the map when on the edge of it
+	//works like a charm, will probably cause jank
+	Click(location, control, params)
+		. = ..()
+		params = params2list(params)
+		var/dist = GET_DIST(usr, src)
+		var/max_dist = (world.maxx / src.scale) / (32 * 2)
+		if (dist < max_dist)
+			var/obj/item/equipped = usr.equipped()
+			if (equipped)
+				src.Attackby(equipped, usr, params, FALSE)
+				equipped.AfterAttack(src, usr, 0, params)
+			else
+				src.Attackhand(usr)
 
 	///Should a turf be rendered on the map
 	proc/valid_turf(var/turf/turf)
