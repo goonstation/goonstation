@@ -248,6 +248,7 @@
 	render_special = new
 	traitHolder = new(src)
 
+
 	if (!src.bioHolder)
 		src.bioHolder = new /datum/bioHolder(src)
 		src.initializeBioholder()
@@ -267,6 +268,7 @@
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
 	src.chat_text = new
+	src.vis_contents += src.chat_text
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -343,6 +345,9 @@
 		else
 			m.set_loc(src.loc)
 			m.ghostize()
+
+	qdel(chat_text)
+	chat_text = null
 
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
@@ -777,6 +782,8 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
+	var/atom/oldloc = src.loc
+
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -794,6 +801,17 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
+
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -1821,6 +1839,7 @@
 	if (animation)
 		animation.delaydispose()
 	qdel(src)
+
 
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
@@ -3084,7 +3103,7 @@
 	set name = "Point"
 	src.point_at(A)
 
-/mob/proc/point_at(var/atom/target) //overriden by living and dead
+/mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))

@@ -261,6 +261,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 	SPAWN(0)
 		src.botcard.access = get_all_accesses()
+		src.botcard.registered = "AI"
+		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
