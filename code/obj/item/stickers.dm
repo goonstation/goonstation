@@ -36,10 +36,8 @@
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
 		if (params)
 			if (islist(params) && params["icon-y"] && params["icon-x"])
-				var/icon/dummy_icon = new(A.icon)
-				//account for pixel shifting and scaling
-				pox = (text2num(params["icon-x"]) - dummy_icon.Width()/2) * A.transform.a - A.pixel_x
-				poy = (text2num(params["icon-y"]) - dummy_icon.Height()/2) * A.transform.e - A.pixel_y
+				pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
+				poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 				DEBUG_MESSAGE("pox [pox] poy [poy]")
 		src.stick_to(A, pox, poy, user)
 		user.u_equip(src)
