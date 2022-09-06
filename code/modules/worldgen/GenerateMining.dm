@@ -352,9 +352,8 @@ var/list/miningModifiers = list()
 	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
 	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
-	if (map_settings.has_hotspots)
-		hotspot_controller.generate_map()
-		logTheThing(LOG_DEBUG, null, "Generated hotspot map or something.")
+	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
+	hotspot_controller.generate_map()
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae
 /datum/bioluminescent_algae
