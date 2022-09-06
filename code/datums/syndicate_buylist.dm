@@ -275,32 +275,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "You shouldn't see me!"
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/traitorthermalscanner
-	name = "Advanced Optical Thermal Scanner"
-	item = /obj/item/clothing/glasses/thermal/traitor
-	cost = 3
-	desc = "An advanced optical thermal scanner capable of seeing living entities through walls and smoke."
-	br_allowed = TRUE
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/stimulants
-	name = "Stimulants"
-	item = /obj/item/storage/box/stimulants
-	cost = 6
-	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawl symptoms play out naturally.</font>"
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/donkpockets
-	name = "Syndicate Donk Pockets"
-	item = /obj/item/reagent_containers/food/snacks/donkpocket_w
-	cost = 1
-	desc = "Ready to eat, no microwave required! The pocket-sandwich station personnel crave, now with added medical agents to heal you up in a pinch! Zero grams trans-fat per serving*!<br><br><font size=1>*Made with partially-hydrogenated wizard blood.</font>"
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
 /datum/syndicate_buylist/traitor/chambomb
 	name = "Chameleon Bomb Case"
 	item = /obj/item/storage/box/chameleonbomb
-	cost = 3
+	cost = 4
 	vr_allowed = 0
 	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	br_allowed = TRUE
@@ -315,33 +293,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/zappy_implant
-	name = "Flyzapper Implant"
-	item = /obj/item/implanter/zappy
-	cost = 1
-	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/vuvuzelagun
-	name = "Vuvuzela Gun"
-	item = /obj/item/gun/energy/vuvuzela_gun
-	cost = 3
-	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	br_allowed = TRUE
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/buddy_ammofab
-	name = "Guardbuddy Ammo Replicator"
-	item = /obj/item/device/guardbot_module/ammofab
-	cost = 1
-	vr_allowed = 0
-	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
 /datum/syndicate_buylist/traitor/moustache_grenade
 	name = "Moustache Grenade"
 	item = /obj/item/old_grenade/moustache
-	cost = 2
+	cost = 3
 	desc = "A disturbingly hairy grenade."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -749,6 +704,14 @@ This is basically useless for anyone but miners.
 	job = list("Mechanic")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/stimulants
+	name = "Stimulants"
+	item = /obj/item/storage/box/stimulants
+	cost = 6
+	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawl symptoms play out naturally.</font>"
+	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/syringegun
 	name = "Syringe Gun"
 	item = /obj/item/gun/reagent/syringe
@@ -763,6 +726,15 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "These marvels of modern technology employ nanites and space science to draw energy from nearby cables to zap things. BZZZZT!"
 	not_in_crates = 1
+	job = list("Engineer", "Chief Engineer", "Mechanic")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+
+/datum/syndicate_buylist/traitor/zappy_implant
+	name = "Flyzapper Implant"
+	item = /obj/item/implanter/zappy
+	cost = 1
+	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
 	job = list("Engineer", "Chief Engineer", "Mechanic")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -893,6 +865,15 @@ This is basically useless for anyone but miners.
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/vuvuzelagun
+	name = "Vuvuzela Gun"
+	item = /obj/item/gun/energy/vuvuzela_gun
+	cost = 3
+	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
+	br_allowed = TRUE
+	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/hotdog_bomb
 	name = "Hotdog Bomb"
 	item = /obj/item/gimmickbomb/hotdog
@@ -916,6 +897,15 @@ This is basically useless for anyone but miners.
 	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/traitorthermalscanner
+	name = "Advanced Optical Thermal Scanner"
+	item = /obj/item/clothing/glasses/thermal/traitor
+	cost = 3
+	desc = "An advanced optical thermal scanner capable of seeing living entities through walls and smoke."
+	br_allowed = TRUE
+	job = list("Detective")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/cargo_transporter
 	name = "Syndicate Cargo Transporter"
@@ -966,6 +956,14 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	desc = "A Deluxe Mindhack Cloning Kit. Contains a mindhack cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
+
+/datum/syndicate_buylist/traitor/buddy_ammofab
+	name = "Guardbuddy Ammo Replicator"
+	item = /obj/item/device/guardbot_module/ammofab
+	cost = 1
+	vr_allowed = 0
+	desc = "A device that allows PR-6S Guardbuddy units to use their internal charge to replenish kinetic ammunition."
+	job = list("Research Director")
 
 /datum/syndicate_buylist/traitor/wiretap
 	name = "Wiretap Radio Upgrade"
@@ -1047,13 +1045,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 		cost = 5
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
-
-/datum/syndicate_buylist/surplus/bananagrenades
-	name = "Banana Grenades"
-	item = /obj/item/storage/banana_grenade_pouch
-	cost = 2
-	desc = "Honk."
-	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/concussiongrenades
 	name = "Concussion Grenades"
