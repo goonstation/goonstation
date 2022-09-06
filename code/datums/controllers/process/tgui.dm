@@ -42,8 +42,8 @@ var/global/datum/controller/process/tgui/tgui_process
 		//cache for sanic speed (lists are references anyways)
 		var/list/current_run = src.current_run
 
-		while(current_run.len)
-			var/datum/tgui/ui = current_run[current_run.len]
+		while(length(current_run))
+			var/datum/tgui/ui = current_run[length(current_run)]
 			current_run.len--
 			if(ui?.user && ui.src_object)
 				ui.process()

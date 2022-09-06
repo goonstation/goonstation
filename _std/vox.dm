@@ -148,8 +148,8 @@ proc/vox_help(var/mob/user)
 
 	var/output = vox_play(input, src)
 	if(output)
-		logTheThing("admin", src, null, "has created an intercom announcement: [output]")
-		logTheThing("diary", src, null, "has created an intercom announcement: [output]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created an intercom announcement: [output]")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output]", "admin")
 		message_admins("[key_name(src)] has created an intercom announcement: [output]")
 
 /client/proc/cmd_admin_intercom_announce_freq()
@@ -177,8 +177,8 @@ proc/vox_help(var/mob/user)
 		freq_input = 99
 	var/output = vox_play(input, src, freq_input)
 	if(output)
-		logTheThing("admin", src, null, "has created an intercom announcement: [output] : With frequency [freq_input]")
-		logTheThing("diary", src, null, "has created an intercom announcement: [output] : With frequency [freq_input]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created an intercom announcement: [output] : With frequency [freq_input]")
+		logTheThing(LOG_DIARY, src, "has created an intercom announcement: [output] : With frequency [freq_input]", "admin")
 		message_admins("[key_name(src)] has created an intercom announcement: [output] : With frequency [freq_input]")
 
 proc/vox_play(var/input, var/user, var/pitch = 1)

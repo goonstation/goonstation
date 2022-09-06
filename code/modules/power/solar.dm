@@ -43,6 +43,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
@@ -107,6 +111,10 @@
 		id = "diner"
 	silverglass
 		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 
 
 /obj/machinery/power/solar/New()
@@ -253,6 +261,10 @@
 		solar_id = "diner"
 	silverglass
 		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()

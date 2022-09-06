@@ -59,7 +59,7 @@
 				if (!F.group.draining)
 					F.group.add_drain_process()
 
-				playsound(src.loc, "sound/misc/drain_glug.ogg", 50, 1)
+				playsound(src.loc, 'sound/misc/drain_glug.ogg', 50, 1)
 
 				//moved to fluid process
 				//F.group.reagents.skip_next_update = 1
@@ -74,10 +74,10 @@
 
 			if (!src.welded)
 				src.welded = 1
-				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "welded [name] shut at [log_loc(user)].")
 				user.show_text("You weld the drain shut.")
 			else
-				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 				src.welded = 0
 				user.show_text("You unseal the drain with your welder.")
 
@@ -91,7 +91,7 @@
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
-			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "clogs [name] shut temporarily at [log_loc(user)].")
 			qdel(I)
 			src.UpdateIcon()
 			return
@@ -268,7 +268,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0.1, 0.7)
 				UpdateIcon()
 
 		else if (pissing)
@@ -452,7 +452,7 @@
 
 	proc/deploy_ladder(turf/source, turf/dest, mob/user)
 		user.show_text("You deploy [src].")
-		playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 60, 1)
 
 		var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(source)
 		L.linked_ladder = new /obj/sea_ladder_deployed(dest)
@@ -495,7 +495,7 @@
 
 	proc/boom()
 		if (src.active)
-			logTheThing("bombing", src.fingerprintslast, null, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 			src.blowthefuckup(boom_str)
 
 

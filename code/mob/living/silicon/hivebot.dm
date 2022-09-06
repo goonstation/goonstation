@@ -77,7 +77,7 @@
 
 /mob/living/silicon/hivebot/death(gibbed)
 	if (src.mainframe)
-		logTheThing("combat", src, null, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
+		logTheThing(LOG_COMBAT, src, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 		src.mainframe.return_to(src)
 	if (src.camera)
 		src.camera.camera_status = 0
@@ -118,7 +118,7 @@
 
 		/*if ("shit")
 			new /obj/item/rods/(src.loc)
-			playsound(src.loc, "sound/voice/farts/poo2_robot.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/farts/poo2_robot.ogg', 50, 1)
 			message = "<B>[src]</B> shits on the floor."
 			m_type = 1*/
 
@@ -389,7 +389,7 @@
 			return
 
 	if ((message && isalive(src)))
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1074,7 +1074,7 @@ Frequency:
 			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.icon_state = "shell-plate"
 				return
 			else
@@ -1092,7 +1092,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1111,7 +1111,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1128,7 +1128,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1145,7 +1145,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.has_interface = 1
 				qdel(W)
 				return

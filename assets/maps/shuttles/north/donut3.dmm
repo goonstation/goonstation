@@ -931,7 +931,6 @@
 /area/shuttle/escape/centcom)
 "Nl" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/storage/firstaid/fire{
 	pixel_x = -6
 	},

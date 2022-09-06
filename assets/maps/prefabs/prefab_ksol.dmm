@@ -991,7 +991,6 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard/glass,
 /turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "ct" = (

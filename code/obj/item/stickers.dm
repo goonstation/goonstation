@@ -41,11 +41,11 @@
 				pox = (text2num(params["icon-x"]) - dummy_icon.Width()/2) * A.transform.a - A.pixel_x
 				poy = (text2num(params["icon-y"]) - dummy_icon.Height()/2) * A.transform.e - A.pixel_y
 				DEBUG_MESSAGE("pox [pox] poy [poy]")
-		src.stick_to(A, pox, poy)
+		src.stick_to(A, pox, poy, user)
 		user.u_equip(src)
 		return 1
 
-	proc/stick_to(var/atom/A, var/pox, var/poy)
+	proc/stick_to(var/atom/A, var/pox, var/poy, user)
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
@@ -71,6 +71,8 @@
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		add_fingerprint(user)
+		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -175,7 +177,7 @@
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
@@ -473,7 +475,7 @@
 			src.camera.updateCoverage()
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
-		logTheThing("combat", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 

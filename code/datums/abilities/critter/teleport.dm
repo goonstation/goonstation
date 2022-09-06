@@ -19,6 +19,6 @@
 		var/turf/T = target
 		holder.owner.set_loc(T)
 		elecflash(T)
-		playsound(T, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
 		holder.owner.say("TELEPORT!", 1)
 		return 0

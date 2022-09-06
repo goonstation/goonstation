@@ -96,7 +96,7 @@
 
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3)
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 
 		if(weather)
