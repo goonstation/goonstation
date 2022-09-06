@@ -1,3 +1,4 @@
+import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Input, Knob, LabeledList } from '../components';
 import { Window } from '../layouts';
@@ -144,13 +145,13 @@ export const MusicInstrument = (_props, context) => {
                 </Box>
               </Box>
               <Box className="instrument__keyorder">
-                <h4>Key binding order for keyboard input</h4>
+                <Box className="instrument__instructions" fontSize="1.1em">Key binding order for keyboard input</Box>
                 <Input
                   className="instrument__input_keyorder"
                   value={noteKeysOrder.join('')}
                   onInput={(e, v) => setNoteKeysOrder(v.split(''))}
                 />
-                <h6>Type in the order you wish the keybindings to be placed</h6>
+                <Box className="instrument__instructions" fontSize="0.8em" bold>Type in the order you wish the keybindings to be placed</Box>
               </Box>
             </Flex>
             <Box className="instrument__speaker" />
@@ -161,18 +162,21 @@ export const MusicInstrument = (_props, context) => {
               const keybind = noteKeysOrder[index - keyOffset];
               const keyClass = isBlackKey ? 'instruments__piano-key-black' : 'instruments__piano-key-white';
               const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(note.split('')[0]);
-              const wko = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-kwo' : '';
+              const whiteKeyOffsetClass = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-key-white-offset' : '';
 
               return (
                 <li
                   key={index}
-                  className={`instruments__piano-key ${keyClass} ${wko} ${
+                  className={classes([
+                    'instruments__piano-key',
+                    keyClass,
+                    whiteKeyOffsetClass,
                     activeKeys[index]
                       ? isBlackKey
                         ? 'instruments__piano-key-black-active'
                         : 'instruments__piano-key-white-active'
-                      : ''
-                  }`}
+                      : '',
+                  ])}
                   onMouseDown={() => playNote(index)}
                   onMouseLeave={() => playNoteRelease(index)}
                   onMouseUp={() => playNoteRelease(index)}>
