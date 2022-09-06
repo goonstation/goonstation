@@ -883,10 +883,12 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/ammo/bullets/result = null
 	var/obj/item/accepteditem = null
 	var/craftname = null
+	var/success = FALSE
 
 	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
 
-		if (istype(craftingitem, accepteditem)) //success! items match
+		if (istype(craftingitem, accepteditem))
+			//the checks for if an item is actually allowed are local to the recipie, since they can vary
 			var/consumed = min(src.thingsneeded, craftingitem.amount)
 			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
 
@@ -898,30 +900,18 @@ obj/item/assembly/radio_horn/receive_signal()
 				user.put_in_hand_or_drop(shot)
 				qdel(frame)
 
-			//consume material
+				//consume material- proc handles deleting
 			craftingitem.change_stack_amount(-consumed)
-
-
-/datum/pipeshotrecipe/plasglass //was tricky figuring this out in a non-abusable way but we got there
+/datum/pipeshotrecipe/plasglass
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/plasglass
 	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+	var/matid = "plasmaglass"
 
-	craftwith(obj/item/craftingitem, obj/item/frame, mob/user) //overwritten to change the typecheck to a material check
-		var/consumed = min(src.thingsneeded, craftingitem.amount)
-		thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
-		if (craftingitem.material.getProperty("hard") >= 7)// unhappy about overriding for this one statement but that's how it is
-
-			if (thingsneeded > 0)
-				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
-
-			if (thingsneeded <= 0)
-				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
-				user.put_in_hand_or_drop(shot)
-				qdel(frame)
-
-			//consume material
-			craftingitem.change_stack_amount(-consumed)
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(matid == craftingitem.material.mat_id)
+			..() //call parent, have them run the typecheck
 
 /datum/pipeshotrecipe/scrap
 	thingsneeded = 1
@@ -943,7 +933,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	attackby(obj/item/W, mob/user)
 		if (!recipe) //no recipie? assign one
 			if (istype(W, /obj/item/raw_material/shard))
-				if(W.material.getProperty("hard") >= 7)
+				if(W.material.mat_id == "plasmaglass")
 					recipe = new/datum/pipeshotrecipe/plasglass
 				else
 					recipe = new/datum/pipeshotrecipe/glass
