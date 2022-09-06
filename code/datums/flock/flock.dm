@@ -688,11 +688,14 @@ var/flock_signal_unleashed = FALSE
 	/obj/spacevine = null
 	)
 
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
+
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return
-	var/area/area = get_area(T)
-	if (istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
+	if (!flockTurfAllowed(T))
 		return
 
 	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
