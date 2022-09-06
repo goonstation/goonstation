@@ -29,6 +29,7 @@
 	var/log_telepathy = 0				// log telepathy events
 	var/log_debug = 0					// log debug events
 	var/log_vehicles = 0					//I feel like this is a better place for listing who entered what, than the admin log.
+	var/log_gamemode = 0				// log gamemode events
 
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_sounds = 1			// allows admin sound playing
@@ -176,7 +177,6 @@
 			if ("log_game")
 				config.log_game = 1
 
-
 			if ("log_whisper")
 				config.log_whisper = 1
 
@@ -200,6 +200,9 @@
 
 			if ("log_vehicles")
 				config.log_vehicles = 1
+
+			if ("log_gamemode")
+				config.log_gamemode = 1
 
 			if ("allow_admin_jump")
 				config.allow_admin_jump = 1
