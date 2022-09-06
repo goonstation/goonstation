@@ -37,6 +37,11 @@
 	layer = TURF_LAYER
 	anchored = TRUE
 	var/static/icon/map_icon
+	///The actual size the map should be clipped to (multiple of world.maxx)
+	var/clip_scale = 1
+	var/zoom_level = 1
+	var/zoom_x = 0
+	var/zoom_y = 0
 
 	var/x_max = 1
 	var/x_min = null
@@ -60,26 +65,36 @@
 			map_icon.Scale(world.maxx, world.maxy)
 			#endif
 			render_map()
-		zoom_map()
+		auto_zoom_map()
 		icon = map_icon
-		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
-		mask_icon.Scale((1/src.scale) * 300, (1/src.scale) * 300)
-		src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
+		clip_area(src.center_x,src.center_y)
 
-	//very hacky solution to not being able to click the map when on the edge of it
-	//works like a charm, will probably cause jank
-	Click(location, control, params)
-		. = ..()
-		params = params2list(params)
-		var/dist = GET_DIST(usr, src)
-		var/max_dist = (world.maxx / src.scale) / (32 * 2)
-		if (dist < max_dist)
-			var/obj/item/equipped = usr.equipped()
-			if (equipped)
-				src.Attackby(equipped, usr, params, FALSE)
-				equipped.AfterAttack(src, usr, 0, params)
-			else
-				src.Attackhand(usr)
+	///Zoom the map to a world coordinate
+	proc/manual_zoom(var/x, var/y, var/zoom)
+		src.zoom_level = zoom
+		src.zoom_x = x
+		src.zoom_y = y
+		src.scale *= zoom
+		src.Scale(zoom, zoom)
+		src.pixel_x -= ceil((x - src.center_x) * src.scale)
+		src.pixel_y -= ceil((y - src.center_y) * src.scale)
+		src.clip_area(x,y, zoom)
+
+	///Stupid naive unzoom
+	proc/unzoom()
+		src.pixel_x += ceil((src.zoom_x - src.center_x) * src.scale)
+		src.pixel_y += ceil((src.zoom_y - src.center_y) * src.scale)
+		src.Scale(1/src.zoom_level, 1/src.zoom_level)
+		src.scale /= src.zoom_level
+		src.zoom_level = 1
+		src.clip_area(src.center_x, src.center_y)
+
+	///Clip the map to size around a world coordinate
+	proc/clip_area(var/x,var/y, var/zoom = 1)
+		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
+		mask_icon.Scale((src.clip_scale * 300)/zoom, (src.clip_scale * 300)/zoom)
+		src.remove_filter("map_cutoff")
+		src.add_filter("map_cutoff", 1, alpha_mask_filter(x - src.center_x, y - src.center_y, mask_icon))
 
 	///Should a turf be rendered on the map
 	proc/valid_turf(var/turf/turf)
@@ -117,8 +132,8 @@
 					continue
 				map_icon.DrawBox(turf_color(turf), x - x_offset, y - y_offset)
 
-	///Zooms and centers the map on the station
-	proc/zoom_map()
+	///Zooms the map on the station
+	proc/auto_zoom_map()
 		var/scale_x = world.maxx / ((x_max - x_min) + border_width)
 		var/scale_y = world.maxy / ((y_max - y_min) + border_width)
 		src.scale = min(scale_x, scale_y)
@@ -171,6 +186,9 @@
 			return TRUE
 
 /obj/station_map/nukie
+	//I give up trying to fix all the jank, just click on the turfs behind it wcgw
+	mouse_opacity = 0
+	clip_scale = 0.5
 	var/obj/map_icon/plant_site
 	New()
 		START_TRACKING
@@ -203,6 +221,9 @@
 		//add an icon for it
 		src.plant_site = new(src.loc, src)
 		src.plant_site.set_position(target_x,target_y)
+
+	proc/test()
+		src.manual_zoom(180,180,2)
 
 	disposing()
 		STOP_TRACKING
