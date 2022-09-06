@@ -678,6 +678,15 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
 
+/datum/trait/dwarf
+	name = "Dwarf"
+	desc = "You are a dwarf, beard not required."
+	id = "dwarf"
+	points = 0
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("dwarf", 0, 0, 0, 1)
+
 /datum/trait/random_allergy
 	name = "Allergy"
 	desc = "You're allergic to... something. You can't quite remember, but how bad could it possibly be?"
