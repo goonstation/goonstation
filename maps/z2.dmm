@@ -4417,8 +4417,8 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital)
 "aoB" = (
-/obj/item/reagent_containers/food/drinks/cola/random,
 /obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/coffee,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "aoC" = (
@@ -10315,6 +10315,7 @@
 /area/marsoutpost)
 "aIn" = (
 /obj/table/syndicate/auto,
+/obj/item/item_box/postit,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "aIo" = (
@@ -41447,7 +41448,9 @@
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm1"
+	},
 /area/syndicate_station/battlecruiser)
 "cwc" = (
 /obj/decal/stalagtite{
@@ -56315,11 +56318,9 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfo" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm14"
 	},
-/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfp" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -56491,16 +56492,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
-"dfA" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm19"
-	},
-/area/syndicate_station/battlecruiser)
 "dfB" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/closet/wardrobe/green,
@@ -56518,19 +56509,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm20"
-	},
-/area/syndicate_station/battlecruiser)
-"dfD" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm21"
-	},
+/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dfE" = (
 /obj/cable{
@@ -56684,11 +56663,9 @@
 	},
 /area/iomoon/caves)
 "dfQ" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm4"
 	},
-/turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfR" = (
 /obj/map/light/lava,
@@ -56704,14 +56681,6 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon/caves)
-"dfS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm14"
-	},
-/area/syndicate_station/battlecruiser)
 "dfT" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm15"
@@ -56753,14 +56722,6 @@
 /obj/machinery/vending/cards,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
-"dfZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm18"
-	},
-/area/syndicate_station/battlecruiser)
 "dga" = (
 /obj/table/reinforced/bar/auto,
 /obj/decal/tile_edge/line/black{
@@ -56836,38 +56797,18 @@
 	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
-"dgl" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm9"
-	},
-/area/syndicate_station/battlecruiser)
 "dgm" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm10"
 	},
 /area/syndicate_station/battlecruiser)
 "dgn" = (
-/obj/landmark{
-	name = "Nuclear-Bomb"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm11"
-	},
+/obj/station_map/nukie,
+/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgo" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm12"
-	},
-/area/syndicate_station/battlecruiser)
-"dgp" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm13"
 	},
 /area/syndicate_station/battlecruiser)
 "dgr" = (
@@ -56917,14 +56858,6 @@
 "dgx" = (
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
-"dgy" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm4"
-	},
-/area/syndicate_station/battlecruiser)
 "dgz" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm5"
@@ -56938,14 +56871,6 @@
 "dgB" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm7"
-	},
-/area/syndicate_station/battlecruiser)
-"dgC" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm8"
 	},
 /area/syndicate_station/battlecruiser)
 "dgD" = (
@@ -56979,9 +56904,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm1"
-	},
+/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgH" = (
 /obj/cable{
@@ -56994,19 +56917,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm2"
-	},
-/area/syndicate_station/battlecruiser)
-"dgI" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm3"
-	},
+/turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
 "dgJ" = (
 /obj/cable{
@@ -68519,6 +68430,11 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/bot/darkpurple,
 /area/syndicate_station/battlecruiser)
+"eSz" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm21"
+	},
+/area/syndicate_station/battlecruiser)
 "eTm" = (
 /obj/item/clothing/under/pride/ace,
 /obj/storage/closet{
@@ -68976,6 +68892,11 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"fSV" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm8"
+	},
+/area/syndicate_station/battlecruiser)
 "fTb" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
@@ -73593,6 +73514,14 @@
 	icon_state = "floor3"
 	},
 /area/meat_derelict/soviet)
+"pEn" = (
+/obj/landmark{
+	name = "Nuclear-Bomb"
+	},
+/turf/unsimulated/floor/stairs/dark{
+	dir = 10
+	},
+/area/syndicate_station/battlecruiser)
 "pEv" = (
 /obj/lattice{
 	dir = 10;
@@ -73723,6 +73652,11 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/battle)
+"pPO" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm9"
+	},
+/area/syndicate_station/battlecruiser)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -74026,6 +73960,10 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qxH" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/black,
+/area/syndicate_station/battlecruiser)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 9
@@ -74690,6 +74628,11 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"rKO" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm11"
+	},
+/area/syndicate_station/battlecruiser)
 "rLk" = (
 /obj/stool,
 /turf/unsimulated/floor/carpet/grime,
@@ -74877,7 +74820,9 @@
 /obj/rack,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/breath,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm2"
+	},
 /area/syndicate_station/battlecruiser)
 "seK" = (
 /obj/machinery/vending/kitchen,
@@ -75378,6 +75323,11 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"tsd" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm19"
+	},
+/area/syndicate_station/battlecruiser)
 "tsf" = (
 /obj/cable{
 	d1 = 1;
@@ -75665,7 +75615,9 @@
 /obj/item/tank/jetpack/syndicate,
 /obj/item/tank/jetpack/syndicate,
 /obj/machinery/light,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm3"
+	},
 /area/syndicate_station/battlecruiser)
 "ubH" = (
 /obj/grille/catwalk{
@@ -76026,6 +75978,11 @@
 	dir = 6
 	},
 /area/centcom)
+"uYe" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm13"
+	},
+/area/syndicate_station/battlecruiser)
 "vab" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-45"
@@ -76129,7 +76086,9 @@
 /area/retentioncenter)
 "vkk" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/darkpurple,
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm20"
+	},
 /area/syndicate_station/battlecruiser)
 "vld" = (
 /obj/spacevine,
@@ -76890,8 +76849,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
 "wNz" = (
-/obj/item/reagent_containers/food/drinks/coffee,
 /obj/table/syndicate/auto,
+/obj/item/item_box/assorted/stickers/glow_sticker,
 /turf/unsimulated/floor/carpet/red/decal/outercross,
 /area/syndicate_station/battlecruiser)
 "wOp" = (
@@ -77442,6 +77401,11 @@
 	},
 /turf/space/no_replace,
 /area/adventure/channel)
+"xXc" = (
+/turf/unsimulated/floor/black{
+	icon_state = "cairngorm18"
+	},
+/area/syndicate_station/battlecruiser)
 "xXj" = (
 /obj/shrub{
 	dir = 4
@@ -102969,11 +102933,11 @@ cIJ
 cIJ
 xPX
 des
-bqV
+bqW
 dfo
+pPO
 dfQ
-dfQ
-dgv
+qxH
 lzl
 dgQ
 dgY
@@ -103271,10 +103235,10 @@ cIJ
 cIL
 ddG
 des
-bqV
-dfo
-dfQ
-dfQ
+tsd
+dfT
+dgm
+dgz
 cvZ
 lzl
 dgQ
@@ -103572,11 +103536,11 @@ cIJ
 cIL
 cIJ
 xPX
-des
+pEn
 vkk
-dfo
-dfQ
-dfQ
+dfU
+rKO
+dgA
 sdh
 lzl
 bqW
@@ -103875,10 +103839,10 @@ cIJ
 cIL
 ddG
 des
-bqV
-dfo
-dfQ
-dfQ
+eSz
+dfV
+dgo
+dgB
 ubB
 lzl
 bqW
@@ -104177,11 +104141,11 @@ cIJ
 cIJ
 xPX
 des
-bqV
-dfo
-dfQ
-dfQ
-bqV
+bqW
+xXc
+uYe
+fSV
+bqW
 dgD
 bqW
 dha
@@ -105689,9 +105653,9 @@ dej
 lzl
 bqV
 dfz
-dfS
-dgl
-dgy
+dek
+dek
+dek
 dgF
 dgT
 dhd
@@ -105990,10 +105954,10 @@ dbo
 bqV
 deu
 bqV
-dfA
-dfT
-dgm
-dgz
+dgG
+bqW
+bqW
+bqW
 dgG
 dgx
 lzl
@@ -106293,9 +106257,9 @@ dek
 dev
 dek
 dfC
-dfU
+bqW
 dgn
-dgA
+bqW
 dgH
 dek
 dhe
@@ -106594,11 +106558,11 @@ dcP
 btf
 dew
 btf
-dfD
-dfV
-dgo
-dgB
-dgI
+dgG
+bqW
+bqW
+bqW
+dgG
 dgx
 lzl
 lzl
@@ -106897,9 +106861,9 @@ dej
 lzl
 deB
 dfE
-dfZ
-dgp
-dgC
+dek
+dek
+dek
 dgJ
 dgT
 dhd
