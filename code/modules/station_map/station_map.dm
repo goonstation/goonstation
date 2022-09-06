@@ -1,14 +1,3 @@
-///This is exclusively for the AI map right now
-
-//TODO: remove this
-/atom
-	proc/make_icon_clone()
-		var/obj/clone = new(get_turf(usr))
-		clone.icon = src.icon
-		clone.icon_state = src.icon_state
-		src.render_target = ref(src)
-		clone.render_source = src.render_target
-		usr.vis_contents += clone
 /obj/map_icon
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
@@ -20,6 +9,7 @@
 		src.map = map
 		src.layer = map.layer + 0.1
 
+	///Sets the icon's position on the map from world coordinates
 	proc/set_position(var/x, var/y)
 		var/icon/dummy_icon = new(src.icon)
 		//the first term is the scaled distance to the map's center
@@ -61,19 +51,20 @@
 		..()
 		x_min = world.maxx
 		y_min = world.maxy
+		find_center()
 		if (!map_icon)
 			map_icon = icon('icons/obj/station_map.dmi', "blank")
 			#ifdef UPSCALED_MAP
 			map_icon.Scale(world.maxx, world.maxy)
 			#endif
-		find_center()
-		render_map()
+			render_map()
 		zoom_map()
 		icon = map_icon
 		var/icon/mask_icon = icon('icons/obj/station_map.dmi', "blank")
 		mask_icon.Scale((1/src.scale) * 300, (1/src.scale) * 300)
 		src.add_filter("map_cutoff", 1, alpha_mask_filter(0,0, mask_icon))
 
+	///Should a turf be rendered on the map
 	proc/valid_turf(var/turf/turf)
 		if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
 			return FALSE
@@ -82,6 +73,7 @@
 			return FALSE
 		return TRUE
 
+	///Locate the center of the map by using the furthest valid turf in each direction
 	proc/find_center()
 		for (var/y in world.maxy to 1 step -1)
 			for (var/x in 1 to world.maxx)
@@ -97,7 +89,7 @@
 		src.center_x = (x_max + x_min)/2
 		src.center_y = (y_max + y_min)/2
 
-	//generates the map from the current station layout
+	///Renders the map in the center of the icon
 	proc/render_map()
 		var/x_offset = src.center_x - world.maxx/2
 		var/y_offset = src.center_y - world.maxy/2
@@ -108,7 +100,7 @@
 					continue
 				map_icon.DrawBox(turf_color(turf), x - x_offset, y - y_offset)
 
-	//zooms and centers the map on the station
+	///Zooms and centers the map on the station
 	proc/zoom_map()
 		var/scale_x = world.maxx / ((x_max - x_min) + border_width)
 		var/scale_y = world.maxy / ((y_max - y_min) + border_width)
@@ -172,6 +164,7 @@
 		src.pixel_y -= 133
 
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
+		//find the center of the plant site
 		var/x_max = 0
 		var/y_max = 0
 		var/x_min = world.maxx
@@ -187,5 +180,6 @@
 						y_min = min(turf.y, y_min)
 		var/target_x = (x_max + x_min) / 2
 		var/target_y = (y_max + y_min) / 2
+		//add an icon for it
 		src.plant_site = new(src.loc, src)
 		src.plant_site.set_position(target_x,target_y)
