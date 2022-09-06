@@ -240,7 +240,7 @@
 	if(miningshuttle_location)
 		dat += "Shuttle Location: Station"
 	else
-		dat += "Shuttle Location: Mining Outpost"
+		dat += "Shuttle Location: Diner"
 	dat += "<BR>"
 	if(active)
 		dat += "Moving"
@@ -272,7 +272,7 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Mining Shuttle has been called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Diner Shuttle has been called and will leave shortly!</span>")
 		SPAWN(10 SECONDS)
 			call_shuttle()
 
@@ -300,7 +300,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Mining Shuttle has moved!</span>")
+		C.visible_message("<span class='alert'>The Diner Shuttle has moved!</span>")
 
 	return
 
@@ -781,7 +781,7 @@ proc/bioele_accident()
 
 
 // JOHN BILL'S JUICIN' BUS
-// This is used for reliable transport between Z3 and Z5 (ever since the diner moved to Z5)
+// This is used for reliable transport between Z3 and Z5 (ever since the diner moved to Z5 (it got moved back))
 // And also for certain adventure zones!
 // You can ask warc for details but c'mon it's just copypasted prison shuttle code (for now)
 
