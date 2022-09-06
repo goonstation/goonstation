@@ -62,7 +62,6 @@ var/list/datum/chem_request/chem_requests = list()
 				src.request = new
 				. = TRUE
 			if ("silicon_login")
-				//usr is bad, but it should be safe here
 				var/mob/living/silicon/silicon = ui.user
 				//handle AIeyes
 				if (isAIeye(ui.user))
