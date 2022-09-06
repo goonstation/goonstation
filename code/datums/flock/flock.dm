@@ -579,6 +579,8 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	T.AddComponent(/datum/component/flock_interest, src)
@@ -688,6 +690,9 @@ var/flock_signal_unleashed = FALSE
 
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
+		return
+	var/area/area = get_area(T)
+	if (istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 		return
 
 	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
