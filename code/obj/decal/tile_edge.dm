@@ -164,6 +164,11 @@
 		src.set_dir(pick(cardinal))
 		..()
 
+/obj/decal/tile_edge/syndie_border
+	name = "syndie border"
+	icon = 'icons/obj/line.dmi'
+	icon_state = "syndie_border"
+
 /obj/decal/stage_edge
 	name = "stage"
 	icon = 'icons/obj/decals/misc.dmi'
