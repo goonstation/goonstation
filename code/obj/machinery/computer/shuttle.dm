@@ -272,7 +272,7 @@
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Diner Shuttle has been called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The NT Transit Shuttle has been called and will leave shortly!</span>")
 		SPAWN(10 SECONDS)
 			call_shuttle()
 
@@ -300,7 +300,7 @@
 
 	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 		active = 0
-		C.visible_message("<span class='alert'>The Diner Shuttle has moved!</span>")
+		C.visible_message("<span class='alert'>The NT Transit Shuttle has moved!</span>")
 
 	return
 
