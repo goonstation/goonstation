@@ -211,7 +211,7 @@
 				if(target:health <= 0)
 					if(isliving(target))
 						var/mob/living/M = target
-						M.set_loc(src.loc)
+						M.set_loc(src)
 						M.gib()
 						occupant = null
 						playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
@@ -221,9 +221,9 @@
 							occupant = null
 							playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
 							src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
-						target.set_loc(null)
-						qdel(target)
-						target = null
+					target.set_loc(null)
+					qdel(target)
+					target = null
 			else
 				reagents.add_reagent(target_fluid, 10)
 				qdel(target)
