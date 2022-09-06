@@ -196,6 +196,7 @@ A Flamethrower in various states of assembly
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | OPENCONTAINER
+	object_flags = REFILL_ON_MOUSEDROP
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1

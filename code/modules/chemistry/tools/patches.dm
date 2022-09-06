@@ -465,6 +465,7 @@
 	var/borg = 0
 	initial_volume = 200
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH | ATTACK_SELF_DELAY
+	object_flags = REFILL_ON_MOUSEDROP
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 

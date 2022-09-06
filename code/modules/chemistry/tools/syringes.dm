@@ -304,6 +304,7 @@
 	desc = "For adding delicious liquids to food."
 	icon_prefix = "baster"
 	icon_state = "baster_0"
+	object_flags = REFILL_ON_MOUSEDROP
 	initial_volume = 100
 	amount_per_transfer_from_this = 25
 

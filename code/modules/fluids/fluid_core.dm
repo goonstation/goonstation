@@ -215,7 +215,9 @@ var/mutable_appearance/fluid_ma
 		T.Attackhand(user)
 
 	mouse_drop(obj/over_object, src_location, over_location)
-		if (istype(src, /obj/fluid/airborne) || !istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/reagent_dispensers) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/item/reagent_containers/mender) && !istype(over_object, /obj/item/tank/jetpack/backtank) && !istype(over_object, /obj/machinery/bathtub))
+		if (!(over_object in usr.contents))
+			return
+		if (!(over_object.object_flags & REFILL_ON_MOUSEDROP))
 			return ..()
 		if (usr.stat || usr.getStatusDuration("weakened") || BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
 			boutput(usr, "<span class='alert'>That's too far!</span>")

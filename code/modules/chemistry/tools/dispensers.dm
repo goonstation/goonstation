@@ -11,7 +11,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | REFILL_ON_MOUSEDROP
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
@@ -61,8 +61,8 @@
 			for (var/i = 0, i < 9, i++) // ugly hack
 				reagents.temperature_reagents(exposed_temperature, exposed_volume)
 
-	mouse_drop(atom/over_object as obj)
-		if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket) && !istype(over_object, /obj/machinery/hydro_mister) && !istype(over_object, /obj/item/tank/jetpack/backtank))
+	mouse_drop(obj/over_object as obj)
+		if (!(over_object.object_flags & REFILL_ON_MOUSEDROP))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)

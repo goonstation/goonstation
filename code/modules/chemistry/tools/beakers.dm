@@ -14,7 +14,7 @@
 	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | REFILL_ON_MOUSEDROP
 
 	on_reagent_change()
 		..()

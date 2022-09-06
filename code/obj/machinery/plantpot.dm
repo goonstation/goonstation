@@ -211,6 +211,7 @@
 	mats = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH
+	object_flags = REFILL_ON_MOUSEDROP
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -1877,6 +1878,7 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "fogmachine0"
+	flags = FPRINT | REFILL_ON_MOUSEDROP | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	density = 1
 	anchored = 0
 	mats = 6

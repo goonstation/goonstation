@@ -453,6 +453,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = REFILL_ON_MOUSEDROP
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1

@@ -4,9 +4,9 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mopbucket"
 	density = 1
-	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	object_flags = REFILL_ON_MOUSEDROP
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	p_class = 1.2
@@ -58,8 +58,8 @@
 	else
 		return ..()
 
-/obj/mopbucket/mouse_drop(atom/over_object as obj)
-	if (!istype(over_object, /obj/item/reagent_containers/glass) && !istype(over_object, /obj/item/reagent_containers/food/drinks) && !istype(over_object, /obj/item/spraybottle) && !istype(over_object, /obj/machinery/plantpot) && !istype(over_object, /obj/mopbucket))
+/obj/mopbucket/mouse_drop(obj/over_object as obj)
+	if (!(over_object.object_flags & REFILL_ON_MOUSEDROP))
 		return ..()
 
 	if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)

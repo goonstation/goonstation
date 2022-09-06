@@ -14,6 +14,7 @@ WET FLOOR SIGN
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	object_flags = REFILL_ON_MOUSEDROP
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL

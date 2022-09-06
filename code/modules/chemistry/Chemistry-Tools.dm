@@ -20,19 +20,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/incompatible_with_chem_dispensers = 0
 	var/can_mousedrop = 1
 	move_triggered = 1
-	///Types that should be quickly refilled by mousedrop
-	var/static/list/mousedrop_refill = list(
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/reagent_dispensers,
-		/obj/item/spraybottle,
-		/obj/machinery/plantpot,
-		/obj/mopbucket,
-		/obj/item/reagent_containers/mender,
-		/obj/item/tank/jetpack/backtank,
-		/obj/item/reagent_containers/syringe/baster,
-		/obj/machinery/bathtub
-	)
 
 	var/last_new_initial_reagents = 0 //fuck
 
@@ -115,12 +102,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				return
 		// First filter out everything we don't want to refill or empty quickly.
 		// feels like there should be a macro for this or something
-		var/type_found = FALSE
-		for (var/type in mousedrop_refill)
-			if (istype(over_object, type))
-				type_found = TRUE
-				break
-		if (!type_found)
+		if (!(istype(over_object, /obj)))
+			return
+		var/obj/object = over_object
+		if (!(object.object_flags & REFILL_ON_MOUSEDROP))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -147,6 +132,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/can_recycle = TRUE //can this be put in a glass recycler?
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = REFILL_ON_MOUSEDROP
 
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
