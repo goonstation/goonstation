@@ -1,5 +1,9 @@
 
 (t)mon sep 05 22
+(u)LeahTheTech
+(p)10631
+(e)|
+(+)Canvases now support pixel-precise pointing.
 (u)ZeWaka
 (p)10589
 (e)|
