@@ -217,6 +217,8 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
+	for_by_tcl(map, /obj/station_map/nukie)
+		map.set_marker()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

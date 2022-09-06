@@ -173,6 +173,7 @@
 /obj/station_map/nukie
 	var/obj/map_icon/plant_site
 	New()
+		START_TRACKING
 		..()
 		src.Scale(0.5,0.5)
 		src.scale *= 0.5
@@ -180,6 +181,8 @@
 		src.pixel_x -= 135
 		src.pixel_y -= 133
 
+	///Add a map icon on the nuke plant location
+	proc/set_marker()
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		//find the center of the plant site
 		var/x_max = 0
@@ -200,3 +203,7 @@
 		//add an icon for it
 		src.plant_site = new(src.loc, src)
 		src.plant_site.set_position(target_x,target_y)
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
