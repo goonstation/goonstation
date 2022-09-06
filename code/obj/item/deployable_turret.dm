@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	New(var/loc, var/direction)
 		..()
-		src.set_dir(direction)
+		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
