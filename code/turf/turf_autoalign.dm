@@ -843,10 +843,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead/blue)
 	icon_state = "mapicong"
 	mod = "leadg-"
 
-	New()
-		..()
-		connects_to += /turf/unsimulated/wall/setpieces/leadwindow/gray
-
 /turf/unsimulated/wall/auto/lead/white
 	icon_state = "mapiconw"
 	mod = "leadw-"
