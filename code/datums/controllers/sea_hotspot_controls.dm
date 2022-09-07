@@ -52,7 +52,7 @@
 
 	proc/generate_map()
 		if (!map)
-			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
+			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
@@ -75,7 +75,7 @@
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
-			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
+			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
 
 	proc/generate_map_html()

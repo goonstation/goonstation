@@ -754,7 +754,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -782,7 +782,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -851,7 +851,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -880,7 +880,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -909,7 +909,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -936,7 +936,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -963,7 +963,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -990,7 +990,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1062,7 +1062,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1107,7 +1107,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1179,7 +1179,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1207,7 +1207,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1233,7 +1233,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1259,7 +1259,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1285,7 +1285,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1311,7 +1311,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage

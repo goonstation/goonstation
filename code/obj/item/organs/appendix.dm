@@ -10,7 +10,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2) && !robotic)
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2) && !robotic)
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -39,7 +39,7 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() < FAIL_DAMAGE && probmult(10) && donor.health <= donor.max_health)
+		if (src.get_damage() < fail_damage && probmult(10) && donor.health <= donor.max_health)
 			var/reagID = pick("saline", "salbutamol", "salicylic_acid", "charcoal")
 			donor.reagents.add_reagent(reagID, reagID == "salicyclic_acid" ? 2 : 4) //salicyclic has very low depletion, reduce chances of overdose
 			if(donor.health <= donor.max_health * 0.9)

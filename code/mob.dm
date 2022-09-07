@@ -1840,6 +1840,7 @@
 		animation.delaydispose()
 	qdel(src)
 
+
 /mob/proc/firegib(var/drop_clothes = TRUE)
 	if (isobserver(src)) return
 #ifdef DATALOGGER
@@ -3102,7 +3103,7 @@
 	set name = "Point"
 	src.point_at(A)
 
-/mob/proc/point_at(var/atom/target) //overriden by living and dead
+/mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))

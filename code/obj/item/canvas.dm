@@ -48,6 +48,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
+	pixel_point = TRUE
 
 	New()
 		..()

@@ -223,7 +223,7 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	mats = 12
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2

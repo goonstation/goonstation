@@ -115,6 +115,7 @@
 				return
 			else //GUN THEM DOWN
 				if(src.target)
+					logTheThing(LOG_COMBAT, src, "Flock gnesis turret at [log_loc(src)] belonging to flock [src.flock?.name] fires at [constructTarget(src.target)].")
 					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							muzzle_flash_any(src, 0, "muzzle_flash")
