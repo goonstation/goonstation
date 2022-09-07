@@ -686,6 +686,15 @@
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
+    if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+        if (src.limbs)
+            SPAWN(6 SECONDS)
+                if (src.limbs.l_leg)
+                    src.limbs.l_leg.delete()
+                if (src.limbs.r_leg)
+                    src.limbs.r_leg.delete()
+            src.put_in_hand_or_drop(new /obj/stool/chair/comfy/wheelchair)
+
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))
 		src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/snacks/cookie/dog)
