@@ -219,7 +219,7 @@
 
 		src.last_output = (((average_volatility * (available_oxygen * 5)) * src.output_multiplier) * mult) KILO WATTS
 		var/datum/powernet/P = C.get_powernet()
-		P.new_avail += src.last_output
+		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
