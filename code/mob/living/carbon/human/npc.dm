@@ -389,17 +389,30 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot() && !A?.sanctuary))
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasEffect("eyebeams")) && !A?.sanctuary))
 					//I can attack someone! =D
-					ai_target_old.Cut()
-					var/obj/item/gun/W = src.r_hand
-					W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
-					if(src.bioHolder.HasEffect("coprolalia") && prob(10))
-						switch(pick(1,2))
-							if(1)
-								hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
-							if(2)
-								src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
+					if(src.bioHolder.HasEffect("eyebeams"))
+						var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
+						var/projectile_path = ispath(eyebeams.projectile_path) ? eyebeams.projectile_path : text2path(eyebeams.projectile_path)
+						if(eyebeams.power > 1)
+							projectile_path = /datum/projectile/laser
+						else if(eyebeams.stun_mode) //used by superhero for nonlethal stun
+							projectile_path = /datum/projectile/laser/eyebeams/stun
+						if (!ispath(projectile_path))
+							projectile_path = /datum/projectile/laser/eyebeams
+						src.visible_message("<span class='alert'><b>[src.name]</b> shoots eye beams!</span>")
+						var/datum/projectile/laser/eyebeams/PJ = new projectile_path
+						shoot_projectile_ST(src, PJ, ai_target)
+					else
+						ai_target_old.Cut()
+						var/obj/item/gun/W = src.r_hand
+						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
+							switch(pick(1,2))
+								if(1)
+									hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
+								if(2)
+									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
 				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot() && !A?.sanctuary))
 					//I can attack someone! =D
