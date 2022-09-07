@@ -45594,7 +45594,6 @@
 	name = "Silent Crate"
 	},
 /obj/machinery/light_switch/south,
-/obj/item/clothing/under/misc/mimedress,
 /obj/item/stamp/mime,
 /obj/item/clothing/mask/mime,
 /obj/item/clothing/head/mime_beret,
