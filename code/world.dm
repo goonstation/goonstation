@@ -593,9 +593,11 @@ var/f_color_selector_handler/F_Color_Selector
 		global.region_allocator.add_z_level()
 	#endif
 
+//the station map doesn't play nice when there is no station
+#if !defined(SPACE_PREFAB_RUNTIME_CHECKING) && !defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Generating AI station map...")
 	ai_station_map = new
-
+#endif
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
