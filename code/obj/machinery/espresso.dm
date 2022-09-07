@@ -22,7 +22,7 @@
 		UnsubscribeProcess()
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
 			if (src.cupinside == 1)
 				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
@@ -35,14 +35,14 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
 				if(!(status & (NOPOWER|BROKEN)))
-					switch(alert("What would you like to do with [src]?",,"Make espresso","Remove cup","Nothing"))
+					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
 						if ("Make espresso")
-							var/drink_choice = input(user, "What kind of espresso do you want to make?", "Selection") as null|anything in list("Espresso","Latte","Mocha","Cappuchino","Americano", "Decaf", "Flat White")
+							var/drink_choice = tgui_input_list(user, "What kind of espresso do you want to make?", "Selection", list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha"))
 							if (!drink_choice)
 								return
 							switch (drink_choice)  //finds cup in contents and adds chosen drink to it
@@ -88,7 +88,7 @@
 										playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 									return
 						if ("Remove cup")
-							if (get_dist(src, user) > 1 || isAI(user))
+							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
 							src.cupinside = 0
@@ -102,10 +102,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -134,47 +134,6 @@
 		return
 
 /* ===================================================== */
-/* ---------------------- Cup Rack --------------------- */
-/* ===================================================== */
-/obj/cup_rack
-	name = "coffee cup rack"
-	desc = "It's a rack to hang your fancy coffee cups." //*tip
-	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "cuprack7" //changes based on cup_ammount in updateicon
-	anchored = 1
-	var/cup_amount = 7
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/espressocup
-	var/contained_cup_name = "espresso cup"
-
-	get_desc(dist, mob/user)
-		if (dist <= 2)
-			. += "There's [(src.cup_amount > 0) ? src.cup_amount : "no" ] [src.contained_cup_name][s_es(src.cup_amount)] on \the [src]."
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, src.contained_cup) & src.cup_amount < 7)
-			user.drop_item()
-			qdel(W)
-			src.cup_amount ++
-			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
-		else return ..()
-
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(user)
-		if (src.cup_amount <= 0)
-			user.show_text("\The [src] doesn't have any [src.contained_cup_name]s left, doofus!", "red")
-		else
-			boutput(user, "You take \an [src.contained_cup_name] off of \the [src].")
-			src.cup_amount--
-			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/espressocup
-			user.put_in_hand_or_drop(P)
-			src.updateicon()
-
-	proc/updateicon()
-		src.icon_state = "cuprack[src.cup_amount]" //sets the icon_state to the ammount of cups on the rack
-		return
-
-/* ===================================================== */
 /* ---------------------- Coffeemaker ------------------ */
 /* ===================================================== */
 //Sorry for budging in here, whoever made the espresso machine. Lets just rename this to coffee.dm?
@@ -183,7 +142,7 @@
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "coffeemaker-eng"
+	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
@@ -196,6 +155,8 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
+	var/emagged = FALSE
+
 	New()
 		..()
 		UnsubscribeProcess()
@@ -203,7 +164,21 @@
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+
+		if(!src.emagged)
+			if (user)
+				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+
+			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
+			src.emagged = TRUE
+			return TRUE
+		else
+			if (user)
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+			return FALSE
+
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
 			if (src.my_carafe)
 				user.show_text("The [src] can't hold any more [src.carafe_name]s, doofus!")
@@ -216,37 +191,38 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!(status & (NOPOWER|BROKEN)))
-					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
-						if ("Brew coffee")
+					var/choice = tgui_alert(user, "What would you like to do with [src]?", "Coffeemaker", list("Brew [src.emagged ? "tea" : "coffee"]", "Remove carafe", "Nothing"))
+					if (!choice || choice == "Nothing")
+						return
+					switch (choice)
+						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent("coffee_fresh",100)
+								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
 								user.show_text("The carafe is gone!")
 								return
-							if (get_dist(src, user) > 1 || isAI(user))
+							if (BOUNDS_DIST(src, user) > 0 || isAI(user))
 								user.show_text("You can not do that remotely.")
 								return
 							user.put_in_hand_or_drop(src.my_carafe)
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()
-						if ("Nothing")
-							return
 			else return ..()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -291,44 +267,73 @@
 	icon_state = "coffeemaker-sci"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/research
 
+/obj/machinery/coffeemaker/engineering
+	icon_state = "coffeemaker-eng"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
 /* ===================================================== */
-/* ---------------------- Mug Rack --------------------- */
+/* ---------------------- Racks --------------------- */
 /* ===================================================== */
-/obj/mug_rack
+
+ABSTRACT_TYPE(/obj/drink_rack)
+/obj/drink_rack
+	anchored = 1
+	var/amount_on_rack = null
+	var/max_amount = null
+	var/contained = null
+	var/contained_name = null
+	var/icon_state_prefix = null
+
+	get_desc(dist, mob/user)
+		if (dist <= 2)
+			. += "There's [(src.amount_on_rack > 0) ? src.amount_on_rack : "no" ] [src.contained_name][s_es(src.amount_on_rack)] on \the [src]."
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, src.contained) & src.amount_on_rack < max_amount)
+			if (W.reagents.total_volume > 0)
+				var/turf/T = get_turf(src)
+				W.reagents.reaction(T)
+				boutput(user, "The [src.contained_name] wasn't empty! You spill its contents on the floor.")
+			user.drop_item()
+			qdel(W)
+			src.amount_on_rack ++
+			boutput(user, "You place \the [src.contained_name] back onto \the [src].")
+			src.UpdateIcon()
+		else return ..()
+
+	attack_hand(mob/user)
+		src.add_fingerprint(user)
+		if (src.amount_on_rack <= 0)
+			user.show_text("\The [src] doesn't have any [src.contained_name]s left, doofus!", "red")
+		else
+			boutput(user, "You take \an [src.contained_name] off of \the [src].")
+			src.amount_on_rack--
+			user.put_in_hand_or_drop(new contained)
+			src.UpdateIcon()
+
+	update_icon()
+		src.icon_state = "[src.icon_state_prefix][src.amount_on_rack]" //sets the icon_state to the ammount on the rack
+		return
+
+/obj/drink_rack/cup
+	name = "coffee cup rack"
+	desc = "It's a rack to hang your fancy coffee cups." //*tip
+	icon = 'icons/obj/foodNdrink/espresso.dmi'
+	icon_state = "cuprack7" //changes based on cup_ammount in updateicon
+	amount_on_rack = 7
+	max_amount = 7
+	contained = /obj/item/reagent_containers/food/drinks/espressocup
+	contained_name = "espresso cup"
+	icon_state_prefix = "cuprack"
+
+/obj/drink_rack/mug
 	name = "coffee mug rack"
 	desc = "It's a rack to hang your not-so-fancy coffee cups." //*tip
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "mugrack4" //changes based on cup_ammount in updateicon
-	anchored = 1
-	var/cup_amount = 4
-	var/contained_cup = /obj/item/reagent_containers/food/drinks/mug/random_color
-	var/contained_cup_name = "mug"
+	amount_on_rack = 4
+	max_amount = 4
+	contained = /obj/item/reagent_containers/food/drinks/mug
+	contained_name = "mug"
+	icon_state_prefix = "mugrack"
 
-	get_desc(dist, mob/user)
-		if (dist <= 2)
-			. += "There's [(src.cup_amount > 0) ? src.cup_amount : "no" ] [src.contained_cup_name][s_es(src.cup_amount)] on \the [src]."
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, src.contained_cup) & src.cup_amount < 7)
-			user.drop_item()
-			qdel(W)
-			src.cup_amount ++
-			boutput(user, "You place \the [src.contained_cup_name] back onto \the [src].")
-			src.updateicon()
-		else return ..()
-
-	attack_hand(mob/user as mob)
-		src.add_fingerprint(user)
-		if (src.cup_amount <= 0)
-			user.show_text("\The [src] doesn't have any [src.contained_cup_name]s left, doofus!", "red")
-		else
-			boutput(user, "You take \a [src.contained_cup_name] off of \the [src].")
-			src.cup_amount--
-			var/obj/item/reagent_containers/food/drinks/espressocup/P = new /obj/item/reagent_containers/food/drinks/mug
-			user.put_in_hand_or_drop(P)
-			src.updateicon()
-
-	proc/updateicon()
-		src.icon_state = "mugrack[src.cup_amount]" //sets the icon_state to the amount of cups on the rack
-		return

@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1
@@ -34,38 +34,41 @@
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-			if (do_after(user, 2 SECONDS))
-				var/obj/computerframe/A = new /obj/computerframe(src.loc)
-				if (src.status & BROKEN)
-					user.show_text("The broken glass falls out.", "blue")
-					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-					G.set_loc(src.loc)
-					A.state = 3
-					A.icon_state = "3"
-				else
-					user.show_text("You disconnect the monitor.", "blue")
-					A.state = 4
-					A.icon_state = "4"
-				var/obj/item/circuitboard/M = new src.circuit_type(A)
-				if (src.material)
-					A.setMaterial(src.material)
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.set_dir(src.dir)
-				A.circuit = M
-				A.anchored = 1
-				src.special_deconstruct(A)
-				qdel(src)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
+			list(W, user), W.icon, W.icon_state, null, null)
 		else
 			src.Attackhand(user)
+
+	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
+		var/obj/computerframe/A = new /obj/computerframe(src.loc)
+		if (src.status & BROKEN)
+			user.show_text("The broken glass falls out.", "blue")
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			G.set_loc(src.loc)
+			A.state = 3
+			A.icon_state = "3"
+		else
+			user.show_text("You disconnect the monitor.", "blue")
+			A.state = 4
+			A.icon_state = "4"
+		var/obj/item/circuitboard/M = new src.circuit_type(A)
+		if (src.material)
+			A.setMaterial(src.material)
+		for (var/obj/C in src)
+			C.set_loc(src.loc)
+		A.set_dir(src.dir)
+		A.circuit = M
+		A.anchored = 1
+		src.special_deconstruct(A)
+		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
 	proc/connection_scan()
@@ -74,16 +77,13 @@
 	///Special changes for deconstruction can be added by overriding this
 	proc/special_deconstruct(var/obj/computerframe/frame as obj)
 
+
 /*
 /obj/machinery/computer/airtunnel
 	name = "Air Tunnel Control"
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
-/obj/machinery/computer/aiupload
-	name = "AI Upload"
-	desc = "A computer that accepts modules, and uploads the commands to the AI."
-	icon_state = "aiupload"
 
 /obj/machinery/computer/general_alert
 	name = "General Alert Computer"
@@ -122,16 +122,16 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//gib(src.loc) NO.
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				for(var/x in src.verbs)
 					src.verbs -= x
@@ -172,7 +172,7 @@
 			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
-		SPAWN_DBG(rand(0, 15))
+		SPAWN(rand(0, 15))
 			//src.icon_state = "c_unpowered"
 			icon_state = initial(icon_state)
 			src.icon_state += "0"
@@ -188,6 +188,16 @@
 	if(status & NOPOWER)
 		return
 	use_power(power_usage)
+
+/obj/machinery/computer/update_icon()
+	if(src.glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		src.screen_image.plane = PLANE_LIGHTING
+		src.screen_image.blend_mode = BLEND_ADD
+		src.screen_image.layer = LIGHTING_LAYER_BASE
+		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+	..()
 
 /obj/machinery/computer/proc/set_broken()
 	if (status & BROKEN) return

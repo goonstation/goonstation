@@ -27,16 +27,19 @@
 					human_owner.sight |= SEE_MOBS
 					human_owner.see_invisible = INVIS_CLOAK
 
+			if (istype(owner, /mob/living/critter/flock))
+				owner.see_invisible = INVIS_FLOCK
+
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
-		if ((isdead(owner) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION) || HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
+		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight |= SEE_MOBS
 			owner.sight |= SEE_OBJS
 			owner.see_in_dark = SEE_DARK_FULL
 			if (owner.client?.adventure_view)
 				owner.see_invisible = INVIS_ADVENTURE
-			else if(HAS_MOB_PROPERTY(owner, PROP_XRAYVISION_WEAK))
+			else if(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK))
 				owner.sight &= ~SEE_BLACKNESS
 				owner.sight &= ~SEE_MOBS
 			else
@@ -47,9 +50,9 @@
 				var/sight_meson = 0
 				var/sight_constr = 0
 				for (var/obj/item/roboupgrade/R in robot_owner.upgrades)
-					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated)
+					if (R && istype(R, /obj/item/roboupgrade/visualizer) && R.activated && (T && !isrestrictedz(T.z)))
 						sight_constr = 1
-					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated)
+					if (R && istype(R, /obj/item/roboupgrade/opticmeson) && R.activated && (T && !isrestrictedz(T.z)))
 						sight_meson = 1
 					//if (R && istype(R, /obj/item/roboupgrade/opticthermal) && R.activated)
 					//	sight_therm = 1
@@ -57,13 +60,13 @@
 				if (sight_meson)
 					robot_owner.sight &= ~SEE_BLACKNESS
 					robot_owner.sight |= SEE_TURFS
-					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 					robot_owner.vision.set_scan(1)
-					robot_owner.client.color = "#c2ffc2"
+					robot_owner.client.set_color(normalize_color_to_matrix("#c2ffc2"))
 				else
 					robot_owner.sight |= SEE_BLACKNESS
 					robot_owner.sight &= ~SEE_TURFS
-					robot_owner.client.color = null
+					robot_owner.client.set_color()
 					robot_owner.vision.set_scan(0)
 				//if (sight_therm)
 				//	src.sight |= SEE_MOBS //todo make borg thermals have a purpose again
@@ -97,7 +100,7 @@
 			if (owner.see_invisible < INVIS_INFRA)
 				owner.see_invisible = INVIS_INFRA
 
-		if (HAS_MOB_PROPERTY(owner, PROP_GHOSTVISION) && (T && !isrestrictedz(T.z)))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_GHOSTVISION) && (T && !isrestrictedz(T.z)))
 			if (owner.see_in_dark != 1)
 				owner.see_in_dark = 1
 			if (owner.see_invisible < INVIS_GHOST)
@@ -106,7 +109,7 @@
 		if (owner.client?.adventure_view)
 			owner.see_invisible = INVIS_ADVENTURE
 
-		if (HAS_MOB_PROPERTY(owner, PROP_THERMALVISION_MK2))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION_MK2))
 			owner.sight |= SEE_MOBS //traitor item can see through walls
 			owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < SEE_DARK_FULL)
@@ -117,7 +120,7 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_THERMALVISION))	//  && (T && !isrestrictedz(T.z))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION))	//  && (T && !isrestrictedz(T.z))
 			// This kinda fucks up the ability to hide things in infra writing in adv zones
 			// so away the restricted z check goes.
 			// with mobs invisible it shouldn't matter anyway? probably? idk.
@@ -130,16 +133,16 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_MESONVISION) && (T && !isrestrictedz(T.z)))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_MESONVISION) && (T && !isrestrictedz(T.z)))
 			owner.sight |= SEE_TURFS
 			owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 
-		if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION))
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION))
 			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		else if (HAS_MOB_PROPERTY(owner, PROP_NIGHTVISION_WEAK))
+		else if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK))
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
 		if (human_owner)////Glasses handled separately because i dont have a fast way to get glasses on any mob type

@@ -6,6 +6,7 @@
 	density = 0
 	opacity = 0
 	anchored = 0
+	health = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/list/tiles = new/list()
@@ -22,18 +23,18 @@
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
 				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 			else
 				boutput(user, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(secured)
 			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
 			return
@@ -107,7 +108,7 @@
 			S.health = 0
 			S.icon_state = "shield0"
 			S.name = "weakened shield"
-			SPAWN_DBG(20 SECONDS)
+			SPAWN(20 SECONDS)
 				if(S)
 					S.health = S.health_max
 					S.check()
@@ -146,7 +147,7 @@
 	opacity = 0
 	anchored = 1
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0
@@ -171,7 +172,7 @@
 		if(broken) return
 		health--
 		check()
-		playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		qdel(O)
 
 	proc/check()
@@ -179,8 +180,8 @@
 			broken = 1
 			icon_state = "shield0"
 			name = "weakened shield"
-			playsound(src, "sound/effects/shielddown2.ogg", 45, 1)
-			SPAWN_DBG(45 SECONDS)
+			playsound(src, 'sound/effects/shielddown2.ogg', 45, 1)
+			SPAWN(45 SECONDS)
 				health = health_max
 				check()
 		else

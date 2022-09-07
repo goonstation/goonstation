@@ -14,7 +14,7 @@
 	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
-	list(/mob/living/critter/bot/cleanbot, /mob/living/critter/bot/firebot),)
+	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
 
 	admin_call(var/source)
 		if (..())
@@ -73,7 +73,7 @@
 				EV += landmarks[LANDMARK_LATEJOIN]
 				if (!EV.len)
 					message_admins("Pests event couldn't find any valid landmarks!")
-					logTheThing( "debug", null, null, "Failed to find any valid landmarks for a Pests event!" )
+					logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
 					cleanup_event()
 					return
 
@@ -104,7 +104,7 @@
 			pestlandmark.visible_message("A group of pests emerge from their hidey-hole!")
 
 			if (src.num_pests >= 5)
-				command_alert("A large number of pests have been detected onboard.", "Pest invasion")
+				command_alert("A large number of pests have been detected onboard.", "Pest invasion", alert_origin = ALERT_STATION)
 		cleanup_event()
 
 	proc/cleanup_event()

@@ -18,7 +18,7 @@
 	New()
 		..()
 		if (src.armed)
-			src.update_icon()
+			src.UpdateIcon()
 
 		if (!src.our_timer || !istype(src.our_timer))
 			src.our_timer = new /obj/item/device/timer(src)
@@ -33,7 +33,7 @@
 		if (!src.suppress_flavourtext)
 			. += "It appears to be [src.armed ? "armed" : "disarmed"]."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 
 		if (prob(50) && src.armed && !src.used_up)
@@ -44,7 +44,7 @@
 
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (prob(50) && src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] fumbles with the [src.name], accidentally setting it off!</b></span>")
@@ -53,14 +53,14 @@
 
 		..()
 
-	pull(mob/user as mob)
+	pull(mob/user)
+		if (..())
+			return
 		if (src.armed && !src.used_up)
 			if (!src.suppress_flavourtext)
 				src.visible_message("<font color='red'><b>[user] tries to pull the [src.name], triggering the anti-tamper mechanism!</b></span>")
 			src.triggered(user)
 			return
-
-		..()
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -71,9 +71,9 @@
 
 		if (src.armed)
 			src.armed = FALSE
-			src.update_icon()
+			src.UpdateIcon()
 			user.show_text("You disarm the [src.name].", "blue")
-			logTheThing("bombing", user, null, "has disarmed the [src.name] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "has disarmed the [src.name] at [log_loc(user)].")
 
 		if (src.our_timer && istype(src.our_timer))
 			src.our_timer.attack_self(user)
@@ -83,9 +83,9 @@
 		if (src.used_up)
 			return
 
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 		src.armed = TRUE
-		src.update_icon()
+		src.UpdateIcon()
 
 	// Timer process() expects this to be here. Could be used for dynamic icon_states updates.
 	proc/c_state()
@@ -131,7 +131,8 @@
 		src.triggered(AM)
 		return
 
-	proc/update_icon()
+	update_icon()
+
 		if (!src || !istype(src))
 			return
 
@@ -182,7 +183,7 @@
 		if (!src || !istype(src))
 			return
 		var/logtarget = (T && ismob(T) ? T : null)
-		logTheThing("bombing", M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, logtarget, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 
 /obj/item/mine/radiation
 	name = "radiation land mine"
@@ -200,7 +201,7 @@
 		if (length(mobs))
 			for (var/mob/living/L in mobs)
 				if (istype(L))
-					L.changeStatus("radiation", 60 SECONDS)
+					L.take_radiation_dose(2.5 SIEVERTS)
 					if (L.bioHolder && ishuman(L))
 						L.bioHolder.RandomEffect("bad")
 					if (L != M)
@@ -280,6 +281,7 @@
 		armed = TRUE
 
 	update_icon()
+
 		return
 
 	custom_stuff(var/atom/M)
@@ -288,6 +290,6 @@
 
 		src.visible_message("<span class='alert'>[src] bursts[pick(" like an overripe melon!", " like an impacted bowel!", " like a balloon filled with blood!", "!", "!")]</span>")
 		gibs(src.loc)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 
 		return

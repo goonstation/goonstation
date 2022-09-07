@@ -23,7 +23,7 @@
 
 	New(var/is_control = 0)
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (src.holder)
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
@@ -115,7 +115,7 @@
 		var/prev_value = value
 		var/affection_mod = amt < 0 ? drain_rate : gain_rate //Negative change, use drain modifier, positive, use gain modifier
 
-		value = max(min(value + (amt * affection_mod), 100), 0)
+		value = clamp(value + (amt * affection_mod), 0, 100)
 		if (prev_value < 100 && value >= 100)
 			onFill()
 		else if (prev_value > 0 && value <= 0)
@@ -234,10 +234,6 @@
 
 		onDeplete()
 			holder.owner.contract_disease(/datum/ailment/disease/space_madness, null, null, 1)
-			if (ishuman(holder.owner))
-				var/mob/living/carbon/human/H = holder.owner
-				if (!H.pathogens.len)
-					holder.owner.infected(ez_pathogen(/datum/pathogeneffects/malevolent/serious_paranoia))
 
 		onLife()
 			if (value < 10 && prob((10 - value) * 10))
@@ -262,9 +258,11 @@
 			protection = round(value / 5)
 
 		onLife()
-			if (value < 15 && prob(33))
-				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")))
-					holder.owner.bioHolder.AddEffect("sims_stinky")
+			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
+				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
+					holder.owner.setStatus("filthy", 3 MINUTES)
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+				holder.owner.delStatus("rancid")
 			/*
 			if (value < 10 && prob((10 - value) * 1.5))
 				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
@@ -397,8 +395,8 @@
 				showOwner("<span class='alert'><b>You can't take being so bored anymore!</b></span>")
 				if (ishuman(holder.owner))
 					var/mob/living/carbon/human/H = holder.owner
-					H.force_suicide()
-					modifyValue(50)
+					H.death()
+					logTheThing(LOG_COMBAT, usr, "died from the sims fun motive at [log_loc(H)].")
 
 		onLife()
 			if (value < 10)
@@ -495,7 +493,7 @@
 		name = "Sanity"
 		icon_state = "sanity"
 		desc = "Your sanity slowly increases by itself, but you can speed that up with certain substances or by making sure that your mind won't be further afflicted."
-		depletion_rate = 0.0
+		depletion_rate = 0
 
 		gain_rate = 0.1
 
@@ -518,16 +516,16 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND) //Give it some time to finish creating the simsController because fak
+		SPAWN(1 SECOND) //Give it some time to finish creating the simsController because fak
 			for (var/M in childrentypesof(/datum/simsMotive))
 				motives[M] = new M(1)
 #ifdef RP_MODE
-			SPAWN_DBG(0)
+			SPAWN(0)
 				set_multiplier(1)
 #endif
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["mot"])
 			var/datum/simsMotive/M = locate(href_list["mot"])
 			if (!istype(M) || M != motives[M.type])
@@ -587,7 +585,7 @@
 
 	proc/set_global_sims_var(var/datum/simsMotive/M, var/var_name, var/new_value) //Change one value on every simsHolder
 		if(!(var_name in M.vars))
-			logTheThing("debug", null, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
+			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Sims:</B> Tried to set \"[var_name]\" var on simsMotive [M] but could not find it in vars list.")
 			return
 		for(var/datum/simsMotive/SM in simsMotives)
 			if(SM.type == M.type)
@@ -763,7 +761,7 @@ var/global/datum/simsControl/simsController = new()
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "plum-desat"
 	mouse_opacity = 0
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 32
 	var/mob/living/owner
 
@@ -773,11 +771,11 @@ var/global/datum/simsControl/simsController = new()
 		add_simple_light("plumbob", list(255, 255, 255, 100))
 
 	// relay procs
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (owner)
 			owner.Attackby(W, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (owner)
 			owner.Attackhand(user)
 

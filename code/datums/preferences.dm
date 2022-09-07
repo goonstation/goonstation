@@ -12,6 +12,7 @@ datum/preferences
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/robot_name
 	var/gender = MALE
 	var/age = 30
 	var/pin = null
@@ -118,6 +119,27 @@ datum/preferences
 			qdel(src.preview)
 			src.preview = null
 
+	ui_static_data(mob/user)
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits[trait.id] = list(
+				"id" = trait.id,
+				"name" = trait.name,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+			)
+
+		. = list(
+			"traitsData" = traits
+		)
+
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
@@ -144,8 +166,20 @@ datum/preferences
 				cloud_saves += name
 
 		sanitize_null_values()
-		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")
-		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
+
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -161,6 +195,7 @@ datum/preferences
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
 			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
@@ -197,7 +232,9 @@ datum/preferences
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
+			"hudThemePreview" = icon2base64(icon(hud_style_selection[hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
+			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
@@ -208,6 +245,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -234,7 +274,7 @@ datum/preferences
 					sound_file = sound(src.AH.screamsounds[src.AH.screamsound])
 
 				if (params["chatsound"])
-					sound_file = sounds_speak[AH.voicetype]
+					sound_file = sounds_speak["[AH.voicetype]"]
 
 				if (sound_file)
 					preview_sound(sound_file)
@@ -256,19 +296,14 @@ datum/preferences
 				ui.close()
 				return TRUE
 
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
-				ui.close()
-				return TRUE
-
 			if ("save")
 				var/index = params["index"]
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
-					alert(usr, "You need to give your profile a name.")
+					tgui_alert(usr, "You need to give your profile a name.", "Pick name")
 					return
 
 				if (!isnull(index) && isnum(index))
-					src.savefile_save(client, index)
+					src.savefile_save(client.key, index)
 					src.profile_number = index
 					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
 					return TRUE
@@ -277,7 +312,7 @@ datum/preferences
 				var/index = params["index"]
 				if (!isnull(index) && isnum(index))
 					if (!src.savefile_load(client, index))
-						alert(usr, "You do not have a savefile.")
+						tgui_alert(usr, "You do not have a savefile.", "No savefile")
 						return FALSE
 
 					boutput(usr, "<span class='notice'><b>Character loaded from Slot [index].</b></span>")
@@ -288,11 +323,11 @@ datum/preferences
 				if (!client.cloud_available())
 					return
 				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
-					alert(usr, "You have hit your cloud save limit. Please write over an existing save.")
+					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
 					if(!isnull(new_name) && length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
-						alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!")
+						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
 						if(istext(ret))
@@ -359,16 +394,16 @@ datum/preferences
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
-					alert("Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
+					tgui_alert(usr, "Your first name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
 				else if (length(new_name) > NAME_CHAR_MAX)
-					alert("Your first name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					tgui_alert(usr, "Your first name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
 				else if (is_blank_string(new_name))
-					alert("Your first name cannot contain only spaces.")
+					tgui_alert(usr, "Your first name cannot contain only spaces.", "Blank name")
 					return
 				else if (!character_name_validation.Find(new_name))
-					alert("Your first name must contain at least one letter.")
+					tgui_alert(usr, "Your first name must contain at least one letter.", "Letters required")
 					return
 				new_name = capitalize(new_name)
 
@@ -386,10 +421,10 @@ datum/preferences
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) > NAME_CHAR_MAX)
-					alert("Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
 				else if (is_blank_string(new_name) && new_name != "")
-					alert("Your middle name cannot contain only spaces.")
+					tgui_alert(usr, "Your middle name cannot contain only spaces.", "Blank name")
 					return
 				new_name = capitalize(new_name)
 				src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
@@ -405,22 +440,41 @@ datum/preferences
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
 				if (length(new_name) < NAME_CHAR_MIN)
-					alert("Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.")
+					tgui_alert(usr, "Your last name is too short. It must be at least [NAME_CHAR_MIN] characters long.", "Name too short")
 					return
 				else if (length(new_name) > NAME_CHAR_MAX)
-					alert("Your last name is too long. It must be no more than [NAME_CHAR_MAX] characters long.")
+					tgui_alert(usr, "Your last name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
 				else if (is_blank_string(new_name))
-					alert("Your last name cannot contain only spaces.")
+					tgui_alert(usr, "Your last name cannot contain only spaces.", "Blank name")
 					return
 				else if (!character_name_validation.Find(new_name))
-					alert("Your last name must contain at least one letter.")
+					tgui_alert(usr, "Your last name must contain at least one letter.", "Letters required")
 					return
 				new_name = capitalize(new_name)
 
 				if (new_name)
 					src.name_last = new_name
 					src.real_name = src.name_first + " " + src.name_last
+					src.profile_modified = TRUE
+					return TRUE
+
+			if ("update-robotName")
+				var/new_name = input(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name) as null|text
+				if (isnull(new_name))
+					return
+				if (is_blank_string(new_name))
+					src.robot_name = ""
+					src.profile_modified = TRUE
+					return TRUE
+
+				new_name = strip_html(new_name, MOB_NAME_MAX_LENGTH, 1)
+				if (!length(new_name))
+					tgui_alert(usr, "That name was too short after removing bad characters from it. Please choose a different name.", "Name too short")
+					return
+
+				if (new_name)
+					src.robot_name = new_name
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -449,7 +503,7 @@ datum/preferences
 				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
 
 				if (new_age)
-					src.age = max(min(round(text2num(new_age)), 80), 20)
+					src.age = clamp(round(text2num(new_age)), 20, 80)
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -473,7 +527,7 @@ datum/preferences
 				else
 					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
 					if (new_pin)
-						src.pin = max(min(round(text2num(new_pin)), 9999), 1000)
+						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -482,7 +536,7 @@ datum/preferences
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
-						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.flavor_text = new_text
 					src.profile_modified = TRUE
@@ -494,7 +548,7 @@ datum/preferences
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
-						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.security_note = new_text
 					src.profile_modified = TRUE
@@ -506,7 +560,7 @@ datum/preferences
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
-						alert("Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
+						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 					src.medical_note = new_text
 					src.profile_modified = TRUE
@@ -517,8 +571,8 @@ datum/preferences
 				get_all_character_setup_ringtones()
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
-					alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x", "Okay")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
 					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 					if (!(src.pda_ringtone_index in selectable_ringtones))
@@ -538,7 +592,7 @@ datum/preferences
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				if (usr.has_medal("Contributor"))
-					switch(alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", "Paint me like a posh fence!", "Use Standard tone.", "Cancel"))
+					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
 						if("Paint me like a posh fence!")
 							new_tone = input(usr, "Please select skin color.", "Character Generation", AH.s_tone)  as null|color
 						if("Use Standard tone.")
@@ -588,7 +642,7 @@ datum/preferences
 				var/mob/living/carbon/human/H = src.preview.preview_mob
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
 				if (!typeinfo)
-					alert(usr, "No usable special styles detected.", "Error", "Okay")
+					tgui_alert(usr, "No usable special styles detected.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
 				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
@@ -851,6 +905,19 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("reset")
 				src.profile_modified = TRUE
 
@@ -943,7 +1010,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -973,12 +1040,12 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break
@@ -1309,23 +1376,30 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
+			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_conspirator = FALSE
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
-			src.be_traitor = 0
-			src.be_syndicate = 0
-			src.be_syndicate_commander = 0
-			src.be_spy = 0
-			src.be_gangleader = 0
-			src.be_revhead = 0
-			src.be_changeling = 0
-			src.be_wizard = 0
-			src.be_werewolf = 0
-			src.be_vampire = 0
-			src.be_arcfiend = 0
-			src.be_wraith = 0
-			src.be_blob = 0
-			src.be_conspirator = 0
-			src.be_flock = 0
+			src.be_traitor = FALSE
+			src.be_syndicate = FALSE
+			src.be_syndicate_commander = FALSE
+			src.be_spy = FALSE
+			src.be_gangleader = FALSE
+			src.be_revhead = FALSE
+			src.be_changeling = FALSE
+			src.be_wizard = FALSE
+			src.be_werewolf = FALSE
+			src.be_vampire = FALSE
+			src.be_arcfiend = FALSE
+			src.be_wraith = FALSE
+			src.be_blob = FALSE
+			src.be_conspirator = FALSE
+			src.be_flock = FALSE
 		else
 
 			HTML += {"
@@ -1512,10 +1586,6 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
-			return
-
 		if (link_tags["closejobswindow"])
 			user.Browse(null, "window=mob_occupation")
 			src.ShowChoices(user)
@@ -1617,21 +1687,27 @@ datum/preferences
 
 		src.ShowChoices(user)
 
-	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0)//LOOK SORRY, I MADE THIS /mob/living iF THIS BREAKS SOMETHING YOU SHOULD PROBABLY NOT BE CALLING THIS ON A NON LIVING MOB
+	proc/copy_to(mob/living/character,var/mob/user,ignore_randomizer = 0, skip_post_new_stuff=FALSE)
 		sanitize_null_values()
 		if (!ignore_randomizer)
-			var/namebanned = jobban_isbanned(user, "Custom Names")
-			if (be_random_name || namebanned)
+			if (be_random_name)
 				randomize_name()
 
-			if (be_random_look || namebanned)
+			if (be_random_look)
 				randomizeLook()
 
 			if (character.bioHolder)
-				if (random_blood || namebanned)
+				if (random_blood)
 					character.bioHolder.bloodType = random_blood_type()
 				else
 					character.bioHolder.bloodType = blType
+
+			SPAWN(0) // avoid blocking
+				if(jobban_isbanned(user, "Custom Names"))
+					randomize_name()
+					randomizeLook()
+					character.bioHolder?.bloodType = random_blood_type()
+					src.copy_to(character, user, TRUE) // apply the other stuff again but with the random name
 
 		//character.real_name = real_name
 		src.real_name = src.name_first + " " + src.name_last
@@ -1650,12 +1726,9 @@ datum/preferences
 			H.pin = pin
 			H.gender = src.gender
 			//H.desc = src.flavor_text
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
 
-		if (traitPreferences.isValid() && character.traitHolder)
-			for (var/T in traitPreferences.traits_selected)
-				character.traitHolder.addTrait(T)
+		if (!skip_post_new_stuff)
+			apply_post_new_stuff(character)
 
 		character.update_face()
 		character.update_body()
@@ -1668,6 +1741,15 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			if (H.mutantrace && H.mutantrace.voice_override)
 				H.voice_type = H.mutantrace.voice_override
+
+	proc/apply_post_new_stuff(mob/living/character)
+		if(ishuman(character))
+			var/mob/living/carbon/human/H = character
+			if (H?.organHolder?.head?.donor_appearance) // aaaa
+				H.organHolder.head.donor_appearance.CopyOther(AH)
+		if (traitPreferences.isValid() && character.traitHolder)
+			for (var/T in traitPreferences.traits_selected)
+				character.traitHolder.addTrait(T)
 
 	proc/sanitize_null_values()
 		if (!src.gender || !(src.gender == MALE || src.gender == FEMALE))
@@ -1973,7 +2055,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 
 // Generates a real crap checkbox for html toggle links.

@@ -17,8 +17,3 @@
 			for (var/atom/A in owner.contents)
 				if (A.material)
 					A.material.triggerTemp(A, T0C + 900)
-
-			if(owner.traitHolder && owner.traitHolder.hasTrait("burning"))
-				if(prob(50))
-					owner.update_burning(1)
-		..()

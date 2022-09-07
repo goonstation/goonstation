@@ -87,3 +87,11 @@ proc/text2num_safe(x)
 
 /// Linearly interpolates a and b based on t
 #define lerp(a, b, t) ((a) * (1 - (t)) + (b) * (t))
+
+/// pseudorandom number based on x, y in range 0 to 1
+/proc/fixed_random(x, y)
+	. = sin(x * 12.9898 + y * 78.233) * 43758.5453
+	. -= round(.)
+
+// hyperbolic trig functions
+#define tanh(x) (((eulers**(2*x))-1)/((eulers**(2*x))+1))

@@ -41,7 +41,7 @@ var/global/runtime_count = 0
 	set desc = "View a detailed list of the runtimes during this round"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (!cdn)
 		var/list/viewerResources = list(
@@ -56,7 +56,7 @@ var/global/runtime_count = 0
 /client/Topic(href, href_list)
 
 	if (href_list["action"] == "getRuntimeData")
-		usr_admin_only
+		USR_ADMIN_ONLY
 		src << output(url_encode(json_encode(runtimeDetails)), "runtimeviewer.browser:refreshRuntimes")
 
 	..()

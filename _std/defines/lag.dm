@@ -41,7 +41,7 @@
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
 /// where to start ticklag if many players present
-#define SEMIOVERLOADED_WORLD_TICKLAG 1.0
+#define SEMIOVERLOADED_WORLD_TICKLAG 1
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
@@ -71,6 +71,8 @@
 #define CPU_STOP_PROFILING_COUNT 20
 /// how long the round needs to be in progress before we can start profiling
 #define CPU_PROFILING_ROUNDSTART_GRACE_PERIOD 10 SECONDS
+/// even if world.cpu is normal if tick took this amount of time profiling will start
+#define TICK_TIME_PROFILING_THRESHOLD 1 SECOND
 
 /// when pcount is above this number on round start, increase ticklag to OVERLOADED_WORLD_TICKLAG to try to maintain smoothness
 #define OVERLOAD_PLAYERCOUNT 120
@@ -79,11 +81,11 @@
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
 /// whenn pcount is <= this number, speed up Life() processing a bit
-#define FAST_LIFE_PLAYERCOUNT 25
+#define FAST_LIFE_PLAYERCOUNT 40
 /// whenn pcount is >= this number, slow Life() processing a bit
-#define SLOW_LIFE_PLAYERCOUNT 65
+#define SLOW_LIFE_PLAYERCOUNT 85
 /// whenn pcount is >= this number, slow Life() processing a lot
-#define SLOWEST_LIFE_PLAYERCOUNT 85
+#define SLOWEST_LIFE_PLAYERCOUNT 120
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.

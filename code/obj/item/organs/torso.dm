@@ -8,7 +8,7 @@
 	desc = "Oh, crap."
 	icon_state = "chest_m"
 	edible = 0
-	MAX_DAMAGE = INFINITY
+	max_damage = INFINITY
 
 	var/datum/appearanceHolder/donor_appearance = null
 	//var/datum/mutantrace/donor_mutantrace = null
@@ -17,7 +17,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (src.donor)
 				if(!src.bones)
 					src.bones = new /datum/bone(src)
@@ -27,14 +27,14 @@
 				if (src.donor.bioHolder && src.donor.bioHolder.mobAppearance)
 					src.donor_appearance = new(src)
 					src.donor_appearance.CopyOther(src.donor.bioHolder.mobAppearance)
-				src.update_icon()
+				src.UpdateIcon()
 
 	disposing()
 		if (holder)
 			holder.chest = null
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (!src.donor || !src.donor_appearance)
 			return // vOv
 

@@ -52,7 +52,7 @@
 	//Forensic scanner
 	forensic_scan
 		name = "Forensic Scan"
-		size = 8
+		size = 6
 
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
@@ -100,21 +100,21 @@
 		on_unset_scan(obj/item/device/pda2/pda)
 			qdel(get_radio_connection_by_id(pda, "ruckkit"))
 
-		scan_atom(atom/A as obj)
-			if (..() || !istype(A, /obj))
+		scan_atom(atom/A)
+			if (..() || !isobj(A) || !ismob(usr))
 				return
-
-			var/obj/O = A
-			if(istype(O,/obj/machinery/rkit) || istype(O, /obj/item/electronics/frame))
-				return
-
-			if(O.mats == 0 || isnull(O.mats) || O.disposed || O.is_syndicate != 0)
-				return "<span class='alert'>Unable to scan.</span>"
-
 			if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-				return "<span class='alert'>Messaging must be on to communicate with engineering kit.</span>"
-
-			animate_scanning(O, "#FFFF00")
+				return "<span class='alert'>Messaging must be enabled to communicate with engineering kit.</span>"
+			var/obj/O = A
+			var/mob/user = usr
+			if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+				return
+			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user)
+			if (scan_result != MECHANICS_ANALYSIS_SUCCESS && O.mechanics_interaction == MECHANICS_INTERACTION_SKIP_IF_FAIL)
+				return
+			animate_scanning(A, "#FFFF00")
+			if (!scan_result || scan_result == MECHANICS_ANALYSIS_INCOMPATIBLE)
+				return "<span class='alert'>Unable to scan.</span>"
 
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
@@ -151,6 +151,20 @@
 
 			. = scan_medrecord(src.master, C, visible = 1)
 			update_medical_record(C)
+
+	secrecord_scan
+		name = "Secmate Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if (..())
+				return
+
+			if (!iscarbon(A))
+				return
+			var/mob/living/carbon/C = A
+
+			. = scan_secrecord(src.master, C, visible = 1)
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"

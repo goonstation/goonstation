@@ -5,14 +5,12 @@
 	var/mob/gunner = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
-	var/isfiring = 0
 	var/weapon_score = 0.1
 	var/appearanceString
 
 	var/uses_ammunition = 0
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
-
 
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
@@ -60,12 +58,11 @@
 
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
-	if(isfiring) return
-	isfiring = 1
+	if(ON_COOLDOWN(src, "fire", firerate))
+		return
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
-			isfiring  = 0
 			return
 
 	var/rdir = ship.dir
@@ -74,11 +71,9 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", user, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
-	SPAWN_DBG (firerate)
-		isfiring = 0
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
 	if(!gunner)
@@ -208,7 +203,7 @@
 	name = "Rock Drilling Rig"
 	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
 	power_used = 100
-	weapon_score = 1.0
+	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
 	firerate = 10
@@ -304,8 +299,8 @@
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
 			if(0)
-				if(isfiring) return
-				isfiring = 1
+				if(ON_COOLDOWN(src, "fire", firerate))
+					return
 				var/obj/decal/D = new/obj/decal(ship.loc)
 				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
@@ -316,12 +311,12 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
@@ -332,9 +327,6 @@
 					s.start()
 					sleep(0.3 SECONDS)
 					D.dispose()
-
-				SPAWN_DBG(firerate)
-					isfiring = 0
 			if(1)
 				..()
 
@@ -385,39 +377,43 @@
 	var/increment
 	var/pod_is_large = false
 	var/core_inserted = false
-	var/image/purge
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state= "SPS_empty"
 
 	Fire(var/mob/user,var/shot_dir_override = -1)
+		if(ON_COOLDOWN(src, "fire", firerate))
+			return
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
-		if(isfiring) return
-		isfiring = 1
-		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
-		logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		playsound(src.loc, 'sound/weapons/heavyioncharge.ogg', 75, 1)
+		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
+		purge.dir = ship.facing
+		if(!is_cardinal(purge.dir))
+			if(prob(50))
+				purge.dir &= NORTH | SOUTH
+			else
+				purge.dir &= EAST | WEST
+		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
 			pod_is_large = true
-			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_large", "layer" = EFFECTS_LAYER_4)
+			flick("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
 			pod_is_large = false
-			purge = image('icons/misc/retribution/320x320.dmi', "SPS_o_small", "layer" = EFFECTS_LAYER_4)
+			flick("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
-		purge.plane = PLANE_SELFILLUM
-		ship.UpdateOverlays(purge, "purge")
 
-		SPAWN_DBG(12)
+		SPAWN(1.2 SECONDS)
 			var/destruction_point_x
 			var/destruction_point_y
-			SPAWN_DBG(8)
-				ship.UpdateOverlays(null, "purge")
-			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
-			switch (ship.dir)
-				if (1)	//N
+			ship.vis_contents -= purge
+			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+			switch (purge.dir)
+				if (NORTH)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y + increment
@@ -427,7 +423,7 @@
 							destruction_point_x = ship.loc.x + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (4)	//E
+				if (EAST)
 					for(increment in 1 to 4)
 						destruction_point_x = ship.loc.x + increment
 						destruction_point_y = ship.loc.y
@@ -437,7 +433,7 @@
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (2)	//S
+				if (SOUTH)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x
 						destruction_point_y = ship.loc.y - increment
@@ -446,7 +442,7 @@
 							destruction_point_x = ship.loc.x + 1
 						purge_sps(destruction_point_x, destruction_point_y)
 
-				if (8)	//W
+				if (WEST)
 					for (increment in 1 to 4)
 						destruction_point_x = ship.loc.x - increment
 						destruction_point_y = ship.loc.y
@@ -454,12 +450,6 @@
 							purge_sps(destruction_point_x, destruction_point_y)
 							destruction_point_y = ship.loc.y + 1
 						purge_sps(destruction_point_x, destruction_point_y)
-
-				else boutput(ship.pilot, "<span class='alert'><B>Shooting diagonally is unsupported.</B></span>")
-
-
-			SPAWN_DBG(firerate)
-				isfiring = 0
 			return
 		return
 
@@ -486,7 +476,7 @@
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
 			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))
 			T.ex_act(1)

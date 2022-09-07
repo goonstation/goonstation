@@ -6,15 +6,17 @@
 	max_range = 2
 	cooldown = 450
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/ShockingGraspGrim.ogg"
-	voice_fem = "sound/voice/wizard/ShockingGraspFem.ogg"
-	voice_other = "sound/voice/wizard/ShockingGraspLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ShockingGraspGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ShockingGraspFem.ogg'
+	voice_other = 'sound/voice/wizard/ShockingGraspLoud.ogg'
 	var/wattage = 100000
 	var/burn_damage = 100
 	var/target_damage_modifier = 1.95
 	var/arc_range = 3
+	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
 
 	cast(mob/target)
 		if(!holder)
@@ -23,12 +25,12 @@
 			return 1
 		if(!IN_RANGE(target, holder.owner, max_range))
 			return 1
-		playsound(holder.owner.loc, "sound/effects/elec_bzzz.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/elec_bzzz.ogg', 25, 1, -1)
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NATH")
+			holder.owner.say("EI NATH", FALSE, maptext_style, maptext_colors)
 		..()
 
-		playsound(holder.owner.loc, "sound/effects/elec_bigzap.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/elec_bigzap.ogg', 25, 1, -1)
 
 		if (ishuman(target))
 			if (target.traitHolder.hasTrait("training_chaplain"))

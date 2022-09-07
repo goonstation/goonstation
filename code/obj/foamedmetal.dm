@@ -10,7 +10,7 @@
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall."
 	flags = FPRINT | CONDUCT | USEDELAY
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	var/metal = 1		// 1=aluminium, 2=iron
 	gas_impermeable = TRUE
 
@@ -21,7 +21,7 @@
 			loc:ReplaceWithMetalFoam(metal)
 
 		update_nearby_tiles(1)
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			RL_SetOpacity(1)
 
 	disposing()
@@ -30,7 +30,7 @@
 		update_nearby_tiles(1)
 		..()
 
-	proc/updateicon()
+	update_icon()
 		if(metal == 1)
 			icon_state = "metalfoam"
 		else

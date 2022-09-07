@@ -20,20 +20,20 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to sting."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
 		if (!stealthy)
-			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
+			holder.owner.visible_message("<span class='alert'><b>[holder.owner] stings [target]!</b></span>")
 		else
-			holder.owner.show_message(__blue("You stealthily sting [target]."))
+			holder.owner.show_message("<span class='notice'>You stealthily sting [target].</span>")
 		for(var/venom_id in src.venom_ids)
 			MT.reagents.add_reagent(venom_id, inject_amount)
 
@@ -66,3 +66,4 @@
 		icon_state = "fermid_sting"
 		venom_ids = list("ants", "histamine")
 		inject_amount = 8
+

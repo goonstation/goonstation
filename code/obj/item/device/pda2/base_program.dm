@@ -173,7 +173,7 @@
 			return 1
 		if(isghostdrone(usr))
 			return 1
-		if(usr.stat || usr.restrained())
+		if(!can_act(usr))
 			return 1
 		if(!(holder in src.master.contents))
 			if(master.active_program == src)

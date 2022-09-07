@@ -190,13 +190,18 @@
 	probability = 99
 	isBad = 1
 	color_to_use = "#FFFFFF"
-	skintone_to_use = "#FFFFFF"
 
 	OnAdd()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-			eye_color_to_use = AH.e_color
+			src.eye_color_to_use = AH.e_color
+			//totally desaturate skintone
+			var/skin_tone = hex_to_rgb_list(AH.s_tone)
+			skin_tone = rgb2hsv(skin_tone[1], skin_tone[2], skin_tone[3])
+			skin_tone[2] = 0
+			skin_tone = hsv2rgb(skin_tone[1], skin_tone[2], skin_tone[3])
+			src.skintone_to_use = skin_tone
 		. = ..()
 
 /datum/bioEffect/stinky
@@ -248,10 +253,11 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=0, render_source = src.distort.render_target))
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
 		owner.vis_contents += src.distort
 		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=src.size, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 	OnRemove()
 		owner.remove_filter("dwarfism")
@@ -267,7 +273,8 @@
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=newval, time=0.7 SECONDS, easing=SINE_EASING, flags=ANIMATION_PARALLEL)
+			animate(src.filter, size=0, time=0)
+			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -491,3 +498,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "hell_fire"
+
+	New()
+		..()
+		color_hex = "#680000"

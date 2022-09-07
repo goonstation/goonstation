@@ -7,10 +7,10 @@
 
 TYPEINFO(/datum/component/cell_holder)
 	initialization_args = list(
-		ARG_INFO("new_cell", "ref", "ref to cell that will be first used"),
-		ARG_INFO("chargable", "num", "If it can be placed in a recharger (bool)", TRUE),
-		ARG_INFO("max_cell", "num", "Maximum size of cell that can be held", INFINITY),
-		ARG_INFO("swappable", "num", "If the cell can be swapped out (bool)", TRUE)
+		ARG_INFO("new_cell", DATA_INPUT_REF, "ref to cell that will be first used"),
+		ARG_INFO("chargable", DATA_INPUT_BOOL, "If it can be placed in a recharger", TRUE),
+		ARG_INFO("max_cell", DATA_INPUT_NUM, "Maximum size of cell that can be held", INFINITY),
+		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE)
 	)
 
 /datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/cell_holder)
 	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 	can_be_recharged = chargable
 	max_cell_size = max_cell
 	swappable_cell = swappable
@@ -49,7 +49,7 @@ TYPEINFO(/datum/component/cell_holder)
 				qdel(src.cell)
 				src.cell = new_cell
 				src.cell.set_loc(parent)
-				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+				RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 		else if(istype(new_cell, /datum/component/power_cell))
 			src.cell.AddComponent(new_cell)
 		else if(islist(new_cell))
@@ -91,7 +91,7 @@ TYPEINFO(/datum/component/cell_holder)
 			user.u_equip(P)
 			P.add_fingerprint(user)
 		src.cell = P
-		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_icon)
+		RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/UpdateIcon)
 		P.set_loc(src.parent)
 		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
@@ -110,7 +110,7 @@ TYPEINFO(/datum/component/cell_holder)
 			var/mob/M = old_loc
 			M.put_in_hand_or_drop(old_cell)
 
-	playsound(parent, "sound/weapons/gunload_click.ogg", 50, 1)
+	playsound(parent, 'sound/weapons/gunload_click.ogg', 50, 1)
 
 /datum/component/cell_holder/proc/try_swap(source, obj/item/I, mob/user)
 	begin_swap(user, I)
@@ -134,7 +134,7 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/check_charge(source, amount)
 	. = SEND_SIGNAL(src.cell, COMSIG_CELL_CHECK_CHARGE, amount)
 
-/datum/component/cell_holder/proc/update_icon()
+/datum/component/cell_holder/proc/UpdateIcon()
 	SEND_SIGNAL(parent, COMSIG_UPDATE_ICON)
 
 /datum/action/bar/icon/cellswap
@@ -155,20 +155,20 @@ TYPEINFO(/datum/component/cell_holder)
 
 	onStart()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		return
 
 	onUpdate()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(user, cell_holder) > 1 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
+		if(BOUNDS_DIST(user, cell_holder) > 0 || QDELETED(user) || QDELETED(cell) || QDELETED(cell_holder) || get_turf(cell_holder) != get_turf(cell) )
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		SEND_SIGNAL(cell_holder, COMSIG_CELL_SWAP, cell, user)

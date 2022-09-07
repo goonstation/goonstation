@@ -15,7 +15,7 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src) && !src.broken)
 			user.visible_message("<b>[user]</b> bends [src] a little too far back and it snaps in half. Shoot!")
-			playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
 			src.name = "broken popsicle stick"
 			src.icon_state = "stick-broken"
 			src.broken = 1
@@ -44,7 +44,7 @@
 	desc = "A popsicle. It's in a wrapper right now."
 	icon = 'icons/obj/foodNdrink/food_popsicles.dmi'
 	icon_state = null
-	amount = 4
+	bites_left = 4
 	heal_amt = 4
 	food_color = null
 	initial_volume = 40

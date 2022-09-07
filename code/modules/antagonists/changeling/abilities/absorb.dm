@@ -20,20 +20,20 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state < 1)
+		if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -44,14 +44,14 @@
 		..()
 
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
-			logTheThing("combat", ownerMob, target, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
 			target.ghostize()
 			qdel(target)
@@ -116,19 +116,19 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/mob/ownerMob = owner
 		var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state != 3)
+		if (!istype(G) || G.affecting != target || G.state < GRAB_CHOKE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		var/done = TIME - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))
@@ -143,47 +143,37 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		var/mob/ownerMob = owner
-		target.vamp_beingbitten = 1
 
 		if (isliving(target))
 			target:was_harmed(owner, special = "ling")
 
-		var/datum/abilityHolder/changeling/C = devour.holder
-		if (istype(C))
-			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(target)
-			originalBHolder.CopyOther(target.bioHolder)
-			C.absorbed_dna[target.real_name] = originalBHolder
-			ownerMob.show_message("<span class='notice'>We can now transform into [target.real_name], we must hold still...</span>", 1)
+		devour.addBHData(target)
 
 	onEnd()
 		..()
 
 		var/mob/ownerMob = owner
-		if (target)
-			target.vamp_beingbitten = 0
-		if(owner && ownerMob && target && get_dist(owner, target) <= 1 && devour)
+		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && devour)
 			var/datum/abilityHolder/changeling/C = devour.holder
 			if (istype(C))
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
-			logTheThing("combat", ownerMob, target, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, ownerMob, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
-			target.death(0)
-			target.real_name = "Unknown"
+			target.death(FALSE)
+			target.disfigured = TRUE
+			target.UpdateName()
 			target.bioHolder.AddEffect("husk")
 			target.bioHolder.mobAppearance.flavor_text = "A desiccated husk."
 
 	onInterrupt()
 		..()
-		target.vamp_beingbitten = 0
-		boutput(owner, "<span class='alert'>Our absorbtion of [target] has been interrupted!</span>")
+		boutput(owner, "<span class='alert'>Our absorption of [target] has been interrupted!</span>")
 
 /datum/targetable/changeling/absorb
 	name = "Absorb DNA"
@@ -211,9 +201,22 @@
 		if (isnpcmonkey(T))
 			boutput(C, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return 1
+		if (isnpc(T))
+			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			addBHData(T)
+			return 1
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
 
 		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)
 		return 0
+
+	proc/addBHData(var/mob/living/T)
+		var/datum/abilityHolder/changeling/C = holder
+		var/mob/ownerMob = holder.owner
+		if (istype(C) && isnull(C.absorbed_dna[T.real_name]))
+			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(T)
+			originalBHolder.CopyOther(T.bioHolder)
+			C.absorbed_dna[T.real_name] = originalBHolder
+			ownerMob.show_message("<span class='notice'>We can now transform into [T.real_name].</span>", 1)

@@ -1,0 +1,5352 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"ab" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"ac" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"ad" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"ae" = (
+/obj/stool/chair/blue,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"af" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"ag" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"ah" = (
+/obj/decal/fakeobjects/tallsmes{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ai" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aj" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1 (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ak" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = -64;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"al" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"am" = (
+/obj/decal/poster/wallsign/hazard_rad{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = -64;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"an" = (
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ao" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"ap" = (
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"aq" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"ar" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"as" = (
+/obj/rack,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"at" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"au" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"av" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1 (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aw" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ax" = (
+/obj/decal/poster/wallsign/hazard_caution{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"ay" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"az" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aB" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-conduit (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"aD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aE" = (
+/turf/unsimulated/floor/stairs/dark,
+/area/centcom/outside)
+"aF" = (
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aG" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aH" = (
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"aI" = (
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aJ" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = -64;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aL" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aM" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aN" = (
+/obj/machinery/light,
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"aO" = (
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"aP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"aQ" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"aR" = (
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"aS" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"aT" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 5
+	},
+/area/centcom/outside)
+"aU" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 4
+	},
+/area/centcom/outside)
+"aV" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"aW" = (
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"aX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aY" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"aZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ba" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"bd" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"be" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bf" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "A pipe.";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bg" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "A pipe.";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bh" = (
+/obj/machinery/shuttle/engine/propulsion{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_propulsion";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"bi" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"bj" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"bk" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"bl" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	icon_state = "7";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"bm" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
+"bn" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"bo" = (
+/obj/machinery/door/airlock/pyro/external{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bp" = (
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bq" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"br" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bt" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bv" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"bw" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bx" = (
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"by" = (
+/obj/machinery/vending/alcohol{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bz" = (
+/obj/machinery/vending/alcohol{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/random_item_spawner/snacks/lots,
+/obj/storage/crate/wooden,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bA" = (
+/obj/random_item_spawner/snacks/lots,
+/obj/storage/crate/wooden,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bB" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"bC" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bD" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bF" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 6;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bG" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater-L";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"bH" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"bI" = (
+/obj/machinery/deep_fryer{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bJ" = (
+/obj/random_item_spawner/snacks/lots,
+/obj/table/reinforced/bar/auto,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bK" = (
+/turf/unsimulated/floor/stairs{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"bL" = (
+/obj/loudspeaker,
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bM" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"bN" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bO" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater-M";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"bP" = (
+/obj/machinery/deep_fryer{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bQ" = (
+/obj/decal/stage_edge{
+	layer = 2.9
+	},
+/obj/item/clothing/mask/wrestling{
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/wrestling/black{
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/wrestling/blue{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/wrestling/green{
+	pixel_x = 3
+	},
+/obj/table/auto,
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"bR" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"bS" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"bT" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"bU" = (
+/obj/decal/boxingropeenter{
+	dir = 8
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"bV" = (
+/obj/decal/boxingrope{
+	dir = 9
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"bW" = (
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"bX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bY" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"bZ" = (
+/obj/decal/boxingrope,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"ca" = (
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cb" = (
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cc" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater-R";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"cd" = (
+/obj/item/reagent_containers/food/snacks/burger,
+/obj/item/reagent_containers/food/snacks/burger/baconburger,
+/obj/item/reagent_containers/food/snacks/burger/cheeseburger,
+/obj/item/reagent_containers/food/snacks/burger/fishburger,
+/obj/item/reagent_containers/food/snacks/burger/monkeyburger,
+/obj/item/reagent_containers/food/snacks/burger/roburger,
+/obj/item/reagent_containers/food/snacks/burger/tikiburger,
+/obj/storage/secure/closet/fridge,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"ce" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane,
+/obj/table/reinforced/bar/auto,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"cf" = (
+/obj/decal/stage_edge{
+	layer = 2.9
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_y = -4
+	},
+/obj/item/clothing/gloves/boxing{
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/boxing,
+/obj/table/auto,
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"cg" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"ch" = (
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"ci" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cj" = (
+/obj/machinery/door/window{
+	dir = 4
+	},
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"ck" = (
+/obj/window/reinforced/east,
+/turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"cl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cm" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cn" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"co" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	icon_state = "7";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"cp" = (
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"cq" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cr" = (
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"ct" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cu" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/stairs/wide,
+/area/shuttle/escape/centcom)
+"cv" = (
+/obj/decal/boxingropeenter,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cw" = (
+/obj/stool/chair,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cx" = (
+/obj/random_item_spawner/snacks/lots,
+/obj/table/auto,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cy" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/random_item_spawner/snacks/lots,
+/obj/table/auto,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cz" = (
+/obj/decal/boxingropeenter,
+/obj/window/reinforced/east,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cA" = (
+/obj/window/reinforced/east,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/fitness/stacklifter,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cD" = (
+/obj/fitness/stacklifter,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/fitness/speedbag/syndie{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/fitness/speedbag/captain{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/fitness/weightlifter,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cH" = (
+/obj/fitness/weightlifter,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cI" = (
+/turf/unsimulated/floor/stairs/wide/middle,
+/area/shuttle/escape/centcom)
+"cJ" = (
+/obj/window/reinforced/north,
+/turf/unsimulated/floor/stairs/wide/middle,
+/area/shuttle/escape/centcom)
+"cK" = (
+/obj/item/trophy{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/centcom/outside)
+"cL" = (
+/turf/unsimulated/floor/specialroom/gym,
+/area/centcom/outside)
+"cM" = (
+/obj/map/light/brightwhite,
+/obj/window/reinforced/south,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"cN" = (
+/obj/item/device/microphone,
+/obj/table/auto,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cO" = (
+/obj/stool/chair/comfy/shuttle/pilot,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cP" = (
+/obj/machinery/computer/announcement{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/grey,
+/area/shuttle/escape/centcom)
+"cU" = (
+/obj/item/wrestlingbell,
+/obj/table/auto,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cV" = (
+/obj/machinery/computer/shuttle{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"cW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 5;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cX" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom)
+"cY" = (
+/obj/machinery/door/airlock/pyro/security{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"cZ" = (
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"da" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"db" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/stairs/wide/other,
+/area/shuttle/escape/centcom)
+"dc" = (
+/obj/decal/boxingropeenter,
+/obj/window/reinforced/west,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"dd" = (
+/obj/window/reinforced/west,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"de" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater-L";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"df" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dg" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/window/crystal/north,
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dh" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/sw,
+/area/shuttle/escape/centcom)
+"di" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/west,
+/area/shuttle/escape/centcom)
+"dj" = (
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	rand_pos = 1
+	},
+/obj/table/auto,
+/turf/unsimulated/floor/carpet/green/fancy/edge/west,
+/area/shuttle/escape/centcom)
+"dk" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/area/shuttle/escape/centcom)
+"dl" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/stool/chair/couch/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/area/shuttle/escape/centcom)
+"dm" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dn" = (
+/obj/decal/stage_edge{
+	layer = 2.9
+	},
+/obj/item/storage/belt/wrestling{
+	pixel_y = 10
+	},
+/obj/item/storage/belt/wrestling{
+	pixel_y = 5
+	},
+/obj/item/storage/belt/wrestling,
+/obj/table/auto,
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"do" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
+"dp" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"dq" = (
+/obj/window/crystal/north,
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dr" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/area/shuttle/escape/centcom)
+"ds" = (
+/obj/stool/chair/couch/red{
+	dir = 2
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
+/area/shuttle/escape/centcom)
+"dt" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/south,
+/area/shuttle/escape/centcom)
+"du" = (
+/turf/unsimulated/floor/carpet/green,
+/area/shuttle/escape/centcom)
+"dv" = (
+/obj/item/cigarbox/gold,
+/obj/item/device/light/zippo/gold,
+/obj/table/auto,
+/turf/unsimulated/floor/carpet/green,
+/area/shuttle/escape/centcom)
+"dw" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/area/shuttle/escape/centcom)
+"dx" = (
+/obj/stool/chair/couch/red,
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/area/shuttle/escape/centcom)
+"dy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dA" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"dB" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"dC" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/obj/map/light/brightwhite,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"dD" = (
+/obj/decal/boxingropeenter{
+	dir = 4
+	},
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
+"dE" = (
+/obj/decal/boxingrope{
+	dir = 5
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"dF" = (
+/obj/machinery/shuttle/engine/heater{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "alt_heater-R";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"dG" = (
+/obj/access_spawn/brig,
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dH" = (
+/obj/access_spawn/brig,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dI" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/se,
+/area/shuttle/escape/centcom)
+"dJ" = (
+/turf/unsimulated/floor/carpet/green/fancy/innercorner/se,
+/area/shuttle/escape/centcom)
+"dK" = (
+/obj/stool/chair/couch/red{
+	dir = 2
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/area/shuttle/escape/centcom)
+"dL" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"dM" = (
+/turf/unsimulated/floor/stairs{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"dN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dP" = (
+/obj/stool/chair/couch/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
+/area/shuttle/escape/centcom)
+"dQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dR" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/simulated/floor/airless/black,
+/area/shuttle/escape/centcom)
+"dS" = (
+/obj/item/cigarbox/gold,
+/obj/item/device/light/zippo/gold,
+/obj/table/auto,
+/turf/unsimulated/floor/carpet/green/fancy/edge/se,
+/area/shuttle/escape/centcom)
+"dT" = (
+/turf/unsimulated/floor/carpet/green/fancy/edge/east,
+/area/shuttle/escape/centcom)
+"dU" = (
+/obj/table/auto,
+/turf/unsimulated/floor/carpet/green/fancy/edge/ne,
+/area/shuttle/escape/centcom)
+"dV" = (
+/obj/machinery/vending/cola/red{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"dW" = (
+/obj/indestructible/shuttle_corner{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"dX" = (
+/obj/item/cigarbox/gold,
+/obj/item/device/light/zippo/gold,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/table/auto,
+/turf/unsimulated/floor/carpet/green/fancy/edge/se,
+/area/shuttle/escape/centcom)
+"dY" = (
+/obj/stool/chair/comfy/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/east,
+/area/shuttle/escape/centcom)
+"dZ" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/wood/three,
+/area/shuttle/escape/centcom)
+"ea" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"eb" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ec" = (
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 10;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ed" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-xtra_bigstripe-edge (WEST)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ee" = (
+/obj/machinery/light,
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"ef" = (
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"eg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "delivery2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"eh" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"ei" = (
+/obj/shrub{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"ej" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"ek" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"el" = (
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"em" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"en" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"eo" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "A pipe.";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ep" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 6;
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 8;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"eq" = (
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 9;
+	icon_state = "line2";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"er" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 4;
+	icon = 'icons/obj/atmospherics/valve.dmi';
+	icon_state = "valve0";
+	name = "valve";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"es" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"et" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"eu" = (
+/obj/decal/fakeobjects/pipe{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	desc = "It's a pipe manifold.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ev" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/atmospherics/portables_connector,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ew" = (
+/obj/decal/fakeobjects{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]";
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/black{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	dir = 1;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	tag = "icon-line1 (NORTH)";
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/machinery/atmospherics/portables_connector,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ex" = (
+/obj/decal/poster/wallsign/hazard_rad{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	pixel_x = 64;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/obj/decal/tile_edge/line/orange{
+	bound_height = 64;
+	bound_width = 64;
+	bound_x = 0;
+	bound_y = 0;
+	icon_state = "line1";
+	merge_with_turf = 0;
+	pixel_x = 0;
+	pixel_y = 0;
+	transform = list(2,0,16,0,2,16)
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ey" = (
+/obj/machinery/light,
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"ez" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"eA" = (
+/obj/machinery/atmospherics/portables_connector,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+
+(1,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+as
+as
+an
+an
+as
+as
+aa
+aa
+ar
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ao
+aa
+aa
+an
+an
+an
+am
+al
+ak
+ai
+aj
+ai
+ah
+ai
+ai
+ai
+ah
+ai
+ai
+ai
+ah
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+as
+as
+an
+an
+as
+as
+aa
+aa
+ar
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ao
+aa
+aa
+an
+an
+an
+an
+al
+al
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+ax
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+ax
+an
+an
+an
+aw
+al
+al
+au
+av
+ai
+at
+ai
+ai
+ai
+at
+au
+au
+ai
+at
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+an
+an
+an
+an
+al
+al
+au
+au
+ai
+ai
+ai
+ai
+ai
+ai
+au
+au
+ai
+ai
+aa
+aa
+"}
+(7,1,1) = {"
+ay
+ay
+an
+an
+an
+an
+an
+an
+aG
+aG
+an
+an
+an
+an
+aG
+aI
+ad
+aH
+aq
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ap
+ad
+aH
+aG
+aF
+aE
+aE
+al
+aD
+ai
+aC
+ai
+aB
+ai
+aA
+ai
+aB
+ai
+aA
+ai
+az
+ay
+ay
+"}
+(8,1,1) = {"
+ay
+ay
+an
+an
+an
+an
+an
+an
+aG
+aG
+an
+an
+an
+an
+aG
+aG
+ad
+ad
+aq
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ap
+ad
+ad
+aG
+aG
+aE
+aE
+al
+al
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ay
+ay
+"}
+(9,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+aU
+aU
+aT
+aT
+an
+aM
+aa
+ax
+aS
+aR
+aQ
+aP
+aQ
+aQ
+aQ
+aQ
+aQ
+aP
+aO
+aN
+aa
+ax
+an
+aM
+an
+aL
+al
+aK
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+aJ
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+aU
+aU
+aT
+aT
+an
+an
+aa
+aa
+aS
+aW
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aO
+aV
+aa
+aa
+an
+an
+an
+an
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+an
+an
+aG
+aG
+an
+bd
+an
+aL
+al
+al
+al
+al
+al
+al
+aa
+aa
+aa
+aa
+ad
+bc
+aa
+aa
+aa
+aa
+ad
+bc
+aa
+aa
+aa
+aa
+al
+aZ
+al
+aZ
+al
+bb
+aY
+ba
+al
+aZ
+al
+aZ
+aY
+aX
+al
+al
+al
+al
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+an
+an
+aG
+aG
+an
+an
+an
+an
+al
+al
+al
+al
+al
+al
+aa
+aa
+aa
+aa
+ad
+ad
+aa
+aa
+aa
+aa
+ad
+ad
+aa
+aa
+aa
+aa
+al
+al
+al
+al
+al
+al
+aY
+aY
+al
+al
+al
+al
+aY
+aY
+al
+al
+al
+al
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+an
+bd
+an
+aM
+an
+aL
+al
+al
+al
+al
+aY
+bs
+al
+br
+bi
+bq
+bn
+bn
+bp
+bo
+bn
+bn
+bn
+bn
+bp
+bo
+bn
+bn
+bk
+bk
+bm
+bm
+bk
+bk
+bk
+bk
+bk
+bl
+bk
+bj
+bi
+bh
+al
+bg
+al
+bf
+al
+be
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+al
+al
+al
+al
+aY
+aY
+al
+al
+bi
+bi
+bn
+bn
+bp
+bp
+bn
+bn
+bn
+bn
+bp
+bp
+bn
+bn
+bk
+bk
+bm
+bm
+bk
+bk
+bk
+bk
+bk
+bk
+bk
+bk
+bi
+bi
+al
+al
+al
+al
+al
+al
+aa
+aa
+"}
+(15,1,1) = {"
+ay
+ay
+an
+aw
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bE
+bi
+bq
+bp
+bD
+bC
+bC
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bC
+bC
+bp
+bp
+bB
+bB
+bA
+bz
+bx
+by
+bx
+bw
+bm
+bm
+bi
+bv
+al
+bu
+aY
+aX
+al
+bt
+ay
+ay
+"}
+(16,1,1) = {"
+ay
+ay
+an
+an
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bi
+bi
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bB
+bB
+bA
+bA
+bx
+bx
+bx
+bx
+bm
+bm
+bi
+bi
+al
+al
+aY
+aY
+al
+al
+ay
+ay
+"}
+(17,1,1) = {"
+aa
+aa
+aG
+bM
+al
+al
+aY
+bs
+al
+aZ
+al
+aZ
+al
+br
+bB
+bB
+bL
+bL
+bp
+bp
+bK
+bK
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bJ
+bJ
+bx
+bx
+bx
+bx
+bx
+bx
+bx
+bI
+bH
+bG
+bi
+bh
+al
+bg
+al
+bF
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aG
+aG
+al
+al
+aY
+aY
+al
+al
+al
+al
+al
+al
+bB
+bB
+bL
+bL
+bN
+bN
+bK
+bK
+bN
+bN
+bN
+bN
+bN
+bN
+bp
+bp
+bp
+bp
+bJ
+bJ
+bx
+bx
+bx
+bx
+bx
+bx
+bx
+bx
+bH
+bH
+bi
+bi
+al
+al
+al
+al
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+an
+aw
+al
+bX
+al
+br
+bi
+bq
+bW
+bW
+bW
+bW
+bV
+bB
+bT
+bT
+bS
+bS
+bU
+bU
+bT
+bT
+bS
+bR
+bQ
+bQ
+bp
+bp
+bp
+bp
+bJ
+bJ
+bx
+bx
+bx
+bx
+bx
+bx
+bx
+bP
+bB
+bO
+bi
+bh
+al
+bg
+al
+bF
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+an
+an
+al
+al
+al
+al
+bi
+bi
+bW
+bW
+bW
+bW
+bB
+bB
+cb
+cb
+ca
+ca
+ca
+ca
+cb
+cb
+ca
+bZ
+bQ
+bQ
+bp
+bp
+bp
+bp
+bJ
+bJ
+bx
+bx
+bx
+bx
+bx
+bx
+bx
+bY
+bB
+bB
+bi
+bi
+al
+al
+al
+al
+aa
+aa
+"}
+(21,1,1) = {"
+ay
+ay
+an
+aw
+al
+bE
+bi
+bq
+ch
+ci
+ch
+ch
+ch
+ch
+ch
+cg
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+bZ
+cf
+cf
+bp
+bp
+bp
+bp
+ce
+ce
+bx
+bx
+bx
+bx
+bx
+bx
+cd
+cd
+bB
+cc
+bi
+bh
+al
+bg
+al
+bF
+ay
+ay
+"}
+(22,1,1) = {"
+ay
+ay
+an
+an
+al
+al
+bi
+bi
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+bZ
+cf
+cf
+bp
+bp
+bp
+bp
+ce
+ce
+ck
+ck
+ck
+ck
+cj
+cj
+cd
+cd
+bB
+bB
+bi
+bi
+al
+al
+al
+al
+ay
+ay
+"}
+(23,1,1) = {"
+aa
+aa
+aG
+bM
+al
+bE
+bW
+bW
+cy
+cx
+ch
+ch
+ch
+cw
+bW
+bW
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+cv
+cu
+cu
+bp
+bp
+bp
+bp
+cr
+ct
+cr
+cs
+cr
+cs
+cr
+cq
+cp
+co
+bi
+cn
+aY
+cm
+al
+cl
+al
+bt
+aa
+aa
+"}
+(24,1,1) = {"
+aa
+aa
+aG
+aG
+al
+al
+bW
+bW
+cy
+cx
+ch
+ch
+ch
+cw
+bW
+bW
+ca
+ca
+ca
+ca
+ca
+ca
+cA
+cA
+cA
+cz
+cu
+cu
+bp
+bp
+bp
+bp
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cp
+cp
+bi
+bi
+aY
+aY
+al
+al
+al
+al
+aa
+aa
+"}
+(25,1,1) = {"
+aa
+aa
+an
+aw
+al
+bE
+bW
+bW
+ch
+cP
+ch
+cO
+cN
+cN
+bW
+bW
+ca
+ca
+cb
+cb
+cb
+cM
+cL
+cL
+cK
+cK
+cJ
+cI
+bp
+bp
+bp
+bp
+cH
+cG
+cr
+cF
+cr
+cE
+cD
+cC
+bB
+bB
+al
+cB
+al
+cl
+al
+al
+al
+bt
+aa
+aa
+"}
+(26,1,1) = {"
+aa
+aa
+an
+an
+al
+al
+bW
+bW
+ch
+ch
+ch
+cO
+cN
+cN
+bW
+bW
+ca
+ca
+cb
+cb
+cb
+cM
+cL
+cL
+cK
+cK
+cJ
+cI
+bp
+bp
+bp
+bp
+cH
+cH
+cr
+cr
+cr
+cr
+cD
+cD
+bB
+bB
+al
+al
+al
+al
+al
+al
+al
+al
+aa
+aa
+"}
+(27,1,1) = {"
+ay
+ay
+an
+aw
+al
+bE
+bW
+bW
+ch
+cV
+ch
+cO
+cU
+cU
+bW
+bW
+ca
+ca
+cb
+cb
+cb
+cM
+cL
+cL
+cL
+cL
+cJ
+cI
+bp
+bp
+bp
+bp
+cr
+cT
+cr
+cS
+cr
+cS
+cr
+cR
+bB
+bB
+al
+bu
+al
+cQ
+al
+al
+al
+bt
+ay
+ay
+"}
+(28,1,1) = {"
+ay
+ay
+an
+an
+al
+al
+bW
+bW
+ch
+ch
+ch
+cO
+cU
+cU
+bW
+bW
+ca
+ca
+cb
+cb
+cb
+cM
+cL
+cL
+cL
+cL
+cJ
+cI
+bp
+bp
+bp
+bp
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+cr
+bB
+bB
+al
+al
+al
+al
+al
+al
+al
+al
+ay
+ay
+"}
+(29,1,1) = {"
+aa
+aa
+aG
+bM
+al
+bE
+bW
+bW
+cy
+cx
+ch
+ch
+ch
+cw
+bW
+bW
+ca
+ca
+ca
+ca
+ca
+ca
+dd
+dd
+dd
+dc
+db
+db
+bp
+bp
+bp
+da
+bk
+bk
+bk
+bk
+bk
+bk
+cZ
+cY
+cX
+cX
+bi
+bv
+aY
+cW
+al
+cQ
+al
+bt
+aa
+aa
+"}
+(30,1,1) = {"
+aa
+aa
+aG
+aG
+al
+al
+bW
+bW
+cy
+cx
+ch
+ch
+ch
+cw
+bW
+bW
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+cv
+db
+db
+bp
+bp
+bp
+bp
+bk
+bk
+bk
+bk
+bk
+bk
+cZ
+cZ
+cX
+cX
+bi
+bi
+aY
+aY
+al
+al
+al
+al
+aa
+aa
+"}
+(31,1,1) = {"
+aa
+aa
+an
+aw
+al
+bE
+bi
+dp
+ch
+do
+ch
+ch
+ch
+ch
+ch
+cg
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+bZ
+dn
+dn
+bp
+bp
+dm
+dm
+dl
+dk
+dj
+dj
+di
+di
+dh
+dh
+dg
+df
+bB
+de
+bi
+bh
+al
+bg
+al
+bF
+aa
+aa
+"}
+(32,1,1) = {"
+aa
+aa
+an
+an
+al
+al
+bi
+bi
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ch
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+ca
+bZ
+dn
+dn
+bp
+bp
+dm
+dm
+ds
+dr
+dj
+dj
+di
+di
+dh
+dh
+dq
+cZ
+bB
+bB
+bi
+bi
+al
+al
+al
+al
+aa
+aa
+"}
+(33,1,1) = {"
+ay
+ay
+an
+aw
+al
+dz
+al
+dy
+bi
+dp
+bW
+bW
+bW
+bW
+bB
+bB
+cb
+cb
+ca
+ca
+ca
+ca
+cb
+cb
+ca
+bZ
+dn
+dn
+bp
+bp
+dm
+dm
+dx
+dw
+dv
+dv
+du
+du
+dt
+dt
+dq
+cZ
+bB
+bO
+bi
+bh
+al
+bg
+al
+bF
+ay
+ay
+"}
+(34,1,1) = {"
+ay
+ay
+an
+an
+al
+al
+al
+al
+bi
+bi
+bW
+bW
+bW
+bW
+dE
+bB
+dC
+dC
+dB
+dB
+dD
+dD
+dC
+dC
+dB
+dA
+dn
+dn
+bp
+bp
+dm
+dm
+dx
+dw
+dv
+dv
+du
+du
+dt
+dt
+dq
+cZ
+bB
+bB
+bi
+bi
+al
+al
+al
+al
+ay
+ay
+"}
+(35,1,1) = {"
+aa
+aa
+aG
+bM
+al
+al
+aY
+dO
+al
+dN
+al
+dN
+al
+dy
+bB
+bB
+bL
+bL
+dL
+dL
+dM
+dM
+dL
+dL
+dL
+dL
+dL
+dL
+bp
+bp
+dm
+dm
+dK
+dw
+du
+du
+dJ
+dJ
+dI
+dI
+dH
+dG
+bH
+dF
+bi
+bh
+al
+bg
+al
+bF
+aa
+aa
+"}
+(36,1,1) = {"
+aa
+aa
+aG
+aG
+al
+al
+aY
+aY
+al
+al
+al
+al
+al
+al
+bB
+bB
+bL
+bL
+bp
+bp
+dM
+dM
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+dm
+dm
+dP
+dw
+du
+du
+dJ
+dJ
+dI
+dI
+dH
+dG
+bH
+bH
+bi
+bi
+al
+al
+al
+al
+aa
+aa
+"}
+(37,1,1) = {"
+aa
+aa
+an
+aw
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bE
+bi
+dp
+bp
+dW
+bp
+dV
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+dm
+dm
+dU
+dU
+dT
+dT
+dS
+dS
+cZ
+dR
+cX
+cX
+bi
+cn
+al
+cB
+aY
+dQ
+al
+bt
+aa
+aa
+"}
+(38,1,1) = {"
+aa
+aa
+an
+an
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bi
+bi
+bp
+bp
+dZ
+dZ
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+dZ
+dZ
+dm
+dm
+dU
+dU
+dY
+dY
+dX
+dX
+cZ
+cZ
+cX
+cX
+bi
+bi
+al
+al
+aY
+aY
+al
+al
+aa
+aa
+"}
+(39,1,1) = {"
+ay
+ay
+an
+ec
+an
+eb
+an
+ea
+al
+al
+al
+al
+aY
+dO
+al
+dy
+bi
+dp
+bn
+bn
+bp
+bo
+bn
+bn
+bn
+bn
+bp
+bo
+bn
+bn
+bk
+bk
+cX
+cX
+bk
+bk
+bk
+bk
+cX
+cX
+bk
+bj
+bi
+bh
+al
+bg
+al
+bf
+al
+bF
+ay
+ay
+"}
+(40,1,1) = {"
+ay
+ay
+an
+an
+an
+an
+an
+an
+al
+al
+al
+al
+aY
+aY
+al
+al
+bi
+bi
+bn
+bn
+bp
+bp
+bn
+bn
+bn
+bn
+bp
+bp
+bn
+bn
+bk
+bk
+cX
+cX
+bk
+bk
+bk
+bk
+cX
+cX
+bk
+bk
+bi
+bi
+al
+al
+al
+al
+al
+al
+ay
+ay
+"}
+(41,1,1) = {"
+aa
+aa
+an
+an
+aG
+aG
+an
+ec
+an
+ea
+al
+al
+al
+al
+al
+al
+aa
+aa
+aa
+aa
+ad
+bc
+aa
+aa
+aa
+aa
+ad
+bc
+aa
+aa
+aa
+aa
+al
+dN
+al
+dN
+al
+dN
+aY
+ed
+al
+dN
+al
+dN
+aY
+dQ
+al
+al
+al
+bt
+aa
+aa
+"}
+(42,1,1) = {"
+aa
+aa
+an
+an
+aG
+aG
+an
+an
+an
+an
+al
+al
+al
+al
+al
+al
+aa
+aa
+aa
+aa
+ad
+ad
+aa
+aa
+aa
+aa
+ad
+ad
+aa
+aa
+aa
+aa
+al
+al
+al
+al
+al
+al
+aY
+aY
+al
+al
+al
+al
+aY
+aY
+al
+al
+al
+al
+aa
+aa
+"}
+(43,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+aU
+aU
+aT
+aT
+an
+eb
+aa
+ax
+ej
+ei
+eh
+eg
+eh
+eh
+eh
+eh
+eh
+eg
+ef
+ee
+aa
+ax
+an
+eb
+an
+ea
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+bt
+aa
+aa
+"}
+(44,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+aU
+aU
+aT
+aT
+an
+an
+aa
+aa
+ej
+el
+eh
+eh
+eh
+eh
+eh
+eh
+eh
+eh
+ef
+ek
+aa
+aa
+an
+an
+an
+an
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+al
+aa
+aa
+"}
+(45,1,1) = {"
+ay
+ay
+an
+an
+an
+an
+an
+an
+aG
+aG
+an
+an
+an
+an
+aG
+aI
+ad
+aH
+aq
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ap
+ad
+aH
+aG
+aF
+aE
+aE
+al
+al
+ai
+eq
+ai
+ep
+ai
+eo
+ai
+eo
+ai
+en
+ai
+em
+ay
+ay
+"}
+(46,1,1) = {"
+ay
+ay
+an
+an
+an
+an
+an
+an
+aG
+aG
+an
+an
+an
+an
+aG
+aG
+ad
+ad
+aq
+aq
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ap
+ap
+ad
+ad
+aG
+aG
+aE
+aE
+al
+al
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ay
+ay
+"}
+(47,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+ax
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+ax
+an
+an
+an
+aw
+al
+al
+au
+av
+ai
+er
+ai
+ai
+ai
+ai
+ai
+er
+au
+au
+aa
+aa
+"}
+(48,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+an
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+an
+an
+an
+an
+al
+al
+au
+au
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+ai
+au
+au
+aa
+aa
+"}
+(49,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+as
+as
+an
+an
+as
+as
+aa
+aa
+ez
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ey
+aa
+aa
+an
+an
+an
+ex
+al
+al
+ai
+ew
+ai
+eu
+et
+es
+ai
+ev
+ai
+eu
+et
+es
+aa
+aa
+"}
+(50,1,1) = {"
+aa
+aa
+an
+an
+an
+an
+an
+an
+an
+an
+as
+as
+an
+an
+as
+as
+aa
+aa
+ez
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ey
+aa
+aa
+an
+an
+an
+an
+al
+al
+ai
+eA
+ai
+ai
+et
+ai
+ai
+eA
+ai
+ai
+et
+ai
+aa
+aa
+"}
+(51,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(52,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+ag
+ag
+ad
+ad
+af
+ad
+ad
+ae
+ad
+ad
+ac
+ac
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+"}

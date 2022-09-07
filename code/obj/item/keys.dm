@@ -94,7 +94,11 @@
 
 /obj/item/device/key/iridium
 	name = "iridium key"
-	desc = "A key made of a fancy, silvery material."
+	desc = "An artifact made of a fancy, silvery material. Arcs of energy repeatedly crawl up the twin shanks of the device."
+
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "iridium"
+
 
 	virtual
 		desc = "A key made of a fancy, silvery set of pixels."
@@ -119,7 +123,7 @@
 	New()
 		..()
 		. = rand(5, 20)
-		SPAWN_DBG(rand(1,10))
+		SPAWN(rand(1,10))
 			animate(src, pixel_y = 32, transform = matrix(., MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(. * (-1), MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -127,9 +131,11 @@
 	name = "lead key"
 
 /obj/item/device/key/onyx
-	desc = "What does this go to?"
+	desc = "A menacing onyx-like scepter with angular hand guards. Shaped a bit like the teeth of a big key, weird."
 	icon_state = "key_onyx"
 	name = "onyx key"
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "onyx"
 
 /obj/item/device/key/silver
 	desc = "What does this go to?"

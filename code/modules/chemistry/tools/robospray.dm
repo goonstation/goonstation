@@ -28,13 +28,13 @@
 	New()
 		..()
 		processing_items.Add(src)
-		src.update_icon()
+		src.UpdateIcon()
 
 	disposing()
 		..()
 		processing_items.Remove(src)
 
-	proc/update_icon()
+	update_icon()
 		if (botreagents[currentreagent] >= 1)
 			if (!src.fluid_image)
 				src.fluid_image = image(src.icon, "hypoover", -1)
@@ -52,13 +52,15 @@
 			for (var/reagent in botreagents)
 				available_chems += reagents_cache[reagent]
 		var/holder = src.loc
-		var/datum/reagent/pick = input(user, "Inject which chemical?", "Cybernetic Hypospray", null) in available_chems
+		var/datum/reagent/pick = tgui_input_list(user, "Inject which chemical?", "Cybernetic Hypospray", available_chems)
 		if (src.loc != holder)
+			return
+		if (!pick)
 			return
 		currentreagent = pick.id
 		propername = pick.name
 		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
-		update_icon()
+		UpdateIcon()
 		tooltip_rebuild = 1
 		return
 
@@ -66,7 +68,7 @@
 		. += "It is injecting [propername]. There are [botreagents[currentreagent]] units left."
 		return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(ON_COOLDOWN(src, "injection_cooldown", 0.5 SECONDS))
 			user.show_text("[src] is still recharging, give it a moment! ", "red")
 
@@ -90,12 +92,12 @@
 
 		user.visible_message("<span class='notice'><B>[user] injects [M] with [amt_prop] units of [propername].</B></span>",\
 		"<span class='notice'>You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
-		logTheThing("combat", user, M, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
 
 		M.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop
 		tooltip_rebuild = 1
-		update_icon()
+		UpdateIcon()
 		playsound(M, src.sound_inject, 80, 0)
 		return 0
 
@@ -113,7 +115,7 @@
 			botreagents[reagent] = min(amt + refill_amount, max_fill_amount)
 			if (reagent == currentreagent)
 				tooltip_rebuild = 1
-				update_icon()
+				UpdateIcon()
 
 		return 0
 

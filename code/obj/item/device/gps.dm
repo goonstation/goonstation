@@ -1,6 +1,6 @@
 /obj/item/device/gps
 	name = "space GPS"
-	desc = "Tells you your coordinates based on the nearest coordinate beacon."
+	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
 	icon_state = "gps-off"
 	item_state = "electronic"
 	var/allowtrack = 1 // defaults to on so people know where you are (sort of!)
@@ -50,7 +50,7 @@
 		if (!user)
 			return
 		src.add_dialog(user)
-		var/HTML = {"<style type="text/css">
+		var/list/HTML = list({"<style type="text/css">
 		.desc {
 			background: #21272C;
 			width: calc(100% - 5px);
@@ -93,7 +93,7 @@
 			margin: 0;
 			font-size: 12px;
 		}
-		</style>"}
+		</style>"})
 		HTML += build_html_gps_form(src, false, src.tracking_target)
 		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
@@ -134,11 +134,11 @@
 			HTML += "<div class='buttons gps'><A href='byond://?src=\ref[src];dest_cords=1;x=[T.x];y=[T.y];z=[T.z];name=[B.name]'><span><b>[B.name]</b><br><span>located at: [T.x], [T.y]</span><span style='float: right'>[src.get_z_info(T)]</span></span></A></div>"
 		HTML += "<br></div>"
 
-		user.Browse(HTML, "window=gps_[src];title=GPS;size=400x540;override_setting=1")
+		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
 		onclose(user, "gps")
 
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
@@ -173,6 +173,7 @@
 				if(!t)
 					return
 				src.identifier = t
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -270,12 +271,12 @@
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
-		if (get_dist(src,tracking_target) == 0)
+		if (GET_DIST(src,tracking_target) == 0)
 			icon_state = "gps-direct"
 		else
 			icon_state = "gps"
 
-		SPAWN_DBG(0.5 SECONDS) .()
+		SPAWN(0.5 SECONDS) .()
 
 	disposing()
 		STOP_TRACKING
@@ -292,7 +293,7 @@
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
-				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal recieved from GPS [senderName].\".")
+				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal received from GPS [senderName].\".")
 			else if (lowertext(signal.data["distress_alert"] == "clear"))
 				src.visible_message("<b>[bicon(src)] [src]</b> beeps, \"NOTICE: Distress signal cleared by GPS [senderName].\".")
 			return

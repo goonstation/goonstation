@@ -16,14 +16,14 @@
 				if (M.client)
 					M.show_message("<span class='notice'>You slipped on the floor!</span>")
 
-				playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
+				playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
-			SPAWN_DBG(0.1)
+			SPAWN(0.1)
 				step(M, M.dir)
 
 		else
 			var/obj/O = entered
-			SPAWN_DBG(0.1)
+			SPAWN(0.1)
 				step(O, O.dir)
 
 /obj/machinery/gutter
@@ -42,7 +42,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.link_gutter()
 
 	proc/link_gutter()
@@ -97,7 +97,7 @@
 
 			AM.set_loc(src.loc)
 			AM.pipe_eject(0)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				if(AM)
 					AM.throw_at(target, 5, 1)
 

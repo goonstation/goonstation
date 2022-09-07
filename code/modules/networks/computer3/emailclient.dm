@@ -263,7 +263,7 @@
 								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									var/dat = ""
-									var/end_max = max( min(mail_temp.len, max_lines) - 8, 0)
+									var/end_max = clamp(length(mail_temp), 8, max_lines) - 8
 									for (var/i = 1, i <= end_max, i++)
 										dat += "<br>[mail_temp[i]]"
 

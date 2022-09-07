@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
@@ -59,10 +59,11 @@
 				node = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 
 	update_icon()
+
 		if(src.node)
 			if(src.on)
 				icon_state = "freezer_1"
@@ -75,7 +76,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_dialog(user)
 		var/temp_text = ""
 		if(air_contents.temperature > (T0C - 20))
@@ -96,11 +97,11 @@
 		onclose(user, "freezer")
 
 	Topic(href, href_list)
-		if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 			src.add_dialog(usr)
 			if (href_list["start"])
 				src.on = !src.on
-				update_icon()
+				UpdateIcon()
 			if(href_list["temp"])
 				var/amount = text2num_safe(href_list["temp"])
 				if(amount > 0)
@@ -110,7 +111,7 @@
 			if (href_list["settemp"])
 				var/change = input(usr,"Target Temperature (-200 C - 20 C):","Enter target temperature",current_temperature - T0C) as num
 				if(!isnum_safe(change)) return
-				current_temperature = min(max(73.15, change + T0C),293.15)
+				current_temperature = clamp(change + T0C, 73.15, 293.15)
 				src.updateUsrDialog()
 				return
 

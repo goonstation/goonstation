@@ -6,7 +6,7 @@
 		location = usr
 	if(!location?.z) // we care not for null gibs
 		return
-	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
@@ -73,9 +73,12 @@
 		return
 	if (length(ejectables))
 		for (var/atom/movable/I in ejectables)
-			if(istype(I.loc, /mob))
-				var/mob/M = I.loc
-				M.u_equip(I)
+			if(istype(I.loc, /mob) && isitem(I))
+				var/obj/item/item = I
+				var/mob/M = item.loc
+				M.u_equip(item)
+				item.dropped(M)
+				item.layer = initial(item.layer)
 			I.set_loc(location)
 			ThrowRandom(I, 12, 3)
 
@@ -83,7 +86,10 @@
 	var/obj/decal/cleanable/robot_debris/gib = null
 	var/list/gibs = new()
 
-	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+	if(!location)
+		return
+
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 
 	// RUH ROH
 	elecflash(location,power=2)
@@ -91,14 +97,14 @@
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibup1"
+		gib.icon_state = "gibup"
 	gib.streak_cleanable(NORTH)
 	gibs.Add(gib)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/robot_debris,location)
 	if (prob(25))
-		gib.icon_state = "gibdown1"
+		gib.icon_state = "gibdown"
 	gib.streak_cleanable(SOUTH)
 	gibs.Add(gib)
 

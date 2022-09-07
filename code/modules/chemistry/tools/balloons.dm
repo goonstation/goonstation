@@ -21,17 +21,18 @@
 		..()
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
-			update_icon()
+			UpdateIcon()
 		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
-			update_icon()
+			UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents)
 			if (src.reagents.total_volume)
 				src.icon_state = "balloon_[src.balloon_color]_[src.reagents.has_reagent("helium") || src.reagents.has_reagent("hydrogen") ? "inflated" : "full"]"
@@ -52,7 +53,7 @@
 			return
 		if (!user && usr)
 			user = usr
-		else if (!user && !usr && ismob(src.loc))
+		else if (!user && !user && ismob(src.loc))
 			user = src.loc
 		if (!ohshit)
 			ohshit = (src.reagents.total_volume /  (src.reagents.maximum_volume - 10)) * 33
@@ -142,7 +143,7 @@
 						if ("bee")
 							A.color = "#FFDD00"
 					H.losebreath ++
-					//SPAWN_DBG(4 SECONDS)
+					//SPAWN(4 SECONDS)
 						//H.losebreath --
 					qdel(src)
 

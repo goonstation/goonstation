@@ -17,11 +17,11 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 	var/color_three_picked
 	var/color_three_mapped_to
 	var/calculated_matrix
-	var/busy
+	var/tmp/busy
 	var/using_random = FALSE
 	var/randomization_multiplier = 1
 
-	var/stage = 1
+	var/tmp/stage = 1
 
 	selected()
 		. = ..()
@@ -169,7 +169,6 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 		var/selection = (input("Manual color tweaking") as null|anything in options)
 		if(!selection) return
 
-		calculated_matrix = null // to ensure rebuilding the matrix with new inputs
 		switch(selection)
 			if("Colors 1")
 				busy = TRUE
@@ -191,6 +190,13 @@ Alt+Shift+Left Mouse Button = Set a multiplier for matrix randomization value ge
 				if(stage <= 3) stage++
 			else
 				return // no selection
+		if (stage == 4)
+			calculated_matrix = calculate_color_matrix()
+			if(!calculated_matrix)
+				boutput(usr, "<span class='alert'>Original color inputs aren't linearly independent, couldn't calculate matrix. Try again with different inputs. Reset with ctrl+leftclick or tweak manually by rightclicking the buildmode icon.</span>")
+				return
+			else
+				boutput(usr, "Calculated color matrix: <br>[json_encode(calculated_matrix)]")
 		update_text()
 		return
 

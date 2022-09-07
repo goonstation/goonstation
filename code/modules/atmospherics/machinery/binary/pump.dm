@@ -32,7 +32,7 @@ obj/machinery/atmospherics/binary/pump
 
 	attack_hand(mob/user)
 		//on = !on
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		if(node1&&node2)
@@ -72,7 +72,7 @@ obj/machinery/atmospherics/binary/pump
 
 			network2?.update = 1
 
-			use_power((target_pressure) * (0.10)) // cogwerks: adjust the multiplier if needed
+			use_power((target_pressure) * (0.1)) // cogwerks: adjust the multiplier if needed
 
 		return 1
 
@@ -105,7 +105,7 @@ obj/machinery/atmospherics/binary/pump
 
 		switch(signal.data["command"])
 			if("broadcast_status")
-				SPAWN_DBG(0.5 SECONDS) broadcast_status()
+				SPAWN(0.5 SECONDS) broadcast_status()
 
 			if("power_on")
 				on = 1
@@ -118,16 +118,16 @@ obj/machinery/atmospherics/binary/pump
 
 			if("set_output_pressure")
 				var/number = text2num_safe(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				target_pressure = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
+			SPAWN(0.5 SECONDS) broadcast_status()
 
-		update_icon()
+		UpdateIcon()
 
-obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
+obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
@@ -147,11 +147,11 @@ datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
 
 datum/pump_ui/basic_pump_ui/set_value(val_to_set)
 	our_pump.target_pressure = val_to_set
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/basic_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/basic_pump_ui/is_on()
 	return our_pump.on

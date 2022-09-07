@@ -336,7 +336,7 @@
 			resume_group_processing()
 			return
 	else
-		if(air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(air?.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			for(var/turf/simulated/member as anything in members)
 				ATMOS_TILE_OPERATION_DEBUG(member)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
@@ -374,7 +374,7 @@
 			if (b == member)
 				continue
 
-			var/dist = get_dist(b, member)
+			var/dist = GET_DIST(b, member)
 			if (minDist == null || dist < minDist)
 				minDist = dist
 */
@@ -392,6 +392,9 @@
 			ADD_MIXTURE_PRESSURE(member_air, totalPressure) // Build your own atmos disaster
 
 		LAGCHECK(LAG_REALTIME)
+
+	if(!length(members))  //bail to resolve div 0
+		return
 
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)

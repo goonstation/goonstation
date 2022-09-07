@@ -191,8 +191,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
@@ -202,10 +202,13 @@ proc/debug_map_apc_count(delim,zlim)
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Open Profiler"
 
-		admin_only
+		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
 		winset( usr, null, "command=.command" )
+		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
+				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
+			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
 
 /datum/infooverlay
 	var/name = null
@@ -247,6 +250,15 @@ proc/debug_map_apc_count(delim,zlim)
 			if(theTurf.loc:do_not_irradiate)
 				img.app.color = "#0f0"
 			else
+				img.app.color = "#f00"
+
+	proximity
+		name = "proximity turfs"
+		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf:checkinghasproximity)
+				img.app.color = "#0f0"
+			else if(theTurf:neighcheckinghasproximity)
 				img.app.color = "#f00"
 
 	areas
@@ -344,7 +356,7 @@ proc/debug_map_apc_count(delim,zlim)
 					/*
 					var/list/borders_space = list()
 					for(var/turf/spaceses in group.space_borders)
-						if(get_dist(spaceses, theTurf) == 1)
+						if(GET_DIST(spaceses, theTurf) == 1)
 							var/dir = get_dir(theTurf, spaceses)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
@@ -359,7 +371,7 @@ proc/debug_map_apc_count(delim,zlim)
 					*/
 					var/list/borders_individual = list()
 					for(var/turf/ind in group.border_individual)
-						if(get_dist(ind, theTurf) == 1)
+						if(GET_DIST(ind, theTurf) == 1)
 							var/dir = get_dir(theTurf, ind)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_individual[++borders_individual.len] = "NORTH"
@@ -373,7 +385,7 @@ proc/debug_map_apc_count(delim,zlim)
 						img.app.desc += "<br/>(borders individual to the [borders_individual.Join(" ")])"
 					var/list/borders_group = list()
 					for(var/turf/simulated/T in group.enemies)
-						if(get_dist(T, theTurf) == 1)
+						if(GET_DIST(T, theTurf) == 1)
 							var/dir = get_dir(theTurf, T)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_group[++borders_group.len] = "NORTH"
@@ -954,12 +966,6 @@ proc/debug_map_apc_count(delim,zlim)
 		proc/is_ok(atom/A)
 			return TRUE
 
-	checkingexit
-		name = "checkingexit"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
-
 	blocked_dirs
 		name = "blocked dirs"
 		help = "Displays dir flags of blocked turf exits"
@@ -1108,6 +1114,48 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				processed_areas.len = 0
 
+	lightswitches //This overlay is a kitbash of areas and active areas, code might be odd as a result
+		name = "light switches"
+		help = {"Shows amount of light switches for non-space areas.<br>
+		Red is none, green is at least one, white turfs have a light switch located on them.<br>
+		This overlay looks only at physical location and does <b>not</b> account for light switches that have otherarea set up."}
+		var/list/area/processed_areas
+		var/list/turf/switch_turfs = list() //Turfs with a light switch on them, to be coloured separately
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/area/area = theTurf.loc
+			var/switchcount = 0
+			var/list/lcolor = hex_to_rgb_list(debug_color_of(area))
+			var/color_factor = 4
+
+			if(!(area in processed_areas))
+				for (var/obj/machinery/light_switch/someswitch in area.machines)
+					switchcount += 1
+					switch_turfs += someswitch.loc
+				img.app.overlays = list(src.makeText(switchcount, align_left=TRUE))
+				processed_areas += area
+				processed_areas[area] = switchcount //Store this for later turfs in the same area
+
+			if(processed_areas[area]) //this reads the area's stored switch count
+				if (theTurf in switch_turfs) //This turf has a switch on it
+					img.app.color = "#ffffff"
+					img.app.alpha = 100
+				else //Area has switch(es) - This code is directly lifted BTW but it somehow makes the area's debug colour a lot greener
+					lcolor[1] /= color_factor
+					lcolor[3] /= color_factor
+					lcolor[2] = 255 - (255 - lcolor[2]) / color_factor
+					img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			else //Area has none - this time it's tinted redder
+				lcolor[2] /= color_factor
+				lcolor[3] /= color_factor
+				lcolor[1] = 255 - (255 - lcolor[2]) / color_factor
+				img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+
+			img.app.desc = "Area: [area.name]<br/>Number of switches: [processed_areas[area]]" //update tooltip only after the area is processed
+
+
+		OnStartRendering(client/C)
+			processed_areas = list()
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
@@ -1221,7 +1269,7 @@ proc/info_overlay_choices()
 /client/proc/SetInfoOverlay(name in info_overlay_choices())
 	set name = "Debug Overlay"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")
@@ -1234,8 +1282,8 @@ proc/info_overlay_choices()
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
-		activeOverlay = null
 		qdel(activeOverlay)
+		activeOverlay = null
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()
@@ -1243,7 +1291,7 @@ proc/info_overlay_choices()
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			var/client/X = src
 			while (X?.activeOverlay)
 				// its a debug overlay so f u

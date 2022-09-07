@@ -785,7 +785,7 @@
 		if (cmptext(command, "-p") && initlist.len > 2)
 			. = text2num_safe(initlist[2])
 			if (isnum(.))
-				. = max(0, min(round(.), 64))
+				. = clamp(round(.), 0, 64)
 				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
 				if (istype(possibleDrivers))
 					for (var/x = 1, x <= possibleDrivers.len, x++)
@@ -1064,7 +1064,7 @@
 				if (!isnum(data["time"]))
 					return ESIG_GENERIC
 
-				var/newtime = clamp("time", 0, MAX_NUKE_TIME)
+				var/newtime = clamp(data["time"], MIN_NUKE_TIME, MAX_NUKE_TIME)
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
@@ -1132,7 +1132,7 @@
 				if (!isnum(stat_time))
 					return
 
-				src.nuke_time = min(max(stat_time, 0), 512)
+				src.nuke_time = clamp(stat_time, 0, 512)
 
 				src.nuke_active = (datalist["active"] == "1")
 
@@ -1227,7 +1227,7 @@
 								logUser = "Terminal \[[src.useracc.user_id]]"
 
 						message_admins("NUKE: Research Sector nuclear charge activated by [key_name(logUser)].")
-						logTheThing("combat", logUser, null, "Activated the Research Sector nuclear charge.")
+						logTheThing(LOG_COMBAT, logUser, "Activated the Research Sector nuclear charge.")
 
 						message_user("!Transmitting Activation Code!")
 					if (ESIG_USR1)
@@ -1489,7 +1489,7 @@
 							message_device("command=upload&overwrite=1&newmodel=[model]", locatedTask)
 
 							src.contents_mirror -= locatedTask
-							SPAWN_DBG(0.5 SECONDS)
+							SPAWN(0.5 SECONDS)
 								//qdel(locatedTask)
 								if (locatedTask)
 									locatedTask.dispose()
@@ -2117,13 +2117,13 @@
 			var/newCover = data["cover"]
 
 			if (!isnull(newEquip))
-				commandString += "&equip=[round(max(0, min(newEquip, 3)))]"
+				commandString += "&equip=[round(clamp(newEquip, 0, 3))]"
 
 			if (!isnull(newLight))
-				commandString += "&light=[round(max(0, min(newLight, 3)))]"
+				commandString += "&light=[round(clamp(newLight, 0, 3))]"
 
 			if (!isnull(newEnviron))
-				commandString += "&environ=[round(max(0, min(newEnviron, 3)))]"
+				commandString += "&environ=[round(clamp(newEnviron, 0, 3))]"
 
 			if (!isnull(newCover))
 				commandString += "&cover=[newCover ? "1" : "0"]"
@@ -2155,13 +2155,13 @@
 				var/newCover = text2num_safe(datalist["cover"])
 
 				if (!isnull(newEquip))
-					apcEquip = round(max(0, min(newEquip, 3)))
+					apcEquip = round(clamp(newEquip, 0, 3))
 
 				if (!isnull(newLight))
-					apcLight = round(max(0, min(newLight, 3)))
+					apcLight = round(clamp(newLight, 0, 3))
 
 				if (!isnull(newEnviron))
-					apcEnviron = round(max(0, min(newEnviron, 3)))
+					apcEnviron = round(clamp(newEnviron, 0, 3))
 
 				if (newCover)
 					apcCover = 1
@@ -2407,7 +2407,7 @@
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
 					if (isnum(data["value"]))
-						data["value"] = round(max(1, min(data["value"], 400))) // 400 is highest stimulus value for heater
+						data["value"] = round(clamp(data["value"], 1, 400)) // 400 is highest stimulus value for heater
 
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
@@ -2434,7 +2434,7 @@
 				if (!isnum(pulseDuration))
 					pulseDuration = 1
 
-				pulseDuration = max(1, min(pulseDuration, 255))
+				pulseDuration = clamp(pulseDuration, 1, 255)
 				message_device("command=pulse&duration=[pulseDuration]")
 				return ESIG_SUCCESS
 
@@ -2981,7 +2981,7 @@
 				return
 
 			if ("remove_report")
-				. = round( max(0, min(text2num_safe(datalist["filenum"]),127 ) ))
+				. = round( clamp(text2num_safe(datalist["filenum"]), 0, 127 ) )
 				if (!isnum(.))
 					return
 

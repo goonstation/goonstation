@@ -176,7 +176,7 @@
 			CRASH("human HUD created with no master")
 		master = M
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(master?.disposed)
 				qdel(src)
 				return
@@ -310,7 +310,26 @@
 				if (I)
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
+					// you can write multiline macros with \, please god don't write 400 character macros on one line
+					#define autoequip_slot(slot, var_name)\
+						if (master.can_equip(I, master.slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
+						{\
+							master.u_equip(I);\
+							var/obj/item/C = master.var_name;\
+							if (C)\
+							{\
+								/*master.u_equip(C);*/\
+								C.unequipped(master);\
+								src.remove_item(C);\
+								master.var_name = null;\
+								if(!master.put_in_hand(C))\
+								{\
+									master.drop_from_slot(C, get_turf(C))\
+								}\
+							}\
+							master.force_equip(I, master.slot);\
+							return\
+						}
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
 					autoequip_slot(slot_wear_id, wear_id)
@@ -414,17 +433,17 @@
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_x > 16)
 					if (icon_y > 16)
-						master.a_intent = INTENT_DISARM
+						master.set_a_intent(INTENT_DISARM)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_HARM
+						master.set_a_intent(INTENT_HARM)
 						master.check_for_intent_trigger()
 				else
 					if (icon_y > 16)
-						master.a_intent = INTENT_HELP
+						master.set_a_intent(INTENT_HELP)
 						master.check_for_intent_trigger()
 					else
-						master.a_intent = INTENT_GRAB
+						master.set_a_intent(INTENT_GRAB)
 						master.check_for_intent_trigger()
 				src.update_intent()
 
@@ -439,8 +458,25 @@
 			if ("pull")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.remove_pulling()
-				src.update_pulling()
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
+						to_pull.pull(master)
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -686,7 +722,7 @@
 	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
 		if (!H) return
 		var/obj/item/W = null
-		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W.MouseDrop_T(O,user); }
+		#define mdrop_slot(slot) W = master.get_slot(master.slot); if (W) { W._MouseDrop_T(O,user); }
 		switch(H.id)
 			if("belt")
 				mdrop_slot(slot_belt)
@@ -755,8 +791,9 @@
 		var/newDesc = ""
 		newDesc += "<div><img src='[resource("images/tooltips/heat.png")]' alt='' class='icon' /><span>Total Resistance (Heat): [master.get_heat_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/cold.png")]' alt='' class='icon' /><span>Total Resistance (Cold): [master.get_cold_protection()]%</span></div>"
-		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/radiation.png")]' alt='' class='icon' /><span>Total Resistance (Radiation): [master.get_rad_protection() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/disease.png")]' alt='' class='icon' /><span>Total Resistance (Disease): [master.get_disease_protection()]%</span></div>"
+		newDesc += "<div><img src='[resource("images/tooltips/chemical.png")]' alt='' class='icon' /><span>Total Resistance (Chemical): [master.get_chem_protection()]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/explosion.png")]' alt='' class='icon' /><span>Total Resistance (Explosion): [master.get_explosion_resistance() * 100]%</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/bullet.png")]' alt='' class='icon' /><span>Total Ranged Protection: [master.get_ranged_protection()]</span></div>"
 		newDesc += "<div><img src='[resource("images/tooltips/melee.png")]' alt='' class='icon' /><span>Total Melee Armor (Body): [master.get_melee_protection("chest")]</span></div>"
@@ -1025,7 +1062,8 @@
 			health.tooltipTheme = "healthDam healthDam[stage]"
 
 	proc/update_blood_indicator()
-		if (!bleeding || isdead(master))
+		if (!src.bleeding) return //doesn't have a hud element to update
+		if (isdead(master))
 			bleeding.icon_state = "blood0"
 			bleeding.tooltipTheme = "healthDam healthDam0"
 			return

@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_gearspawn
 	name = "Order hunting gear"
-	desc = "Teleports hunting gear to your location."
+	desc = "Equip your hunting gear."
+	icon_state = "gearspawn"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0
@@ -43,7 +44,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, __red("<B>Request acknowledged. You must stand still.</B>"))
+		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
 
 	onUpdate()
 		..()
@@ -61,7 +62,7 @@
 		var/datum/abilityHolder/H = transform.holder
 
 		if (M.hunter_transform() != 1)
-			boutput(M, __red("Gearspawn failed. Make sure you're a human and try again later."))
+			boutput(M, "<span class='alert'>Gearspawn failed. Make sure you're a human and try again later.</span>")
 		else
 			H.removeAbility(/datum/targetable/hunter/hunter_gearspawn)
 
@@ -69,4 +70,4 @@
 		..()
 
 		var/mob/living/M = owner
-		boutput(M, __red("You were interrupted!"))
+		boutput(M, "<span class='alert'>You were interrupted!</span>")

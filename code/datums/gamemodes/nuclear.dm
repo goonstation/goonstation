@@ -90,14 +90,14 @@
 			"the robotics lab" = list(/area/station/medical/robotics))
 
 		else if (ismap ("DONUT2"))
-			target_locations = list("the bridge" = list(/area/station/bridge),
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"the public market" = list(/area/station/crew_quarters/market),
+			"the stock exchange" = list(/area/station/crew_quarters/stockex),
 			"the chapel" = list(/area/station/chapel/sanctuary),
-			"the medbay" = list(/area/station/medical/medbay),
-			"the genetic lab" = list(/area/station/medical/research),
-			"the public tool storage" = list(/area/station/storage/tools),
-			"the brig" = list(/area/station/security/brig),
-			"the cargo bay(QM)" = list(/area/station/quartermaster/office),
-			"the hydroponics bay(Botany)" = list(/area/station/hydroponics/bay))
+			"the bridge" = list(/area/station/bridge),
+			"the crew lounge" = list(/area/station/crew_quarters/quarters),
+			"the main brig area" = list(/area/station/security/brig),
+			"the main station pod bay" = list(/area/station/hangar/main))
 
 
 		else // COG1
@@ -116,7 +116,7 @@
 	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
-		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
+		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 
 
@@ -141,7 +141,7 @@
 		token_players.Remove(tplayer)
 		num_synds--
 		num_synds = max(num_synds, 0)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_syndicates = antagWeighter.choose(pool = possible_syndicates, role = ROLE_NUKEOP, amount = num_synds, recordChosen = 1)
@@ -168,7 +168,7 @@
 /datum/game_mode/nuclear/post_setup()
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
@@ -193,6 +193,7 @@
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
 			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
+			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
@@ -201,10 +202,10 @@
 			equip_syndicate(synd_mind.current, 0)
 			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
 			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
+			synd_mind.current.show_antag_popup("nukeop")
 		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
-		SHOW_NUKEOP_TIPS(synd_mind.current)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
@@ -217,7 +218,7 @@
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return
@@ -272,43 +273,40 @@
 
 	return 0
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/nuclear/victory_msg()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			boutput(world, "<FONT size = 3><B>Total Syndicate Victory</B></FONT>")
-			boutput(world, "The operatives have destroyed [station_name(1)]!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
+					The operatives have destroyed [station_name(1)]!"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			boutput(world, "<FONT size = 3><B>Syndicate Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
+					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
 		if(0) // Uhhhhhh
-			boutput(world, "<FONT size = 3><B>Stalemate</B></FONT>")
-			boutput(world, "Everybody loses!")
+			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
+					Everybody loses!"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			boutput(world, "<FONT size = 3><B>Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived.")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			boutput(world, "<FONT size = 3><B>Total Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+
+/datum/game_mode/nuclear/declare_completion()
+	boutput(world, src.victory_msg())
 
 	if(finished > 0)
 		var/value = world.load_intra_round_value("nukie_loss")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorloss")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_loss", value + 1)
 	else if(finished < 0)
 		var/value = world.load_intra_round_value("nukie_win")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorwin")
+#endif
 		if(isnull(value))
 			value = 0
 		world.save_intra_round_value("nukie_win", value + 1)
@@ -406,7 +404,7 @@ var/syndicate_name = null
 #elif defined(HALLOWEEN)
 	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint", "Donk", "Elec")
 #endif
 	// Suffix
 	if (prob(80))
@@ -414,7 +412,7 @@ var/syndicate_name = null
 
 		// Full
 		if (prob(60))
-			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel")
+			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel", "Company")
 		// Broken
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
@@ -432,7 +430,7 @@ var/syndicate_name = null
 	name = "Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 1
 
@@ -453,7 +451,7 @@ var/syndicate_name = null
 			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
 		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 

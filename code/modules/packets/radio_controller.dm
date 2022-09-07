@@ -105,6 +105,6 @@ function sortTable(n) {
 /client/proc/dbg_radio_controller()
 	set name = "Inspect Radio Frequencies"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	admin_only
+	ADMIN_ONLY
 
 	global.radio_controller.debug_window(src)

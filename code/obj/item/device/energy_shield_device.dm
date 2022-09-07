@@ -4,7 +4,7 @@
 	icon_state = "enshield0"
 	flags = FPRINT | TABLEPASS| CONDUCT  | ONBELT
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -43,7 +43,7 @@
 				boutput(user, "<span class='alert'>The impact temporarily weakens the shield.</span>")
 				var/pre_protect = protection
 				protection -= 5
-				SPAWN_DBG(30 SECONDS) protection += 5
+				SPAWN(30 SECONDS) protection += 5
 				return max(pre_protect,0)
 
 		turn_off()
@@ -75,7 +75,7 @@
 			if(!can_use())
 				turn_off()
 				return
-			SPAWN_DBG(1 SECOND) work()
+			SPAWN(1 SECOND) work()
 
 		can_use()
 			if(!user || !ismob(loc) || user != loc)

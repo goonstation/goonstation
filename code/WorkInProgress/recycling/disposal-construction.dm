@@ -155,7 +155,7 @@
 				level = 1
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
-			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 		else if(isweldingtool(I))
 			if(I:try_weld(user, 2, noisy = 2))
@@ -170,7 +170,7 @@
 					if (ploc != loc)
 						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
 						ploc = loc
-						SPAWN_DBG(0)
+						SPAWN(0)
 							robogibs(ploc)
 							//if (isrestrictedz(ploc.z))
 								//explosion_new(src, ploc, 3) // okay yes we don't need to explode people for this
@@ -183,8 +183,9 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
-					P.updateicon()
+					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
+					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")
 
 					qdel(src)
 				else

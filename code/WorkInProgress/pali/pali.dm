@@ -1,6 +1,6 @@
 // im pali
 
-//bonk
+//bonk 2
 
 
 // Pill of sheltestgrog for my office
@@ -20,11 +20,11 @@
 	name = "beepsky box"
 	desc = "A box of large Beepsky-shaped bullets"
 	icon_state = "lmg_ammo"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/special/spawner/beepsky
 
-	caliber = 2
+	ammo_cat = AMMO_BEEPSKY
 	icon_dynamic = 1
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
@@ -35,7 +35,7 @@
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
-	caliber = 2 // hell if I know
+	ammo_cats = list(AMMO_BEEPSKY)  // hell if I know
 	max_ammo_capacity = 100
 	auto_eject = 0
 
@@ -115,7 +115,7 @@
 	fits_under_table = 1
 	good_grip = 1
 	bird_call_msg = "honks"
-	bird_call_sound = "sound/voice/animal/goose.ogg"
+	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	health_brute = 50
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
@@ -191,7 +191,7 @@
 	..()
 	src.transform = matrix() * 0
 	animate(src, transform = matrix(), time = 1 SECOND, easing = SINE_EASING)
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		new /obj/effects/void_break(src.loc)
 		sleep(0.5 SECONDS)
 		critter_spam()
@@ -304,7 +304,7 @@
 			var/obj/item/I = pick(src.contents)
 			if(istype(I))
 				src.last_item_bump = I
-				SPAWN_DBG(0)
+				SPAWN(0)
 					src.weapon_attack(AM, I, 1)
 
 	death(gibbed)
@@ -323,13 +323,13 @@
 			AM.set_density(0)
 			AM.throw_at(pick(targets), rand(1, 10), rand(1, 15), allow_anchored=TRUE)
 		. = ..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/atom/movable/AM in to_densify)
 				AM.set_density(TRUE)
 			src.transforming = 1
 			src.canmove = 0
 			src.icon = null
-			APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 			if (src.mind || src.client)
 				src.ghostize()
 			qdel(src)
@@ -400,7 +400,7 @@
 	unequipped(var/mob/user)
 		..()
 		animate(user.get_filter("muscly"), size=0, time=1 SECOND, easing=SINE_EASING)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			user.remove_filter("muscly")
 
 
@@ -466,3 +466,11 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
+
+
+
+
+/obj/storage/closet/extradimensional
+	New()
+		..()
+		src.setMaterial(getMaterial("negativematter"))

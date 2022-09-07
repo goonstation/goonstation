@@ -3,7 +3,7 @@ var/global/datum/processSchedulerView/processSchedulerView
 /datum/processSchedulerView
 
 /datum/processSchedulerView/Topic(href, href_list)
-	usr_admin_only
+	USR_ADMIN_ONLY
 	if (!href_list["action"])
 		return
 

@@ -58,10 +58,9 @@
 	var/datum/geneboothproduct/selected_product = null
 	var/list/offered_genes = list()
 
-	var/spam_time = 0
 	var/started = 0
 	mats = 40
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 
 	var/datum/light/light
 	var/light_r =0.88
@@ -109,8 +108,10 @@
 		if (occupant)
 			if (!powered())
 				eject_occupant(0)
-			if (occupant.loc != src)
+			if (occupant?.loc != src)
 				eject_occupant(0)
+			if(!occupant)
+				return
 
 			started++
 			if (started == 2)
@@ -123,7 +124,7 @@
 		else if (started)
 			eject_occupant(0)
 
-		updateicon()
+		UpdateIcon()
 		..()
 
 
@@ -131,6 +132,11 @@
 		if (occupant)
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
+
+		if (status & (NOPOWER | BROKEN))
+			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			return
+
 
 		if (length(offered_genes))
 			var/list/names = list()
@@ -147,10 +153,6 @@
 					if (name_sel == P.name)
 						select_product(P)
 						break
-			if(occupant && occupant != user)
-				user.show_text("There's someone else inside!")
-				return
-
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
@@ -207,7 +209,7 @@
 							if(!selected_product || selected_product.locked)
 								selected_product = null
 								just_pick_anything()
-								updateicon()
+								UpdateIcon()
 							reload_contexts()
 
 			show_admin_panel(usr)
@@ -219,10 +221,10 @@
 	proc/select_product(var/datum/geneboothproduct/P)
 		selected_product = P
 		abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-		updateicon()
+		UpdateIcon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, extrarange = -15, pitch = 0.60)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
 
 	proc/just_pick_anything()
 		for (var/datum/geneboothproduct/P as anything in offered_genes)
@@ -230,17 +232,17 @@
 				continue
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-			updateicon()
+			UpdateIcon()
 			break
 
-	proc/updateicon()
+	update_icon()
 		if (powered())
 			light.enable()
 			if (occupant && started>1)
 				UpdateOverlays(workingoverlay, "abil", 0, 1)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
-				playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, pitch = 1.4)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
 				if (entry_time + process_time < world.timeofday)
 					eject_occupant()
 			else
@@ -280,7 +282,7 @@
 				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1)
 			occupant = null
 
-			updateicon()
+			UpdateIcon()
 
 		started = 0
 		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
@@ -359,6 +361,10 @@
 	Cross(var/mob/M)
 		.= ..()
 		if (M && M.y == src.y)
+			if (src.status & (NOPOWER | BROKEN))
+				if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+					boutput(M, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+				return
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
@@ -369,23 +375,21 @@
 					entry_time = world.timeofday
 					started = 0
 
-					if (world.time > spam_time + 3 SECONDS)
-						playsound(src.loc, "sound/machines/heater_on.ogg", 90, 1, pitch = 0.78)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+						playsound(src.loc, 'sound/machines/heater_on.ogg', 90, 1, pitch = 0.78)
 						M.show_text("[src] is warming up. Please hold still.", "blue")
-						spam_time = world.time
 
-					updateicon()
+					UpdateIcon()
 					.= 1
 				else
-					if (world.time > spam_time + 3 SECONDS)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
 						M.show_text("You already have the offered mutation!", "blue")
-						spam_time = world.time
 
 
 	mob_flip_inside(var/mob/user)
 		..(user)
 		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
-		if (prob(8))
+		if (prob(33))
 			src.eject_occupant(add_power = 0)
 
 	relaymove(mob/user, direction)
@@ -394,14 +398,17 @@
 				if (occupant == user && !(started>1))
 					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
 
 //next :
 	//sound effects
