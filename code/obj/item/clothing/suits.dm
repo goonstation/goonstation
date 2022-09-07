@@ -1818,3 +1818,92 @@
 	desc = "A replica of an old space suit. Seems to still work, though."
 	icon_state = "space_replica"
 	item_state = "space_replica"
+
+// RP Wrestlemania 2022 stuff by Walpvrgis, now available as crate loot woooo
+
+/obj/item/clothing/suit/torncloak
+	name = "Torn Cloak"
+	desc = "You and this cloak have been through a lot together."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
+	icon_state = "torncape_red"
+	item_state = "torncape_red"
+
+	red
+		name = "Red Torn Cloak"
+		icon_state = "torncape_red"
+		item_state = "torncape_red"
+
+	black
+		name = "Black Torn Cloak"
+		icon_state = "torncape_black"
+		item_state = "torncape_black"
+
+	blue
+		name = "Blue Torn Cloak"
+		icon_state = "torncape_blue"
+		item_state = "torncape_blue"
+
+	brown
+		name = "Brown Torn Cloak"
+		icon_state = "torncape_brown"
+		item_state = "torncape_brown"
+
+	purple
+		name = "Purple Torn Cloak"
+		icon_state = "torncape_purple"
+		item_state = "torncape_purple"
+
+	green
+		name = "Green Torn Cloak"
+		icon_state = "torncape_green"
+		item_state = "torncape_green"
+
+/obj/item/clothing/suit/scarfcape
+	name = "Adventurous Scarf"
+	desc = "The twin scarf tails blow in the wind as you prepare for ADVENTURE."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
+	icon_state = "scarfcape_red"
+	item_state = "scarfcape_red"
+
+	red
+		name = "Red Adventurous Scarf"
+		icon_state = "scarfcape_red"
+		item_state = "scarfcape_red"
+
+	black
+		name = "Black Adventurous Scarf"
+		icon_state = "scarfcape_black"
+		item_state = "scarfcape_black"
+
+	white
+		name = "White Adventurous Scarf"
+		icon_state = "scarfcape_white"
+		item_state = "scarfcape_white"
+
+	blue
+		name = "Blue Adventurous Scarf"
+		icon_state = "scarfcape_blue"
+		item_state = "scarfcape_blue"
+
+	purple
+		name = "Purple Adventurous Scarf"
+		icon_state = "scarfcape_purple"
+		item_state = "scarfcape_purple"
+
+	green
+		name = "Green Adventurous Scarf"
+		icon_state = "scarfcape_green"
+		item_state = "scarfcape_green"
+
+/obj/item/clothing/suit/fakebeewings
+	name = "Fake Bee Wings"
+	desc = "Made out of crinkly cellophane and a coat-hanger, but does the trick!"
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
+	icon_state = "fakebeewings"
+	item_state = "fakebeewings"
