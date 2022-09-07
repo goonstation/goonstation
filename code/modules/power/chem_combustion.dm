@@ -14,9 +14,31 @@
 	var/output_multiplier = 1 // for bigger generators?
 	var/last_output
 
+	// reagents
+
+	// think heat producing, not explosive
+	var/valid_fuels = list(
+		"dbreath" = 60000,
+		"kerosene" = 45000,
+		"firedust" = 30000,
+		"phlogiston" = 25000,
+		"napalm_goo" = 20000,
+		"diethylamine" = 18000,
+		"acetone" = 14000,
+		"ethanol" = 12000,
+		"oil" = 10000,
+		"fuel" = 8000,
+		"pyrosium" = 7000,
+		"plasma" = 6000,
+		"phosphorus" = 5000,
+		"magnesium" = 4000
+	) // wattage
+
+	// tanks
 	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank
 	var/obj/item/tank/inlet_tank
 
+	// images
 	var/image/fuel_tank_image
 	var/image/inlet_tank_image
 
@@ -103,7 +125,7 @@
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/reagent_containers/food/drinks/fueltank))
-					if (!src.get_average_volatility(I.reagents))
+					if (!src.get_fuel_power(I.reagents))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any fuel!</span>")
 						return
 
@@ -164,7 +186,7 @@
 				boutput(user, "<span class='alert'>There appears to be a fuel tank loaded already!</span>")
 				return
 
-			if (!src.get_average_volatility(W.reagents))
+			if (!src.get_fuel_power(W.reagents))
 				boutput(user, "<span class='alert'>The [W.name] doesn't contain any fuel!</span>")
 				return
 
@@ -198,9 +220,9 @@
 		if (!src || !src.active)
 			return
 
-		var/average_volatility = get_average_volatility(src.fuel_tank.reagents)
+		var/fuel_power = get_fuel_power(src.fuel_tank.reagents)
 		var/available_oxygen = src.check_available_oxygen()
-		if (!available_oxygen || !average_volatility)
+		if (!available_oxygen || !fuel_power)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
 			return
@@ -217,72 +239,42 @@
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		src.last_output = (((average_volatility * (available_oxygen * 5)) * src.output_multiplier) * mult) KILO WATTS
+		src.last_output = (fuel_power * available_oxygen * src.output_multiplier) * mult // TODO: richer fuel mixture = more power
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = src.atmos_drain_rate * average_volatility * src.output_multiplier
+			payload.carbon_dioxide = (src.atmos_drain_rate * src.output_multiplier) * mult // TODO: richer fuel mixture = more CO2
 			payload.temperature = T20C
 			T.assume_air(payload)
 
 		if (src.inlet_tank)
-			src.inlet_tank.air_contents.remove(src.atmos_drain_rate * average_volatility * src.output_multiplier)
+			src.inlet_tank.air_contents.remove((src.atmos_drain_rate * src.output_multiplier) * mult) // TODO: adjustable fuel/air ratio
 		else
-			T.air.remove(src.atmos_drain_rate * average_volatility * src.output_multiplier)
+			T.air.remove((src.atmos_drain_rate * src.output_multiplier) * mult)
 
-		src.fuel_tank.reagents.remove_any(src.fuel_drain_rate * src.output_multiplier)
+		src.fuel_tank.reagents.remove_any((src.fuel_drain_rate * src.output_multiplier) * mult) // TODO: adjustable fuel/air ratio
 
 		src.UpdateIcon()
 		src.updateDialog()
 
-#define FUEL_QUALITY_VERY_HIGH 10
-#define FUEL_QUALITY_HIGH 6
-#define FUEL_QUALITY_AVERAGE 3
-#define FUEL_QUALITY_LOW 2
-#define FUEL_QUALITY_VERY_LOW 1
-
-	proc/get_average_volatility(datum/reagents/R)
+	proc/get_fuel_power(datum/reagents/R)
 		if (!R || !R.total_volume)
 			return
 
 		var/average = 0
 		for (var/reagent_id in R.reagent_list)
 			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-			if (current_reagent)
-				switch(reagent_id)
-					if ("foof", "kerosene", "nitrotri_dry", "dbreath")
-						average += (FUEL_QUALITY_VERY_HIGH * current_reagent.volume)
 
-					if ("blackpowder", "phlogiston", "napalm_goo", "sorium", "firedust")
-						average += (FUEL_QUALITY_HIGH * current_reagent.volume)
-
-					if ("fuel", "acetone")
-						average += (FUEL_QUALITY_AVERAGE * current_reagent.volume)
-
-					if ("oil", "butter", "diethylamine", "ethanol")
-						average += (FUEL_QUALITY_LOW * current_reagent.volume)
-
-					if ("plasma", "magnesium", "phosphorus")
-						average += (FUEL_QUALITY_VERY_LOW * current_reagent.volume)
-
-					else
-						var/datum/reagent/fooddrink/alcoholic/current_alcoholic_reagent = current_reagent
-						if (istype(current_alcoholic_reagent) && current_alcoholic_reagent.alch_strength >= 0.5)
-							average += 3
+			if (reagent_id in src.valid_fuels)
+				average += src.valid_fuels[reagent_id] * current_reagent.volume
 
 		if (!average)
 			return FALSE
 
 		return average / R.total_volume
-
-#undef FUEL_QUALITY_VERY_HIGH
-#undef FUEL_QUALITY_HIGH
-#undef FUEL_QUALITY_AVERAGE
-#undef FUEL_QUALITY_LOW
-#undef FUEL_QUALITY_VERY_LOW
 
 	proc/start_engine()
 		if (!src.active)
@@ -313,7 +305,7 @@
 		if (!anchored || !src.fuel_tank)
 			return FALSE
 
-		if (!src.get_average_volatility(src.fuel_tank.reagents) || !src.check_available_oxygen())
+		if (!src.get_fuel_power(src.fuel_tank.reagents) || !src.check_available_oxygen())
 			return FALSE
 
 		return TRUE
