@@ -1,4 +1,9 @@
 
+(t)wed sep 07 22
+(u)Stonepillar
+(p)10537
+(e)|
+(*)Fixed syndicate drones not dropping their loot (including sharkdrones!)
 (t)tue sep 06 22
 (u)Sord
 (*)The Mining Outpost and Diner have swapped places.
