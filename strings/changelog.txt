@@ -2,6 +2,9 @@
 (t)tue sep 06 22
 (u)Sord
 (*)The Mining Outpost and Diner have swapped places.
+(u)Sord
+(e)|
+(+)The mining shuttle, now renamed, also stops at all three locations. Station, Diner, and Mining Outpost.
 (t)mon sep 05 22
 (u)LeahTheTech
 (p)10656

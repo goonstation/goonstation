@@ -119,13 +119,6 @@
 	},
 /turf/space,
 /area/noGenerate)
-"bY" = (
-/obj/machinery/light/incandescent,
-/obj/rack,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "ce" = (
 /obj/lattice{
 	dir = 4;
@@ -181,6 +174,12 @@
 /turf/space,
 /area/noGenerate)
 "eT" = (
+/turf/simulated/floor/grime,
+/area/mining/dock)
+"fh" = (
+/obj/machinery/computer/mining_shuttle{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "fK" = (
@@ -281,13 +280,6 @@
 "nn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/miningoutpost)
-"no" = (
-/obj/table/auto,
-/obj/item/reagent_containers/food/snacks/biscuit,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "np" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -573,15 +565,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
-"oV" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/dock)
 "oX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/miningoutpost)
@@ -753,13 +736,6 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/caution/east,
 /area/tech_outpost)
-"qa" = (
-/obj/rack,
-/obj/item/satchel/mining,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "qc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -890,11 +866,6 @@
 "qE" = (
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/genetics)
-"qG" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "qH" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame,
@@ -906,12 +877,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
-"qI" = (
-/obj/item/rods/steel,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "qK" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -1014,16 +979,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/mining/refinery)
-"rr" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "rs" = (
 /obj/stool/chair{
 	dir = 4
@@ -1183,14 +1138,6 @@
 "sm" = (
 /turf/simulated/floor/caution/south,
 /area/tech_outpost)
-"so" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
 "sp" = (
 /obj/table/reinforced/auto,
 /obj/item/mining_tool/power_pick,
@@ -1340,14 +1287,6 @@
 /obj/decal/fakeobjects/lighttube_broken,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
-"tg" = (
-/obj/rack,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "th" = (
 /obj/machinery/computer/power_monitor{
 	dir = 8
@@ -1611,16 +1550,6 @@
 	dir = 4
 	},
 /area/tech_outpost)
-"uV" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "uX" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
@@ -1922,13 +1851,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
-"wC" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
 "wD" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/caution/north{
@@ -1991,31 +1913,6 @@
 "xc" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/storage/tools)
-"xe" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
-"xh" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "xj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2441,14 +2338,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/caution/east,
 /area/mining/hangar)
-"zK" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "zL" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
@@ -2661,12 +2550,6 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
-"AN" = (
-/obj/storage/crate,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "AO" = (
 /obj/storage/crate,
 /obj/item/clothing/head/genki,
@@ -2714,12 +2597,6 @@
 /obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
-"AX" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/mining/dock)
 "AY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2773,6 +2650,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/mining/hangar)
 "Br" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
 /turf/simulated/floor/caution/west,
 /area/mining/dock)
 "Bt" = (
@@ -2832,12 +2712,6 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
 /area/mining/manufacturing)
-"BG" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "BJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2981,17 +2855,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/mining/refinery)
-"Cq" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
 "Cu" = (
 /turf/simulated/floor/caution/north,
 /area/mining/refinery)
@@ -3260,13 +3123,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
-"EA" = (
-/obj/machinery/light/incandescent,
-/obj/landmark/spawner/loot,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "EJ" = (
 /obj/lattice{
 	dir = 6;
@@ -3390,9 +3246,6 @@
 "Fa" = (
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/genetics)
-"Fb" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/mining/dock)
 "Fe" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -3423,15 +3276,6 @@
 /obj/decal/fakeobjects/pipe,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
-"Fp" = (
-/obj/rack,
-/obj/item/tank/air,
-/obj/item/tank/air,
-/obj/item/clothing/head/helmet/space/engineer,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "Fq" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -3491,14 +3335,6 @@
 	},
 /turf/space,
 /area/station/solar/small_backup3)
-"FE" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "FG" = (
 /obj/crevice{
 	pixel_y = 30
@@ -4000,16 +3836,6 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
-"IH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "IL" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -4450,10 +4276,6 @@
 	name = "space"
 	},
 /area/noGenerate)
-"Ln" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/noGenerate)
 "Lp" = (
 /turf/simulated/floor{
 	icon_state = "corner_east"
@@ -4496,6 +4318,13 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
+"Lz" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grime,
+/area/mining/dock)
 "LA" = (
 /obj/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
@@ -5299,14 +5128,6 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/mining/quarters)
-"Qt" = (
-/obj/machinery/light/incandescent,
-/obj/table/auto,
-/obj/item/spacecash/ten,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "Qy" = (
 /obj/lattice,
 /obj/decal/fakeobjects/lighttube_broken{
@@ -5338,14 +5159,6 @@
 /obj/critter/martian/warrior/dead,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
-"QM" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
 "QN" = (
 /obj/table/auto,
 /obj/item/magnet_parts/construction,
@@ -5851,12 +5664,6 @@
 "TK" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
-"TM" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "TN" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/computer/barcode,
@@ -6031,15 +5838,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"UC" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "UF" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/incandescent,
@@ -6114,12 +5912,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
-"UY" = (
-/obj/table/auto,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "UZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6329,6 +6121,9 @@
 /obj/item/cable_coil/cut,
 /turf/space,
 /area/noGenerate)
+"Wc" = (
+/turf/space,
+/area/shuttle/mining/outpost)
 "Wi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6430,14 +6225,6 @@
 /obj/item/tile/steel,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"WO" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/space,
-/turf/space,
-/area/mining/dock)
 "WR" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -6475,12 +6262,6 @@
 /obj/decal/fakeobjects/apc_broken,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
-"Xb" = (
-/obj/rack,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/mining/dock)
 "Xd" = (
 /obj/machinery/bot/secbot{
 	control_freq = 1441;
@@ -6893,13 +6674,6 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
-"ZF" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 4;
-	icon_state = "alt_heater"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/mining/dock)
 "ZG" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -44581,9 +44355,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+aa
+aa
+aa
 ab
 ab
 ab
@@ -44882,9 +44656,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+aa
+aa
+aa
 ab
 ab
 ab
@@ -45183,9 +44957,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+aa
+aa
+aa
 ab
 ab
 ab
@@ -45484,9 +45258,9 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
+aa
+aa
+aa
 ab
 ab
 ab
@@ -45785,14 +45559,14 @@ aa
 aa
 aa
 aa
+aa
+aa
+aa
 ab
 ab
 ab
 ab
-ex
-oV
-oV
-fK
+ab
 ab
 ab
 ab
@@ -46090,12 +45864,12 @@ ab
 ab
 ab
 ab
-QM
-Fb
-FE
-FE
-Fb
-wC
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 ab
@@ -46391,14 +46165,14 @@ ab
 ab
 ab
 ab
-QM
-rr
-qG
-qG
-qG
-zK
-IH
-wC
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 aY
@@ -46693,14 +46467,14 @@ ab
 ab
 ab
 ab
-Fb
-Qt
-qG
-qG
-qG
-Xb
-bY
-Fb
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 ab
 ab
 sW
@@ -46995,14 +46769,14 @@ ab
 ab
 ab
 ab
-Fb
-BG
-qG
-qG
-qG
-qI
-qI
-Fb
+ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+ab
 ab
 XR
 HW
@@ -47295,17 +47069,17 @@ ab
 ab
 ab
 ab
-EU
-AX
-Fb
-BG
-qG
-qG
-qG
-Fp
-tg
-Fb
-cs
+ab
+ab
+ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+ab
 aY
 HW
 wO
@@ -47599,15 +47373,15 @@ ab
 ab
 ab
 ab
-Fb
-no
-qG
-qG
-qG
-qG
-qG
-Fb
 ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 ab
 HW
 UX
@@ -47901,17 +47675,17 @@ ab
 ab
 ab
 ab
-Fb
-AN
-qG
-qG
-qG
-qa
-qa
-Fb
 ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 Uq
-RK
+HW
 UX
 Pz
 Pz
@@ -48201,19 +47975,19 @@ ab
 ab
 ab
 ab
-EU
-AX
-ZF
-EA
-qG
-qG
-qG
-qG
-TM
-ZF
-cs
+ab
+ab
+ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aY
-RK
+HW
 UX
 Pz
 Pz
@@ -48505,14 +48279,14 @@ ab
 ab
 ab
 ab
-Cq
-UC
-qG
-qG
-qG
-UY
-uV
-xe
+ab
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 ab
 ce
 RK
@@ -48808,12 +48582,12 @@ ab
 ab
 ab
 ab
-so
-Fb
-xh
-xh
-Fb
-WO
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 ab
 ab
 ce
@@ -49114,8 +48888,8 @@ ex
 YO
 Br
 Br
+EU
 YO
-cs
 bt
 cs
 DW
@@ -49416,15 +49190,15 @@ aX
 XD
 Fu
 eT
+fh
 XD
-ab
 ce
 ab
 RK
 Kc
 UX
 Kc
-Ln
+Pz
 Pz
 Pz
 LG
@@ -49717,9 +49491,9 @@ ab
 aX
 XD
 ID
-ID
+eT
+Lz
 XD
-ab
 ce
 ab
 RK
@@ -50021,7 +49795,7 @@ PC
 Ec
 Ec
 PC
-cs
+EU
 aY
 DW
 DW

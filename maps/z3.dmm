@@ -2122,7 +2122,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "ajx" = (
 /obj/lattice{
 	dir = 6;
@@ -17591,7 +17591,7 @@
 /turf/simulated/shuttle/wall/cockpit{
 	icon_state = "shuttlecock_mining"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "cll" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -18055,10 +18055,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "dQS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -18162,7 +18162,7 @@
 /area/diner/jucer_trader)
 "ejg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -18525,14 +18525,16 @@
 /area/diner/jucer_trader)
 "fFQ" = (
 /obj/table/auto,
-/obj/item/mining_tool,
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/mining_tool,
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "fIW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -18553,10 +18555,10 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "fPL" = (
 /obj/cable{
 	d2 = 4;
@@ -19422,10 +19424,10 @@
 	icon_state = "gibbl2"
 	},
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "iob" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy,
@@ -19491,7 +19493,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "izy" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -19620,12 +19622,14 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "iUR" = (
-/obj/table/auto,
-/obj/item/satchel/mining,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "iXE" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/vr/arcade,
@@ -19728,10 +19732,10 @@
 /area/diner/dining)
 "jhF" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jij" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -19767,7 +19771,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jmg" = (
 /turf/unsimulated/floor/specialroom/freezer,
 /area/helldrone)
@@ -19788,7 +19792,7 @@
 /area/diner/hangar)
 "jpS" = (
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -19975,10 +19979,10 @@
 "jTh" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/mining_shuttle/embedded/south,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jUl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -21574,10 +21578,10 @@
 /area/diner/hangar)
 "oQp" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "oQs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/arrival,
@@ -22105,13 +22109,14 @@
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "qiT" = (
-/obj/table/auto,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "qja" = (
 /obj/machinery/traymachine/locking/tanning,
 /obj/decal/cleanable/cobweb2,
@@ -22216,10 +22221,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "qEL" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
@@ -22638,17 +22643,17 @@
 	dir = 2;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "rQo" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "rQI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -22928,14 +22933,13 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
 "sDv" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/floor/plating/airless,
-/area/shuttle/mining/space)
+/turf/simulated/floor/plating,
+/area/shuttle/mining/diner)
 "sFI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -23272,10 +23276,10 @@
 /area/space)
 "tur" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "tuE" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -23287,7 +23291,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "twl" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -23470,7 +23474,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "uen" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grime,
@@ -24562,10 +24566,10 @@
 	name = "GLOMAR Salvager"
 	})
 "xvT" = (
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "xws" = (
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
