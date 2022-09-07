@@ -1819,7 +1819,7 @@
 	icon_state = "space_replica"
 	item_state = "space_replica"
 
-// RP Wrestlemania 2022 stuff by Walpvrgis, now available as crate loot woooo
+// RP Wrestlemania 2022 stuff by Walp
 
 /obj/item/clothing/suit/torncloak
 	name = "Torn Cloak"
@@ -1829,6 +1829,7 @@
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "torncape_red"
 	item_state = "torncape_red"
+	body_parts_covered = TORSO|ARMS
 
 	red
 		name = "Red Torn Cloak"
