@@ -23,12 +23,14 @@
 		var/center_x = src.map.zoom_level == 1 ? src.map.center_x : src.map.zoom_x
 		var/center_y = src.map.zoom_level == 1 ? src.map.center_y : src.map.zoom_y
 		var/icon/dummy_icon = new(src.icon)
-		//the first term is the scaled distance to the map's center
-		//then add the position of the true center
-		//add the pixel offset of the parent map
-		//subtract half the icon size
-		src.pixel_x = (x - center_x) * src.map.scale + world.maxx/2 + src.map.pixel_x - dummy_icon.Width()/2
-		src.pixel_y = (y - center_y) * src.map.scale + world.maxy/2 + src.map.pixel_y - dummy_icon.Height()/2
+		var/offset_x = 0
+		var/offset_y = 0
+		//if the map isn't centered on the real turf then add an offset to center it
+		if (!src.map.centered)
+			offset_x = world.maxx/2 + src.map.pixel_x - dummy_icon.Width()/2
+			offset_y = world.maxy/2 + src.map.pixel_y - dummy_icon.Height()/2
+		src.pixel_x = (x - center_x) * src.map.scale + offset_x
+		src.pixel_y = (y - center_y) * src.map.scale + offset_y
 
 	disposing()
 		src.map.map_icons -= src
@@ -57,6 +59,9 @@
 
 	///The actual size the map should be clipped to (multiple of original icon size)
 	var/clip_scale = 1
+
+	///Is the map centered on the actual turf it sits on?
+	var/centered = FALSE
 
 	//temporary zoom vars
 	var/zoom_level = 1
@@ -95,6 +100,10 @@
 		src.scale *= src.clip_scale
 		icon = map_render
 		src.clip_area(src.center_x,src.center_y)
+		if (src.centered)
+			//center it on the tile it was spawned from
+			src.pixel_x -= world.maxx * clip_scale - 16
+			src.pixel_y -= world.maxy * clip_scale - 16
 
 	proc/update_map_icons()
 		for (var/obj/map_icon/map_icon in src.map_icons)
@@ -225,13 +234,11 @@
 	//to the turfs underneath
 	mouse_opacity = 0
 	clip_scale = 0.5
+	centered = TRUE
 	var/obj/map_icon/plant_site
 	New()
 		START_TRACKING
 		..()
-		//center it on the tile it was spawned from
-		src.pixel_x -= 135
-		src.pixel_y -= 133
 
 	///Add a map icon on the nuke plant location
 	proc/set_marker()
@@ -256,9 +263,34 @@
 		src.plant_site = new(src.loc, src)
 		src.plant_site.set_position(target_x,target_y)
 
-	proc/zoom_to_site()
-		src.manual_zoom(src.plant_site.pos_x, src.plant_site.pos_y, 2)
+	proc/toggle_zoom()
+		if (src.zoom_level == 1)
+			src.manual_zoom(src.plant_site.pos_x, src.plant_site.pos_y, 2)
+		else
+			src.unzoom()
 
 	disposing()
 		STOP_TRACKING
 		. = ..()
+
+/obj/map_button
+	name = "Button"
+	desc = "Press to toggle the station map zoom level."
+	icon = 'icons/misc/mechanicsExpansion.dmi'
+	icon_state = "comp_button"
+	density = 1
+	var/icon_up = "comp_button"
+	var/icon_down = "comp_button1"
+	var/obj/station_map/nukie/map = null
+
+	New()
+		..()
+		for_by_tcl(nukie_map, /obj/station_map/nukie)
+			src.map = nukie_map
+			return
+
+	attack_hand(mob/user)
+		. = ..()
+		if (src.icon_state == src.icon_up)
+			flick(src.icon_down, src)
+			map.toggle_zoom()

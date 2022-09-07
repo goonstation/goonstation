@@ -56209,6 +56209,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/map_button,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dfr" = (
