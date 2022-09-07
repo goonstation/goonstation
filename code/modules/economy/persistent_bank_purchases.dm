@@ -35,7 +35,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
-	new /datum/bank_purchaseable/legless,\
+//	new /datum/bank_purchaseable/legless,\
+
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
@@ -435,7 +436,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			return 0
 
 // not sure if theres a better way to do this, so i just put // before every line
-//	legless 
+//	legless
 //		name = "No Legs"
 //		cost = 5000
 //		path = /obj/item/furniture_parts/wheelchair

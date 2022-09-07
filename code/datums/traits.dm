@@ -512,12 +512,12 @@
 	icon_state = "placeholder"
 	points = 0
 
-/obj/trait/nolegs
-    name = "Stumped"
-    desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair (due to regulations) out of the goodness of their heart."
-    id = "nolegs"
-    icon_state = "placeholder"
-    points = 0
+/datum/trait/nolegs
+	name = "Stumped"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair (due to regulations) out of the goodness of their heart."
+	id = "nolegs"
+	icon_state = "placeholder"
+	points = 0
 
 // Skill - White Border
 
