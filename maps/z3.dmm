@@ -18055,6 +18055,10 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -18531,6 +18535,10 @@
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/mining_tool,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -19322,6 +19330,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"ibe" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "ibO" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
@@ -19372,6 +19390,15 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
+"ifC" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "iii" = (
 /obj/effects/background_objects/antistes,
 /turf/space,
@@ -19626,6 +19653,10 @@
 	dir = 9;
 	icon_state = "wall3_trans"
 	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -19732,6 +19763,10 @@
 /area/diner/dining)
 "jhF" = (
 /obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -20082,6 +20117,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"kjO" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "kjV" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -21257,6 +21305,20 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
+"nxR" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "nyA" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -22112,6 +22174,10 @@
 /obj/indestructible/shuttle_corner{
 	dir = 10;
 	icon_state = "wall3_trans"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -23416,6 +23482,25 @@
 	},
 /turf/simulated/floor/black,
 /area/helldrone/core)
+"tJW" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
+"tLI" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 5;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "tNm" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -24585,6 +24670,15 @@
 /obj/lattice,
 /turf/space,
 /area/space)
+"xDJ" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 9;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "xEB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -78605,8 +78699,8 @@ aff
 apU
 ajw
 sDv
-jhF
-xvT
+nxR
+ifC
 fFQ
 qiT
 udQ
@@ -78907,10 +79001,10 @@ uGK
 cyC
 ejg
 fLF
-xvT
+xDJ
 tur
 tur
-tur
+ibe
 tuY
 jpS
 aaa
@@ -79511,10 +79605,10 @@ aEC
 cyC
 ejg
 rPi
-xvT
+tLI
 tur
 rQo
-tur
+tJW
 tuY
 jpS
 aaa
@@ -79813,7 +79907,7 @@ hgU
 apU
 ajw
 sDv
-xvT
+kjO
 jhF
 dPH
 iUR
