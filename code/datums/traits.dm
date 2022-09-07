@@ -682,7 +682,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Dwarf"
 	desc = "You are a dwarf, beard not required."
 	id = "dwarf"
-	points = 0
+	points = -1
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("dwarf", 0, 0, 0, 1)
