@@ -261,7 +261,7 @@
 		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
 
 /obj/random_item_spawner/surplus/rifleroundsbig
-	amt2spawn = 3
+	amt2spawn = 2
 	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	items2spawn = list(
 		/obj/item/ammo/bullets/rifle_3006)

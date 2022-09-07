@@ -10,23 +10,9 @@
 
 	event_effect(var/source)
 		..()
-		//set up objectives
-		var/objectiveslist = list(
-		/datum/objective/regular/steal,
-		/datum/objective/regular/steal,
-		/datum/objective/regular/steal/authdisc,
-		/datum/objective/regular/assassinate,
-		/datum/objective/regular/assassinate,
-		/datum/objective/regular/assassinate,
-		/datum/objective/regular/bonsaitree
-		)
+		//set up objectives up here so they get the same ones (hopefully)
+		var/ourobjectives = new /datum/objective_set/surplusop
 
-		var/list/chosenobjectives = null//to ensure all of them have the same objectives, pick them prematurely
-		var/tempobjective = pick(objectiveslist)
-		chosenobjectives += tempobjective
-		//chosenobjectives +=	pick(objectiveslist)
-		//chosenobjectives +=	pick(objectiveslist)
-		//objectives are actually assigned further down in the respawn code
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
@@ -41,7 +27,9 @@
 		if (!candidates)
 			return
 		if(candidates.len < 3)
-			message_admins("There are less than three potential candidates for surplus ops, this will cause issues!") //once build is final, it won't ever trigger if theres less than 3 dead folks
+			message_admins("There are less than three potential candidates for surplus ops, this will cause issues with their deployment!") //once build is final, it won't ever trigger if theres less than 3 dead folks
+
+		//spawn them in, set up as needed
 		for (var/i in 1 to 3)
 			var/datum/mind/lucky_dude = pick(candidates)
 
@@ -73,9 +61,10 @@
 					equip_shitty_syndicate(R, 1)//do this after the name call to prevent their agent cards from changing
 					R.choose_name(3, "Surplus Operative")
 					lucky_dude.special_role = ROLE_NUKEOP //not ideal, but functional and efficient
-					R.antagonist_overlay_refresh(1, 0)
+					R.antagonist_overlay_refresh(1, 0) //this doesn't work RN
+
 					boutput(R, "<span class='notice'>You are a surplus operative!</span>")
-					ticker.mode.bestow_objective(R, tempobjective)
+					ticker.mode.bestow_objective(R, ourobjectives)
 					for (var/datum/objective/Obj in lucky_dude.objectives)
 						boutput(R, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 						lucky_dude.store_memory(Obj.explanation_text)

@@ -571,12 +571,12 @@
 	path = /obj/random_item_spawner/surplus/revolverrounds
 	description = "Revolvin' bullets. Fer the revolvin' guns."
 /datum/materiel/ammo/riflesmall
-	name = "Rifle bullets"
+	name = "Rifle bullets- 5.56"
 	path = /obj/random_item_spawner/surplus/rifleroundslittle
 	description = "Rifle bullets o' the five five six variety."
 
 /datum/materiel/ammo/riflebig
-	name = "Rifle bullets"
+	name = "Rifle bullets- 308"
 	path = /obj/random_item_spawner/surplus/rifleroundsbig
 	description = "Rifle bullets o' the three oh eight variety."
 /datum/materiel/ammo/shotgun

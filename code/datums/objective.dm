@@ -1496,6 +1496,13 @@ ABSTRACT_TYPE(/datum/objective/conspiracy)
 	escape_choices = list(/datum/objective/escape,
 	/datum/objective/escape/hijack)
 
+/datum/objective_set/surplusop
+	objective_list = list(/datum/objective/regular/steal,
+	/datum/objective/regular/assassinate,
+	/datum/objective/regular/assassinate,
+	/datum/objective/regular/steal/authdisc)
+	escape_choices = list(/datum/objective/escape/survive)
+
 // Wraith not listed since it has its own dedicated proc
 
 // Traitors
