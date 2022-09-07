@@ -1,5 +1,7 @@
 
 (t)wed sep 07 22
+(u)Sord
+(*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
 (u)Stonepillar
 (p)10537
 (e)|
