@@ -31,7 +31,7 @@
 		else
 			src.icon_state = "chemportgen0"
 
-		src.overlays = null
+		src.ClearSpecificOverlays("fueltank", "inlettank")
 		if (!src.fuel_tank_image)
 			src.fuel_tank_image = image('icons/obj/power.dmi')
 		if (!src.inlet_tank_image)
@@ -45,11 +45,9 @@
 			src.inlet_tank_image.icon_state = "gengastank"
 
 		if (src.fuel_tank)
-			src.overlays += src.fuel_tank_image
+			src.UpdateOverlays(src.fuel_tank_image, "fueltank")
 		if (src.inlet_tank)
-			src.overlays += src.inlet_tank_image
-
-		signal_event("icon_updated")
+			src.UpdateOverlays(src.inlet_tank_image, "inlettank")
 
 	was_deconstructed_to_frame(mob/user)
 		. = ..()
@@ -105,10 +103,6 @@
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/reagent_containers/food/drinks/fueltank))
-					if (src.fuel_tank)
-						boutput(usr, "<span class='alert'>There appears to be a fuel tank loaded already!</span>")
-						return
-
 					if (!src.get_average_volatility(I.reagents))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any fuel!</span>")
 						return
@@ -128,10 +122,6 @@
 			else
 				var/obj/item/I = usr.equipped()
 				if (istype(I, /obj/item/tank) && !(istype(I, /obj/item/tank/plasma) || istype(I, /obj/item/tank/jetpack)))
-					if (src.inlet_tank)
-						boutput(usr, "<span class='alert'>There appears to be a tank loaded already!</span>")
-						return
-
 					if (!src.check_tank_oxygen(I))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
 						return
@@ -204,13 +194,7 @@
 		src.updateUsrDialog()
 		return
 
-#define FUEL_QUALITY_VERY_HIGH 10
-#define FUEL_QUALITY_HIGH 6
-#define FUEL_QUALITY_AVERAGE 3
-#define FUEL_QUALITY_LOW 2
-#define FUEL_QUALITY_VERY_LOW 1
-
-	process()
+	process(var/mult)
 		if (!src || !src.active)
 			return
 
@@ -233,9 +217,9 @@
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		src.last_output = ((average_volatility * (available_oxygen * 5)) * src.output_multiplier) KILO WATTS
+		src.last_output = (((average_volatility * (available_oxygen * 5)) * src.output_multiplier) * mult) KILO WATTS
 		var/datum/powernet/P = C.get_powernet()
-		P.newavail += src.last_output
+		P.add_avail(src.last_output)
 
 		var/turf/simulated/T = get_turf(src)
 		if (istype(T))
@@ -253,6 +237,12 @@
 
 		src.UpdateIcon()
 		src.updateDialog()
+
+#define FUEL_QUALITY_VERY_HIGH 10
+#define FUEL_QUALITY_HIGH 6
+#define FUEL_QUALITY_AVERAGE 3
+#define FUEL_QUALITY_LOW 2
+#define FUEL_QUALITY_VERY_LOW 1
 
 	proc/get_average_volatility(datum/reagents/R)
 		if (!R || !R.total_volume)
