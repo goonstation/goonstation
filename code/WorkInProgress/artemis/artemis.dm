@@ -242,11 +242,11 @@
 		timing[2] = 0
 #endif
 		while(do_process)
-			if(vel_mag)
+			if(src.vel_mag)
 				calc_new_coords()
-			if(tracking)
+			if(src.tracking)
 				do_tracking()
-			if(navigating)
+			if(src.navigating)
 				update_nav_arrow()
 
 			for(var/obj/background_star/S in src.my_stars)
@@ -417,7 +417,7 @@
 
 	proc/remove_arrows(var/mob/M)
 		for(var/obj/background_star/galactic_object/G in src.my_galactic_objects)
-			if((my_galactic_objects[G] in my_pilot.client.images))
+			if((my_galactic_objects[G] in my_pilot.client?.images))
 				M.client.images -= my_galactic_objects[G]
 		return
 
@@ -457,7 +457,7 @@
 		return
 
 	proc/remove_nav_arrow(var/mob/M)
-		if((src.nav_arrow in my_pilot.client.images))
+		if((src.nav_arrow in my_pilot.client?.images))
 			M.client.images -= src.nav_arrow
 		return
 
@@ -474,15 +474,15 @@
 			M.client.images += back
 
 	proc/remove_thrusters(var/mob/M)
-		if(front_right in M.client.images)
+		if(front_right in M.client?.images)
 			M.client.images -= front_right
-		if(front_left in M.client.images)
+		if(front_left in M.client?.images)
 			M.client.images -= front_left
-		if(back_right in M.client.images)
+		if(back_right in M.client?.images)
 			M.client.images -= back_right
-		if(back_left in M.client.images)
+		if(back_left in M.client?.images)
 			M.client.images -= back_left
-		if(back in M.client.images)
+		if(back in M.client?.images)
 			M.client.images -= back
 
 

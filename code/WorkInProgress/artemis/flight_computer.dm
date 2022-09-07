@@ -101,10 +101,10 @@
 		ship.remove_nav_arrow(src.occupant)
 		ship.remove_thrusters(src.occupant)
 
-		src.occupant.client.eye = src.occupant
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).remove_mob(src.occupant)
 
 		if (occupant.client)
+			src.occupant.client.eye = src.occupant
 			occupant.detach_hud(myhud)
 			for(var/datum/hud/hud in stored_huds)
 				src.stored_huds -= hud
