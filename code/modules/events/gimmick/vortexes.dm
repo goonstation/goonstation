@@ -10,6 +10,8 @@
 		var/derelictchoice = alert(usr, "Use alternate void critter spawns spawns?","Enable Derelict Mode", "Yes","No")
 		if (derelictchoice == "Yes")
 			derelict_mode = 1
+		if (derelictchoice == "No")
+			derelict_mode = 0
 
 		src.event_effect(source)
 		return
