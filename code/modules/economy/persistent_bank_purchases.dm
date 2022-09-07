@@ -35,8 +35,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
-//	new /datum/bank_purchaseable/legless,\
-
+//	new /datum/bank_purchaseable/legless,
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
