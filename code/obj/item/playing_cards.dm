@@ -16,7 +16,6 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 2
-	health = 10
 	///what style of card sprite are we using?
 	var/card_style
 	///number of cards in a full deck (used for reference when updating stack size)
@@ -34,7 +33,7 @@
 	contextLayout = new /datum/contextLayout/instrumental(16)
 	var/list/datum/contextAction/cardActions
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
 
@@ -42,7 +41,7 @@
 	attack_self(mob/user as mob)
 		flip() //uno reverse O.O
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
 			if(loc != user)
 				update_card_actions(TRUE)
@@ -350,7 +349,7 @@
 			if(!foiled)
 				user.take_brain_damage(1000)
 			else
-				logTheThing("combat", user, null, "was partygibbed by [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")
 				user.partygib(1)
 
 /obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
@@ -376,7 +375,7 @@
 	var/list/datum/contextAction/cardActions
 	var/list/stored_cards = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
 			update_card_actions(user, "empty")
 			user.showContextActions(cardActions, src)
@@ -394,7 +393,7 @@
 				riffle_shuffle(stored_cards)
 			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/playing_card)) //adding a card to a hand will automatically place it in the hand, while adding a card to a deck will allow the player to decide where it goes
 			if(is_hand)
 				var/obj/item/playing_card/card = W
@@ -1042,7 +1041,7 @@
 		else
 			icon_state = "[box_style]-box"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((loc == user) && (icon_state == "[box_style]-box-open"))
 			user.put_in_hand_or_drop(stored_deck)
 			icon_state = "[box_style]-box-empty"
@@ -1050,7 +1049,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!stored_deck && istype(W,/obj/item/card_group))
 			user.u_equip(W)
 			W.set_loc(src)
@@ -1121,7 +1120,7 @@
 		if(icon_state == "stg-box")
 			user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
 			if(loc != user)
 				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
@@ -1189,7 +1188,7 @@
 		if(icon_state == "stg-booster")
 			icon_state = "stg-booster-open"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(icon_state == "stg-booster-open")
 			icon_state = "stg-booster-empty"
 			user.put_in_hand_or_drop(stored_deck)

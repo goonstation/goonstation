@@ -25,7 +25,7 @@
 				src.ship.engines.add_engine(P)
 
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if(istype(O,/obj/item/grab))
 			var/obj/item/grab/G = O
 			if (!ismob(G.affecting))
@@ -84,7 +84,7 @@
 
 	*/
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		return
 
 	go_out(var/do_set_loc = 1)

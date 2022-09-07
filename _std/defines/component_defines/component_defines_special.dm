@@ -86,3 +86,8 @@
 	#define COMSIG_TRANSFER_OUTGOING "outgoing_tx"
 	/// Return whether the target should allow receiving items from the given atom (/atom)
 	#define COMSIG_TRANSFER_CAN_LINK "permit_tx"
+
+// ---- Flockmind ----
+
+	/// Return whether an action by a thing (/atom) that can optionally be intentional (boolean) is denied because it would harm a flock.
+	#define COMSIG_FLOCK_ATTACK "flock_attack"

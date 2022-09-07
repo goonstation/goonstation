@@ -26,12 +26,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to bite there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to bite."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
 		playsound(target, src.sound_bite, sound_volume, 1, -1)
 		var/mob/MT = target

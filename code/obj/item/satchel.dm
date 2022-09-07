@@ -17,7 +17,7 @@
 		..()
 		src.UpdateIcon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/proceed = 0
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path) && W.w_class < W_CLASS_BULKY)
@@ -39,8 +39,9 @@
 		else boutput(user, "<span class='alert'>[src] is full!</span>")
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len)
+		if (length(src.contents))
 			var/turf/T = user.loc
+			logTheThing(LOG_STATION, user, "dumps the contents of [src] ([length(src.contents)] items) out at [log_loc(T)].")
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
@@ -49,14 +50,14 @@
 			tooltip_rebuild = 1
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		// There's a hilarious bug in here - if you're searching through the container
 		// and then throw it, after you finish searching the container will just.
 		// warp back to your hands.
 		// This is probably easily fixable by just running the check again
 		// but to be honest this is one of those funny bugs that can be fixed later
 
-		if (get_dist(user, src) <= 0 && length(src.contents))
+		if (GET_DIST(user, src) <= 0 && length(src.contents))
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
@@ -106,7 +107,7 @@
 				temp = "[I.name]"
 				satchel_contents += temp
 				satchel_contents[temp] = I
-		satchel_contents = sortList(satchel_contents)
+		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
 		if (!chosenItem)
 			return
@@ -201,7 +202,7 @@
 			if(. && istype(template, /obj/item/seed))
 				var/obj/item/seed/inserted_seed = inserted
 				var/obj/item/seed/template_seed = template
-				. = (inserted_seed.planttype.type == template_seed.planttype.type) && \
+				. = (inserted_seed.planttype?.type == template_seed.planttype?.type) && \
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
@@ -241,7 +242,7 @@
 			return
 
 		// ITS GONNA BE CLICKY AND OPEN OK   SHUT UP
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			src.open_it_up(1)
 			..()
 			src.open_it_up(0)
@@ -251,8 +252,8 @@
 			..()
 			src.open_it_up(0)
 
-		attack_hand(mob/user as mob)
-			if (get_dist(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
+		attack_hand(mob/user)
+			if (GET_DIST(user, src) <= 0 && src.contents.len && (user.l_hand == src || user.r_hand == src))
 				src.open_it_up(1)
 			..()
 			src.open_it_up(0)
@@ -265,13 +266,13 @@
 		// clicky open close
 		proc/open_it_up(var/open)
 			if (open && icon_state == "figurinecase")
-				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 1.2)
+				playsound(src, 'sound/misc/lightswitch.ogg', 50, pitch = 1.2)
 				icon_state = "figurinecase-open"
 				sleep(0.4 SECONDS)
 
 			else if (!open && icon_state == "figurinecase-open")
 				sleep(0.5 SECONDS)
-				playsound(src, "sound/misc/lightswitch.ogg", 50, pitch = 0.9)
+				playsound(src, 'sound/misc/lightswitch.ogg', 50, pitch = 0.9)
 				icon_state = "figurinecase"
 
 /obj/item/satchel/figurines/full

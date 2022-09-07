@@ -48,6 +48,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
+	pixel_point = TRUE
 
 	New()
 		..()
@@ -74,7 +75,7 @@
 		. = ..()
 		pop_open_a_browser_box(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
 
@@ -90,9 +91,9 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
-			logTheThing("station", user, null, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
+			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
 			// send the damn icon and gently nudge the page into refreshing it
 			send_the_damn_icon(user)
@@ -151,7 +152,7 @@
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		artists[ckey(usr.ckey)]++
 		pixel_artists[pixel_id] = usr.ckey
-		logTheThing("station", usr, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
+		logTheThing(LOG_STATION, usr, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
 
@@ -412,9 +413,58 @@
 	icon_state = "centcomcanvas"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		if (istype(W, /obj/item/pixel_pass))
+			var/obj/item/pixel_pass/PP = W
+			PP.redeem(user, src)
+
+/obj/item/pixel_pass
+	name = "pixel pass"
+	desc = "A mysterious pixel shaped token that can be used at the centcom canvas to place an additional pixel. Be sure to keep it safe until you have a chance to redeem it."
+	icon_state = "pixel_pass"
+	burn_possible = FALSE
+	w_class = W_CLASS_TINY
+
+	proc/redeem(mob/user, obj/item/canvas/canvas)
+		if (!user?.client || !canvas) return
+
+		if (user.ckey in canvas.artists)
+			canvas.artists -= user.ckey
+			user.show_text("[src] glows brightly before crumbling away into dust leaving you feeling invigorated with the strength to place down an additional pixel!")
+			if (user.client.persistent_bank_item == "Pixel Pass")
+				user.client.persistent_bank_item = "none"
+			user.drop_item(src)
+			qdel(src)
+		else
+			user.show_text("There's no need to redeem this now, you're already brimming with artistic ability.")
+
 // the intro at the start of this file is a joke:
 // https://www.youtube.com/watch?v=wpNxzJk7xUc#t=42s
 // ...and is not to be taken seriously, or as any definition
 // of copyright/license or otherwise.
 // I didn't look at anything about how bee's worked except
 // seeing the ui, sort of.
+
+#ifndef SECRETS_ENABLED
+/obj/decal/exhibit
+	name = "empty exhibit"
+	desc = "An empty exhibit in desperate need of art."
+	layer = OBJ_LAYER
+	plane = PLANE_DEFAULT
+	icon = 'icons/obj/canvas.dmi'
+	icon_state = "28x22_base"
+	/// unqiue id's set in map
+	var/exhibit_id = "ex_0"
+	/// cost to purchase this exhibit space
+	var/spacebux_cost = 0
+
+	lowend
+		spacebux_cost = 5000
+	midrange
+		spacebux_cost = 10000
+	highend
+		spacebux_cost = 25000
+	premium
+		spacebux_cost = 50000
+#endif

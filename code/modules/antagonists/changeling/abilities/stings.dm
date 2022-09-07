@@ -16,7 +16,7 @@
 
 		if (isobj(target) && (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
 			if (BOUNDS_DIST(holder.owner, target) > 0)
-				boutput(holder.owner, __red("We cannot reach that target with our stinger."))
+				boutput(holder.owner, "<span class='alert'>We cannot reach that target with our stinger.</span>")
 				return 1
 			if (!target.reagents)
 				boutput(holder.owner, "<span class='notice'>We cannot seem to sting [target].</span>")
@@ -31,9 +31,9 @@
 					//break the seal
 					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 					P.medical = 0
-			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
+			logTheThing(LOG_COMBAT, holder.owner, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
 			target.reagents.add_reagent(venom_id, inject_amount)
-			holder.owner.show_message(__blue("We stealthily sting [target]."))
+			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
 			return 0
 
 
@@ -42,28 +42,28 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("We cannot sting without a target."))
+				boutput(holder.owner, "<span class='alert'>We cannot sting without a target.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("We cannot reach that target with our stinger."))
+			boutput(holder.owner, "<span class='alert'>We cannot reach that target with our stinger.</span>")
 			return 1
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, __red("That does not hold reagents, apparently."))
+			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
 			return 1
 		if (!stealthy)
-			holder.owner.visible_message(__red("<b>[holder.owner] stings [target]!</b>"))
+			holder.owner.visible_message("<span class='alert'><b>[holder.owner] stings [target]!</b></span>")
 		else
-			holder.owner.show_message(__blue("We stealthily sting [target]."))
+			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
 		if(MT.reagents.total_volume + inject_amount > MT.reagents.maximum_volume)
 			MT.reagents.remove_any(MT.reagents.total_volume + inject_amount - MT.reagents.maximum_volume)
 		MT.reagents?.add_reagent(venom_id, inject_amount)
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
-		logTheThing("combat", holder.owner, MT, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
 
 	neurotoxin
 		name = "Neurotoxic Sting"
@@ -159,12 +159,12 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, __red("That ability is incompatible with our abilities. We should report this to a coder."))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		var/target_name = input("Select new DNA sting target!", "DNA Sting Target", null) as null|anything in H.absorbed_dna
+		var/target_name = tgui_input_list(holder.owner, "Select new DNA sting target!", "DNA Sting Target", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
-			boutput(holder.owner, __blue("We change our mind."))
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
 		dna_sting_target = H.absorbed_dna[target_name]

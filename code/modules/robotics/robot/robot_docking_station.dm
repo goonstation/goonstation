@@ -4,7 +4,7 @@
 	desc = "A station which allows cyborgs to repair damage, recharge their cells, and have upgrades installed if they are present in the station."
 	icon_state = "station"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 10
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -312,7 +312,7 @@
 				return
 			if(newname && newname != R.name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
-			logTheThing("combat", usr, R, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
+			logTheThing(LOG_COMBAT, usr, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
@@ -420,10 +420,12 @@
 					src.cells.Add(C)
 					C.set_loc(src)
 					R.cell = null
+					R.part_chest?.cell = null
 					boutput(R, "<span class='notice'>Your power cell is being swapped...</span>")
 				src.cells.Remove(O)
 				O.set_loc(R)
 				R.cell = O
+				R.part_chest?.cell = O
 				boutput(R, "<span class='notice'>Power cell installed: [O].</span>")
 				R.hud.update_charge()
 
@@ -496,8 +498,9 @@
 			src.cells.Add(R.cell)
 			C.set_loc(src)
 			R.cell = null
+			R.part_chest?.cell = null
 			boutput(R, "<span class='alert'>Your power cell was removed!</span>")
-			logTheThing("combat", usr, R, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
+			logTheThing(LOG_COMBAT, usr, "removes [constructTarget(R,"combat")]'s power cell at [log_loc(usr)].")
 			R.hud.update_charge()
 
 		if (href_list["eject"])
@@ -592,7 +595,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/recharge_station/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing) && src.allow_clothes)
 		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
@@ -642,7 +645,7 @@
 			return
 		else
 			user.visible_message("<span class='notice'>[user] pours [G.amount_per_transfer_from_this] units of [G]'s contents into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			W.reagents.trans_to(src, G.amount_per_transfer_from_this)
 			if (!G.reagents.total_volume)
 				boutput(user, "<span class='alert'><b>[G] is now empty.</b></span>")
@@ -676,7 +679,7 @@
 		return FALSE
 
 	var/mob/living/carbon/human/H = victim
-	logTheThing("combat", user, H, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
+	logTheThing(LOG_COMBAT, user, "puts [constructTarget(H,"combat")] into a conversion chamber at [log_loc(src)]")
 	user.visible_message("<span class='notice>[user] stuffs [H] into \the [src].")
 
 	H.remove_pulling()
@@ -825,7 +828,7 @@
 
 					H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
-					playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else
 				H.bioHolder.AddEffect("eaten")
 				random_brute_damage(H, 10)
@@ -837,9 +840,12 @@
 /obj/machinery/recharge_station/proc/go_out()
 	if (!src.occupant)
 		return
-	src.occupant.set_loc(src.loc)
+	src.occupant.set_loc(get_turf(src))
 	src.occupant = null
 	src.build_icon()
+
+/obj/machinery/recharge_station/was_deconstructed_to_frame(mob/user)
+	src.go_out()
 
 /obj/machinery/recharge_station/verb/move_eject()
 	set src in oview(1)
@@ -879,12 +885,12 @@
 	anchored = 0
 	p_class = 1.5
 
-/obj/machinery/recharge_station/syndicate/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		src.anchored = !src.anchored
 		if (!anchored)
 			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, "sound/items/Ratchet.ogg", 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
 		return
 	..()

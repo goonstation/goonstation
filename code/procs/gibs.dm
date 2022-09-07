@@ -6,7 +6,7 @@
 		location = usr
 	if(!location?.z) // we care not for null gibs
 		return
-	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
@@ -86,7 +86,10 @@
 	var/obj/decal/cleanable/robot_debris/gib = null
 	var/list/gibs = new()
 
-	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+	if(!location)
+		return
+
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 
 	// RUH ROH
 	elecflash(location,power=2)

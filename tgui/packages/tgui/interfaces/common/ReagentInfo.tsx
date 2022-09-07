@@ -12,7 +12,7 @@ import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
 
 interface ReagentContainer {
-  name: string;
+  name?: string;
   id?: string;
   maxVolume: number;
   totalVolume: number;

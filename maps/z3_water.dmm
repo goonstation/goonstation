@@ -2850,6 +2850,7 @@
 	free_resources = null;
 	malfunction = 1;
 	name = "grody manufacturer";
+	supplemental_desc = null;
 	wires = 11
 	},
 /obj/machinery/light/small{

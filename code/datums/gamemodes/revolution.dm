@@ -64,7 +64,7 @@
 		head_revolutionaries += tplayer
 		token_players.Remove(tplayer)
 		rev_number--
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
@@ -211,7 +211,7 @@
 
 		src.revolutionaries += rev_mind
 		src.update_rev_icons_added(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "was made a member of the revolution.")
 		. = 1
 
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
@@ -229,7 +229,7 @@
 
 		src.revolutionaries -= rev_mind
 		src.update_rev_icons_removed(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "is no longer a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "is no longer a member of the revolution.")
 
 		for (var/mob/living/M in view(rev_mind.current))
 			M.show_text("<b>[rev_mind.current] looks like they just remembered their real allegiance!</b>", "blue")
@@ -322,7 +322,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Consultant","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 
@@ -345,6 +345,9 @@
 				continue
 
 			if(isghostcritter(head_mind.current) || isVRghost(head_mind.current))
+				continue
+
+			if(istype(head_mind.current.loc, /obj/cryotron))
 				continue
 
 			// Check if they're on the current z-level
@@ -397,7 +400,8 @@
 			if(istype(T.loc, /area/station/security/brig) && !rev_mind.current.canmove)
 				continue
 
-
+			if(istype(rev_mind.current.loc, /obj/cryotron))
+				continue
 
 			return 0
 	return 1
@@ -496,6 +500,10 @@
 
 	..() // Admin-assigned antagonists or whatever.
 
+	if (finished == 1)
+		for(var/datum/mind/rev_mind as anything in head_revolutionaries)
+			if(rev_mind.current && !isdead(rev_mind.current))
+				rev_mind.current.unlock_medal("This station is ours!", TRUE)
 
 
 
@@ -539,7 +547,7 @@
 					var/found = 0
 					for (var/datum/mind/M in R.head_revolutionaries)
 						if (M.current && ishuman(M.current))
-							if (get_dist(owner,M.current) <= 5)
+							if (GET_DIST(owner,M.current) <= 5)
 								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
 									found = 1
 									break

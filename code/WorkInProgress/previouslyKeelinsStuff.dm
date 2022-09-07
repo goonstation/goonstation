@@ -292,9 +292,7 @@ var/reverse_mode = 0
 		return 1
 	var/list/line = getline(A,B)
 	for (var/turf/T in line)
-		if (T == AT || T == BT)
-			break
-		if (T.density)
+		if (!T.gas_cross(T))
 			return 0
 		var/obj/blob/BL = locate() in T
 		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))
@@ -371,7 +369,7 @@ var/reverse_mode = 0
 						else
 							user.shock(src, rand(5000, 250000), "chest", 1, 1)
 						/*harmless_smoke_puff(get_turf(src))
-						playsound(user, "sound/effects/ghost2.ogg", 60, 0)
+						playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
 						user.flash(60)
 						var/mob/oldmob = user
 						var/mob/dead/observer/O = new/mob/dead/observer()
@@ -441,15 +439,15 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
-									logTheThing("user", user, null, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
+									logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
 									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
-									playsound(user, "sound/effects/ghost2.ogg", 60, 0)
-									logTheThing("user", user, null, "was killed by [src] ([src.type]) at [log_loc(user)].")
+									playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+									logTheThing(LOG_COMBAT, user, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
 									oldmob.ghostize()

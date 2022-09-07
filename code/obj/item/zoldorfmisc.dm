@@ -14,10 +14,10 @@
 			src.icon_state = "scrollopen"
 			src.desc = "This is one WEIRD burrito..."
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
-			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
 			if (do_after(user, 4.6 SECONDS))
@@ -28,7 +28,7 @@
 			else
 				src.icon_state = "scrollopen"
 
-	attack(mob/user as mob,mob/target as mob)
+	attack(mob/user, mob/target)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
 			user.visible_message("<span class='alert'><b>[user.name] bites into the [src]. They didn't seem to enjoy it.</b></span>","<span class='alert'><b>Blegh! This doesn't taste like a burrito!</b></span>")
 
@@ -123,7 +123,7 @@
 					AM.set_loc(get_turf(src))
 				qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.loc != user)
 			..()
 			return
@@ -193,7 +193,7 @@
 		boutput(user,"<span class='success'><b>You have drawn the [cardname]!</b></span>")
 		if(cardname == "Head of Personnel")
 			src.icon_state = "hop"
-			var/yn = alert(user,"Do you wish to repeat an effect of an already drawn card or cancel your queued draws?","Choice","Repeat","Cancel")
+			var/yn = tgui_alert(user, "Do you wish to repeat an effect of an already drawn card or cancel your queued draws?", "Choice", list("Repeat", "Cancel"))
 			if(!yn)
 				yn = pick("Repeat","Cancel")
 			if(yn == "Repeat")
@@ -246,7 +246,7 @@
 			if("Cluwne")
 				user.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
 			if("Clown")
-				var/input = alert(user,"Would you prefer to learn the secrets of the clown or the secret to clown immunity?","Choice","Clown","Immunity")
+				var/input = tgui_alert(user, "Would you prefer to learn the secrets of the clown or the secret to clown immunity?", "Choice", list("Clown", "Immunity"))
 				if(!input)
 					input = pick("Clown","Immunity")
 				if(input == "Clown")
@@ -260,7 +260,7 @@
 				else if(input == "Immunity")
 					boutput(user,"<span class='success'>You will never slip again!</span>")
 					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal)
-				input = alert(user, "Do you wish to draw two more cards?","Choice","Yes","No")
+				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"
 				if (input == "Yes")
@@ -294,7 +294,7 @@
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
-				logTheThing("combat", user, null, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
 				user.gib(1)
 			if("Geneticist")
 				var/list/effectpool = list("xray","hulk","breathless","thermal_resist","regenerator","detox")
@@ -427,7 +427,7 @@
 					return
 				if(isrestrictedz(user.z))
 					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
-					logTheThing("user", user, null, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
 				var/list/randomturfs = new/list()

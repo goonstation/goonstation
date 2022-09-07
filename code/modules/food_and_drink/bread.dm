@@ -14,7 +14,7 @@
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
@@ -23,8 +23,8 @@
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)
@@ -357,8 +357,8 @@
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/knife/butcher))
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
 				user.change_eye_blurry(5)

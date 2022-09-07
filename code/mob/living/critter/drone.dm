@@ -55,6 +55,7 @@
 		loot_table = list(/obj/item/device/prox_sensor = 25)
 
 	death(var/gibbed)
+		. = ..()
 		if (dying)
 			return
 		dying = 1

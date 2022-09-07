@@ -19,7 +19,7 @@
 	ex_act()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.stat)
 			//Yaaaaaaaaaaaaaaaay!!
 			user.AddComponent(/datum/component/death_confetti)
@@ -49,7 +49,7 @@
 		else if (numkills > 0)
 			. = " Like the last jerk that pressed it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user || !ishuman(user))
 			return
 

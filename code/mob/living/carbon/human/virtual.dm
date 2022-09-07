@@ -43,8 +43,8 @@
 
 		Station_VNet.Leave_Vspace(src)
 
+		. = ..()
 		qdel(src)
-		return
 
 	disposing()
 		if (isghost && src.client)

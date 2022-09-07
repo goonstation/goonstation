@@ -55,8 +55,10 @@
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
-
-		set_loc(get_turf(src.possessed_thing))
+		if(loc)
+			set_loc(loc)
+		else
+			set_loc(get_turf(src.possessed_thing))
 		possessed_thing.set_loc(src)
 
 		//Appearance Stuff
@@ -93,6 +95,7 @@
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	// Relay these procs
 
@@ -172,7 +175,7 @@
 			if (D_KINETIC)
 				src.TakeDamage(null, damage, 0)
 			if (D_PIERCING)
-				src.TakeDamage(null, damage / 2.0, 0)
+				src.TakeDamage(null, damage / 2, 0)
 			if (D_SLASHING)
 				src.TakeDamage(null, damage, 0)
 			if (D_BURNING)
@@ -184,7 +187,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
-		logTheThing("combat", src, null, "is hit by a blob")
+		logTheThing(LOG_COMBAT, src, "is hit by a blob")
 		if (isdead(src) || src.nodamage)
 			return
 
@@ -265,7 +268,7 @@
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
-				var/mob/dead/observer/O = new/mob/dead/observer()
+				var/mob/dead/observer/O = new/mob/dead/observer(src)
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
 					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
@@ -280,7 +283,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, 'sound/voice/wraith/wraithleaveobject.ogg', 40, 1, -1, 0.6)
 
 		for (var/atom/movable/AM in src.contents)
 			AM.set_loc(src.loc)
@@ -367,7 +370,7 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage)
+		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
 			humans += H
 	return humans
 
@@ -412,54 +415,59 @@
 /datum/aiTask/timed/targeted/living_object/proc/pre_attack()
 	var/mob/living/object/spooker = holder.owner
 	var/obj/item/item = spooker.equipped()
-	if (istype(item, /obj/item/baton))
-		var/obj/item/baton/bat = item
-		if (is_incapacitated(src.holder.target) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)) // they're down or we're out of juice, let's harm baton
-			if (bat.is_active) // uh oh, we're on. turn off
-				spooker.self_interact()
+	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
+		if (istype(item, /obj/item/baton))
+			var/obj/item/baton/bat = item
+			if (is_incapacitated(src.holder.target) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE)) // they're down or we're out of juice, let's harm baton
+				if (bat.is_active) // uh oh, we're on. turn off
+					spooker.self_interact()
+				spooker.set_a_intent(INTENT_HARM)
+				bat.flipped = TRUE
+
+			else // they're up and we have charge, let's try to stun
+				if (!bat.is_active)
+					if (istype(bat, /obj/item/baton/ntso))
+						var/obj/item/baton/ntso/NTbat = bat
+						if (NTbat.state == EXTENDO_BATON_OPEN_AND_OFF) // need 2 taps to get to 'on' in this case
+							spooker.self_interact()
+					spooker.self_interact()
+
+				spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
+				bat.flipped = FALSE
+			bat.UpdateIcon()
+
+		else if (istype(item, /obj/item/sword))
+			var/obj/item/sword/saber = item
+			if (!saber.active)
+				spooker.self_interact() // turn that sword on
 			spooker.set_a_intent(INTENT_HARM)
-			bat.flipped = TRUE
+		else if (istype(item, /obj/item/gun))
+			var/obj/item/gun/pew = item
+			if (pew.canshoot())
+				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
+			else
+				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
+		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
+			spooker.self_interact() // arm grenades
+		else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+			if (ishuman(holder.target))
+				var/mob/living/carbon/human/H = holder.target
+				var/limbless = TRUE
+				for (var/limb in list("l_leg", "r_leg", "l_arm", "r_arm"))
+					if (H.limbs.vars[limb]) // sue me
+						spooker.zone_sel.select_zone(limb)
+						limbless = FALSE
+						break
+				if (limbless) // >:^)
+					spooker.zone_sel.select_zone("head")
 
-		else // they're up and we have charge, let's try to stun
-			if (!bat.is_active)
-				if (istype(bat, /obj/item/baton/ntso))
-					var/obj/item/baton/ntso/NTbat = bat
-					if (NTbat.state == EXTENDO_BATON_OPEN_AND_OFF) // need 2 taps to get to 'on' in this case
-						spooker.self_interact()
+		else if (istype(item, /obj/item/weldingtool))
+			var/obj/item/weldingtool/welder = item
+			if (!welder.welding)
 				spooker.self_interact()
-
-			spooker.set_a_intent(INTENT_DISARM) // have charge, baton normally
-			bat.flipped = FALSE
-		bat.UpdateIcon()
-
-	else if (istype(item, /obj/item/sword))
-		var/obj/item/sword/saber = item
-		if (!saber.active)
-			spooker.self_interact() // turn that sword on
-		spooker.set_a_intent(INTENT_HARM)
-	else if (istype(item, /obj/item/gun))
-		var/obj/item/gun/pew = item
-		if (pew.canshoot())
-			spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 		else
-			spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
-	else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
-		spooker.self_interact() // arm grenades
-	else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
-		if (ishuman(holder.target))
-			var/mob/living/carbon/human/H = holder.target
-			var/limbless = TRUE
-			for (var/limb in list("l_leg", "r_leg", "l_arm", "r_arm"))
-				if (H.limbs.vars[limb]) // sue me
-					spooker.zone_sel.select_zone(limb)
-					limbless = FALSE
-					break
-			if (limbless) // >:^)
-				spooker.zone_sel.select_zone("head")
-
-	else
-		spooker.set_a_intent(INTENT_HARM)
-		spooker.zone_sel.select_zone("head")
-	spooker.hud.update_intent()
+			spooker.set_a_intent(INTENT_HARM)
+			spooker.zone_sel.select_zone("head") // head for plates n stuff
+		spooker.hud.update_intent()
 
 	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

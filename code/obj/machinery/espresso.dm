@@ -22,7 +22,7 @@
 		UnsubscribeProcess()
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
 			if (src.cupinside == 1)
 				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
@@ -35,14 +35,14 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
 				if(!(status & (NOPOWER|BROKEN)))
-					switch(alert("What would you like to do with [src]?",,"Make espresso","Remove cup","Nothing"))
+					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
 						if ("Make espresso")
-							var/drink_choice = input(user, "What kind of espresso do you want to make?", "Selection") as null|anything in list("Espresso","Latte","Mocha","Cappuchino","Americano", "Decaf", "Flat White")
+							var/drink_choice = tgui_input_list(user, "What kind of espresso do you want to make?", "Selection", list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha"))
 							if (!drink_choice)
 								return
 							switch (drink_choice)  //finds cup in contents and adds chosen drink to it
@@ -102,10 +102,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -142,7 +142,7 @@
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "coffeemaker-eng"
+	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
@@ -155,6 +155,8 @@
 	var/default_carafe = /obj/item/reagent_containers/food/drinks/carafe
 	var/image/fluid_image
 
+	var/emagged = FALSE
+
 	New()
 		..()
 		UnsubscribeProcess()
@@ -162,7 +164,21 @@
 			src.my_carafe = new src.default_carafe (src)
 		src.update()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+
+		if(!src.emagged)
+			if (user)
+				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+
+			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
+			src.emagged = TRUE
+			return TRUE
+		else
+			if (user)
+				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+			return FALSE
+
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/carafe))
 			if (src.my_carafe)
 				user.show_text("The [src] can't hold any more [src.carafe_name]s, doofus!")
@@ -175,15 +191,18 @@
 				src.update()
 				return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
 			if (src.my_carafe) //freaking spacing errors made me waste hours on this
 				if (!(status & (NOPOWER|BROKEN)))
-					switch (alert("What would you like to do with [src]?",,"Brew coffee","Remove carafe","Nothing"))
-						if ("Brew coffee")
+					var/choice = tgui_alert(user, "What would you like to do with [src]?", "Coffeemaker", list("Brew [src.emagged ? "tea" : "coffee"]", "Remove carafe", "Nothing"))
+					if (!choice || choice == "Nothing")
+						return
+					switch (choice)
+						if ("Brew coffee","Brew tea")
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
-								C.reagents.add_reagent("coffee_fresh",100)
+								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						if ("Remove carafe")
 							if (!src.my_carafe)
@@ -196,16 +215,14 @@
 							src.my_carafe = null
 							user.show_text("You have removed the [src.carafe_name] from the [src].")
 							src.update()
-						if ("Nothing")
-							return
 			else return ..()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -250,6 +267,10 @@
 	icon_state = "coffeemaker-sci"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/research
 
+/obj/machinery/coffeemaker/engineering
+	icon_state = "coffeemaker-eng"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
+
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */
 /* ===================================================== */
@@ -267,7 +288,7 @@ ABSTRACT_TYPE(/obj/drink_rack)
 		if (dist <= 2)
 			. += "There's [(src.amount_on_rack > 0) ? src.amount_on_rack : "no" ] [src.contained_name][s_es(src.amount_on_rack)] on \the [src]."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.contained) & src.amount_on_rack < max_amount)
 			if (W.reagents.total_volume > 0)
 				var/turf/T = get_turf(src)
@@ -280,7 +301,7 @@ ABSTRACT_TYPE(/obj/drink_rack)
 			src.UpdateIcon()
 		else return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (src.amount_on_rack <= 0)
 			user.show_text("\The [src] doesn't have any [src.contained_name]s left, doofus!", "red")

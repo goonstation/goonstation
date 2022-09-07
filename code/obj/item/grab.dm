@@ -40,6 +40,8 @@
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
 		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		if (assailant != affecting)
+			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
 	proc/post_item_setup()//after grab is done being made with item
 		return
@@ -78,11 +80,11 @@
 				affecting.force_laydown_standup()
 
 			if (state == GRAB_CHOKE)
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
-				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			else if(!istype(src, /obj/item/grab/block))
-				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
 
@@ -207,7 +209,7 @@
 					src.affecting.buckled = null
 
 				else
-					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
+					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
@@ -223,7 +225,7 @@
 				src.assailant.lastattacked = src.affecting
 				src.affecting.lastattacker = src.assailant
 				src.affecting.lastattackertime = world.time
-				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
+				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
 				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!</span>")
 			if (GRAB_AGGRESSIVE)
@@ -239,7 +241,7 @@
 				user.next_click = world.time + user.combat_click_delay
 			if (GRAB_CHOKE)
 				src.state = GRAB_AGGRESSIVE
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
+				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 				user.next_click = world.time + user.combat_click_delay
@@ -250,7 +252,7 @@
 			return
 
 		icon_state = "disarm/kill"
-		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
+		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
 
 		if (!msg_overridden)
@@ -284,10 +286,10 @@
 			return
 
 		icon_state = "pin"
-		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
+		logTheThing(LOG_COMBAT, src.assailant, "pins [constructTarget(src.affecting,"combat")]")
 
 		for (var/mob/O in AIviewers(src.assailant, null))
-			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [T]!</span>", 1)
+			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [get_turf(T)]!</span>", 1)
 
 		src.state = GRAB_PIN
 
@@ -509,7 +511,7 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -519,14 +521,14 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 || !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -552,7 +554,7 @@
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
-	logTheThing("combat", user, M, "smashes [constructTarget(M,"combat")] against [src]")
+	logTheThing(LOG_COMBAT, user, "smashes [constructTarget(M,"combat")] against [src]")
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
@@ -600,6 +602,41 @@
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
 	attack_particle(user,src)
 
+/obj/fluid/grab_smash(obj/item/grab/G as obj, mob/user as mob)
+	var/mob/M = G.affecting
+
+	if  (!(ismob(G.affecting)))
+		return 0
+
+	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (isliving(G.affecting))
+		G.affecting:was_harmed(G.assailant)
+
+	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
+	attack_particle(user,src)
+
+/obj/decal/cleanable/grab_smash(obj/item/grab/G as obj, mob/user as mob)
+	var/mob/M = G.affecting
+
+	if  (!(ismob(G.affecting)))
+		return 0
+
+	if (BOUNDS_DIST(src, M) > 0)
+		return 0
+
+	if (!G.can_pin)
+		return 0
+
+	if (isliving(G.affecting))
+		G.affecting:was_harmed(G.assailant)
+
+	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
+	attack_particle(user,src)
 
 ///////////////////////
 //SPECIAL GRABS BELOW//
@@ -867,7 +904,7 @@
 				playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
-				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+				logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 			step_to(user, target_turf)
 

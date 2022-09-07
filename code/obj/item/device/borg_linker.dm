@@ -2,9 +2,9 @@
 	name = "cyborg law linker"
 	icon_state = "cyborg_linker"
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_SMALL
-	throwforce = 5.0
+	throwforce = 5
 	throw_range = 15
 	throw_speed = 3
 	desc = "A device for connecting silicon beings to a law rack, setting restrictions on their behaviour."

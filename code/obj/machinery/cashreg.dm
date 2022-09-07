@@ -13,12 +13,12 @@
 		..()
 		UnsubscribeProcess()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [anchored ? "unbolts the [src] from" : "secures the [src] to"] the floor.")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 80, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 80, 1)
 			src.anchored = !src.anchored
 		if (istype(W, /obj/item/card/id))
 			var/obj/item/card/id/card = W
@@ -65,14 +65,11 @@
 			mainaccount["current_money"] += amount
 			user.visible_message("<b>[src]</b> beeps, \"[mainaccount["name"]] now holds [mainaccount["current_money"]] credits. Thank you for your service!\"")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!mainaccount)
 			boutput(user, "<span class='alert'>You press the reset button, but nothing happens.</span>")
 			return
-		switch(alert("Reset the reader?",,"Yes","No"))
-			if ("Yes")
-				boutput(user, "<span class='alert'>Reader reset.</span>")
-				user.visible_message("<span class='alert'><B>[user]</B> resets [src].</span>")
-				mainaccount = null
-			if ("No")
-				return
+		if (tgui_alert(user, "Reset the reader?", "Reset reader", list("Yes", "No")) == "Yes")
+			boutput(user, "<span class='alert'>Reader reset.</span>")
+			user.visible_message("<span class='alert'><B>[user]</B> resets [src].</span>")
+			mainaccount = null

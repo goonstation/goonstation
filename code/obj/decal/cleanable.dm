@@ -583,13 +583,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 0
 	can_fluid_absorb = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Chef" || H.job == "Sous-Chef")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (H.gloves)
 					H.gloves.blood_DNA = src.blood_DNA
 				else
@@ -804,7 +804,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_y += rand(-12,12)
 		pixel_x += rand(-12,12)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W
@@ -840,7 +840,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
@@ -986,7 +986,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's probably best not to ask.</span>",\
 				"<span class='notice'>You [src.sample_verb] some of the puke into [W]. You are absolutely disgusting.</span>")
 				W.reagents.handle_reactions()
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				src.sampled = 1
 				return 1
 
@@ -1022,7 +1022,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>",\
 			"<span class='notice'>You [src.sample_verb] some of the puke into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>")
 			W.reagents.handle_reactions()
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			src.sampled = 1
 			return 1
 
@@ -1079,7 +1079,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							M.vomit()
 
 				I.reagents.handle_reactions()
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				src.sampled = 1
 				return 1
 
@@ -1119,7 +1119,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.show_text("The ashes slip through your fingers.", "blue")
 		qdel(src)
 		return
@@ -1271,7 +1271,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.visible_message("<span class='notice'><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
 				"<span class='notice'>You [src.sample_verb] some of [src] into [W].</span>")
 				W.reagents.handle_reactions()
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.amount--
 				if (src.amount <= 0)
 					qdel(src)
@@ -1334,13 +1334,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/effects/sparks3.ogg", 50, 1)
+				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now you have grime all over your hands for nothing!", "red")
 				else
@@ -1350,7 +1350,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (H.job == "Chef" || H.job == "Sous-Chef")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now your hands are all grimey for nothing!", "red")
 				else

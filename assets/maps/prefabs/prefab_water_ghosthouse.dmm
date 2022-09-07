@@ -594,7 +594,7 @@
 /area/prefab/ghost_house)
 "cj" = (
 /obj/table/wood/round/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/decal/cleanable/cobweb{
 	dir = 1;
 	icon_state = "cobweb"

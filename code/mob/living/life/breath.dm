@@ -243,12 +243,14 @@
 		var/datum/organ/lung/status/status_updates = new
 
 		var/datum/gas_mixture/left_breath = breath.remove_ratio(0.5)
-		var/datum/gas_mixture/right_breath = breath.remove_ratio(1.0) // the rest
+		var/datum/gas_mixture/right_breath = breath.remove_ratio(1) // the rest
 		left_breath.volume = breath.volume / 2
 		right_breath.volume = breath.volume / 2
 
-		human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
-		human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
+		if (!human_owner?.organHolder?.left_lung?.broken)
+			human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
+		if (!human_owner?.organHolder?.right_lung?.broken)
+			human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
 
 		breath.merge(left_breath)
 		breath.merge(right_breath)

@@ -88,7 +88,10 @@ var/global/datum/phrase_log/phrase_log = new
 			@"we do a little .",
 			@"\b.ower\s?gam(:?er?|ing)",
 			@"\bowo",
-			@"\buwu"
+			@"\buwu",
+			@"forgor",
+			@"admeme",
+			@"\bmorb(?!id)"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(

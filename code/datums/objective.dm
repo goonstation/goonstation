@@ -353,7 +353,6 @@ proc/create_fluff(datum/mind/target)
 		"Become a vigilante and violently harass people over the slightest suspicion.",
 		"Seek out any non-security vigilantes on the station and make their life utter hell.",
 		"Find another crew member's pet project and subvert it to a more violent purpose.",
-		"FUCK THE POLICE.",
 		"Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado.",
 		"Spy on the crew and uncover their deepest secrets.",
 		"Kidnap George and hold him for ransom.",
@@ -684,6 +683,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/absorb
+	medal_name = "Many names, many faces"
 	var/absorb_count
 
 	set_up()
@@ -789,6 +789,7 @@ proc/create_fluff(datum/mind/target)
 		return 1
 
 /datum/objective/specialist/blob
+	medal_name = "Blob everywhere!"
 	var/blobtiletarget = 500
 
 	set_up()
@@ -809,6 +810,13 @@ proc/create_fluff(datum/mind/target)
 
 		if (O.blobs.len >= blobtiletarget)
 			return 1
+
+/datum/objective/specialist/flock
+	explanation_text = "Construct the relay and transmit The Signal."
+
+	check_completion()
+		return flock_signal_unleashed
+
 
 /datum/objective/specialist/wraith
 	explanation_text = "Be dastardly as heck!"
@@ -966,6 +974,7 @@ proc/create_fluff(datum/mind/target)
 		return !failed
 
 /datum/objective/specialist/werewolf/feed
+	medal_name = "Good feasting"
 	var/feed_count = 0
 	var/target_feed_count
 	var/list/mob/mobs_fed_on = list() // Stores bioHolder.Uid of previous victims, so we can't feed on the same person multiple times.

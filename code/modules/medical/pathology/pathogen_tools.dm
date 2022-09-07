@@ -14,7 +14,7 @@
 		var/datum/reagents/R = new /datum/reagents(5)
 		src.reagents = R
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		return
 
 	on_reagent_change()
@@ -435,20 +435,20 @@
 	proc/inject(var/mob/living/carbon/human/target, var/mob/user)
 		if (is_cure)
 			if (!is_vaccine)
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
 				target.remission(src.pathogen)
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
 				target.immunity(src.pathogen)
 		else
 			if (target.infected(src.pathogen))
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
 		src.pathogen = null
 		used = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (used)
 			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return

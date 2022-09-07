@@ -134,7 +134,7 @@
 	icon_state = "ammobag-sp-d"
 	anchored = 2
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/K = I
 			if(!K.ammo.refillable)

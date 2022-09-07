@@ -10,6 +10,7 @@ var/list/action_names = list(
 
 	"fart" = "Fart",
 	"flip" = "Flip",
+	"twirl" = "Twirl",
 	"eyebrow" = "Raise Eyebrow",
 	"gasp" = "Gasp",
 	"raisehand" = "Raise Hand",
@@ -101,6 +102,7 @@ var/list/action_verbs = list(
 	"eyebrow" = "me_hotkey eyebrow",
 	"fart" = "me_hotkey fart",
 	"flip" = "me_hotkey flip",
+	"twirl" = "me_hotkey twirl",
 	"gasp" = "me_hotkey gasp",
 	"raisehand" = "me_hotkey raisehand",
 	"laugh" = "me_hotkey laugh",

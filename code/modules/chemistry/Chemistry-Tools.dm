@@ -73,9 +73,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	attack_self(mob/user as mob)
 		return
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		return
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (reagents)
 			reagents.physical_shock(I.force)
 		return
@@ -185,7 +185,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 					boutput(user, "<span class='notice'>You apply [min(src.amount_per_transfer_from_this,src.reagents.total_volume)] units of the solution to [target].</span>")
 					target.visible_message("<span class='alert'><b>[user.name]</b> applies some of the [src.name]'s contents to [target.name].</span>")
 				var/mob/living/MOB = target
-				logTheThing("combat", user, MOB, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
+				logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(MOB,"combat")] [log_reagents(src)] at [log_loc(MOB)].") // Added location (Convair880).
 				can_mousedrop = 0
 				if (src.splash_all_contents)
 					src.reagents.reaction(target,TOUCH)
@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+				logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing(LOG_COMBAT, user, "splashes [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 				can_mousedrop = 1
 			return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		/*if (istype(I, /obj/item/reagent_containers/pill))
 
 			if (!I.reagents || !I.reagents.total_volume)
@@ -366,7 +366,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if (src.reagents && I.reagents)
 				I:Poisoner = user
 				src.reagents.trans_to(I, 5)
-				logTheThing("combat", user, null, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+				logTheThing(LOG_COMBAT, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
 				return
 
@@ -423,9 +423,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.is_open_container() && src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-			src.reagents.reaction(get_turf(user), TOUCH)
-			src.reagents.clear_reagents()
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
 
 	is_open_container()
 		return 1
@@ -486,6 +489,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack_self(mob/user as mob)
 		if (isrobot(user))
 			boutput(user, "<span class='alert'>Why would you wanna flip over your precious bucket? Silly.</span>")
+			return
+		if (src.cant_drop || src.cant_self_remove)
+			boutput(user, "<span class='alert'>You can't flip that, it's stuck on.</span>")
 			return
 		if (src.reagents.total_volume)
 			user.show_text("<b>You turn the bucket upside down, causing it to spill!</b>", "red")

@@ -2308,7 +2308,7 @@
 /area/station/hallway/secondary/construction)
 "aeQ" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /turf/simulated/floor/plating/damaged2,
@@ -2393,7 +2393,7 @@
 /area/station/crew_quarters/locker)
 "afb" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
@@ -2943,7 +2943,7 @@
 /area/station/maintenance/north)
 "agi" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/cable{
@@ -5156,7 +5156,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Habitat Dome"
 	},
 /turf/simulated/floor/engine{
@@ -6832,7 +6832,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Restroom"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -13007,7 +13007,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -14115,7 +14115,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -14587,7 +14587,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -16205,7 +16205,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -16799,7 +16799,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Bar";
 	req_access_txt = "25"
 	},
@@ -17320,7 +17320,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/vertical,
@@ -17338,7 +17338,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
@@ -18976,7 +18976,7 @@
 /area/station/security/brig)
 "aPL" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
@@ -24497,7 +24497,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Patchy's Cabana";
 	req_access_txt = "5;25;"
 	},
@@ -24634,7 +24634,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/maintenance/west)
 "bcj" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -24937,7 +24937,7 @@
 "bcI" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Restroom"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -25643,7 +25643,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Last Resort Bar";
 	req_access_txt = "25"
 	},
@@ -29139,7 +29139,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -29594,7 +29594,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -31049,7 +31049,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -38661,7 +38661,7 @@
 	dir = 2;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -38675,7 +38675,7 @@
 	dir = 2;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -39026,7 +39026,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -39393,7 +39393,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_east"
@@ -42483,7 +42483,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -43025,7 +43025,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -43461,7 +43461,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "The Alchemist's Nook";
 	req_access_txt = "25"
 	},
@@ -44791,7 +44791,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44843,7 +44843,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -46166,7 +46166,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)

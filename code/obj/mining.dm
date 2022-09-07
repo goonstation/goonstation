@@ -25,7 +25,7 @@
 		linked_magnet = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		#ifndef UNDERWATER_MAP
 		if (istype(W,/obj/item/magnet_parts))
 			if (istype(src.linked_magnet))
@@ -265,7 +265,7 @@
 		else
 			. += "<span class='alert'>The magnetizer must be loaded with a chunk of plasmastone to use.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, "<span class='notice'>You charge the magnetizer with the plasmastone.</span>")
@@ -301,7 +301,7 @@
 			var/turf/C = M.UL()
 			var/turf/D = M.UR()
 			var/turf/O = get_turf(target)
-			var/dist = min(min(get_dist(A, O), get_dist(B, O)), min(get_dist(C, O), get_dist(D, O)))
+			var/dist = min(min(GET_DIST(A, O), GET_DIST(B, O)), min(GET_DIST(C, O), GET_DIST(D, O)))
 			if (dist > 10)
 				boutput(user, "<span class='alert'>Designation failed: designated tile is outside magnet range.</span>")
 				qdel(M)
@@ -328,6 +328,7 @@
 	var/cooldown_time = 1200
 	var/active = 0
 	var/last_used = 0
+	var/last_use_attempt = 0
 	var/automatic_mode = 0
 	var/auto_delay = 100
 	var/last_delay = 0
@@ -381,9 +382,9 @@
 		process()
 			if (!target)
 				return
-			if (automatic_mode && last_used < world.time && last_delay < world.time)
+			if (automatic_mode && last_used < TIME && last_delay < TIME)
 				if (target.check_for_unacceptable_content())
-					last_delay = world.time + auto_delay
+					last_delay = TIME + auto_delay
 					return
 				else
 					SPAWN(0)
@@ -400,16 +401,16 @@
 				wall_bits = target.generate_walls()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 1
+				M.set_opacity(1)
 				M.set_density(1)
 				M.invisibility = INVIS_NONE
 
 			active = 1
 
-			if (last_used > world.time)
+			if (last_used > TIME)
 				damage(rand(2,6))
 
-			last_used = world.time + cooldown_time
+			last_used = TIME + cooldown_time
 			playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 			build_icon()
 
@@ -440,7 +441,7 @@
 				MC.generate(target)
 			else
 				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-					M.opacity = 0
+					M.set_opacity(0)
 					M.set_density(0)
 					M.invisibility = INVIS_INFRA
 				active = 0
@@ -455,7 +456,7 @@
 			build_icon()
 
 			for (var/obj/forcefield/mining/M in wall_bits)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_ALWAYS
 
@@ -488,9 +489,9 @@
 
 	process()
 		..()
-		if (automatic_mode && last_used < world.time && last_delay < world.time)
+		if (automatic_mode && last_used < TIME && last_delay < TIME)
 			if (mining_controls.magnet_area.check_for_unacceptable_content())
-				last_delay = world.time + auto_delay
+				last_delay = TIME + auto_delay
 				return
 			else
 				SPAWN(0) //Did you know that if you sleep directly in process() you are the old lady at the mall who only pays in quarters.
@@ -536,7 +537,7 @@
 	bullet_act(var/obj/projectile/P)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.active)
 			boutput(user, "<span class='alert'>It's way too dangerous to do that while it's active!</span>")
 			return
@@ -560,7 +561,7 @@
 			C.use(1)
 			src.damage(-10)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 				src.malfunctioning = 0
@@ -619,7 +620,7 @@
 		switch(picker)
 			if (1)
 				src.visible_message("<b>[src] makes a loud bang! That didn't sound too good...</b>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 				src.damage(rand(5,10))
 			if (2)
 				if (istype(mining_apc))
@@ -628,16 +629,16 @@
 
 	proc/pull_new_source(var/selectable_encounter_id = null)
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 1
+			M.set_opacity(1)
 			M.set_density(1)
 			M.invisibility = INVIS_NONE
 
 		active = 1
 
-		if (last_used > world.time)
+		if (last_used > TIME)
 			damage(rand(2,6))
 
-		last_used = world.time + cooldown_time
+		last_used = TIME + cooldown_time
 		playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 		build_icon()
 
@@ -645,12 +646,15 @@
 			if (!(O.type in mining_controls.magnet_do_not_erase))
 				qdel(O)
 		for (var/turf/simulated/T in mining_controls.magnet_area.contents)
+			var/datum/client_image_group/cig = get_image_group(T) //clear out scan results
+			for(var/image/i in cig.images)
+				cig.remove_image(i)
 			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
-				T.ReplaceWithSpace()
+				T.ReplaceWith(/turf/space)
 				//qdel(T)
 		if(station_repair.station_generator)
 			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
-				UT.ReplaceWith("Space", force=TRUE)
+				UT.ReplaceWith(/turf/space, force=TRUE)
 		for (var/turf/space/S in mining_controls.magnet_area.contents)
 			S.ClearAllOverlays()
 
@@ -679,7 +683,7 @@
 			MC.generate(null)
 		else
 			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-				M.opacity = 0
+				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_INFRA
 			active = 0
@@ -700,168 +704,85 @@
 		build_icon()
 
 		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-			M.opacity = 0
+			M.set_opacity(0)
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
 
 		src.updateUsrDialog()
 		return
 
-	proc/generate_interface(var/mob/user as mob)
-		src.add_dialog(user)
+	ui_data(mob/user)
+		. = ..()
+		.["magnetHealth"] = src.health
+		.["magnetActive"] = src.active
+		.["magnetLastUsed"] = src.last_used
+		.["magnetCooldownOverride"] = src.cooldown_override
+		.["magnetAutomaticMode"] = src.automatic_mode
 
-		var/dat = "<BR><B>Magnet Status:</B><BR>"
-		dat += "<u>Condition:</u> "
-		switch(src.health)
-			if (95 to INFINITY)
-				dat += "Optimal"
-			if (70 to 94)
-				dat += "Mild Structural Damage"
-			if (40 to 69)
-				dat += "Heavy Structural Damage"
-			if (10 to 39)
-				dat += "Extreme Structural Damage"
-			if (-INFINITY to 10)
-				dat += "Destruction Imminent"
+		var/list/miningEncounters = list()
+		for(var/encounter_id in mining_controls.mining_encounters_selectable)
+			var/datum/mining_encounter/encounter = mining_controls.mining_encounters_selectable[encounter_id]
+			if(istype(encounter))
+				miningEncounters += list(list(
+					name = encounter.name,
+					id = encounter_id
+				))
+		.["miningEncounters"] = miningEncounters
 
-		dat += "<br><u>Status:</u> "
-		if (src.active)
-			dat += "Pulling New Mineral Source"
-		else
-			if (src.last_used > world.time)
-				dat += "Cooling Down: Ready in T-[max(0,round((src.last_used - world.time) / 10))]"
-				if (src.cooldown_override)
-					dat += "<br><i>Cooldown Override Engaged</i>"
-			else
-				dat += "Idle"
+		.["time"] = TIME
 
-		dat += "<BR><HR>"
-		if (src.active)
-			dat += "Magnet Active<BR>"
-		else
-			if (src.last_used > world.time)
-				if (src.cooldown_override)
-					dat += "<A href='?src=\ref[src];activate_magnet=1'>Activate Magnet</A> (On Cooldown!)<BR>"
-					if(mining_controls.mining_encounters_selectable.len > 0)
-						dat += "<A href='?src=\ref[src];show_selectable=1'>Activate telescope location</A>  (On Cooldown!)<BR>"
+	ui_act(action, params)
+		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
+		switch(action)
+			if ("geoscan")
+				var/MC = src.get_magnetic_center()
+				if (!MC)
+					boutput(usr, "Error. Magnet is not magnetized.")
+					return
+				mining_scan(MC, usr, src.get_scan_range())
+			if ("activateselectable")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
+
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					dat += "Magnet Cooling Down<BR>"
-			else
-				dat += "<A href='?src=\ref[src];activate_magnet=1'>Activate Magnet</A><BR>"
-				if(mining_controls.mining_encounters_selectable.len > 0)
-					dat += "<A href='?src=\ref[src];show_selectable=1'>Activate telescope location</A><BR>"
+					src.last_use_attempt = TIME + 10
+					src.pull_new_source(params["encounter_id"])
+					. = TRUE
+			if ("activatemagnet")
+				if (magnetNotReady)
+					return
+				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					return
 
-
-			dat += "<A href='?src=\ref[src];geo_scan=1'>Scan Mining Area</A><BR>"
-
-		var/auto_mode = "Enable Automatic Mode"
-		if (src.automatic_mode)
-			auto_mode = "Disable Automatic Mode"
-		dat += "<A href='?src=\ref[src];auto_mode=1'>[auto_mode]</A><BR>"
-
-		var/override_text = "Override Cooldown"
-		if (src.cooldown_override)
-			override_text = "Disable Cooldown Override"
-		dat += "<A href='?src=\ref[src];override_cooldown=1'>[override_text]</A><BR>"
-		dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-		user.Browse(dat, "window=computer;size=300x400")
-		onclose(user, "computer")
-		return null
-
-	Topic(href, href_list)
-		if(status & (NOPOWER|BROKEN))
-			boutput(usr, "<span class='alert'>That machine is not powered.</span>")
-			return 1
-		if(usr.restrained() || usr.lying || usr.stat)
-			boutput(usr, "<span class='alert'>You are currently unable to do that.</span>")
-			return 1
-
-		var/rangecheck = 0
-		if (isAI(usr) || issilicon(usr))
-			rangecheck = 1
-		if (istype(usr.loc,/obj/machinery/vehicle/))
-			var/obj/machinery/vehicle/V = usr.loc
-			if (istype(V.com_system,/obj/item/shipcomponent/communications/mining) && V.com_system.active)
-				rangecheck = 1
-		for(var/obj/machinery/computer/magnet/M in range(usr,1))
-			rangecheck = 1
-			break
-
-		if (!rangecheck)
-			boutput(usr, "<span class='alert'>You aren't in range of the controls.</span>")
-			return
-		src.add_dialog(usr)
-
-		if (!istype(src))
-			boutput(usr, "Error. Magnet not detected.")
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["back"])
-			src.generate_interface(usr)
-
-		else if (href_list["show_selectable"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			var/html = ""
-			for(var/X in mining_controls.mining_encounters_selectable)
-				var/datum/mining_encounter/E = mining_controls.mining_encounters_selectable[X]
-				if(istype(E))
-					html += "<A href='?src=\ref[src];activate_selectable=[X]'>[E.name]</A><BR>"
-
-			html += "<BR><A href='?src=\ref[src];back=1'>Back</A><BR>"
-			usr.Browse(html, "window=computer;size=300x400")
-			onclose(usr, "computer")
-			return
-
-		else if (href_list["activate_selectable"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			if (src.check_for_unacceptable_content())
-				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-			else
-				SPAWN(0)
-					if (src) src.pull_new_source(href_list["activate_selectable"])
-
-		else if (href_list["activate_magnet"])
-			if (src.uses_global_controls && !istype(mining_controls.magnet_area))
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
-				return
-
-			if (src.check_for_unacceptable_content())
-				src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
-			else
-				SPAWN(0)
-					if (src) src.pull_new_source()
-
-		else if (href_list["override_cooldown"])
-			if (!ishuman(usr))
-				boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
-			else
-				var/mob/living/carbon/human/H = usr
-				if(!src.allowed(H))
-					boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+				if (src.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
-					src.cooldown_override = !src.cooldown_override
+					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
+					src.pull_new_source()
+					. = TRUE
+			if("overridecooldown")
+				if (!ishuman(usr))
+					boutput(usr, "<span class='alert'>AI and robotic personnel may not access the override.</span>")
+				else
+					var/mob/living/carbon/human/H = usr
+					if(!src.allowed(H))
+						boutput(usr, "<span class='alert'>Access denied. Please contact the Chief Engineer or Captain to access the override.</span>")
+					else
+						src.cooldown_override = !src.cooldown_override
+					. = TRUE
+			if("automode")
+				src.automatic_mode = !src.automatic_mode
+				. = TRUE
 
-		else if (href_list["auto_mode"])
-			src.automatic_mode = !src.automatic_mode
+	ui_status(mob/user, datum/ui_state/state)
+		. = tgui_broken_state.can_use_topic(src, user)
 
-		else if (href_list["geo_scan"])
-			var/MC = src.get_magnetic_center()
-			if (!MC)
-				boutput(usr, "Error. Magnet is not magnetized.")
-				src.updateUsrDialog()
-				return
-
-			mining_scan(MC, usr, src.get_scan_range())
-
-		src.generate_interface(usr)
-		return
 
 /obj/machinery/computer/magnet
 	name = "mineral magnet controls"
@@ -872,7 +793,7 @@
 	var/list/linked_magnets = list()
 	var/obj/machinery/mining_magnet/linked_magnet = null
 	req_access = list(access_engineering_chief)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = 1 //IDK why you'd want to but for consistency's sake
 
 	New()
@@ -880,60 +801,65 @@
 		SPAWN(0)
 			src.connection_scan()
 
-	attack_hand(var/mob/user as mob)
-		if(..())
-			return
-		if (istype(linked_magnet))
-			linked_magnet.generate_interface(user)
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "MineralMagnet", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+		.["linkedMagnets"] = null
+
+		if(istype(linked_magnet))
+			. = linked_magnet.ui_data(user)
+			.["isLinked"] = TRUE
 		else
-			src.add_dialog(user)
-			var/dat = "<B>Mineral Mining Magnet Terminal</B><HR>"
-			dat += "<A href='?src=\ref[src];scan_for_connection=1'>Scan for Magnets</A><BR><BR>"
-			dat += "<B>Choose linked magnet:</B><BR>"
+			var/list/linkedMagnets = list()
 			for (var/obj/M in linked_magnets)
-				dat += "<a href='?src=\ref[src];choosemagnet=\ref[M]'>[M] at ([M.x], [M.y])</a><BR>"
-			dat += "<BR><B>Selected magnet:</B><BR>"
-			if (linked_magnet)
-				dat += "[linked_magnet] at ([linked_magnet.x], [linked_magnet.y])<BR>"
-			else
-				dat += "None<BR>"
+				var/magnetData = list(
+					name = M.name,
+					x = M.x,
+					y = M.y,
+					z = M.z,
+					ref = "\ref[M]",
+					angle = -arctan(M.x - user.x, M.y - user.y)
+				)
+				linkedMagnets += list(magnetData)
+			.["linkedMagnets"] = linkedMagnets
+			.["isLinked"] = FALSE
 
-			//dat += "<BR><a href='?src=\ref[src];unlink=1'>Disconnect Terminal from Magnet</a>"
-
-			dat += "<BR><A href='?action=mach_close&window=computer'>Close</A>"
-			user.Browse(dat, "window=computer;size=300x400")
-			onclose(user, "computer")
-		return
-
-	Topic(href, href_list)
-		if(..())
+	ui_act(action, params)
+		. = ..()
+		if (.)
 			return
+		switch(action)
+			if("linkmagnet")
+				linked_magnet = locate(params["ref"]) in linked_magnets
+				if (!istype(linked_magnet))
+					linked_magnet = null
+					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+				. = TRUE
+			if ("magnetscan")
+				switch(src.connection_scan())
+					if(1)
+						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+					if(2)
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
+					else
+						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
+				. = TRUE
+			if ("unlinkmagnet")
+				src.linked_magnet = null
+				. = TRUE
+			else
+				if(istype(src.linked_magnet))
+					. = src.linked_magnet.ui_act(action, params)
 
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			src.add_dialog(usr)
-
-		src.add_fingerprint(usr)
-
-		if (href_list["choosemagnet"])
-			linked_magnet = locate(href_list["choosemagnet"])
-			if (!linked_magnet)
-				linked_magnet = null
-				src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
-
-		else if (href_list["scan_for_connection"])
-			switch(src.connection_scan())
-				if(1)
-					src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
-				if(2)
-					src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
-				else
-					src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
-
-		else if (href_list["unlink"])
-			src.linked_magnet = null
-
-		src.updateUsrDialog()
-		return
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(istype(src.linked_magnet))
+			. = min(., linked_magnet.ui_status(user))
 
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
@@ -950,6 +876,18 @@
 	return 2
 
 // Turf Defines
+
+TYPEINFO(/turf/simulated/wall/auto/asteroid)
+TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
+	. = ..()
+	connect_overlay = 0
+	connect_diagonal = 1
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/asteroid,
+		/turf/simulated/wall/false_wall,
+		/obj/structure/woodwall,
+		/obj/machinery/door/poddoor/blast/asteroid
+	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
 	mod = "asteroid-"
@@ -957,9 +895,7 @@
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 0
-	connect_diagonal = 1
-	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall)
+	default_material = "rock"
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -1135,11 +1071,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_asteroid(7)
-			if(2.0)
+			if(2)
 				src.damage_asteroid(5)
-			if(3.0)
+			if(3)
 				src.damage_asteroid(3)
 		return
 
@@ -1166,7 +1102,7 @@
 				if (src.event)
 					. += "<br><span class='alert'>There's something not quite right here...</span>"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.gloves, /obj/item/clothing/gloves/concussive))
@@ -1175,7 +1111,7 @@
 				return
 			else if (H.is_hulk())
 				H.visible_message("<span class='alert'><b>[H.name] punches [src] with great strength!</span>")
-				playsound(H.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 100, 1)
+				playsound(H.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
 				src.damage_asteroid(3)
 				return
 		..()
@@ -1193,7 +1129,7 @@
 				UNLINT(L.click(src, list(), null, null))
 			return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/mining_tool/))
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user,T)
@@ -1249,15 +1185,7 @@
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
 
-	proc/build_icon(var/wipe_overlays = 0)
-		/*
-		if (wipe_overlays)
-			src.overlays = list()
-		var/image/coloration = image(src.icon,"color_overlay")
-		coloration.blend_mode = 4
-		coloration.color = src.stone_color
-		src.overlays += coloration
-		*/
+	proc/build_icon()
 		src.color = src.stone_color
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
@@ -1398,7 +1326,7 @@
 		src.RL_SetOpacity(0)
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
 		src.stone_color = new_color
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
 			A.ClearAllOverlays() // i know theres probably a better way to handle this
@@ -1519,7 +1447,7 @@
 	proc/weaken_asteroid()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispryingtool(W))
 			src.ReplaceWithSpace()
 
@@ -1603,7 +1531,7 @@
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
-				playsound(user.loc, "sound/items/miningtool_on.ogg", 30, 1)
+				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 			else
 				boutput(user, "<span class='notice'>You power down [src].</span>")
 				src.power_down()
@@ -1638,6 +1566,10 @@ obj/item/clothing/gloves/concussive
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.6)
 
 	New()
 		..()
@@ -1685,7 +1617,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1751,7 +1683,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 		src.setItemSpecial(/datum/item_special/simple)
 
 	borg
@@ -1802,7 +1734,7 @@ obj/item/clothing/gloves/concussive
 		if(ismob(src.loc))
 			var/mob/user = src.loc
 			user.update_inhands()
-			playsound(user.loc, "sound/items/miningtool_off.ogg", 30, 1)
+			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 	borg
 		process_charges(var/use)
@@ -1819,6 +1751,7 @@ obj/item/clothing/gloves/concussive
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
 	flags = ONBELT
+	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
 	var/hacked = 0
@@ -1854,7 +1787,7 @@ obj/item/clothing/gloves/concussive
 						boutput(user, "<span class='alert'>The timing mechanism malfunctions!</span>")
 					else
 						boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					logTheThing("combat", user, null, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
 					SPAWN(0.5 SECONDS)
 						concussive_blast()
 						qdel (src)
@@ -1868,7 +1801,7 @@ obj/item/clothing/gloves/concussive
 
 						// Yes, please (Convair880).
 						if (src?.hacked)
-							logTheThing("combat", user, null, "attaches a hacked [src] to [target] at [log_loc(target)].")
+							logTheThing(LOG_COMBAT, user, "attaches a hacked [src] to [target] at [log_loc(target)].")
 
 						user.set_dir(get_dir(user, target))
 						user.drop_item()
@@ -1910,7 +1843,7 @@ obj/item/clothing/gloves/concussive
 		src.desc = "It is set to detonate in 5 seconds."
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/chargehacker))
 			if(!src.emagged && !src.hacked)
 				boutput(user, "<span class='notice'>You short out the attachment mechanism, removing its restrictions!</span>")
@@ -1921,23 +1854,23 @@ obj/item/clothing/gloves/concussive
 		else ..()
 
 	proc/concussive_blast()
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src.expl_flash,src))
-			if(get_dist(src,A) <= src.expl_heavy)
+			if(GET_DIST(src,A) <= src.expl_heavy)
 				A.damage_asteroid(4)
-			if(get_dist(src,A) <= src.expl_light)
+			if(GET_DIST(src,A) <= src.expl_light)
 				A.damage_asteroid(3)
-			if(get_dist(src,A) <= src.expl_flash)
+			if(GET_DIST(src,A) <= src.expl_flash)
 				A.damage_asteroid(2)
 
 		for(var/mob/living/carbon/C in range(src.expl_flash, src))
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
-			if(get_dist(src,C) <= src.expl_light)
+			if(GET_DIST(src,C) <= src.expl_light)
 				C.changeStatus("stunned", 8 SECONDS)
 				C.changeStatus("weakened", 10 SECONDS)
 				C.stuttering += 15
 				boutput(C, "<span class='alert'>The concussive blast knocks you off your feet!</span>")
-			if(get_dist(src,C) <= src.expl_heavy)
+			if(GET_DIST(src,C) <= src.expl_heavy)
 				C.TakeDamage("All",rand(15,25)*(1-C.get_explosion_resistance()),0)
 				boutput(C, "<span class='alert'>You are battered by the concussive shockwave!</span>")
 
@@ -1967,6 +1900,7 @@ obj/item/clothing/gloves/concussive
 		for (var/supertype in allowed_supertypes)
 			for (var/subtype in typesof(supertype))
 				allowed_types[subtype] = 1
+		allowed_types -= /obj/storage/closet/flock
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
@@ -2006,6 +1940,9 @@ obj/item/clothing/gloves/concussive
 		if (!istype(O))
 			return ..()
 		if (O.artifact || src.allowed_types[O.type])
+			if (O.anchored)
+				boutput(user, "<span class='alert'>You can't teleport [O] while it is anchored!</span>")
+				return
 			src.try_teleport(O, user)
 
 	proc/can_teleport(var/obj/cargo, var/mob/user)
@@ -2033,7 +1970,7 @@ obj/item/clothing/gloves/concussive
 			return FALSE
 
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
-		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
 		return TRUE
 
@@ -2052,9 +1989,10 @@ obj/item/clothing/gloves/concussive
 
 		for (var/mob/M in cargo.contents)
 			if (M)
-				logTheThing("station", user, M, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
+		target.receive_cargo(cargo)
 		elecflash(src)
 		if (isrobot(user))
 			var/mob/living/silicon/robot/R = user
@@ -2099,11 +2037,11 @@ obj/item/clothing/gloves/concussive
 			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
 		src.target = pick(src.possible_targets)
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
-		playsound(user.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 
 		// Logs for good measure (Convair880).
 		for (var/mob/M in cargo.contents)
-			logTheThing("station", user, M, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
 
 		cargo.set_loc(src.target)
 		elecflash(src)
@@ -2135,6 +2073,10 @@ obj/item/clothing/gloves/concussive
 	var/datum/ore/O
 	var/datum/ore/event/E
 	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
+		//clear out any scanning images if there are any
+		var/datum/client_image_group/cig = get_image_group(T)
+		for(var/image/i in cig.images)
+			cig.remove_image(i)
 		stone++
 		O = AST.ore
 		E = AST.event
@@ -2167,13 +2109,12 @@ obj/item/clothing/gloves/concussive
 /proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
 	if(!user || !T || !decalicon) return
 	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	user << O
+	var/datum/client_image_group/cig = get_image_group(T)
+	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
+	cig.add_image(O)
+
 	SPAWN(2 MINUTES)
-		if (user?.client)
-			user.client.images -= O
-			user.client.screen -= O
-		qdel (O)
-		O = null
+		cig.remove_mob(user)
 
 ///// MINER TRAITOR ITEM /////
 
@@ -2207,7 +2148,7 @@ obj/item/clothing/gloves/concussive
 		src.cell = P
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!src.cell) boutput(user, "<span class='alert'>It won't work without a power cell!</span>")
 		else
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
@@ -2235,7 +2176,7 @@ obj/item/clothing/gloves/concussive
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
 			if (src.cell) boutput(user, "<span class='alert'>It already has a power cell inserted!</span>")
 			else
@@ -2357,34 +2298,64 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
 	var/group
+	/// The mailgroup to send notifications to
+	var/mailgroup = null
 
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
+		mailgroup = MGD_BOTANY
 		name = "Hydroponics Pad"
 	robotics
+		mailgroup = MGD_MEDRESEACH
 		name = "Robotics Pad"
 	artlab
+		mailgroup = MGD_SCIENCE
 		name = "Artifact Lab Pad"
 	engineering
+		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
+		mailgroup = MGO_MECHANIC
 		name = "Mechanics Pad"
 	magnet
+		mailgroup = MGD_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
+		mailgroup = MGD_MINING
 		name = "Mining Outpost Pad"
 	qm
+		mailgroup = MGD_CARGO
 		name = "QM Pad"
 	qm2
+		mailgroup = MGD_CARGO
 		name = "QM Pad 2"
 	researchoutpost
+		mailgroup = MGD_SCIENCE
 		name = "Research Outpost Pad"
 
 	New()
 		..()
 		if (src.name == "Cargo Pad")
 			src.name += " ([rand(100,999)])"
+
+		//sadly maps often don't use the subtypes, so we do this instead
+		if (!src.mailgroup)
+			var/area/area = get_area(src)
+			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
+				src.mailgroup = MGD_BOTANY
+			else if (istype(area, /area/station/medical))
+				src.mailgroup = MGD_MEDRESEACH
+			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
+				src.mailgroup = MGD_SCIENCE
+			else if (istype(area, /area/station/engine/elect))
+				src.mailgroup = MGO_MECHANIC
+			else if (istype(area, /area/station/engine))
+				src.mailgroup = MGO_ENGINEER
+			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
+				src.mailgroup = MGD_MINING
+			else if (istype(area, /area/station/quartermaster))
+				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
@@ -2402,7 +2373,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
 		..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")
@@ -2413,6 +2384,13 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
 			src.active = TRUE
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_CARGO_PAD_ENABLED, src)
+
+	proc/receive_cargo(var/obj/cargo)
+		if (!src.mailgroup)
+			return
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(src.mailgroup), "sender"="00000000", "message"="Notification: Incoming delivery to [src.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
 
@@ -2440,7 +2418,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			var/obj/item/satchel/mining/large/S = new /obj/item/satchel/mining/large(src)
 			satchel = S
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/satchel/mining/))
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
@@ -2494,7 +2472,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	desc = "A weird jet black metal wall indented with strange grooves and lines."
 	icon_state = "ancient"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
@@ -2514,7 +2492,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 
@@ -2528,7 +2506,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		boutput(user, "<span class='combat'>You attack [src] with [W] but fail to even make a dent!</span>")
 		return
 

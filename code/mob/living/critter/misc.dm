@@ -42,12 +42,12 @@
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn, no_burn_mult)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.stat != 2)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat == 2)
 			return
 		else

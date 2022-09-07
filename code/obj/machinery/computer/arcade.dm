@@ -37,7 +37,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	show_ui(user)

@@ -6814,7 +6814,7 @@
 	dir = 8;
 	tag = "icon-bulb1 (WEST)"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/storage/autolathe)
 "aBh" = (
@@ -10843,7 +10843,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "aRx" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary2";
 	name = "Automatic Locker (Cell #2)"
 	},
@@ -16366,7 +16366,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto_gangway)
 "bjJ" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary3";
 	name = "Automatic Locker (Cell #3)"
 	},
@@ -20296,7 +20296,7 @@
 	dir = 9;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -24557,7 +24557,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -28459,7 +28459,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
@@ -28927,7 +28927,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Teleporter Pad";
@@ -38111,7 +38111,7 @@
 	},
 /area/station/bridge)
 "xVF" = (
-/obj/storage/secure/closet/brig/automatic/solitary{
+/obj/storage/secure/closet/brig_automatic/solitary{
 	id = "solitary1"
 	},
 /turf/simulated/floor/red/side{

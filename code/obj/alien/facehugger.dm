@@ -60,10 +60,10 @@
 			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
 
 
-	attack_hand(user as mob)
+	attack_hand(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75
@@ -98,9 +98,9 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.death()
-			if(2.0)
+			if(2)
 				src.health -= 15
 				healthcheck()
 		return
@@ -219,7 +219,7 @@
 				idle()
 
 		else if(target)
-			var/turf/distance = get_dist(src, target)
+			var/turf/distance = GET_DIST(src, target)
 			set_attack()
 
 			if(can_see(src,target,viewrange))
@@ -267,7 +267,7 @@
 						step_towards(src,next)
 						quick_move = 1
 
-			if (get_dist(src, src.target) >= distance) src.frustration++
+			if (GET_DIST(src, src.target) >= distance) src.frustration++
 			else src.frustration--
 			if(frustration >= 35) set_null()
 
@@ -328,7 +328,7 @@
 		else
 
 			if(can_see(src,trg_idle,viewrange))
-				switch(get_dist(src, trg_idle))
+				switch(GET_DIST(src, trg_idle))
 					if(1)
 						if(istype(trg_idle,/obj/alien/weeds))
 							step_towards(src,get_step_towards2(src , trg_idle))

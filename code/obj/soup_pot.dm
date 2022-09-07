@@ -65,7 +65,7 @@
 	var/on = 0
 	flags = NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
 			if(src.pot)
 				boutput(user,"<span class='alert'><b>There's already a pot on the stove, dummy!</span>")
@@ -82,7 +82,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
@@ -123,7 +123,7 @@
 			return src.Attackby(W, user)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.on)
 			boutput(user,"<span class='alert'><b>Cooking soup takes time, be patient!</b></span>")
 			return
@@ -296,7 +296,7 @@
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150
@@ -361,7 +361,7 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
 				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever

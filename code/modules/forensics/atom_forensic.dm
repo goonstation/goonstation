@@ -197,8 +197,7 @@
 		if (isobserver(src) || isintangible(src) || iswraith(src)) // Just in case.
 			return
 
-		if (src.color) //wash off paint! might be dangerous, so possibly move this check into humans only if it causes problems with critters
-			src.color = initial(src.color)
+		src.remove_filter(list("paint_color", "paint_pattern")) //wash off any paint
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/M = src
@@ -292,6 +291,8 @@
 	if (!islist(src.tracked_blood))
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
+		return
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 		return
 	var/turf/T = get_turf(src)
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null

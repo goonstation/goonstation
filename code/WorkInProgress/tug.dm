@@ -84,7 +84,7 @@
 	proc/load(var/atom/movable/C)
 		/*if ((wires & wire_loadcheck) && !istype(C,/obj/storage/crate))
 			src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			return		// if not emagged, only allow crates to be loaded // cogwerks - turning this off for now to make the mule more versatile + funny
 			*/
 
@@ -154,6 +154,8 @@
 	layer = MOB_LAYER + 1
 //	sealed_cabin = 0
 	mats = 10
+	health = 80
+	health_max = 80
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
@@ -165,6 +167,8 @@
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
 		delay = 2
+		health = 120
+		health_max = 120
 
 
 		/*
@@ -183,7 +187,7 @@
 
 			weeoo_in_progress = 10
 			SPAWN(0)
-				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
+				playsound(src.loc, 'sound/machines/siren_police.ogg', 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
 				while (weeoo_in_progress--)
@@ -214,7 +218,7 @@
 				rider.client.screen -= B
 		if (crashed)
 			if (crashed == 2)
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			boutput(rider, "<span class='alert'><B>You are flung off of [src]!</B></span>")
 			rider.changeStatus("stunned", 8 SECONDS)
 			rider.changeStatus("weakened", 5 SECONDS)
@@ -309,19 +313,19 @@
 			eject_rider(0, 1)
 		return
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		if (!M || !rider)
 			..()
 			return
 		switch (M.a_intent)
 			if ("harm", "disarm")
 				if (prob(60))
-					playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 					src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of [src]!</B></span>")
 					rider.changeStatus("weakened", 2 SECONDS)
 					eject_rider()
 				else
-					playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 					src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of [src]!</B></span>")
 		return
 

@@ -21,29 +21,29 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to stun yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if (isdead(target))
-			boutput(M, __red("It would be a waste of time to stun the dead."))
+			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
 			return 1
 
 		if (!isliving(target) || (isliving(target) && issilicon(target)))
-			boutput(M, __red("This spell would have no effect on [target]."))
+			boutput(M, "<span class='alert'>This spell would have no effect on [target].</span>")
 			return 1
 
 		if (!M.sight_check(1))
-			boutput(M, __red("How do you expect this to work? You can't use your eyes right now."))
+			boutput(M, "<span class='alert'>How do you expect this to work? You can't use your eyes right now.</span>")
 			M.visible_message("<span class='alert'>What was that? There's something odd about [M]'s eyes.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 1
 
 		M.visible_message("<span class='alert'><B>[M] stares into [target]'s eyes!</B></span>")
-		boutput(M, __red("You have to stand still..."))
+		boutput(M, "<span class='alert'>You have to stand still...</span>")
 
 		actions.start(new/datum/action/bar/icon/vamp_hypno(M,target,src), M)
 
@@ -53,7 +53,7 @@
 		if (isliving(target))
 			target:was_harmed(M, special = "vamp")
 
-		logTheThing("combat", M, target, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
+		logTheThing(LOG_COMBAT, M, "uses hypnotise on [target ? "[constructTarget(target,"combat")]" : "*UNKNOWN*"] at [log_loc(M)].") // Target might have been gibbed, who knows.
 		return 1
 
 
@@ -80,28 +80,28 @@
 
 	onUpdate()
 		..()
-		if(hypno == null || get_dist(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, __red("Your attempt to hypnotize the target was interrupted!"))
+			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
 			return
 
 	onStart()
 		..()
-		if(hypno == null || get_dist(M, target) > hypno.max_range || M == null || target == null)
+		if(hypno == null || GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, __red("Your attempt to hypnotize the target was interrupted!"))
+			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
 			return
 
 	onEnd()
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
-			boutput(target, __blue("Your faith protects you from [M]'s dark designs!"))
+			boutput(target, "<span class='notice'>Your faith protects you from [M]'s dark designs!</span>")
 			JOB_XP(target, "Chaplain", 2)
 			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
 
 		else if (target.sight_check(1)) // Can't stare through a blindfold very well, no?
-			boutput(target, __red("Your consciousness is overwhelmed by [M]'s dark glare!"))
-			boutput(M, __blue("Your piercing gaze knocks out [target]."))
+			boutput(target, "<span class='alert'>Your consciousness is overwhelmed by [M]'s dark glare!</span>")
+			boutput(M, "<span class='notice'>Your piercing gaze knocks out [target].</span>")
 			target.changeStatus("stunned", 30 SECONDS)
 			target.changeStatus("weakened", 30 SECONDS)
 			target.changeStatus("paralysis", 30 SECONDS)

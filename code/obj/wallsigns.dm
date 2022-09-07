@@ -3,7 +3,7 @@
 	name = "SECURE AREA"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "securearea"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 	layer = EFFECTS_LAYER_BASE
@@ -14,7 +14,7 @@
 	name = "Joe Q. Memorial Plaque"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -23,7 +23,7 @@
 	name = "Arthur Muggins Memorial Plaque"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -32,7 +32,7 @@
 	name = "Funny-Looking Memorial Plaque"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -41,6 +41,6 @@
 	name = "dedication plaque"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "rip"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0

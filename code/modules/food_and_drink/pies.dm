@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
@@ -123,12 +123,18 @@
 			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 				var/mob/M = hit_atom
 				if (M == thr.user)
 					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
+
+	Exited(atom/movable/Obj, newloc)
+		. = ..()
+		if(!QDELETED(Obj))
+			Obj.visible_message("<span class='alert'>[Obj] dissolves completely upon leaving [src]!</span>")
+			qdel(Obj)
 
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"
@@ -178,7 +184,7 @@
 	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("sugar"=20,"hugs"=10)
-	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"

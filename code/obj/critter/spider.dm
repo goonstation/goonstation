@@ -25,7 +25,7 @@
 		if(prob(15))
 			spiderflail(src.target)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive)
 			if (user.a_intent == INTENT_HARM)
 				return ..()
@@ -34,7 +34,7 @@
 				if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
 					for (var/mob/O in hearers(src, null))
 						O.show_message("[src] coos[prob(50) ? " happily!" : ""]!",2)
-						playsound(src.loc, "sound/voice/babynoise.ogg", 30, 0)
+						playsound(src.loc, 'sound/voice/babynoise.ogg', 30, 0)
 				return
 		else
 			..()
@@ -132,7 +132,7 @@
 			src.target = C
 			src.oldtarget_name = C.name
 			src.task = "chasing"
-			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 			break
 
@@ -147,7 +147,7 @@
 			src.attacking = 1
 			if (prob(20))
 				src.visible_message("<span class='alert'><B>[src]</B> dives on [M]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0)
 				M.changeStatus("weakened", 2 SECONDS)
 				M.changeStatus("stunned", 2 SECONDS)
 				random_brute_damage(M, rand(2,5),1)
@@ -182,7 +182,7 @@
 					src.visible_message("<span class='alert'><B>[src]</B> jumps onto [src.target]!</span>")
 					sleep(0.5 SECONDS)
 					src.visible_message("<span class='alert'><B>[src]</B> sinks its fangs into [src.target]!</span>")
-					playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
+					playsound(src.loc, 'sound/misc/fuse.ogg', 50, 1)
 					src.reagents.add_reagent("[venom1]", 5) // doing this instead of directly adding reagents to M should give people the correct messages
 					src.reagents.add_reagent("[venom2]", 5)
 					if (src.reacting)
@@ -199,7 +199,7 @@
 						src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [T]!</span>")
 						src.set_loc(T.loc)
 						sleep(2 SECONDS)
-						playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
+						playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 						sleep(5 SECONDS)
 						if(src.target && T.stat && src.loc == T.loc) // check to see if the target is still passed out and under the spider
 							src.visible_message("<span class='alert'><B>[src]</B> drains [T] dry!</span>")
@@ -207,7 +207,7 @@
 							T.real_name = "Unknown"
 							T.bioHolder.AddEffect("husk")
 							sleep(0.2 SECONDS)
-							playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
+							playsound(src.loc, 'sound/misc/fuse.ogg', 50, 1)
 							src.set_loc(get_step(src, pick(alldirs))) // get the fuck out of the way of the ice cube
 							sleep(0.2 SECONDS)
 							var/obj/icecube/cube = new /obj/icecube(get_turf(M), M)
@@ -243,11 +243,11 @@
 				src.attacking = 0
 
 	ChaseAttack(mob/M)
-		playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+		playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 		src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 		if (prob(30))
 			..()
-			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			playsound(src.loc, pick('sound/impact_sounds/Generic_Shove_1.ogg'), 50, 0)
 			M.changeStatus("weakened", 2 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)
@@ -464,7 +464,7 @@
 		..()
 		src.parent = parent
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.alive && (user.a_intent != INTENT_HARM))
 			src.visible_message("<span class='combat'><b>[user]</b> [src.pet_text] [src]!</span>")
 			return
@@ -493,19 +493,19 @@
 				return
 			if (!src.scavenger || src.corpse_target == null)
 				src.task = "thinking"
-			if (get_dist(src, src.corpse_target) > src.attack_range)
+			if (GET_DIST(src, src.corpse_target) > src.attack_range)
 				src.task = "chasing corpse"
 			src.visible_message("<span class='alert'><B>[src]</B> starts draining the fluids out of [C]!</span>")
 			src.set_loc(C.loc)
 			sleep(2 SECONDS)
-			playsound(src.loc, "sound/misc/pourdrink.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 			sleep(5 SECONDS)
 			if(src.corpse_target && src.loc == C.loc)
 				src.visible_message("<span class='alert'><B>[src]</B> drains [C] dry!</span>")
 				C.real_name = "Unknown"
 				C.bioHolder.AddEffect("husk")
 				sleep(0.2 SECONDS)
-				playsound(src.loc, "sound/misc/fuse.ogg", 50, 1)
+				playsound(src.loc, 'sound/misc/fuse.ogg', 50, 1)
 				src.set_loc(get_step(src, pick(alldirs))) // get the fuck out of the way of the ice cube
 				sleep(0.2 SECONDS)
 				var/obj/icecube/cube = new /obj/icecube(get_turf(C), C)
@@ -523,7 +523,7 @@
 
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable(/obj/decal/cleanable/blood/gibs,src.loc)
 		new src.item_shoes(src.loc)
@@ -568,6 +568,7 @@
 			src.task = "chasing"
 			return
 		for (var/mob/living/C in hearers(src.seekrange,src))
+			if (isintangible(C)) continue
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (C.bioHolder && C.bioHolder.HasEffect("husk")) continue
 			if (istype(C, /mob/living/critter/spider)) continue
@@ -580,7 +581,7 @@
 
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 		var/obj/decal/cleanable/blood/gibs/gib = null
 		gib = make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
 		new src.item_shoes(src.loc)
@@ -596,7 +597,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	name = "clown egg"
 	desc = "Um."
-	critter_type = /obj/critter/spider/clown
+	critter_type = /mob/living/critter/spider/clown
 	warm_count = 20
 	critter_reagent = "rainbow fluid"
 
@@ -604,6 +605,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 	name = "cluwne egg"
 	desc = "Um???"
-	critter_type = /obj/critter/spider/clown/cluwne
+	critter_type = /mob/living/critter/spider/clown/cluwne
 	warm_count = 20
 	critter_reagent = "painbow fluid"

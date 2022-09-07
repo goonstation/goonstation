@@ -110,7 +110,7 @@ var/list/clothingbooth_items = list()
 				return
 		..()
 
-/obj/machinery/clothingbooth/attackby(obj/item/weapon as obj, mob/user as mob)
+/obj/machinery/clothingbooth/attackby(obj/item/weapon, mob/user)
 	if(istype(weapon, /obj/item/spacecash))
 		if(!(locate(/mob) in src))
 			src.money += weapon.amount
@@ -132,7 +132,7 @@ var/list/clothingbooth_items = list()
 				user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
 				src.close()
 				qdel(G)
-				logTheThing("combat", user, GM, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
 	else
 		..()
 
@@ -173,7 +173,7 @@ var/list/clothingbooth_items = list()
 				AM.set_loc(T)
 
 
-/obj/machinery/clothingbooth/attack_hand(mob/user as mob)
+/obj/machinery/clothingbooth/attack_hand(mob/user)
 	if (!ishuman(user))
 		boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
 		return

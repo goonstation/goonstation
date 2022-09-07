@@ -50,7 +50,7 @@
 		P.change_stack_amount(toRemove - P.amount)
 		return P
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many material pieces do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
@@ -172,7 +172,7 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+		attack(mob/living/carbon/M, mob/living/carbon/user)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)
@@ -182,10 +182,10 @@
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, surgery_status, rand(1,4), "bandag"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, surgery_status, rand(1,4), Vrb = "bandag"), user)
 					src.in_use = 1
 				else if (H.bleeding)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 20, zone, 0, rand(2,4), "bandag"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 20, zone, 0, rand(2,4), Vrb = "bandag"), user)
 					src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -200,7 +200,7 @@
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
 				if (src.material) B.setMaterial(src.material)
-				logTheThing("station", user, null, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
 				src.change_stack_amount(-1)
 				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
 
@@ -294,7 +294,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
 			var/obj/item/plankobj = new /obj/item/plank(user.loc)
@@ -313,7 +313,7 @@
 	setup_material()
 		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
 		..()
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)

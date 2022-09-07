@@ -12,7 +12,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "shipalert0"
 	desc = ""
-	anchored = 1.0
+	anchored = 1
 	mats = 5
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = 0 //processing loops
@@ -23,7 +23,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		..()
 		UnsubscribeProcess()
 
-/obj/machinery/shipalert/attack_hand(mob/user as mob)
+/obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
 
@@ -44,10 +44,10 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		if (2)
 			//activate
 			if (src.working) return
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.toggleActivate(user)
 
-/obj/machinery/shipalert/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
 		return
 
@@ -56,16 +56,16 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			//break glass
 			var/area/T = get_turf(src)
 			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
-			playsound(T, pick("sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Glass_Shatter_2.ogg","sound/impact_sounds/Glass_Shatter_3.ogg"), 100, 1)
+			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
 			src.usageState = 2
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
 
-/obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
+/obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
@@ -116,8 +116,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
 
-	logTheThing("station", user, null, "toggled the ship alert to \"[alertWord]\"")
-	logTheThing("diary", user, null, "toggled the ship alert to \"[alertWord]\"", "station")
+	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
+	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
 	src.working = 0
 
 /obj/item/tinyhammer
@@ -127,7 +127,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5.0
+	object_flags = NO_GHOSTCRITTER
+	force = 5
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	m_amt = 50

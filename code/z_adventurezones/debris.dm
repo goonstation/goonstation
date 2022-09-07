@@ -14,12 +14,12 @@
 	name = "organic floor"
 	icon_state = "floor1"
 
-/turf/simulated/floor/martian/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/simulated/floor/martian/attackby(obj/item/C, mob/user, params)
 	if (istype(C, /obj/item/martianSeed))
 		var/obj/item/martianSeed/S = C
 		if(S)
 			S.plant(src)
-			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 	else
 		..()
@@ -41,13 +41,13 @@
 
 /turf/simulated/martian/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 40
 			checkhealth()
-		if(2.0)
+		if(2)
 			src.health -= 20
 			checkhealth()
-		if(3.0)
+		if(3)
 			src.health -= 5
 			checkhealth()
 

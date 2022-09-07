@@ -46,6 +46,13 @@
 		var/obj/item/storage/desk_drawer/azrun/L = new(src)
 		src.desk_drawer = L
 
+
+/obj/item/storage/toilet/goldentoilet/azrun
+	name = "thinking throne"
+	icon_state = "goldentoilet"
+	desc = "A wonderful place to send bad ideas...  Clogged more often than not."
+	dir = NORTH
+
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
 	item_paths = list("MET-2","CON-1")
@@ -240,9 +247,9 @@
 		heart_ticker = max(heart_ticker--,0)
 		if(heart_ticker & prob(50))
 			if(prob(30))
-				boutput(src.owner,__red("You feel as though something moving towards your heart... That can't be good."))
+				boutput(src.owner,"<span class='alert'>You feel as though something moving towards your heart... That can't be good.</span>")
 			else
-				boutput(src.owner,__red("You feel as though something is working its way through your chest."))
+				boutput(src.owner,"<span class='alert'>You feel as though something is working its way through your chest.</span>")
 		else if(!heart_ticker)
 			var/mob/living/carbon/human/H = src.owner
 			if(istype(H))
@@ -251,11 +258,11 @@
 				src.owner.TakeDamage("All", 2, 0)
 
 			if(prob(5))
-				boutput(src.owner,__red("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
+				boutput(src.owner,"<span class='alert'>AAHRRRGGGG something is trying to dig your heart out from the inside?!?!</span>")
 				src.owner.emote("scream")
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
-				boutput(src.owner,__red("You feel a sharp pain in your chest."))
+				boutput(src.owner,"<span class='alert'>You feel a sharp pain in your chest.</span>")
 
 /datum/gimmick_event
 	var/interaction = 0
@@ -289,7 +296,7 @@
 		else
 			. += AE.description
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/datum/gimmick_event/AE = get_active_event()
 
 		if(!AE)
@@ -299,7 +306,7 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 
 		var/attempt = FALSE
 		var/datum/gimmick_event/AE = get_active_event()
@@ -434,3 +441,306 @@
 		if("active_step")
 			active_stage = id
 			. = TRUE
+
+/obj/item/aiModule/ability_expansion/taser
+	name = "CLF:Taser Expansion Module"
+	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a taser like effect."
+	lawText = "CLF:Taser EXPANSION MODULE"
+	highlight_color = rgb(255, 251, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_gun/taser)
+
+/obj/item/aiModule/ability_expansion/laser
+	name = "CLF:Laser Expansion Module"
+	desc = "A camera lense focus module.  This module allows for the AI controlled camera produce a laser like effect."
+	lawText = "CLF:Laser EXPANSION MODULE"
+	highlight_color = rgb(255, 0, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_gun/laser)
+
+/obj/item/aiModule/ability_expansion/mfoam_launcher
+	name = "Metal Foam Expansion Module"
+	desc = "Chemical release module.  This module allows for the AI controlled camera to launch metal foam payloads."
+	lawText = "MFoam EXPANSION MODULE"
+	highlight_color = rgb(71, 92, 85, 255)
+	ai_abilities = list(/datum/targetable/ai/module/chems/metal_foam)
+
+/obj/item/aiModule/ability_expansion/friend_turret
+	name = "Turret Expansion Module"
+	desc = "A turret expansion module.  This module allows for control of turret."
+	lawText = "TURRET EXPANSION MODULE"
+	highlight_color = rgb(255, 255, 255, 255)
+	ai_abilities = list(/datum/targetable/ai/module/turret/deploy, /datum/targetable/ai/module/turret/target, /datum/targetable/ai/module/turret/swap_bullets)
+	var/obj/machinery/turret/friend/turret
+
+	New()
+		..()
+		turret = new(src)
+
+/datum/targetable/ai/module/turret/deploy
+	name = "Deploy Turret"
+	desc = "Conviently place a turret for fun and compliance."
+	icon_state = "ai_template"
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/turf/floorturf = get_turf(target)
+		var/x_coeff = rand(0, 1)	// open the floor horizontally
+		var/y_coeff = !x_coeff // or vertically but not both - it looks weird
+		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
+
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		if(!expansion)
+			return 1
+
+		if (!floorturf.intact)
+			boutput(holder.owner, "The floor is not intact here.  LAME!!!")
+			return 1
+
+		if(!checkTurfPassable(floorturf) && get_turf(target) != get_turf(expansion.turret))
+			boutput(holder.owner, "Something is blocking a turret here.  LAME!!!")
+			return 1
+
+		if(expansion.turret.loc != expansion)
+			var/turf/oldLoc = get_turf(expansion.turret)
+			expansion.turret.popDown()
+			if (oldLoc.intact)
+				animate_slide(oldLoc, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+
+				sleep(0.4 SECONDS)
+
+				if(expansion.turret)
+					expansion.turret.layer = MOB_LAYER
+					expansion.turret.plane = PLANE_DEFAULT
+
+					expansion.turret.set_density(0)
+					expansion.turret.cover.set_density(0)
+					expansion.turret.layer = BETWEEN_FLOORS_LAYER
+					expansion.turret.plane = PLANE_FLOOR
+					expansion.turret.cover.set_density(0)
+					expansion.turret.cover.layer = BETWEEN_FLOORS_LAYER
+					expansion.turret.cover.plane = PLANE_FLOOR
+
+				if(oldLoc?.intact)
+					animate_slide(oldLoc, 0, 0, 4)
+			sleep(1.0 SECONDS)
+			expansion.turret.set_loc(expansion)
+			expansion.turret.cover.set_loc(expansion)
+
+		if(get_turf(target) == get_turf(expansion.turret))
+			expansion.turret.target = null
+			return
+
+		expansion.turret.set_loc(floorturf)
+		expansion.turret.cover.set_loc(floorturf)
+		if (floorturf.intact)
+			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
+			sleep(0.4 SECONDS)
+			expansion.turret.set_density(1)
+			expansion.turret.cover.set_density(1)
+			expansion.turret.layer = OBJ_LAYER
+			expansion.turret.plane = PLANE_DEFAULT
+			expansion.turret.cover.layer = OBJ_LAYER
+			expansion.turret.cover.plane = PLANE_DEFAULT
+
+		if(floorturf?.intact)
+			animate_slide(floorturf, 0, 0, 4)
+
+		if(expansion.turret.target)
+			if(GET_DIST(expansion.turret, expansion.turret.target) > 10)
+				expansion.turret.target = null
+
+/datum/targetable/ai/module/turret/target
+	name = "Assign Target"
+	desc = "Assign a target for the target"
+	icon_state = "ai_template"
+	targeted = TRUE
+	cooldown = 2 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		if(!expansion)
+			return 1
+
+		var/mob/M = target
+
+		if(target == expansion.turret.target)
+			expansion.turret.target = null
+			boutput(holder.owner, "Clearing active turret target.")
+		else if(!isdead(M) && (iscarbon(M) || !ismobcritter(M)))
+			expansion.turret.target = M
+			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
+
+			boutput(holder.owner, "Deployable turret now targeting: [M.name].")
+		else
+			boutput(holder.owner, "Invalid target selected.")
+/datum/targetable/ai/module/turret/swap_bullets
+	name = "Change Lethality"
+	desc = "Lethal to Non-Lethal and Non-Lethal to Lethal!"
+	icon_state = "ai_template"
+	cooldown = 2 SECONDS
+
+	cast(atom/target)
+		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
+		expansion.turret.lasers = !expansion.turret.lasers
+		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
+		logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] set deployable turret to [mode].")
+		boutput(holder.owner, "Turret now set to [mode].")
+		expansion.turret.power_change()
+
+
+/obj/machinery/turret/friend
+	var/mob/target
+
+/obj/machinery/turret/friend/process()
+	src.target_list = list()
+	if(target)
+		if(!isdead(target) && (iscarbon(target) || !ismobcritter(target)))
+			target_list |= target
+	var/prev_enabled = src.enabled
+	src.enabled = length(target_list) > 0
+	if(prev_enabled != src.enabled)
+		power_change()
+	..()
+	return
+
+
+/turf/unsimulated/floor
+
+	proc/update_ambient()
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			if(A.color=="#222222")
+				animate(A, color="#666666", time=10 SECONDS)
+			else
+				animate(A, color="#222222", time=10 SECONDS)
+
+	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			var/old_color = A.color
+			var/first_flash_low = "#666666"
+			var/list/L1 = hex_to_rgb_list(A.color)
+			var/list/L2 = hex_to_rgb_list(flash_color)
+			if(!isnull(L1) && !isnull(L2))
+				first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+
+			A.color = flash_color
+			animate(A, color=flash_color, time=0.5)
+			animate(color=first_flash_low, time=0.75 SECONDS, easing = SINE_EASING)
+			animate(color=flash_color, time=0.75)
+			animate(color=old_color, time = fadeout, easing = SINE_EASING)
+			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
+			SPAWN(fadeout + (1.5 SECONDS))
+				A.color = old_color
+
+	proc/color_shift_lights(colors, durations)
+		var/obj/ambient/A = locate() in vis_contents
+		if(A && length(colors) && length(durations))
+			var/iterations = min(length(colors), length(durations))
+			for(var/i in 1 to iterations)
+				if(i==1)
+					animate(A, color=colors[i], time=durations[i])
+				else
+					animate(color=colors[i], time=durations[i])
+
+	proc/sunset()
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+
+	proc/sunrise()
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+
+
+/proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
+	var/list/nodes = list()
+
+	var/index_open = 1
+	var/list/open = list(epicenter)
+	var/list/next_open = list()
+	var/list/heuristics = list() //caching is only valid if we arn't calculating based on the open node
+	nodes[epicenter] = radius
+	var/i = 0
+	while (index_open <= length(open) || length(next_open))
+		if(i++ % 500 == 0)
+			LAGCHECK(LAG_HIGH)
+		if(index_open > length(open))
+			open = next_open
+			next_open = list()
+			index_open = 1
+		var/turf/T = open[index_open++]
+		var/value = nodes[T] - (1)
+		var/value2 = nodes[T] - (1.4)
+		if (heuristic) // Only use a custom hueristic if we were passed one
+			if(isnull(heuristics[T]))
+				heuristics[T] = call(heuristic)(T, heuristic_args)
+			if(heuristics[T])
+				value -= heuristics[T]
+				value2 -= heuristics[T]
+		if (value < 0)
+			continue
+		for (var/dir in alldirs)
+			var/turf/target = get_step(T, dir)
+			if (!target) continue // woo edge of map
+			var/new_value = dir & (dir-1) ? value2 : value
+			if(width < 360)
+				var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+				if(diff > width)
+					continue
+				else if(diff > width/2)
+					new_value = new_value / 3 - 1
+			if ((nodes[target] && nodes[target] >= new_value))
+				continue
+
+			nodes[target] = new_value
+			next_open[target] = 1
+
+	for (var/turf/T as anything in nodes)
+		if(nodes[T]<=0)
+			nodes -= T
+
+	return nodes
+
+/datum/mutex
+	var/locked
+
+	proc/unlock()
+		locked = FALSE
+
+	proc/lock()
+		while(!trylock())
+			sleep(1)
+
+	proc/trylock()
+		if(!locked)
+			locked = TRUE
+			. = TRUE
+
+	limited
+		var/iterations
+		var/maxIterations
+
+		New(maxItrs)
+			..()
+			maxIterations = maxItrs
+
+		trylock()
+			if(iterations <= 0 && locked)
+				locked = FALSE
+			. = ..()
+			if(.)
+				iterations = maxIterations
+			else
+				iterations--
+
+		unlock()
+			iterations = 0
+			..()
+
+
+
+

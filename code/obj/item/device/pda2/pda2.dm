@@ -564,7 +564,7 @@
 		src.updateSelfDialog()
 		return
 
-/obj/item/device/pda2/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda2/attackby(obj/item/C, mob/user)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		if (U.try_deliver(C, user))
@@ -598,7 +598,7 @@
 		return
 
 	else if (isscrewingtool(C))
-		playsound(user.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(user.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.closed = !src.closed
 		boutput(user, "You [src.closed ? "secure" : "unscrew"] the cover.")
 
@@ -668,7 +668,7 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/pda2/attack(mob/M, mob/user)
 	if(src.scan_program)
 		return
 	else
@@ -994,7 +994,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, 1)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1026,11 +1026,7 @@
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
-			for (var/atom in mobs)
-				if (!atom) continue
-				var/mob/O = atom
-				if (get_dist(get_turf(src),O) <= 3)
-					O.show_message(text("[bicon(src)] *[alert_message]*"))
+			src.audible_message("[bicon(src)] *[alert_message]*")
 
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))

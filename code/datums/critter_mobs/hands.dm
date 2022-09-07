@@ -53,7 +53,7 @@
 	proc/set_cooldown_overlay()
 		if (!limb || !screenObj || cooldown_overlay)
 			return
-		var/cd = limb.is_on_cooldown()
+		var/cd = limb.is_on_cooldown(src.holder)
 		if (cd > 0)
 			cooldown_overlay = 1
 			screenObj.overlays += obscurer
