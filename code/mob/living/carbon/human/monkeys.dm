@@ -258,9 +258,8 @@
 				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands"))
 					var/atom/thing_to_poke = pick(things_to_pick)
 					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands") // rarer in play, so gets priority
-					if (istype(ink_glands))
-						src.visible_message("<span class='alert'>[src] sprays ink onto [thing_to_poke]!</span>")
-						thing_to_poke.color = ink_glands.color
+					if (ink_glands)
+						ink_glands.ability.tryCast(thing_to_poke)
 					else
 						var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
 						var/base_path = /obj/item/

@@ -2106,20 +2106,23 @@
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to spray ink on.")
-			return 1
+		var/obj/the_object = target
 
-		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			return 1
+		if(!the_object)
+			var/base_path = /obj
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to spray ink on.")
+				return 1
+
+			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
