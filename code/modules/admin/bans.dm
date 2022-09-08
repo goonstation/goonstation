@@ -150,9 +150,6 @@ var/global/list/playersSeen = list()
 			details += "Please make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted."
 		return details
 
-/// Fill in the banning admin's auto alt key if possible, otherwise use regular key. Won't runtime on null client
-#define ADMIN_NAME_OR_KEY(client, key) (client?.holder.auto_alt_key ? client.holder.auto_alt_key_name : (key || "N/A"))
-
 /proc/addBan(data)
 	set background = 1
 
@@ -178,13 +175,13 @@ var/global/list/playersSeen = list()
 		var/replacement_text
 		if (targetC)
 			targetC.mob.unlock_medal("Banned", 1)
-			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [ADMIN_NAME_OR_KEY(adminC, row["akey"])].<br>Reason: [row["reason"]]</B></BIG></span>")
+			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
 			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
 		else
 			replacement_text = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 
 		if (!adminC)
-			adminC = row["akey"] || "N/A"
+			adminC = (row["akey"] ? row["akey"] : "N/A")
 
 		var/expiry = getExpiry(row["timestamp"])
 		var/serverLogSnippet = row["server"] ? "from [row["server"]]" : "from all servers"
@@ -215,10 +212,10 @@ var/global/list/playersSeen = list()
 			message_admins(adminMsg)
 
 		if (row["ckey"] && row["ckey"] != "N/A")
-			addPlayerNote(row["ckey"], ADMIN_NAME_OR_KEY(adminC, row["akey"]), "Banned [serverLogSnippet] by [ADMIN_NAME_OR_KEY(adminC, row["akey"])], reason: [row["reason"]], duration: [duration]")
+			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [duration]")
 
 		var/ircmsg[] = new()
-		ircmsg["key"] = ADMIN_NAME_OR_KEY(adminC, row["akey"])
+		ircmsg["key"] = row["akey"]
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
@@ -354,7 +351,7 @@ var/global/list/playersSeen = list()
 					mins = cust_mins
 		data["mins"] = mins
 		data["text_ban_length"] = ban_time
-		data["akey"] = ADMIN_NAME_OR_KEY(src, src.ckey)
+		data["akey"] = src.ckey
 		return data
 	else
 		alert("You need to be at least a Secondary Administrator to ban players.")
@@ -496,7 +493,7 @@ var/global/list/playersSeen = list()
 		data["reason"] = reason
 		data["mins"] = mins
 		data["text_ban_length"] = ban_time
-		data["akey"] = ADMIN_NAME_OR_KEY(src, src.ckey)
+		data["akey"] = src.ckey
 		editBan(data)
 
 		src.holder.banPanel()
@@ -566,8 +563,6 @@ var/global/list/playersSeen = list()
 			src.holder.banPanel()
 	else
 		alert("You need to be at least a Secondary Administrator to remove bans.")
-
-#undef ADMIN_NAME_OR_KEY
 
 /*
 /proc/addException(step = 1, data)
