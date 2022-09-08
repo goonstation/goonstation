@@ -389,22 +389,43 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && (((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasEffect("eyebeams")) && !A?.sanctuary))
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis")) && !A?.sanctuary)
 					//I can attack someone! =D
-					if(src.bioHolder.HasEffect("eyebeams"))
+					ai_target_old.Cut()
+					if(src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis")) // TODO: Cooldowns
 						var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
-						var/projectile_path = ispath(eyebeams.projectile_path) ? eyebeams.projectile_path : text2path(eyebeams.projectile_path)
-						if(eyebeams.power > 1)
-							projectile_path = /datum/projectile/laser
-						else if(eyebeams.stun_mode) //used by superhero for nonlethal stun
-							projectile_path = /datum/projectile/laser/eyebeams/stun
-						if (!ispath(projectile_path))
-							projectile_path = /datum/projectile/laser/eyebeams
-						src.visible_message("<span class='alert'><b>[src.name]</b> shoots eye beams!</span>")
-						var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-						shoot_projectile_ST(src, PJ, ai_target)
+						var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
+						if (eyebeams)
+							var/projectile_path = ispath(eyebeams.projectile_path) ? eyebeams.projectile_path : text2path(eyebeams.projectile_path)
+							if(eyebeams.power > 1)
+								projectile_path = /datum/projectile/laser
+							else if(eyebeams.stun_mode) //used by superhero for nonlethal stun
+								projectile_path = /datum/projectile/laser/eyebeams/stun
+							if (!ispath(projectile_path))
+								projectile_path = /datum/projectile/laser/eyebeams
+							src.visible_message("<span class='alert'><b>[src.name]</b> shoots eye beams!</span>")
+							var/datum/projectile/laser/eyebeams/PJ = new projectile_path
+							shoot_projectile_ST(src, PJ, ai_target)
+						else if (cryokinesis)
+							var/turf/T = get_turf(ai_target)
+							ai_target.visible_message("<span class='alert'><b>[src]</b> points at [ai_target]!</span>")
+							playsound(ai_target.loc, 'sound/effects/bamf.ogg', 50, 0)
+							particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(ai_target),"8x8snowflake","#88FFFF"))
+							var/obj/decal/icefloor/B
+							for (var/turf/TF in range(cryokinesis.power - 1,T))
+								B = new /obj/decal/icefloor(TF)
+								SPAWN(80 SECONDS)
+									B.dispose()
+							for (var/mob/living/L in T.contents)
+								if (L == src && cryokinesis.safety)
+									continue
+								boutput(L, "<span class='notice'>You are struck by a burst of ice cold air!</span>")
+								if(L.getStatusDuration("burning"))
+									L.delStatus("burning")
+								L.bodytemperature = 100
+								if (cryokinesis.power > 1)
+									new /obj/icecube(get_turf(L), L)
 					else
-						ai_target_old.Cut()
 						var/obj/item/gun/W = src.r_hand
 						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
