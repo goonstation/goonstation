@@ -16,7 +16,7 @@ export const Freezer = (props, context) => {
   const { target_temperature, active, air_temperature, air_pressure } = data;
 
   return (
-    <Window title="Freezer" height="400px">
+    <Window title="Freezer" width={320} height={215}>
       <Window.Content>
         <Section title="Temperature Control">
           <Stack align="center">
