@@ -787,8 +787,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/cleaner_grenade
 	name = "Cleaner Grenade"
-	item_paths = list("INS-1", "CRY-1")
-	item_amounts = list(2, 2)
+	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
+	item_amounts = list(8, 8, 10, 10)
 	item_outputs = list(/obj/item/chem_grenade/cleaner)
 	time = 5 SECONDS
 	create = 1
