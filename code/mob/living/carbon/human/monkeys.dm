@@ -259,15 +259,10 @@
 					var/atom/thing_to_poke = pick(things_to_pick)
 					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands") // rarer in play, so gets priority
 					if (ink_glands)
-						ink_glands.ability.tryCast(thing_to_poke)
+						ink_glands.ability.handleCast(thing_to_poke)
 					else
 						var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
-						var/base_path = /obj/item/
-						if (midas_touch.power > 1)
-							base_path = /obj/
-						if (istype(thing_to_poke, base_path))
-							src.visible_message("<span class='alert'>[src] touches [thing_to_poke], turning it to [midas_touch.transmute_material]!</span>")
-							thing_to_poke.setMaterial(getMaterial(midas_touch.transmute_material))
+						midas_touch.ability.handleCast(thing_to_poke)
 				else if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
