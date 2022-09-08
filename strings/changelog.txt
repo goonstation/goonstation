@@ -1,5 +1,9 @@
 
 (t)wed sep 07 22
+(u)Ikea, Zonespace, and Yellow/Myco
+(p)9898
+(e)|
+(*)Pressing the PDA crisis or security alert now alerts people nearby through the use of a sound effect, chatbox message, and overhead text.
 (u)Sord
 (*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
 (u)Stonepillar
