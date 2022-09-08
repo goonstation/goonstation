@@ -26,7 +26,7 @@
 			if (in_container)
 				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
 				for (var/mob/living/M in psource)
-					logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
+					logTheThing(LOG_COMBAT, M, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 					M.TakeDamage("All", damage, 0)
 					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
@@ -63,7 +63,7 @@
 			if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
 				continue
 			new/obj/decal/shockwave(source)
-			playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
 			SPAWN(0)
 				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 					if(M.anchored || M == source || M.throwing) continue

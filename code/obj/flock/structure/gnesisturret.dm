@@ -137,7 +137,7 @@
 					src.target = T
 					min_dist = target_list[T]
 
-			playsound(src.loc, "sound/misc/flockmind/flockdrone_door.ogg", 40, 1, pitch=0.5)
+			playsound(src.loc, 'sound/misc/flockmind/flockdrone_door.ogg', 40, 1, pitch=0.5)
 
 		return src.target
 

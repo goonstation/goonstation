@@ -143,7 +143,7 @@ MATERIAL
 
 	split_stack(toRemove)
 		. = ..()
-		if(src.reinforcement)
+		if(. && src.reinforcement)
 			var/obj/item/sheet/S = .
 			S.set_reinforcement(src.reinforcement)
 			. = S
@@ -274,7 +274,7 @@ MATERIAL
 		.["labeledAvailableAmount"] = "[src.amount] [src.name]\s"
 
 		var/list/availableRecipes = list()
-		if (src?.material.material_flags & MATERIAL_METAL)
+		if (src?.material?.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
@@ -283,12 +283,12 @@ MATERIAL
 			else
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 			if (istype(src.reinforcement))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
-		if (src?.material.mat_id == "cardboard")
+		if (src?.material?.mat_id == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
@@ -670,7 +670,7 @@ MATERIAL
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
 					src.change_stack_amount(-2)
-					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+					logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
 					G.add_fingerprint(user)
 		src.add_fingerprint(user)
 		return
@@ -808,7 +808,7 @@ MATERIAL
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
 		user.changeStatus("stunned", 50 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if(prob(40)) user.emote("scream")
 
 		SPAWN(1 SECOND)
@@ -818,7 +818,7 @@ MATERIAL
 			heads += head
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -985,7 +985,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)

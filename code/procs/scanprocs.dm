@@ -172,6 +172,9 @@
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
 				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
 
+				organ_data1 += organ_health_scan("left_eye", H, obfuscate)
+				organ_data1 += organ_health_scan("right_eye", H, obfuscate)
+
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
 
@@ -198,11 +201,9 @@
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
-	var/datum/statusEffect/simpledot/radiation/NR = M.hasStatus("n_radiation")
-	if (R)
-		rad_data = "&emsp;<span class='alert'>Radiation poisoning: Lv [R.stage]</span>"
-	if (NR)
-		nrad_data = "&emsp;<span class='alert'>Neutron Radiation poisoning: Lv [NR.stage]</span>"
+	if (R?.stage)
+		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
+
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"

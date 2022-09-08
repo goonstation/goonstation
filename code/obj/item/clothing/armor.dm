@@ -75,7 +75,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)
-		setProperty("rangedprot", 0.4)
+		setProperty("rangedprot", 0.5)
 
 	attackby(obj/item/W, mob/user)
 		return
@@ -239,7 +239,7 @@
 
 		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
-		logTheThing("bombing", wearer, null, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
+		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 
 		if (src.grenade)
 			src.grenade.explode()

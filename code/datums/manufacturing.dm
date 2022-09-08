@@ -46,11 +46,11 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 	proc/sanity_check()
 		if (item_paths.len != item_amounts.len || !isnull(item_names) && (item_paths.len != item_names.len || item_names.len != item_amounts.len))
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic requirement lists not properly configured")
 			qdel(src)
 			return
 		if (!item_outputs.len)
-			logTheThing("debug", null, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
+			logTheThing(LOG_DEBUG, null, "<b>Manufacturer:</b> [src.name]/[src.type] schematic output list not properly configured")
 			qdel(src)
 			return
 
@@ -96,21 +96,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/mechanics/clonepod
 	name = "cloning pod"
-	item_amounts = list(6,5,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
-	item_amounts = list(3,3,4)
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
-	item_amounts = list(5,6,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
@@ -1123,6 +1120,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/floppydisk //Cloning disks
+	name = "Floppy Disk"
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/disk/data/floppy)
+	time = 5 SECONDS
+	create = 1
+	category = "Resource"
+
 /******************** Robotics **************************/
 
 /datum/manufacture/robo_frame
@@ -1718,6 +1724,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/artifactforms
+	name ="Artifact Analysis Forms"
+	item_paths = list("MET-1", "FAB-1")
+	item_amounts = list(2,5)
+	item_outputs = list(/obj/item/paper_bin/artifact_paper)
+	time = 10 SECONDS
+	create = 1
+	category = "Resource"
+
 // Mining Gear
 #ifndef UNDERWATER_MAP
 /datum/manufacture/mining_magnet
@@ -1949,10 +1965,19 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jetpack
 	name = "Jetpack"
-	item_paths = list("MET-3","CON-1")
-	item_amounts = list(2,10)
+	item_paths = list("MET-3","CON-2")
+	item_amounts = list(10,20)
 	item_outputs = list(/obj/item/tank/jetpack)
 	time = 60 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/microjetpack
+	name = "Micro Jetpack"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,10)
+	item_outputs = list(/obj/item/tank/jetpack/micro)
+	time = 30 SECONDS
 	create = 1
 	category = "Clothing"
 

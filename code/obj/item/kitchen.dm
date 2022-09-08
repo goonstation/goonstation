@@ -70,7 +70,7 @@ TRAYS
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
+		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
 		switch(src.type)
@@ -466,7 +466,7 @@ TRAYS
 		..()
 		SPAWN(1 SECOND)
 			if(!ispath(src.contained_food))
-				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
 
@@ -546,7 +546,7 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
-	pickup_sfx = "sound/items/pickup_plate.ogg"
+	pickup_sfx = 'sound/items/pickup_plate.ogg'
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
 
@@ -555,7 +555,7 @@ TRAYS
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
-	var/hit_sound = "sound/items/plate_tap.ogg"
+	var/hit_sound = 'sound/items/plate_tap.ogg'
 	/// Can this be stacked with other stackable plates?
 	var/stackable = TRUE
 
@@ -647,7 +647,7 @@ TRAYS
 
 	/// The plate shatters into shards and tosses its contents around.
 	proc/shatter()
-		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to 2)
 			var/obj/O = new /obj/item/raw_material/shard/glass
@@ -684,7 +684,7 @@ TRAYS
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 
 			unique_attack_garbage_fuck(M, user)
 
@@ -712,7 +712,7 @@ TRAYS
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			playsound(src, src.hit_sound, 30, 1)
-			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+			logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	dropped(mob/user)
 		..()
@@ -791,13 +791,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, "sound/weapons/trayhit.ogg", 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return

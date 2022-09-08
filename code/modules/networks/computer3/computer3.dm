@@ -272,8 +272,17 @@
 	light.set_brightness(0.4)
 	light.attach(src)
 
-	SPAWN(0.4 SECONDS)
+	src.base_icon_state = src.icon_state
 
+	if(glow_in_dark_screen)
+		src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
+		screen_image.plane = PLANE_LIGHTING
+		screen_image.blend_mode = BLEND_ADD
+		screen_image.layer = LIGHTING_LAYER_BASE
+		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+		src.UpdateOverlays(screen_image, "screen_image")
+
+	SPAWN(0.4 SECONDS)
 		if(ispath(src.setup_starting_peripheral1))
 			new src.setup_starting_peripheral1(src) //Peripherals add themselves automatically if spawned inside a computer3
 
@@ -314,18 +323,6 @@
 
 			src.hd.root.add_file(os)
 
-		src.tag = null
-
-		src.base_icon_state = src.icon_state
-
-		if(glow_in_dark_screen)
-			src.screen_image = image('icons/obj/computer_screens.dmi', src.icon_state, -1)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-			src.UpdateOverlays(screen_image, "screen_image")
-
 		src.post_system()
 
 		if (prob(60))
@@ -365,6 +362,8 @@
 			src.temp += temp_add
 			temp_add = null
 
+		// preference is in a percentage of the default
+		var/font_size = user.client ? (((user.client.preferences.font_size/100) * 10) || 10) : 10 // font size pref is null if you haven't changed it from the default, so we need extra logic
 		var/dat = {"<title>Computer Terminal</title>
 		<style type="text/css">
 		body
@@ -388,7 +387,7 @@
 			background-color:[src.setup_bg_color];
 			color:[src.setup_font_color];
 			font-family: "Consolas", monospace;
-			font-size:10pt;
+			font-size:[font_size]pt;
 		}
 
 		#consoleshell
@@ -653,10 +652,6 @@ function lineEnter (ev)
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			screen_image.plane = PLANE_LIGHTING
-			screen_image.blend_mode = BLEND_ADD
-			screen_image.layer = LIGHTING_LAYER_BASE
-			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
@@ -684,7 +679,7 @@ function lineEnter (ev)
 			boutput(user, "<span class='alert'>There's no visible peripheral device to insert the disk into!</span>")
 
 	else if (isscrewingtool(W))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
@@ -1096,7 +1091,7 @@ function lineEnter (ev)
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")

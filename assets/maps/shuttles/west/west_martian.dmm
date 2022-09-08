@@ -1,0 +1,1885 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aX" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"ba" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cq" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"cu" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"cA" = (
+/obj/machinery/atmospherics/portables_connector/west,
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"cC" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"cD" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"dK" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"ei" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ex" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"eK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"fa" = (
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"fs" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"fG" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 1.9;
+	name = "power conduit"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"fT" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"gr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"gB" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom)
+"he" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"hw" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"iu" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 1
+	},
+/area/centcom/outside)
+"iY" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"jm" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It's a pipe manifold.";
+	dir = 6;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"jT" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"ks" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"kx" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"lt" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/atmospherics/portables_connector/east,
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"lE" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/shuttle/escape/centcom)
+"mg" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"mn" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"mY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"mZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"nQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"nW" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"oc" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"oi" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/shuttle/escape/centcom)
+"oj" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/shuttle/escape/centcom)
+"pl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"qf" = (
+/obj/machinery/sleeper/compact,
+/obj/map/light/dimred,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"qs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"qw" = (
+/obj/machinery/computer/shuttle{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"re" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"rY" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It's a pipe manifold.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"sl" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"sP" = (
+/obj/machinery/atmospherics/portables_connector/east,
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"sU" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"sX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ta" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"tq" = (
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"tr" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 10;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ul" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"um" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"uu" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"uz" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"vd" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"vp" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"vw" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"wb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"wu" = (
+/obj/table/auto,
+/obj/table/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -6
+	},
+/obj/item/storage/firstaid/brute{
+	pixel_x = 7
+	},
+/obj/item/storage/firstaid/oxygen{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"wH" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 10
+	},
+/area/centcom/outside)
+"wS" = (
+/turf/unsimulated/floor/stairs/dark/wide,
+/area/centcom/outside)
+"xv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"xz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"xR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"xX" = (
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/shuttle/escape/centcom)
+"ya" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"zf" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"zo" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Ab" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"AN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 2;
+	icon = 'icons/obj/atmospherics/valve.dmi';
+	icon_state = "valve0";
+	name = "valve"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"AO" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Bg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Bx" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Cm" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"CC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 1.9;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"CD" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"CQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-1";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Dr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"DJ" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"EJ" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"ER" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Ff" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Fm" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Fq" = (
+/obj/machinery/sleeper/compact,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"FE" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"FT" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Gg" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/centcom/outside)
+"GJ" = (
+/obj/stool/chair/comfy/shuttle/red,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"GW" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"HM" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Ip" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Ir" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"II" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Jg" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "A pipe.";
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"JN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Ke" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"KC" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"KF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"KL" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"KU" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"Ld" = (
+/obj/stool/chair/comfy/shuttle/green,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Lm" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 6;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Ls" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Lt" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"LX" = (
+/obj/stool/chair/comfy/shuttle,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Mx" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"MI" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"Nm" = (
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"NB" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"NH" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Oa" = (
+/obj/machinery/door/unpowered/martian,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Oz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"OP" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"OQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHWEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Pm" = (
+/obj/decal/fakeobjects/tallsmes,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"PV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"PY" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Qs" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"QA" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/centcom/outside)
+"QQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-4";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"QW" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"RN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Sk" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"Sm" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"SG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Tp" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"TB" = (
+/obj/rack,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"TD" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"Uy" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"VA" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 7
+	},
+/obj/item/device/radio{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"WG" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"WJ" = (
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"YI" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"YP" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 1
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+"YY" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 6;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ZO" = (
+/obj/stool/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor{
+	icon = 'icons/turf/martian.dmi';
+	icon_state = "floor1"
+	},
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+cq
+cq
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+cq
+"}
+(2,1,1) = {"
+cq
+fa
+fa
+fa
+fa
+fa
+Lm
+zo
+FT
+zo
+zo
+FT
+zo
+zo
+FT
+zo
+zo
+FT
+zo
+OP
+fa
+fa
+fa
+fa
+fa
+cq
+"}
+(3,1,1) = {"
+cq
+fa
+fa
+fa
+CD
+fa
+KC
+vd
+vd
+mn
+xz
+xz
+xz
+xz
+xz
+xz
+ba
+vd
+vd
+ei
+fa
+CD
+fa
+fa
+fa
+cq
+"}
+(4,1,1) = {"
+cq
+fa
+fa
+fa
+fa
+Lm
+YY
+vd
+sX
+Oz
+Cm
+cu
+cu
+cu
+cu
+dh
+eK
+JN
+vd
+Ab
+OP
+fa
+fa
+fa
+fa
+Qs
+"}
+(5,1,1) = {"
+Qs
+fa
+fa
+CD
+fa
+YY
+vd
+vd
+um
+Cm
+Sm
+ZO
+qw
+CQ
+ZO
+PY
+dh
+pl
+vd
+vd
+Ab
+fa
+CD
+fa
+fa
+cq
+"}
+(6,1,1) = {"
+cq
+TB
+fa
+fa
+wS
+vd
+vd
+vd
+um
+cu
+LX
+Ls
+ta
+ta
+Ls
+uu
+cu
+pl
+vd
+vd
+vd
+wH
+fa
+fa
+TB
+cq
+"}
+(7,1,1) = {"
+cq
+fa
+fa
+fa
+Gg
+vd
+sX
+xz
+Oz
+cu
+VA
+Ls
+Ls
+Ls
+Ls
+Sk
+cu
+eK
+xz
+JN
+vd
+iu
+fa
+fa
+fa
+Qs
+"}
+(8,1,1) = {"
+Qs
+TB
+fa
+mZ
+KC
+vd
+PV
+Cm
+xX
+xX
+xX
+Oa
+xX
+xX
+Oa
+xX
+xX
+xX
+dh
+xv
+vd
+ei
+mZ
+fa
+TB
+cq
+"}
+(9,1,1) = {"
+cq
+cq
+cC
+kx
+cC
+cq
+Cm
+Sm
+mg
+tq
+tq
+Ls
+tq
+tq
+Ls
+tq
+tq
+mg
+PY
+dh
+cq
+cC
+kx
+cC
+cq
+cq
+"}
+(10,1,1) = {"
+KU
+FE
+KU
+oc
+sl
+cq
+cu
+mg
+tq
+tq
+tq
+Ff
+tq
+tq
+Ff
+tq
+tq
+tq
+tq
+cu
+cq
+uz
+oc
+KU
+sU
+KU
+"}
+(11,1,1) = {"
+WG
+WG
+WG
+WG
+he
+wb
+Oa
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Oa
+wb
+Ke
+WG
+WG
+WG
+WG
+"}
+(12,1,1) = {"
+re
+re
+re
+re
+WJ
+cq
+cu
+tq
+tq
+Ff
+tq
+tq
+Ls
+Ls
+tq
+tq
+Lt
+tq
+tq
+cu
+cq
+dK
+re
+re
+re
+re
+"}
+(13,1,1) = {"
+ya
+ya
+ya
+ya
+WJ
+cq
+cu
+tq
+tq
+Ls
+tq
+tq
+Ls
+Ls
+tq
+tq
+Ls
+tq
+tq
+cu
+cq
+dK
+ya
+ya
+ya
+ya
+"}
+(14,1,1) = {"
+WG
+WG
+WG
+WG
+he
+gB
+Oa
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Ls
+Lt
+Ls
+Ls
+Ls
+Ls
+Oa
+gB
+Ke
+WG
+WG
+WG
+WG
+"}
+(15,1,1) = {"
+MI
+EJ
+MI
+ex
+aX
+cq
+cu
+tq
+tq
+Lt
+tq
+tq
+Ls
+Ls
+tq
+tq
+Ff
+tq
+mg
+cu
+cq
+TD
+ex
+MI
+NB
+MI
+"}
+(16,1,1) = {"
+cq
+cq
+cC
+kx
+cC
+cq
+xX
+tq
+tq
+Ls
+tq
+tq
+Ls
+Ls
+tq
+tq
+Ls
+tq
+tq
+xX
+cq
+cC
+kx
+cC
+cq
+cq
+"}
+(17,1,1) = {"
+cq
+fa
+fa
+Ir
+KC
+iY
+xX
+xX
+xX
+Oa
+xX
+xX
+Oa
+Oa
+xX
+xX
+Oa
+xX
+xX
+xX
+SG
+ei
+Ir
+fa
+fa
+Qs
+"}
+(18,1,1) = {"
+cq
+GW
+zo
+QA
+YY
+um
+xX
+Fq
+Ls
+Ls
+wu
+xX
+Ld
+Lt
+xX
+GJ
+Ls
+Ls
+jT
+xX
+pl
+Ab
+QA
+zo
+Mx
+cq
+"}
+(19,1,1) = {"
+cq
+vd
+vd
+vd
+vd
+um
+xX
+qf
+Ls
+Ls
+uu
+xX
+Ld
+Ls
+xX
+GJ
+Ls
+Ls
+YP
+xX
+fG
+CC
+OQ
+vd
+fT
+cq
+"}
+(20,1,1) = {"
+Qs
+lt
+Fm
+Ip
+vd
+Bx
+xX
+QW
+CQ
+Ls
+uu
+xX
+QQ
+Ls
+xX
+GJ
+Ls
+jT
+Dr
+xX
+NH
+vd
+Nm
+Fm
+hw
+Qs
+"}
+(21,1,1) = {"
+cq
+vw
+AN
+Tp
+vd
+um
+oi
+xX
+QW
+Lt
+uu
+xX
+xX
+xX
+xX
+GJ
+Lt
+Dr
+xX
+oi
+pl
+vd
+YI
+KL
+Pm
+cq
+"}
+(22,1,1) = {"
+cq
+cA
+AO
+II
+vd
+um
+fs
+ks
+lE
+oj
+oi
+gr
+xR
+HM
+ks
+lE
+oj
+oi
+gr
+fs
+pl
+vd
+nW
+AO
+AO
+cq
+"}
+(23,1,1) = {"
+Qs
+sP
+AO
+II
+vd
+qs
+RN
+HM
+fs
+fs
+fs
+zf
+Bg
+vd
+nQ
+fs
+fs
+fs
+xR
+RN
+KF
+vd
+YI
+KL
+Pm
+Qs
+"}
+(24,1,1) = {"
+cq
+vw
+AN
+jm
+vd
+vd
+DJ
+qs
+RN
+RN
+RN
+Bg
+vd
+vd
+mY
+RN
+RN
+RN
+KF
+DJ
+vd
+vd
+nW
+ER
+AO
+cq
+"}
+(25,1,1) = {"
+cq
+cA
+ER
+tr
+Jg
+Jg
+rY
+Jg
+rY
+rY
+rY
+Jg
+Jg
+Jg
+Jg
+rY
+rY
+rY
+Jg
+cD
+Uy
+vd
+ul
+KL
+Pm
+cq
+"}
+(26,1,1) = {"
+cq
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+vp
+cq
+cq
+cq
+cq
+"}
