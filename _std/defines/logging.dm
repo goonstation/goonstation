@@ -23,3 +23,4 @@
 #define LOG_VEHICLE "vehicle"
 #define LOG_WHISPER "whisper"
 #define LOG_TOPIC "topic"
+#define LOG_GAMEMODE "gamemode"

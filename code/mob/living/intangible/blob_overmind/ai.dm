@@ -273,7 +273,7 @@
 						continue
 					if (isdead(H))
 						continue
-					if (H.decomp_stage >= 4)
+					if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 						continue
 					if (!(locate(/obj/blob) in H.loc))
 						var/turf/T = get_turf(H)
