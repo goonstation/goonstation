@@ -1,4 +1,7 @@
 
+(t)thu sep 8 22
+(u)aloe
+(+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
 (t)wed sep 07 22
 (u)Ikea, Zonespace, and Yellow/Myco
 (p)9898
