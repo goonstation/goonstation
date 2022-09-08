@@ -11,16 +11,16 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	initial_volume = 50
-	module_research = list("science" = 2, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/glass/beaker
 	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	object_flags = NO_GHOSTCRITTER
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
@@ -40,7 +40,7 @@
 			A.c_state(1)
 		signal_event("icon_updated")
 
-	attackby(obj/A as obj, mob/user as mob)
+	attackby(obj/A, mob/user)
 		if (istype(A, /obj/item/assembly/time_ignite) && !(A:status))
 			var/obj/item/assembly/time_ignite/W = A
 			if (!W.part3)
@@ -92,6 +92,8 @@
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker (cryoxadone)"
+	icon_state = "roundflask"
+	icon_style = "roundflask"
 	initial_reagents = list("cryoxadone"=40)
 
 /obj/item/reagent_containers/glass/beaker/epinephrine
@@ -202,9 +204,10 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
 		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
@@ -229,3 +232,6 @@
 	name = "round flask"
 	icon_state = "roundflask"
 	icon_style = "roundflask"
+
+/obj/item/reagent_containers/glass/flask/black_powder //prefab shit
+	initial_reagents = "blackpowder"

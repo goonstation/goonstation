@@ -13,7 +13,10 @@
 		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 			return
 
-		if (!istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
+			return
+
+		if (istype(C, /mob/dead/))
 			return
 
 		if (istype(C, /obj/vehicle/tug))
@@ -58,7 +61,7 @@
 		load(C)
 		src.visible_message("<b>[user]</b> loads [C] onto [src].")
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
@@ -88,7 +91,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if (get_dist(C, src) > 1 || load)
+		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
 		// if a create, close before loading
@@ -96,7 +99,7 @@
 		if (istype(crate))
 			crate.close()
 		C.set_loc(src.loc)
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)
 				C.set_loc(src)
 				load = C
@@ -111,15 +114,7 @@
 		if (!isturf(T))
 			T = get_turf(T)
 
-		load.pixel_y -= 6
-		load.layer = initial(load.layer)
 		load.set_loc(src.loc)
-		if (T)
-			SPAWN_DBG(0.2 SECONDS)
-				if (load)
-					load.set_loc(T)
-					load = null
-		src.UpdateOverlays(null, "load")
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
@@ -129,6 +124,14 @@
 			AM.set_loc(src.loc)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	Exited(atom/movable/Obj, newloc)
+		. = ..()
+		if(src.load == Obj)
+			src.load.pixel_y -= 6
+			src.load.layer = initial(src.load.layer)
+			src.load = null
+			src.UpdateOverlays(null, "load")
 
 	Move()
 		var/oldloc = src.loc
@@ -151,6 +154,8 @@
 	layer = MOB_LAYER + 1
 //	sealed_cabin = 0
 	mats = 10
+	health = 80
+	health_max = 80
 	var/obj/tug_cart/cart = null
 	throw_dropped_items_overboard = 1
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
@@ -162,6 +167,8 @@
 		icon_state = "tractor-sec"
 		var/weeoo_in_progress = 0
 		delay = 2
+		health = 120
+		health_max = 120
 
 
 		/*
@@ -179,7 +186,7 @@
 				return
 
 			weeoo_in_progress = 10
-			SPAWN_DBG(0)
+			SPAWN(0)
 				playsound(src.loc, "sound/machines/siren_police.ogg", 60, 1)
 				light.enable()
 				src.icon_state = "tractor-sec2"
@@ -306,7 +313,7 @@
 			eject_rider(0, 1)
 		return
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		if (!M || !rider)
 			..()
 			return

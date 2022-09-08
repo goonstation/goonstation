@@ -127,7 +127,7 @@ var/global/datum/galaxy/GALAXY = new
 	New()
 		..()
 		if(src.destination_name)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				for(var/obj/landmark/destination_landmark/D in world)
 					if(D.destination_name == src.destination_name)
 						src.landing_zone = D

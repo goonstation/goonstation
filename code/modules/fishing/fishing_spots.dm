@@ -56,6 +56,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
 
+/datum/fishing_spot/swamp
+	fishing_atom_type = /turf/unsimulated/floor/auto/swamp
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/critter/slug = 10,\
+	/obj/critter/snake = 10,\
+	/obj/critter/frog = 10,\
+	/obj/item/clothing/head/rafflesia = 5)
+
 /datum/fishing_spot/test
 	fishing_atom_type = /turf/simulated/floor/ancient
 	fish_available = list(/obj/item/fish/carp = 40,\
@@ -64,6 +73,18 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
 	do_not_generate = 1
+
+/datum/fishing_spot/toilet
+	fishing_atom_type = /obj/item/storage/toilet
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
+
+/datum/fishing_spot/toilet/random
+	fishing_atom_type = /obj/item/storage/toilet/random
 
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event

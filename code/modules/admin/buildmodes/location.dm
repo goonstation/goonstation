@@ -6,7 +6,7 @@ Ctrl + LMB mob/obj                 = Set location inside of mob or object<br>
 Right Mouse Button on mob/obj      = Select Target<br>
 ***********************************************************"}
 	icon_state = "buildlocation"
-	var/atom/movable/target = null
+	var/tmp/atom/movable/target = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!src.target || !object) return

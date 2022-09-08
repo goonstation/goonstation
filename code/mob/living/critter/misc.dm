@@ -12,11 +12,11 @@
 	speechverb_stammer = "grumps"
 	speech_void = 1
 	death_text = "%src% dissipates!"
-	add_abilities = list(/datum/targetable/critter/envelope)
+	add_abilities = list(/datum/targetable/critter/envelop)
 
 	setup_healths()
-		add_hh_flesh(-8, 8, 0.25)
-		add_hh_flesh_burn(-8, 8, 0.01)
+		add_hh_flesh(8, 0.25)
+		add_hh_flesh_burn(8, 0.01)
 
 	death(var/gibbed)
 		..(0) // go through the normal death stuff but don't gib them
@@ -24,7 +24,7 @@
 		src.transforming = 1
 		src.canmove = 0
 		src.icon = null
-		APPLY_MOB_PROPERTY(src, PROP_INVISIBILITY, "transform", INVIS_ALWAYS)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
 		if (src.mind || src.client)
 			src.ghostize()
@@ -42,12 +42,12 @@
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn, no_burn_mult)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (src.stat != 2)
 			boutput(user, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat == 2)
 			return
 		else

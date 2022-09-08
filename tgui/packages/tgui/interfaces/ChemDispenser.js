@@ -1,5 +1,10 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
 
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState, useLocalState } from "../backend";
 import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
@@ -123,7 +128,6 @@ export const ReagentDispenser = (props, context) => {
           <Button
             key={reagentIndex}
             className="chem-dispenser__dispense-buttons"
-            position="relative"
             align="left"
             width="130px"
             onMouseEnter={() => setHoverOverId(reagent.id)}
@@ -143,15 +147,7 @@ export const ReagentDispenser = (props, context) => {
                 "text-shadow": "0 0 3px #000",
               }}
             />
-            <Tooltip.Overflow
-              content={reagent.name}
-              style={{
-                "line-height": "15px",
-              }}
-              width="105px"
-            >
-              {reagent.name}
-            </Tooltip.Overflow>
+            {reagent.name}
           </Button>
         ))}
       </Section>
@@ -209,23 +205,19 @@ export const Beaker = (props, context) => {
       </Box>
       {beakerContents.map((reagent, indexContents) => (
         <Table.Row key={indexContents}>
-          <Table.Cell collapsing
+          <Table.Cell
+            collapsing
             textAlign="left"
-            position="relative">
+          >
             <Icon
               pr={stateMap[reagent.state].pr}
               style={{
                 "text-shadow": "0 0 3px #000;",
               }}
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
-              name={iconToggle ? stateMap[reagent.state].icon : "circle"} />
-            <Tooltip.Overflow width="225px"
-              content={" ( " + reagent.volume + "u ) " + reagent.name}
-              style={{
-                "line-height": "15px",
-              }}>
-              {` ( ${reagent.volume}u ) ${reagent.name}`}
-            </Tooltip.Overflow>
+              name={iconToggle ? stateMap[reagent.state].icon : "circle"}
+            />
+            { `( ${reagent.volume}u ) ${reagent.name}`}
           </Table.Cell>
           <Table.Cell collapsing textAlign="left">
             <Box mt={0.5}>
@@ -314,42 +306,46 @@ export const BeakerContentsGraph = (props, context) => {
           ))}
         </Tabs>
       )}>
-      <Box
-        position="relative"
-        py={1.5}
-        pl={4}
-        backgroundColor={finalColor.substring(0, 7)}>
-        <Tooltip
-          position="top"
-          content="Current Mixture Color" />
-      </Box>
+      <Tooltip
+        position="top"
+        content="Current Mixture Color"
+      >
+        <Box
+          position="relative"
+          py={1.5}
+          pl={4}
+          backgroundColor={finalColor.substring(0, 7)}
+        />
+      </Tooltip>
       {beakerContents.slice().sort(sortMap[sort].compareFunction).map(
         (reagent, index) => (
-          <Box
-            position="relative"
-            as="span"
-            pl={((reagent.volume / maximumBeakerVolume)*100) / 1.146}
-            py={1}
+          <Tooltip
+            content={`${reagent.name} ( ${reagent.volume}u )`}
             key={index}
-            tooltip="test"
-            backgroundColor={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}>
-            <Tooltip
-              position="top"
-              content={reagent.name + " ( " + reagent.volume + "u )"} />
-          </Box>
+            position="top"
+          >
+            <Box
+              position="relative"
+              as="span"
+              pl={((reagent.volume / maximumBeakerVolume)*100) / 1.146}
+              py={1}
+              backgroundColor={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
+            />
+          </Tooltip>
         ))}
-      <Box
-        as="span"
-        position="relative"
-        pl={((maximumBeakerVolume - beakerTotalVolume)
-          / maximumBeakerVolume * 100) / 1.146}
-        py={1}
-        tooltip="test"
-        backgroundColor="black">
-        <Tooltip
-          position="top"
-          content={" ( " + (maximumBeakerVolume - beakerTotalVolume) + "u )"} />
-      </Box>
+      <Tooltip
+        content={`( ${maximumBeakerVolume - beakerTotalVolume}u )`}
+        position="top"
+      >
+        <Box
+          as="span"
+          position="relative"
+          pl={((maximumBeakerVolume - beakerTotalVolume)
+            / maximumBeakerVolume * 100) / 1.146}
+          py={1}
+          backgroundColor="black"
+        />
+      </Tooltip>
     </Section>
   );
 };

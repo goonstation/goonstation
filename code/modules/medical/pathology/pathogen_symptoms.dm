@@ -43,7 +43,7 @@ datum/pathogeneffects
 				if(istype(M, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = I
 					if(prob(100-H.get_disease_protection()))
-						SPAWN_DBG(rand(0.5,2) SECONDS)
+						SPAWN(rand(0.5,2) SECONDS)
 							H.show_message("Pretty catchy tune...")
 							H.emote("snap") // consider yourself lucky I haven't implemented snap infection yet, human
 
@@ -598,8 +598,8 @@ obj/hallucinated_item
 	New(myloc, myowner, var/obj/prototype)
 		..()
 		myowner = owner
-		name = prototype.name
-		desc = prototype.desc
+		name = prototype?.name || "something unknown"
+		desc = prototype?.desc
 
 	attack_hand(var/mob/M)
 		if (M == owner)
@@ -1543,10 +1543,10 @@ datum/pathogeneffects/malevolent/seriouschills
 	rarity = RARITY_RARE
 
 	proc/create_icing(var/mob/M)
-		var/obj/decal/icefloor/I = unpool(/obj/decal/icefloor)
+		var/obj/decal/icefloor/I = new /obj/decal/icefloor
 		I.set_loc(get_turf(M))
-		SPAWN_DBG(30 SECONDS)
-			pool(I)
+		SPAWN(30 SECONDS)
+			qdel(I)
 
 	disease_act(var/mob/M as mob, var/datum/pathogen/origin)
 		if (!origin.symptomatic)
@@ -1730,7 +1730,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
 		gas.temperature = T20C
@@ -1759,7 +1759,7 @@ datum/pathogeneffects/malevolent/farts/co2
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
 		gas.temperature = T20C
@@ -1792,7 +1792,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
 		var/turf/T = get_turf(M)
-		var/datum/gas_mixture/gas = unpool(/datum/gas_mixture)
+		var/datum/gas_mixture/gas = new /datum/gas_mixture
 		gas.zero()
 		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
 		gas.temperature = T20C
@@ -1824,7 +1824,7 @@ datum/pathogeneffects/malevolent/leprosy
 						if (limb.remove_stage < 2)
 							limb.remove_stage = 2
 							M.show_message("<span class='alert'>Your [limb] comes loose!</span>")
-							SPAWN_DBG(rand(150, 200))
+							SPAWN(rand(150, 200))
 								if (limb.remove_stage == 2)
 									limb.remove(0)
 	may_react_to()

@@ -43,7 +43,7 @@
 				var/index = 0
 				var/group = null
 				if (initlist.len > 1)
-					index = max( round(text2num(initlist[2])), 1)
+					index = max( round(text2num_safe(initlist[2])), 1)
 
 					if (initlist.len > 2)
 						group = initlist[3]
@@ -77,7 +77,7 @@
 				var/index = 0
 				var/group = null
 				if (initlist.len > 1)
-					index = max( round(text2num(initlist[2])), 1)
+					index = max( round(text2num_safe(initlist[2])), 1)
 
 					if (initlist.len > 2)
 						group = initlist[3]

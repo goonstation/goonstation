@@ -6,7 +6,7 @@ on:
 jobs:
   post-to-forums:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'goonstation/goonstation' && (github.event.action == 'labeled' && github.event.label.name == 'input wanted' || github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'input wanted')) }}
+    if: ${{ github.repository == 'goonstation/goonstation' && (github.event.action == 'labeled' && github.event.label.name == 'E-Input-Wanted' || github.event.action != 'labeled' && contains(github.event.pull_request.labels.*.name, 'E-Input-Wanted')) }}
     steps:
     - name: Get The Script
       run: |
@@ -26,8 +26,6 @@ jobs:
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REPO: ${{ github.repository }}
         FORUM_URL: "https://forum.ss13.co"
-        FORUM_LOGOUT_KEY: ${{ secrets.FORUM_LOGOUT_KEY }}
-        FORUM_POST_KEY: ${{ secrets.FORUM_POST_KEY }}
         FORUM_PASSWORD: ${{ secrets.FORUM_PASSWORD }}
         FORUM_USERNAME: "github_bot"
         SUBFORUM_ID: 8 # Ideas & Suggestions

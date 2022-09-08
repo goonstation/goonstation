@@ -1,111 +1,1282 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_prison)
-"ab" = (/turf/variableTurf/clear,/area/space)
-"ac" = (/obj/machinery/deep_fryer{icon_state = "fryer0"; dir = 4},/turf/simulated/floor/black,/area/prefab/sea_prison)
-"ad" = (/turf/simulated/floor/black,/area/prefab/sea_prison)
-"ae" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/prison_loaf,/turf/simulated/floor,/area/prefab/sea_prison)
-"af" = (/turf/simulated/floor,/area/prefab/sea_prison)
-"ag" = (/obj/stool,/turf/simulated/floor,/area/prefab/sea_prison)
-"ah" = (/obj/stool,/obj/machinery/light/incandescent/harsh,/turf/simulated/floor,/area/prefab/sea_prison)
-"ai" = (/obj/stool,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"aj" = (/obj/fitness/speedbag/captain,/turf/simulated/floor/bot,/area/prefab/sea_prison)
-"ak" = (/obj/machinery/light/incandescent/cool,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"al" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"am" = (/obj/item/reagent_containers/food/drinks/bottle/vintage,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"an" = (/obj/storage/secure/closet/fridge/kitchen,/obj/item/reagent_containers/food/snacks/sandwich/meatball,/obj/item/reagent_containers/food/snacks/friedrice,/obj/item/reagent_containers/food/snacks/breakfast,/obj/item/reagent_containers/food/snacks/burger/roburger,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"ao" = (/obj/table/auto,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor,/area/prefab/sea_prison)
-"ap" = (/obj/table/auto,/obj/item/reagent_containers/food/drinks/coffee,/turf/simulated/floor,/area/prefab/sea_prison)
-"aq" = (/obj/table/auto,/obj/item/kitchen/utensil/fork,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"ar" = (/obj/machinery/light/incandescent/harsh,/turf/simulated/floor,/area/prefab/sea_prison)
-"as" = (/obj/item/rods/steel,/turf/simulated/floor,/area/prefab/sea_prison)
-"at" = (/obj/machinery/shower{dir = 8; icon_state = "showerhead"; pixel_x = -6},/obj/item/item_box/medical_patches/synthflesh,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"au" = (/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"av" = (/obj/machinery/shower{dir = 4; icon_state = "showerhead"; pixel_x = 6},/obj/decal/cleanable/dirt,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"aw" = (/turf/variableTurf/clear,/area/noGenerate)
-"ax" = (/obj/storage/secure/closet/kitchen,/obj/item/reagent_containers/food/drinks/energyshake,/obj/item/reagent_containers/food/drinks/tea/mugwort,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"ay" = (/obj/machinery/light/incandescent/harsh,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"az" = (/obj/fitness/weightlifter,/obj/item/reagent_containers/emergency_injector/synaptizine,/turf/simulated/floor/bot,/area/prefab/sea_prison)
-"aA" = (/obj/fitness/weightlifter,/turf/simulated/floor/bot,/area/prefab/sea_prison)
-"aB" = (/obj/machinery/drainage/big,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"aC" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/soup/gruel,/turf/simulated/floor,/area/prefab/sea_prison)
-"aD" = (/obj/machinery/shower{dir = 8; icon_state = "showerhead"; pixel_x = -6},/obj/decal/cleanable/dirt,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"aE" = (/obj/critter/zombie,/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"aF" = (/obj/machinery/shower{dir = 4; icon_state = "showerhead"; pixel_x = 6},/turf/simulated/floor/sanitary,/area/prefab/sea_prison)
-"aG" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/yuckburn,/obj/item/reagent_containers/food/snacks/yuckburn,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"aH" = (/obj/table/auto,/obj/machinery/microwave,/turf/simulated/floor/black,/area/prefab/sea_prison)
-"aI" = (/obj/table/auto,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/soup/gruel,/obj/item/reagent_containers/food/snacks/donkpocket,/obj/item/reagent_containers/food/snacks/donkpocket,/obj/item/reagent_containers/food/snacks/donkpocket,/turf/simulated/floor,/area/prefab/sea_prison)
-"aJ" = (/obj/table/auto,/turf/simulated/floor,/area/prefab/sea_prison)
-"aK" = (/obj/fitness/stacklifter,/turf/simulated/floor/bot,/area/prefab/sea_prison)
-"aL" = (/obj/machinery/door/airlock/pyro/glass,/obj/machinery/secscanner{pixel_y = 10},/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aM" = (/obj/machinery/secscanner{pixel_y = 10},/obj/machinery/door/airlock/pyro/glass,/turf/simulated/floor,/area/prefab/sea_prison)
-"aN" = (/obj/disposalpipe/segment{dir = 4; icon_state = "pipe-c"},/turf/variableTurf/clear,/area/noGenerate)
-"aO" = (/obj/disposalpipe/segment{dir = 4; level = -1; pixel_y = 0},/turf/variableTurf/clear,/area/noGenerate)
-"aP" = (/obj/disposalpipe/segment{dir = 4; level = -1; pixel_y = 0},/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_prison)
-"aQ" = (/obj/table/auto,/obj/item/storage/belt/security,/obj/item/baton,/obj/disposalpipe/segment{dir = 4; level = -1; pixel_y = 0},/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aR" = (/obj/table/auto,/obj/machinery/recharger,/obj/disposalpipe/segment{dir = 4; level = -1; pixel_y = 0},/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aS" = (/obj/machinery/disposal/brig,/obj/disposalpipe/trunk/west,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aT" = (/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aU" = (/obj/machinery/light/incandescent/cool,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"aV" = (/obj/disposalpipe/segment,/turf/simulated/wall/auto/reinforced/supernorn,/area/prefab/sea_prison)
-"aW" = (/obj/decal/skeleton,/obj/item/implantcase/robust,/turf/simulated/floor,/area/prefab/sea_prison)
-"aX" = (/obj/stool/bed,/turf/simulated/floor,/area/prefab/sea_prison)
-"aY" = (/obj/critter/fermid,/turf/simulated/floor,/area/prefab/sea_prison)
-"aZ" = (/obj/machinery/bot/guardbot/bad,/turf/simulated/floor,/area/prefab/sea_prison)
-"ba" = (/obj/machinery/light/incandescent/harsh,/obj/disposalpipe/segment,/obj/item/storage/toilet,/turf/simulated/floor,/area/prefab/sea_prison)
-"bb" = (/obj/item/storage/toilet,/turf/simulated/floor,/area/prefab/sea_prison)
-"bc" = (/obj/machinery/door/airlock/pyro/security/alt{dir = 4; name = "Security"; req_access_txt = "1"},/obj/access_spawn/security,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"bd" = (/obj/machinery/door/airlock/pyro/security/alt{req_access_txt = "1"},/obj/access_spawn/security,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"be" = (/obj/item/implanter,/obj/decal/cleanable/blood/tracks,/turf/simulated/floor,/area/prefab/sea_prison)
-"bf" = (/obj/item/storage/toilet{dir = 4; icon_state = "toilet"; tag = ""},/turf/simulated/floor,/area/prefab/sea_prison)
-"bg" = (/mob/living/critter/skeleton,/turf/simulated/floor,/area/prefab/sea_prison)
-"bh" = (/obj/table/auto,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"bi" = (/obj/critter/zombie/security,/obj/stool,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"bj" = (/obj/machinery/vending/security_ammo,/turf/simulated/floor,/area/prefab/sea_prison)
-"bk" = (/obj/table/auto,/obj/machinery/recharger,/obj/machinery/light/incandescent/warm,/turf/simulated/floor,/area/prefab/sea_prison)
-"bl" = (/obj/storage/closet/wardrobe/red/security_gimmick,/turf/simulated/floor,/area/prefab/sea_prison)
-"bm" = (/obj/rack,/obj/item/clothing/suit/space/diving/security,/obj/item/clothing/head/helmet/space/engineer/diving/security,/obj/item/tank/oxygen,/obj/machinery/light/incandescent/warm,/turf/simulated/floor,/area/prefab/sea_prison)
-"bn" = (/turf/simulated/wall/false_wall{icon_state = "rdoor1"},/area/prefab/sea_prison)
-"bo" = (/obj/machinery/door/airlock/pyro/security/alt{req_access_txt = "1"},/obj/access_spawn/security,/turf/simulated/floor,/area/prefab/sea_prison)
-"bp" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor,/area/prefab/sea_prison)
-"bq" = (/obj/table/reinforced,/obj/machinery/cashreg{name = "bail payment device"},/obj/machinery/door/airlock/pyro/glass/windoor,/obj/access_spawn/security,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"br" = (/obj/decal/cleanable/blood/tracks,/turf/simulated/floor,/area/prefab/sea_prison)
-"bs" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/red,/area/prefab/sea_prison)
-"bt" = (/obj/table/auto,/obj/item/paper,/obj/item/pen/marker/red,/turf/simulated/floor,/area/prefab/sea_prison)
-"bu" = (/obj/stool/chair/office/red{dir = 8; icon_state = "office_chair_red"},/turf/simulated/floor,/area/prefab/sea_prison)
-"bv" = (/obj/decal/cleanable/blood/drip,/turf/simulated/floor,/area/prefab/sea_prison)
-"bw" = (/obj/machinery/door/airlock/pyro/security/alt{dir = 4; name = "Security"; req_access_txt = "1"},/obj/access_spawn/security,/turf/simulated/floor,/area/prefab/sea_prison)
-"bx" = (/obj/table/auto,/obj/item/stamp,/turf/simulated/floor,/area/prefab/sea_prison)
-"by" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor,/area/prefab/sea_prison)
-"bz" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor,/area/prefab/sea_prison)
-"bA" = (/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/obj/item/pen/crayon/orange,/turf/simulated/floor,/area/prefab/sea_prison)
-"bB" = (/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/turf/simulated/floor,/area/prefab/sea_prison)
-"bC" = (/obj/vehicle/segway,/turf/simulated/floor,/area/prefab/sea_prison)
-"bD" = (/obj/item/uplink/syndicate{uses = 0},/obj/stool/bed,/turf/simulated/floor,/area/prefab/sea_prison)
-"bE" = (/obj/item/clothing/shoes/cleats,/obj/item/toy/sword,/obj/machinery/light/incandescent/cool,/turf/simulated/floor,/area/prefab/sea_prison)
-"bF" = (/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/turf/simulated/floor,/area/prefab/sea_prison)
-"bG" = (/obj/item/pen/crayon/orange,/obj/machinery/light/incandescent/harsh,/turf/simulated/floor,/area/prefab/sea_prison)
-"bH" = (/obj/critter/goose,/turf/simulated/floor,/area/prefab/sea_prison)
-"bI" = (/obj/stool/bed,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton,/obj/machinery/light/incandescent/harsh,/turf/simulated/floor,/area/prefab/sea_prison)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_prison)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/machinery/deep_fryer{
+	icon_state = "fryer0";
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"ad" = (
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"ae" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/prison_loaf,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"af" = (
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"ag" = (
+/obj/stool,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"ah" = (
+/obj/stool,
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"ai" = (
+/obj/stool,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"aj" = (
+/obj/fitness/speedbag/captain,
+/turf/simulated/floor/bot,
+/area/prefab/sea_prison)
+"ak" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"al" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"am" = (
+/obj/item/reagent_containers/food/drinks/bottle/vintage,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"an" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/obj/item/reagent_containers/food/snacks/sandwich/meatball,
+/obj/item/reagent_containers/food/snacks/friedrice,
+/obj/item/reagent_containers/food/snacks/breakfast,
+/obj/item/reagent_containers/food/snacks/burger/roburger,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"ao" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"ap" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/coffee,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aq" = (
+/obj/table/auto,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"ar" = (
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"as" = (
+/obj/item/rods/steel,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"at" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_x = -6
+	},
+/obj/item/item_box/medical_patches/synthflesh,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"au" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"av" = (
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead";
+	pixel_x = 6
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"aw" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ax" = (
+/obj/storage/secure/closet/kitchen,
+/obj/item/reagent_containers/food/drinks/energyshake,
+/obj/item/reagent_containers/food/drinks/tea/mugwort,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"ay" = (
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"az" = (
+/obj/fitness/weightlifter,
+/obj/item/reagent_containers/emergency_injector/synaptizine,
+/turf/simulated/floor/bot,
+/area/prefab/sea_prison)
+"aA" = (
+/obj/fitness/weightlifter,
+/turf/simulated/floor/bot,
+/area/prefab/sea_prison)
+"aB" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"aC" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aD" = (
+/obj/machinery/shower{
+	dir = 8;
+	icon_state = "showerhead";
+	pixel_x = -6
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"aE" = (
+/obj/critter/zombie,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"aF" = (
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead";
+	pixel_x = 6
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"aG" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuckburn,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"aH" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/black,
+/area/prefab/sea_prison)
+"aI" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/soup/gruel,
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/obj/item/reagent_containers/food/snacks/donkpocket,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aJ" = (
+/obj/table/auto,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aK" = (
+/obj/fitness/stacklifter,
+/turf/simulated/floor/bot,
+/area/prefab/sea_prison)
+"aL" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aM" = (
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aN" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aO" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1;
+	pixel_y = 0
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aP" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1;
+	pixel_y = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_prison)
+"aQ" = (
+/obj/table/auto,
+/obj/item/storage/belt/security,
+/obj/item/baton,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1;
+	pixel_y = 0
+	},
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aR" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1;
+	pixel_y = 0
+	},
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aS" = (
+/obj/machinery/disposal/brig,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aT" = (
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aU" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"aV" = (
+/obj/disposalpipe/segment,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/sea_prison)
+"aW" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/implantcase/robust,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aX" = (
+/obj/stool/bed,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aY" = (
+/obj/critter/fermid,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"aZ" = (
+/obj/machinery/bot/guardbot/bad,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"ba" = (
+/obj/machinery/light/incandescent/harsh,
+/obj/disposalpipe/segment,
+/obj/item/storage/toilet,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bb" = (
+/obj/item/storage/toilet,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bc" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4;
+	name = "Security";
+	req_access_txt = "1"
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"bd" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	req_access_txt = "1"
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"be" = (
+/obj/item/implanter,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bf" = (
+/obj/item/storage/toilet{
+	dir = 4;
+	icon_state = "toilet";
+	tag = ""
+	},
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bg" = (
+/mob/living/critter/skeleton,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bh" = (
+/obj/table/auto,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"bi" = (
+/obj/critter/zombie/security,
+/obj/stool,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"bj" = (
+/obj/machinery/vending/security_ammo,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bk" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bl" = (
+/obj/storage/closet/wardrobe/red/security_gimmick,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bm" = (
+/obj/rack,
+/obj/item/clothing/suit/space/diving/security,
+/obj/item/clothing/head/helmet/space/engineer/diving/security,
+/obj/item/tank/oxygen,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bn" = (
+/turf/simulated/wall/false_wall{
+	icon_state = "rdoor1"
+	},
+/area/prefab/sea_prison)
+"bo" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	req_access_txt = "1"
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bp" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bq" = (
+/obj/table/reinforced,
+/obj/machinery/cashreg{
+	name = "bail payment device"
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/access_spawn/security,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"br" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bs" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/red,
+/area/prefab/sea_prison)
+"bt" = (
+/obj/table/auto,
+/obj/item/paper,
+/obj/item/pen/marker/red,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bu" = (
+/obj/stool/chair/office/red{
+	dir = 8;
+	icon_state = "office_chair_red"
+	},
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bv" = (
+/obj/decal/cleanable/blood/drip,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bw" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4;
+	name = "Security";
+	req_access_txt = "1"
+	},
+/obj/access_spawn/security,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bx" = (
+/obj/table/auto,
+/obj/item/stamp,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"by" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bz" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bA" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/item/pen/crayon/orange,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bB" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bC" = (
+/obj/vehicle/segway,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bD" = (
+/obj/item/uplink/syndicate{
+	uses = 0
+	},
+/obj/stool/bed,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bE" = (
+/obj/item/clothing/shoes/cleats,
+/obj/item/toy/sword,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bF" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bG" = (
+/obj/item/pen/crayon/orange,
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bH" = (
+/obj/critter/goose,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"bI" = (
+/obj/stool/bed,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton,
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
 
 (1,1,1) = {"
-ababababababababababababababababababababababababababababababababababab
-abababababababababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab
-abababababababababababababaaacadaeafagagahaiadaaafajajajafaaakalamaaab
-abababababababababababababaaanadaeafaoaoapaqadaaarafafafasaaatauavaaab
-abababababababababababababaaaxadaeafagagagadayaaafazafaAafaaauaBalaaab
-abababababababababababababaaadadaCafagagagadadaaasafafafaraaaDaEaFaaab
-abababababababababababababaaaGaHaIafaJaoaJadadaaafaKafaKafaaalauakaaab
-abababababababababababababaaadadafafagahagadadaaafafafafasaaauaualaaab
-abababababababababababawawaaaaaaaaaaaaaaaaaLaLaaaLaLaaaaaaaaaaaMaaaaab
-ababababababababababawaNaOaOaOaOaPaQaRaSaaaTaTaaaTaTaTaTaUaTaTaTaTaaab
-ababaaaaaaaaaaaaaaaaaaaVaaaaaaaaaaaTaTaTaaaTaTaaaUaTaTaTaTaTaTaTaUaaab
-ababaaaWaaaXaYaaaXaZaabaaXaabbaXaaaTaTaTbcaTaTaaaTaTaaaaaabdaaaaaaaaab
-ababaabeaabfafaabfafaaafafaabgafaabhbiaTaaaTaTaaaTaTaabjbkafblblbmaaab
-abaaaabnaaaaboaaaaboaaaaboaabpboaaaabqaaaaaTaTaaaUaTaaafafafafafafaaab
-abaaafbraaaTaTaUaTaTaTaTaTaUaTaTaTaTaTaUaTaTaTaTaTaTbsbtbuafafafafaaab
-abaaafbvbwaTaTaTaTaTaUaTaTaTaTaTaUaTaTaTaTaTaUaTaTaTbsbxafafafbyafaaab
-abaaaaaaaaboaaaaboaaaaboaaaabobpaaaaaabdaaaaaaaaaaaaaabyafafafaabzaaab
-ababaaafaaafbbaabAbBaaafbbaaafafaabCafafbyafafafafafafafafafafaaafaaab
-ababaaafaabDbEaabFbGaabHafaaafbIaabCafafafafafafbyafafafafbyafaaafaaab
-ababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabzaaab
-abababababababababababababababababababababababababababababababawawawab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+af
+af
+aa
+aa
+aa
+aa
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aW
+be
+bn
+br
+bv
+aa
+af
+af
+aa
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+bw
+aa
+aa
+aa
+aa
+ab
+"}
+(6,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aX
+bf
+aa
+aT
+aT
+bo
+af
+bD
+aa
+ab
+"}
+(7,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aY
+af
+bo
+aT
+aT
+aa
+bb
+bE
+aa
+ab
+"}
+(8,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aU
+aT
+aa
+aa
+aa
+aa
+ab
+"}
+(9,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aX
+bf
+aa
+aT
+aT
+bo
+bA
+bF
+aa
+ab
+"}
+(10,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aZ
+af
+bo
+aT
+aT
+aa
+bB
+bG
+aa
+ab
+"}
+(11,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aw
+aa
+aa
+aa
+aa
+aT
+aU
+aa
+aa
+aa
+aa
+ab
+"}
+(12,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aw
+aN
+aV
+ba
+af
+aa
+aT
+aT
+bo
+af
+bH
+aa
+ab
+"}
+(13,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aw
+aO
+aa
+aX
+af
+bo
+aT
+aT
+aa
+bb
+af
+aa
+ab
+"}
+(14,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aO
+aa
+aa
+aa
+aa
+aU
+aT
+aa
+aa
+aa
+aa
+ab
+"}
+(15,1,1) = {"
+ab
+aa
+ac
+an
+ax
+ad
+aG
+ad
+aa
+aO
+aa
+bb
+bg
+bp
+aT
+aT
+bo
+af
+af
+aa
+ab
+"}
+(16,1,1) = {"
+ab
+aa
+ad
+ad
+ad
+ad
+aH
+ad
+aa
+aO
+aa
+aX
+af
+bo
+aT
+aT
+bp
+af
+bI
+aa
+ab
+"}
+(17,1,1) = {"
+ab
+aa
+ae
+ae
+ae
+aC
+aI
+af
+aa
+aP
+aa
+aa
+aa
+aa
+aT
+aU
+aa
+aa
+aa
+aa
+ab
+"}
+(18,1,1) = {"
+ab
+aa
+af
+af
+af
+af
+af
+af
+aa
+aQ
+aT
+aT
+bh
+aa
+aT
+aT
+aa
+bC
+bC
+aa
+ab
+"}
+(19,1,1) = {"
+ab
+aa
+ag
+ao
+ag
+ag
+aJ
+ag
+aa
+aR
+aT
+aT
+bi
+bq
+aT
+aT
+aa
+af
+af
+aa
+ab
+"}
+(20,1,1) = {"
+ab
+aa
+ag
+ao
+ag
+ag
+ao
+ah
+aa
+aS
+aT
+aT
+aT
+aa
+aU
+aT
+bd
+af
+af
+aa
+ab
+"}
+(21,1,1) = {"
+ab
+aa
+ah
+ap
+ag
+ag
+aJ
+ag
+aa
+aa
+aa
+bc
+aa
+aa
+aT
+aT
+aa
+by
+af
+aa
+ab
+"}
+(22,1,1) = {"
+ab
+aa
+ai
+aq
+ad
+ad
+ad
+ad
+aL
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+af
+af
+aa
+ab
+"}
+(23,1,1) = {"
+ab
+aa
+ad
+ad
+ay
+ad
+ad
+ad
+aL
+aT
+aT
+aT
+aT
+aT
+aT
+aU
+aa
+af
+af
+aa
+ab
+"}
+(24,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+aa
+af
+af
+aa
+ab
+"}
+(25,1,1) = {"
+ab
+aa
+af
+ar
+af
+as
+af
+af
+aL
+aT
+aU
+aT
+aT
+aU
+aT
+aT
+aa
+af
+by
+aa
+ab
+"}
+(26,1,1) = {"
+ab
+aa
+aj
+af
+az
+af
+aK
+af
+aL
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aa
+af
+af
+aa
+ab
+"}
+(27,1,1) = {"
+ab
+aa
+aj
+af
+af
+af
+af
+af
+aa
+aT
+aT
+aa
+aa
+aa
+bs
+bs
+aa
+af
+af
+aa
+ab
+"}
+(28,1,1) = {"
+ab
+aa
+aj
+af
+aA
+af
+aK
+af
+aa
+aT
+aT
+aa
+bj
+af
+bt
+bx
+by
+af
+af
+aa
+ab
+"}
+(29,1,1) = {"
+ab
+aa
+af
+as
+af
+ar
+af
+as
+aa
+aU
+aT
+aa
+bk
+af
+bu
+af
+af
+af
+af
+aa
+ab
+"}
+(30,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aT
+aT
+bd
+af
+af
+af
+af
+af
+af
+by
+aa
+ab
+"}
+(31,1,1) = {"
+ab
+aa
+ak
+at
+au
+aD
+al
+au
+aa
+aT
+aT
+aa
+bl
+af
+af
+af
+af
+af
+af
+aa
+ab
+"}
+(32,1,1) = {"
+ab
+aa
+al
+au
+aB
+aE
+au
+au
+aM
+aT
+aT
+aa
+bl
+af
+af
+by
+aa
+aa
+aa
+aa
+aw
+"}
+(33,1,1) = {"
+ab
+aa
+am
+av
+al
+aF
+ak
+al
+aa
+aT
+aU
+aa
+bm
+af
+af
+af
+bz
+af
+af
+bz
+aw
+"}
+(34,1,1) = {"
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+"}
+(35,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

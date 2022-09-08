@@ -24,6 +24,24 @@
 			if(istype(src.holder.loc,/obj/item/device/pda2))
 				src.master = src.holder.loc
 
+	proc/on_activated(obj/item/device/pda2/pda)
+		return
+
+	proc/on_deactivated(obj/item/device/pda2/pda)
+		return
+
+	proc/on_set_host(obj/item/device/pda2/pda)
+		return
+
+	proc/on_unset_host(obj/item/device/pda2/pda)
+		return
+
+	proc/on_set_scan(obj/item/device/pda2/pda)
+		return
+
+	proc/on_unset_scan(obj/item/device/pda2/pda)
+		return
+
 	proc
 		return_text()
 			if((!src.holder) || (!src.master))
@@ -35,7 +53,7 @@
 			if(!(holder in src.master.contents))
 				//boutput(world, "Holder [holder] not in [master] of prg:[src]")
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			return 0
@@ -61,7 +79,7 @@
 
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			if(!src.holder.root)
@@ -92,8 +110,6 @@
 
 		post_signal(datum/signal/signal, newfreq)
 			master?.post_signal(signal, newfreq)
-			//else
-				//qdel(signal)
 
 		transfer_holder(obj/item/disk/data/newholder,datum/computer/folder/newfolder)
 
@@ -123,45 +139,22 @@
 			src.holder = newholder
 			return 1
 
-
-		receive_signal(datum/signal/signal, rx_method, rx_freq)
-			if((!src.holder) || (!src.master))
-				return 1
-
-			if((!istype(holder)) || (!istype(master)))
-				return 1
-
-			if(!(holder in src.master.contents))
-				if(master.active_program == src)
-					master.active_program = null
-				return 1
-
-			return 0
-
 		// called when a program is run
 		init()
-			return
-
-		// to allow promiscuous mode
-		network_hook()
 			return
 
 		/// Sends a message to the owner's PDA about... something, usually a confirmation that it did something
 		self_text(var/message)
 			if(!message)
 				message = "Confirmed."
-			var/datum/radio_frequency/frequency = radio_controller.return_frequency(FREQ_PDA)
-			if(frequency)
-
-				var/datum/signal/signal = get_free_signal()
-				signal.source = src
-				signal.data["sender"] = "00000000"
-				signal.data["command"] = "text_message"
-				signal.data["sender_name"] = "BOT-CMD"
-				signal.data["address_1"] = src.master.net_id
-				signal.data["message"] = message
-				signal.transmission_method = TRANSMISSION_RADIO
-				frequency.post_signal(src, signal)
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["sender"] = "00000000"
+			signal.data["command"] = "text_message"
+			signal.data["sender_name"] = "BOT-CMD"
+			signal.data["address_1"] = src.master.net_id
+			signal.data["message"] = message
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 		/// generates a passkey out of a bunch of words and shit
 		GenerateFilesharePasskey(var/how_many = 3)
@@ -180,11 +173,11 @@
 			return 1
 		if(isghostdrone(usr))
 			return 1
-		if(usr.stat || usr.restrained())
+		if(!can_act(usr))
 			return 1
 		if(!(holder in src.master.contents))
 			if(master.active_program == src)
-				master.active_program = null
+				master.set_active_program(null)
 			return 1
 		src.master.add_dialog(usr)
 

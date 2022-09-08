@@ -9,7 +9,12 @@
 	name = "organic floor"
 	icon_state = "floor1"
 
-/turf/simulated/floor/martian/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/unsimulated/martian/floor
+	icon = 'icons/turf/martian.dmi'
+	name = "organic floor"
+	icon_state = "floor1"
+
+/turf/simulated/floor/martian/attackby(obj/item/C, mob/user, params)
 	if (istype(C, /obj/item/martianSeed))
 		var/obj/item/martianSeed/S = C
 		if(S)
@@ -24,25 +29,25 @@
 	icon_state = "wall1"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 
 	var/health = 40
 
 	proc/checkhealth()
 		if(src.health <= 0)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				gib(src.loc)
 				ReplaceWithSpace()
 
 /turf/simulated/martian/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 40
 			checkhealth()
-		if(2.0)
+		if(2)
 			src.health -= 20
 			checkhealth()
-		if(3.0)
+		if(3)
 			src.health -= 5
 			checkhealth()
 

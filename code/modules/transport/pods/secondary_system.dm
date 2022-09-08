@@ -36,14 +36,14 @@
 		..()
 		if(!active)
 			return
-		ship.invisibility = 2
+		ship.invisibility = INVIS_CLOAK
 		shield = image("icon" = 'icons/obj/ship.dmi', "icon_state" = "shield", "layer" = MOB_LAYER)
 		ship.overlays += shield
 		return
 
 	deactivate()
 		..()
-		ship.invisibility = 0
+		ship.invisibility = INVIS_NONE
 		ship.overlays -= shield
 		return
 
@@ -81,7 +81,7 @@
 
 	on_shipdeath(var/obj/machinery/vehicle/ship)
 		if (ship)
-			SPAWN_DBG(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
+			SPAWN(1 SECOND)	//idk so it doesn't get caught on big pods when they are still aorund...
 				for (var/obj/O in src.contents)
 					O.set_loc(get_turf(ship))
 					O.throw_at(get_edge_target_turf(O, pick(alldirs)), rand(1,3), 3)
@@ -108,7 +108,7 @@
 
 		var/inrange = 0
 		for(var/turf/ST in src.ship.locs)
-			if (get_dist(T,ST) <= 1)
+			if (BOUNDS_DIST(T, ST) == 0)
 				inrange = 1
 				break
 		if (!inrange)
@@ -126,7 +126,7 @@
 
 /obj/item/shipcomponent/secondary_system/cargo
 	name = "Cargo Hold"
-	desc = "Allows the ship to load crates and transport them."
+	desc = "Allows the ship to load crates and transport them. One of Tradecraft Seneca's best sellers."
 	var/list/load = list() //Current crates inside
 	var/maxcap = 3 //how many crates it can hold
 	var/list/acceptable = list(/obj/storage/crate,
@@ -158,12 +158,12 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/deactivate()
-	for(var/obj/O in load) //Drop cargo.
+	for(var/atom/movable/O in load) //Drop cargo.
 		src.unload(O)
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/activate()
-	var/loadmode = input(usr, "Unload/Load", "Unload/Load")  as null|anything in list("Load", "Unload")
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
 	switch(loadmode)
 		if("Load")
 			var/atom/movable/AM = null
@@ -285,8 +285,6 @@
 		playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
 		return 1 // invalid cargo
 
-	C.set_loc(src.loc)
-	sleep(0.2 SECONDS)
 	C.set_loc(src)
 	load += C
 	playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
@@ -818,7 +816,7 @@
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
 		SC.on_shipdeath()
-	SPAWN_DBG(0) //???? otherwise we runtime
+	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
 
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)

@@ -69,10 +69,10 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, __red("You cannot use that ability at this time."))
+			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 

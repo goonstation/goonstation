@@ -2,15 +2,13 @@
 
 /obj/item/device/pda2
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by an EEPROM cartridge."
+	desc = "A portable microcomputer by Thinktronic Systems, LTD. It has a slot for an ID card, and a hole to put a pen into."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
-	module_research = list("science" = 1, "miniaturization" = 5, "devices" = 5, "efficiency" = 3)
-	module_research_type = /obj/item/device/pda2
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
@@ -30,10 +28,8 @@
 	var/closed = 1 //Can we insert a module now?
 	var/obj/item/uplink/integrated/pda/uplink = null
 	var/obj/item/device/pda_module/module = null
-	var/frequency = 1149
-	var/bot_freq = 1447 //Bot control frequency
-	var/beacon_freq = 1445 //Beacon frequency for locating beacons (I love beacons)
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_PDA
+	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
 
 	var/tmp/list/pdasay_autocomplete = list()
@@ -46,6 +42,7 @@
 	var/linkbg_color = "#565D4B"
 	var/graphic_mode = 0
 
+	var/setup_default_pen = /obj/item/pen //PDAs can contain writing implements by default
 	var/setup_default_cartridge = null //Cartridge contains job-specific programs
 	var/setup_drive_size = 32 //PDAs don't have much work room at all, really.
 	// 2020 zamu update: 24 -> 32
@@ -56,9 +53,9 @@
 	var/default_muted_mailgroups = list() //What mail groups should the PDA ignore by default
 	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
 		// Departments
-		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
 		// Alerts
 		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
@@ -100,18 +97,21 @@
 /obj/item/device/pda2
 	captain
 		icon_state = "pda-c"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	heads
 		icon_state = "pda-h"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	hos
 		icon_state = "pda-hos"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -120,6 +120,7 @@
 
 	ntso
 		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
@@ -128,15 +129,16 @@
 
 	ai
 		icon_state = "pda-h"
+		setup_default_pen = null // ai don't need no pens
 		setup_default_cartridge = /obj/item/disk/data/cartridge/ai
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
 		mailgroups = list( // keep in sync with the list of reserved mail groups
 			// Departments
-			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MINING, MGO_MECHANIC,
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
 			// start in party line by default
 			MGD_PARTY,
 		)
@@ -145,6 +147,7 @@
 
 	cyborg
 		icon_state = "pda-h"
+		setup_default_pen = null // you don't even have hands
 		setup_default_cartridge = /obj/item/disk/data/cartridge/cyborg
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
@@ -155,12 +158,14 @@
 
 	research_director
 		icon_state = "pda-rd"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
 
 	medical_director
 		icon_state = "pda-md"
+		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
 		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
@@ -192,6 +197,7 @@
 
 	forensic
 		icon_state = "pda-s"
+		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
@@ -210,19 +216,31 @@
 	clown
 		icon_state = "pda-clown"
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
+		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
-		event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+		event_handler_flags = USE_FLUID_ENTER
 
-		HasEntered(AM as mob|obj) //Clown PDA is slippery.
+		proc/on_mob_throw_end(mob/M)
+			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
+			LAZYLISTREMOVE(M.attached_objs, src)
+			src.glide_size = initial(src.glide_size)
+
+		Crossed(atom/movable/AM)
+			..()
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))
 				var/mob/M = AM
-				if (M.slip(ignore_actual_delay = 1))
+				LAZYLISTADDUNIQUE(M.attached_objs, src)
+				src.glide_size = M.glide_size
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
+				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
 						JOB_XP(M, "Clown", 1)
+				else
+					src.on_mob_throw_end(M)
 
 	janitor
 		icon_state = "pda-j"
@@ -244,15 +262,20 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
+	technical_assistant
+		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
+		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL,MGA_RADIO)
+
 	mining
 		icon_state = "pda-e"
-		mailgroups = list(MGO_MINING,MGD_PARTY)
+		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGO_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
@@ -280,6 +303,14 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
 		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/mess_off
 
+		New()
+			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
+		disposing()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+			..()
+
 /obj/item/device/pda2/pickup(mob/user)
 	..()
 	if (src.module)
@@ -305,62 +336,66 @@
 
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	SPAWN_DBG(0.5 SECONDS)
-		src.hd = new /obj/item/disk/data/fixed_disk(src)
-		src.hd.file_amount = src.setup_drive_size
-		src.hd.name = "Minidrive"
-		src.hd.title = "Minidrive"
+	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd.file_amount = src.setup_drive_size
+	src.hd.name = "Minidrive"
+	src.hd.title = "Minidrive"
 
-		if(src.setup_system_os_path)
-			src.host_program = new src.setup_system_os_path
-			src.active_program = src.host_program
+	if(src.setup_system_os_path)
+		src.set_host_program(new src.setup_system_os_path)
+		src.set_active_program(src.host_program)
 
-			src.hd.file_amount = max(src.hd.file_amount, src.host_program.size)
+		src.hd.file_amount = max(src.hd.file_amount, src.host_program.size)
 
-			src.host_program.transfer_holder(src.hd)
+		src.host_program.transfer_holder(src.hd)
 
-			src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
-			src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
-			if(length(src.default_muted_mailgroups))
-				src.host_program.muted_mailgroups = src.default_muted_mailgroups
-			if(ismob(src.loc))
-				var/mob/mob = src.loc
-				get_all_character_setup_ringtones()
-				if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
-					src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
-					var/rtone_program = src.ringtone2program(src.r_tone)
-					if(rtone_program)
-						src.hd.root.add_file(new rtone_program)
+		src.hd.root.add_file(new /datum/computer/file/text/pda2manual)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/robustris)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
+		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+		if(length(src.default_muted_mailgroups))
+			src.host_program.muted_mailgroups = src.default_muted_mailgroups
+		if(ismob(src.loc))
+			var/mob/mob = src.loc
+			get_all_character_setup_ringtones()
+			if(mob.client && (mob.client.preferences.pda_ringtone_index in selectable_ringtones) && mob.client?.preferences.pda_ringtone_index != "Two-Beep")
+				src.set_ringtone(selectable_ringtones[mob.client.preferences.pda_ringtone_index], FALSE, FALSE, "main", null, FALSE)
+				var/rtone_program = src.ringtone2program(src.r_tone)
+				if(rtone_program)
+					src.hd.root.add_file(new rtone_program)
 
-		src.net_id = format_net_id("\ref[src]")
+	src.net_id = format_net_id("\ref[src]")
 
-		radio_controller?.add_object(src, "[frequency]")
+	if (src.setup_default_pen)
+		src.pen = new src.setup_default_pen(src)
+		if(istype(src.pen, /obj/item/clothing/mask/cigarette))
+			src.UpdateOverlays(image(src.icon, "cig"), "pen")
+		else if(istype(src.pen, /obj/item/pen/crayon))
+			var/image/pen_overlay = image(src.icon, "crayon")
+			pen_overlay.color = pen.color
+			src.UpdateOverlays(pen_overlay, "pen")
+		else if(istype(src.pen, /obj/item/pen/pencil))
+			src.UpdateOverlays(image(src.icon, "pencil"), "pen")
+		else
+			src.UpdateOverlays(image(src.icon, "pen"), "pen")
 
-		if (src.setup_default_cartridge)
-			src.cartridge = new src.setup_default_cartridge(src)
+	if (src.setup_default_cartridge)
+		src.cartridge = new src.setup_default_cartridge(src)
 
-		if (src.setup_scanner_on && src.cartridge)
-			var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
-			if (scan && istype(scan))
-				src.scan_program = scan
+	if (src.setup_scanner_on && src.cartridge)
+		var/datum/computer/file/pda_program/scan/scan = locate() in src.cartridge.root.contents
+		if (istype(scan))
+			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
 	if (src.cartridge)
-		for (var/datum/computer/file/pda_program/P in src.cartridge.root?.contents)
-			if (P.name == "Packet Sniffer")
-				radio_controller.remove_object(src, "[P:scan_freq]")
-				continue
-			if (P.name == "Ping Tool")
-				radio_controller.remove_object(src, "[P:send_freq]")
 		src.cartridge.dispose()
 		src.cartridge = null
 
-	src.active_program = null
-	src.host_program = null
-	src.scan_program = null
+	src.set_active_program(null)
+	src.set_host_program(null)
+	src.set_scan_program(null)
 	qdel(src.r_tone)
 	qdel(src.r_tone_temp)
 	src.r_tone = null
@@ -376,12 +411,6 @@
 			src.alert_ringtones[T] = null
 
 	if (src.hd)
-		for (var/datum/computer/file/pda_program/P in src.hd.root?.contents)
-			if (P.name == "Packet Sniffer")
-				radio_controller.remove_object(src, "[P:scan_freq]")
-				continue
-			if (P.name == "Ping Tool")
-				radio_controller.remove_object(src, "[P:send_freq]")
 		src.hd.dispose()
 		src.hd = null
 
@@ -393,12 +422,6 @@
 		src.module.remove_abilities_from_host()
 		src.module.dispose()
 		src.module = null
-
-	radio_controller.remove_object(src, "[frequency]")
-
-	if (radio_connection)
-		radio_connection.devices -= src
-		radio_connection = null
 
 	var/mob/living/ourHolder = src.loc
 	if (istype(ourHolder))
@@ -471,6 +494,12 @@
 		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
 	</style>
+	<script>
+		function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
+		window.addEventListener("beforeunload", updateScroll);
+		window.addEventListener("scroll", updateScroll);
+		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
+	</script>
 </head>
 <body>"}
 
@@ -509,19 +538,14 @@
 
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
-	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
-		if (usr.stat || usr.restrained())
+	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( BOUNDS_DIST(src, usr) == 0 || isAI(usr) )))
+		if(!can_act(usr))
 			return
 
 		src.add_fingerprint(usr)
 		src.add_dialog(usr)
 
-		if (href_list["return_to_host"])
-			if (src.host_program)
-				src.active_program = src.host_program
-				src.host_program = null
-
-		else if (href_list["eject_cart"])
+		if (href_list["eject_cart"])
 			src.eject_cartridge(usr ? usr : null)
 
 		else if (href_list["eject_id_card"])
@@ -540,7 +564,7 @@
 		src.updateSelfDialog()
 		return
 
-/obj/item/device/pda2/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda2/attackby(obj/item/C, mob/user)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		if (U.try_deliver(C, user))
@@ -644,59 +668,7 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/receive_signal(datum/signal/signal, rx_method, rx_freq)
-
-	//let programs receive encrypted signals
-	if(!signal || !src.owner) return
-
-	src.host_program?.network_hook(signal, rx_method, rx_freq)
-
-	if(src.active_program && (src.active_program != src.host_program))
-		src.active_program.network_hook(signal, rx_method, rx_freq)
-
-	if(signal.encryption) return
-
-
-
-	if(signal.data["address_1"] && signal.data["address_1"] != src.net_id)
-
-		// special programs can receive all signals
-		if((signal.data["address_1"] == "ping") && signal.data["sender"])
-			var/datum/signal/pingreply = new
-			pingreply.source = src
-			pingreply.data["device"] = "NET_PDA_51XX"
-			pingreply.data["netid"] = src.net_id
-			pingreply.data["address_1"] = signal.data["sender"]
-			pingreply.data["command"] = "ping_reply"
-			pingreply.data["data"] = src.owner
-			SPAWN_DBG(0.5 SECONDS)
-				src.post_signal(pingreply)
-
-			return
-
-		else if (!signal.data["group"]) // only accept broadcast signals if they are filtered
-			return
-
-	if (islist(signal.data["group"]))
-		var/any_member = FALSE
-		for (var/group in signal.data["group"])
-			if (group in src.mailgroups)
-				any_member = TRUE
-				break
-		if (!any_member) // not a member of any specified group; discard
-			return
-	else if (signal.data["group"])
-		if (!(signal.data["group"] in src.mailgroups) && !(signal.data["group"] in src.alertgroups)) // not a member of the specified group; discard
-			return
-
-	src.host_program?.receive_signal(signal, rx_method, rx_freq)
-
-	if(src.active_program && (src.active_program != src.host_program))
-		src.active_program.receive_signal(signal, rx_method, rx_freq)
-
-	return
-
-/obj/item/device/pda2/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/pda2/attack(mob/M, mob/user)
 	if(src.scan_program)
 		return
 	else
@@ -743,7 +715,7 @@
 
 	return
 
-/obj/item/device/pda2/MouseDrop(atom/over_object, src_location, over_location)
+/obj/item/device/pda2/mouse_drop(atom/over_object, src_location, over_location)
 	..()
 	if (over_object == usr && src.loc == usr && isliving(usr) && !usr.stat)
 		src.attack_self(usr)
@@ -757,7 +729,7 @@
 	if (!target || !message)
 		return
 
-	if (is_incapacitated(usr))
+	if (!can_act(usr))
 		return
 
 	if (istype(src.host_program))
@@ -809,6 +781,21 @@
 
 		src.update_overlay()
 
+	proc/set_active_program(datum/computer/file/pda_program/program)
+		src.active_program?.on_deactivated(src)
+		src.active_program = program
+		src.active_program?.on_activated(src)
+
+	proc/set_host_program(datum/computer/file/pda_program/program)
+		src.host_program?.on_unset_host(src)
+		src.host_program = program
+		src.host_program?.on_set_host(src)
+
+	proc/set_scan_program(datum/computer/file/pda_program/program)
+		src.scan_program?.on_unset_scan(src)
+		src.scan_program = program
+		src.scan_program?.on_set_scan(src)
+
 	proc/is_user_in_interact_range(var/mob/user)
 		return in_interact_range(src, user) || loc == user || isAI(user)
 
@@ -822,24 +809,20 @@
 		signal.source = src
 		signal.data["sender"] = src.net_id
 
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency("[freq]")
-
-		signal.transmission_method = TRANSMISSION_RADIO
-		if(frequency)
-			return frequency.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, freq)
 
 	proc/eject_cartridge(var/mob/user as mob)
 		if (src.cartridge && src.ejectable_cartridge)
 			var/turf/T = get_turf(src)
 
 			if(src.active_program && (src.active_program.holder == src.cartridge))
-				src.active_program = null
+				src.set_active_program(null)
 
 			if(src.host_program && (src.host_program.holder == src.cartridge))
-				src.host_program = null
+				src.set_host_program(null)
 
 			if(src.scan_program && (src.scan_program.holder == src.cartridge))
-				src.scan_program = null
+				src.set_scan_program(null)
 
 			src.cartridge.set_loc(T)
 			if (istype(user))
@@ -1043,11 +1026,7 @@
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
-			for (var/atom in mobs)
-				if (!atom) continue
-				var/mob/O = atom
-				if (get_dist(get_turf(src),O) <= 3)
-					O.show_message(text("[bicon(src)] *[alert_message]*"))
+			src.audible_message("[bicon(src)] *[alert_message]*")
 
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
@@ -1073,16 +1052,16 @@
 			program.master = src
 
 		if(!src.host_program && istype(program, /datum/computer/file/pda_program/os))
-			src.host_program = program
+			src.set_host_program(program)
 
 		if(istype(program, /datum/computer/file/pda_program/scan))
 			if(program == src.scan_program)
-				src.scan_program = null
+				src.set_scan_program(null)
 			else
-				src.scan_program = program
+				src.set_scan_program(program)
 			return 1
 
-		src.active_program = program
+		src.set_active_program(program)
 		program.init()
 
 		if(program.setup_use_process) processing_items |= src
@@ -1099,7 +1078,7 @@
 		if(src.host_program && src.host_program.holder && (src.host_program.holder in src.contents))
 			src.run_program(src.host_program)
 		else
-			src.active_program = null
+			src.set_active_program(null)
 
 		src.updateSelfDialog()
 		return 1
@@ -1112,7 +1091,7 @@
 
 		//Don't delete the running program you jerk
 		if(src.active_program == theFile || src.host_program == theFile)
-			src.active_program = null
+			src.set_active_program(null)
 
 		//boutput(world, "Now calling del on [file]...")
 		//qdel(file)
@@ -1173,7 +1152,7 @@
 		if (S.mainframe && S.mainframe == loc)
 			return 1
 	if (isAIeye(user))
-		var/mob/dead/aieye/E = user
+		var/mob/living/intangible/aieye/E = user
 		if (E.mainframe)
 			return 1
 	return ..(user)

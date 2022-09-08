@@ -1,4 +1,4 @@
-/obj/lrteleporter/planetary_teleporter
+/obj/machinery/lrteleporter/planetary_teleporter
 	name = "Planetary Teleporter"
 	desc = "A pad used for teleportation to nearby bodies"
 	var/ship_id = "artemis"
@@ -6,13 +6,13 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			for(var/obj/artemis/A in world)
 				if(A.stars_id == src.ship_id)
 					src.my_ship = A
 					return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/link_html = "<br>"
 		var/found = 0
 
@@ -45,7 +45,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["send"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["send"])
@@ -58,10 +58,10 @@
 				for(var/atom/movable/M in src.loc)
 					if(M.anchored) continue
 					animate_teleport(M)
-					SPAWN_DBG(0.6 SECONDS)
+					SPAWN(0.6 SECONDS)
 						M.set_loc(target)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)
 
@@ -76,9 +76,9 @@
 				for(var/atom/movable/M in target)
 					if(M.anchored) continue
 					animate_teleport(M)
-					SPAWN_DBG(0.6 SECONDS) M.set_loc(src.loc)
+					SPAWN(0.6 SECONDS) M.set_loc(src.loc)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)
 
@@ -89,16 +89,16 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	w_class = W_CLASS_SMALL
 	var/ship_id = "artemis"
-	var/obj/lrteleporter/planetary_teleporter/my_teleporter = null
+	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null
 	var/busy = 0
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
-			for(var/obj/lrteleporter/planetary_teleporter/P in world)
+		SPAWN(1 SECOND)
+			for(var/obj/machinery/lrteleporter/planetary_teleporter/P in world)
 				if(P.ship_id == src.ship_id)
 					src.my_teleporter = P
 					return
@@ -137,7 +137,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) != 0) return
+		if(GET_DIST(usr, src) != 0) return
 
 		if(href_list["recieve"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["recieve"])
@@ -152,8 +152,8 @@
 					if(ismob(M))
 						var/mob/O = M
 						O.changeStatus("stunned",20) // 2 seconds
-					SPAWN_DBG(0.6 SECONDS) M.set_loc(my_teleporter.loc)
+					SPAWN(0.6 SECONDS) M.set_loc(my_teleporter.loc)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(target)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					busy = 0
 					qdel(S)

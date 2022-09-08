@@ -2,7 +2,7 @@
 	name = "teleport"
 	icon = 'icons/obj/teleporter.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
@@ -27,10 +27,10 @@
 		light.attach(src)
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	Bumped(M as mob|obj)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			if (src.icon_state == "tele1")
 				teleport(M)
 				use_power(5000)
@@ -94,7 +94,7 @@
 		find_links()
 
 	attack_ai()
-		src.attack_hand()
+		src.Attackhand()
 
 	attack_hand()
 		if(engaged)
@@ -103,7 +103,7 @@
 			src.engage()
 
 	attackby(var/obj/item/W)
-		src.attack_hand()
+		src.Attackhand()
 
 	power_change()
 		..()
@@ -167,9 +167,6 @@
 	if (!istype(destturf))
 		return
 
-	if (isrestrictedz(destturf.z))
-		precision = 0
-
 	var/tx = destturf.x + rand(precision * -1, precision)
 	var/ty = destturf.y + rand(precision * -1, precision)
 
@@ -191,23 +188,23 @@
 
 	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
 		var/atom/A = atom
-		if (get_dist(tmploc,A) <= 5)
+		if (GET_DIST(tmploc,A) <= 5)
 			if (istype(atom, /obj/machinery/telejam))
 				var/obj/machinery/telejam/T = atom
 				if (!T.active)
 					continue
-				var/r = get_dist(T, tmploc)
+				var/r = GET_DIST(T, tmploc)
 				if (r > T.range)
 					continue
 				m_blocked = 1
 				break
 
-		if (get_dist(tmploc,A) <= 4)
+		if (GET_DIST(tmploc,A) <= 4)
 			if (istype(atom, /obj/item/device/flockblocker))
 				var/obj/item/device/flockblocker/F = atom
 				if (!F.active)
 					continue
-				var/r = get_dist(F, tmploc)
+				var/r = GET_DIST(F, tmploc)
 				if (r > F.range)
 					continue
 				m_blocked = 1
@@ -215,7 +212,7 @@
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
 	var/area/myArea = get_area(tmploc)
-	if (myArea?.teleport_blocked || m_blocked)
+	if (myArea?.teleport_blocked || isrestrictedz(tmploc.z) || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
 				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")

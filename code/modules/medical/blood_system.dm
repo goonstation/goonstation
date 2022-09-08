@@ -120,7 +120,7 @@ this is already used where it needs to be used, you can probably ignore it.
 /* ---------- take_bleeding_damage() ---------- */
 /* ============================================ */
 
-/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf)
+/proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0)
 	if (!T) // I forget why I set T as a variable OH WELL
 		T = get_turf(some_idiot)
 
@@ -136,6 +136,10 @@ this is already used where it needs to be used, you can probably ignore it.
 		return
 
 	var/mob/living/H = some_idiot
+
+	if (ismob(some_jerk) && some_jerk?.find_type_in_hand(/obj/item/hemostat) && (surgery_bleed)) // Surgery bleeding gets fixed by hemostats
+		boutput(some_jerk, "<b class='notice'> You clamp the bleeders with the hemostat.</span>")
+		return
 
 	if (isdead(H) || H.nodamage || !H.can_bleed)
 		if (H.bleeding)
@@ -409,7 +413,11 @@ this is already used where it needs to be used, you can probably ignore it.
 			B.blood_DNA = "--unidentified substance--"
 			B.blood_type = "--unidentified substance--"
 
-		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount)
+		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+		bloodHolder.CopyOther(some_idiot.bioHolder)
+		bloodHolder.ownerName = some_idiot.real_name
+
+		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
 		return
 
 	BLOOD_DEBUG("[some_idiot] begins bleed")
@@ -458,7 +466,11 @@ this is already used where it needs to be used, you can probably ignore it.
 				H.blood_volume = 0
 				//BLOOD_DEBUG("[H]'s blood volume dropped below 0 and was reset to 0")
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount)
+		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+		bloodHolder.CopyOther(some_idiot.bioHolder)
+		bloodHolder.ownerName = some_idiot.real_name
+
+		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)
@@ -516,7 +528,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/list/SP = A.reagents.aggregate_pathogens()
 		for (var/uid in some_human_idiot.pathogens)
 			if (!(uid in SP))
-				var/datum/pathogen/P = unpool(/datum/pathogen)
+				var/datum/pathogen/P = new /datum/pathogen
 				P.setup(0, some_human_idiot.pathogens[uid], 0)
 				B.pathogens[uid] = P
 
@@ -666,9 +678,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message(H, "<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding
@@ -807,7 +819,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			if ("BURN")
 				src.damage_type = DAMAGE_BURN
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> attacks [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
 		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
 		switch(src.damage_type)
@@ -829,8 +841,8 @@ this is already used where it needs to be used, you can probably ignore it.
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 0.0
-	throwforce = 0.0
+	force = 0
+	throwforce = 0
 	throw_range = 16
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1
@@ -847,7 +859,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(A, null, rand(2,3), DAMAGE_STAB)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		..()
 		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		take_bleeding_damage(target, user, rand(2,3), DAMAGE_STAB)

@@ -1,7 +1,7 @@
 /obj/machinery/power
 	name = null
 	icon = 'icons/obj/power.dmi'
-	anchored = 1.0
+	anchored = 1
 	machine_registry_idx = MACHINES_POWER
 	var/datum/powernet/powernet = null
 	var/tmp/netnum = 0
@@ -12,7 +12,7 @@
 /obj/machinery/power/New(var/new_loc)
 	..()
 	if (current_state > GAME_STATE_PREGAME)
-		SPAWN_DBG(0.1 SECONDS) // aaaaaaaaaaaaaaaa
+		SPAWN(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			src.netnum = 0
 			if(makingpowernets)
 				return // TODO queue instead
@@ -43,6 +43,19 @@
 /obj/machinery/power/proc/add_avail(var/amount)
 	if(powernet)
 		powernet.newavail += amount
+
+#ifdef MACHINE_PROCESSING_DEBUG
+	var/area/A = get_area(src)
+	var/list/machines = detailed_machine_power[A]
+	if(!machines)
+		detailed_machine_power[A] = list()
+		machines = detailed_machine_power[A]
+	var/list/machine = machines[src]
+	if(!machine)
+		machines[src] = list()
+		machine = machines[src]
+	machine += amount
+#endif
 
 /obj/machinery/power/proc/add_load(var/amount)
 	if(powernet)
@@ -86,29 +99,27 @@ var/makingpowernetssince = 0
 
 	for_by_tcl(PC, /obj/cable)
 		PC.netnum = 0
-	LAGCHECK(LAG_MED)
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum >=0)
 			M.netnum = 0
-	LAGCHECK(LAG_MED)
 
 	for_by_tcl(PC, /obj/cable)
 		if(!PC.netnum)
 			powernet_nextlink(PC, ++netcount)
-		LAGCHECK(LAG_MED)
 
 	for(var/L = 1 to netcount)
 		var/datum/powernet/PN = new()
-		//PN.tag = "powernet #[L]"
 		powernets += PN
 		PN.number = L
 
 	for_by_tcl(C, /obj/cable)
 		if(!C.netnum) continue
-		var/datum/powernet/PN = powernets[C.netnum]
-		PN.cables += C
-		LAGCHECK(LAG_MED)
+		if (C.netnum <= length(powernets))
+			var/datum/powernet/PN = powernets[C.netnum]
+			PN.cables += C
+		else
+			stack_trace("Tried to add cable [C] \ref[C] to the cables of powernet [C.netnum], but that powernet number was larger than the powernets list length of [length(powernets)]")
 
 	for(var/obj/machinery/power/M as anything in machine_registry[MACHINES_POWER])
 		if(M.netnum<=0)		// APCs have netnum=-1 so they don't count as network nodes directly
@@ -118,7 +129,6 @@ var/makingpowernetssince = 0
 		M.powernet.nodes += M
 		if(M.use_datanet)
 			M.powernet.data_nodes += M
-		LAGCHECK(LAG_MED)
 
 	makingpowernets = 0
 	DEBUG_MESSAGE("rebuilding powernets end")

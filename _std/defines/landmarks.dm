@@ -16,15 +16,11 @@
 #define LANDMARK_BOXING_RING "boxing ring"
 #define LANDMARK_GPS_WAYPOINT "GPS Waypoint"
 #define LANDMARK_ARTIFACT_SPAWN "artifact spawner"
+#define LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN "artifact spawner random room"
 
-// centcom shuttle landmarks
-#define LANDMARK_SHUTTLE_COG1 "shuttle-cog1"
-#define LANDMARK_SHUTTLE_COG2 "shuttle-cog2"
-#define LANDMARK_SHUTTLE_SEALAB "shuttle-sealab"
-#define LANDMARK_SHUTTLE_MANTA "shuttle-manta"
-#define LANDMARK_SHUTTLE_DONUT2 "shuttle-donut2"
-#define LANDMARK_SHUTTLE_DONUT3 "shuttle-donut3"
-#define LANDMARK_SHUTTLE_DESTINY "shuttle-destiny"
+// shuttle landmarks
+#define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
+#define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
 
 // nukies
 
@@ -35,6 +31,8 @@
 #define LANDMARK_SYNDICATE_GEAR_CLOSET "Syndicate-Gear-Closet"
 #define LANDMARK_SYNDICATE_BOMB "Syndicate-Bomb"
 #define LANDMARK_SYNDICATE_BREACHING_CHARGES "Breaching-Charges"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
+#define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
@@ -85,6 +83,7 @@
 #define LANDMARK_FALL_SPACEMAS "spacemasfall" // Merry Spacemas!
 
 // misc adventure zone stuff
+#define LANDMARK_SUMMON "summon"
 
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"

@@ -44,13 +44,22 @@
 	/// process running again.
 	var/tmp/schedule_interval = PROCESS_DEFAULT_SCHEDULE_INTERVAL
 
+	/**
+	 * This is added to the [/datum/controller/process/var/schedule_interval] when checking it.
+	 * By default, this adjusts the interval by either adding or subtracting anywhere in the jitter range.
+	 * For example, a jitter of `2 SECONDS` for an interval of `10 SECONDS` would give times from `8 SECONDS` to `12 SECONDS`.
+	 *
+	 * For more complex behavior, override [/datum/controller/processScheduler/proc/setQueuedProcessState]. Necessary for runtime jitter range change.
+	 */
+	var/tmp/schedule_jitter = PROCESS_DEFAULT_SCHEDULE_JITTER
+
 	/// This controls what percentage a single tick (0 to 100) the process should be allowed to run before sleeping.
 	var/tmp/tick_allowance = PROCESS_DEFAULT_TICK_ALLOWANCE
 
-	/// This is the time after which the server will begin to show "maybe hung" in the context window
+	/// This is the time after which the server will begin to show "maybe hung" in the context window.
 	var/tmp/hang_warning_time = PROCESS_DEFAULT_HANG_WARNING_TIME
 
-	///  After this much time, the server will send an admin debug message saying the process may be hung
+	///  After this much time, the server will send an admin debug message saying the process may be hung.
 	var/tmp/hang_alert_time = PROCESS_DEFAULT_HANG_ALERT_TIME
 
 	/// After this much time, the server will automatically kill and restart the process.
@@ -101,6 +110,7 @@
 	idle()
 	name = "process"
 	schedule_interval = 50
+	schedule_jitter = ((rand() * 2) - 1) * schedule_jitter // for first run
 	last_slept = 0
 	run_start = 0
 	tick_start = 0

@@ -10,7 +10,7 @@
 	help_text = "Respawns a given ckey."
 
 /datum/tgs_chat_command/respawn_dude/Run(datum/tgs_chat_user/sender, params)
-	var/mob/target = whois_ckey_to_mob_reference(params)
+	var/mob/target = ckey_to_mob(params)
 	logTheThing("admin", "[sender.friendly_name] (Discord)", target, "respawned [constructTarget(target,"admin")]")
 	logTheThing("diary", "[sender.friendly_name] (Discord)", target, "respawned [constructTarget(target,"diary")].", "admin")
 	message_admins("[sender.friendly_name] (Discord) respawned [key_name(target)].")

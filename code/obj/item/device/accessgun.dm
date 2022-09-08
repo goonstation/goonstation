@@ -33,7 +33,7 @@
 		ID.set_loc(src)
 
 		switch(ID.icon_state)
-			if ("id" || "id_civ")
+			if ("id", "id_civ")
 				icon_state = "accessgun-civ"
 			if ("id_sec")
 				icon_state = "accessgun-sec"
@@ -73,7 +73,7 @@
 
 		src.eject_id_card(user)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			var/obj/item/card/id/ID = C
 			if (src.ID_card)
@@ -152,19 +152,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
@@ -221,7 +221,7 @@
 			O.set_access_list(scanned_access)
 		playsound(src, "sound/machines/reprog.ogg", 70, 1)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			return
 		. = ..()

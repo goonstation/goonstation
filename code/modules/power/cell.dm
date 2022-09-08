@@ -1,15 +1,16 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
+	health = 8
 	w_class = W_CLASS_NORMAL
 	pressure_resistance = 80
 	var/charge = 0	// note %age conveted to actual charge in New
@@ -23,8 +24,6 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 10
-	module_research = list("energy" = 8, "engineering" = 1, "miniaturization" = 3)
-	module_research_type = /obj/item/cell
 
 	disposing()
 		if (istype(src.loc,/obj/machinery/power/apc))
@@ -70,16 +69,24 @@
 		if (istype(src.material))
 			genrate = 0
 			if(src.material.hasProperty("radioactive"))
-				genrate += round((material.getProperty("radioactive") / 6.33))
+				genrate += round(material.getProperty("radioactive"))
 			if(src.material.hasProperty("n_radioactive"))
-				genrate += round((material.getProperty("n_radioactive") / 4.33))
+				genrate += round(material.getProperty("n_radioactive") * 2)
 			if(src.material.hasProperty("electrical"))
-				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
+				maxcharge = round((src.material.getProperty("electrical") ** 2) * 300, 500)
 			else
 				maxcharge = 2500
 
 			charge = maxcharge
 		return
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			maxcharge = round((conductivity ** 2) * 300, 500)
+			genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
 
 /obj/item/cell/charged
 	charge = 7500
@@ -106,8 +113,8 @@
 
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
-	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+	SPAWN(0.5 SECONDS)
+		UpdateIcon()
 
 	if (genrate)
 		processing_items |= src
@@ -116,8 +123,7 @@
 	processing_items -= src
 	..()
 
-/obj/item/cell/proc/updateicon()
-
+/obj/item/cell/update_icon()
 	if(src.specialicon) return
 
 	if(maxcharge <= 2500) icon_state = "cell"
@@ -187,7 +193,6 @@
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
 				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
@@ -222,7 +227,7 @@
 
 	explosion(src, T, 0, 1, 2, 2)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 
 
@@ -258,7 +263,7 @@
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously.</span>")
 		if ("cut")
 			src.visible_message("<span class='bold' style='color: #B7410E;'>The failsafe timer buzzes refusingly before going quiet forever.</span>")
-			SPAWN_DBG(0)
+			SPAWN(0)
 				det.detonate()
 
 //kubius potato battery: main def
@@ -299,8 +304,8 @@
 	unusualCell = 1
 	m_amt = 20000
 	g_amt = 20000
-	max_charge = 10.0
-	recharge_rate = 0.0
+	max_charge = 10
+	recharge_rate = 0
 
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()

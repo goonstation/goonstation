@@ -1,6 +1,6 @@
 /obj/item/barrier
 	name = "barrier"
-	desc = "A personal barrier. Activate this item with both hands free to use it."
+	desc = "A personal barrier. Activate this item inhand to deploy it."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -19,6 +19,8 @@
 
 	can_disarm = 1
 	two_handed = 0
+
+	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 	var/use_two_handed = 0
 
 	var/status = 0
@@ -35,7 +37,7 @@
 			B.setProperty("exploprot", 10)
 			. = ..()
 
-	proc/update_icon()
+	update_icon()
 		icon_state = status ? "barrier_1" : "barrier_0"
 		item_state = status ? "barrier1" : "barrier0"
 
@@ -55,6 +57,7 @@
 				setProperty("disorient_resist", 65)
 				setProperty("disorient_resist_eye", 65)
 				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				setProperty("deflection", 20)
 				flick("barrier_a",src)
 				c_flags |= BLOCK_TOOLTIP
 
@@ -68,6 +71,7 @@
 				delProperty("disorient_resist", 0)
 				delProperty("disorient_resist_eye", 0)
 				delProperty("disorient_resist_ear", 0)
+				setProperty("deflection", 0)
 				c_flags &= ~BLOCK_TOOLTIP
 
 				src.setItemSpecial(/datum/item_special/simple)
@@ -78,14 +82,14 @@
 
 			can_disarm = src.status
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.update_inhands()
 		else
 			user.show_text("You need two free hands in order to activate the [src.name].", "red")
 
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		..()
 		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 

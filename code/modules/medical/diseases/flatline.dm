@@ -9,7 +9,7 @@
 	"epinephrine" = list(1,10)) // epi is recommended though
 	var/robo_restart = 0
 
-/datum/ailment/disease/flatline/stage_act(var/mob/living/affected_mob,var/datum/ailment/D)
+/datum/ailment/disease/flatline/stage_act(var/mob/living/affected_mob, var/datum/ailment/D, mult)
 	if (..())
 		return
 	if (ishuman(affected_mob))
@@ -27,12 +27,12 @@
 				H.cure_disease(D)
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
@@ -40,24 +40,24 @@
 				H.cure_disease(D)
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 
 			else
 				src.robo_restart = 1
 				if (H.organHolder.heart.emagged)
-					SPAWN_DBG(20 SECONDS)
+					SPAWN(20 SECONDS)
 						src.robo_restart = 0
 				else
-					SPAWN_DBG(30 SECONDS)
+					SPAWN(30 SECONDS)
 						src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 		else
 			if (H.get_oxygen_deprivation())

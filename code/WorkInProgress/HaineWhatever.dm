@@ -31,7 +31,7 @@
 				var/obj/machinery/disposal/mail/mail_chute = D
 
 				mail_chute.Topic("?rescan=1", params2list("rescan=1"))
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					for(var/dest in mail_chute.destinations)
 						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
 						MD.source_disposal = mail_chute
@@ -47,7 +47,7 @@
 			TD.expected_y = expected_y
 			dummy_list.Add(TD)
 			TD.source_disposal = D
-			SPAWN_DBG(0)
+			SPAWN(0)
 				D.flush()
 
 	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
@@ -74,7 +74,7 @@
 	New(var/atom/loc, var/TTL=0)
 		..(loc)
 		if(TTL)
-			SPAWN_DBG(TTL)
+			SPAWN(TTL)
 				die()
 
 	proc/report_fail()
@@ -97,7 +97,7 @@
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
 	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = 1
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		die()
 	..()
 
@@ -182,7 +182,7 @@
 				src.spam_flag = src.spam_timer
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
@@ -211,9 +211,12 @@
 	burn_possible = 1
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
-		M.emote("sneeze")
+		if (user.zone_sel.selecting == "head")
+			M.emote("sneeze")
+		else
+			M.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -469,12 +472,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /datum/projectile/special/paintball
 	name = "red paintball"
 	icon_state = "paintball-r"
-	icon_turf_hit = "paint-r"
+	impact_image_state = "paint-r"
 	power = 1
 	cost = 1
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "red"
 	shot_sound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	shot_number = 1
@@ -486,8 +489,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	sname = "paintball"
 	name = "paintball jug"
 	icon_state = "357-2"
-	amount_left = 4.0
-	max_amount = 4.0
+	amount_left = 4
+	max_amount = 4
 	ammo_type = new/datum/projectile/special/paintball
 	caliber = 42069
 	icon_dynamic = 1
@@ -523,8 +526,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/pip_color = "#FFFFFF" // only set to other colors by white 50c chips atm but may as well make it a var because ~variety~
 	var/image/image_pip = null
 	var/value = 1
-	force = 2.0
-	throwforce = 2.0
+	force = 2
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -559,14 +562,14 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
 			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
@@ -575,7 +578,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 					return
 				src.change_stack_amount(0 - amt)
 				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.attack_hand(user)
+				P.Attackhand(user)
 		else
 			..(user)
 
@@ -834,7 +837,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.hand_dealer -= Card
 		src.cards = shuffle(src.cards)
 
-	proc/update_icon()
+	update_icon()
 		if (!src.overlay_light)
 			src.overlay_light = image('icons/obj/objects.dmi', "BJ-light")
 		src.overlays -= src.overlay_light
@@ -863,7 +866,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			randomize_look(src)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, slot_w_uniform)
@@ -906,7 +909,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			if (!customer || customer == src) // they're doing shit to us
 				src.im_mad += 50 // we're double mad
 
-		SPAWN_DBG(rand(10, 30))
+		SPAWN(rand(10, 30))
 			src.yell_at(M, customer)
 
 	proc/yell_at(var/mob/M as mob, var/mob/customer as mob) // blatantly stolen from NPC assistants and then hacked up
@@ -984,7 +987,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			walk_towards(src,null)
 			return 1
 
-		else if (get_dist(src, M) >= 5)
+		else if (GET_DIST(src, M) >= 5)
 			var/insult = pick("fucker", "fuckhead", "shithead", "shitface", "shitass", "asshole")
 			var/targ = pick("", ", [target_name]", ", [insult]", ", you [insult]")
 
@@ -1014,22 +1017,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/obj/item/grab/G = H.find_type_in_hand(/obj/item/grab)
 			if (!G)
 				return 0
-/*
-			if (G.affecting in npc_protected_mobs)
-				if (G.state == 1)
-					src.im_mad += 5
-				else if (G.state == 2)
-					src.im_mad += 20
-				else if (G.state == 3)
-					src.im_mad += 50
-				return 1
-*/
+
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == 1)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == 2)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == 3)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 
@@ -1104,6 +1098,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throw_speed = 1
 	throw_return = 1
 	throw_spin = 0
+	wear_layer = MOB_GLASSES_LAYER2
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
@@ -1120,7 +1115,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				if (!usagi.equip_if_possible(src, usagi.slot_glasses))
 					usagi.put_in_hand_or_drop(src)
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		return ..(hit_atom)
 
@@ -1174,9 +1169,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
-	force = 2.0
+	force = 2
 	w_class = W_CLASS_SMALL
-	throwforce = 2.0
+	throwforce = 2
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 15
@@ -1264,9 +1259,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
@@ -1277,7 +1272,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
@@ -1299,7 +1294,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1311,6 +1306,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	mat_changename = 0
 	mat_changedesc = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
 	var/cash_amt = 1000
@@ -1328,6 +1324,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
+			boutput(user, "<span class='success'>\The [src] beeps, \"You're a big shot, this end needs to point in the direction of poor people!\"</span>")
 			return
 
 		if ((last_shot + shot_delay) <= world.time)
@@ -1336,6 +1333,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				return
 
 			last_shot = world.time
+
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
 			var/chosen_bling// = pick(60;/obj/item/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
@@ -1347,24 +1349,27 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				chosen_bling = pick(src.possible_bling_common)
 			else
 				chosen_bling = /obj/item/spacecash
-			var/obj/item/bling = unpool(chosen_bling)
+			var/obj/item/bling = new chosen_bling
 			bling.set_loc(T)
 			bling.throwforce = 8
 			src.cash_amt = max(src.cash_amt-src.shot_cost, 0)
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
 			playsound(T, "sound/effects/bamf.ogg", 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
-	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		shoot(get_turf(target), get_turf(user), user, 0, 0)
+
+	attackby(var/obj/item/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
 			boutput(user, "<span class='success'>\The [src] beeps, \"Your cash is trash! It ain't worth jack, mack!\"<br>[C] promptly vanishes in a puff of logic.</span>")
 			user.u_equip(C)
-			pool(C)
+			qdel(C)
 			return
 		if (src.cash_amt >= src.cash_max)
 			boutput(user, "<span class='success'>\The [src] beeps, \"I ain't need no more money, honey!\"</span>")
@@ -1377,7 +1382,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.cash_amt += C.amount
 			user.u_equip(C)
-			pool(C)
+			qdel(C)
 		boutput(user, "<span class='success'>\The [src] beeps, \"That's the good stuff!\"</span>")
 
 /obj/item/gun/bling_blaster/cheapo
@@ -1409,9 +1414,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.font_color = HSVtoRGB(hsv(AngleToHue(rand(310,360)), rand(180,255), rand(180,255)))
 		src.color_name = hex2color_name(src.font_color)
 		src.name = "[src.color_name] lipstick"
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "spacelipstick[src.open]"
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")
@@ -1422,9 +1427,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	attack_self(var/mob/user)
 		src.open = !src.open
-		src.update_icon()
+		src.UpdateIcon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.makeup == 2) // it's messed up
@@ -1452,7 +1457,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onUpdate()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1462,7 +1467,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1485,7 +1490,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			target.makeup = 1
 			target.makeup_color = makeup.font_color
 			target.update_body()
@@ -1590,7 +1595,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob) // big ol hackery here
+	attack(mob/M, mob/user) // big ol hackery here
 		if (M && isvampire(M))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1656,7 +1661,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[switch_select]-throw"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1680,7 +1685,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[board_select]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1715,7 +1720,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	desc = "kali ma motherfuckers"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1741,7 +1746,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	set name = "Throw"
 	set desc = "Spin a grabbed opponent around and throw them."
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
 			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
@@ -1801,7 +1806,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							src.visible_message("<span class='alert'><B>[src] shoves \his hand into [H]'s chest!</B></span>")
 							src.say("Kali ma, shakthi deh!")
 							if(HU.heart_op_stage <= 3.0)
-								HU:heart_op_stage = 4.0
+								HU:heart_op_stage = 4
 								HU.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 								var/obj/item/organ/heart/heart = new /obj/item/organ/heart(src.loc)
 								heart.donor = HU
@@ -1817,7 +1822,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							HU.stunned += 10
 							HU.weakened += 12
 							var/turf/target = get_edge_target_turf(src, src.dir)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								playsound(src.loc, "swing_hit", 40, 1)
 								src.visible_message("<span class='alert'><B>[src] casually tosses [H] away!</B></span>")
 								HU.throw_at(target, 10, 2)
@@ -1826,7 +1831,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							HU.transforming = 0
 
 						var/cooldown = max(100,(300-src.jitteriness))
-						SPAWN_DBG(cooldown)
+						SPAWN(cooldown)
 							src.verbs -= /mob/proc/kali_ma_placeholder
 							if (istype(src:w_uniform, /obj/item/clothing/under/mola_ram))
 								src.verbs += /mob/proc/kali_ma
@@ -1926,7 +1931,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	on_add()
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
-			APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine", 200)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine", 200)
 			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
 
@@ -1934,7 +1939,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(ismob(holder?.my_atom))
 			var/mob/M = holder.my_atom
 			if (remove_buff)
-				REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_cocaine")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine")
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)

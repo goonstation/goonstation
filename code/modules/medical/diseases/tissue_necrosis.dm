@@ -8,7 +8,7 @@
 	reagentcure = list("formaldehyde")
 	recureprob = 10
 
-/datum/ailment/disease/tissue_necrosis/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/tissue_necrosis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 	if (D.stage > 1)

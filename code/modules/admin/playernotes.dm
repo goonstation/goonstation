@@ -37,7 +37,15 @@
 	var/regex/R = new("!!ID(\\d+)", "g")
 	content = R.Replace(content, "[deletelinkpre]$1[deletelinkpost]")
 
-	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><A href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A><br><HR>"
+	var/datum/player/pdatum = make_player(player)
+	pdatum.cloud_fetch()
+	var/noticelink = ""
+	if (pdatum.cloud_available() && pdatum.cloud_get("login_notice"))
+		noticelink = {" style="color: red; font-weight: bold;">Login Notice Set"}
+	else
+		noticelink = {">Add Login Notice"}
+
+	var/dat = "<h1>Player Notes for <b>[player]</b></h1><HR><br><a href='?src=\ref[src];action=notes2;target=[player];type=add'>Add Note</A> - <a href='?src=\ref[src];action=loginnotice;target=[player]'[noticelink]</a><hr>"
 	dat += replacetext(content, "\n", "<br>")
 	usr.Browse(dat, "window=notesp;size=875x400;title=Notes for [player]")
 

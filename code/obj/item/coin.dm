@@ -7,15 +7,13 @@
 	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
-	module_research = list("vice" = 3, "efficiency" = 1)
-	module_research_type = /obj/item/coin
 	flags = FPRINT | TABLEPASS  | ATTACK_SELF_DELAY
 	click_delay = 1 SECOND
 	var/emagged = FALSE
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		src.set_loc(user.loc)
 		user.u_equip(src)
 		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
@@ -31,6 +29,7 @@
 	if(!emagged)
 		boutput(user, "You magnetize the coin, ruining it's chances of ever being used in the Inter-galactic Poker Tournaments ever again.")
 		emagged = TRUE
+		return TRUE
 
 /obj/item/coin/proc/flip()
 	if(!emagged)

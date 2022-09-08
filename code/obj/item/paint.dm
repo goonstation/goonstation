@@ -45,7 +45,7 @@
 
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/paint_can))
 			boutput(user, "<span class='notice'>You refill the paint can.</span>")
 			W:uses = 15
@@ -53,7 +53,7 @@
 
 			return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
@@ -77,12 +77,12 @@
 	var/repair_stage = 0
 	var/paint_needed = 20
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='alert'>This must be repaired before it can be used!</span>")
 		add_fingerprint(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !user)
 			return
 
@@ -191,9 +191,6 @@
 
 				if (6)
 					if (istype(W, /obj/item/tile))
-						if (W.name != "maintenance panel")
-							user.visible_message("[user] tries to use a common floor tile in place of the maintenance panel! How silly!", "<span class='alert'>That is a floor tile, not a maintenance panel! It doesn't even fit!</span>")
-							return
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
 						playsound(user, "sound/items/Deconstruct.ogg", 65, 1)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
@@ -227,7 +224,7 @@
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
 
 						flick("vendbreak", src)
-						SPAWN_DBG(0.8 SECONDS)
+						SPAWN(0.8 SECONDS)
 							src.icon_state = "fallen"
 							sleep(7 SECONDS)
 							playsound(src.loc, "sound/effects/Explosion2.ogg", 100, 1)
@@ -235,7 +232,7 @@
 							var/obj/effects/explosion/delme = new /obj/effects/explosion(src.loc)
 							delme.fingerprintslast = src.fingerprintslast
 
-							invisibility = 100
+							invisibility = INVIS_ALWAYS_ISH
 							set_density(0)
 							sleep(15 SECONDS)
 							qdel(delme)
@@ -261,17 +258,17 @@ var/list/cached_colors = new/list()
 	var/image/paint_overlay
 	var/uses = 15
 	var/paint_intensity = 0.5
-	var/add_orig = 0.0
+	var/add_orig = 0
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 
 		generate_icon()
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")
@@ -324,7 +321,7 @@ var/list/cached_colors = new/list()
 	uses = 5
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			var/colorname = "Weird"
 			switch(rand(1,6))
 				if(1)
@@ -389,7 +386,7 @@ var/list/cached_colors = new/list()
 		currentpattern = 1
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(target == loc || get_dist(src,target) > 1 || istype(target,/obj/machinery/vending/paint) ) return
+		if(target == loc || BOUNDS_DIST(src, target) > 0 || istype(target,/obj/machinery/vending/paint) ) return
 
 		if(!uses)
 			boutput(user, "It's empty.")

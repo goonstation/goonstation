@@ -24,17 +24,20 @@ datum
 			hunger_value = -0.1
 			bladder_value = -0.1
 			thirst_value = -0.05
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_under()
+				..()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_bathsalts", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_bathsalts", 3)
 				return
 
-			on_remove()
+			cross_threshold_under()
+				..()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_bathsalts")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_bathsalts")
 				return
 
 			on_mob_life(var/mob/M, var/mult = 1) // commence bad times
@@ -47,7 +50,7 @@ datum
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
 						H.set_face_icon_dirty()
 						boutput(M, "<span class='alert'><b>You feel gruff!</b></span>")
-						SPAWN_DBG(0.3 SECONDS)
+						SPAWN(0.3 SECONDS)
 							M.visible_message("<span class='alert'><b>[M.name]</b> has a wild look in their eyes!</span>")
 					if(check < 60)
 						if(H.getStatusDuration("paralysis")) H.delStatus("paralysis")
@@ -140,7 +143,7 @@ datum
 						M.emote("twitch_s")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
@@ -151,7 +154,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> eyes dilate!</span>")
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.change_eye_blurry(7, 7)
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 4)
@@ -159,7 +162,7 @@ datum
 						M.make_jittery(50)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(1 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 9 SECONDS))
+						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("gasp")
 						M.reagents.add_reagent("salts1", 5 * mult)
 					else if (effect <= 7)
@@ -216,6 +219,7 @@ datum
 			hunger_value = -0.05
 			thirst_value = -0.05
 			stun_resist = 60
+			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -248,7 +252,7 @@ datum
 						M.bodytemperature += rand(5,30) * mult
 						M.take_brain_damage(1 * mult)
 						M.take_toxin_damage(1 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 3 SECONDS))
+						M.setStatusMin("stunned", 3 SECONDS * mult)
 					else if (effect <= 7)
 						M.make_jittery(30)
 						M.emote("grumble")
@@ -257,13 +261,13 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>")
 						M.bodytemperature += rand(20,100) * mult
 						M.take_toxin_damage(5 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> starts tweaking the hell out!</span>")
 						M.make_jittery(100)
 						M.take_toxin_damage(2 * mult)
 						M.take_brain_damage(8 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 4 SECONDS))
+						M.setStatusMin("weakened", 4 SECONDS * mult)
 						M.change_misstep_chance(25 * mult)
 						M.emote("scream")
 						M.reagents.add_reagent("salts1", 5 * mult)
@@ -285,13 +289,20 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/current_color_pattern = 1
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.druggy = max(M.druggy, 15)
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
+				if(prob(20))
+					if(src.current_color_pattern == 1)
+						animate_fade_drug_inbetween_1(M.client, 40)
+						src.current_color_pattern = 2
+					else
+						animate_fade_drug_inbetween_2(M.client, 40)
+						src.current_color_pattern = 1
 				if(probmult(6))
 					switch(rand(1,2))
 						if(1)
@@ -310,7 +321,7 @@ datum
 									halluc_name = pick("pig", "DAT FUKKEN PIG")
 								if(2)
 									halluc_state = "spider"
-									halluc_name = pick("giant black widow", "queen bitch spider", "OH FUCK A SPIDER")
+									halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
 								if(3)
 									halluc_state = "dragon"
 									halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")
@@ -333,6 +344,19 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
+
+			on_mob_life_complete(var/mob/living/M)
+				if(src.current_color_pattern == 1)
+					animate_fade_from_drug_1(M.client, 40)
+				else
+					animate_fade_from_drug_2(M.client, 40)
+
+			on_remove()
+				. = ..()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+					if (M.client)
+						animate(M.client, color = null, time = 2 SECONDS, easing = SINE_EASING) // gotta come down sometime
 
 		drug/lsd_bee
 			name = "lsbee"
@@ -439,7 +463,12 @@ datum
 				if(M.client && probmult(5))
 					for (var/obj/critter/domestic_bee/bee in view(7,M))
 						var/chat_text = null
-						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list("M"="[M]", "beeMom"=bee.beeMom ? bee.beeMom : "Mom", "other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"), bee)
+						var/text = pick_smart_string("shit_bees_say_when_youre_high.txt", "strings", list(
+							"M"="[M]",
+							"beeMom"=bee.beeMom ? bee.beeMom : "Mom",
+							"other_bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Spacebee" : "Seabee",
+							"bee"=istype(bee, /obj/critter/domestic_bee/sea) ? "Seabee" : "Spacebee"
+							))
 						if(!M.client.preferences.flying_chat_hidden)
 							var/speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 							chat_text = make_chat_maptext(bee, text, "color: [rgb(194,190,190)];" + speechpopupstyle, alpha = 140)
@@ -454,7 +483,7 @@ datum
 					M.change_misstep_chance(10 * mult)
 				if (holder.get_reagent_amount(src.id) >= 50 && probmult(25))
 					if(prob(10))
-						M.drowsyness = 10
+						M.setStatus("drowsy", 20 SECONDS)
 				..()
 				return
 
@@ -483,7 +512,7 @@ datum
 					M.delStatus("weakened")
 				if (holder.get_reagent_amount(src.id) >= 70 && probmult(25))
 					if (holder.get_reagent_amount("THC") <= 20)
-						M.drowsyness = 10
+						M.setStatus("drowsy", 20 SECONDS)
 				if(prob(25))
 					M.HealDamage("All", 2 * mult, 0)
 				..()
@@ -510,30 +539,29 @@ datum
 			value = 3
 			thirst_value = -0.07
 			stun_resist = 8
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine", 1)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine", 1)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(probmult(50))
 					M.make_jittery(5)
-
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(1 * mult)
 				..()
 
 			//cogwerks - improved nicotine poisoning?
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
+				M.take_toxin_damage(1 * mult)
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> looks nervous!</span>")
@@ -555,19 +583,19 @@ datum
 						boutput(M, "<span class='alert'><b>You can't breathe!</b></span>")
 						M.take_oxygen_deprivation(15 * mult)
 						M.take_toxin_damage(3 * mult)
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 1 SECOND * mult))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 					else if (effect <= 4)
 						boutput(M, "<span class='alert'><b>You feel terrible!</b></span>")
 						M.emote("drool")
 						M.make_jittery(10)
 						M.take_toxin_damage(5 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECOND * mult))
+						M.setStatusMin("weakened", 1 SECOND * mult)
 						M.change_misstep_chance(33 * mult)
 					else if (effect <= 7)
 						M.emote("collapse")
 						boutput(M, "<span class='alert'><b>Your heart is pounding!</b></span>")
 						M << sound('sound/effects/heartbeat.ogg')
-						M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 5 SECONDS * mult))
+						M.setStatusMin("paralysis", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
 						M.take_oxygen_deprivation(20 * mult)
@@ -579,17 +607,18 @@ datum
 			addiction_prob = 100
 			overdose = 70
 			stun_resist = 11
+			threshold = THRESHOLD_INIT
 
-			on_add()
+			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine2", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine2", 3)
 				..()
 
-			on_remove()
+			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_nicotine2")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_nicotine2")
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -619,8 +648,6 @@ datum
 					boutput(M, "<span class='alert'><b>Your heart's beating really really fast!</b></span>")
 					M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 					M.take_toxin_damage(4)
-				if(src.volume > src.overdose)
-					M.take_toxin_damage(2)
 				..(M)
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
@@ -697,7 +724,7 @@ datum
 							boutput(M, "<B>The Emergency Shuttle has docked with the station! You have 3 minutes to board the Emergency Shuttle.</B>")
 						if(2)
 							boutput(M, "<span class='alert'><b>Restarting world!</b> </span><span class='notice'>Initiated by Administrator!</span>")
-							SPAWN_DBG(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
+							SPAWN(2 SECONDS) M.playsound_local(M.loc, pick('sound/misc/NewRound.ogg', 'sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'), 50, 1)
 						if(3)
 							switch (rand(1,4))
 								if(1)
@@ -709,12 +736,12 @@ datum
 								if(3)
 									boutput(M, "<span class='alert'><b>Unknown has punched [M]</b></span>")
 									boutput(M, "<span class='alert'><b>Unknown has weakened [M]</b></span>")
-									M.setStatus("weakened", max(M.getStatusDuration("weakened"), 1 SECOND))
+									M.setStatusMin("weakened", 1 SECOND * mult)
 									M.playsound_local(M.loc, pick(sounds_punch), 50, 1)
 								if(4)
 									boutput(M, "<span class='alert'><b>[M] has been attacked with the taser gun by Unknown</b></span>")
 									boutput(M, "<i>You can almost hear someone talking...</i>")
-									M.setStatus("paralysis", max(M.getStatusDuration("paralysis"), 3 SECONDS))
+									M.setStatusMin("paralysis", 3 SECONDS * mult)
 				..()
 
 
@@ -745,7 +772,7 @@ datum
 				if(prob(5))
 					boutput(M, "<span class='alert'><b>You feel too chill!</b></span>")
 					M.emote(pick("yawn", "drool"))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS * mult))
+					M.setStatusMin("stunned", 2 SECONDS * mult)
 					M.take_toxin_damage(1 * mult)
 					M.take_brain_damage(1 * mult)
 					M.bodytemperature -= 20 * mult
@@ -760,7 +787,7 @@ datum
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> looks dazed!</span>")
-						M.setStatus("stunned", max(M.getStatusDuration("stunned"), 4 SECONDS))
+						M.setStatusMin("stunned", 4 SECONDS * mult)
 						M.emote("drool")
 					else if (effect <= 4)
 						M.emote("shiver")
@@ -776,7 +803,7 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> sways and falls over!</span>")
 						M.take_toxin_damage(3 * mult)
 						M.take_brain_damage(3 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 9 SECONDS * mult))
+						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
 						if(ishuman(M))
@@ -852,12 +879,14 @@ datum
 			bladder_value = -0.1
 			hunger_value = -0.3
 			thirst_value = -0.2
+			var/list/flushed_reagents = list("mannitol","synaptizine")
 
 			on_remove()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth")
-					M.remove_stun_resist_mod("triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth")
 
 				if(hascall(holder.my_atom,"removeOverlayComposition"))
 					holder.my_atom:removeOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -868,12 +897,13 @@ datum
 				if(!M) M = holder.my_atom
 
 				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
-				M.add_stun_resist_mod("triplemeth", 98)
-				APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "triplemeth", 1000)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth", 98)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth", 98)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
-
+				flush(M, 5 * mult, flushed_reagents)
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -884,33 +914,31 @@ datum
 				..()
 				return
 
-			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				var/effect = ..(severity, M)
-				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
+			do_overdose(var/severity, var/mob/overdoser, var/mult = 1)
+				var/effect = ..(severity, overdoser)
+				var/mob/living/M = overdoser
+				if(!istype(M))
+					return
+				if(holder.has_reagent("methamphetamine"))
+					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(12 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-						M.drop_item()
-						M.hand = !M.hand
-						M.drop_item()
-						M.hand = !M.hand
+						M.empty_hands()
 					else if (effect <= 7)
 						M.emote("laugh")
 				else if (severity == 2)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-						M.drop_item()
-						M.hand = !M.hand
-						M.drop_item()
-						M.hand = !M.hand
+						M.empty_hands()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(10)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 10 SECONDS * mult))
+						M.setStatusMin("weakened", 10 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
 
@@ -933,24 +961,35 @@ datum
 			hunger_value = -0.09
 			thirst_value = -0.09
 			stun_resist = 50
+			threshold = THRESHOLD_INIT
+			var/list/flushed_reagents = list("mannitol","synaptizine")
+			var/purge_brain = TRUE
 
 			on_add()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_methamphetamine", 3)
-				if (ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth")
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth")
+
 				..()
 
 			on_remove()
 				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_MOB_PROPERTY(M, PROP_STAMINA_REGEN_BONUS, "r_methamphetamine")
-				if(holder && ismob(holder.my_atom))
 					holder.del_reagent("triplemeth")
-				if (ismob(holder?.my_atom))
+				..()
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_methamphetamine", 3)
+					APPLY_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_methamphetamine")
 					REMOVE_MOVEMENT_MODIFIER(M, /datum/movement_modifier/reagent/energydrink, src.type)
 				..()
 
@@ -958,26 +997,28 @@ datum
 				if(!M) M = holder.my_atom
 				if(probmult(5)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
-				M.drowsyness = max(M.drowsyness-10, 0)
+				M.changeStatus("drowsy", -20 SECONDS)
 				if(M.sleeping) M.sleeping = 0
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
+				if(purge_brain)
+					flush(M, 5 * mult, flushed_reagents)
 				..()
 				return
 
-			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				var/effect = ..(severity, M)
+			do_overdose(var/severity, var/mob/overdoser, var/mult = 1)
+				var/effect = ..(severity, overdoser)
+				var/mob/living/M = overdoser
+				if(!istype(M))
+					return
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]</b> can't seem to control their legs!</span>")
 						M.change_misstep_chance(20 * mult)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 5 SECONDS * mult))
+						M.setStatusMin("weakened", 5 SECONDS * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-						M.drop_item()
-						M.hand = !M.hand
-						M.drop_item()
-						M.hand = !M.hand
+						M.empty_hands()
 					else if (effect <= 7)
 						M.emote("laugh")
 				else if (severity == 2)
@@ -988,16 +1029,22 @@ datum
 
 					if (effect <= 2)
 						M.visible_message("<span class='alert'><b>[M.name]'s</b> hands flip out and flail everywhere!</span>")
-						M.drop_item()
-						M.hand = !M.hand
-						M.drop_item()
-						M.hand = !M.hand
+						M.empty_hands()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor and flails uncontrollably!</span>")
 						M.make_jittery(10)
-						M.setStatus("weakened", max(M.getStatusDuration("weakened"), 2 SECONDS * mult))
+						M.setStatusMin("weakened", 2 SECONDS * mult)
 					else if (effect <= 7)
 						M.emote("laugh")
+
+			syndicate
+				name = "methamphetamine"
+				id = "synd_methamphetamine"
+				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusally high-grade and pure."
+				purge_brain = FALSE
+				fluid_r = 115 // This shit's pure and blue
+				fluid_g = 197
+				fluid_b = 250
 
 		drug/hellshroom_extract
 			name = "Hellshroom extract"
@@ -1071,6 +1118,6 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			break
 		if (F == get_turf(M))
 			continue
-		if (get_dist(M,F) > range)
+		if (GET_DIST(M,F) > range)
 			continue
 		tfireflash(F,1,temp)

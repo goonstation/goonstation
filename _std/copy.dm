@@ -19,10 +19,11 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 	if(((copy_flags & COPY_SHALLOW) || (copy_flags & COPY_SHALLOW_EXCEPT_FOR_LISTS && !islist(orig))) && !isnull(root))
 		return orig
 	if(isnum(orig) || istext(orig) || isnull(orig) || isclient(orig) || isicon(orig) || isfile(orig) || ispath(orig) || \
-			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency))
+			istype(orig, /datum/chemical_reaction) || istype(orig, /datum/radio_frequency) || istype(orig, /datum/client_image_group) || \
+			istype(orig, /datum/packet_network))
 		return orig
 	if(copy_flags & COPY_SKIP_EXPLOITABLE && (
-			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint)))
+			istype(orig, /obj/item/uplink) || istype(orig, /obj/item/spacebux) || istype(orig, /obj/item/chem_hint) || istype(orig, /obj/item/pixel_pass)))
 		return null
 	if(isnull(environment))
 		root = orig
@@ -110,7 +111,7 @@ proc/semi_deep_copy(orig, new_arg=null, list/environment=null, root=null, copy_f
 		for(var/A in orig_image.vis_contents)
 			result_image.vis_contents += _SEMI_DEEP_COPY(A)
 		result_image.appearance = orig_image.appearance
-	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "clients", "color", "alpha", "blend_mode", "apperance_flags")
+	var/list/var_blacklist = list("vars", "contents", "overlays", "underlays", "locs", "type", "parent_type", "vis_contents", "vis_locs", "appearance", "mind", "clients", "color", "alpha", "blend_mode", "appearance_flags")
 	var/list/mob_var_blacklist = list("ckey", "client", "key")
 	for(var/var_name in orig_datum.vars)
 		if(!issaved(orig_datum.vars[var_name]) || (var_name in var_blacklist) || ismob(result) && (var_name in mob_var_blacklist) || length(var_name) >= 6 && copytext(var_name, 1, 7) == "global")

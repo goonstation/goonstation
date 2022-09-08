@@ -5,7 +5,7 @@
 	var/info = "There is nothing here."
 	infra_luminosity = 4
 	anchored = 1
-	invisibility = 1
+	invisibility = INVIS_INFRA
 
 /obj/infared_icon/examine(mob/user)
 	if(user.see_infrared)
@@ -35,7 +35,7 @@
 			src.info = ""
 
 		if("Remove")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 			qdel(src)
 
 		if("Change Icon")
@@ -58,7 +58,7 @@
 				onclose(usr, "[src.name]")
 	return
 
-/obj/infared_icon/attackby(obj/item/P as obj, mob/user as mob)
+/obj/infared_icon/attackby(obj/item/P, mob/user)
 
 	if (istype(P, /obj/item/pen/infared))
 
@@ -84,5 +84,5 @@
 				src.info = ""
 
 			if("Remove")
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 				qdel(src)

@@ -7,7 +7,7 @@
 	anchored = 1
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
 			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
@@ -29,7 +29,7 @@
 		src.overlays += image('icons/mob/ai.dmi', "topopen")
 		src.overlays += image('icons/mob/ai.dmi', "batterymode")
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/organ/brain) && !processing)
 			processing = 1
 			var/valid = 0
@@ -111,7 +111,7 @@
 				turrets += T
 				T.control = src
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (!in_interact_range(src,user))
 			boutput(user, text("Too far away."))
 			src.remove_dialog(user)
@@ -214,7 +214,7 @@
 			return
 		using = 1
 		boutput(user, "<span class='notice'>Designating room.</span>")
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (designated.check_completion(target))
 				boutput(user, "<span class='notice'>Designation successful, room matches required parameters.</span>")
 				//new /obj/machinery/power/apc(get_turf(target))
@@ -363,10 +363,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -434,13 +434,13 @@
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
+					qdel(M)
 					sleep(0.1 SECONDS)
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
 /obj/item/room_planner
-	name = "\improper Floor and Wall Planner"
+	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
@@ -450,12 +450,48 @@
 	click_delay = 1
 
 	var/selecting = 0
-	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi', "restore original")
+	var/mode = null
+	var/icons = list("floors", "walls", "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
-	var/selected = "floor"
+	/// icon file selected
+	var/selectedicon
+	/// iconstate selected
+	var/selectedtype
+	/// mod to use for generating smoothwalls
+	var/selectedmod
 	// var/pod_turf = 0
 	var/turf_op = 0
+
+	var/list/wallicons = list(
+		"diner" = 'icons/turf/walls_derelict.dmi',
+		"martian" = 'icons/turf/walls_martian.dmi',
+		"shuttle blue" = 'icons/turf/walls_shuttle.dmi',
+		"shuttle white" = 'icons/turf/walls_shuttle-debris.dmi',
+		"shuttle dark" = 'icons/turf/walls_shuttle-debris.dmi',
+		"overgrown" = 'icons/turf/walls_overgrown.dmi',
+		"meat" = 'icons/turf/walls_meat.dmi',
+		"ancient" = 'icons/turf/walls_ancient.dmi',
+		"cave" = 'icons/turf/walls_cave.dmi',
+		"lead blue" = 'icons/turf/walls_lead.dmi',
+		"lead gray" = 'icons/turf/walls_lead.dmi',
+		"lead white" = 'icons/turf/walls_lead.dmi',
+		"ancient smooth" = 'icons/turf/walls_iomoon.dmi',
+	)
+	var/list/wallmods = list(
+		"diner" = "oldr-",
+		"martian" = "martian-",
+		"shuttle blue" = "",
+		"shuttle white" = "shuttle-",
+		"shuttle dark" = "dshuttle-",
+		"overgrown" = "root-",
+		"meat" = "meatier-",
+		"ancient" = "ancient-",
+		"cave" = "cave-",
+		"lead blue" = "leadb-",
+		"lead gray" = "leadg-",
+		"lead white" = "leadw-",
+		"ancient smooth" = "interior-",
+	)
 
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
@@ -466,33 +502,49 @@
 			return
 
 		selecting = 1
-		mode = input("What to mark?", "Marking", mode) in icons
-		selected = null
+
+		// mode selection for floor planner
+		mode = tgui_input_list(message="What to mark?", title="Marking", buttons=icons)
+		if(!mode)
+			mode = "floors"
 		var/states = list()
 		if (mode == "restore original")
 			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
 			selecting = 0
 			return
+
+		// icon selection
+		// selectedicon is the file we selected
+		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
+		if (mode == "floors")
+			states += icon_states('icons/turf/construction_floors.dmi')
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", buttons=states)
+			if(!selectedtype)
+				selectedtype = states[1]
+			selectedicon = 'icons/turf/construction_floors.dmi'
 		if (mode == "walls")
-			states += "* AUTO *"
-		states += icon_states(icons[mode])
-		selected = input("What kind?", "Marking", states[1]) in states
-		// if (mode == "floors" && findtext(selected, "catwalk") != 0)
-		// 	pod_turf = 1
-		// else
-		// 	pod_turf = 0
-		if (mode == "floors" || (mode == "walls" && findtext(selected, "window") != 0))
+			states += wallicons
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", buttons=states)
+			if(!selectedtype)
+				selectedtype = states[1]
+			selectedicon = wallicons[selectedtype]
+			selectedmod = wallmods[selectedtype]
+
+
+
+		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
 			turf_op = 0
 		else
 			turf_op = 1
-		boutput(user, "<span class='notice'>Now marking plan for [mode] of type [selected].</span>")
+
+		boutput(user, "<span class='notice'>Now marking plan for [mode] of type '[selectedtype]'.</span>")
 		selecting = 0
 
 	pixelaction(atom/target, params, mob/user)
 		var/turf/T = target
 		if (!istype(T))
 			T = get_turf(T)
-		if (!T)
+		if (!T || !mode)
 			return 0
 
 		if (mode == "restore original") //For those who want to undo the carnage
@@ -508,7 +560,7 @@
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
-					W.update_icon()
+					W.UpdateIcon()
 					W.update_neighbors()
 			return
 		var/obj/plan_marker/old = null
@@ -517,15 +569,16 @@
 				old = K
 				break
 		if (old)
-			old.attackby(src, user)
+			old.Attackby(src, user)
 		else
 			var/class = marker_class[mode]
-			old = new class(T, selected)
+			old = new class(T, selectedicon, selectedtype, mode)
+
 			old.set_dir(get_dir(user, T))
 			// if (pod_turf)
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
-			old:check()
+			old:check(selectedmod)
 		boutput(user, "<span class='notice'>Done.</span>")
 
 		return 1
@@ -537,25 +590,27 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
 	alpha = 128
 
-	New(var/initial_loc, var/initial_state)
+	New(var/initial_loc, var/initial_icon, var/selectedtype, var/mode)
 		..()
 		color = rgb(0, 255, 0)
-		icon_state = initial_state
+		icon = initial_icon
+		if(mode == "floors")
+			icon_state = selectedtype
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/room_planner))
 			qdel(src)
 			return
 		var/turf/T = get_turf(src)
 		if (T)
-			T.attackby(W, user)
-			W.afterattack(T, user)
+			T.Attackby(W, user)
+			W.AfterAttack(T, user)
 
 /obj/plan_marker/glass_shaper
 	name = "\improper Window Plan Marker"
@@ -564,7 +619,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null
@@ -748,7 +803,7 @@
 			else
 				boutput(usr, "<span class='alert'>Insufficient materials -- requires 2 metal and [borders] glass.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/material_shaper))
 			handle_shaper(W)
 		else
@@ -758,25 +813,18 @@
 	name = "\improper Wall Plan Marker"
 	desc = "Build a wall here to complete the plan."
 
-	proc/check()
+	proc/check(var/selectedmod)
 		var/turf/T = get_turf(src)
 		// Originally worked only on this type specifically.
 		// Which meant it didn't work with the fancy new auto-walls
-		if (istype(T, /turf/simulated/wall))
-			// Only update if the wall should have a different type
-			if (src.icon_state != "* AUTO *")
-				T.icon = src.icon
-				T.icon_state = src.icon_state
-				T.set_dir(src.dir)
-				T:allows_vehicles = src.allows_vehicles
-			else if (istype(T, /turf/simulated/wall/auto))
-				var/turf/simulated/wall/auto/AT = T
-				AT.icon = initial(AT.icon)
-				AT.icon_state = initial(AT.icon_state)
-				AT.set_dir(initial(AT.dir))
-				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
-				AT.update_neighbors()
+
+		// this has been reworked to use auto walls that i resprited a while back.
+		if (istype(T, /turf/simulated/wall/auto))
+			var/turf/simulated/wall/auto/AT = T
+			var/connectdir = get_connected_directions_bitflag(AT.connects_to, AT.connects_to_exceptions, TRUE, AT.connect_diagonal)
+			AT.icon = src.icon
+			AT.icon_state = "[selectedmod][connectdir]"
+
 			qdel(src)
 
 /obj/plan_marker/floor

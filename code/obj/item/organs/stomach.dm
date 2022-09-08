@@ -4,7 +4,7 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4.0
+	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
 	FAIL_DAMAGE = 100
 
@@ -33,11 +33,11 @@
 			// 		src.donor.cure_disease(disease)
 			// return
 	on_removal()
-		..()
 		//Add stomach contents on mob to this object for transplants
 		if (iscarbon(src.donor))
 			src.contents = src.donor.stomach_process
 			src.donor.stomach_process = list()
+		..()
 
 	on_life(var/mult = 1)
 		if (!..())
@@ -55,7 +55,7 @@
 				holder.stomach = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if (src.contents && src.contents.len > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/output = ""
@@ -94,17 +94,15 @@
 			ADD_STATUS_LIMIT(M, "Food", 6)
 
 	on_removal()
-		. = ..()
 		REMOVE_STATUS_LIMIT(src.donor, "Food")
+		. = ..()
 
 	unbreakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			ADD_STATUS_LIMIT(src.donor, "Food", 6)
 
 	breakme()
-		..()
-		if(donor)
+		if(..() && donor)
 			REMOVE_STATUS_LIMIT(src.donor, "Food")
 
 	emag_act(mob/user, obj/item/card/emag/E)

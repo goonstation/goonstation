@@ -1,0 +1,103 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/cable/black{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/item/cable_coil/black/cut{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/cable_coil/black/cut{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/critter/mouse/mad,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/critter/mouse,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/critter/mouse,
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/cable/black{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/cable/black{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/item/clothing/gloves/yellow/unsulated{
+	desc = "There's holes all over them. There's no way these are safe.";
+	name = "gnawed yellow gloves"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/cable/black{
+	icon_state = "4-5"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/cable/black{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/item/cable_coil/black/cut,
+/obj/critter/mouse{
+	alive = 0
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+o
+R
+a
+"}
+(2,1,1) = {"
+E
+X
+m
+"}
+(3,1,1) = {"
+J
+S
+a
+"}
+(4,1,1) = {"
+N
+j
+a
+"}
+(5,1,1) = {"
+V
+a
+r
+"}

@@ -21,8 +21,8 @@
 						/datum/targetable/critter/bite/big)
 
 	setup_healths()
-		add_hh_flesh(-20, 20, 0.5)
-		add_hh_flesh_burn(-20, 20, 0.5)
+		add_hh_flesh(20, 0.5)
+		add_hh_flesh_burn(20, 0.5)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/brain)
 

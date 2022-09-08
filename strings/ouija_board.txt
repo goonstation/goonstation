@@ -95,7 +95,6 @@ ouija_board_words@=maybe
 	poison
 	drugs
 	honey
-	chained pen
 	king in yellow
 	solarium
 	automaton
@@ -138,6 +137,7 @@ ouija_board_words@=maybe
 	armory
 	murder
 	murderer
+	kill
 	killer
 	innocent
 	me
@@ -255,3 +255,9 @@ ouija_board_words@=maybe
 	rouge
 	rogue
 	pray
+	friend
+	revenge
+	repent
+	wait
+	forever
+	death

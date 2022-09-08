@@ -130,15 +130,15 @@
 		message["traitor_type"] = traitor_type
 		var/special
 		switch(traitor_type)
-			if ("changeling")
+			if (ROLE_CHANGELING)
 				if (M.current)
 					var/datum/abilityHolder/changeling/C = M.current.get_ability_holder(/datum/abilityHolder/changeling)
 					if (C && istype(C))
 						special = C.absorbtions
-			if ("vampire")
+			if (ROLE_VAMPIRE)
 				if (M.current)
 					special = M.current.get_vampire_blood(1)
-			if ("wizard")
+			if (ROLE_WIZARD)
 				if (M.current)
 					var/datum/abilityHolder/wizard/W = M.current.get_ability_holder(/datum/abilityHolder/wizard)
 					if (W && istype(W))
@@ -147,28 +147,28 @@
 							if (spells != "")
 								spells += ", "
 							spells += S.name
-			if ("werewolf")
+			if (ROLE_WEREWOLF)
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 						special = length(O.mobs_fed_on)
-			if ("vampthrall")
+			if (ROLE_VAMPTHRALL)
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("spyslave")
+			if ("spyminion")
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("mindslave")
+			if (ROLE_MINDHACK)
 				if (M.master)
-					var/mob/mymaster = whois_ckey_to_mob_reference(M.master)
+					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("nukeop")
+			if (ROLE_NUKEOP)
 				if (istype(ticker.mode, /datum/game_mode/nuclear))
 					special = syndicate_name()
 					if (ticker.mode:nuke_detonated)
 						message["success"] = 1
-			if ("spy_thief")
+			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
 				for(var/stolen_item_name in M.spy_stolen_items)
 					if (stolen_item_name != "")
@@ -231,16 +231,8 @@
 	else
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			var/laws[] = new()
-			if (ticker.centralized_ai_laws.zeroth)
-				laws["0"] = ticker.centralized_ai_laws.zeroth
-
-			var/list/suppliedLaws = ticker.centralized_ai_laws.supplied
-			var/count = 4
-			for (var/i = 1, i <= suppliedLaws.len, i++)
-				var/lawText = suppliedLaws[i]
-				if (length(lawText) > 0)
-					laws["[count]"] = lawText
-					count++
+			if(aiPlayer.law_rack_connection)
+				laws = aiPlayer.law_rack_connection.format_for_irc()
 
 			for (var/key in laws)
 				var/message[] = new()

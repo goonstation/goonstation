@@ -46,12 +46,12 @@
 		holder.owner.set_loc(D)
 
 		if(!ground)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				while(P)
 					step(P, the_dir)
 					sleep(0.2 SECONDS)
 
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			holder.owner.set_loc(D.loc)
 			qdel(D)
 			qdel(P)
@@ -60,7 +60,7 @@
 	name = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0
@@ -95,4 +95,4 @@
 			src.x--
 
 	src.can_move = 0
-	SPAWN_DBG(0.2 SECONDS) src.can_move = 1
+	SPAWN(0.2 SECONDS) src.can_move = 1

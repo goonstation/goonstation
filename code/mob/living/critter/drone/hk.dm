@@ -1,4 +1,4 @@
-/mob/living/critter/drone/hk
+/mob/living/critter/robotic/drone/hk
 	drone_designation = "HK"
 	desc = "A heavily-armed Syndicate hunter-killer drone."
 	icon_state = "drone2"
@@ -16,5 +16,5 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_robot(-200, 200, 1)
-		add_hh_robot_burn(-200, 200, 1)
+		add_hh_robot(200, 1)
+		add_hh_robot_burn(200, 1)

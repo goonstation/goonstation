@@ -6,8 +6,10 @@ var/datum/manufacturing_controller/manuf_controls
 	var/list/custom_schematics = list()
 
 	proc/set_up()
-		for (var/M in childrentypesof(/datum/manufacture))
-			src.normal_schematics += new M
+		for (var/M in concrete_typesof(/datum/manufacture, FALSE))
+			var/datum/manufacture/man = new M
+			if(!man.disposed)
+				src.normal_schematics += man
 		for_by_tcl(M, /obj/machinery/manufacturer)
 			src.manufacturing_units += M
 			M.set_up_schematics()

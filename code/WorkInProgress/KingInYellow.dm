@@ -41,7 +41,7 @@
 			set_loc(location)
 			effect = image('icons/effects/effects.dmi', src, "ykingvanish", 4)
 			trg << effect
-			SPAWN_DBG(0.3 SECONDS)	qdel(src)
+			SPAWN(0.3 SECONDS)	qdel(src)
 		else	qdel(src)
 
 
@@ -62,24 +62,24 @@
 		showimg = image('icons/misc/critter.dmi', src, "kingyellow", 3)
 		target << showimg
 		src.set_dir(get_dir(src, target))
-		SPAWN_DBG(0.5 SECONDS) update()
+		SPAWN(0.5 SECONDS) update()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		vanish()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		vanish()
 
 	proc/update()
 		if(!target) vanish()
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
-		if(get_dist(src,target) <= 2) vanish()
+		if(GET_DIST(src,target) <= 2) vanish()
 		src.set_dir(get_dir(src, target))
-		SPAWN_DBG(0.5 SECONDS) update()
+		SPAWN(0.5 SECONDS) update()
 
 	proc/vanish()
 		new/obj/kingyellow_vanish(src.loc, target)
-		SPAWN_DBG(0.3 SECONDS)	qdel(src)
+		SPAWN(0.3 SECONDS)	qdel(src)
 
 /obj/item/book_kinginyellow
 	name = "\"The King In Yellow\""
@@ -127,7 +127,7 @@
 			if (readers.len && (reader in readers))
 				. += "<br>You frantically read the play again..."
 				. += "You feel as if you're about to faint."
-				reader.drowsyness += 3
+				reader.changeStatus("drowsy", 15 SECONDS)
 			else
 				. += "<br>This appears to be an ancient book containing a play."
 				. += "The first act tells of a city named Carcosa, and a mysterious \"King in Yellow\"."
