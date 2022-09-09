@@ -1366,7 +1366,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
-	mats = 20
+	mats = 25
 
 /obj/machinery/power/collector_control/New()
 	..()
