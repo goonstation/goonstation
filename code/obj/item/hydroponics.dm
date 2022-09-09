@@ -643,7 +643,7 @@
 	filled
 
 /obj/item/reagent_containers/glass/mutagenicbulk
-	name = "Mutagenic Plant Nutrient"
+	name = "Mutagenic Plant Nutrients"
 	desc = "A wholesale jug of an unstable radioactive mixture that stimulates genetic diversity. Holds up to 200 units."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "MutagenicJug"
@@ -655,7 +655,7 @@
 	initial_reagents = list("mutagen"=200)
 
 /obj/item/reagent_containers/glass/ammoniabulk
-	name = "Quick-Growth Plant Nutrient"
+	name = "Quick-Growth Plant Nutrients"
 	desc = "A wholesale jug a nutrient-rich plant formula that encourages quick plant growth. Holds up to 200 units."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "AmmoniaJug"
@@ -667,7 +667,7 @@
 	initial_reagents = list("ammonia"=200)
 
 /obj/item/reagent_containers/glass/potashbulk
-	name = "High-Yield Plant Nutrient"
+	name = "High-Yield Plant Nutrients"
 	desc = "A wholesale jug of a nutrient-rich plant formula that encourages large crop yields. Holds up to 200 units."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "PotashJug"
@@ -679,7 +679,7 @@
 	initial_reagents = list("potash"=200)
 
 /obj/item/reagent_containers/glass/saltpetrebulk
-	name = "High-Strength Plant Nutrient"
+	name = "High-Strength Plant Nutrients"
 	desc = "A wholesale jug of a nutrient-rich plant formula that encourages more potent crops. Holds up to 200 units."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "SaltpetreJug"
@@ -691,7 +691,7 @@
 	initial_reagents = list("saltpetre"=200)
 
 /obj/item/reagent_containers/glass/mutadonebulk
-	name = "Healthy Plant Nutrient"
+	name = "Healthy Plant Nutrients"
 	desc = "A wholesale jug of a nutrient-rich formula that attempts to rectify genetic problems. Holds up to 200 units."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "MutadoneJug"
