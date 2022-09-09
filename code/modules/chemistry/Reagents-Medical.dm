@@ -1281,20 +1281,17 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
+				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275 && !M.hasStatus("burning")) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-10 * mult)
+						M.take_oxygen_deprivation(-2 * mult)
 					if(M.losebreath && prob(50))
 						M.lose_breath(-1 * mult)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-3 * mult)
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 2 * mult, 2 * mult)
-					M.updatehealth() //I hate this, but we actually need the health on time here.
-					if(M.health > health_before)
-						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
-						M.bodytemperature = min(M.bodytemperature+increase,M.base_body_temp)
+					M.HealDamage("All", 2 * mult, 2 * mult, 2 * mult)
+
+					M.take_radiation_dose(-0.025 SIEVERTS * mult)
+					M.bodytemperature = min(M.bodytemperature + (10 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
