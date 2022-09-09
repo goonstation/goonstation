@@ -337,12 +337,16 @@
 			if(ai_target == src && prob(10)) //If we're fighting ourselves we wanna look for other targets periodically
 				src.ai_findtarget_new()
 
-			if (ai_frustration >= 100)
-				ai_target_old |= ai_target //Can't get to this dork
-				ai_frustration = 0
-				ai_target = null
-				ai_state = AI_PASSIVE
-				walk_towards(src,null)
+			if (ai_frustration >= 25)
+				var/datum/bioEffect/power/adrenaline/adrenaline_rush = src.bioHolder.GetEffect("adrenaline")
+				adrenaline_rush?.ability.handleCast()
+
+				if (ai_frustration >= 100)
+					ai_target_old |= ai_target //Can't get to this dork
+					ai_frustration = 0
+					ai_target = null
+					ai_state = AI_PASSIVE
+					walk_towards(src,null)
 
 			var/area/A = get_area(src)
 
