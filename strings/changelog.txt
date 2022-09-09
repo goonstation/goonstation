@@ -1,7 +1,36 @@
 
+(t)fri sep 09 22
+(u)aloe
+(+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
+(u)Mr. Moriarty
+(p)10573
+(e)|
+(*)Custom emotes now have a typing indicator.
+(t)thu sep 08 22
+(u)NightmarechaMillian
+(p)10658
+(e)|
+(+)??? pills have been updated with some new chems.
+(t)thu sep 8 22
+(u)aloe
+(+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
+(t)wed sep 07 22
+(u)Ikea, Zonespace, and Yellow/Myco
+(p)9898
+(e)|
+(*)Pressing the PDA crisis or security alert now alerts people nearby through the use of a sound effect, chatbox message, and overhead text.
+(u)Sord
+(*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
+(u)Stonepillar
+(p)10537
+(e)|
+(*)Fixed syndicate drones not dropping their loot (including sharkdrones!)
 (t)tue sep 06 22
 (u)Sord
 (*)The Mining Outpost and Diner have swapped places.
+(u)Sord
+(e)|
+(+)The mining shuttle, now renamed, also stops at all three locations. Station, Diner, and Mining Outpost.
 (t)mon sep 05 22
 (u)LeahTheTech
 (p)10656

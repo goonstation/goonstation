@@ -96,6 +96,7 @@
 	icon_state = "shuttle"
 	machine_registry_idx = MACHINES_SHUTTLECOMPS
 	var/active = 0
+	var/shuttle_loc = 2 //1 = station 2 = diner 3 = mining outpost
 
 /obj/machinery/computer/mining_shuttle/embedded
 	icon_state = "shuttle-embed"
@@ -237,15 +238,28 @@
 
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
 
-	if(miningshuttle_location)
-		dat += "Shuttle Location: Station"
-	else
-		dat += "Shuttle Location: Mining Outpost"
-	dat += "<BR>"
+	switch(shuttle_loc)
+		if(1)
+			dat += "Shuttle Location: Station"
+		if(2)
+			dat += "Shuttle Location: Diner"
+		if(3)
+			dat += "Shuttle Location: Mining Outpost"
+	dat += "<BR><BR>"
+
 	if(active)
 		dat += "Moving"
 	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Shuttle</a><BR><BR>"
+		for(var/i=1,i<=3,i++)
+			if(i == shuttle_loc)
+				continue
+			switch(i)
+				if(1)
+					dat += "<a href='byond://?src=\ref[src];Station=1'>Station</a><BR>"
+				if(2)
+					dat += "<a href='byond://?src=\ref[src];Diner=1'>Diner</a><BR>"
+				if(3)
+					dat += "<a href='byond://?src=\ref[src];Mining Outpost=1'>Mining Outpost</a><BR>"
 
 	user.Browse(dat, "window=shuttle")
 	onclose(user, "shuttle")
@@ -257,52 +271,81 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
 		src.add_dialog(usr)
 
-		if (href_list["send"])
-			src.send()
-
-		if (href_list["close"])
+		if(href_list["Station"])
+			src.call_shuttle(1)
+		else if(href_list["Diner"])
+			src.call_shuttle(2)
+		else if(href_list["Mining Outpost"])
+			src.call_shuttle(3)
+		else if (href_list["close"])
 			src.remove_dialog(usr)
 			usr.Browse(null, "window=shuttle")
 
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
+	usr.Browse(null, "window=shuttle")
 	return
 
 /obj/machinery/computer/mining_shuttle/proc/send()
 	if(!active)
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			active = 1
-			C.visible_message("<span class='alert'>The Mining Shuttle has been called and will leave shortly!</span>")
+			C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle has been called and will leave shortly!</span>")
 		SPAWN(10 SECONDS)
 			call_shuttle()
 
-/obj/machinery/computer/mining_shuttle/proc/call_shuttle()
-	var/area/start_location
-	var/area/end_location
-	if(miningshuttle_location == 0)
-		start_location = locate(/area/shuttle/mining/space)
-		end_location = locate(/area/shuttle/mining/station)
-		start_location.move_contents_to(end_location)
-		miningshuttle_location = 1
-	else
-		if(miningshuttle_location == 1)
-			start_location = locate(/area/shuttle/mining/station)
-			end_location = locate(/area/shuttle/mining/space)
+/obj/machinery/computer/mining_shuttle/proc/call_shuttle(var/target_loc)
+	if(!active)
+		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+			C.active = 1
+			var/message_string
+			switch(target_loc)
+				if(1)
+					message_string = "the Station"
+				if(2)
+					message_string = "the Diner"
+				if(3)
+					message_string = "the Mining Outpost"
+			C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle has been sent to [message_string]!</span>")
+		SPAWN(10 SECONDS)
+			var/area/start_location
+			var/area/end_location
+			switch(shuttle_loc)
+				if(1)
+					start_location = locate(/area/shuttle/mining/station)
+				if(2)
+					start_location = locate(/area/shuttle/mining/diner)
+				if(3)
+					start_location = locate(/area/shuttle/mining/outpost)
+			switch(target_loc)
+				if(1)
+					end_location = locate(/area/shuttle/mining/station)
+				if(2)
+					end_location = locate(/area/shuttle/mining/diner)
+				if(3)
+					end_location = locate(/area/shuttle/mining/outpost)
+
+			for(var/x in end_location)
+				if(isliving(x) && !isintangible(x))
+					var/mob/living/M = x
+					logTheThing(LOG_COMBAT, M, "was gibbed by an arriving shuttle at [log_loc(M)].")
+					M.gib(1)
+				if(istype(x, /obj/storage))
+					var/obj/storage/S = x
+					qdel(S)
+
 			start_location.move_contents_to(end_location)
-			miningshuttle_location = 0
 
+			if(station_repair.station_generator)
+				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+				if(length(turfs_to_fix))
+					station_repair.repair_turfs(turfs_to_fix)
 
-	if(station_repair.station_generator)
-		if(istype(start_location, /area/shuttle/mining/station))
-			var/list/turf/turfs_to_fix = get_area_turfs(start_location)
-			if(length(turfs_to_fix))
-				station_repair.repair_turfs(turfs_to_fix)
-
-	for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
-		active = 0
-		C.visible_message("<span class='alert'>The Mining Shuttle has moved!</span>")
-
-	return
+			for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+				C.active = 0
+				C.shuttle_loc = target_loc
+				C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle has moved!</span>")
+			return
 
 /obj/machinery/computer/prison_shuttle/attack_hand(mob/user)
 	if(..())
@@ -781,7 +824,7 @@ proc/bioele_accident()
 
 
 // JOHN BILL'S JUICIN' BUS
-// This is used for reliable transport between Z3 and Z5 (ever since the diner moved to Z5)
+// This is used for a secondary reliable transport between Z3 and Z5
 // And also for certain adventure zones!
 // You can ask warc for details but c'mon it's just copypasted prison shuttle code (for now)
 

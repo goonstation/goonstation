@@ -4274,8 +4274,14 @@
 /area/station/crew_quarters/cafeteria)
 "kX" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray,
-/obj/random_item_spawner/tableware,
+/obj/item/decoration/ashtray{
+	pixel_x = -4
+	},
+/obj/item_dispenser/icedispenser{
+	dir = 8;
+	pixel_x = 19;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
