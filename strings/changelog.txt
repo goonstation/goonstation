@@ -1,5 +1,9 @@
 
 (t)fri sep 09 22
+(u)Conchuckter
+(p)10527
+(e)|
+(+)Tranquilizer darts and old hunting rifle clips have been resprited, they now look like stripper clips.
 (u)glowbold
 (p)10713
 (e)|
