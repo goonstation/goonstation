@@ -393,16 +393,18 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis")) && !A?.sanctuary)
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					if(src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis"))
-						var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
-						if (eyebeams)
-							eyebeams.ability.handleCast(target)
-						else
-							var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
-							cryokinesis?.ability.handleCast(target)
+					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
+					var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
+					var/datum/bioEffect/power/jumpy/jumpy = src.bioHolder.GetEffect("jumpy")
+					if (eyebeams?.ability.last_cast < world.time)
+						eyebeams.ability.handleCast(target)
+					else if (cryokinesis?.ability.last_cast < world.time)
+						cryokinesis.ability.handleCast(target)
+					else if (jumpy?.ability.last_cast < world.time)
+						jumpy.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
 						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
