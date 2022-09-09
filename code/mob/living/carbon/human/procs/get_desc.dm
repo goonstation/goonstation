@@ -51,13 +51,13 @@
 
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
-	if (src.w_uniform)
+	if (src.w_uniform && !(src.wear_suit?.hides_from_examine & C_UNIFORM))
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
 
-	if (src.ears)
+	if (src.ears && !(src.wear_suit?.hides_from_examine & C_EARS) & !(src.head?.hides_from_examine & C_EARS))
 		if (istype(src.ears, /obj/item/clothing/))
 			. += "<br><span class='[src.ears.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.ears)] \an [src.ears.name] by [t_his] mouth.</span>"
 		else
@@ -66,13 +66,13 @@
 	if (src.head)
 		. += "<br><span class='[src.head.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.head)] \an [src.head.name] on [t_his] head.</span>"
 
-	if (src.wear_mask)
+	if (src.wear_mask && !(src.wear_suit?.hides_from_examine & C_MASK) & !(src.head?.hides_from_examine & C_MASK))
 		if (istype(src.l_hand, /obj/item/clothing/))
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] [src.wear_mask.blood_DNA ? "a bloody [src.wear_mask.name]" : "\an [src.wear_mask.name]"] on [t_his] face.</span>"
 		else
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_mask)] \an [src.wear_mask.name] on [t_his] face.</span>"
 
-	if (src.glasses)
+	if (src.glasses && !(src.wear_suit?.hides_from_examine & C_GLASSES) & !(src.head?.hides_from_examine & C_GLASSES))
 		if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
 			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
@@ -88,15 +88,15 @@
 		else
 			. += "<br><span class='[src.r_hand.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.r_hand)] [src.r_hand.blood_DNA ? "a bloody [src.r_hand.name]" : "\an [src.r_hand.name]"] in [t_his] right hand.</span>"
 
-	if (src.belt)
+	if (src.belt && !(src.wear_suit?.hides_from_examine & C_BELT))
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
-	if (src.gloves)
+	if (src.gloves && !(src.wear_suit?.hides_from_examine & C_GLOVES))
 		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
 
-	if (src.shoes)
+	if (src.shoes && !(src.wear_suit?.hides_from_examine & C_SHOES))
 		. += "<br><span class='[src.shoes.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.shoes)] [src.shoes.name] on [t_his] feet.</span>"
 	else if (islist(src.tracked_blood))
 		. += "<br><span class='alert'>[src.name] has bloody feet!</span>"

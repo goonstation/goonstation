@@ -92,6 +92,8 @@ proc/filter_trait_hats(var/type)
 	icon_state = "bio"
 	item_state = "bio_hood"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_GLASSES|C_EARS
+
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 	path_prot = 0
