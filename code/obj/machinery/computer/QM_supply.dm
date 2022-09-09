@@ -636,15 +636,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 			if ("fee_pct")
 				var/fee_pct = null
-				fee_pct = input(usr,"What fee percent would you like to set? (Min 0)","Fee Percent per Transaction:",null) as num
-				fee_pct = max(0,fee_pct)
+				fee_pct = tgui_input_number(usr, "What fee percent would you like to set?", "Fee Percent per Transaction:", 0, 100, 0)
+				if (isnull(fee_pct))
+					fee_pct = 0
 				rockbox_globals.rockbox_client_fee_pct = fee_pct
 				. = {"Fee Percent per Transaction is now [rockbox_globals.rockbox_client_fee_pct]%"}
 
 			if ("fee_min")
 				var/fee_min = null
-				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
-				fee_min = max(0,fee_min)
+				fee_min = tgui_input_number(usr, "What fee min would you like to set?", "Minimum Fee per Transaction in Credits:", 0, 100000000, 0)
+				if (isnull(fee_min))
+					fee_min = 0
 				rockbox_globals.rockbox_client_fee_min = fee_min
 				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
 
@@ -867,12 +869,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			src.in_dialogue_box = 1
-			var/howmany = input("How many units do you want to purchase?", "Trader Purchase", null, null) as num
-			if (howmany < 1)
+			var/howmany = tgui_input_number(usr, "How many units do you want to purchase? Available: [C.amount]", "Trader Purchase", 1, buy_cap, 1)
+			if (!howmany)
 				src.in_dialogue_box = 0
 				return
-			if (C.amount > 0 && howmany > C.amount)
-				howmany = C.amount
+			if (howmany > C.amount)
+				if (C.amount > 0)
+					boutput(usr, "<span class='alert'>There were only [C.amount] of this item you could purchase.</span>")
+					howmany = C.amount
+				else
+					boutput(usr, "<span class='alert'>There isn't any more of this item available!</span>")
+					return
 
 			if (howmany + total_stuff_in_cart > buy_cap)
 				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
@@ -908,11 +915,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			src.in_dialogue_box = 1
-			var/haggling = input("Suggest a new lower price.", "Haggle", null, null)  as null|num
-			if (haggling < 1)
-				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
-				src.in_dialogue_box = 0
+			var/haggling = tgui_input_number(usr, "Suggest a new lower price.", "Haggle", 0, C.price, 0)
+			if (isnull(haggling))
 				return
 			T.haggle(C,haggling,1)
 
@@ -938,11 +942,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			src.in_dialogue_box = 1
-			var/haggling = input("Suggest a new higher price.", "Haggle", null, null)  as null|num
-			if (haggling < 1)
-				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
-				src.in_dialogue_box = 0
+			var/haggling = tgui_input_number(usr, "Suggest a new higher price.", "Haggle", C.price, 10000000, C.price)
+			if (isnull(haggling))
 				return
 			T.haggle(C,haggling,0)
 
@@ -959,10 +960,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 			var/howmany = 1
 			if (C.amount > 1)
-				howmany = input("Remove how many units?", "Remove from Cart", null, null) as num
-				if (howmany < 1)
+				howmany = tgui_input_number(usr, "Remove how many units?", "Remove from Cart", 1, C.amount, 1)
+				if (!howmany)
 					return
-			howmany = clamp(howmany, 0, C.amount)
 
 			C.amount -= howmany
 

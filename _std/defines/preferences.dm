@@ -5,6 +5,12 @@
 
 #define FULLNAME_MAX 50
 
+#define AGE_MIN 20
+#define AGE_MAX 80
+
+#define PIN_MIN 1000
+#define PIN_MAX 9999
+
 //savefiles!
 #define SAVEFILE_VERSION_MIN	3
 #define SAVEFILE_VERSION_MAX	9

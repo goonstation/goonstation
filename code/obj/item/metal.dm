@@ -1,147 +1,10 @@
 /*
 CONTAINS:
-RODS
 METAL
 REINFORCED METAL
 MATERIAL
 
 */
-
-// RODS
-/obj/item/rods
-	name = "rods"
-	desc = "A set of metal rods, useful for constructing grilles and other objects, and decent for hitting people."
-	icon = 'icons/obj/metal.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	health = 3
-	w_class = W_CLASS_NORMAL
-	force = 9
-	throwforce = 15
-	throw_speed = 5
-	throw_range = 20
-	m_amt = 1875
-	max_stack = 50
-	stamina_damage = 10
-	stamina_cost = 15
-	stamina_crit_chance = 25
-
-	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] begins gathering up metal rods!</span>")
-
-	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
-
-	examine()
-		. = ..()
-		. += "There are [amount] rod\s in this stack."
-
-	attack_hand(mob/user)
-		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
-				return
-			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
-			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
-			if(src.material) new_stack.setMaterial(src.material)
-			new_stack.amount = splitnum
-			new_stack.Attackhand(user)
-			new_stack.add_fingerprint(user)
-		else
-			..(user)
-
-	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			if(src.amount < 2)
-				boutput(user, "<span class='alert'>You need at least two rods to make a metal sheet.</span>")
-				return
-			if (!istype(src.loc,/turf/))
-				if (issilicon(user))
-					boutput(user, "<span class='alert'>Hardcore as it sounds, smelting parts of yourself off isn't big or clever.</span>")
-				else
-					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
-				return
-			if(!W:try_weld(user, 1))
-				return
-
-			var/weldinput = 1
-			if (src.amount > 3)
-				var/makemetal = round(src.amount / 2)
-				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
-				weldinput = input("How many sheets of metal do you want to make?","Welding",1) as num
-				if (weldinput < 1 || !isnum_safe(weldinput)) return
-				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(user.loc)
-			if(src.material) M.setMaterial(src.material)
-			M.amount = weldinput
-			src.consume_rods(weldinput * 2)
-
-			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
-			return
-		if (istype(W, /obj/item/rods))
-			var/obj/item/rods/R = W
-			if (R.amount == src.max_stack)
-				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
-				return
-			if (W.material && src.material && !isSameMaterial(W.material, src.material))
-				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
-				return
-			if (R.amount + src.amount > src.max_stack)
-				src.amount = R.amount + src.amount - src.max_stack
-				R.amount = src.max_stack
-				boutput(user, "<span class='notice'>You add the rods to the stack. It now has [R.amount] rods.</span>")
-			else
-				R.amount += src.amount
-				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				qdel(src)
-				return
-		return
-
-	attack_self(mob/user as mob)
-		if (user.weakened | user.getStatusDuration("stunned"))
-			return
-		if (locate(/obj/grille, user.loc))
-			for(var/obj/grille/G in user.loc)
-				if (G.destroyed)
-					G.health = G.health_max
-					G.set_density(1)
-					G.destroyed = 0
-					G.UpdateIcon()
-					if(src.material)
-						G.setMaterial(src.material)
-					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
-					src.amount--
-				else
-					boutput(user, "<span class='alert'>There is already a grille here.</span>")
-				break
-		else
-			if (src.amount < 2)
-				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
-				return
-			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = user.loc
-			SPAWN(1.5 SECONDS)
-				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
-					src.amount -= 2
-					var/atom/G = new /obj/grille(user.loc)
-					G.setMaterial(src.material)
-					logTheThing(LOG_STATION, user, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
-					G.add_fingerprint(user)
-		if (src.amount < 1)
-			qdel(src)
-			return
-		src.add_fingerprint(user)
-		return
-
-/obj/item/rods/five
-	amount = 5
-
-/obj/item/rods/fifty
-	amount = 50
 
 // METAL SHEET
 /obj/item/sheet/metal
@@ -175,18 +38,13 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+			var/splitnum = tgui_input_number(user, "How many sheets do you want to take from the stack?", "Stack of [src.amount]", 1, src.max_stack - 1, 1)
+			splitnum = min(splitnum, src?.amount - 1)
+			var/obj/item/sheet/metal/new_stack = src.split_stack(splitnum)
+			if (!new_stack)
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
-			src.amount = diff
-			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
-			if(src.material) new_stack.setMaterial(src.material)
-			new_stack.amount = splitnum
-			new_stack.Attackhand(user)
-			new_stack.add_fingerprint(user)
+			new_stack.set_loc(user.loc)
+			user.put_in_hand_or_drop(new_stack)
 		else
 			..(user)
 
@@ -253,17 +111,15 @@ MATERIAL
 				return
 			switch(href_list["make"])
 				if("rods")
-					var/makerods = round(src.amount * 2)
-					if (makerods > 50) makerods = 50
-					boutput(usr, "<span class='notice'>You could make up to [makerods] rods with the amount of metal you have.</span>")
-					var/rodsinput = input("How many rods do you want to make? (Minimum of 2)","Metal Crafting",1) as num
-					if (rodsinput < 2 || !isnum_safe(rodsinput)) return
-					if (rodsinput > makerods) rodsinput = makerods
+					var/amt = tgui_input_number(usr, "How many sheets do you want to use? (2 rods per sheet)", "Metal Crafting", 1, 25, 1) // rods have max stack of 50
+					amt = min(amt, src?.amount)
+					if (!amt)
+						return
 
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
 					R.setMaterial(src.material)
-					R.amount = rodsinput
-					src.amount -= round(rodsinput / 2)
+					R.amount = amt * 2
+					src.amount -= amt
 				if("table")
 					if (src.amount < 2)
 						boutput(usr, text("<span class='alert'>You need at least two metal to build table parts.</span>"))
@@ -315,17 +171,15 @@ MATERIAL
 					A.setMaterial(src.material)
 					logTheThing(LOG_STATION, usr, "builds a Closet in [usr.loc.loc] ([log_loc(usr)])")
 				if("fl_tiles")
-					var/maketiles = round(src.amount * 4)
-					if (maketiles > 80) maketiles = 80
-					boutput(usr, "<span class='notice'>You could make up to [maketiles] tiles with the amount of metal you have.</span>")
-					var/tileinput = input("How many tiles do you want to make? (Minimum of 4)","Metal Crafting",1) as num
-					if (tileinput < 4 || !isnum_safe(tileinput)) return
-					if (tileinput > maketiles) tileinput = maketiles
+					var/amt = tgui_input_number(usr, "How many sheets do you want to use? (4 tiles per sheet)", "Metal Crafting", 1, 20, 1) // sheets have max stack of 80
+					amt = min(amt, src?.amount)
+					if (!amt)
+						return
 
 					var/obj/item/tile/R = new /obj/item/tile( usr.loc )
 					R.setMaterial(src.material)
-					R.amount = tileinput
-					src.amount -= round(tileinput / 4)
+					R.amount = amt * 4
+					src.amount -= amt
 				if("pipef")
 					if (src.amount < 3)
 						boutput(usr, text("<span class='alert'>You need at least three metal to build pipe frames.</span>"))
@@ -435,18 +289,13 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+			var/splitnum = tgui_input_number(user, "How many sheets do you want to take from the stack?", "Stack of [src.amount]", 1, src.max_stack - 1, 1)
+			splitnum = min(splitnum, src?.amount - 1)
+			var/obj/item/sheet/r_metal/new_stack = src.split_stack(splitnum)
+			if (!new_stack)
 				return
-			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
-			src.amount = diff
-			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
-			if(src.material) new_stack.setMaterial(src.material)
-			new_stack.amount = splitnum
-			new_stack.Attackhand(user)
-			new_stack.add_fingerprint(user)
+			new_stack.set_loc(user.loc)
+			user.put_in_hand_or_drop(new_stack)
 		else
 			..(user)
 

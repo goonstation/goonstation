@@ -525,11 +525,20 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		src.ensure_plist()
 
 		if (href_list["print"])
-			var/pnum = input(usr, "Enter amount to print:", "Print Amount", 1) as null|num
-			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
+			var/pnum = tgui_input_number(usr, "Enter amount to print:", "Print Amount", 1, 99, 1)
+			if (!pnum || BOUNDS_DIST(usr, src) > 0)
 				return
+			if (src.papers == 0)
+				boutput(usr, "<span class='alert'>No paper available!</span>")
+				return
+			if (pnum > src.papers)
+				if (src.papers > 1)
+					boutput(usr, "Only [src.papers] posters were available.")
+				else
+					boutput(usr, "Only 1 poster was available.")
+				pnum = src.papers
 			logTheThing(LOG_STATION, usr, "printed out [pnum] wanted poster(s) [log_loc(src)] contents: name [src.plist["name"]], subtitle [src.plist["subtitle"]], wanted [src.plist["wanted"]], for [src.plist["for"]], notes [src.plist["notes"]]")
-			for (var/i = clamp(pnum, 1, src.papers), i>0, i--)
+			for (var/i = pnum, i>0, i--)
 				if (src.papers <= 0)
 					break
 				src.print_poster(usr)
@@ -574,7 +583,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			logTheThing(LOG_STATION, usr, "edited wanted poster's wanted: [ptext]")
 
 		else if (href_list["enterreward"])
-			var/pnum = input(usr, "Enter reward amount:", "Reward", src.plist["reward"]) as null|num
+			var/pnum = tgui_input_number(usr, "Enter reward amount:", "Reward", src.plist["reward"], 0, 1000000, 0)
 			if (isnull(pnum) || BOUNDS_DIST(usr, src) > 0)
 				return
 			src.plist["reward"] = pnum

@@ -176,12 +176,9 @@
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		var/usernum = round(input("Select a note to play: 0-12?") as null|num)
+		var/usernum = tgui_input_number(user, "Select a note to play: 0-12?", "Play note", 0, 12, 0)
 		if (isnull(usernum))
 			return
-		if(usernum < 0) usernum = 0
-		if(usernum > 12) usernum = 12
-		if(!usernum) usernum = 0
 		pitch = usernum
 
 		if(!(src in user.contents)) // did they drop it while the input was up

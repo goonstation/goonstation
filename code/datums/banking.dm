@@ -382,13 +382,17 @@
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as num)
-				if( amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+				if (!src.accessed_record["current_money"])
+					boutput(usr, "No money available.")
 					return
-				if(amount > src.accessed_record["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
+				var/amount = tgui_input_number(usr, "How much would you like to withdraw? Available: [src.accessed_record["current_money"]]", "Withdrawal", 0, 100000000, 0)
+				if (amount > src.accessed_record["current_money"])
+					if (src.accessed_record["current_money"] > 0)
+						boutput(usr, "There was only [src.accessed_record["current_money"]] available.")
+					else
+						boutput(usr, "There was no money available.")
+					amount = src.accessed_record["current_money"]
+				if (amount)
 					src.accessed_record["current_money"] -= amount
 					var/obj/item/spacecash/S = new /obj/item/spacecash
 					S.setup(src.loc, amount)
@@ -411,12 +415,17 @@
 			if("transfer_spacebux")
 				if(!usr.client)
 					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
-				var/amount = input("How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer") as num|null
-				if(!amount)
+				if (!usr.client.persistent_bank)
+					boutput(usr, "No spacebux available!")
 					return
-				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
-					src.updateUsrDialog()
+				var/amount = tgui_input_number(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer", 0, 100000000, 0)
+				if (amount > usr.client.persistent_bank)
+					if (usr.client.persistent_bank > 0)
+						boutput(usr, "There was only [usr.client.persistent_bank] spacebux available.")
+					else
+						boutput(usr, "There was no spacebux available.")
+					amount = usr.client.persistent_bank
+				if (!amount)
 					return
 				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(tgui_alert(usr, "You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -433,20 +442,23 @@
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
 
 			if("withdraw_spacebux")
-				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
-				amount = clamp(amount, 0, 1000000)
-				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
-					src.updateUsrDialog()
+				if (!usr.client.persistent_bank)
+					boutput(usr, "No spacebux available!")
+					return
+				var/amount = tgui_input_number(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0, 100000000, 0)
+				if (amount > usr.client.persistent_bank)
+					if (usr.client.persistent_bank > 0)
+						boutput(usr, "There was only [usr.client.persistent_bank] spacebux available.")
+					else
+						boutput(usr, "There was no spacebux available.")
+					amount = usr.client.persistent_bank
+				if(!amount)
 					return
 
-				if(!usr.client.bank_can_afford(amount))
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
-				else
-					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
-					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
-					usr.put_in_hand_or_drop(newbux)
+				logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
+				usr.client.add_to_bank(-amount)
+				var/obj/item/spacebux/newbux = new(src.loc, amount)
+				usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
 
@@ -629,43 +641,46 @@
 					playsound(src.loc, "keyboard", 50, 1, -15)
 				else if(href_list["Fwage"])
 					var/datum/db_record/R = locate(href_list["Fwage"])
-					var/t1 = input("Please input wage:", "Secure. records", R["wage"], null)  as null|num
-					if ((!( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
-					if (t1 < 0)
-						t1 = 0
-						boutput(usr, "<span class='alert'>You cannot set a negative wage.</span>")
-					if (!t1) t1 = 0
-					if (t1 > 10000)
-						t1 = 10000
-						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
+					var/t1 = tgui_input_number(usr, "Please input wage, with a maximum of $10,000:", "Secure records", R["wage"], 0, 10000, 0)
+					if (!src.authenticated || usr.stat || usr.restrained() || isnull(t1) || (!in_interact_range(src, usr) && !usr_is_robot)) return
 					logTheThing(LOG_STATION, usr, "sets <b>[R["name"]]</b>'s wage to $[t1].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
-					var/avail = null
 					var/t2 = input("Withdraw or Deposit?", "Secure Records", null, null) in list("Withdraw", "Deposit")
-					var/t1 = input("How much?", "Secure. records", R["current_money"], null)  as null|num
-					if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && (!usr_is_robot)))) return
+					var/t1 = tgui_input_number(usr, "How much?", "[t2] money", R["current_money"], 0, 100000000, 0)
+					if (!t1 || !src.authenticated || usr.stat || usr.restrained() || (!in_interact_range(src, usr) && !usr_is_robot)) return
 					if (t2 == "Withdraw")
 						if (R["name"] in FrozenAccounts)
 							boutput(usr, "<span class='alert'>This account cannot currently be liquidated due to active borrows.</span>")
 							return
-						avail = R["current_money"]
-						if (t1 > avail) t1 = avail
-						if (t1 < 1) return
+						if (!R["current_money"])
+							boutput(usr, "No money available to withdraw!")
+							return
+						if (t1 > R["current_money"])
+							if (R["current_money"] > 0)
+								boutput(usr, "There was only [R["current_money"]] available.")
+							else
+								boutput(usr, "There was no money available.")
+							t1 = R["current_money"]
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
 						logTheThing(LOG_STATION, usr, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
 						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
-						avail = wagesystem.station_budget
-						if (t1 > avail) t1 = avail
-						if (t1 < 1) return
+						if (!wagesystem.station_budget)
+							boutput(usr, "No money available to deposit!")
+							return
+						if (t1 > wagesystem.station_budget)
+							if (wagesystem.station_budget > 0)
+								boutput(usr, "There was only [wagesystem.station_budget] available.")
+							else
+								boutput(usr, "There was no money available.")
+							t1 = wagesystem.station_budget
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
 						logTheThing(LOG_STATION, usr, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
 						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
-					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
 					if(world.time >= src.payroll_rate_limit_time)
 						src.payroll_rate_limit_time = world.time + (10 SECONDS)
@@ -692,13 +707,22 @@
 					if (transfrom == transto)
 						boutput(usr, "<span class='alert'>You can't transfer a budget into itself.</span>")
 						return
-					var/amount = input(usr, "How much would you like to transfer?", "Budget Transfer", 0) as null|num
-					if (!amount) amount = 0
-					if (amount < 0) amount = 0
+					var/amount = tgui_input_number(usr, "How much would you like to transfer?", "Budget Transfer", 0, 100000000, 0)
+					if (!amount)
+						return
 
-					if (transfrom == "Payroll" && amount > wagesystem.station_budget) amount = wagesystem.station_budget
-					if (transfrom == "Shipping" && amount > wagesystem.shipping_budget) amount = wagesystem.shipping_budget
-					if (transfrom == "Research" && amount > wagesystem.research_budget) amount = wagesystem.research_budget
+					var/lowered_amount = -1
+					if (transfrom == "Payroll" && amount > wagesystem.station_budget) lowered_amount = wagesystem.station_budget
+					if (transfrom == "Shipping" && amount > wagesystem.shipping_budget) lowered_amount = wagesystem.shipping_budget
+					if (transfrom == "Research" && amount > wagesystem.research_budget) lowered_amount = wagesystem.research_budget
+
+					if (lowered_amount != -1)
+						if (lowered_amount > 0)
+							boutput(usr, "There was only [lowered_amount] available.")
+						else
+							boutput(usr, "There was no money available.")
+							return
+						amount = lowered_amount
 
 					if (transfrom == "Payroll") wagesystem.station_budget -= amount
 					if (transfrom == "Shipping") wagesystem.shipping_budget -= amount
@@ -918,17 +942,22 @@
 				if (scan.registered in FrozenAccounts)
 					boutput(usr, "<span class='alert'>This account is frozen!</span>")
 					return
-				var/amount = round(input(usr, "How much would you like to withdraw?", "Withdrawal", 0) as num)
-				if( amount < 1)
-					boutput(usr, "<span class='alert'>Invalid amount!</span>")
+				if (!src.accessed_record["current_money"])
+					boutput(usr, "No money available!")
 					return
-				if(amount > src.accessed_record["current_money"])
-					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
-				else
-					src.accessed_record["current_money"] -= amount
-					var/obj/item/spacecash/S = new /obj/item/spacecash
-					S.setup(src.loc, amount)
-					usr.put_in_hand_or_drop(S)
+				var/amount = tgui_input_number(usr, "How much would you like to withdraw? Available: [src.accessed_record["current_money"]]", "Withdrawal", 0, 100000000, 0)
+				if (amount > src.accessed_record["current_money"])
+					if (src.accessed_record["current_money"] > 0)
+						boutput(usr, "There was only [src.accessed_record["current_money"]] available.")
+					else
+						boutput(usr, "There was no money available.")
+					amount = src.accessed_record["current_money"]
+				if(!amount)
+					return
+				src.accessed_record["current_money"] -= amount
+				var/obj/item/spacecash/S = new /obj/item/spacecash
+				S.setup(src.loc, amount)
+				usr.put_in_hand_or_drop(S)
 
 			if("buy")
 				if(accessed_record["current_money"] >= 100)
@@ -947,12 +976,17 @@
 			if("transfer_spacebux")
 				if(!usr.client)
 					boutput(usr, "<span class='alert'>Banking system offline. Welp.</span>")
-				var/amount = input("How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer") as num|null
-				if(!amount)
+				if (!usr.client.persistent_bank)
+					boutput(usr, "No spacebux available!")
 					return
-				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
-					src.updateUsrDialog()
+				var/amount = tgui_input_number(usr, "How much do you wish to transfer? You have [usr.client.persistent_bank] spacebux", "Spacebux Transfer", 0, 100000000, 0)
+				if (amount > usr.client.persistent_bank)
+					if (usr.client.persistent_bank > 0)
+						boutput(usr, "There was only [usr.client.persistent_bank] spacebux available.")
+					else
+						boutput(usr, "There was no spacebux available.")
+					amount = usr.client.persistent_bank
+				if(!amount)
 					return
 				var/client/C = input("Who do you wish to give [amount] to?", "Spacebux Transfer") as anything in clients|null
 				if(tgui_alert("You are about to send [amount] to [C]. Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -969,20 +1003,24 @@
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
 
 			if("withdraw_spacebux")
-				var/amount = round(input(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0) as num)
-				amount = clamp(amount, 0, 1000000)
-				if(amount <= 0)
-					boutput(usr, "<span class='alert'>No.</span>")
-					src.updateUsrDialog()
+				if (!usr.client.persistent_bank)
+					boutput(usr, "No spacebux available!")
+					return
+				var/amount = tgui_input_number(usr, "You have [usr.client.persistent_bank] spacebux.\nHow much would you like to withdraw?", "How much?", 0, 100000000, 0)
+				if (amount > usr.client.persistent_bank)
+					if (usr.client.persistent_bank > 0)
+						boutput(usr, "There was only [usr.client.persistent_bank] spacebux available.")
+					else
+						boutput(usr, "There was no spacebux available.")
+					amount = usr.client.persistent_bank
+				if(!amount)
 					return
 
-				if(!usr.client.bank_can_afford(amount))
-					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
-				else
-					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
-					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
-					usr.put_in_hand_or_drop(newbux)
+
+				logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
+				usr.client.add_to_bank(-amount)
+				var/obj/item/spacebux/newbux = new(src.loc, amount)
+				usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
 

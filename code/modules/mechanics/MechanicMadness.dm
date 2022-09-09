@@ -542,19 +542,13 @@
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
-		var/inp = input(user,"Enter new price:","Price setting", price) as num
+		var/inp = tgui_input_number(user, "Enter new price:", "Price setting", price, 0, 1000000, 0) // 1000000 should be plenty
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(!isnull(inp))
-			if (inp < 0)
-				user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
-				return 0
 			if (inp == 0)
 				user.show_text("Please set a price higher than zero.", "red")
 				return 0
-			if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
-				inp = 1000000
-				user.show_text("[src] is not designed to handle such large transactions. Input has been set to the allowable limit.", "red")
 			price = inp
 			tooltip_rebuild = 1
 			boutput(user, "Price set to [inp]")
@@ -843,10 +837,11 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",.proc/setRange)
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
-		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
+		var/rng = tgui_input_number(user, "Range is limited between 1-5.", "Enter a new range", src.range, 5, 1)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		range = clamp(rng, 1, 5)
+		if (!rng)
+			return FALSE
 		boutput(user, "<span class='notice'>Range set to [range]!</span>")
 		if(level == 1)
 			rebeam()
@@ -1015,10 +1010,11 @@
 		elecflash(src.loc, 0, power = zap_power, exclude_center = 0)
 
 	proc/setPower(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Power(1 - 3):","Power setting", zap_power) as num
+		var/inp = tgui_input_number(user, "Please enter Power (1 - 3):", "Power setting", src.zap_power, 3, 1)
 		if(!in_interact_range(src, user) || !isalive(user))
 			return 0
-		inp = clamp(round(inp), 1, 3)
+		if (!inp)
+			return FALSE
 		zap_power = inp
 		boutput(user, "Power set to [inp]")
 		return 1
@@ -1051,11 +1047,10 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",.proc/toggleDefault)
 
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
+		var/inp = tgui_input_number(user, "Enter delay in 10ths of a second:", "Set delay", src.delay, 10, 1)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		inp = max(inp, 10)
-		if(!isnull(inp))
+		if(!inp)
 			delay = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set delay to [inp]")
@@ -1108,10 +1103,10 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Frame",.proc/setTime)
 
 	proc/setTime(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
+		var/inp = tgui_input_number(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", src.timeframe, 30, 1)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		if(!isnull(inp))
+		if(!inp)
 			timeframe = inp
 			tooltip_rebuild = 1
 			boutput(user, "Set Time Frame to [inp]")
@@ -1787,10 +1782,10 @@
 		src.net_id = format_net_id("\ref[src]")
 
 	proc/setFreqManually(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Frequency:","Frequency setting", frequency) as num
+		var/inp = tgui_input_number(user, "Please enter Frequency:", "Frequency setting", src.frequency, 1500, 1000)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		if(!isnull(inp))
+		if(!inp)
 			set_frequency(inp)
 			boutput(user, "Frequency set to [inp]")
 			tooltip_rebuild = 1
@@ -1960,12 +1955,8 @@
 
 
 	proc/setSignalList(obj/item/W as obj, mob/user as mob)
-		var/numsig = input(user,"How many Signals would you like to define?","# Signals:", 3) as num
+		var/numsig = tgui_input_number(user, "How many Signals would you like to define (max 10)?", "# Signals:", 3, 10, 0)
 		if(!in_interact_range(src, user) || user.stat)
-			return 0
-		numsig = round(numsig)
-		if(numsig > 10) //Needs a limit because nerds are nerds
-			boutput(user, "<span class='alert'>This component can't handle more than 10 signals!</span>")
 			return 0
 		if(numsig)
 			signals.Cut()
@@ -2376,24 +2367,28 @@
 		light.attach(src)
 
 	proc/setColor(obj/item/W as obj, mob/user as mob)
-		var/red = input(user,"Red Color(0.0 - 1.0):","Color setting", 1.0) as num
-		var/green = input(user,"Green Color(0.0 - 1.0):","Color setting", 1.0) as num
-		var/blue = input(user,"Blue Color(0.0 - 1.0):","Color setting", 1.0) as num
+		var/red = tgui_input_number(user, "Red Color (0.0 - 1.0):", "Color setting", 1, 1, 0, round_input = FALSE)
+		if (isnull(red))
+			return
+		var/green = tgui_input_number(user, "Green Color (0.0 - 1.0):", "Color setting", 1, 1, 0, round_input = FALSE)
+		if (isnull(green))
+			return
+		var/blue = tgui_input_number(user, "Blue Color (0.0 - 1.0):", "Color setting", 1, 1, 0, round_input = FALSE)
+		if (isnull(blue))
+			return
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		red = clamp(red, 0.0, 1.0)
-		green = clamp(green, 0.0, 1.0)
-		blue = clamp(blue, 0.0, 1.0)
 		selcolor = rgb(red * 255, green * 255, blue * 255)
 		tooltip_rebuild = 1
 		light.set_color(red, green, blue)
 		return 1
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Range(1 - 7):","Range setting", light_level) as num
+		var/inp = tgui_input_number(user, "Please enter Range (1 - 7):", "Range setting", src.light_level, 7, 1)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		inp = clamp(round(inp), 1, 7)
+		if (!inp)
+			return
 		light.set_brightness(inp / 7)
 		boutput(user, "Range set to [inp]")
 		return 1
@@ -2493,10 +2488,10 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency) as num
+		var/inp = tgui_input_number(user, "New frequency ([R_FREQ_MINIMUM] - [R_FREQ_MAXIMUM]):", "Enter new frequency", frequency, R_FREQ_MAXIMUM, R_FREQ_MINIMUM)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
-		if(!isnull(inp))
+		if(inp)
 			set_frequency(inp)
 			boutput(user, "Frequency set to [frequency]")
 			return 1
@@ -3015,7 +3010,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
-		var/input = input("Set A to what?", "A", A) as num
+		var/input = tgui_input_number(user, "Set A to what?", "A", A, 100000000, -100000000, round_input = FALSE)
 		if(!in_interact_range(src, user) || user.stat || isnull(input))
 			return 0
 		A = input
@@ -3023,7 +3018,7 @@
 		return 1
 
 	proc/setBManually(obj/item/W as obj, mob/user as mob)
-		var/input = input("Set B to what?", "B", B) as num
+		var/input = tgui_input_number(user, "Set B to what?", "B", B, 100000000, -100000000, round_input = FALSE)
 		if(!in_interact_range(src, user) || user.stat || isnull(input))
 			return 0
 		B = input
@@ -3259,10 +3254,8 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", .proc/fire)
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
-		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num
-		if (!in_interact_range(src, user) || user.stat || isnull(input))
-			return FALSE
-		if (letter_index < 1)
+		var/input = tgui_input_number(user, "Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index, 999, 1)
+		if (!in_interact_range(src, user) || user.stat || !input)
 			return FALSE
 		letter_index = input
 		tooltip_rebuild = TRUE

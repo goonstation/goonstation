@@ -111,7 +111,9 @@
 			send_freq = new_freq
 
 		else if (href_list["set_freq"])
-			var/new_freq = input(usr,"Target frequency (1141-1489):","Enter target frequency",send_freq) as num
+			var/new_freq = tgui_input_number(usr, "Target frequency (1141-1489):", "Enter target frequency", send_freq, 1489, 1141)
+			if (!new_freq)
+				return
 			new_freq = sanitize_frequency_diagnostic(new_freq)
 			adjust_frequency(send_freq, new_freq)
 			send_freq = new_freq
@@ -216,7 +218,9 @@
 			scan_freq = new_freq
 
 		else if (href_list["set_freq"])
-			var/new_freq = input(usr,"Target frequency (1141-1489):","Enter target frequency",scan_freq) as num
+			var/new_freq = tgui_input_number(usr, "Target frequency (1141-1489):", "Enter target frequency", scan_freq, 1489, 1141)
+			if (!new_freq)
+				return
 			new_freq = sanitize_frequency_diagnostic(new_freq)
 			adjust_frequency(scan_freq, new_freq)
 			scan_freq = new_freq
@@ -376,7 +380,9 @@
 			get_radio_connection_by_id(src.master, "sender").update_frequency(send_freq)
 
 		else if (href_list["set_freq"])
-			var/new_freq = input(usr,"Target frequency (1141-1489):","Enter target frequency",send_freq) as num
+			var/new_freq = tgui_input_number(usr, "Target frequency (1141-1489):", "Enter target frequency", send_freq, 1489, 1141)
+			if (!new_freq)
+				return
 			new_freq = sanitize_frequency_diagnostic(new_freq)
 			send_freq = new_freq
 			get_radio_connection_by_id(src.master, "sender").update_frequency(send_freq)
@@ -607,7 +613,9 @@
 		if(..())
 			return
 		if (href_list["set_freq"])
-			var/new_freq = input(usr,"Target frequency (1141-1489):","Enter target frequency",send_freq) as num
+			var/new_freq = tgui_input_number(usr, "Target frequency (1141-1489):", "Enter target frequency", send_freq, 1489, 1141)
+			if (!new_freq)
+				return
 			new_freq = sanitize_frequency_diagnostic(new_freq)
 			send_freq = new_freq
 			get_radio_connection_by_id(src.master, "builtprog").update_frequency(send_freq)

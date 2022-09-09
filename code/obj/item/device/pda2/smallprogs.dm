@@ -1054,10 +1054,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
-			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!isnum_safe(fine_amount)) return
-			fine_amount = min(fine_amount,1000)
-			fine_amount = max(fine_amount,1)
+			var/fine_amount = tgui_input_number(usr, "Fine amount (1-1000):", src.name, 1, 1000, 1)
+			if(!fine_amount) return
 
 			var/datum/fine/F = new /datum/fine()
 			F.target = ticket_target

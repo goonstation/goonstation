@@ -1118,10 +1118,9 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		else if (href_list["setX"])
-			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
-			if(!isnum_safe(change))
+			var/change = tgui_input_number(usr, "Target X:", "Enter target X coordinate", xtarget, 500, 0, round_input = FALSE)
+			if(isnull(change))
 				return
-			xtarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
@@ -1141,10 +1140,9 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		else if (href_list["setY"])
-			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
-			if(!isnum_safe(change))
+			var/change = tgui_input_number(usr, "Target Y:", "Enter target Y coordinate", ytarget, 500, 0, round_input = FALSE)
+			if(isnull(change))
 				return
-			ytarget = clamp(change, 0, 500)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return
@@ -1164,10 +1162,9 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		else if (href_list["setZ"])
-			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
-			if(!isnum_safe(change))
+			var/change = tgui_input_number(usr, "Target Z:", "Enter target Z coordinate", ztarget, 14, 0)
+			if(isnull(change))
 				return
-			ztarget = clamp(change, 0, 14)
 			coord_update_flag = 1
 			src.updateUsrDialog()
 			return

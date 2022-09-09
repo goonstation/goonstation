@@ -473,8 +473,7 @@
 								src.active_record_general["sex"] = "Male"
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
-							t1 = clamp(t1, 1, 99)
+							var/t1 = tgui_input_number(usr, "Age:", "Security Records", src.active_record_general["age"], AGE_MAX, AGE_MIN)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["age"] = t1

@@ -26,9 +26,9 @@ datum/pump_ui/Topic(href, href_list)
 		return
 	if(href_list["ui_target"] == "pump_ui")
 		if(href_list["ui_action"] == "set_value")
-			var/value_to_set = input(usr, "[value_name] ([min_value] - [max_value] [value_units]):", "Enter new value", get_value()) as num
-			if(isnum_safe(value_to_set))
-				set_value(clamp(value_to_set, min_value, max_value))
+			var/value_to_set = tgui_input_number(usr, "[value_name] ([min_value] - [max_value] [value_units]):", "Enter new value", get_value(), max_value, min_value)
+			if (!isnull(value_to_set))
+				set_value(value_to_set)
 		else if(href_list["ui_action"] == "toggle_power")
 			toggle_power()
 		else if(href_list["ui_action"] == "bump_value")

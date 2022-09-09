@@ -106,11 +106,20 @@
 			if(!src.accessed_record)
 				boutput(usr, "<span class='alert'>No account connected.</span>")
 				return TRUE
-			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
-			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
-			src.accessed_record["current_money"] -= transfer_amount
-			src.available_funds += transfer_amount
-			boutput(usr, "<span class='notice'>Funds transferred.</span>")
+			if (!src.accessed_record["current_money"])
+				boutput(usr, "No money available!")
+				return TRUE
+			var/transfer_amount = tgui_input_number(usr, "Enter how much to transfer from your account. Available: [src.accessed_record["current_money"]]", "Deposit Credits", 0, 100000000, 0)
+			if (transfer_amount > src.accessed_record["current_money"])
+				if (src.accessed_record["current_money"] > 0)
+					boutput(usr, "There was only [src.accessed_record["current_money"]] available.")
+				else
+					boutput(usr, "There was no money available.")
+				transfer_amount = src.accessed_record["current_money"]
+			if (transfer_amount)
+				src.accessed_record["current_money"] -= transfer_amount
+				src.available_funds += transfer_amount
+				boutput(usr, "<span class='notice'>Funds transferred.</span>")
 
 		if("cashout")
 			src.accessed_record["current_money"] += src.available_funds

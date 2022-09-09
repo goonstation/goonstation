@@ -83,12 +83,10 @@
 			..(I, user)
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src && src.amount > 1)
+			var/amt = tgui_input_number(user, "How much cash do you want to take from the stack?", "Unstack cash", 1, src.max_stack - 1, 1)
+			if (amt && src && src.amount > 1 && src.loc == user && !user.equipped())
+				amt = min(amt, src.amount - 1)
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacecash/young_money = new /obj/item/spacecash
 				young_money.setup(user.loc, amt)
@@ -187,13 +185,10 @@
 		src.UpdateName()
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-			if (isnum_safe(amt))
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src && src.amount > 1)
+			var/amt = tgui_input_number(user, "How much [src] do you want to take from the stack?", "Unstack [src]", 1, src.max_stack - 1, 1)
+			if (amt && src && src.amount > 1)
+				amt = min(amt, src.amount - 1)
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 		else
 			..()
@@ -331,12 +326,10 @@
 		return ..()
 
 	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src && src.amount > 1)
+			var/amt = tgui_input_number(user, "How much spacebux do you want to split from the token?", 1, src.max_stack - 1, 1)
+			if (amt && src && src.amount > 1 && src.loc == user && !user.equipped())
+				amt = min(amt, src.amount - 1)
 				change_stack_amount( 0 - amt )
 				var/obj/item/spacebux/new_token = new
 				new_token.setup(user.loc, amt)

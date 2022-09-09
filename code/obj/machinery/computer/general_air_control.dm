@@ -594,7 +594,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				amount = clamp(pressure + diff, 0, MAX_PRESSURE)
 
 			else if (href_list["pressure_set"])
-				var/change = input(usr,"Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure) as num
+				var/change = tgui_input_number(usr, "Target Pressure (0 - [MAX_PRESSURE]):", "Enter target pressure", pressure, MAX_PRESSURE, 0)
 				if ((BOUNDS_DIST(src, usr) > 0 && !issilicon(usr)) || !isliving(usr) || iswraith(usr) || isintangible(usr))
 					return 0
 				if (is_incapacitated(usr) || usr.restrained())
@@ -602,10 +602,8 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				if (!src.allowed(usr))
 					boutput(usr, "<span class='alert'>Access denied!</span>")
 					return 0
-				if (!isnum_safe(change))
+				if (isnull(change))
 					return 0
-
-				amount = clamp(change, 0, MAX_PRESSURE)
 
 			signal.data["command"] = "set_pressure"
 			signal.data["parameter"] = num2text(amount)

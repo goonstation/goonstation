@@ -73,13 +73,12 @@
 				if("Set Range")
 					src.set_range(user)
 				if("Set Power Level")
-					var/the_level = input("Enter a power level from [src.min_power]-[src.max_power]. Higher levels use more power.","[src.name]",1) as null|num
+					var/the_level = tgui_input_number(user, "Enter a power level from [src.min_power]-[src.max_power]. Higher levels use more power.", "[src.name]", 1, src.max_power, src.min_power)
 					if(!the_level)
 						return
 					if(BOUNDS_DIST(user, src) > 0)
 						boutput(user, "<span class='alert'>You flail your arms at [src] from across the room like a complete muppet. Move closer, genius!</span>")
 						return
-					the_level = clamp(the_level, min_power, max_power)
 					src.power_level = the_level
 					boutput(user, "<span class='notice'>You set the power level to [src.power_level].</span>")
 

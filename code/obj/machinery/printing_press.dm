@@ -334,15 +334,20 @@
 				return
 
 			if ("amount to make")
-				var/amount_sel = input("How many books do you want to make? ([round(paper_amt / 2)] max)", "Ream Control", book_amount) as num
-/*				if ((amount_sel * 2) > paper_amt) //2*amount sel is the amount of paper
-					boutput(user, "Not enough paper.")
-					return*/
-				if (amount_sel > 0 && amount_sel <= (paper_amt / 2)) //is the number in range?
-					boutput(user, "Book amount set.")
-					book_amount = amount_sel
-				else
-					boutput(user, "Amount out of range.")
+				if (src.paper_amt < 2)
+					boutput(user, "Not enough paper is available to make a book!")
+					return
+				var/amount_sel = tgui_input_number(user, "How many books do you want to make? (2 sheets of paper are needed per book) Max: [round(src.paper_max / 2)]", "Ream Control", book_amount, round(src.paper_max / 2), 0)
+				if (!amount_sel)
+					return
+				if (src.paper_amt < 2)
+					boutput(user, "There wasn't enough paper available to make a book!")
+					return
+				if (amount_sel * 2 > src.paper_amt)
+					boutput(user, "There was only enough paper to make [round(src.paper_amt / 2)] books.")
+					amount_sel = round(src.paper_amt / 2)
+				boutput(user, "Book amount set.")
+				book_amount = amount_sel
 
 			if ("print books")
 				if (is_running)

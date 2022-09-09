@@ -168,14 +168,9 @@
 			account = FindBankAccountByName(src.scan.registered)
 			if (account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
-				if(!isnum_safe(quantity))
+				quantity = tgui_input_number(usr, "How many units do you want to purchase? Maximum: 50", "Trader Purchase", 1, 50, 1)
+				if(!quantity)
 					return
-				if (quantity < 1)
-					quantity = 0
-					return
-				else if (quantity >= 50)
-					quantity = 50
 
 				////////////
 				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
@@ -207,19 +202,20 @@
 		///////////////////////////////////////////
 		else if (href_list["haggleb"])
 
-			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(isnum_safe(askingprice))
-				var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
-				if(N)
-					if(patience == N.haggleattempts)
-						src.temp = "[src.name] becomes angry and won't trade anymore."
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						angry = 1
-						anger()
-					else
-						haggle(askingprice, 1, N)
-						src.temp +="<BR><A href='?src=\ref[src];purchase=1'>Ok</A>"
+			var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0, 10000000, 0)
+			if(isnull(askingprice))
+				return
+			var/datum/commodity/N = locate(href_list["haggleb"]) in goods_for_purchase
+			if(N)
+				if(patience == N.haggleattempts)
+					src.temp = "[src.name] becomes angry and won't trade anymore."
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					angry = 1
+					anger()
+				else
+					haggle(askingprice, 1, N)
+					src.temp +="<BR><A href='?src=\ref[src];purchase=1'>Ok</A>"
 
 
 		/////////////////////////////////////////////
@@ -246,20 +242,21 @@
 		///////////////////////////////////////////
 		else if (href_list["haggles"])
 
-			var/askingprice= input(usr, "Please enter your asking price.", "Haggle", 0) as null|num
-			if(isnum_safe(askingprice))
-				var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
-				if(N)
-					if(patience == N.haggleattempts)
+			var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0, 10000000, 0)
+			if(isnull(askingprice))
+				return
+			var/datum/commodity/N = locate(href_list["haggles"]) in goods_buy
+			if(N)
+				if(patience == N.haggleattempts)
 
-						src.temp = "[src.name] becomes angry and won't trade anymore."
-						src.add_fingerprint(usr)
-						src.updateUsrDialog()
-						angry = 1
-						anger()
-					else
-						haggle(askingprice, 0, N)
-						src.temp +="<BR><A href='?src=\ref[src];sell=1'>Ok</A>"
+					src.temp = "[src.name] becomes angry and won't trade anymore."
+					src.add_fingerprint(usr)
+					src.updateUsrDialog()
+					angry = 1
+					anger()
+				else
+					haggle(askingprice, 0, N)
+					src.temp +="<BR><A href='?src=\ref[src];sell=1'>Ok</A>"
 
 		////////////////////////////////////////
 		////////Slot holder for the current item///

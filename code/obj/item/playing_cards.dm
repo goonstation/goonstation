@@ -584,14 +584,18 @@
 	proc/draw_multiple(var/mob/user) //the context action proc that handles players drawing multiple cards
 		if(is_hand)
 			return
-		var/card_number = round(input(user, "How many cards would you like to draw?", "[name]")  as null|num)
-		if(!card_number || !isnum_safe(card_number))
+		var/card_number = tgui_input_number(user, "How many cards would you like to draw? Available: [length(src.stored_cards)]", "[name]", 1, src.total_cards, 1)
+		if(!card_number)
 			return
+		if (card_number > length(src.stored_cards))
+			card_number = length(src.stored_cards)
+			if (card_number > 1)
+				boutput(user, "There were only [card_number] cards available to draw.")
+			else
+				boutput(user, "There was only 1 card left to draw")
 		if(card_number == 1)
 			draw(user)
 			return
-		if(card_number > length(stored_cards))
-			card_number = length(stored_cards)
 		if(in_interact_range(src, user))
 			var/obj/item/card_group/hand = new /obj/item/card_group
 			update_group_information(hand,src,TRUE)

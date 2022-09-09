@@ -3086,6 +3086,11 @@
 		var/obj/item/device/pda2/pda = src.equipped()
 		return pda.ID_card
 
+/mob/proc/enter_pin(title="ID PIN number")
+	. = tgui_input_number(src, "Please enter your PIN number:", title, src.mind?.remembered_pin, PIN_MAX, PIN_MIN)
+	if(src.mind && isnull(src.mind.remembered_pin))
+		src.mind.remembered_pin = .
+
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
 	// TODO add NPC karma

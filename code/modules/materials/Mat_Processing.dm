@@ -377,10 +377,9 @@
 			if(first_part && second_part)
 				var/obj/item/FP = first_part
 				var/obj/item/SP = second_part
-				var/maxamt = min(FP.amount, SP.amount)
-				var/amt = input(usr, "How many? ([maxamt] max)", "Select amount", maxamt) as null|num
-				amt = max(0, amt)
-				if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
+				var/amt = tgui_input_number(usr, "How many?", "Select amount", 1, 10000, 1)
+				amt = min(amt, FP.amount, SP.amount)
+				if(amt && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
 					flick("smelter1",src)
 					var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
 					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)

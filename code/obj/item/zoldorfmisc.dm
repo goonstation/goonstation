@@ -130,14 +130,16 @@
 		src.inuse = 1
 		var/cardnumber
 		var/invcheck = inventorycheck(user)
-		cardnumber = input("How many cards would you like to draw?","Cards to Draw",null) as null|num //check if number works
-		if(!user || !invcheck || !cardnumber || !isnum_safe(cardnumber))
+		cardnumber = tgui_input_number(user, "How many cards would you like to draw? Available: [length(src.cards)]", "Cards to Draw", 1, length(initial(src.cards)), 1)
+		if(!user || !invcheck || !cardnumber)
 			src.inuse = 0
 			return
-		if(cardnumber < 0)
-			cardnumber = 0
-		else if(cardnumber > cards.len)
-			cardnumber = length(cards)
+		if (cardnumber > length(src.cards))
+			cardnumber = length(src.cards)
+			if (cardnumber > 1)
+				boutput(user, "There were only [cardnumber] cards available to draw.")
+			else
+				boutput(user, "There was only 1 card left to draw.")
 		carddraw(user, cardnumber)
 		src.inuse = 0
 

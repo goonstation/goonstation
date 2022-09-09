@@ -500,10 +500,9 @@ datum/preferences
 				return TRUE
 
 			if ("update-age")
-				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
-
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, AGE_MAX, AGE_MIN)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = new_age
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -525,9 +524,9 @@ datum/preferences
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
+					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || PIN_MIN, PIN_MAX, PIN_MIN)
 					if (new_pin)
-						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
+						src.pin = new_pin
 						src.profile_modified = TRUE
 						return TRUE
 
@@ -802,7 +801,7 @@ datum/preferences
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = input(usr, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE

@@ -576,30 +576,23 @@
 					var/mat_id = href_list["eject"]
 					var/ejectamt = 0
 					var/turf/ejectturf = get_turf(usr)
+					if (!ejectturf)
+						return
 					for(var/obj/item/O in src.contents)
 						if (O.material && O.material.mat_id == mat_id)
 							if (!ejectamt)
-								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
-								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
+								ejectamt = tgui_input_number(usr, "How many material pieces do you want to eject?", "Eject Materials", 1, 999, 1, round_input = FALSE)
+								if (!ejectamt || !O?.amount || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0)
 									break
-								if (round(ejectamt) != ejectamt)
-									boutput(usr, "<span class='alert'>You can only eject a whole number of a material</span>")
-									break
-							if (!ejectturf)
-								break
-							if (ejectamt > O.amount)
-								playsound(src.loc, src.sound_grump, 50, 1)
-								boutput(usr, "<span class='alert'>There's not that much material in [name]. It has ejected what it could.</span>")
-								ejectamt = O.amount
+								if (ejectamt > O.amount)
+									playsound(src.loc, src.sound_grump, 50, 1)
+									if (O.amount != 1)
+										boutput(usr, "<span class='alert'>There were only [O.amount] pieces of material available.")
+									else
+										boutput(usr, "<span class='alert'>There was only 1 piece of material available.")
+									ejectamt = O.amount
 							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
-							if (ejectamt == O.amount)
-								O.set_loc(get_output_location(O))
-							else
-								var/obj/item/material_piece/P = new O.type
-								P.setMaterial(copyMaterial(O.material))
-								P.change_stack_amount(ejectamt - P.amount)
-								O.change_stack_amount(-ejectamt)
-								P.set_loc(get_output_location(O))
+							O.set_loc(get_output_location(O))
 							break
 
 			if (href_list["speed"])
@@ -610,8 +603,8 @@
 				else if (given_speed >= 1 && given_speed <= upperbound)
 					src.speed = given_speed
 				else
-					var/newset = input(usr, "Enter from 1 to [upperbound]. Higher settings consume more power.", "Manufacturing Speed") as num
-					src.speed = clamp(newset, 1, upperbound)
+					var/newset = tgui_input_number(usr, "Enter from 1 to [upperbound]. Higher settings consume more power.", "Manufacturing Speed", 1, upperbound, 1)
+					src.speed = newset || src.speed
 
 			if (href_list["clearQ"])
 				var/Qcounter = 1
@@ -710,9 +703,19 @@
 				var/obj/item/reagent_containers/glass/B = locate(href_list["transto"])
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
-				var/howmuch = input("Transfer how much to [B]?","[src.name]",B.reagents.maximum_volume - B.reagents.total_volume) as null|num
-				if (!howmuch || !B || B != src.beaker || !isnum_safe(howmuch) )
+				if (B.reagents.total_volume == B.reagents.maximum_volume)
+					boutput(usr, "There is no more room in [B]!")
 					return
+				var/howmuch = tgui_input_number(usr, "Transfer how much to [B]?", "[src.name]", B.reagents.maximum_volume - B.reagents.total_volume, B.reagents.maximum_volume, 0)
+				if (!howmuch || !src?.reagents || !B?.reagents || B != src?.beaker)
+					return
+				if (howmuch > B.reagents.maximum_volume - B.reagents.total_volume)
+					if (B.reagents.maximum_volume - B.reagents.total_volume > 0)
+						boutput(usr, "Only [B.reagents.maximum_volume - B.reagents.total_volume]u was available to transfer.")
+					else
+						boutput(usr, "The beaker is full!")
+						return
+					howmuch = B.reagents.maximum_volume - B.reagents.total_volume
 				src.reagents.trans_to(B,howmuch)
 
 			if (href_list["transfrom"])
@@ -720,18 +723,38 @@
 				var/obj/item/reagent_containers/glass/B = locate(href_list["transfrom"])
 				if (!istype(B,/obj/item/reagent_containers/glass/))
 					return
-				var/howmuch = input("Transfer how much from [B]?","[src.name]",B.reagents.total_volume) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
+				if (!B.reagents.total_volume)
+					boutput(usr, "There are no reagents in [B] to transfer from!")
 					return
+				var/howmuch = tgui_input_number(usr, "Transfer how much from [B]?", "[src.name]", B.reagents.total_volume, B.reagents.maximum_volume, 0)
+				if (!howmuch || !src?.reagents || !B?.reagents)
+					return
+				if (howmuch > B.reagents.total_volume)
+					if (B.reagents.total_volume > 0)
+						boutput(usr, "Only [B.reagents.total_volume]u was available to transfer.")
+					else
+						boutput(usr, "No reagent was left to transfer.")
+						return
+					howmuch = src.reagents.total_volume
 				B.reagents.trans_to(src,howmuch)
 
 			if (href_list["flush"])
 				var/the_reagent = href_list["flush"]
 				if (!istext(the_reagent))
 					return
-				var/howmuch = input("Flush how much [the_reagent]?","[src.name]",0) as null|num
-				if (!howmuch || !isnum_safe(howmuch))
+				if (!src.reagents.total_volume)
+					boutput(usr, "There are no reagents to flush!")
 					return
+				var/howmuch = tgui_input_number(usr, "Flush how much [the_reagent]?", "[src.name]", 0, src.reagents.maximum_volume, 0)
+				if (!howmuch || !src?.reagents)
+					return
+				if (howmuch > src.reagents.total_volume)
+					if (src.reagents.total_volume > 0)
+						boutput(usr, "Only [src.reagents.total_volume]u was available to flush.")
+					else
+						boutput(usr, "No reagent was left to flush.")
+						return
+					howmuch = src.reagents.total_volume
 				src.reagents.remove_reagent(the_reagent,howmuch)
 
 			if ((href_list["cutwire"]) && (src.panel_open || isAI(usr)))
@@ -788,54 +811,51 @@
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan.registered)
 				if (account)
-					var/quantity = 1
-					quantity = max(0, input("How many units do you want to purchase?", "Ore Purchase", null, null) as num)
-					if(!isnum_safe(quantity))
+					if (!account["current_money"])
+						boutput(usr, "No money available!")
+						return
+					var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", 1, 999, 1)
+					quantity = min(quantity, OCD?.amount)
+					if(!quantity)
 						return
 					////////////
 
-					if(OCD.amount >= quantity && quantity > 0)
-						var/subtotal = round(price * quantity)
-						var/sum_taxes = round(taxes * quantity)
-						var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
-						var/total = subtotal + sum_taxes + rockbox_fees
-						if(account["current_money"] >= total)
-							account["current_money"] -= total
-							storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
+					var/subtotal = round(price * quantity)
+					var/sum_taxes = round(taxes * quantity)
+					var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
+					var/total = subtotal + sum_taxes + rockbox_fees
+					if(account["current_money"] >= total)
+						account["current_money"] -= total
+						storage.eject_ores(ore, get_output_location(), quantity, transmit=1, user=usr)
 
-							 // This next bit is stolen from PTL Code
-							var/list/accounts = \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Engineer")
+						 // This next bit is stolen from PTL Code
+						var/list/accounts = \
+							data_core.bank.find_records("job", "Chief Engineer") + \
+							data_core.bank.find_records("job", "Chief Engineer") + \
+							data_core.bank.find_records("job", "Engineer")
 
 
-							var/datum/signal/minerSignal = get_free_signal()
-							minerSignal.source = src
-							//any non-divisible amounts go to the shipping budget
-							var/leftovers = 0
-							if(length(accounts))
-								leftovers = subtotal % length(accounts)
-								var/divisible_amount = subtotal - leftovers
-								if(divisible_amount)
-									var/amount_per_account = divisible_amount/length(accounts)
-									for(var/datum/db_record/t as anything in accounts)
-										t["current_money"] += amount_per_account
-									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
-							else
-								leftovers = subtotal
-								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
-							wagesystem.shipping_budget += (leftovers + sum_taxes)
-							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
-
-							src.temp = {"Enjoy your purchase!<BR>"}
+						var/datum/signal/minerSignal = get_free_signal()
+						minerSignal.source = src
+						//any non-divisible amounts go to the shipping budget
+						var/leftovers = 0
+						if(length(accounts))
+							leftovers = subtotal % length(accounts)
+							var/divisible_amount = subtotal - leftovers
+							if(divisible_amount)
+								var/amount_per_account = divisible_amount/length(accounts)
+								for(var/datum/db_record/t as anything in accounts)
+									t["current_money"] += amount_per_account
+								minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
 						else
-							src.temp = {"You don't have enough dosh, bucko.<BR>"}
+							leftovers = subtotal
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+						wagesystem.shipping_budget += (leftovers + sum_taxes)
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
+
+						src.temp = {"Enjoy your purchase!<BR>"}
 					else
-						if(quantity > 0)
-							src.temp = {"I don't have that many for sale, champ.<BR>"}
-						else
-							src.temp = {"Enter some actual valid number, you doofus!<BR>"}
+						src.temp = {"You don't have enough dosh, bucko.<BR>"}
 				else
 					src.temp = {"That card doesn't have an account anymore, you might wanna get that checked out.<BR>"}
 

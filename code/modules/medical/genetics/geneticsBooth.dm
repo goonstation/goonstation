@@ -195,10 +195,9 @@
 				if("price")
 					if(href_list["op"])
 						P = locate(href_list["op"])
-						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
-						if(!isnum_safe(price))
+						var/price = tgui_input_list(usr, "Please enter price for [P.name].", "Gene Price", 0, 100000000, 0)
+						if(isnull(price))
 							return
-						price = max(price,0)
 						P.cost = price
 
 				if("lock")

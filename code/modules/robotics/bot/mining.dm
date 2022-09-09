@@ -283,7 +283,7 @@
 			if("toggle_suspicious")
 				bot.digsuspicious = !bot.digsuspicious
 			if("hardness")
-				bot.hardthreshold = input(usr, "Maximum hardness level this bot will dig up to?", "Hardness Threshold", "") as num
+				bot.hardthreshold = tgui_input_number(usr, "Maximum hardness level this bot will dig up to?", "Hardness Threshold", 500, 99999, 1) || bot.hardthreshold
 	show_ui(usr)
 
 /datum/digbot_ui/proc/show_ui(mob/user)

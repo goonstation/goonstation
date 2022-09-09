@@ -195,16 +195,26 @@
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
-					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
-					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
-						if (num_sel <= src.paper_amount)
-							src.make_amount = num_sel
-							playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
-							boutput(user, "Amount set to: [num_sel] sheets.")
-							return
+					if (src.paper_amount == 0)
+						boutput(user, "There's no paper in the photocopier!")
+						return
+					var/num_sel = tgui_input_number(user, "How many copies do you want to make? Max: 30", "Photocopier Controls", 1, 30, 1) // max 30 sheets in photocopier
+					if (!num_sel)
+						return
+					if (src.paper_amount == 0)
+						boutput(user, "There was no paper left in the photocopier!")
+						return
+					if (num_sel > src.paper_amount)
+						num_sel = src.paper_amount
+						if (num_sel > 1)
+							boutput(user, "There were only [num_sel] pieces of paper in the photocopier.")
 						else
-							boutput(user, "<span class='alert'>There's not enough paper for that!</span>")
-							return
+							boutput(user, "There was only one piece of paper left in the photocopier.")
+					if (BOUNDS_DIST(user, src) == 0)
+						src.make_amount = num_sel
+						playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
+						boutput(user, "Amount set to: [num_sel] sheet[num_sel > 1 ? "s" : ""].")
+						return
 
 				if ("Toggle Lid")
 					if (src.use_state == 2)

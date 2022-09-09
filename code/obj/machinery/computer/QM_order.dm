@@ -241,8 +241,17 @@
 			if (!account)
 				src.temp = {"<B>ERROR:</B> No bank account associated with this ID card found.<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
-			var/transaction = input("How much?", "Shipping Budget", null, null)  as null|num
-			if (account["current_money"] >= transaction && (transaction > 0) && isnum_safe(transaction))
+			if (!account["current_money"])
+				tgui_alert(usr, "No money available!", "Account")
+				return
+			var/transaction = tgui_input_number(usr, "How much? Available: [account["current_money"]]", "Shipping Budget", 0, 100000000, 0)
+			if (transaction > account["current_money"])
+				if (account["current_money"] > 0)
+					boutput(usr, "There was only [account["current_money"]] available.")
+				else
+					boutput(usr, "There was no money available.")
+				transaction = account["current_money"]
+			if (transaction)
 				account["current_money"] -= transaction
 				wagesystem.shipping_budget += transaction
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
@@ -252,9 +261,6 @@
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
-			else
-				src.temp = {"<B>ERROR:</B> Insufficient funds. Purchase cancelled.<BR>
-							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
 		else
 			src.temp = {"<B>ERROR:</B> Login removed mid-transaction. Purchase cancelled.<BR>
 							<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}

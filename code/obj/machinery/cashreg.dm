@@ -52,12 +52,18 @@
 				boutput(user, "<span class='alert'>You can't send funds with the host ID to the host ID!</span>")
 				return
 
-			boutput(user, "<span class='notice'>The current host ID is [mainaccount["name"]]. Insert a value less than zero to cancel transaction.</span>")
-			var/amount = input(user, "How much money would you like to send?", "Deposit", 0) as null|num
-			if (amount <= 0 || !isnum_safe(amount))
+			boutput(user, "<span class='notice'>The current host ID is [mainaccount["name"]].</span>")
+			if (!target_account["current_money"])
+				boutput(user, "No money available!")
 				return
+			var/amount = tgui_input_number(user, "How much money would you like to send? Available: [target_account["current_money"]]", "Deposit", 0, 100000000, 0)
 			if (amount > target_account["current_money"])
-				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [target_account["current_money"]] credits.</span>")
+				if (target_account["current_money"] > 0)
+					boutput(usr, "There was only [target_account["current_money"]] available.")
+				else
+					boutput(usr, "There was no money available.")
+				amount = target_account["current_money"]
+			if (!amount)
 				return
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'>[user] swipes [src] with [W].</span>")

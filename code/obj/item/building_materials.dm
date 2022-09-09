@@ -119,19 +119,14 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
-			if(!in_interact_range(src, user) || !isnum_safe(splitnum))
+			var/splitnum = tgui_input_number(user, "How many sheets do you want to take from the stack?", "Stack of [src.amount]", 1, src.max_stack - 1, 1)
+			if(!in_interact_range(src, user))
 				return
-			splitnum = round(clamp(splitnum, 0, src.amount))
-			if(amount == 0)
-				return
+			splitnum = min(splitnum, src?.amount - 1)
 			var/obj/item/sheet/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			user.put_in_hand_or_drop(new_stack)
-			new_stack.add_fingerprint(user)
-			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [src.amount] sheets behind.</span>")
 		else
 			..(user)
 
@@ -192,11 +187,10 @@ MATERIAL
 				return
 
 			if (src.material && (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL))
-				var/makesheets = min(min(R.amount,src.amount),50)
-				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [makesheets]",1) as num
-				if (sheetsinput < 1 || !isnum_safe(sheetsinput))
+				var/sheetsinput = tgui_input_number(user, "Reinforce how many sheets?", "Reinforce sheets", 1, src.max_stack, 1)
+				sheetsinput = min(sheetsinput, R?.amount, src?.amount)
+				if (!sheetsinput)
 					return
-				sheetsinput = min(sheetsinput,makesheets)
 
 				if (!in_interact_range(src, user) || !R) //moving, or the rods are getting destroyed during the input()
 					return
@@ -335,10 +329,9 @@ MATERIAL
 
 			switch(href_list["make"])
 				if("rods")
-					var/makerods = min(src.amount,25)
-					var/rodsinput = input("Use how many sheets? (Get 2 rods for each sheet used)","Min: 1, Max: [makerods]",1) as num
-					if (rodsinput < 1 || !isnum_safe(rodsinput)) return
-					rodsinput = min(rodsinput,makerods)
+					var/rodsinput = tgui_input_number(usr, "Use how many sheets? (Get 2 rods for each sheet used). Max: 25.", "Make rods", 1, 25, 1) // max stack of rods is 50
+					rodsinput = min(rodsinput, src?.amount)
+					if (!rodsinput) return
 
 					if (!in_interact_range(src, usr)) //no walking away
 						return
@@ -351,10 +344,9 @@ MATERIAL
 					a_name = "rods"
 
 				if("fl_tiles")
-					var/maketiles = min(src.amount,20)
-					var/tileinput = input("Use how many sheets? (Get 4 tiles for each sheet used)","Max: [maketiles]",1) as num
-					if (tileinput < 1 || !isnum_safe(tileinput)) return
-					tileinput = min(tileinput,maketiles)
+					var/tileinput = tgui_input_number(usr, "Use how many sheets? (Get 4 tiles for each sheet used). Max: 20.", "Make tiles", 1, 20, 1) // max stack of tiles is 80
+					tileinput = min(tileinput, src?.amount)
+					if (!tileinput) return
 
 					if (!in_interact_range(src, usr)) //no walking away
 						return
@@ -586,10 +578,9 @@ MATERIAL
 					a_name = "industrial table parts"
 
 				if("remetal")
-					// what the fuck is this
-					var/input = input("Use how many sheets?","Max: [src.amount]",1) as num
-					if (input < 1 || !isnum_safe(input)) return
-					input = min(input,src.amount)
+					var/input = tgui_input_list(usr, "Use how many sheets?", "Reinforce sheets", 1, src.max_stack, 1)
+					input = min(input, src?.amount)
+					if (!input) return
 
 					if (!in_interact_range(src, usr)) //no walking away
 						return
@@ -725,18 +716,15 @@ MATERIAL
 
 	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
-			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
-
-			if (!in_interact_range(src, user) || !isnum_safe(splitnum)) //no walking away
+			var/splitnum = tgui_input_number(user, "How many rods do you want to take from the stack?", "Stack of [src.amount]", 1, src.max_stack - 1, 1)
+			splitnum = min(splitnum, src?.amount - 1)
+			if (!in_interact_range(src, user))
 				return
 
 			var/obj/item/rods/new_stack = split_stack(splitnum)
 			if (!istype(new_stack))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
 			user.put_in_hand_or_drop(new_stack)
-			new_stack.add_fingerprint(user)
-			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [src.amount] rods behind.</span>")
 		else
 			..(user)
 
@@ -754,18 +742,19 @@ MATERIAL
 			if(!W:try_weld(user, 1))
 				return
 
-			var/weldinput = 1
-			if (src.amount > 3)
-				var/makemetal = round(src.amount / 2)
-				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
-				weldinput = input("How many sheets do you want to make?","Welding",1) as num
-				makemetal = round(src.amount / 2) // could have changed during input()
+			var/weldinput = tgui_input_number(user, "How many sheets do you want to make? (2 rods are needed for one sheet)", "Welding", 1, round(src.max_stack / 2), 1)
+			if (!in_interact_range(src, user))
+				return
 
-				if (!in_interact_range(src, user) || !isnum_safe(weldinput)) //no walking away
-					return
+			if (!weldinput)
+				return
+			if (src.amount < 2)
+				boutput(user, "Not enough rods available!")
+				return
+			if (weldinput * 2 > src.amount)
+				boutput(user, "There were only enough rods to make [round(src.amount / 2)] sheets of metal.")
+				weldinput = round(src.amount / 2)
 
-				if (weldinput < 1) return
-				if (weldinput > makemetal) weldinput = makemetal
 			var/obj/item/sheet/M = new /obj/item/sheet/steel(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput

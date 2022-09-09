@@ -77,7 +77,9 @@
 					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now.")
 
 				if ("Adjust Timing") //adjusts tempo
-					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
+					var/time_sel = tgui_input_number(user, "Input a custom tempo from [MIN_TIMING] to [MAX_TIMING] BPS", "Tempo Control", MIN_TIMING, MAX_TIMING, MIN_TIMING, round_input = FALSE)
+					if (!time_sel)
+						return
 					if (!src.set_timing(time_sel))
 						src.visible_message("<span class='alert'>The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
 						return

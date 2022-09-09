@@ -180,10 +180,10 @@
 		boutput(user, "<span class='alert'>This account does not own any shares of [S.name]!</span>")
 		return
 	var/price = S.current_value
-	var/amt = round(input(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 0) as num|null)
+	var/amt = tgui_input_number(user, "How many shares? (Have: [avail], unit price: [price])", "Sell shares in [S.name]", 1, 10000000, 1)
 	if (!user)
 		return
-	if (!isnum_safe(amt))
+	if (!amt)
 		return
 	if (!(user in range(1, src)))
 		return
@@ -194,8 +194,8 @@
 		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	if (amt > S.shareholders[logged_in])
-		boutput(user, "<span class='alert'>You do not own that many shares!</span>")
-		return
+		boutput(usr, "<span class='alert'>There were only [S.shareholders[logged_in]] shares you could sell.</span>")
+		amt = S.shareholders[logged_in]
 	var/total = amt * S.current_value
 	if (!S.sellShares(logged_in, amt))
 		boutput(user, "<span class='alert'>Could not complete transaction.</span>")
@@ -216,10 +216,10 @@
 	var/avail = S.available_shares
 	var/price = S.current_value
 	var/canbuy = round(b / price)
-	var/amt = round(input(user, "How many shares? (Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 0) as num|null)
+	var/amt = tgui_input_number(user, "How many shares? (Available: [avail], unit price: [price], can buy: [canbuy])", "Buy shares in [S.name]", 1, 10000000, 0)
 	if (!user)
 		return
-	if (!isnum_safe(amt))
+	if (!amt)
 		return
 	if (!(user in range(1, src)))
 		return
@@ -230,8 +230,8 @@
 		boutput(user, "<span class='alert'>No active account on the console!</span>")
 		return
 	if (amt > S.available_shares)
-		boutput(user, "<span class='alert'>That many shares are not available!</span>")
-		return
+		boutput(usr, "<span class='alert'>There were only [S.available_shares] shares you could buy.</span>")
+		amt = S.available_shares
 	var/total = amt * S.current_value
 	if (total > b)
 		boutput(user, "<span class='alert'>Insufficient funds.</span>")

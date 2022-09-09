@@ -428,10 +428,9 @@
 			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
-			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
-			if (!pillvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(pillvol))
+			var/pillvol = tgui_input_number(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5, 100, 5, round_input = FALSE)
+			if (!pillvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON)
 				return
-			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
 			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
@@ -478,9 +477,9 @@
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
 
-			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
+			var/input_design = tgui_input_number(usr, "Choose the design (1~26):", "Design", default, 26, 1)
 
-			if (!src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || isnull(input_design) || input_design > 26 || input_design < 1)
+			if (!src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || !input_design)
 				return
 
 			var/obj/item/reagent_containers/food/drinks/cola/custom/C
@@ -546,10 +545,9 @@
 			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
-			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
-			if (!patchvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(patchvol))
+			var/patchvol = tgui_input_number(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5, 30, 5, round_input = FALSE)
+			if (!patchvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON)
 				return
-			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
 			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")

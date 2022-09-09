@@ -647,10 +647,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 	proc/change_light_pattern()
-		var/pattern = input(usr, "Type number from 0 to 4", "Enter Number", 1) as null|num
-		if (!isnum_safe(pattern))
+		var/pattern = tgui_input_number(usr, "Type number from 0 to 4", "Enter Number", 0, 4, 0)
+		if (isnull(pattern))
 			return
-		pattern = clamp(pattern, 0, 4)
 		src.light_pattern(pattern)
 
 
