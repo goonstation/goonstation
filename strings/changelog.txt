@@ -1,4 +1,109 @@
 
+(t)fri sep 09 22
+(u)Sord
+(e)|
+(+)Raw gemstones now have their own value on the shipping market
+(u)LeahTheTech
+(p)10460
+(e)|
+(+)Cyborgs now also get a killswitch warning overlay.
+(u)Conchuckter
+(p)10527
+(e)|
+(+)Tranquilizer darts and old hunting rifle clips have been resprited, they now look like stripper clips.
+(u)glowbold
+(p)10713
+(e)|
+(+)Donut3's taxi/mining shuttle can now be boarded through a new maintenance dock, south of nerd lounge.
+(u)aloe
+(+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
+(u)Mr. Moriarty
+(p)10573
+(e)|
+(*)Custom emotes now have a typing indicator.
+(t)thu sep 08 22
+(u)NightmarechaMillian
+(p)10658
+(e)|
+(+)??? pills have been updated with some new chems.
+(u)aloe
+(e)|
+(+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
+(t)wed sep 07 22
+(u)Ikea, Zonespace, and Yellow/Myco
+(p)9898
+(e)|
+(*)Pressing the PDA crisis or security alert now alerts people nearby through the use of a sound effect, chatbox message, and overhead text.
+(u)Sord
+(*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
+(u)Stonepillar
+(p)10537
+(e)|
+(*)Fixed syndicate drones not dropping their loot (including sharkdrones!)
+(t)tue sep 06 22
+(u)Sord
+(*)The Mining Outpost and Diner have swapped places.
+(u)Sord
+(e)|
+(+)The mining shuttle, now renamed, also stops at all three locations. Station, Diner, and Mining Outpost.
+(t)mon sep 05 22
+(u)LeahTheTech
+(p)10656
+(e)|
+(+)Silicons can now use the chemical request console.
+(u)FlameArrow57
+(p)10621
+(e)|
+(+)A Head of Security can now be picked from medium and low priority job selections.
+(u)LeahTheTech
+(p)10631
+(e)|
+(+)Canvases now support pixel-precise pointing.
+(u)ZeWaka
+(p)10589
+(e)|
+(+)Made some large internal changes to how our walls smooth out and look pretty. Be sure to report any bugs!
+(u)Wisemonster
+(p)10554
+(e)|
+(+)The interdictor blueprints are now on a single manudrive.
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
+(t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
+(u)LeahTheTech
+(p)10361
+(e)|
+(+)Messages from sentient elements of the flock are now much easier to pick out.
 (t)sat sep 03 22
 (u)LeahTheTech and JulyJade
 (p)10564

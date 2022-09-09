@@ -36,6 +36,7 @@
 
 /obj/flock_structure/relay/New()
 	..()
+	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	// no shuttle for you, either destroy the relay or flee when it unleashes
 	if (emergency_shuttle.online)
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
@@ -57,6 +58,7 @@
 
 /obj/flock_structure/relay/disposing()
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
+	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
 	..()
 	if (!src.finished)
 		F?.death(relay_destroyed = TRUE)
@@ -108,11 +110,12 @@
 		for (var/turf/T as anything in turfs)
 			if (istype(T, /turf/simulated) && !isfeathertile(T))
 				LAGCHECK(LAG_LOW)
-				src?.flock.claimTurf(flock_convert_turf(T))
+				src?.flock?.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()
 	if(src.finished)
 		return
+	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)

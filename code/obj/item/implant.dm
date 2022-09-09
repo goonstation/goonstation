@@ -1101,7 +1101,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			for (var/organ in organs)
 				if (!organ_found)
 					current_organ = H.get_organ(organ)
-					if (!current_organ || current_organ.get_damage() > current_organ.FAIL_DAMAGE)
+					if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
 						organ_found = organ
 
 			if (organ_found)
@@ -1594,59 +1594,59 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implantcase/health
 	name = "glass case - 'Health'"
-	implant_type = "/obj/item/implant/health"
+	implant_type = /obj/item/implant/health
 
 /obj/item/implantcase/sec
 	name = "glass case - 'Security Access'"
-	implant_type = "/obj/item/implant/sec"
+	implant_type = /obj/item/implant/sec
 /*
 /obj/item/implantcase/nt
 	name = "glass case - 'Weapon Auth 2'"
-	implant_type = "/obj/item/implant/nt"
+	implant_type = /obj/item/implant/nt
 
 /obj/item/implantcase/ntc
 	name = "glass case - 'Weapon Auth 3'"
-	implant_type = "/obj/item/implant/ntc"
+	implant_type = /obj/item/implant/ntc
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = "/obj/item/implant/freedom"
+	implant_type = /obj/item/implant/freedom
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
-	implant_type = "/obj/item/implant/counterrev"
+	implant_type = /obj/item/implant/counterrev
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb"
+	implant_type = /obj/item/implant/revenge/microbomb
 
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
-	implant_type = "/obj/item/implant/robotalk"
+	implant_type = /obj/item/implant/robotalk
 
 /obj/item/implantcase/bloodmonitor
 	name = "glass case - 'Blood Monitor'"
-	implant_type = "/obj/item/implant/bloodmonitor"
+	implant_type = /obj/item/implant/bloodmonitor
 
 /obj/item/implantcase/mindhack
 	name = "glass case - 'Mindhack'"
-	implant_type = "/obj/item/implant/mindhack"
+	implant_type = /obj/item/implant/mindhack
 
 /obj/item/implantcase/super_mindhack
 	name = "glass case - 'Mindhack DELUXE'"
-	implant_type = "/obj/item/implant/mindhack/super"
+	implant_type = /obj/item/implant/mindhack/super
 
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
-	implant_type = "/obj/item/implant/robust"
+	implant_type = /obj/item/implant/robust
 
 /obj/item/implantcase/antirot
 	name = "glass case - 'Rotbusttec'"
-	implant_type = "/obj/item/implant/antirot"
+	implant_type = /obj/item/implant/antirot
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
-	implant_type = "/obj/item/implant/access"
+	implant_type = /obj/item/implant/access
 
 	get_desc(dist)
 		if (dist <= 1 && src.imp)
@@ -1655,7 +1655,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				. += "It appears to contain \a [src.imp.name] with [I.uses] charges."
 
 	unlimited
-		implant_type = "/obj/item/implant/access/infinite"
+		implant_type = /obj/item/implant/access/infinite
 		get_desc(dist)
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."

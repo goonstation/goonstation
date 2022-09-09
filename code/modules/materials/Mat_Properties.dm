@@ -17,13 +17,10 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
 
-	proc/changeValue(var/datum/material/M, var/newValue)
-		for(var/X in M.properties)
-			if(X == src)
-				M.properties[X] = clamp(newValue, min_value, max_value)
-				onValueChanged(M, M.properties[X])
-				return
-		return
+	proc/changeValue(datum/material/M, newValue)
+		if (src in M.properties)
+			M.properties[src] = clamp(newValue, min_value, max_value)
+			onValueChanged(M, M.properties[src])
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
