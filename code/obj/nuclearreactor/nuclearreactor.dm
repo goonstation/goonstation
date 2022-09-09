@@ -26,7 +26,6 @@
 	var/radiationLevel = 0
 	var/datum/gas_mixture/current_gas = null
 	var/temperature = T20C
-	var/datum/projectile/neutron_projectile = new /datum/projectile/neutron
 
 	var/reactor_vessel_gas_volume=200
 	var/obj/machinery/power/terminal/terminal = null
@@ -180,9 +179,9 @@
 	proc/processCaseRadiation(var/rads)
 		if(rads <= 0)
 			return
-		neutron_projectile.power = min(rads*5,100)
+
 		for(var/i = min(rads,20),i>0,i--)
-			shoot_projectile_XY(src, neutron_projectile, rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
+			shoot_projectile_XY(src, new /datum/projectile/neutron(min(rads*5,100)), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 		rads -= min(rads,20)
 
 		if(rads <= 0)
@@ -452,37 +451,46 @@
 //file location for the sound you want it to play
 	shot_sound = null
 	shot_number = 1
-	damage_type = D_SPECIAL
+	damage_type = D_TOXIC //would use D_SPECIAL but a few things don't use it properly.
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	window_pass = FALSE
 	silentshot = TRUE
 
-	on_hit(atom/hit, angle, var/obj/projectile/O)
+	New(power)
+		..()
+		src.power = power
+
+	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
 		. = FALSE //default to doing normal hit behaviour
+
 		if(isintangible(hit) || isobserver(hit))
-			return
+			return TRUE
+
+		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
+		if((hit.material && !prob(hit.material.getProperty("density")*multiplier)) || (isnull(hit.material) && prob(5*multiplier)))
+			O.initial_power /= 2 //initial power because projectile.collide() uses it to calculate power, rather than direct use of .power
+			if(O.initial_power < 1)
+				O.initial_power = 0
+			return TRUE //don't hit this, lose power and pass through it
+
 		if(hit.material)
 			if(prob(hit.material.getProperty("hardness")*10))
 				//reflect
 				shoot_reflected_bounce(O, hit)
+				return TRUE
 
 			if(prob(hit.material.getProperty("n_radioactive")*10))
 				hit.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
 			if(prob(hit.material.getProperty("radioactive")*10))
 				hit.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
-		hit.AddComponent(/datum/component/radioactive, min(power,25), TRUE, FALSE, 1)
+		hit.AddComponent(/datum/component/radioactive, min(O.proj_data.power,25), TRUE, FALSE, 1)
+
 		if(ismob(hit))
 			var/mob/hitmob = hit
 			hitmob.take_radiation_dose(power/200)
-		return
+			O.initial_power = 0
 
-	on_pre_hit(atom/hit, angle, var/obj/projectile/O)
-		. = FALSE //default to doing normal hit behaviour
-		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
-		if((hit.material && !prob(hit.material.getProperty("density")*multiplier)) || (isnull(hit.material) && prob(5*multiplier)))
-			O.power /= 2
-			. = TRUE
 
 /particles/nuke_overheat_smoke
 	icon = 'icons/effects/effects.dmi'
