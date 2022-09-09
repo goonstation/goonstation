@@ -41,6 +41,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 			if(prefabSizeX != props.maxX - props.sourceX + 1 || prefabSizeY != props.maxY - props.sourceY + 1)
 				CRASH("size of prefab [prefabPath] is incorrect ([prefabSizeX]x[prefabSizeY] != [props.maxX - props.sourceX + 1]x[props.maxY - props.sourceY + 1])")
 			convertSpace(T, prefabSizeX, prefabSizeY, area_type)
+			src.nPlaced++
 			return props
 		else return
 
@@ -49,7 +50,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		var/area/map_gen/planet/A = get_area(T)
 		if(length(required_biomes) && istype(A))
 			for(var/biome in A.biome_turfs)
-				if(!(biome in required_biomes))
+				if(!(biome in src.required_biomes))
 					. = FALSE
 					break
 
@@ -99,6 +100,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/prefab_corn_and_weed.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 16
+		required_biomes = list(/datum/biome/mudlands)
 
 	organic_organs
 		maxNum = 1
@@ -106,3 +108,4 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
+		required_biomes = list(/datum/biome/mudlands)

@@ -1,6 +1,7 @@
 /// The following is based on GenerateMining.dm
 
 var/planetZLevel = null
+var/list/planetGenerators = list()//Assoc list
 var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 var/list/planet_seeds = list()
@@ -39,18 +40,21 @@ var/list/planet_seeds = list()
 						var/turf/target = locate(GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
 						target = GALAXY.Rand.xor_pick(area_turfs)
 						//var/area/A = get_area(target)
+						if(!M.check_biome_requirements(target))
+							count = INFINITY
+							break
 						var/ret = M.applyTo(target)
 						if (!ret)
-							logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
+							logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
 						else
-							logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+							logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
 							stop = 1
 							if(istype(A,/area/map_gen/planet))
 								var/area/map_gen/planet/P = A
 								P.prefabs |= ret
 						count++
-						if (count >= 33)
-							logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
+					if (count == maxTries)
+						logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""].")
 				else break
 
 	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
@@ -116,11 +120,16 @@ var/list/planet_seeds = list()
 	/area/map_gen/planet/_PATH/no_prefab{allow_prefab = FALSE};
 
 /area/map_gen/planet
+	New()
+		..()
+		if(isnull(planetGenerators[name]))
+			var/map_generator_path = pick(/datum/map_generator/jungle_generator,/datum/map_generator/desert_generator,/datum/map_generator/snow_generator)
+			planetGenerators[name] = new map_generator_path()
+
 	generate_perlin_noise_terrain(list/seed_list)
 		if(generated)
 			return
-		if(src.map_generator_path)
-			map_generator = new map_generator_path()
+		map_generator = planetGenerators[name]
 		if(seed_list)
 			map_generator.set_seed(seed_list)
 		map_generator.generate_terrain(get_area_turfs(src), reuse_seed=TRUE)
@@ -151,12 +160,10 @@ DEFINE_PLANET(gamma, "Gamma")
 DEFINE_PLANET(hotel, "Hotel")
 DEFINE_PLANET(indigo, "Indigo")
 
-
 #endif
 
 /area/map_gen/planet
 	name = "planet generation area"
-	var/map_generator_path = /datum/map_generator/jungle_generator
 	var/list/turf/biome_turfs = list()
 	var/list/datum/loadedProperties/prefabs = list()
 	var/allow_prefab = TRUE
@@ -233,15 +240,19 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			var/maxTries = (P.required ? 200:33)
 			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
+				if(!P.check_biome_requirements(target))
+					count = INFINITY
+					break
+
 				var/ret = P.applyTo(target)
 				if (ret)
-					logTheThing("debug", null, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				count++
-				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
+			if (count == maxTries)
+				logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 		else break
 
 	//Allow folks to like uh, get here?
@@ -263,8 +274,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			lrt_placed = TRUE
 			special_places.Add(name)
 
-	logTheThing("admin", usr, null, "Planet region generated at [log_loc(region.bottom_left)] with [generator].")
-	logTheThing("diary", usr, null, "Planet region generated at [log_loc(region.bottom_left)] with [generator].", "admin")
+	logTheThing(LOG_ADMIN, usr, "Planet region generated at [log_loc(region.bottom_left)] with [generator].")
+	logTheThing(LOG_DIARY, usr, "Planet region generated at [log_loc(region.bottom_left)] with [generator].", "admin")
 	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
 
 
