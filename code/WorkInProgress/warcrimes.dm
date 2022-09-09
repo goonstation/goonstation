@@ -699,7 +699,6 @@ Urs' Hauntdog critter
 	is_npc = 1
 	uses_mobai = 1
 	real_name = "Juicer Gene"
-	gender = NEUTER
 	max_health = 50
 
 	New()

@@ -685,8 +685,11 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/mining/station
 	icon_state = "shuttle"
 
-/area/shuttle/mining/space
-	icon_state = "shuttle2"
+/area/shuttle/mining/diner
+	icon_state = "shuttle"
+
+/area/shuttle/mining/outpost
+	icon_state = "shuttle"
 
 /area/shuttle/john/diner
 	icon_state = "shuttle"
