@@ -790,8 +790,6 @@
 				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(tempobj.name),X,initial(tempobj.mats))
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)
