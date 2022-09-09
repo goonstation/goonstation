@@ -392,7 +392,7 @@
 				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					if(src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis")) // TODO: Cooldowns
+					if(src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis"))
 						var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
 						if (eyebeams)
 							eyebeams.ability.handleCast(target)
