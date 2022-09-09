@@ -1101,7 +1101,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			for (var/organ in organs)
 				if (!organ_found)
 					current_organ = H.get_organ(organ)
-					if (!current_organ || current_organ.get_damage() > current_organ.FAIL_DAMAGE)
+					if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
 						organ_found = organ
 
 			if (organ_found)

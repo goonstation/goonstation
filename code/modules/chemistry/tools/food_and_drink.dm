@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage))
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage))
 						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")

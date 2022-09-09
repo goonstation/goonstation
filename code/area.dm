@@ -1545,19 +1545,15 @@ ABSTRACT_TYPE(/area/station)
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
-
-	New()
-		..()
-		initial_structure_value = calculate_structure_value()
-		START_TRACKING
 #else
 	filler_turf = null
+#endif
 
 	New()
 		..()
-		initial_structure_value = calculate_structure_value()
 		START_TRACKING
-#endif
+		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+			initial_structure_value = calculate_structure_value()
 
 	Del()
 		STOP_TRACKING

@@ -1166,7 +1166,7 @@
 			..()
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
-			setProperty("exploprot", 30)
+			setProperty("exploprot", 40)
 			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
@@ -1178,7 +1178,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 20)
+			setProperty("exploprot", 30)
 			setProperty("meleeprot", 4)
 			setProperty("rangedprot", 1.5)
 
