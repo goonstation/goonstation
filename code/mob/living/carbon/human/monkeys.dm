@@ -322,6 +322,8 @@
 				src.emote("scream")
 			if(src.client)
 				break
+		var/datum/bioEffect/power/adrenaline/adrenaline_rush = src.bioHolder.GetEffect("adrenaline")
+		adrenaline_rush?.ability.handleCast()
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
