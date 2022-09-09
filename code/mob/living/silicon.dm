@@ -95,7 +95,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
@@ -524,6 +524,10 @@ var/global/list/module_editors = list()
 		src.real_name = borgify_name("Robot")
 
 	src.UpdateName()
+
+/mob/living/silicon/UpdateName()
+	..()
+	src.botcard.registered = src.name
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()

@@ -90,6 +90,7 @@
 	var/list/medical_staff = list()
 	var/list/engineering_staff = list()
 	var/list/research_staff = list()
+	var/list/security_officers = list()
 
 
 	for(var/datum/job/JOB in job_controls.staple_jobs)
@@ -192,6 +193,8 @@
 				research_staff += player
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += player
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
@@ -218,6 +221,8 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
@@ -246,6 +251,8 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
@@ -259,39 +266,26 @@
 	/////////////////////////////////////////////////
 
 	//Find the command jobs, if they are unfilled, pick a random person from within that department to be that command officer
+	//if they had the command job in their medium or low priority jobs
 	for(var/datum/job/JOB in available_job_roles)
 		//cheaper to discout this first than type check here *I think*
-		if (JOB.limit > 0 && JOB.assigned < JOB.limit)
-			//Promote Chief Engineer
+		if (istype(JOB, /datum/job/command) && JOB.limit > 0 && JOB.assigned < JOB.limit)
+			var/list/picks
 			if (istype(JOB, /datum/job/command/chief_engineer))
-				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Research Director
+				picks = FindPromotionCandidates(engineering_staff, JOB)
 			else if (istype(JOB, /datum/job/command/research_director))
-				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Medical Director
+				picks = FindPromotionCandidates(research_staff, JOB)
 			else if (istype(JOB, /datum/job/command/medical_director))
-				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
+				picks = FindPromotionCandidates(medical_staff, JOB)
+			else if (istype(JOB, /datum/job/command/head_of_security))
+				picks = FindPromotionCandidates(security_officers, JOB)
+			if (!length(picks))
+				continue
+			var/mob/new_player/candidate = pick(picks)
+			logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+			candidate.mind.assigned_role = JOB.name
+			logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
+			JOB.assigned++
 
 
 	// If there's anyone left without a job after this, lump them with a randomly
@@ -604,7 +598,7 @@
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
-		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)

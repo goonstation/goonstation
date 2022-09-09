@@ -111,7 +111,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, "sound/machines/mixer.ogg", 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -298,6 +298,10 @@
 
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
+				if(prob(15))
+					if(prob(10))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
+					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.send(T)
 			else
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
@@ -313,6 +317,10 @@
 			var/turf/T = get_turf(target)
 			var/obj/machinery/networked/telepad/telepad = get_first_teleporter()
 			if(is_teleportation_allowed(T))
+				if(prob(85))
+					if(prob(10))
+						boutput(holder.owner, "<span class='alert'>Recalculating...</span>")
+					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
 				telepad.receive(T)
 			else
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
@@ -498,7 +506,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, "sound/weapons/flash.ogg", 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

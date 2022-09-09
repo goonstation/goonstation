@@ -43,7 +43,7 @@
 			return "Access to NSS Manta's public bridge computer granted. What can we do for you, [C.mob.name]?"
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_start2
@@ -54,7 +54,7 @@
 			return "This computer contains access to NSS Manta's captains logs and a few other helpful documents related to NSS Manta and it's subsystems. What would you like to do, [C.mob.name]?"
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_propellers
@@ -74,7 +74,7 @@
 	Nanotrasen due to the propellers."}
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_junctionboxes
@@ -93,7 +93,7 @@
 	keep NSS Manta powered for even the longest of voyages."}
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_torpedoes
@@ -138,7 +138,7 @@
 	</ul>"}
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_comms
@@ -156,7 +156,7 @@
 	Nanotrasen has also hired a communications officer to guard the communication tower and also to keep the crew of NSS Manta informed of on-going affairs that are happening on the ship."}
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_magnets
@@ -169,7 +169,7 @@
 			return "NSS Manta is equipped with a safety measure for close-by ocean exploration. Jetpacks aboard NSS Manta are directly linked to the Magnetic Tether that can be found in the engineering department. Should the tether ever become damaged, the links will fail and no longer pull anyone towards NSS Manta. Extra caution should be taken to keep the members of the Syndicate away from the Magnetic Tether."
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_mission
@@ -195,7 +195,7 @@
 			I wonder where it will take us, [C.mob.name]?"}
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	mantalog_captainslogentry1
@@ -206,5 +206,5 @@
 			return "The NSS Manta has been on ocean floor patrol for approximately four weeks. Crewmen including several heads of staff have mentioned noticing anomalous Green-tinted lights in crevasses, however nothing of substance has been sighted as of yet, It is suspected to be a new kind of fauna or megafauna that feeds off the ocean wildlife. <br> <br> However, our direction changed when on Sept 6th 2053 at exactly 04:59 hours, a distress signal was recieved from the NSS Polaris, indicating that the ship has run aground in one of Abzu's trenches. However after the initial pass the wreckage of the Polaris could not be found, nor any sign of the Polaris's crew. The Manta is standing by near the beacon and is extending its search radius by sending local deep-sea expedition teams into the deeper recesses via submersible."
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return

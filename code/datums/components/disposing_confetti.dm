@@ -16,7 +16,7 @@ TYPEINFO(/datum/component/disposing_confetti)
 	var/turf/T = get_turf(AM)
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(T))
 	SPAWN(1 SECOND)
-		playsound(T, "sound/voice/yayyy.ogg", 50, 1)
+		playsound(T, 'sound/voice/yayyy.ogg', 50, 1)
 
 /datum/component/disposing_confetti/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING)

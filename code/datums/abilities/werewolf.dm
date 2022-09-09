@@ -5,51 +5,24 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_werewolf(var/force=0)
+/mob/proc/make_werewolf()
 	if (ishuman(src))
 		var/datum/abilityHolder/werewolf/A = src.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (A && istype(A))
 			return
 		var/datum/abilityHolder/werewolf/W = src.add_ability_holder(/datum/abilityHolder/werewolf)
-		//W.addAbility(/datum/targetable/werewolf/werewolf_transform)
 		W.addAbility(/datum/targetable/werewolf/werewolf_feast)
 		W.addAbility(/datum/targetable/werewolf/werewolf_pounce)
 		W.addAbility(/datum/targetable/werewolf/werewolf_thrash)
 		W.addAbility(/datum/targetable/werewolf/werewolf_throw)
 		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
-		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction)	//not using for now, but could be fun later ish.
-		if (force)
-			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
-		else
-			SPAWN(W.awaken_time)
-				handle_natural_werewolf(W)
-
+		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
+		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction) //not using for now, but could be fun later ish.
 		src.resistances += /datum/ailment/disease/lycanthropy
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
 			src.show_antag_popup("werewolf")
-
-	else return
-
-/mob/proc/handle_natural_werewolf(var/datum/abilityHolder/werewolf/W)
-	src.emote("shiver")
-	boutput(src, "<span class='alert'><b>You feel feral!</b></span>")
-	sleep(5 SECONDS)
-	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
-		src.emote("collapse")
-	SPAWN(8 SECONDS)
-		if (!src.getStatusDuration("weakened"))
-			src.emote("collapse")
-		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
-		sleep(rand(300, 500))
-		src.emote("scream")
-		if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-			src.emote("collapse")
-		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		src.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
@@ -72,7 +45,7 @@
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
-			M.delStatus("n_radiation")
+			M.take_radiation_dose(-INFINITY)
 			M.delStatus("burning")
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
@@ -312,15 +285,15 @@
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
 			SPAWN(0.1 SECONDS)
-				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
+				if (src) playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
 		if ("feast")
 			if (prob(60))
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
+				playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 
 			if (prob(40))
-				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			if (prob(30))
 				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)

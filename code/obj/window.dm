@@ -127,9 +127,9 @@
 			corrode_resist 	= material.getProperty("chemical") * 10
 
 			if (material.alpha > 220)
-				opacity = 1 // useless opaque window
+				set_opacity(1) // useless opaque window)
 			else
-				opacity = 0
+				set_opacity(0)
 
 		if (istype(reinforcement))
 
@@ -279,6 +279,19 @@
 
 	get_desc()
 		var/the_text = ""
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99)//dont want to clog up the description unless it's actually damaged
+				the_text += "It seems to be in mostly good condition"
+			if(75 to 89)
+				the_text += "[src] is barely [pick("chipped", "cracked", "scratched")]"
+			if(50 to 74)
+				the_text += "[src] looks [pick("cracked", "damaged", "messed up", "chipped")]."
+			if(25 to 49)
+				the_text += "[src] looks [pick("quite", "pretty", "rather", "notably")] [pick("spiderwebbed", "fractured", "cracked", "busted")]."
+			if(0 to 24)
+				the_text += "[src] is barely intact!"
+
 		switch(src.state)
 			if(0)
 				if (!src.anchored)
@@ -374,7 +387,7 @@
 			if (state == 10) // ???
 				return
 			else if (state >= 1)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -386,7 +399,7 @@
 				else
 					assembly_handler(user, W)
 			else
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 				if (deconstruct_time)
 					var/total_decon_time = deconstruct_time
 					if(ishuman(user))
@@ -444,10 +457,10 @@
 				user.show_text("You have [src.anchored ? "fastened the frame to" : "unfastened the frame from"] the floor.", "blue")
 				logTheThing(LOG_STATION, user, "[src.anchored ? " anchored" : " unanchored"] [src] at [log_loc(src)].")
 				src.align_window()
-		else if(ispryingtool(W))
+		else if(ispryingtool(W) && src.anchored)
 			state = 1 - state
 			user.show_text("You have [src.state ? "pried the window into" : "pried the window out of"] the frame.", "blue")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
 
 	proc/align_window()
 		update_nearby_tiles(need_rebuild=1)
@@ -562,7 +575,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
-		playsound(the_window.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
 		..()
@@ -718,22 +731,53 @@
 	icon_state = "mapwin"
 	dir = 5
 	health_multiplier = 2
+	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
-	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
-		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
-		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall)
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/unsimulated/wall/auto/reinforced/supernorn,
 
-	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced, /turf/unsimulated/wall/auto/lead/blue)
-	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
-	alpha = 160
-	the_tuff_stuff
-		explosion_resistance = 3
+		/turf/simulated/shuttle/wall,
+		/turf/unsimulated/wall,
+		/turf/simulated/wall/auto/shuttle,
+		/obj/indestructible/shuttle_corner,
+
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/supernorn/orange,
+		/turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen,
+		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/supernorn/wood,
+		/turf/unsimulated/wall/auto/supernorn/wood,
+
+		/turf/unsimulated/wall/auto/lead/blue,
+		/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+		/turf/simulated/wall/auto/reinforced/old,
+		/turf/unsimulated/wall/auto/adventure/old,
+		/turf/unsimulated/wall/auto/adventure/mars/interior,
+		/turf/unsimulated/wall/auto/adventure/shuttle,
+		/turf/simulated/wall/auto/marsoutpost,
+		/turf/simulated/wall/false_wall,
+	))
+
+	/// Gotta be a typecache list
+	var/static/list/connects_to_exceptions = typecacheof(list(
+		/obj/window/reinforced,
+		/obj/window/cubicle,
+		/turf/unsimulated/wall/auto/lead/blue,
+	))
+	var/static/list/connects_with_overlay_exceptions = typecacheof(list(
+		/obj/window,
+		/obj/machinery/door/poddoor
+	))
+
 	New()
 		..()
 
@@ -756,7 +800,7 @@
 			return
 
 		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
-		var/overlaydir = get_connected_directions_bitflag(connects_to, mergeLists(connects_to_exceptions, connects_with_overlay_exceptions), connect_diagonal=1)
+		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
 		if (overlaydir)
@@ -767,12 +811,7 @@
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
-	/*
-	attackby(obj/item/W, mob/user)
-		if (..(W, user))
-			src.UpdateIcon()
-			src.update_neighbors()
-	*/
+
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
@@ -780,6 +819,9 @@
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+/obj/window/auto/the_tuff_stuff
+	explosion_resistance = 3
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
@@ -987,8 +1029,8 @@
 
 
 	auto
-		name = "autowindow grille spawner (will place nonreinf soon)"
-		win_path = "/obj/window/auto/reinforced"
+		name = "autowindow grille spawner"
+		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
 		icon_state = "wingrille_f"
@@ -999,8 +1041,8 @@
 			icon_state = "r-wingrille_f"
 
 		crystal
-			name = "crystal autowindow grille spawner (will place nonreinf soon)"
-			win_path = "/obj/window/auto/crystal/reinforced"
+			name = "crystal autowindow grille spawner"
+			win_path = "/obj/window/auto/crystal"
 			icon_state = "p-wingrille_f"
 
 			reinforced
@@ -1037,7 +1079,7 @@
 		if (isscrewingtool(W))
 			src.anchored = !( src.anchored )
 			src.stops_space_move = !(src.stops_space_move)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user << (src.anchored ? "You have fastened [src] to the floor." : "You have unfastened [src].")
 			return
 
@@ -1056,6 +1098,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
 	connects_to += /turf/simulated/wall/auto/feather
@@ -1071,8 +1114,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/auto/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/auto/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/auto/feather/Crossed(atom/movable/mover)
 	. = ..()
@@ -1099,6 +1144,7 @@
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass
 	health_max = 50
+	var/repair_per_resource = 1
 	density = TRUE
 
 /obj/window/feather/New()
@@ -1114,8 +1160,10 @@
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
-/obj/window/feather/proc/repair()
-	src.health = min(src.health + 10, src.health_max)
+/obj/window/feather/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/window/feather/north
 	dir = NORTH

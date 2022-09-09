@@ -52,7 +52,7 @@
 			src.reagents.trans_to(W, W.reagents ? W.reagents.maximum_volume : 10)
 
 			boutput(user, "<span class='notice'>You dunk the mop into [src].</span>")
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='notice'>[src] is empty!</span>")
 	else

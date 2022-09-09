@@ -509,10 +509,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/weapons3
 	name = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
-	desc = "x2 Micro Phaser Gun"
+	desc = "x4 Micro Phaser Gun"
 	category = "Security Department"
-	contains = list(/obj/item/gun/energy/phaser_small = 2)
-	cost = 2500
+	contains = list(/obj/item/gun/energy/phaser_small = 4)
+	cost = 5000
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Micro Phasers (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
@@ -527,22 +527,12 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
 	access = access_armory
 
-/datum/supply_packs/weapons5
-	name = "Weapons Crate - Egun Juniors (Cardlocked \[Armory Equipment])"
-	desc = "x2 Egun Jr"
-	category = "Security Department"
-	contains = list(/obj/item/gun/energy/egun_jr = 2)
-	cost = 6000
-	containertype = /obj/storage/secure/crate/weapon
-	containername = "Weapons Crate - Egun Juniors (Cardlocked \[Armory Equipment])"
-	access = access_armory
-
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
 	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
 	/obj/item/clothing/mask/gas = 4,
-	/obj/item/tank/emergency_oxygen = 2,
+	/obj/item/tank/mini_oxygen = 4,
 	/obj/item/tank/air = 2,
 	/obj/item/clothing/head/emerg = 4,
 	/obj/item/clothing/suit/space/emerg = 4)

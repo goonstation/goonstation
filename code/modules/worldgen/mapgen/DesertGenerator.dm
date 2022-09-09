@@ -105,7 +105,7 @@
 			A.UpdateIcon()
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
 		src.color = new_color
-		src.opacity = 0
+		src.set_opacity(0)
 		src.levelupdate()
 
 		if(weather)

@@ -12,7 +12,7 @@
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/storage/box/starter)
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
 
@@ -41,6 +41,9 @@
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
+/obj/item/storage/backpack/empty
+	spawn_contents = list()
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -63,6 +66,7 @@
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capbackpack"
 	item_state = "capbackpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
@@ -457,13 +461,16 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	proc/can_use()
 		.= 1
 		if (!ismob(loc))
 			return 0
-
-
 
 	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
@@ -545,7 +552,7 @@
 				H.attached_objs.Add(overlay)
 
 
-			playsound(src.loc, "sound/machines/shieldup.ogg", 60, 1)
+			playsound(src.loc, 'sound/machines/shieldup.ogg', 60, 1)
 		return
 
 	dropped(mob/user as mob)
@@ -568,7 +575,7 @@
 			qdel(overlay)
 			overlay = null
 
-		playsound(src.loc, "sound/machines/shielddown.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/shielddown.ogg', 60, 1)
 		return
 
 	process()
@@ -621,7 +628,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/mini_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"

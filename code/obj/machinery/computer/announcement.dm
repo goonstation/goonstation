@@ -19,7 +19,7 @@
 	var/obj/item/device/radio/intercom/announcement_radio = null
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
-	var/sound_to_play = "sound/misc/announcement_1.ogg"
+	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -154,7 +154,7 @@
 		if (isflockmob(user))
 			var/mob/living/critter/flock/flock_creature = user
 			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
-			msg_sound = "sound/misc/flockmind/flockmind_caw.ogg"
+			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)

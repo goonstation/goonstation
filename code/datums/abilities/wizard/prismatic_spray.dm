@@ -10,9 +10,9 @@
 	offensive = 1
 	sticky = 1
 	/*
-	voice_grim = "sound/voice/wizard/weneed.ogg"
-	voice_fem = "sound/voice/wizard/someoneto.ogg"
-	voice_other = "sound/voice/wizard/recordthese.ogg"
+	voice_grim = 'sound/voice/wizard/weneed.ogg'
+	voice_fem = 'sound/voice/wizard/someoneto.ogg'
+	voice_other = 'sound/voice/wizard/recordthese.ogg'
 	*/
 	//set spread equal to half of the desired angle of effect in degrees. 90 becomes 180, 180 becomes 360, etc.
 	var/spread = 26.565 //approximately equivalent to half the angle of a dnd 5e cone AoE spell

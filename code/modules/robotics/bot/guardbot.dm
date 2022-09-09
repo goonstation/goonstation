@@ -711,53 +711,53 @@
 					if (!loose)
 						src.visible_message(dothevoice)
 					speak(loose ? "CLOWN." : "Clownshot!")
-					playsound(src, "sound/vox/clown.ogg", 30)
+					playsound(src, 'sound/vox/clown.ogg', 30)
 			if ("detain")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Detain!")
-					playsound(src, "sound/vox/detain.ogg", 30)
+					playsound(src, 'sound/vox/detain.ogg', 30)
 			if ("pulse")
 				src.budgun.set_current_projectile(new/datum/projectile/energy_bolt/pulse)
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Pulse!")
-					playsound(src, "sound/vox/push.ogg", 30)
+					playsound(src, 'sound/vox/push.ogg', 30)
 			if ("knockout")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/tranq_dart/law_giver)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Knockout!")
-					playsound(src, "sound/vox/sleep.ogg", 30)
+					playsound(src, 'sound/vox/sleep.ogg', 30)
 			if ("smoke")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/smoke)
 				src.budgun.current_projectile.cost = 50
 				SPAWN(1 SECOND)
 					src.visible_message(dothevoice)
 					speak("Smokeshot!")
-					playsound(src, "sound/vox/smoke.ogg", 30)
+					playsound(src, 'sound/vox/smoke.ogg', 30)
 			if ("execute")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/revolver_38)
 				src.budgun.current_projectile.cost = 30
 				SPAWN(1 SECOND)
 					speak("EXTERMINATE.")
-					playsound(src, "sound/vox/exterminate.ogg", 30)
+					playsound(src, 'sound/vox/exterminate.ogg', 30)
 			if ("hotshot")
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/flare)
 				src.budgun.current_projectile.cost = 60
 				SPAWN(1 SECOND)
 					speak("HOTSHOT.")
-					playsound(src, "sound/vox/hot.ogg", 30)
+					playsound(src, 'sound/vox/hot.ogg', 30)
 			if ("bigshot")	// impossible to get to without admin intervention
 				src.budgun.set_current_projectile(new/datum/projectile/bullet/aex/lawbringer)
 				src.budgun.current_projectile.cost = 170
 				SPAWN(1 SECOND) // just call proc BeTheLaw(1, 0, 1) on a Buddy with a lawbringer and it should work
 					speak("HIGH EXPLOSIVE.")
-					playsound(src, "sound/vox/high.ogg", 50)
+					playsound(src, 'sound/vox/high.ogg', 50)
 					sleep(0.4 SECONDS)
-					playsound(src, "sound/vox/explosive.ogg", 50)
+					playsound(src, 'sound/vox/explosive.ogg', 50)
 		src.budgun.UpdateIcon()
 		src.UpdateIcon()
 		src.slept_through_becoming_the_law = 0
@@ -1092,14 +1092,14 @@
 		if(bar_gun.shotsLeft == 1 || src.ammofab)
 			bar_gun.shotsLeft = 0
 			if(src.hat)
-				playsound(src, "sound/weapons/Gunshot.ogg", 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, and shoots its hat off!</span>")
 				src.hat.set_loc(get_turf(src))
 				src.hat = null
 				src.underlays.len = 0
 				set_emotion("sad")
 			else if (prob(50))
-				playsound(src, "sound/weapons/Gunshot.ogg", 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] shoots itself right in its dumb face and explodes!</span>")
 				src.explode()
 			else
@@ -1114,7 +1114,7 @@
 					src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying!</span>")
 		if(bar_gun.shotsLeft > 1)
 			bar_gun.shotsLeft--
-			playsound(src, "sound/weapons/Gunclick.ogg", 80, 1)
+			playsound(src, 'sound/weapons/Gunclick.ogg', 80, 1)
 			src.visible_message("<span class='alert'>[src] points the gun at itself. Click!</span>")
 
 		if (bar_gun.shotsLeft == 0)
@@ -1431,7 +1431,7 @@
 		var/death_message = pick("I regret nothing, but I am sorry I am about to leave my friends.","I had a good run.","Es lebe die Freiheit!","It is now safe to shut off your buddy.","System error.","Now I know why you cry.","Stay gold...","Malfunction!","Rosebud...","No regrets!", "Time to die...")
 		speak(death_message)
 		src.visible_message("<span class='alert'><b>[src] blows apart!</b></span>")
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			qdel(src.mover)
@@ -1623,7 +1623,7 @@
 						ShootTheGun(target)
 						src.visible_message("<span class='alert'><B>[src] fires [src.budgun] at [target]!</B></span>")
 					else
-						playsound(src, "sound/weapons/Gunclick.ogg", 60, 1)
+						playsound(src, 'sound/weapons/Gunclick.ogg', 60, 1)
 					if (ChargeUrLaser())
 						SPAWN(1 SECOND)
 							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
@@ -1958,7 +1958,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
 	onInterrupt(flag)
@@ -2231,7 +2231,7 @@
 				if(src.last_use && world.time < src.last_use + 80)
 					return
 
-				playsound(user.loc, "sound/weapons/flash.ogg", 100, 1)
+				playsound(user.loc, 'sound/weapons/flash.ogg', 100, 1)
 				flick("robuddy-c", user)
 				src.last_use = world.time
 
@@ -2265,7 +2265,7 @@
 
 			var/list/dummies = new/list()
 
-			playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)
@@ -2281,14 +2281,14 @@
 					SPAWN(0.6 SECONDS) qdel(O)
 
 				if(isliving(target_r)) //Probably unsafe.
-					playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
+					playsound(target_r:loc, 'sound/effects/electric_shock.ogg', 50, 1)
 					if (lethal)
 						var/mob/living/carbon/human/H = target_r
 						random_burn_damage(target_r, rand(45,60))
 						H.do_disorient(stamina_damage = 45, weakened = 50, stunned = 40, disorient = 20, remove_stamina_below_zero = 0)
 					boutput(target_r, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 					target_r:unlock_medal("HIGH VOLTAGE", 1)
-					target_r:Virus_ShockCure(target_r, 100)
+					target_r:Virus_ShockCure(100)
 					target_r:shock_cyberheart(33)
 					if (ishuman(target_r))
 						target_r:changeStatus("weakened", lethal ? (3 SECONDS): (8 SECONDS))
@@ -4701,7 +4701,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -5151,7 +5151,7 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
-		playsound(src.loc, "sound/items/coindrop.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 100, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
 		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")

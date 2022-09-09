@@ -204,6 +204,8 @@
 					break
 
 			src.botcard.access = get_all_accesses()
+			src.botcard.registered = "Cyborg"
+			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio(src)
 			if (src.shell)
 				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
@@ -245,7 +247,7 @@
 				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
-			src.sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
+			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 
 	set_pulling(atom/movable/A)
 		. = ..()
@@ -1131,7 +1133,7 @@
 						logTheThing(LOG_STATION, src, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
 						var/area/A = get_area(src.law_rack_connection)
 						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-						src.playsound_local(src, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
+						src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
 						src.show_laws()
 			else
@@ -1737,13 +1739,17 @@
 	special_movedelay_mod(delay,space_movement,aquatic_movement)
 		. = delay
 		if (!src.part_leg_l)
-			. += 3.5
+			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST
 			if (src.part_arm_l)
-				. -= 1
+				. += ROBOT_MISSING_LEG_ARM_OFFSET
 		if (!src.part_leg_r)
-			. += 3.5
+			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST
 			if (src.part_arm_r)
-				. -= 1
+				. += ROBOT_MISSING_LEG_ARM_OFFSET
+		for (var/obj/item/parts/robot_parts/arm as anything in list(src.part_arm_l, src.part_arm_r))
+			if (!arm)
+				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
+
 
 		if (total_weight > 0)
 			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
@@ -2187,7 +2193,7 @@
 			boutput(src, "<span class='alert'>You're not equipped with a suitable head to use this command!</span>")
 			return 0
 
-		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions))
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Face settings", sortList(targethead.expressions, /proc/cmp_text_asc))
 		if (!newFace) return 0
 		var/newMode = tgui_input_list(usr, "Select a display mode", "Face settings", list("light-on-dark", "dark-on-light"))
 		if (!newMode) return 0
@@ -2927,7 +2933,6 @@
 		..()
 
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
-		if(!part) return
 
 		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
@@ -2972,6 +2977,7 @@
 		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
 		if(part.robot_movement_modifier)
 			REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
+
 		src.update_bodypart()
 		//src.update_bodypart(loseslot)
 		qdel(part)
