@@ -302,6 +302,11 @@
 		. = ..()
 		if(.)
 			return
+		if(isintangible(ui.user) || isdead(ui.user) || isunconscious(ui.user) || ui.user.hasStatus("resting"))
+			return
+
+		if(!in_interact_range(src, ui.user))
+			return
 
 		switch(action)
 			if("adjustCR")
