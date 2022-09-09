@@ -193,6 +193,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		var/mob/user = source
 		if(target == user || !istype(user) || user.a_intent == INTENT_HELP || user.a_intent == INTENT_GRAB) return 0
 		if(slot != SLOT_GLOVES || !overridespecial) return 0
+		SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		specialoverride.pixelaction(target,params,user)
 		user.next_click = world.time + user.combat_click_delay

@@ -1142,8 +1142,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(istype(user:gloves, /obj/item/clothing/gloves/bladed))
-			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
