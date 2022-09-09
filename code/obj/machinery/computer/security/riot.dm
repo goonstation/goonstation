@@ -138,7 +138,7 @@
 		if(src.authed)
 
 			logTheThing(LOG_STATION, usr, "unauthorized armory access")
-			command_announcement("<br><b><span class='alert'>Armory weapons access has been revoked from all general security personnel; all personnel are advised to hand in riot gear to the Head of Security.</span></b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
+			command_announcement("<br><b><span class='alert'>Armory weapons access has been revoked from all standard security personnel; all personnel are advised to hand in riot gear to the Head of Security.</span></b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
 			authed = 0
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
