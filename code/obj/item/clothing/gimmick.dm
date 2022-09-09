@@ -70,6 +70,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 	noslow
 		setupProperties()
@@ -215,6 +216,7 @@
 	icon_state = "cyborg"
 	item_state = "cyborg"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_BELT
 
 /obj/item/clothing/under/gimmick/johnny
 	name = "Johnny~~"
@@ -326,6 +328,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "batsuit"
 	item_state = "batsuit"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 /obj/item/clothing/mask/batman
 	name = "batmask and batcape"
@@ -718,6 +721,7 @@
 	item_state = "adeptus"
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT|C_EARS
 	wear_layer = MOB_OVERLAY_BASE
 
 	setupProperties()
@@ -737,6 +741,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 	icon_state = "unp_armor"
 	item_state = "unp_armor"
 
@@ -860,6 +865,7 @@
 	item_state = "robuddy"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 /obj/item/clothing/suit/bee
 	name = "bee costume"
@@ -871,6 +877,7 @@
 	item_state = "bee"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_BELT
 
 /obj/item/clothing/suit/monkey
 	name = "monkey costume"
@@ -883,6 +890,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
 	name = "Nicolas Cage mask"
@@ -917,6 +925,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 	see_face = 0
 
@@ -945,6 +954,7 @@
 	desc = "A blocky looking armor suit, it's made of plastic."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 /obj/item/clothing/head/mobile_suit
 	name = "mobile suit headpiece"
@@ -960,6 +970,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 /obj/item/clothing/suit/armor/sneaking_suit/costume
 	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
@@ -1303,6 +1314,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "guardscoat"
+	hides_from_examine = C_BELT
 
 	setupProperties()
 		..()
@@ -1390,6 +1402,7 @@
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 
 /obj/item/clothing/head/rando
@@ -1461,6 +1474,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_BELT
 	icon_state = "dressb"
 	item_state = "dress"
 
@@ -1489,6 +1503,7 @@
 	name = "werewolf suit"
 	desc = "The suit of a werewolf costume. Given the amount of moons in and around the station, it's a surprise there isn't a real one about."
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 	icon_state = "wwsuit"
 
 /obj/item/clothing/head/werewolf
@@ -1517,6 +1532,7 @@
 	name = "abomination suit"
 	desc =  "The abomination suit straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_BELT
 	icon_state = "abomcostume"
 
 /obj/item/clothing/head/abomination
@@ -1538,6 +1554,7 @@
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
 
@@ -1733,6 +1750,7 @@
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
+	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
 
 	New()
 		..()

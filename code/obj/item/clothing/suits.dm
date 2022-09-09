@@ -259,6 +259,7 @@
 	icon_state = "paramedic"
 	item_state = "paramedic"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_SHOES
 	protective_temperature = 3000
 
 	setupProperties()
@@ -325,6 +326,7 @@
 	item_state = "hev"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -343,6 +345,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_GLOVES|C_SHOES
 
 	New()
 		. = ..()
@@ -421,6 +424,7 @@
 	icon_state = "judge"
 	item_state = "judge"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT
 
 /obj/item/clothing/suit/chef
 	name = "chef's coat"
@@ -428,6 +432,7 @@
 	icon_state = "chef"
 	item_state = "chef"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_BELT
 
 	setupProperties()
 		..()
@@ -596,6 +601,7 @@
 	item_state = "straight_jacket"
 	body_parts_covered = TORSO|LEGS|ARMS
 	restrain_wearer = TRUE
+	hides_from_examine = C_UNIFORM|C_BELT
 
 	setupProperties()
 		..()
@@ -629,6 +635,7 @@
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_UNIFORM|C_BELT|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -912,6 +919,7 @@
 	icon_state = "fire"
 	item_state = "fire_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_SHOES
 	protective_temperature = 4500
 
 	setupProperties()
@@ -951,6 +959,7 @@
 	desc = "A suit that protects against extreme fire and heat."
 	icon_state = "thermal"
 	item_state = "thermal"
+	hides_from_examine = C_UNIFORM|C_BELT|C_SHOES|C_GLOVES
 
 	protective_temperature = 100000
 
@@ -1010,6 +1019,7 @@
 	icon_state = "lshirt"
 	item_state = "lshirt"
 	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_BELT
 
 	setupProperties()
 		..()
@@ -1039,6 +1049,7 @@
 	item_state = "s_suit"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_SHOES|C_GLOVES
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
 	protective_temperature = 1000
@@ -1139,6 +1150,7 @@
 		icon_state = "commissar_greatcoat"
 		desc = "A fear-inspiring, black-leather great coat, typically worn by a Syndicate Nuclear Operative Commander. So scary even the vacuum of space doesn't dare claim the wearer."
 		team_num = TEAM_SYNDICATE
+		hides_from_examine = C_UNIFORM|C_BELT|C_SHOES
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -1466,6 +1478,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
 
 	setupProperties()
 		..()
@@ -1505,6 +1518,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
 	over_hair = TRUE
 
 	setupProperties()
@@ -1518,6 +1532,7 @@
 	item_state = "wizard"
 	magical = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT
 	contraband = 4
 	duration_remove = 10 SECONDS
 
@@ -1574,6 +1589,7 @@
 	icon_state = "wintercoat"
 	item_state = "wintercoat"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_BELT
 
 	setupProperties()
 		..()
@@ -1649,6 +1665,7 @@
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT
 
 	setupProperties()
 		..()
@@ -1665,6 +1682,7 @@
 	icon_state = "nursedress"
 	item_state = "nursedress"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_BELT
 
 /obj/item/clothing/suit/chemsuit
 	name = "chemical protection suit"
@@ -1675,6 +1693,7 @@
 	icon_state = "chem_suit"
 	item_state = "chem_suit"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
 
 	setupProperties()
 		..()
@@ -1731,6 +1750,7 @@
 	icon_state = "snowcoat"
 	item_state = "snowcoat"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES|C_BELT
 
 	setupProperties()
 		..()
