@@ -139,7 +139,7 @@
 			src.terminal.add_avail(src.lastgen)
 
 			src.air1.volume = src.flow_rate
-			src.air2.volume = src.flow_rate
+
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
 

@@ -132,7 +132,7 @@
 		processCaseRadiation(tmpRads)
 		total_gas_volume += src.reactor_vessel_gas_volume
 		src.air1.volume = total_gas_volume
-		src.air2.volume = total_gas_volume
+
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
 
