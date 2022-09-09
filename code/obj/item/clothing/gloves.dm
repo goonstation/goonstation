@@ -485,13 +485,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "transparent"
 	item_state = "transparent"
 	material_prints = "transparent high-quality synthetic fibers"
-	activeweapon = FALSE
-	hit_type = DAMAGE_CUT
-	force = 0
-	stamina_damage = 0
-	stamina_cost = 0
-	attack_verbs = "slashes"
-	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	var/deployed = FALSE
 
 	nodescripition = TRUE
@@ -515,9 +508,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 		if(deployed)
 			deployed = FALSE
-			force = 0
-			stamina_damage = 0
-			stamina_cost = 0
+			hit_type = initial(hit_type)
+			force = initial(force)
+			stamina_damage = initial(stamina_damage)
+			stamina_cost = initial(stamina_cost)
+			hitsound = initial(hitsound)
+			attack_verbs = initial(attack_verbs)
 			activeweapon = FALSE
 			setSpecialOverride(null, src)
 
@@ -531,11 +527,15 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			user.visible_message("<span class='alert'><B>[user]'s hand blades retract!</B></span>")
 		else
 			deployed = TRUE
+			hit_type = DAMAGE_CUT
 			force = 11
 			stamina_damage = 25
 			stamina_cost = 10
 			activeweapon = TRUE
 			setSpecialOverride(/datum/item_special/double, src)
+
+			attack_verbs = "slashes"
+			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 			name = "bladed gloves"
 			desc = "These transparent gloves have blades protruding from them."
