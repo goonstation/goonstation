@@ -1,4 +1,9 @@
 
+(t)fri sep 09 22
+(u)Mr. Moriarty
+(p)10573
+(e)|
+(*)Custom emotes now have a typing indicator.
 (t)thu sep 08 22
 (u)NightmarechaMillian
 (p)10658
