@@ -512,17 +512,18 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			force = initial(force)
 			stamina_damage = initial(stamina_damage)
 			stamina_cost = initial(stamina_cost)
+
 			hitsound = initial(hitsound)
 			attack_verbs = initial(attack_verbs)
-			activeweapon = FALSE
+			activeweapon = initial(activeweapon)
 			setSpecialOverride(null, src)
 
-			name = "transparent gloves"
-			desc = "Transparent gloves make it look like the wearer isn't wearing gloves at all. There's a small gap on the back of each glove."
-			icon_state = "transparent"
-			item_state = "transparent"
+			name = initial(name)
+			desc = initial(desc)
+			icon_state = initial(icon_state)
+			item_state = initial(item_state)
 
-			nodescripition = TRUE
+			nodescripition = initial(nodescripition)
 
 			user.visible_message("<span class='alert'><B>[user]'s hand blades retract!</B></span>")
 		else
