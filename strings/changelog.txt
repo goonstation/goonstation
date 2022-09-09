@@ -1,5 +1,7 @@
 
 (t)fri sep 09 22
+(u)aloe
+(+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
 (u)Mr. Moriarty
 (p)10573
 (e)|
