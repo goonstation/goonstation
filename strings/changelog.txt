@@ -11,8 +11,8 @@
 (p)10658
 (e)|
 (+)??? pills have been updated with some new chems.
-(t)thu sep 8 22
 (u)aloe
+(e)|
 (+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
 (t)wed sep 07 22
 (u)Ikea, Zonespace, and Yellow/Myco
