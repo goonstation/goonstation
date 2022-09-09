@@ -1281,7 +1281,6 @@ datum
 						M.take_brain_damage(-2 * mult)
 					M.HealDamage("All", 2 * mult, 2 * mult)
 					M.updatehealth() //I hate this, but we actually need the health on time here.
-					M.bodytemperature = max(M.bodytemperature+(20 * mult),0)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
