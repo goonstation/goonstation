@@ -1,5 +1,8 @@
 
 (t)fri sep 09 22
+(u)Sord
+(e)|
+(+)Raw gemstones now have their own value on the shipping market
 (u)LeahTheTech
 (p)10460
 (e)|
