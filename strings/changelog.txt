@@ -1,5 +1,9 @@
 
 (t)fri sep 09 22
+(u)glowbold
+(p)10713
+(e)|
+(+)Donut3's taxi/mining shuttle can now be boarded through a new maintenance dock, south of nerd lounge.
 (u)aloe
 (+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
 (u)Mr. Moriarty
