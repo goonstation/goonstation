@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				if(N.velocity > 0 && prob(current_gas.toxins/10))
 					N.velocity++
 					current_gas.toxins--
-					current_gas.radgas++
+					current_gas.radgas+=10
 
 	processGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 				//Q = mcT
 				//dQ = mc(dT)
 				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*0.2)
+				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*0.05)
 				if(src.current_gas.temperature < 0 || src.temperature < 0)
 					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas
