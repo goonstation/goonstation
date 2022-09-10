@@ -216,8 +216,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null
 			else
 				src.burn_tile()
+				src.icon_old = null
 
 
 /////////////////////////////////////////
