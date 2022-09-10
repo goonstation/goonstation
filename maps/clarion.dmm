@@ -4952,6 +4952,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
+/obj/blind_switch/area/south,
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "akt" = (
@@ -10703,7 +10704,11 @@
 /obj/machinery/light_switch/south{
 	dir = 4;
 	pixel_x = 24;
-	pixel_y = 0
+	pixel_y = -7
+	},
+/obj/blind_switch/area/east{
+	dir = 4;
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -38778,7 +38783,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "fkN" = (
 /obj/cable{
 	d2 = 4;
@@ -41001,7 +41006,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "ijW" = (
 /obj/machinery/atmospherics/binary/pump{
 	frequency = 1225;
@@ -49935,7 +49940,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
-/area/station/security/brig)
+/area/station/security/main)
 "wax" = (
 /obj/window/auto/reinforced,
 /obj/decal/poster/wallsign/poster_hair,
