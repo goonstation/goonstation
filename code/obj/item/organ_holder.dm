@@ -1616,3 +1616,17 @@
 			src.icon_state = initial(src.icon_state)
 		else
 			src.icon_state = "[initial(src.icon_state)]_cd"
+
+/datum/targetable/organAbility/sacredheart
+	name = "Sacred Heart"
+	desc = "Channel your faith in god into a knife to smite your enemies."
+	icon_state = "cyberkidney"
+	targeted = 0
+	cooldown = 30 SECONDS
+
+	cast(atom/target)
+		if (..())
+			return 1
+		boutput(holder.owner, "<span class='notice'>You use your [islist(linked_organ) ? "s" : ""] to conqure a knife from thin air.</span>")
+		var/obj/item/dagger/syndicate/chap_knife = new/obj/item/dagger/syndicate/chap_knife(get_turf(holder.owner))
+		holder.owner.put_in_hand_or_drop(chap_knife)

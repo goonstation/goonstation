@@ -115,6 +115,14 @@
 		else
 			return 0
 
+/obj/item/organ/heart/sacred
+	name = "sacredheart"
+	desc = "A heart filled with the teachings of the bible"
+	item_state = "sacred_heart"
+	icon_state = "sacred_heart"
+	transplant_XP = 8
+	organ_abilities = list(/datum/targetable/organAbility/sacredheart)
+
 /obj/item/organ/heart/synth
 	name = "synthheart"
 	desc = "I guess you could call this a... hearti-choke"

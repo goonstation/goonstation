@@ -496,6 +496,16 @@ This is basically useless for anyone but miners.
 	vr_allowed = 0
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/scroll
+	name = "Scroll of Sacred Heart's"
+	item = /obj/item/device/sacred_heart_scroll
+	cost = 6
+	desc = "A scroll from ages past, sure to fill your heart with the lords truth."
+	job = list("Chaplain")
+	not_in_crates = 1
+	vr_allowed = 0
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY
+
 /datum/syndicate_buylist/traitor/contract
 	name = "Faustian Bargain Kit"
 	item = /obj/item/storage/briefcase/satan

@@ -524,6 +524,28 @@
 		..()
 		setProperty("movespeed", -0.5)
 
+//chaplain traitor knice
+/obj/item/dagger/syndicate/chap_knife
+	name = "Blade of Light"
+	desc = "A knife conquered through unshakeable faith in the lord."
+	item_state = "chap_dagger"
+	force = 14
+	throwforce = 18
+	stamina_cost = 5
+	c_flags = EQUIPPED_WHILE_HELD
+
+	New()
+		..()
+		setProperty("movespeed", -0.4)
+		SPAWN(0)
+			icon_state = "chap_knife_1"
+			sleep(1 SECONDS)
+			icon_state = "chap_knife_2"
+			sleep(6 SECONDS)
+			icon_state = "chap_knife_3"
+			sleep(1 SECONDS)
+			qdel(src)
+
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
 	// icon = 'icons/obj/items/weapons.dmi'
