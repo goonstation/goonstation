@@ -192,7 +192,7 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_werewolf(1)
+			M.make_werewolf()
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
 
 	wrestler

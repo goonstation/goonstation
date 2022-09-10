@@ -1257,8 +1257,8 @@
 					var/obj/item/organ/O = CROP
 					if(istype(CROP,/obj/item/organ/heart))
 						O.quality = quality_score
-					O.MAX_DAMAGE += DNA.endurance
-					O.FAIL_DAMAGE += DNA.endurance
+					O.max_damage += DNA.endurance
+					O.fail_damage += DNA.endurance
 
 				else if(istype(CROP,/obj/item/reagent_containers/balloon))
 					var/obj/item/reagent_containers/balloon/B = CROP

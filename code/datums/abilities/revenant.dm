@@ -172,7 +172,7 @@
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
-		owner:decomp_stage = 4
+		owner:decomp_stage = DECOMP_STAGE_SKELETONIZED
 		if (ishuman(owner) && owner:organHolder && owner:organHolder:brain)
 			qdel(owner:organHolder:brain)
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(owner.x, owner.y, owner.z)))
@@ -214,7 +214,7 @@
 			owner.death(FALSE) // todo: add custom death
 			return
 
-		var/e_decomp_stage = 0
+		var/e_decomp_stage = DECOMP_STAGE_NO_ROT
 		if (owner.max_health < 75)
 			e_decomp_stage++
 			if (owner.max_health < 50)

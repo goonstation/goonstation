@@ -8,14 +8,19 @@
 // Fibrenet (functionally a lattice)
 // Barricade (functionally a grille, but flockdrones can pass through it)
 
-////////////////////////////
+//----------------------------
 // TABLE & PARTS
-///////////////////////////
+//----------------------------
+
+TYPEINFO(/obj/table/flock)
+TYPEINFO_NEW(/obj/table/flock)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/flock/auto)
+
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
 	icon = 'icons/obj/furniture/table_flock.dmi'
-	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE

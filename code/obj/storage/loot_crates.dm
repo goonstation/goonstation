@@ -14,7 +14,9 @@
 		/obj/item/clothing/suit/billow_cape = 10,\
 		/obj/item/clothing/under/misc/tiedye = 20,\
 		/obj/item/clothing/under/misc/neapolitan = 20,\
-		/obj/item/clothing/under/misc/mint_chip = 20,
+		/obj/item/clothing/under/misc/mint_chip = 20,\
+		/obj/item/clothing/under/misc/mimefancy = 10,\
+		/obj/item/clothing/under/misc/mimedress = 10,
 	// station
 	)
 	var/list/department = list(

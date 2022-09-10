@@ -1461,9 +1461,9 @@ datum
 			transparency = 220
 
 		harmful/wolfsbane
-			name = "Aconitum"
+			name = "Aconitine"
 			id = "wolfsbane"
-			description = "Also known as monkshood or wolfsbane, aconitum is a very potent neurotoxin."
+			description = "Also known as monkshood or wolfsbane, aconitine is a very potent neurotoxin."
 			reagent_state = LIQUID
 			fluid_r = 129
 			fluid_b = 116

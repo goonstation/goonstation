@@ -173,7 +173,7 @@
 	if (!istype(src))
 		return
 	src.set_mutantrace(/datum/mutantrace/skeleton)
-	src.decomp_stage = 4
+	src.decomp_stage = DECOMP_STAGE_SKELETONIZED
 	if (src.organHolder && src.organHolder.brain)
 		qdel(src.organHolder.brain)
 	src.set_clothing_icon_dirty()
