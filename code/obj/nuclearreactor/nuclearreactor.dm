@@ -388,8 +388,9 @@
 					if(severity > 1)
 						logTheThing("station", src, null, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
 					if(prob(50))
-						src.component_grid[x][y].set_loc(epicentre)
-						src.component_grid[x][y].throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
+						var/obj/item/reactor_component/throwcomp = src.component_grid[x][y]
+						throwcomp.set_loc(epicentre)
+						throwcomp.throw_at(get_ranged_target_turf(epicentre,pick(alldirs),rand(1,20)),rand(1,20),rand(1,20))
 					else
 						qdel(src.component_grid[x][y])
 						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris, epicentre)
@@ -398,6 +399,15 @@
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
 		if(severity <= 1)
 			qdel(src)
+
+	Exited(var/atom/movable/A)
+		if(istype(A,/obj/item/reactor_component))
+			for(var/x=1 to REACTOR_GRID_WIDTH)
+				for(var/y=1 to REACTOR_GRID_HEIGHT)
+					if(src.component_grid[x][y] == A)
+						src.component_grid[x][y] = null
+						break
+
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1

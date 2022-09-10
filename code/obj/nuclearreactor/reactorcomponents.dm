@@ -95,16 +95,6 @@ ABSTRACT_TYPE(/obj/reactor_component)
 
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
-		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
-			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
-			src.material.adjustProperty("n_radioactive", -0.01)
-			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
-			src.temperature += 20
-		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
-			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
-			src.material.adjustProperty("radioactive", -0.01)
-			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
-			src.temperature += 10
 		for(var/datum/neutron/N in inNeutrons)
 			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
@@ -132,6 +122,16 @@ ABSTRACT_TYPE(/obj/reactor_component)
 						qdel(N)
 					src.temperature += 1
 
+		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
+			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
+			src.material.adjustProperty("n_radioactive", -0.01)
+			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
+			src.temperature += 20
+		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
+			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+			src.material.adjustProperty("radioactive", -0.01)
+			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
+			src.temperature += 10
 		return inNeutrons
 
 
