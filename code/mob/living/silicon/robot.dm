@@ -21,7 +21,7 @@
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
-	var/datum/hud/robot/hud
+	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
 	var/obj/item/parts/robot_parts/head/part_head = null

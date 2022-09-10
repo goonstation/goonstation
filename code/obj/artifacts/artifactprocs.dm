@@ -573,7 +573,7 @@
 	if ((target && ismob(target)) && type_of_action == "weapon")
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
 		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")

@@ -1,5 +1,22 @@
 
 (t)fri sep 09 22
+(u)tarmunora
+(+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
+(u)Sord
+(e)|
+(+)Raw gemstones now have their own value on the shipping market
+(u)LeahTheTech
+(p)10460
+(e)|
+(+)Cyborgs now also get a killswitch warning overlay.
+(u)Conchuckter
+(p)10527
+(e)|
+(+)Tranquilizer darts and old hunting rifle clips have been resprited, they now look like stripper clips.
+(u)glowbold
+(p)10713
+(e)|
+(+)Donut3's taxi/mining shuttle can now be boarded through a new maintenance dock, south of nerd lounge.
 (u)aloe
 (+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
 (u)Mr. Moriarty
@@ -11,8 +28,8 @@
 (p)10658
 (e)|
 (+)??? pills have been updated with some new chems.
-(t)thu sep 8 22
 (u)aloe
+(e)|
 (+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
 (t)wed sep 07 22
 (u)Ikea, Zonespace, and Yellow/Myco
