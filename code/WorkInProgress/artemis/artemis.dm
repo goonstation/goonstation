@@ -501,6 +501,12 @@
 	bottom_x_offset = null
 	is_syndicate = TRUE
 
+	New()
+		..()
+#ifndef DEBUG_ARTEMIS
+		qdel(src)
+#endif
+
 /obj/artemis/manta
 	name = "Manta-"
 	desc = "Manta"
@@ -522,6 +528,9 @@
 	var/r_curvature = 50
 	controller_type = "manta"
 
+	New()
+		..()
+		qdel(src)
 
 	fast_process()
 		while(do_process)
