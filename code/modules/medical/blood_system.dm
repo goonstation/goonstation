@@ -475,7 +475,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			H.reagents.trans_to(B, min(round(num_amount / 2, 1), 5))
+			H.reagents.trans_to(B, min((num_amount / 8), 4))
 	else
 		return
 
