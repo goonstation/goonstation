@@ -143,7 +143,7 @@
 			owner.losebreath += (0.7 * mult)
 
 		if (owner.grabbed_by && length(owner.grabbed_by))
-			breath = get_breath_grabbed_by(BREATH_VOLUME * mult)
+			breath = get_breath_grabbed_by(BREATH_VOLUME)
 
 		if (!breath)
 			if (owner.losebreath>0) //Suffocating so do not take a breath
@@ -161,15 +161,15 @@
 					boutput(owner, "<span class='notice'>You catch your breath.</span>")
 			else
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
-				breath = get_breath_from_internal(BREATH_VOLUME * mult)
+				breath = get_breath_from_internal(BREATH_VOLUME)
 
 				//No breath from internal atmosphere so get breath from location
 				if (!breath)
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
-						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME * mult)
+						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME)
 					else if (isturf(owner.loc))
-						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
+						var/breath_moles = (TOTAL_MOLES(environment)*BREATH_PERCENTAGE)
 
 						breath = owner.loc.remove_air(breath_moles)
 
@@ -179,7 +179,7 @@
 						var/obj/location_as_object = owner.loc
 						location_as_object.handle_internal_lifeform(owner, 0)
 
-		breath?.volume = BREATH_VOLUME * mult
+		breath?.volume = BREATH_VOLUME
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
