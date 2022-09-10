@@ -148,10 +148,10 @@
 					items += A
 
 		if (linked_power.power > 1)
-			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		for (var/obj/O in atoms)
+		for (var/obj/O in items)
 			objs += O
 
 		if (!length(objs))
@@ -240,10 +240,10 @@
 					items += A
 
 		if (linked_power.power > 1)
-			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
+			items += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
 			//So people can still get the meat ending
 
-		for (var/obj/O in atoms)
+		for (var/obj/O in items)
 			objs += O
 
 		if (!length(objs))
