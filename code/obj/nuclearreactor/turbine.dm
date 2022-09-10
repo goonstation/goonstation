@@ -42,6 +42,24 @@
 		src.net_id = generate_net_id(src)
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)
+
+	proc/_set_statorload_mechchomp(var/datum/mechanicsMessage/inp)
+		if(!length(inp.signal)) return
+		var/newload = text2num(inp.signal)
+		if(newload != src.stator_load && isnum_safe(newload) && newload > 0)
+			src.stator_load = newload
+			logTheThing(LOG_STATION, src, "set stator load to [newload] using mechcomp.")
+
+	proc/_set_flowrate_mechchomp(var/datum/mechanicsMessage/inp)
+		if(!length(inp.signal)) return
+		var/newflow = text2num(inp.signal)
+		if(newflow != src.flow_rate && isnum_safe(newflow) && newflow > 0)
+			src.flow_rate = newflow
+			logTheThing(LOG_STATION, src, "set flow rate to [newflow] using mechcomp.")
+
 
 	//override the atmos/binary connection code, because it doesn't like big icons
 	initialize()
@@ -145,5 +163,5 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
-
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"rpm=[src.RPM]&power=[src.lastgen]")
 

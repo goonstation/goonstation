@@ -44,6 +44,14 @@
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
 
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
+
+	proc/_set_controlrods_mechchomp(var/datum/mechanicsMessage/inp)
+		if(!length(inp.signal)) return
+		if(src.set_control_rods(text2num(inp.signal)))
+			logTheThing(LOG_STATION, src, "set control rods to [text2num(inp.signal)] using mechcomp.")
+
 	process()
 		. = ..()
 		if(melted)
@@ -101,25 +109,25 @@
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
-				logTheThing("station", src, null, "[src] is at 2000K and may meltdown")
+				logTheThing("station", src, "[src] is at 2000K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
 			if(temperature >= 2500 && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
-				logTheThing("station", src, null, "[src] is at 2500K and is likely to meltdown")
+				logTheThing("station", src, "[src] is at 2500K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
 			else if(temperature < 2500 && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
-				logTheThing("station", src, null, "[src] is cooling from 2500K")
+				logTheThing("station", src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
-				logTheThing("station", src, null, "[src] is cooling from 2000K")
+				logTheThing("station", src, "[src] is cooling from 2000K")
 				src.ClearSpecificParticles("overheat_smoke")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
@@ -135,6 +143,7 @@
 
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[total_gas_volume]")
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I,/obj/item/reactor_component))
@@ -197,7 +206,7 @@
 		world << alarm //ew
 		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
 
-		logTheThing("station", src, null, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
+		logTheThing("station", src, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
 		if(!src.current_gas)
@@ -313,12 +322,8 @@
 
 		switch(action)
 			if("adjustCR")
-				for(var/x=1 to REACTOR_GRID_WIDTH)
-					for(var/y=1 to REACTOR_GRID_HEIGHT)
-						if(src.component_grid[x][y])
-							if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
-								var/obj/item/reactor_component/control_rod/CR = src.component_grid[x][y]
-								CR.configured_insertion_level = text2num(params["crvalue"])/100
+				src.set_control_rods(text2num(params["crvalue"]))
+
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]
@@ -358,17 +363,30 @@
 		user.u_equip(equipped)
 		equipped.set_loc(src)
 		playsound(src, "sound/machines/law_insert.ogg", 80)
-		logTheThing("station", user, null, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
+		logTheThing("station", user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
 		playsound(src, "sound/machines/law_remove.ogg", 80)
-		logTheThing("station", user, null, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
+		logTheThing("station", user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [src.component_grid[x][y]] out of the reactor</span>", "<span class='alert'>You slide the [src.component_grid[x][y]] out of the reactor.</span>")
 		user.put_in_hand_or_drop(src.component_grid[x][y])
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
+
+	proc/set_control_rods(var/val)
+		. = FALSE
+		if(!isnum_safe(val) || val > 100 || val < 0)
+			return
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					if(istype(src.component_grid[x][y],/obj/item/reactor_component/control_rod))
+						var/obj/item/reactor_component/control_rod/CR = src.component_grid[x][y]
+						if(CR.configured_insertion_level != val/100)
+							CR.configured_insertion_level = val/100
+							. = TRUE
 
 	ex_act(severity)
 		var/comp_throw_prob = 0
@@ -379,14 +397,14 @@
 				comp_throw_prob = 25
 			if(1.0)
 				comp_throw_prob = 100
-				logTheThing("station", src, null, "[src] has been destroyed in an explosion!")
+				logTheThing("station", src, "[src] has been destroyed in an explosion!")
 
 		var/turf/epicentre = get_turf(src)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				if(src.component_grid[x][y] && prob(comp_throw_prob))
 					if(severity > 1)
-						logTheThing("station", src, null, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
+						logTheThing("station", src, "a [src.component_grid[x][y]] has been removed from the [src] by an explosion")
 					if(prob(50))
 						var/obj/item/reactor_component/throwcomp = src.component_grid[x][y]
 						throwcomp.set_loc(epicentre)
