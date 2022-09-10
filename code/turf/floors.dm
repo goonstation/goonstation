@@ -181,8 +181,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null // we're already plating
 			else
 				src.burn_tile()
+				src.icon_old = null
 			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
