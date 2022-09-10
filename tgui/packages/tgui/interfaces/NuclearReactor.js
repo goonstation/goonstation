@@ -103,79 +103,93 @@ export const NuclearReactor = (props, context) => {
     components,
     reactorTemp,
     reactorRads,
-    controlRodLevel,
+    configuredControlRodLevel,
+    actualControlRodLevel,
   } = data;
   return (
     <Window
       resizable
       title="Nuclear Reactor"
-      width={(gridW+1)*64}
-      height={650}>
+      width={500}
+      height={700}>
       <Window.Content>
         <Section>
-          <Box>
-            <ReactorGrid
-              gridW={gridW}
-              gridH={gridH}
-              onClick={act}
-              components={components}
-              emptySlotIcon={emptySlotIcon}
-            />
-          </Box>
+          <ReactorGrid
+            gridW={gridW}
+            gridH={gridH}
+            onClick={act}
+            components={components}
+            emptySlotIcon={emptySlotIcon}
+          />
         </Section>
         <Section>
-          <Box>
-            <Stack fill>
-              <Stack.Item width="50%">
-                Reactor Temperature:
-                <RoundGauge
-                  minValue={0-T0C}
-                  maxValue={2500-T0C}
-                  size={5}
-                  value={reactorTemp}
-                  format={value => round(value-T0C, 2)+ " °C"}
-                  alertAfter={2000-T0C}
-                  ranges={{
-                    "good": [0-T0C, 1000-T0C],
-                    "average": [1000-T0C, 2000-T0C],
-                    "bad": [2000-T0C, 2500-T0C],
-                  }} />
-              </Stack.Item>
-              <Stack.Item width="50%">
-                Radiation Level:
-                <RoundGauge
-                  minValue={0}
-                  maxValue={200}
-                  size={5}
-                  value={reactorRads}
-                  format={value => round(value, 1) + " clicks"}
-                  alertAfter={50}
-                  ranges={{
-                    "good": [0, 10],
-                    "average": [10, 75],
-                    "bad": [75, 200],
-                  }} />
-              </Stack.Item>
-            </Stack>
-          </Box>
+          <Flex justify="space-between" align="center">
+            <Flex.Item>
+              <Box>Reactor Temperature:</Box>
+              <RoundGauge
+                minValue={0-T0C}
+                maxValue={2500-T0C}
+                size={5}
+                value={reactorTemp}
+                format={value => round(value-T0C, 2)+ " °C"}
+                alertAfter={2000-T0C}
+                ranges={{
+                  "good": [0-T0C, 1000-T0C],
+                  "average": [1000-T0C, 2000-T0C],
+                  "bad": [2000-T0C, 2500-T0C],
+                }} />
+            </Flex.Item>
+            <Flex.Item>
+              <Box>Radiation Level:</Box>
+              <RoundGauge
+                minValue={0}
+                maxValue={200}
+                size={5}
+                value={reactorRads}
+                format={value => round(value, 1) + " clicks"}
+                alertAfter={50}
+                ranges={{
+                  "good": [0, 10],
+                  "average": [10, 75],
+                  "bad": [75, 200],
+                }} />
+            </Flex.Item>
+          </Flex>
         </Section>
         <Section>
-          <Stack fill>
-            <Stack.Item width="50%">
-              Control Rod Insertion: {controlRodLevel}%
-            </Stack.Item>
-            <Stack.Item width="50%">
+          <Flex justify="space-between" align="center">
+            <Flex.Item>
+              <Box>Control Rod Insertion:</Box>
+              <RoundGauge
+                minValue={-100}
+                maxValue={0}
+                size={5}
+                value={-actualControlRodLevel}
+                format={value => round(-value, 1)+"%"}
+                alertAfter={-5}
+                ranges={{
+                  "good": [-100, -30],
+                  "average": [-30, -10],
+                  "bad": [-10, 0],
+                }} />
+            </Flex.Item>
+            <Flex.Item>
+              <Button color="transparent" icon="angle-double-left" onClick={() => act('adjustCR', { crvalue: 0 })} />
+              <Button color="transparent" icon="angle-left" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
+              {configuredControlRodLevel} %
+              <Button color="transparent" icon="angle-right" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
+              <Button color="transparent" icon="angle-double-right" onClick={() => act('adjustCR', { crvalue: 100 })} />
               <Knob
                 animated
                 size={2}
-                value={controlRodLevel}
+                value={configuredControlRodLevel}
                 minValue={0}
                 maxValue={100}
                 format={value => value + "%"}
                 onDrag={(e, value) => act('adjustCR', { crvalue: value })}
               />
-            </Stack.Item>
-          </Stack>
+            </Flex.Item>
+          </Flex>
         </Section>
       </Window.Content>
     </Window>

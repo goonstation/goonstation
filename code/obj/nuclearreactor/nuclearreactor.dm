@@ -272,6 +272,7 @@
 		var/can_see_neutrons = isadmin(user)
 		var/comps[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 		var/control_rod_level = 0
+		var/control_rod_level_true = 0
 		var/control_rod_count = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
@@ -281,6 +282,7 @@
 						var/obj/item/reactor_component/control_rod/CR = comp
 						control_rod_count++
 						control_rod_level+=CR.configured_insertion_level
+						control_rod_level_true+=CR.neutron_cross_section
 					comps[x][y]=list(
 							"x" = x,
 							"y" = y,
@@ -295,7 +297,8 @@
 			"components" = comps,
 			"reactorTemp" = src.temperature,
 			"reactorRads" = src.radiationLevel,
-			"controlRodLevel" = (control_rod_level/max(1,control_rod_count))*100
+			"configuredControlRodLevel" = (control_rod_level/max(1,control_rod_count))*100,
+			"actualControlRodLevel" = (control_rod_level_true/max(1,control_rod_count))*100
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
