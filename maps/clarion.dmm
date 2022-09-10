@@ -36793,6 +36793,14 @@
 	dir = 1
 	},
 /area/station/ai_monitored/armory)
+"cww" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1;
+	name = "Mixing Port"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "cwH" = (
 /obj/landmark{
 	icon_state = "x3";
@@ -37264,7 +37272,7 @@
 	},
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "ddR" = (
 /turf/space,
 /turf/space,
@@ -37603,7 +37611,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "dII" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -38698,7 +38706,6 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "fcu" = (
-/obj/machinery/atmospherics/valve,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -38746,6 +38753,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"fjc" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "fjj" = (
 /obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -39329,7 +39340,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "fRF" = (
 /obj/machinery/light{
 	dir = 8;
@@ -41142,6 +41153,13 @@
 /obj/item/hand_tele,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"iuj" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "ivH" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -42274,6 +42292,18 @@
 /obj/machinery/navbeacon/mule/podbay_north/south,
 /turf/simulated/floor/bot,
 /area/station/hangar/main)
+"kmN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "kna" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
@@ -44944,6 +44974,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/security/brig)
+"oAQ" = (
+/obj/machinery/atmospherics/valve{
+	name = "dump valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "oCo" = (
 /obj/window_blinds/cog2,
 /obj/wingrille_spawn/auto,
@@ -45754,6 +45790,11 @@
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"pQD" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "pRn" = (
 /obj/machinery/disposal/mail/small{
 	dir = 8;
@@ -45852,6 +45893,12 @@
 /obj/machinery/shield_generator,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
+"pWk" = (
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/engine/substation/west)
 "pWl" = (
 /obj/securearea{
 	desc = "Why not relax at the pool?";
@@ -46772,10 +46819,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "rrZ" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
 /obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/west)
 "rsw" = (
@@ -46918,7 +46965,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "rHG" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/south,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -48371,6 +48417,12 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
+"uev" = (
+/obj/machinery/atmospherics/valve{
+	name = "bleed valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "ufv" = (
 /obj/cable{
 	d1 = 1;
@@ -48454,7 +48506,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
+/area/station/security/hos)
 "uif" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -48841,6 +48893,10 @@
 "uMI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
+"uNz" = (
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/east,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/substation/west)
 "uOX" = (
 /obj/cable{
 	d1 = 1;
@@ -50344,6 +50400,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/engineering,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/engine/core/nuclear)
 "wLy" = (
@@ -50447,6 +50506,9 @@
 "wUQ" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
@@ -50820,11 +50882,9 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "xvM" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "xwh" = (
@@ -51191,6 +51251,15 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
+"xXK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "xXY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -75388,7 +75457,7 @@ byG
 bzO
 bAW
 bCj
-kSp
+uNz
 gyw
 eUx
 eva
@@ -75645,7 +75714,7 @@ byG
 bzP
 bAT
 bAT
-kSp
+pWk
 xsq
 eUx
 eva
@@ -79242,7 +79311,7 @@ jNZ
 pZP
 lKg
 dxE
-kPt
+kmN
 dxE
 pls
 nHO
@@ -79499,7 +79568,7 @@ jNZ
 uxx
 ncz
 kTu
-tEP
+xXK
 kTu
 kTu
 kTu
@@ -79511,7 +79580,7 @@ qZS
 mHn
 tax
 ugF
-cnG
+pQD
 sJM
 wTt
 ybO
@@ -79757,10 +79826,10 @@ kZm
 ijW
 dWZ
 wUQ
-kTu
-kTu
-kTu
-hej
+oAQ
+syv
+syv
+iuj
 cnG
 vbu
 nxX
@@ -80531,9 +80600,9 @@ dWZ
 dWZ
 pPT
 kTu
-cnk
-kTu
-hej
+fjc
+uev
+cww
 cnG
 qZS
 oJL
