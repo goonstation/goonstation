@@ -740,12 +740,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	var/image/fluid_image = null
 
+	New()
+		..()
+		ENSURE_IMAGE(src.fluid_image, src.icon, src.icon_state + "_fluid")
+
 	on_reagent_change()
 		..()
 		if (reagents.total_volume)
-			ENSURE_IMAGE(src.fluid_image, src.icon, src.icon_state + "_fluid")
-			//if (!src.fluid_image)
-				//src.fluid_image = image('icons/obj/kitchen.dmi', "fluid")
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
@@ -819,7 +820,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pumpkin"
 	can_recycle = FALSE
-	initial_reagents = list("juice_pumpkin" = 30)
 
 
 /* ======================================================= */
