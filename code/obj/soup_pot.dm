@@ -28,6 +28,8 @@
 			src.icon_state = bowl.icon_state
 			src.fluid_image = bowl.fluid_image
 			src.dropped_item = bowl.type
+			src.inhand_image_icon = bowl.inhand_image_icon
+			src.item_state = bowl.item_state
 		else
 			src.fluid_image = image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "fluid")
 		src.name = S.name
