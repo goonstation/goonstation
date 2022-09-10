@@ -935,6 +935,10 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
 			P.name = "carved [src.name]"
 			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
+			new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
 	New()
