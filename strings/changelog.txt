@@ -1,5 +1,7 @@
 
 (t)fri sep 09 22
+(u)tarmunora
+(+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
 (u)Sord
 (e)|
 (+)Raw gemstones now have their own value on the shipping market
