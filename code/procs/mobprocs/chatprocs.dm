@@ -244,6 +244,8 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 
+		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 

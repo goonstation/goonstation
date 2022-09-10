@@ -839,22 +839,6 @@
 "acW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
-"acX" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "outpostla"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "outpostla"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 2;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/science/lobby)
 "acZ" = (
 /obj/landmark/artifact,
 /turf/simulated/floor/plating,
@@ -880,15 +864,6 @@
 /area/station/science/chemistry)
 "adq" = (
 /turf/simulated/floor,
-/area/station/science/lobby)
-"adr" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	id = "outpostla"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 1
-	},
 /area/station/science/lobby)
 "adv" = (
 /obj/overlay{
@@ -933,15 +908,9 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
-"adC" = (
-/turf/simulated/floor/caution/northsouth,
-/area/station/science/lobby)
 "adD" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/launcher_loader/north,
-/turf/simulated/floor/caution/south,
+/obj/machinery/vending/coffee,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "adE" = (
 /obj/stool/bed,
@@ -1000,8 +969,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/chemistry)
 "adO" = (
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/airless,
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
+/turf/simulated/floor,
 /area/station/science/lobby)
 "adQ" = (
 /obj/lattice{
@@ -1070,13 +1042,6 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
-"aed" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/caution/north,
-/area/station/science/lobby)
-"aee" = (
-/turf/simulated/floor/caution/north,
-/area/station/science/lobby)
 "aeg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
@@ -2770,10 +2735,6 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "akc" = (
-/obj/stool/chair/office{
-	dir = 1;
-	icon_state = "office_chair"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3030,6 +2991,7 @@
 /obj/machinery/light/incandescent,
 /obj/table/auto,
 /obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "alq" = (
@@ -3743,12 +3705,6 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
-"apf" = (
-/obj/machinery/conveyor_switch{
-	id = "cargo-art-in"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "apg" = (
 /turf/space,
 /area/supply/spawn_point)
@@ -3811,7 +3767,7 @@
 	dir = 4
 	},
 /obj/access_spawn/cargo,
-/turf/simulated/floor,
+/turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "apt" = (
 /obj/machinery/vehicle/miniputt,
@@ -4064,6 +4020,9 @@
 /obj/landmark/start{
 	name = "Quartermaster"
 	},
+/obj/machinery/conveyor_switch{
+	id = "cargo-art-in"
+	},
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/office)
 "aqf" = (
@@ -4147,6 +4106,12 @@
 "aqs" = (
 /obj/submachine/cargopad{
 	name = "Cargo Bay Pad"
+	},
+/obj/machinery/door_control{
+	id = "cargoartdoor";
+	pixel_x = 6;
+	pixel_y = -24;
+	name = "Artifact Intake Door Control"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -19931,6 +19896,12 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"boy" = (
+/obj/critter/fermid,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "boz" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -26712,14 +26683,22 @@
 	},
 /area/station/crew_quarters/locker)
 "cEi" = (
-/obj/machinery/networked/storage/scanner{
-	bank_id = "research"
+/obj/decal/poster/wallsign/stencil/right/q{
+	pixel_x = -3;
+	pixel_y = 48
 	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
+/obj/decal/poster/wallsign/stencil/right/m{
+	pixel_y = 48
 	},
-/obj/machinery/light/incandescent,
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "outpostla";
+	name = "Emergency Ejection Button";
+	pixel_y = 24
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
@@ -26747,6 +26726,9 @@
 "cFC" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -27204,6 +27186,10 @@
 	dir = 6
 	},
 /area/station/hydroponics/bay)
+"daS" = (
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "dbf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27248,6 +27234,26 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
+"dcj" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/machinery/light/incandescent,
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "dcu" = (
 /obj/decal/poster/wallsign/medbay_left{
 	pixel_x = 31
@@ -27278,16 +27284,7 @@
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "dfk" = (
-/obj/machinery/launcher_loader/west{
-	id = "outpostla"
-	},
-/obj/decal/poster/wallsign/stencil/right/q{
-	pixel_x = -3;
-	pixel_y = 39
-	},
-/obj/decal/poster/wallsign/stencil/right/m{
-	pixel_y = 39
-	},
+/obj/machinery/vending/snack,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "dfn" = (
@@ -27663,11 +27660,6 @@
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"dxz" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/science/lobby)
 "dxC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -28199,6 +28191,10 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"dXX" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/station/science/artifact)
 "dYb" = (
 /turf/simulated/floor/greenwhite/corner{
 	dir = 4
@@ -28308,6 +28304,11 @@
 /obj/random_item_spawner/furniture_parts/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"eaH" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "ebn" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28661,6 +28662,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
+"epI" = (
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "epJ" = (
 /obj/cable,
 /obj/cable{
@@ -29687,6 +29692,13 @@
 /turf/space,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
+"fed" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "outpostla"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
 "fef" = (
 /obj/vehicle/segway,
 /turf/simulated/floor/red/side{
@@ -30271,6 +30283,13 @@
 /obj/random_item_spawner/furniture_parts/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"fHR" = (
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "fHS" = (
 /obj/grille/catwalk,
 /obj/machinery/light/incandescent,
@@ -30594,16 +30613,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "gbD" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/table/glass/auto,
+/obj/decoration/decorativeplant/plant4{
+	pixel_y = 11;
+	pixel_x = -9
 	},
-/obj/machinery/camera{
-	c_tag = "Central Hallway North Ejector";
-	dir = 4;
-	name = "Outpost Camera";
-	network = "Zeta"
-	},
-/turf/simulated/floor/caution/south,
+/turf/simulated/floor,
 /area/station/science/lobby)
 "gcf" = (
 /obj/table/auto,
@@ -30727,6 +30742,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"ggw" = (
+/obj/item/raw_material/gold,
+/obj/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "ggJ" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
@@ -32091,6 +32111,12 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
+"hxM" = (
+/obj/critter/fermid,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "hxT" = (
 /obj/item/device/prox_sensor{
 	pixel_x = -8;
@@ -32433,6 +32459,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"hOU" = (
+/obj/machinery/networked/storage/scanner{
+	bank_id = "research"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "hPt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33065,7 +33103,7 @@
 "iwD" = (
 /obj/forcefield/energyshield/perma,
 /obj/machinery/door/poddoor/pyro/shutters{
-	id = "Cargo Artifact";
+	id = "cargoartdoor";
 	name = "Cargo Routing Door"
 	},
 /obj/machinery/conveyor/south{
@@ -33118,11 +33156,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
-"izE" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/research,
-/turf/simulated/floor,
-/area/station/science/artifact)
 "iAn" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/floorguide/catering{
@@ -33501,6 +33534,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"iQu" = (
+/obj/critter/rockworm,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "iQU" = (
 /obj/disposalpipe/segment/mail,
 /obj/wingrille_spawn/auto/reinforced,
@@ -34359,6 +34397,10 @@
 	dir = 8
 	},
 /area/station/security/main)
+"jFy" = (
+/obj/item/mine/stun/armed,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "jGx" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -37167,6 +37209,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"mml" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "mnm" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -37304,20 +37350,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/space)
-"mur" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "muY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37406,6 +37438,11 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"mBe" = (
+/obj/item/mine/stun/armed,
+/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "mBk" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -37434,6 +37471,11 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
+"mBV" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "mBW" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -37489,6 +37531,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -37986,12 +38031,7 @@
 	},
 /area/station/crew_quarters/market)
 "mVH" = (
-/obj/machinery/door_control{
-	desc = "A remote control switch for a door. This one looks like it operates the QM mass driver to ship objects to QM.";
-	id = "outpostla";
-	name = "Manual Ejection Button";
-	pixel_y = 24
-	},
+/obj/stool/chair,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "mXA" = (
@@ -38263,6 +38303,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
+"njm" = (
+/obj/item/raw_material/gold,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "njs" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -40192,14 +40236,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "oTZ" = (
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Artlab";
-	locked = 0;
-	setup_drive_type = /obj/item/disk/data/tape/artifact_research
-	},
-/obj/machinery/power/data_terminal,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "2-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -40362,6 +40403,11 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"pcq" = (
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "pct" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -40470,6 +40516,14 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"pgY" = (
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"phh" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "phs" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -40546,6 +40600,11 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"pli" = (
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "plA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40859,6 +40918,10 @@
 	dir = 8
 	},
 /area/station/hangar/arrivals)
+"pBx" = (
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "pBy" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -42183,6 +42246,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"qMf" = (
+/obj/critter/fermid,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "qME" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
@@ -43156,6 +43224,22 @@
 "rEu" = (
 /turf/simulated/floor/black,
 /area/station/security/processing)
+"rEV" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	id = "outpostla"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "outpostla"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 2;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/science/artifact)
 "rFu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43585,6 +43669,13 @@
 	network = "Zeta"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Artlab";
+	locked = 0;
+	setup_drive_type = /obj/item/disk/data/tape/artifact_research
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /turf/simulated/floor,
 /area/station/science/artifact)
 "rZP" = (
@@ -44298,6 +44389,10 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"sAo" = (
+/obj/critter/rockworm,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "sAM" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -44814,7 +44909,6 @@
 "sTl" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
-/obj/item/cargotele,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
@@ -44841,6 +44935,11 @@
 	dir = 1
 	},
 /area/station/wreckage)
+"sVO" = (
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "sWg" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -45245,6 +45344,10 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/bar)
+"tne" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "tnl" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45493,6 +45596,12 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"tAq" = (
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/cobryl,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "tAz" = (
 /obj/machinery/door/airlock/pyro/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
@@ -45773,6 +45882,10 @@
 	dir = 4
 	},
 /area/station/security/processing)
+"tMS" = (
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "tMY" = (
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/black,
@@ -45932,6 +46045,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"tWs" = (
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 8
+	},
+/area/station/science/artifact)
 "tWE" = (
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/carpet/grime,
@@ -46678,13 +46800,6 @@
 	dir = 1
 	},
 /area/station/medical/staff)
-"uGX" = (
-/obj/machinery/door_control{
-	id = "Cargo Artifact";
-	pixel_x = -26
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "uHl" = (
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/crew_quarters/stockex)
@@ -47513,6 +47628,11 @@
 "vrb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
+"vrj" = (
+/obj/item/raw_material/gold,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "vrG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48525,22 +48645,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"wsC" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 9
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 8
-	},
-/area/station/science/artifact)
 "wsO" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grasstodirt{
@@ -49044,6 +49148,12 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/science/lobby)
+"wSZ" = (
+/obj/critter/rockworm,
+/obj/item/raw_material/gold,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "wTp" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellow/side{
@@ -85530,7 +85640,7 @@ aaa
 ijd
 aoO
 lLv
-uGX
+api
 api
 apO
 aqe
@@ -85832,7 +85942,7 @@ hkx
 hkx
 iwD
 lLv
-api
+phh
 api
 auD
 auD
@@ -86133,7 +86243,7 @@ aaa
 aaa
 tlV
 wMm
-apf
+api
 aoZ
 api
 aoY
@@ -113201,8 +113311,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -113504,6 +113614,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -113513,11 +113627,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -113806,6 +113916,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -113815,14 +113929,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -114108,6 +114218,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -114117,14 +114229,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -114409,6 +114519,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -114419,14 +114531,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -114723,13 +114833,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+mml
+tne
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -115023,18 +115133,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+wfj
+wfj
+wfj
+wfj
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -115325,20 +115435,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+wfj
+wfj
+wfj
+mml
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -115621,26 +115731,26 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+wfj
+wfj
+sPP
+sPP
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -115922,21 +116032,21 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+wfj
+mBe
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -116224,6 +116334,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -116232,12 +116343,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+jFy
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -116514,6 +116624,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -116534,19 +116645,18 @@ aaa
 aaa
 aaa
 aaa
+sPP
+wfj
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -116814,6 +116924,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -116835,6 +116948,9 @@ aaa
 aaa
 aaa
 aaa
+wfj
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -116842,14 +116958,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -117116,6 +117226,16 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+sPP
 aaa
 aaa
 aaa
@@ -117132,6 +117252,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -117143,18 +117264,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -117426,6 +117536,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -117453,10 +117566,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -117727,11 +117837,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118028,10 +118138,20 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+wfj
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118092,23 +118212,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-acf
-aaa
-acf
 aaa
 aaa
 aaa
 acW
-acW
-acW
-acW
+adW
+adW
+adW
 acV
 acV
 acV
@@ -118330,6 +118440,15 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+wfj
+iQu
+wfj
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118398,20 +118517,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aap
-acc
-acp
-acc
-acG
-acG
-acG
-acW
+adW
 mVH
 gbD
 adO
-aed
+afG
 adq
 adq
 adq
@@ -118631,6 +118741,16 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+njm
+vrj
+vrj
+vrj
+vrj
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118649,6 +118769,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118696,24 +118819,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaA
-acd
-acq
-acx
-aaa
-aaa
-aaa
-acX
-adr
-adC
-dxz
-aee
+adW
+afG
+adq
+adq
+adq
 adq
 qlC
 vrG
@@ -118933,8 +119043,20 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+wfj
+wSZ
+vrj
+pBx
+sPP
+sPP
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118948,6 +119070,11 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -118994,28 +119121,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-abZ
-acc
-acd
-acc
-acG
-acK
-acG
-acW
+adW
 dfk
 adD
-adO
-aed
+xQA
+afG
 adq
 ahR
 adq
@@ -119234,9 +119344,20 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+vrj
+vrj
+sPP
+sPP
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -119251,6 +119372,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -119295,21 +119420,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-abZ
-aai
-acy
 aaa
 aaa
 aaa
@@ -119536,6 +119646,16 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+aaa
+sPP
+sPP
+sPP
+sAo
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -119554,17 +119674,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -119839,14 +119949,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -120145,6 +120255,11 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -120152,15 +120267,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -120445,6 +120555,12 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -120452,17 +120568,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -120748,6 +120858,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -120756,17 +120869,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121051,6 +121161,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121059,6 +121171,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121067,20 +121187,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121361,6 +121471,17 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121368,20 +121489,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121663,6 +121773,17 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121671,21 +121792,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -121967,15 +122077,15 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -122268,16 +122378,16 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -122571,14 +122681,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -122874,13 +122984,13 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -123164,6 +123274,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -123180,9 +123292,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -123465,10 +123575,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -123767,9 +123877,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -124068,9 +124178,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -124370,6 +124480,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -124381,8 +124492,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -124683,9 +124793,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -124984,10 +125094,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -125288,7 +125398,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -125964,7 +126074,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aiU
 aiU
 xvU
 udT
@@ -126264,11 +126374,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aiU
 aiU
 aiU
 dSc
+tWs
 akc
 tma
 ege
@@ -126566,11 +126676,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
 taP
 wef
-izE
+dXX
 uoo
+tma
 xnK
 fkY
 dqY
@@ -126856,12 +126966,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aap
+acc
+acp
+acc
+acF
 aaa
 aaa
 aaa
@@ -126872,7 +126981,8 @@ aaa
 aiU
 aiU
 aiU
-wsC
+dcj
+tma
 nAS
 tma
 pdc
@@ -127098,6 +127208,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -127156,6 +127268,10 @@ aaa
 aaa
 aaa
 aaa
+aaA
+acd
+acq
+acx
 aaa
 aaa
 aaa
@@ -127164,17 +127280,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-sHv
+rEV
+fed
+dXX
 oTZ
-mur
+fkY
 cFC
 qrN
 slT
@@ -127401,6 +127511,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -127458,6 +127570,11 @@ aaa
 aaa
 aaa
 aaa
+abZ
+acc
+acd
+acc
+acF
 aaa
 aaa
 aaa
@@ -127465,19 +127582,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-sHv
+aiU
+aiU
+aiU
 cEi
-cFC
 tma
+hOU
 sEx
 ybe
 bLx
@@ -127704,6 +127814,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -127761,11 +127873,9 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+abZ
+aai
+acy
 aaa
 aaa
 aaa
@@ -128002,14 +128112,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -128304,14 +128414,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -128605,15 +128715,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -128908,11 +129018,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -129211,10 +129321,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -129514,7 +129624,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -130107,6 +130217,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -130121,11 +130235,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -130409,6 +130519,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -130419,25 +130532,22 @@ aaa
 aaa
 aaa
 aaa
+sPP
+aaa
+aaa
+aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -130711,6 +130821,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -130720,28 +130831,27 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+aaa
+aaa
+aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131021,30 +131131,30 @@ aaa
 aaa
 aaa
 aaa
+sPP
+wfj
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131319,6 +131429,15 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+aaa
+aaa
+sPP
+wfj
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131330,25 +131449,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131620,6 +131730,19 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+wfj
+daS
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131630,25 +131753,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -131921,6 +132031,22 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+eaH
+boy
+wfj
+wfj
+wfj
+daS
+daS
+pgY
+sPP
+sPP
+sPP
+pgY
+aaa
+sPP
 aaa
 aaa
 aaa
@@ -131929,26 +132055,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -132222,6 +132332,24 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
+eaH
+sPP
+sPP
+sPP
+sPP
+wfj
+sPP
+sPP
+sPP
+sPP
+wfj
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -132230,26 +132358,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -132527,22 +132637,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+wfj
+wfj
+wfj
+epI
+sPP
+sPP
+sPP
+sPP
+wfj
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -132830,6 +132940,21 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+tMS
+sPP
+sPP
+sPP
+sPP
+mBV
+pli
+tMS
+tMS
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -132849,27 +132974,12 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -133132,6 +133242,24 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+wfj
+sPP
+pgY
+pgY
+wfj
+pli
+hxM
+sPP
+sPP
+sPP
+ggw
+wfj
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -133148,32 +133276,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -133434,6 +133544,24 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+wfj
+sPP
+sPP
+sPP
+sPP
+tMS
+sPP
+sPP
+sPP
+sPP
+sPP
+pgY
+sPP
+wfj
+wfj
+sPP
 aaa
 aaa
 aaa
@@ -133443,39 +133571,21 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -133737,6 +133847,23 @@ aaa
 aaa
 aaa
 aaa
+sPP
+wfj
+daS
+tAq
+pcq
+sPP
+tMS
+sPP
+pgY
+pgY
+sPP
+sPP
+pgY
+wfj
+wfj
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -133745,38 +133872,21 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134038,6 +134148,23 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+wfj
+fHR
+fHR
+sPP
+wfj
+sPP
+sVO
+tMS
+wfj
+wfj
+qMf
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134047,6 +134174,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -134055,30 +134183,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134333,6 +134443,29 @@ aaa
 aaa
 aaa
 aaa
+sPP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+sPP
+sPP
+sPP
+epI
+wfj
+daS
+wfj
+wfj
+epI
+wfj
+tMS
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134353,33 +134486,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134635,6 +134745,29 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+sPP
+sPP
+wfj
+tMS
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+aaa
+sPP
 aaa
 aaa
 aaa
@@ -134656,31 +134789,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134937,6 +135047,27 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+sPP
+sPP
+tMS
+wfj
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -134960,28 +135091,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -135248,16 +135358,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+tMS
+tMS
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -135550,6 +135660,14 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+tne
+sPP
+aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -135571,16 +135689,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -135853,6 +135963,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -135869,6 +135983,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -135876,13 +135991,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -136157,6 +136267,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -136172,20 +136284,18 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -136477,6 +136587,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -136484,9 +136596,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -136770,6 +136880,7 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
 aaa
 aaa
@@ -136778,11 +136889,10 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -137072,20 +137182,20 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
+sPP
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -137362,6 +137472,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -137372,6 +137484,8 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -137379,13 +137493,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
 aaa
 aaa
 aaa
@@ -137664,6 +137774,9 @@ aaa
 aaa
 aaa
 aaa
+sPP
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -137674,11 +137787,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+sPP
+sPP
 aaa
 aaa
 aaa
@@ -137968,7 +138078,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+sPP
 aaa
 aaa
 aaa

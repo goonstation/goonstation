@@ -41,7 +41,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
-	var/datum/hud/ai/hud
+	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
 	var/classic_move = 1 //Ordinary AI camera movement
