@@ -558,7 +558,7 @@
 			if (check_target_immunity(A))
 				continue
 			if (ishuman(A))
-				if (A:decomp_stage != 4)
+				if (A:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					M = A
 					break
 			if (ismobcritter(A))
@@ -613,7 +613,7 @@
 		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (ishuman(target) && target:decomp_stage == 4)
+		if (ishuman(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		//damage thing a bit
@@ -640,8 +640,6 @@
 			return
 
 		var/mob/living/carbon/human/H = target
-		if (H?.decomp_stage == 4)
-			H.decomp_stage = 4
 
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H

@@ -167,7 +167,7 @@
 			dat += "</tbody></table>"
 
 		else if (src.mode == "splicing")
-			if (src.splicing1 && src.splicing2)
+			if (src.splicing1?.planttype && src.splicing2?.planttype)
 				dat += {"<b><u>Seed Splicing</u></b><br>
 				<table>
 					<thead>

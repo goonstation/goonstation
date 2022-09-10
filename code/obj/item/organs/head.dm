@@ -18,7 +18,7 @@
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
-	MAX_DAMAGE = INFINITY
+	max_damage = INFINITY
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -541,8 +541,8 @@
 				if(HEAD_WEREWOLF)
 					src.organ_name = "wolf head"
 					src.desc = "Definitely not a good boy."
-					src.MAX_DAMAGE = 250	// Robust head for a robust antag
-					src.FAIL_DAMAGE = 240
+					src.max_damage = 250	// Robust head for a robust antag
+					src.fail_damage = 240
 
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"

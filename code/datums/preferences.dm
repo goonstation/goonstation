@@ -121,7 +121,7 @@ datum/preferences
 
 	ui_static_data(mob/user)
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/list/categories
 			if (islist(trait.category))
 				categories = trait.category.Copy()
@@ -168,7 +168,7 @@ datum/preferences
 		sanitize_null_values()
 
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/selected = (trait.id in traitPreferences.traits_selected)
 			var/list/categories
 			if (islist(trait.category))
@@ -1045,7 +1045,7 @@ datum/preferences
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break

@@ -200,6 +200,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = TRUE
 
+	get_desc()
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99) //dont want to clog up the description unless it's actually damaged
+				. += "It seems to be in mostly good condition"
+			if(75 to 89)
+				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+			if(50 to 74)
+				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+			if(25 to 49)
+				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+			if(0 to 24)
+				. += "It is barely intact!"
+
 /obj/machinery/door/airlock/New()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten

@@ -81,6 +81,7 @@
 			O.anchored = 1
 			O.set_density(0)
 			O.name = T.name
+			O.mouse_opacity = FALSE // let people click through the field
 
 	proc/turn_off()
 		if (!active) return

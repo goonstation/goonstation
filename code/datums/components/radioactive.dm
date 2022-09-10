@@ -50,11 +50,15 @@ TYPEINFO(/datum/component/radioactive)
 				src._added_to_items_processing = TRUE
 		else
 			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item, use the item processing loop anyway
+		src.do_filters()
+
+	proc/do_filters()
 		var/atom/PA = parent
 		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
-		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
-		src._backup_color = PA.color
-		PA.color = null
+		if(PA.color && isnull(src._backup_color))
+			src._backup_color = PA.color
+			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+			PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
 		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
@@ -97,6 +101,7 @@ TYPEINFO(/datum/component/radioactive)
 				src.decays = R.decays
 			else if (R.neutron == src.neutron && R.decays == src.decays) //if compatible, stack
 				src.radStrength = min(src.radStrength+R.radStrength, 100)
+			src.do_filters()
 			//else
 				//either you tried to apply a decay to a permanent, or a non-neutron to a neutron
 				//in which case, do nothing
@@ -106,12 +111,14 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
-			M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
+			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 1.6 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
+			src.do_filters()
 		if(!src.radStrength)
 			src.RemoveComponent()
 
@@ -119,12 +126,12 @@ TYPEINFO(/datum/component/radioactive)
 	proc/touched(atom/owner, mob/toucher)
 		if(istype(toucher))
 			if(!ON_COOLDOWN(toucher, "radiation_exposure", 0.5 SECONDS))
-				toucher.take_radiation_dose((neutron ? 1.8 SIEVERTS: 0.6 SIEVERTS) * (radStrength/100))
+				toucher.take_radiation_dose((neutron ? 0.9 SIEVERTS: 0.3 SIEVERTS) * (radStrength/100))
 
 	/// Called when a radioactive thing is eaten. High dose to account for radioactive things continuing to irradiate you from the stomach.
 	proc/eaten(atom/owner, mob/eater)
 		if(istype(eater))
-			eater.take_radiation_dose((neutron ? 6 SIEVERTS: 3 SIEVERTS) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
+			eater.take_radiation_dose((neutron ? 4 SIEVERTS: 2 SIEVERTS) * (radStrength/100), internal=TRUE) //don't eat radioactive stuff, ya dingus!
 
 	/// Adds a line to examine text to indicate level of radiation produced
 	proc/examined(atom/owner, mob/examiner, list/lines)

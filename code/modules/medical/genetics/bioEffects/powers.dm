@@ -122,7 +122,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = "/obj/item/"
+	var/target_path = /obj/item/
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -139,16 +139,13 @@
 			return TRUE
 		using = TRUE
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
 		var/list/objs = list()
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
-					atoms += A
+				if (istype(A, mattereater.target_path))
+					items += A
 
 		if (linked_power.power > 1)
 			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)
@@ -167,7 +164,7 @@
 			using = FALSE
 			return TRUE
 
-		if (!(the_object in get_filtered_atoms_in_touch_range(owner, base_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
+		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
 			return TRUE
 
@@ -234,16 +231,13 @@
 			return 1
 		using = 1
 
-		var/datum/bioEffect/power/mattereater/ME = linked_power
-		var/base_path = text2path("[ME.target_path]")
-		if (!ispath(base_path))
-			base_path = /obj/item/
-		var/list/atoms = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/datum/bioEffect/power/mattereater/mattereater = linked_power
+		var/list/items = get_filtered_atoms_in_touch_range(owner, mattereater.target_path)
 		var/list/objs = list()
-		if (ismob(owner.loc) || istype(owner.loc,/obj/))
+		if (ismob(owner.loc) || istype(owner.loc, /obj/))
 			for (var/atom/A in owner.loc.contents)
-				if (istype(A,ME.target_path))
-					atoms += A
+				if (istype(A, mattereater.target_path))
+					items += A
 
 		if (linked_power.power > 1)
 			atoms += get_filtered_atoms_in_touch_range(owner, /obj/the_server_ingame_whoa)

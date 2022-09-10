@@ -132,7 +132,6 @@
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
 	src.attach_hud(vision)
-	src.vis_contents += src.chat_text
 	if (can_bleed)
 		src.ensure_bp_list()
 
@@ -155,9 +154,6 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
-
-	qdel(chat_text)
-	chat_text = null
 
 	if(stamina_bar)
 		for (var/datum/hud/thishud in huds)
@@ -476,7 +472,7 @@
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
@@ -599,7 +595,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/point_at(var/atom/target)
+/mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
@@ -618,9 +614,8 @@
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
-
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)
@@ -1392,6 +1387,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 	src.last_resist = world.time + 20
 
+	if (isobj(src.loc))
+		var/obj/container = src.loc
+		if (container.mob_resist_inside(src))
+			return TRUE //cancel further resist code if needed
+
 	if (src.getStatusDuration("burning"))
 		if (!actions.hasAction(src, "fire_roll"))
 			src.last_resist = world.time + 25
@@ -1439,6 +1439,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
+
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc
 	. = ..()
@@ -1452,7 +1453,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			var/atom/movable/A = src
 			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
 			A?.vis_contents += src.chat_text
-
 
 /mob/living/proc/empty_hands()
 	. = 0
@@ -1595,7 +1595,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	// Call movement traits
 	if(src.traitHolder)
 		for(var/id in src.traitHolder.moveTraits)
-			var/obj/trait/O = src.traitHolder.moveTraits[id]
+			var/datum/trait/O = src.traitHolder.moveTraits[id]
 			O.onMove(src)
 
 	..()
@@ -1719,9 +1719,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (running)
 
-		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		var/runScaling = src.lying ? SPRINT_SCALING_LYING : SPRINT_SCALING
 		if (src.hasStatus(list("staggered","blocking")))
-			runScaling = max(runScaling, RUN_SCALING_STAGGER)
+			runScaling = max(runScaling, SPRINT_SCALING_STAGGER)
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
@@ -2104,3 +2104,14 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (G.state > GRAB_PASSIVE)
 				return FALSE
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
+
+/mob/living/take_radiation_dose(Sv,internal=FALSE)
+	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+		return
+	var/actual_dose = ..()
+	if(actual_dose > 0.2 && !internal)
+		src.TakeDamage("All",0,20*clamp(actual_dose/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
+		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
+			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+	else if((!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+		src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")

@@ -788,12 +788,10 @@
 					match_check = 1
 					break
 			if (!match_check)
-				var/obj/tempobj = new X (src)
-				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/obj/tempobj = X
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(tempobj.name),X,initial(tempobj.mats))
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)

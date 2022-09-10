@@ -1891,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
+	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
