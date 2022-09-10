@@ -1231,7 +1231,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1440,7 +1440,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/cable{
@@ -1883,7 +1883,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1895,7 +1895,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/engine,

@@ -34,6 +34,7 @@
 		setProperty("disorient_resist_eye", 8)
 		setProperty("disorient_resist_ear", 8)
 		setProperty("space_movespeed", 0.2)
+		setProperty("radprot", 5)
 
 	oldish
 		icon_state = "space-OLD"
@@ -275,6 +276,7 @@
 	New()
 		..()
 		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -309,6 +311,11 @@
 		seal_hair = 0
 		see_face = 1
 		team_num = TEAM_SYNDICATE
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
+
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -326,6 +333,10 @@
 		desc = "A modified combat helmet for syndicate operative specialists."
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
 
 		infiltrator
 			name = "specialist combat helmet"
@@ -357,7 +368,7 @@
 
 			proc/toggle(var/mob/toggler)
 				src.on = !src.on
-				playsound(src, "sound/items/mesonactivate.ogg", 30, 1)
+				playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
 				if (ishuman(toggler))
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
@@ -396,10 +407,12 @@
 			equipped(var/mob/user, var/slot)
 				..()
 				if (slot == SLOT_HEAD)
+					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
 
 			unequipped(var/mob/user)
 				if(src.equipped_in_slot == SLOT_HEAD)
+					REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH_SYNDICATE,src)
 					get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
 				..()
 
@@ -418,7 +431,6 @@
 				..()
 				setProperty("meleeprot_head", 6)
 				setProperty("rangedprot", 1)
-				setProperty("exploprot", 10)
 				setProperty("disorient_resist_eye", 50)
 				setProperty("disorient_resist_ear", 50)
 				setProperty("space_movespeed", 0.3)
@@ -760,7 +772,7 @@
 			return
 		weeoo_in_progress = 10
 		SPAWN(0)
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 			light.enable()
 			src.icon_state = "siren1"
 			for (weeoo_in_progress, weeoo_in_progress > 0, weeoo_in_progress--)

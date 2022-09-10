@@ -40,6 +40,93 @@
 				flick("lasercannon-fire", src)
 			. = ..()
 
+/datum/projectile/energy_bolt/taser_beam
+	cost = 0
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	shot_volume = 10
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,0,"HalfStartRailG","HalfEndRailG",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(1,2.30348,-4.4382,0,0,1.96078,0,-1.3074,3.46173)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
+/datum/projectile/bullet/optio
+	name = "hardlight bolt"
+	sname = "needle bolt"
+	cost = 20
+	power = 35
+	dissipation_delay = 6
+	damage_type = D_PIERCING
+	hit_type = DAMAGE_BURN
+	icon_state = "laser_white"
+	shot_sound = 'sound/weapons/optio.ogg'
+	implanted = null
+	armor_ignored = 0.66
+	impact_image_state = "bhole"
+	shot_volume = 66
+	window_pass = 1
+
+/datum/projectile/bullet/optio/hitscan
+	name = "hardlight beam"
+	sname = "pencil beam"
+	cost = 40
+	max_range = PROJ_INFINITE_RANGE
+	dissipation_rate = 0
+	projectile_speed = 12800
+	armor_ignored = 0.33
+
+
+	on_hit(atom/hit, angle, obj/projectile/P)
+		. = ..()
+		var/obj/railgun_trg_dummy/start = new(P.orig_turf)
+		var/obj/railgun_trg_dummy/end = new(get_turf(hit))
+
+		var/Sx = P.orig_turf.x*32 + P.orig_turf.pixel_x
+		var/Sy = P.orig_turf.y*32 + P.orig_turf.pixel_y
+
+		var/Hx = hit.x*32 + hit.pixel_x
+		var/Hy = hit.y*32 + hit.pixel_y
+
+		var/dist = sqrt((Hx-Sx)**2 + (Hy-Sy)**2)
+
+		var/Px = Sx + sin(P.angle) * dist
+		var/Py = Sy + cos(P.angle) * dist
+
+		var/list/affected = DrawLine(start, end, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeTrail",1,0,"HalfStartTrail","HalfEndTrail",OBJ_LAYER, 0, Sx, Sy, Px, Py)
+		for(var/obj/O in affected)
+			O.color = list(-0.8, 0, 0, 0, -0.8, 0, 0, 0, -0.8, 1.5, 1.5, 1.5)
+			animate(O, 1 SECOND, alpha = 0, easing = SINE_EASING | EASE_IN)
+		SPAWN(1 SECOND)
+			for(var/obj/O in affected)
+				O.alpha = initial(O.alpha)
+				qdel(O)
+			qdel(start)
+			qdel(end)
+
 /datum/projectile/special/target_designator
 	sname = "foo"
 	name = "bar"
@@ -403,7 +490,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -473,7 +560,7 @@
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			var/turf/T = pick(floors)
 			if(T)
 				new /obj/decal/cleanable/paper(T)
@@ -531,11 +618,11 @@
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/fescream3.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -600,3 +687,20 @@
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)
+
+/obj/item/firebot_deployer
+	name = "compressed firebrand firebot"
+	desc = "Deploys a firebot dedicated to putting out friendly fire(s)"
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "firebot0"
+
+	New()
+		. = ..()
+		src.SafeScale(0.5, 0.5)
+
+	attack_self(mob/user)
+		if(src == user.equipped())
+			new/obj/machinery/bot/firebot/firebrand(get_turf(src))
+			user.u_equip(src)
+			qdel(src)
+		. = ..()

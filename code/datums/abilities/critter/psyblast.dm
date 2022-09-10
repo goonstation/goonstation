@@ -24,7 +24,7 @@
 		if (!istype(MT))
 			boutput(holder.owner, "<span class='alert'>Nothing to psyblast there.</span>")
 			return 1
-		playsound(MT.loc, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(MT.loc, 'sound/effects/ghost2.ogg', 100, 1)
 		if (istype(MT.head, /obj/item/clothing/head/tinfoil_hat) || MT.bioHolder?.HasEffect("psy_resist") == 2)
 			if(istype(MT.head, /obj/item/clothing/head/tinfoil_hat))
 				boutput(MT, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")

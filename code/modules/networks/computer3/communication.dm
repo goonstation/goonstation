@@ -240,8 +240,8 @@
 				var/call_reason = copytext(trim(strip_html(text)), 1, 140)
 				src.print_text("Transmitting call request...")
 				generate_signal(comm_net_id, "command", "call", "shuttle_id", "emergency", "acc_code", netpass_heads, "reason", call_reason)
-				logTheThing("admin", usr, null,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
-				logTheThing("diary", usr, null, "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])", "admin")
+				logTheThing(LOG_ADMIN, usr,  "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])")
+				logTheThing(LOG_DIARY, usr, "attempted to call the Emergency Shuttle via COMMaster (reason: [call_reason])", "admin")
 				message_admins("<span class='internal'>[key_name(usr)] attempted to call the Emergency Shuttle to the station via COMMaster</span>")
 
 			if(MENU_TRANSMIT_TITLE)
@@ -275,11 +275,11 @@
 				src.print_text(transmit_message)
 				generate_signal(comm_net_id, "command", "transmit", "acc_code", netpass_heads, "title", src.transmit_title, "data", transmit_message, "user", usr.real_name, "transmit_type", transmit_type)
 				if(transmit_type == "centcom")
-					logTheThing("admin", usr, null,  "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])")
-					logTheThing("diary", usr, null, "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])", "admin")
+					logTheThing(LOG_ADMIN, usr,  "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])")
+					logTheThing(LOG_DIARY, usr, "attempted to contanct CentCom (title: [src.transmit_title], message: [transmit_message])", "admin")
 				else if(transmit_type == "station")
-					logTheThing("admin", usr, null,  "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])")
-					logTheThing("diary", usr, null, "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])", "admin")
+					logTheThing(LOG_ADMIN, usr,  "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])")
+					logTheThing(LOG_DIARY, usr, "attempted to contanct the partner space station (title: [src.transmit_title], message: [transmit_message])", "admin")
 
 
 		src.master.add_fingerprint(usr)

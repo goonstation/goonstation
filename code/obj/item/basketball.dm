@@ -34,7 +34,7 @@
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
@@ -46,16 +46,16 @@
 				else
 					if (M.equipped() || get_dir(M, src) == M.dir)
 						src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-						logTheThing("combat", M, null, "is struck by [src]")
+						logTheThing(LOG_COMBAT, M, "is struck by [src]")
 						M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 					else
 						// catch the ball!
 						src.Attackhand(M)
 						M.visible_message("<span class='combat'>[M] catches the [src.name]!</span>", "<span class='combat'>You catch the [src.name]!</span>")
-						logTheThing("combat", M, null, "catches [src]")
+						logTheThing(LOG_COMBAT, M, "catches [src]")
 			else
 				src.visible_message("<span class='combat'>[M] gets beaned with the [src.name].</span>")
-				logTheThing("combat", M, null, "is struck by [src]")
+				logTheThing(LOG_COMBAT, M, "is struck by [src]")
 				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
@@ -269,7 +269,7 @@
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
@@ -278,7 +278,7 @@
 					for(var/mob/V in AIviewers(src, null))
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
-							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
+							playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 65, 1)
 					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
@@ -301,7 +301,7 @@
 	. = ..()
 
 /obj/item/bloodbowlball/attack(target, mob/user)
-	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target
 		if(!isdead(targMob))

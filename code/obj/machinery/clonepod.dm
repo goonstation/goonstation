@@ -243,7 +243,7 @@
 				var/mob/living/carbon/human/H = src.occupant
 				H.update_colorful_parts()
 		else
-			logTheThing("debug", null, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
+			logTheThing(LOG_DEBUG, null, "<b>Cloning:</b> growclone([english_list(args)]) with invalid holder.")
 
 		if (istype(oldabilities))
 			// @TODO @BUG: Things with abilities that should lose them (eg zombie clones) keep their zombie abilities.
@@ -263,11 +263,13 @@
 			if(health_penalty >= 100)
 				src.occupant.unlock_medal("Quit Cloning Around")
 
-		src.mess = 0
+		src.mess = FALSE
+		var/puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
 			traits.copy_to(src.occupant.traitHolder)
-			if (src.occupant.traitHolder.hasTrait("puritan"))
-				src.mess = 1
+			puritan = src.occupant.traitHolder.hasTrait("puritan")
+			if (puritan)
+				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
 				// - Immediately take 250 tox and 100 random brute
@@ -306,7 +308,7 @@
 		if ((mindref) && (istype(mindref))) //Move that mind over!!
 			mindref.transfer_to(src.occupant)
 		else //welp
-			logTheThing("debug", null, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
+			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
 			src.occupant.mind.ckey = src.occupant.ckey
 			src.occupant.mind.key = src.occupant.key
@@ -320,7 +322,7 @@
 
 		// -- End mode specific stuff
 
-		logTheThing("combat", usr, src.occupant, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
 
 		if (isobserver(ghost))
 			qdel(ghost) //Don't leave ghosts everywhere!!
@@ -351,7 +353,8 @@
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		src.occupant.changeStatus("paralysis", 10 SECONDS)
+		if (!puritan)
+			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
 
@@ -387,8 +390,8 @@
 
 			if (src.clonehack == 1 && prob(10))
 				// Mindhack cloning modules make obnoxious noises.
-				playsound(src.loc, pick("sound/machines/glitch1.ogg","sound/machines/glitch2.ogg",
-				"sound/machines/genetics.ogg","sound/machines/shieldoverload.ogg"), 50, 1)
+				playsound(src.loc, pick('sound/machines/glitch1.ogg','sound/machines/glitch2.ogg',
+				'sound/machines/genetics.ogg','sound/machines/shieldoverload.ogg'), 50, 1)
 
 			if (isdead(src.occupant) || src.occupant.suiciding)  //Autoeject corpses and suiciding dudes.
 				// Dead or suiciding people are ejected.
@@ -459,7 +462,7 @@
 					src.connected_message("Additional biomatter required to continue.", "warning")
 					src.send_pda_message("Low Biomatter")
 					src.visible_message("<span class='alert'>[src] emits an urgent boop!</span>")
-					playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 					src.failed_tick_counter = 1
 
 				var/heal_delta = (src.occupant.health - previous_heal)
@@ -490,7 +493,7 @@
 					src.connected_message("Cloning Process Complete.", "success")
 					src.send_pda_message("Cloning Process Complete")
 					// literally ding like a microwave
-					playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 					look_busy()
 					src.go_out(1)
 				else
@@ -564,7 +567,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -580,7 +583,7 @@
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -591,7 +594,7 @@
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing("combat", src, user, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user
 			light.enable()
@@ -600,18 +603,18 @@
 			qdel(W)
 			return
 
-		else if(istype(W, /obj/item/screwdriver) && clonehack == 1) // Wait nevermind the clone wars were a terrible idea
+		else if(isscrewingtool(W) && clonehack) // Wait nevermind the clone wars were a terrible idea
 			if (src.occupant && src.attempting)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
 				clonehack = 0
 				implant_hacker = null
-				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor with a dull thunk!</span>")
-				playsound(src.loc, "sound/effects/thunk.ogg", 50, 0)
+				boutput(user,"<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+				playsound(src.loc, 'sound/effects/pop.ogg', 80, 0)
 				light.disable()
 				src.UpdateIcon()
 			else
@@ -644,7 +647,7 @@
 		src.connected.currentStatusMessage["status"] = status
 		tgui_process.update_uis(src)
 		SPAWN(5 SECONDS)
-			if(src.connected.currentStatusMessage == message)
+			if(src?.connected.currentStatusMessage == message)
 				src.connected.currentStatusMessage["text"] = ""
 				src.connected.currentStatusMessage["status"] = ""
 				tgui_process.update_uis(src)
@@ -908,7 +911,7 @@
 		if (!src.emagged)
 			if (user)
 				boutput(user, "<span class='notice'>You override the reclaimer's safety mechanism.</span>")
-			logTheThing("combat", user, null, "emagged [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
 			emagged = 1
 			return 1
 		else
@@ -942,7 +945,7 @@
 
 		user.visible_message("<b>[user]</b> activates [src]!", "You activate [src].")
 		if (istype(src.occupant))
-			logTheThing("combat", user, src.occupant, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "activated [src.name] with [constructTarget(src.occupant,"combat")] ([isdead(src.occupant) ? "dead" : "alive"]) inside at [log_loc(src)].")
 			if (!isdead(src.occupant) && !isnpcmonkey(src.occupant))
 				message_admins("[key_name(user)] activated [src.name] with [key_name(src.occupant, 1)] (alive) inside at [log_loc(src)].")
 		src.start_cycle()
@@ -1177,7 +1180,7 @@
 		if (grinder.occupant)
 			return
 		owner.visible_message("<span class='alert'><b>[owner] stuffs [target] into [grinder]!</b></span>")
-		logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
+		logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (!isdead(target) && !isnpcmonkey(target))
 			message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [grinder] at [log_loc(grinder)].")
 		if (grinder.auto_strip && !grinder.emagged)

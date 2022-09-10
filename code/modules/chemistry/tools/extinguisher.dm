@@ -9,6 +9,8 @@
 	var/const/max_distance = 5
 	var/const/reagents_per_dist = 5
 	var/initial_volume = 100
+	///Does it get destroyed from exploding
+	var/reinforced = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -93,7 +95,7 @@
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
-		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 		user.lastattacked = target
 		return
 
@@ -103,11 +105,14 @@
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
-			user.visible_message("<span class='alert'>[src] violently bursts!</span>")
-			user.drop_item()
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
 			fireflash(src.loc, 0)
 			explosion(src, src.loc, -1,0,1,1)
+			src.reagents.remove_any(src.initial_volume)
+			if (src.reinforced)
+				return
+			user.visible_message("<span class='alert'>[src] violently bursts!</span>")
+			user.drop_item()
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
@@ -121,10 +126,13 @@
 			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
+			fireflash(src.loc, 0)
+			src.reagents.remove_any(src.initial_volume)
+			if (src.reinforced)
+				return
 			user.visible_message("<span class='alert'>[src] ruptures!</span>")
 			user.drop_item()
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
-			fireflash(src.loc, 0)
 			new/obj/item/scrap(get_turf(user))
 			qdel(src)
 			return
@@ -142,7 +150,7 @@
 				qdel(src)
 				return
 
-		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src, 'sound/effects/spray.ogg', 30, 1, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -157,7 +165,7 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
+		logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 
@@ -212,6 +220,13 @@
 
 /obj/item/extinguisher/abilities = list(/obj/ability_button/extinguisher_ab)
 
-/obj/item/extinguisher/large //for borgs. feel free to use elsewhere if applicable
+/obj/item/extinguisher/large
 	name = "fire extinguisher XL"
 	initial_volume = 300
+
+/obj/item/extinguisher/large/cyborg // because borgs can't replace their extinguishers
+	reinforced = TRUE
+	New()
+		..()
+		src.banned_reagents += src.melting_reagents
+		src.melting_reagents = list()
