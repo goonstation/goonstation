@@ -789,7 +789,7 @@
 				see_revs = 1
 		if (istraitor(src) && traitorsseeeachother)
 			see_traitors = TRUE
-		else if (isnukeop(src) || isnukeopgunbot(src))
+		else if (isnukeopgunbot(src) || isnukeop(src))
 			see_nukeops = 1
 		else if (iswizard(src))
 			see_wizards = 1
@@ -801,6 +801,9 @@
 			see_zombies = 1
 		else if (src.mind && src.mind.special_role == ROLE_GRINCH)
 			see_xmas = 1
+		else if (issurplusop(src))
+			see_nukeops = 1
+
 
 	// Clear existing overlays.
 	delete_overlays:
@@ -911,11 +914,10 @@
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)
 						can_see.Add(I)
-				if (ROLE_SURPLUS_OPERATIVE)
-					var/I = image(antag_generic, loc = M.current)
-					can_see.Add(I)
-					see_nukeops = 1
-
+				if(ROLE_SURPLUS_OPERATIVE)
+					if(see_everything || see_nukeops)
+						var/I = image(antag_syndicate, loc = M.current)
+						can_see.Add(I)
 				else
 					if (see_everything)
 						var/I = image(antag_generic, loc = M.current) // Default to this.

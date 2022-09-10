@@ -42,7 +42,13 @@
 					lucky_dude.former_antagonist_roles.Add(lucky_dude.special_role)
 				if (!(lucky_dude in ticker.mode.former_antagonists))
 					ticker.mode.former_antagonists.Add(lucky_dude)
-			//the following code is functional, but genuinely awful
+
+
+
+			//Now I know what you're thinking: The following code is awful
+			//it's also a condensed version of the normal midround traitor code.
+			//if anyone finds a way to make it less bad, please also apply it to the midround antag event
+
 			var/mob/M3 //create a mob, assign it to our winner
 			if (!M3)
 				M3 = lucky_dude.current
@@ -60,7 +66,9 @@
 				SPAWN(0)
 					equip_shitty_syndicate(R, 1)//do this after the name call to prevent their agent cards from changing
 					R.choose_name(3, "Surplus Operative")
-					lucky_dude.special_role = ROLE_NUKEOP //not ideal, but functional and efficient
+					lucky_dude.special_role = ROLE_SURPLUS_OPERATIVE
+					ticker.mode.Agimmicks |= lucky_dude  //add them to the antags
+
 					R.antagonist_overlay_refresh(1, 0) //this doesn't work RN
 
 					boutput(R, "<span class='notice'>You are a surplus operative!</span>")
