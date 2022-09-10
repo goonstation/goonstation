@@ -1162,16 +1162,6 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
-"aeP" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Zeta_South";
-	location = "Zeta_Midway"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor,
-/area/station/science/lobby)
 "aeQ" = (
 /obj/window{
 	dir = 2
@@ -1495,12 +1485,6 @@
 	},
 /turf/space,
 /area/shuttle/research/outpost)
-"afX" = (
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 8;
-	icon_state = "shuttlecock"
-	},
-/area/shuttle/research/outpost)
 "afY" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -1646,15 +1630,21 @@
 /turf/simulated/floor,
 /area/station/science/storage)
 "agC" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor6"
+/obj/machinery/computer/research_shuttle/embedded{
+	dir = 1;
+	pixel_y = -7;
+	layer = 3.9
+	},
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 8;
+	icon_state = "shuttlecock";
+	layer = 2.8;
+	pixel_y = -32
 	},
 /area/shuttle/research/outpost)
 "agD" = (
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "3";
-	opacity = 1
+	icon_state = "3"
 	},
 /area/shuttle/research/outpost)
 "agE" = (
@@ -1861,13 +1851,6 @@
 	},
 /area/shuttle/research/outpost)
 "ahh" = (
-/obj/machinery/computer/research_shuttle{
-	density = 0;
-	dir = 1;
-	icon_state = "shuttle-embed";
-	layer = 31;
-	pixel_y = 25
-	},
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
 	},
@@ -2299,10 +2282,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Zeta_North";
-	location = "Zeta_East"
-	},
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = "toxins";
 	name = "toxins mail junction"
@@ -2499,8 +2478,7 @@
 	icon_state = "alt_heater"
 	},
 /turf/simulated/wall/auto/shuttle{
-	icon_state = "3";
-	opacity = 1
+	icon_state = "3"
 	},
 /area/shuttle/research/outpost)
 "ajs" = (
@@ -3334,9 +3312,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "ank" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -3378,9 +3354,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "anp" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -3826,7 +3800,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "apC" = (
 /turf/simulated/wall/auto/shuttle{
@@ -3870,9 +3844,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "apI" = (
 /obj/machinery/manufacturer/uniform,
@@ -15129,16 +15101,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
-"aYM" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
 "aYO" = (
 /obj/machinery/camera{
 	c_tag = "East Hallway Center";
@@ -27614,6 +27576,24 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"duQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "duU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -34274,10 +34254,6 @@
 	},
 /area/station/bridge)
 "jzC" = (
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Zeta_Midway";
-	location = "Zeta_West"
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -37017,6 +36993,17 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"meL" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor6"
+	},
+/area/shuttle/research/outpost)
 "mfM" = (
 /obj/decal/cleanable/oil/streak,
 /obj/disposalpipe/segment{
@@ -39595,6 +39582,17 @@
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
 	})
+"orH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Zeta_Midway";
+	location = "Zeta_West"
+	},
+/turf/simulated/floor,
+/area/station/science/lobby)
 "orV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45249,6 +45247,16 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
+"tiL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Zeta_North";
+	location = "Zeta_East"
+	},
+/turf/simulated/floor,
+/area/station/science/lobby)
 "tiS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47436,6 +47444,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
+"vfw" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	dir = 2;
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor6"
+	},
+/area/shuttle/research/outpost)
 "vfW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49887,6 +49906,10 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/middle/south,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Zeta_South";
+	location = "Zeta_Midway"
+	},
 /turf/simulated/floor,
 /area/station/science/lobby)
 "xyn" = (
@@ -68734,7 +68757,7 @@ aaa
 aaa
 aaa
 aaa
-aqI
+aaa
 aqI
 aqI
 aqI
@@ -69035,7 +69058,7 @@ aaa
 aaa
 aaa
 aaa
-aqI
+aaa
 aqI
 aqI
 aqI
@@ -69639,7 +69662,7 @@ aaa
 aaa
 aaa
 aaa
-aqI
+aaa
 aqI
 aqI
 aqI
@@ -69942,7 +69965,7 @@ aaa
 aaa
 aaa
 aaa
-aqI
+aaa
 aqI
 aqI
 aqI
@@ -77487,9 +77510,9 @@ aoW
 aoW
 apT
 apC
-apC
 apB
-apV
+aaa
+aaa
 aaa
 aaa
 kus
@@ -77789,10 +77812,10 @@ aoK
 aoK
 aov
 apq
-aow
 aWp
+apC
 apB
-apV
+aaa
 aaa
 kus
 aro
@@ -78997,10 +79020,10 @@ aow
 aow
 aoL
 aow
-aok
-aYM
+duQ
+apC
 apH
-apV
+aaa
 aaa
 kus
 arr
@@ -79299,9 +79322,9 @@ aoW
 aoW
 apG
 aox
-apT
 apH
-apV
+aaa
+aaa
 aaa
 aaa
 kus
@@ -112491,7 +112514,7 @@ aaa
 aaa
 aaa
 aaa
-afW
+aaa
 agD
 agD
 aik
@@ -112792,8 +112815,8 @@ aaa
 aaa
 aaa
 aaa
-afW
-agD
+aaa
+meL
 ahg
 aHz
 ahE
@@ -113094,7 +113117,7 @@ aaa
 aaa
 aaa
 aaa
-afX
+aaa
 agC
 ahh
 ahF
@@ -113396,8 +113419,8 @@ aaa
 aaa
 aaa
 aaa
-afY
-agD
+aaa
+vfw
 ahi
 aHA
 ahF
@@ -113699,7 +113722,7 @@ aaa
 aaa
 aaa
 aaa
-afY
+aaa
 agD
 agD
 ail
@@ -115206,7 +115229,7 @@ aaa
 adW
 aeo
 adq
-afc
+adq
 adq
 adq
 adq
@@ -116118,7 +116141,7 @@ afZ
 agF
 acV
 ahJ
-wSY
+orH
 euD
 oPY
 ahD
@@ -118824,12 +118847,12 @@ afG
 adq
 adq
 adq
-adq
+afc
 qlC
 vrG
 vrG
 qaP
-aeP
+vrG
 vrG
 vrG
 vrG
@@ -127594,7 +127617,7 @@ bLx
 ssf
 sOP
 phI
-ahR
+tiL
 euD
 pNr
 riA
