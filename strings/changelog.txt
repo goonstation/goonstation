@@ -1,4 +1,9 @@
 
+(t)sat sep 10 22
+(u)glowbold
+(p)10737
+(e)|
+(+)Vampire's bat form no longer works on restricted z levels.
 (t)fri sep 09 22
 (u)tarmunora
 (+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
