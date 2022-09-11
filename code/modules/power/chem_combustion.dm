@@ -29,6 +29,7 @@
 		"oil" = 10000,
 		"fuel" = 8000,
 		"pyrosium" = 7000,
+		"hydrogen" = 6500,
 		"plasma" = 6000,
 		"phosphorus" = 5000,
 		"magnesium" = 4000
