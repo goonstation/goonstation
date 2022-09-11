@@ -739,10 +739,7 @@
 	return
 
 /mob/living/critter/flock/drone/get_tracked_examine_atoms()
-	var/list/tracked = list() + ..()
-	for (var/obj/flock_structure/structure as anything in src.flock.structures)
-		tracked += structure
-	return tracked
+	return ..() + src.flock.structures
 
 /mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
 	remove_lifeprocess(/datum/lifeprocess/blood)

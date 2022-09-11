@@ -2708,10 +2708,7 @@
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
 
 /mob/proc/get_tracked_examine_atoms()
-	var/list/tracked_atoms = list()
-	for (var/mob/M as anything in mobs)
-		tracked_atoms += M
-	return tracked_atoms
+	return mobs
 
 /mob/get_examine_tag(mob/examiner)
 	return src.name_tag
