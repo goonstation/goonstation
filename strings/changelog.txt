@@ -1,5 +1,9 @@
 
 (t)sun sep 11 22
+(u)Mr. Moriarty
+(p)10734
+(e)|
+(+)Added an announcement for when the Armoury is deauthorised.
 (u)Sord
 (*)The emergency shuttle can no longer be called on blob rounds until 20 minutes have passed
 (t)sat sep 10 22
