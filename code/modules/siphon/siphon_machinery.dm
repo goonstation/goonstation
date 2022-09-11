@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					//option 2 - running resonators with the panel open is a bad idea
 					if(src.extract_ticks > 50)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
-							src.visible_message("<span class='alert'><B>[src]</B>'s extraction over-charge alarm triggers.<span>")
+							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
 							playsound(src, "sound/machines/pod_alarm.ogg", 30, 1)
 						src.extract_overloaded = TRUE
 					else
