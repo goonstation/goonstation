@@ -5,17 +5,17 @@
 	icon_state = "sacred_heart_scroll-"
 	desc = "A dusty old scroll containing some rather enlightening knowlege from a time of cloak and dagger."
 	w_class = 2
-	is_syndicate = 1
+	is_syndicate = TRUE
 	var/implant = /obj/item/organ/heart/sacred
 	var/implants_available = HEART
 	var/list/parts_to_remove = list()
 	var/list/parts_to_add = list()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)
-			switch (alert("Would you like to read the [src] this can only be done once?",,"Proceed","Cancel"))
+			switch (alert("Would you like to read [src]? This can only be done once.",,"Proceed","Cancel"))
 				if ("Cancel")
 					return
 				if ("Proceed")
@@ -49,7 +49,7 @@
 		for(var/part_loc in parts_to_add)
 			H.receive_organ(new implant, part_loc, 0, 1)
 			H.update_body()
-			implants_available = 0
+			implants_available = FALSE
 		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
 		bleed(H, 5, 5)
 		SPAWN(5 DECI SECOND)

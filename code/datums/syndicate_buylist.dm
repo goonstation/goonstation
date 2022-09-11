@@ -502,7 +502,7 @@ This is basically useless for anyone but miners.
 	cost = 6
 	desc = "A scroll from ages past, sure to fill your heart with radiating light... and knives, lots and lots of knives."
 	job = list("Chaplain")
-	not_in_crates = 1
+	not_in_crates = TRUE
 	vr_allowed = 0
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
 
