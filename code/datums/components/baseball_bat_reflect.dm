@@ -3,7 +3,7 @@
 	signals = list(COMSIG_ATOM_HITBY_THROWN)
 	proctype = .proc/reflect
 
-TYPEINFO(/datum/component/baseball_bat_reflect)
+TYPEINFO(/datum/component/holdertargeting/baseball_bat_reflect)
 	initialization_args = list()
 
 /datum/component/holdertargeting/baseball_bat_reflect/proc/reflect(mob/owner, atom/movable/thing, datum/thrown_thing/thr)

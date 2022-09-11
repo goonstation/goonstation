@@ -1823,3 +1823,10 @@
 	desc = "It's hard to resist playing with the plume on this thing."
 	icon_state = "shako"
 	item_state = "shako"
+
+// deus ex reference
+/obj/item/clothing/under/gimmick/jcdenton
+	name = "nano-augmented agent outfit"
+	desc = "JC stands for Jesus Christ."
+	icon_state = "jcdenton"
+	item_state = "jcdenton"

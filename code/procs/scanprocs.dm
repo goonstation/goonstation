@@ -172,6 +172,9 @@
 				organ_data1 += organ_health_scan("heart", H, obfuscate)
 				// organ_data1 += organ_health_scan("brain", H, obfuscate) //Might want, might not. will be slightly more accurate than current brain damage scan
 
+				organ_data1 += organ_health_scan("left_eye", H, obfuscate)
+				organ_data1 += organ_health_scan("right_eye", H, obfuscate)
+
 				organ_data1 += organ_health_scan("left_lung", H, obfuscate)
 				organ_data1 += organ_health_scan("right_lung", H, obfuscate)
 
@@ -271,13 +274,13 @@
 		return null
 	var/list/ret = list()
 	var/damage = O.get_damage()
-	if (damage >= O.MAX_DAMAGE)
+	if (damage >= O.max_damage)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
-	else if (damage >= O.MAX_DAMAGE*0.9)
+	else if (damage >= O.max_damage*0.9)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
-	else if (damage >= O.MAX_DAMAGE*0.65)
+	else if (damage >= O.max_damage*0.65)
 		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
-	else if (damage >= O.MAX_DAMAGE*0.3)
+	else if (damage >= O.max_damage*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Minor</span>"

@@ -85,13 +85,16 @@
 						break//found target
 				if(!mobtohit) return//if no target stop
 				arcFlash(src, mobtohit, wattage, 1.1)
+				logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(mobtohit)].")
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in view(2, mobtohit.loc))
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
+							logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(nearbymob)] with a chained arcflash.")
 							hit += nearbymob
 							mobtohit = nearbymob
+
 				hit.len = 0//clean up
 				charge = 1
 				var/filter = src.rays.get_filter("flock_sentinel_rays")

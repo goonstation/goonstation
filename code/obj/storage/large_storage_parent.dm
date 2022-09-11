@@ -267,23 +267,23 @@
 				return
 
 		if (src.open)
-			if ((src._health <= 0) && isweldingtool(I))
-				if(!I:try_weld(user, 1, burn_eyes = TRUE))
+			if (isweldingtool(I))
+				var/obj/item/weldingtool/weldingtool = I
+				if(weldingtool.welding)
+					if (src._health <= 0)
+						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
+							return
+						src._health = src._max_health
+						src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
+					else if (!src.is_short && !src.legholes)
+						if (!weldingtool.try_weld(user, 1))
+							return
+						src.legholes = 1
+						src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
 					return
-				src._health = src._max_health
-				src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
-				return
-			if (!src.is_short && isweldingtool(I))
-				if (!src.legholes)
-					if(!I:try_weld(user, 1))
-						return
-					src.legholes = 1
-					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
-					return
-				else if(!issilicon(user))
+				if(!issilicon(user))
 					if(user.drop_item())
-						if (I)
-							I:set_loc(src.loc)
+						weldingtool?.set_loc(src.loc)
 					return
 
 			else if (iswrenchingtool(I))

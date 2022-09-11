@@ -1058,6 +1058,7 @@
 		setProperty("meleeprot", 3)
 		setProperty("rangedprot", 0.5)
 		setProperty("space_movespeed", 0.6)
+		setProperty("radprot", 10)
 
 /obj/item/clothing/suit/space/emerg
 	name = "emergency suit"
@@ -1109,6 +1110,7 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		setProperty("heatprot", 35)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
@@ -1164,7 +1166,7 @@
 			..()
 			setProperty("meleeprot", 6)
 			setProperty("rangedprot", 1)
-			setProperty("exploprot", 30)
+			setProperty("exploprot", 40)
 			setProperty("space_movespeed", 0.9)
 			setProperty("disorient_resist", 65)
 
@@ -1176,7 +1178,7 @@
 
 		setupProperties()
 			..()
-			setProperty("exploprot", 20)
+			setProperty("exploprot", 30)
 			setProperty("meleeprot", 4)
 			setProperty("rangedprot", 1.5)
 
