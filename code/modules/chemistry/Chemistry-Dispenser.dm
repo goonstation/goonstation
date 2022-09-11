@@ -545,7 +545,7 @@
 
 	proc/build_reagent_group_by_reaction(reaction_id, scale=1)
 		var/datum/chemical_reaction/C = chem_reactions_by_id[reaction_id]
-		var/datum/reagent/R  = reagents_cache[C.result]
+		var/datum/reagent/R  = reagents_cache[C?.result]
 
 		if(R && C)
 			if(!name)
@@ -559,16 +559,24 @@
 
 		New()
 			..()
-			build_reagent_group_by_reaction(reaction_id, default_scale)
+			if(reaction_id)
+				build_reagent_group_by_reaction(reaction_id, default_scale)
 
 		potassium_iodide
 			reaction_id = "anti_rad"
 			custom_desc = "Anti-Radiation Medication"
 
 		styptic
-			reaction_id = "styptic_powder"
+			name = "Styptic Powder"
 			custom_desc = "Control bleeding and heal physical wounds"
+			reagents = list("sulfur=1", "hydrogen=1", "oxygen=1", "aluminium=2", "oxygen=2", "hydrogen=2")
 
 		silver_sulfadiazine
-			reaction_id = "silver_sulfadiazine"
+			name = "Burn Medication"
 			custom_desc = "This antibacterial compound is used to treat burn victims"
+			reagents = list("hydrogen=3","nitrogen=1","silver=3","sulfur=3","oxygen=3","chlorine=3")
+
+		space_cleaner
+			name = "Space cleaner"
+			custom_desc = "An industrial compound used to clean things. Lots of things."
+			reagents = list("hydrogen=3","nitrogen=1","ethanol=3", "water=3")

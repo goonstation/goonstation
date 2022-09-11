@@ -398,22 +398,12 @@ export const ChemGroups = (props, context) => {
             <Box pt={1} pr={7} as="span">
               {"Group Name:"}
             </Box>
-            {/* <Box pt={1} as="span">
-              {"Reagents:"}
-            </Box> */}
           </Box>
           <Input
             pl={5}
             placeholder="Name"
             value={groupName}
             onInput={(e, value) => setGroupName(value)} />
-          {/* <Box pt={1} as="span">
-            <Input
-              pl={5}
-              placeholder="Reagents"
-              value={reagents}
-              onInput={(e, value) => setReagents(value)} />
-          </Box> */}
           <Box as="span">
             <Button
               icon="plus-circle"
