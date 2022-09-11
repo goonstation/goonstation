@@ -182,10 +182,7 @@
 	flock_speak(src, message, src.flock)
 
 /mob/living/intangible/flock/get_tracked_examine_atoms()
-	var/list/tracked = list() + ..()
-	for (var/obj/flock_structure/structure as anything in src.flock.structures)
-		tracked += structure
-	return tracked
+	return ..() + src.flock.structures
 
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
