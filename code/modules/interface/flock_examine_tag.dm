@@ -1,6 +1,6 @@
-/atom/movable/flock_examine_tag
-	var/image/flock_info_tag_examine/examine_tag
-	var/image/flock_info_tag_examine_hover/examine_hover_tag
+/atom/movable/name_tag/flock_examine_tag
+	var/image/name_tag_examine/flock_info_tag_examine/examine_tag
+	var/image/name_tag_examine_hover/flock_info_tag_examine_hover/examine_hover_tag
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	alpha = 180
 	icon = null
@@ -11,19 +11,35 @@
 		..()
 		src.examine_tag = new (null, src)
 		src.examine_hover_tag = new (null, src)
+		dispose(src.ex_image)
+		dispose(src.ex_hover_image)
 
 	disposing()
-		dispose(examine_tag)
-		dispose(examine_hover_tag)
+		dispose(src.examine_tag)
+		dispose(src.examine_hover_tag)
 		..()
 
-	proc/set_name_tag(name)
-		src.name_tag = name
-		src.examine_tag.set_tag(src.name_tag)
-		src.examine_hover_tag.set_tag(src.name_tag)
+	set_name(new_name, strip_parentheses = null)
+		src.cur_name = new_name
+		src.examine_tag.set_name(src.cur_name)
+		src.examine_hover_tag.set_info_tag(src.cur_name)
 
-	proc/set_info_tag(info)
-		src.examine_hover_tag.set_tag(src.name_tag, info)
+	set_info_tag(info)
+		src.examine_hover_tag.set_info_tag(src.cur_name, info)
+
+	set_visibility()
+		return
+
+	show_images(client/client, ex, ex_hover)
+		if (ex)
+			client.images |= src.examine_tag
+		else
+			client.images -= src.examine_tag
+
+		if (ex_hover)
+			client.images |= src.examine_hover_tag
+		else
+			client.images -= src.examine_hover_tag
 
 	proc/set_tag_offset(x, y)
 		if (x)
@@ -33,18 +49,7 @@
 			src.examine_tag.offset_y(y)
 			src.examine_hover_tag.offset_y(y)
 
-	proc/show_tags(client/client, ex_tag, ex_hover_tag)
-		if (ex_tag)
-			client.images |= src.examine_tag
-		else
-			client.images -= src.examine_tag
-
-		if (ex_hover_tag)
-			client.images |= src.examine_hover_tag
-		else
-			client.images -= src.examine_hover_tag
-
-/image/flock_info_tag_examine
+/image/name_tag_examine/flock_info_tag_examine
 	plane = PLANE_NOSHADOW_ABOVE
 	maptext_x = -64
 	maptext_y = -6
@@ -53,13 +58,13 @@
 	icon = null
 	appearance_flags = PIXEL_SCALE
 
-	proc/set_tag(name)
+	set_name(name)
 		src.maptext = "<span class='pixel c ol' style='font-size: 6px;'>[name]</span>"
 
 	proc/offset_y(y)
 		src.maptext_y += y
 
-/image/flock_info_tag_examine_hover
+/image/name_tag_examine_hover/flock_info_tag_examine_hover
 	plane = PLANE_NOSHADOW_ABOVE
 	maptext_x = -64
 	maptext_y = -6 - 7 // -7 to accomodate extra text
@@ -69,7 +74,7 @@
 	appearance_flags = PIXEL_SCALE
 	var/y_offset = 0
 
-	proc/set_tag(name, info)
+	set_info_tag(name, info)
 		if (info)
 			src.maptext_y = initial(src.maptext_y) + src.y_offset
 		else
