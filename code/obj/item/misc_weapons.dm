@@ -527,7 +527,7 @@
 //chaplain traitor knice
 /obj/item/dagger/syndicate/chap_knife
 	name = "Blade of Light"
-	desc = "A knife conquered through unshakeable faith in the lord."
+	desc = "A knife made out of pure light. Now thats what I call blind faith"
 	item_state = "chap_dagger"
 	force = 14
 	throwforce = 18

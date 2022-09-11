@@ -3,7 +3,7 @@
 /obj/item/device/sacred_heart_scroll
 	name = "Sacred Heart Scroll"
 	icon_state = "sacred_heart_scroll-"
-	desc = "A dusty old scroll containing essoteric knowlege from a time of cloak and dagger"
+	desc = "A dusty old scroll containing some rather enlightening knowlege from a time of cloak and dagger."
 	w_class = 2
 	is_syndicate = 1
 	var/implant = /obj/item/organ/heart/sacred
@@ -22,7 +22,7 @@
 					if (implants_available & HEART)
 						start_replace_heart(HEART, H)
 					else
-						user.show_text("This Scroll's Writings are Illegible.")
+						user.show_text("This scroll's writings are illegible.")
 
 
 	proc/start_replace_heart(var/target, var/mob/living/carbon/human/H)

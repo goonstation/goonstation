@@ -116,8 +116,8 @@
 			return 0
 
 /obj/item/organ/heart/sacred
-	name = "sacredheart"
-	desc = "A heart filled with the teachings of the bible"
+	name = "sacred heart"
+	desc = "Does this count as being lighter than a feather?"
 	item_state = "sacred_heart"
 	icon_state = "sacred_heart"
 	transplant_XP = 8
