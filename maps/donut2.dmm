@@ -38053,6 +38053,12 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"mXH" = (
+/obj/machinery/shipalert{
+	pixel_y = 24
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "mXT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -95676,7 +95682,7 @@ gZN
 pfc
 aRK
 aRK
-aVb
+mXH
 aVS
 aWL
 aXn
