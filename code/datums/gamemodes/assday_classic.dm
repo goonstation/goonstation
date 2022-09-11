@@ -58,7 +58,7 @@
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*num_traitors--
 		num_traitors = max(num_traitors, 0)*/

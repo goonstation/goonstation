@@ -240,17 +240,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.fail_damage))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.fail_damage))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.fail_damage))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.fail_damage))
 			count++
 		return count
 
@@ -500,10 +500,10 @@
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.key)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
@@ -511,7 +511,7 @@
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.key)
-						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
@@ -1159,6 +1159,7 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
 		switch (working_lungs)
 			if (0)
@@ -1410,11 +1411,11 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam

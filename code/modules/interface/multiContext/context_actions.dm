@@ -474,7 +474,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -486,7 +486,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -509,7 +509,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
 	screw
@@ -521,7 +521,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
@@ -533,7 +533,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle

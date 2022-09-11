@@ -42,10 +42,10 @@
 	src.botcard = new /obj/item/card/id(src)
 	if(src.syndicate)
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack_syndie
-		logTheThing("station", src, null, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default SYNDICATE rack [constructName(src.law_rack_connection)]")
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
-		logTheThing("station", src, null, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -95,7 +95,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
@@ -250,7 +250,7 @@
 
 /mob/living/proc/robot_talk(var/message)
 
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	message = trim(html_encode(message))
 
@@ -525,6 +525,10 @@ var/global/list/module_editors = list()
 
 	src.UpdateName()
 
+/mob/living/silicon/UpdateName()
+	..()
+	src.botcard.registered = src.name
+
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
@@ -551,10 +555,10 @@ var/global/list/module_editors = list()
 		boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
 		boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
 		tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
-		logTheThing("station", src, null, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 
 		src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
-		logTheThing("station", src, null, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 		src.show_laws()
 
 		if (!src.mind.special_role) // Preserve existing antag role (if any).
@@ -603,12 +607,12 @@ var/global/list/module_editors = list()
 		if (!(src.mind in ticker.mode.former_antagonists))
 			ticker.mode.former_antagonists += src.mind
 
-	logTheThing("station", src, null, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	logTheThing(LOG_STATION, src, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
 	src.show_antag_popup("rogueborgremoved")
 	src.antagonist_overlay_refresh(TRUE, TRUE) // Syndie vision deactivated.
 	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
-	logTheThing("station", src, null, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 	src.syndicate = FALSE
 	return TRUE
 
@@ -625,7 +629,7 @@ var/global/list/module_editors = list()
 	. = ..()
 
 	src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
-	logTheThing("combat", src, null, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)].")
 	random_brute_damage(src, AM.throwforce,1)
 
 	#ifdef DATALOGGER

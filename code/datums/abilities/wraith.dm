@@ -291,7 +291,7 @@
 			return 1
 
 		boutput(holder.owner, "<span class='alert'><strong>[pick("You extend your will into [target].", "You force [target] to do your bidding.")]</strong></span>")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithpossesobject.ogg", 50, 0)
+		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithpossesobject.ogg', 50, 0)
 		var/mob/living/object/O = new/mob/living/object(get_turf(target), target, holder.owner)
 		SPAWN(45 SECONDS)
 			if (O)
@@ -299,7 +299,7 @@
 		SPAWN(60 SECONDS) //time limit on possession: 1 minute
 			if (O)
 				boutput(O, "<span class='alert'><strong>Your control is wrested away! The item is no longer yours.</strong></span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithleaveobject.ogg", 50, 0)
+				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithleaveobject.ogg', 50, 0)
 				O.death(FALSE)
 		return 0
 
@@ -324,7 +324,7 @@
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
 			for (var/mob/living/carbon/human/target in T.contents)
-				if (isdead(target) && target:decomp_stage != 4)
+				if (isdead(target) && target:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					T = target
 					break
 
@@ -332,7 +332,7 @@
 			var/mob/wraith/W = holder.owner
 			. = W.makeRevenant(T)		//return 0
 			if(!.)
-				playsound(W.loc, "sound/voice/wraith/reventer.ogg", 80, 0)
+				playsound(W.loc, 'sound/voice/wraith/reventer.ogg', 80, 0)
 			return
 		else
 			boutput(usr, "<span class='alert'>There are no corpses here to possess!</span>")
@@ -374,7 +374,7 @@
 			else
 				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
 				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithstaminadrain.ogg", 75, 0)
+				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithstaminadrain.ogg', 75, 0)
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
 				H.changeStatus("stunned", 4 SECONDS)
@@ -448,7 +448,7 @@
 		//If you targeted a turf for some reason, find a corpse on it
 		if (istype(T, /turf))
 			for (var/mob/living/carbon/human/target in T)
-				if (isdead(target) && target.decomp_stage == 4)
+				if (isdead(target) && target.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 					T = target
 					break
 			//Or a locker
@@ -462,7 +462,7 @@
 
 		if (ishuman(T))
 			var/mob/living/carbon/human/H = T
-			if (!isdead(H) || H.decomp_stage != 4)
+			if (!isdead(H) || H.decomp_stage != DECOMP_STAGE_SKELETONIZED)
 				boutput(usr, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
 				return 1
 			var/personname = H.real_name
@@ -522,7 +522,7 @@
 				boutput(usr, "<span class='alert'>That is not a valid target for animation!</span>")
 				return 1
 			new/mob/living/object/ai_controlled(O.loc, O)
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithlivingobject.ogg", 50, 0)
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 50, 0)
 			return 0
 		else
 			boutput(usr, "<span class='alert'>There is no object here to animate!</span>")
@@ -578,8 +578,7 @@
 				boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
 				return 1
 
-			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
-
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
 			return W.haunt()
 
 /datum/targetable/wraithAbility/spook
@@ -726,7 +725,7 @@
 				return 1
 			else
 				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
-				logTheThing("say", usr, target, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
+				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
 					return 1
@@ -778,11 +777,11 @@
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [t]")
 		G.icon_state = t
 		G.words = t
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 0)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 0)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -826,12 +825,12 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		usr.playsound_local(usr.loc, "sound/voice/wraith/wraithportal.ogg", 50, 0)
+		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages)
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
-			logTheThing("admin", null, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
 				boutput(W, "No spirits responded. The portal closes.")
 				qdel(marker)
@@ -853,8 +852,8 @@
 		//P.ckey = lucky_dude.ckey
 		P.antagonist_overlay_refresh(1, 0)
 		message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
-		usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
-		logTheThing("admin", lucky_dude.current, null, "respawned as a poltergeist for [src.holder.owner].")
+		usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
+		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a poltergeist for [src.holder.owner].")
 		boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 		boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
 		boutput(P, "Don't venture too far from your portal or your master!")

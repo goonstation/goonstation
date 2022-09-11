@@ -16,6 +16,9 @@
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
 
+	/// Should points thrown at this take into account the click pixel value
+	var/pixel_point = FALSE
+
 	/// If hear_talk is triggered on this object, make my contents hear_talk as well
 	var/open_to_sound = 0
 
@@ -218,7 +221,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
@@ -949,6 +952,21 @@
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
 
+/atom/proc/set_opacity(var/newopacity)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if (newopacity == src.opacity)
+		return // Why even bother
+
+	var/oldopacity = src.opacity
+	src.opacity = newopacity
+
+	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+
+	if (isturf(src.loc))
+		// Not a turf, so we must send a signal to the turf
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+
 // standardized damage procs
 
 /// Does x blunt damage to the atom
@@ -996,43 +1014,37 @@
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
-/atom/proc/should_auto_connect(var/turf/T, var/connect_to = list(), var/exceptions = list(), var/cross_areas = TRUE)
-	if (!connect_to || !islist(connect_to)) // nothing to connect to
+/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
+	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
 		return FALSE
 
-	for (var/connect in connect_to)
-		var/list/matches= list()
-		if(istype(T, connect))
-			matches.Add(T)
-		else
-			for (var/atom/A in T)
-				if (!isnull(A))
-					if (istype(A, /atom/movable))
-						var/atom/movable/M = A
-						if (!M.anchored)
-							continue
-						if (istype(A, connect))
-							matches.Add(A)
-		for (var/match in matches)
-			var/valid = TRUE
-			if (exceptions && islist(exceptions))
-				for (var/exception in exceptions)
-					if (istype(match, exception))
-						valid = FALSE
-			if (valid)
-				return TRUE
+	// quick path, basically istype(T, anything in connect-except)
+	if (connect_to[T.type] && !exceptions[T.type])
+		return TRUE
+
+	// slow 😩
+	for (var/atom/movable/AM in T)
+		if (!AM.anchored)
+			continue
+		if (connect_to[AM.type] && !exceptions[AM.type])
+			return TRUE
 	return FALSE
 
-/// Return a bitflag that represents all potential connected icon_states
-/*
-connecting with diagonal tiles require additional bitflags
-i.e. there is a difference between N & E, and N & E & NE
-N, S, E, W, NE, SE, SW, NW
-1, 2, 4, 8, 16, 32, 64, 128
-*/
-/atom/proc/get_connected_directions_bitflag(var/valid_atoms = list(), var/exceptions = list(), var/cross_areas = TRUE, var/connect_diagonal = 0)
+/**
+ * Return a bitflag that represents all potential connected icon_states
+ *
+ * connecting with diagonal tiles require additional bitflags
+ * i.e. there is a difference between N & E, and N & E & NE
+ *
+ * N, S, E, W, NE, SE, SW, NW
+ *
+ * 1, 2, 4, 8, 16, 32, 64, 128
+ *
+ * connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
+ */
+/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0)
 	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
@@ -1044,7 +1056,6 @@ N, S, E, W, NE, SE, SW, NW
 		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
 			connected_directions |= dir
 
-	// connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
 	if (connect_diagonal)
 		for (var/i = 1 to 4)  // needed for bitshift
 			ordir = ordinal[i]
@@ -1058,8 +1069,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/scaleatomall()
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
+	logTheThing(LOG_ADMIN, usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]")
+	logTheThing(LOG_DIARY, usr, "scaled every goddamn atom by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled every goddamn atom by X:[scalex] Y:[scaley]")
 	for(var/atom/A in world)
 		A.Scale(scalex,scaley)
@@ -1068,8 +1079,8 @@ N, S, E, W, NE, SE, SW, NW
 
 /proc/rotateatomall()
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated every goddamn atom by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated every goddamn atom by [rot] degrees", "admin")
+	logTheThing(LOG_ADMIN, usr, "rotated every goddamn atom by [rot] degrees")
+	logTheThing(LOG_DIARY, usr, "rotated every goddamn atom by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated every goddamn atom by [rot] degrees")
 	for(var/atom/A in world)
 		A.Turn(rot)
@@ -1080,8 +1091,8 @@ N, S, E, W, NE, SE, SW, NW
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/scalex = input(usr,"X Scale","1 normal, 2 double etc","1") as num
 	var/scaley = input(usr,"Y Scale","1 normal, 2 double etc","1") as num
-	logTheThing("admin", usr, null, "scaled [target] by X:[scalex] Y:[scaley]")
-	logTheThing("diary", usr, null, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
+	logTheThing(LOG_ADMIN, usr, "scaled [target] by X:[scalex] Y:[scaley]")
+	logTheThing(LOG_DIARY, usr, "scaled [target] by X:[scalex] Y:[scaley]", "admin")
 	message_admins("[key_name(usr)] scaled [target] by X:[scalex] Y:[scaley]")
 	target.Scale(scalex, scaley)
 	return
@@ -1089,8 +1100,8 @@ N, S, E, W, NE, SE, SW, NW
 /proc/rotateatom()
 	var/atom/target = input(usr,"Target","Target") as mob|obj in world
 	var/rot = input(usr,"Rotation","Rotation","0") as num
-	logTheThing("admin", usr, null, "rotated [target] by [rot] degrees")
-	logTheThing("diary", usr, null, "rotated [target] by [rot] degrees", "admin")
+	logTheThing(LOG_ADMIN, usr, "rotated [target] by [rot] degrees")
+	logTheThing(LOG_DIARY, usr, "rotated [target] by [rot] degrees", "admin")
 	message_admins("[key_name(usr)] rotated [target] by [rot] degrees")
 	target.Turn(rot)
 	return

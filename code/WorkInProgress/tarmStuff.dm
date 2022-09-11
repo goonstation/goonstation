@@ -84,6 +84,7 @@
 	hit_type = DAMAGE_BURN
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
+	implanted = null
 	armor_ignored = 0.66
 	impact_image_state = "bhole"
 	shot_volume = 66
@@ -489,7 +490,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -559,7 +560,7 @@
 				taken_suggestion = 1
 			user.u_equip(P)
 			qdel(P)
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			var/turf/T = pick(floors)
 			if(T)
 				new /obj/decal/cleanable/paper(T)
@@ -617,11 +618,11 @@
 
 /obj/machinery/door/unpowered/wood/lily/open()
 	if(src.locked) return
-	playsound(src.loc, "sound/voice/screams/fescream3.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/fescream3.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/lily/close()
-	playsound(src.loc, "sound/voice/screams/robot_scream.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+	playsound(src.loc, 'sound/voice/screams/robot_scream.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	. = ..()
 
 
@@ -686,3 +687,20 @@
 			for (var/mob/living/M in view(src, 5))
 				if (M.bioHolder)
 					M.bioHolder.AddEffect("cold_resist", 0, 45)
+
+/obj/item/firebot_deployer
+	name = "compressed firebrand firebot"
+	desc = "Deploys a firebot dedicated to putting out friendly fire(s)"
+	icon = 'icons/obj/bots/aibots.dmi'
+	icon_state = "firebot0"
+
+	New()
+		. = ..()
+		src.SafeScale(0.5, 0.5)
+
+	attack_self(mob/user)
+		if(src == user.equipped())
+			new/obj/machinery/bot/firebot/firebrand(get_turf(src))
+			user.u_equip(src)
+			qdel(src)
+		. = ..()

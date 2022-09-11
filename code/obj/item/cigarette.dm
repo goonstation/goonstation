@@ -139,7 +139,7 @@
 
 			hit_type = DAMAGE_BLUNT
 
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -341,14 +341,14 @@
 			explosion(src, tlocation, 0, 1, 1, 2)
 		else
 			elecflash(src,power = 2)
-			playsound(src.loc, "sound/effects/Explosion1.ogg", 75, 1)
+			playsound(src.loc, 'sound/effects/Explosion1.ogg', 75, 1)
 		src.visible_message("<span class='alert'>The [src] explodes!</span>")
 
 		// Added (Convair880).
 		if (ismob(src.loc))
-			logTheThing("bombing", null, src.loc, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
+			logTheThing(LOG_BOMBING, null, "A trick cigarette (held/equipped by [constructTarget(src.loc,"bombing")]) explodes at [log_loc(src)].")
 		else
-			logTheThing("bombing", src.fingerprintslast, null, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing(LOG_BOMBING, src.fingerprintslast, "A trick cigarette explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 
 		if (istype(src.loc,/obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = src.loc
@@ -386,13 +386,6 @@
 		else
 			src.flavor = "nicotine"
 		..()
-
-
-/obj/item/clothing/mask/cigarette/dryjoint
-	name = "dried up joint"
-	desc = "An ancient joint, it's paper now resembles the burial shroud of an egyptian king. There's no telling what the roller could have twisted up in here."
-	nic_free = 1
-	flavor = "THC"
 
 /obj/item/clothing/mask/cigarette/cigar
 	name = "cigar"
@@ -953,7 +946,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
-		playsound(user, "sound/items/matchstick_light.ogg", 50, 1)
+		playsound(user, 'sound/items/matchstick_light.ogg', 50, 1)
 		light.enable()
 
 		processing_items |= src
@@ -966,11 +959,11 @@
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
 		light.disable()
 
@@ -1225,7 +1218,7 @@
 				if (O.reagents.has_reagent("fuel"))
 					O.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.get_reagent_amount("fuel"), 1, 1, O.reagents.reagent_list.Find("fuel"))
 					boutput(user, "<span class='notice'>[src] has been refueled.</span>")
-					playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+					playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				else
 					user.show_text("[src] can only be refilled with fuel.", "red")
 			else

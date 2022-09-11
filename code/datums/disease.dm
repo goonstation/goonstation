@@ -27,7 +27,7 @@
 	//IM SORRY
 
 	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
-		if (!affected_mob || !D)
+		if (QDELETED(affected_mob) || !D)
 			return 1
 		return 0
 

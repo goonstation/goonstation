@@ -151,7 +151,7 @@
 
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
-				playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
 

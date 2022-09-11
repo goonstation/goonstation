@@ -148,11 +148,11 @@
 
 	onStart()
 		..()
-		playsound(the_rack, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
 
 	onEnd()
 		..()
-		playsound(the_rack, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
 		the_rack.deconstruct()

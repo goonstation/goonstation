@@ -64,7 +64,7 @@
 			unassigned += player
 
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
-	logTheThing("debug", null, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
+	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
 	if (unassigned.len == 0)
 		return 0
@@ -90,6 +90,7 @@
 	var/list/medical_staff = list()
 	var/list/engineering_staff = list()
 	var/list/research_staff = list()
+	var/list/security_officers = list()
 
 
 	for(var/datum/job/JOB in job_controls.staple_jobs)
@@ -132,25 +133,25 @@
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
 				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-				logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
+				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 				unassigned -= candidate
 				JOB.assigned++
 	else
@@ -192,10 +193,12 @@
 				research_staff += player
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += player
 
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
-			logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, player, "assigned job: [player.mind.assigned_role]")
 			unassigned -= player
 			JOB.assigned++
 
@@ -218,12 +221,14 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -246,11 +251,13 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
-			logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
+			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
-			logTheThing("debug", candidate, null, "assigned job: [candidate.mind.assigned_role]")
+			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
 			unassigned -= candidate
 			JOB.assigned++
 
@@ -259,39 +266,26 @@
 	/////////////////////////////////////////////////
 
 	//Find the command jobs, if they are unfilled, pick a random person from within that department to be that command officer
+	//if they had the command job in their medium or low priority jobs
 	for(var/datum/job/JOB in available_job_roles)
 		//cheaper to discout this first than type check here *I think*
-		if (JOB.limit > 0 && JOB.assigned < JOB.limit)
-			//Promote Chief Engineer
+		if (istype(JOB, /datum/job/command) && JOB.limit > 0 && JOB.assigned < JOB.limit)
+			var/list/picks
 			if (istype(JOB, /datum/job/command/chief_engineer))
-				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Research Director
+				picks = FindPromotionCandidates(engineering_staff, JOB)
 			else if (istype(JOB, /datum/job/command/research_director))
-				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Medical Director
+				picks = FindPromotionCandidates(research_staff, JOB)
 			else if (istype(JOB, /datum/job/command/medical_director))
-				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing("debug", null, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing("debug", candidate, null, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
+				picks = FindPromotionCandidates(medical_staff, JOB)
+			else if (istype(JOB, /datum/job/command/head_of_security))
+				picks = FindPromotionCandidates(security_officers, JOB)
+			if (!length(picks))
+				continue
+			var/mob/new_player/candidate = pick(picks)
+			logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+			candidate.mind.assigned_role = JOB.name
+			logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
+			JOB.assigned++
 
 
 	// If there's anyone left without a job after this, lump them with a randomly
@@ -301,9 +295,9 @@
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
 		if(!player?.mind) continue
-		logTheThing("debug", null, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
+		logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] given a low priority role")
 		player.mind.assigned_role = pick(low_priority_jobs)
-		logTheThing("debug", player, null, "assigned job: [player.mind.assigned_role]")
+		logTheThing(LOG_DEBUG, player, "assigned job: [player.mind.assigned_role]")
 
 	return 1
 
@@ -479,7 +473,7 @@
 
 			if(SL.len > 0)
 				src.set_loc(pick(SL))
-				logTheThing("station", src, null, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
+				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			var/turf/pilotSpawnLocation = null
@@ -511,7 +505,7 @@
 			if (length(valid_beds) > 0)
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
-				logTheThing("station", src, null, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
+				logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -604,7 +598,7 @@
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
-		var/obj/item/tank/emergency_oxygen/E = new /obj/item/tank/emergency_oxygen(src.loc)
+		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, slot_in_backpack)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
@@ -792,7 +786,7 @@
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing("debug", H, null, "Attempted to antagify [H] but could not find mind.")
+		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
 		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/

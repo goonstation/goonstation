@@ -47,8 +47,8 @@ obj/chessbutton
 			boutput(user, "<span class='alert'>You are about to erase the board. Press again to confirm.</span>")
 			confirm = 1
 		else
-			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
-			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
+			logTheThing(LOG_ADMIN, user, "has reset the chessboard. Hope nobody was playing chess.")
+			logTheThing(LOG_DIARY, user, "has reset the chessboard. Hope nobody was playing chess.", "admin")
 
 			for(var/turf/unsimulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC

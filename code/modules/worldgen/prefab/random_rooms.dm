@@ -39,6 +39,8 @@ proc/buildRandomRooms()
 	icon = 'icons/effects/mapeditor.dmi'
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
+	opacity = 1
+	invisibility = 0 // To see landmarks if NO_RANDOM_ROOM is defined
 
 	New()
 		..()
@@ -53,7 +55,7 @@ proc/buildRandomRooms()
 		if(isnull(room_prefab))
 			CRASH("No random room prefab found for size: " + size)
 		room_prefab.applyTo(src.loc)
-		logTheThing("debug", null, null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
+		logTheThing(LOG_DEBUG, null, "Applied random room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
 
 	size3x3

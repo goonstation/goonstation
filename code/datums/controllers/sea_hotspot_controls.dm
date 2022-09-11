@@ -52,7 +52,7 @@
 
 	proc/generate_map()
 		if (!map)
-			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
+			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
@@ -63,7 +63,7 @@
 					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -75,7 +75,7 @@
 					var/turf/T = get_turf(beacon)
 					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
 
-			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
+			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
 
 	proc/generate_map_html()
@@ -388,8 +388,8 @@
 			if (recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
@@ -399,8 +399,8 @@
 			if (phenomena_flags > PH_QUAKE && recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 
 	proc/poll_capture_amt(var/turf/center)
@@ -562,7 +562,7 @@
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
 								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
@@ -979,7 +979,7 @@
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
-				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
@@ -990,7 +990,7 @@
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
 				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-				playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
 			shake_camera(C, 5, 8)

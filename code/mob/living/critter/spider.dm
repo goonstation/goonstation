@@ -15,8 +15,8 @@
 	var/venom2 = "spiders"
 	var/babyspider = 0
 	var/adultpath = null
-	var/bitesound = "sound/weapons/handcuffs.ogg"
-	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
+	var/bitesound = 'sound/weapons/handcuffs.ogg'
+	var/deathsound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	death_text = "%src% crumples up into a ball!"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	var/encase_in_web = 1 // do they encase people in ice, web, or uh, cotton candy?
@@ -41,6 +41,9 @@
 	blood_id = "black_goop"
 
 	var/bite_transfer_amt = 1
+
+	ai_type = /datum/aiHolder/spider
+	is_npc = TRUE
 
 	New()
 		..()
@@ -78,7 +81,7 @@
 		if (..())
 			return 1
 		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
-			playsound(src, "sound/voice/babynoise.ogg", 30, 1)
+			playsound(src, 'sound/voice/babynoise.ogg', 30, 1)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 
@@ -86,11 +89,11 @@
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/cat_hiss.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/babynoise.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/babynoise.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -132,6 +135,60 @@
 		SPAWN(0)
 			src.make_critter(src.adultpath)
 
+	seek_target(range)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue //maybe dont attack blob overminds
+			if (isdead(C)) continue
+			if (C.bioHolder.HasEffect("husk")) continue
+			if (istype(C, /mob/living/critter/spider)) continue
+			. += C
+		if(length(.) && prob(30))
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+			if (!flail.disabled && flail.cooldowncheck() && prob(20))
+				flail.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+			else
+				..()
+
+	critter_scavenge(target)
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		if(!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && !drain.handleCast(target)
+
+	can_critter_scavenge()
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+	can_critter_attack()
+		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
+		return can_act(src,TRUE) && !flail.disabled
+
+
+	Login()
+		. = ..()
+		//Disable the AI when a player takes control
+		if(src.client)
+			src.is_npc = FALSE
+
+	Logout()
+		. = ..()
+		//Enable the AI when a player loses control
+		if(!src.client)
+			src.is_npc = TRUE
+			src.ai?.enabled = TRUE
+			src.ai?.interrupt() //trigger a task re-evaluation
+
+
+
 /mob/living/critter/spider/nice
 	name = "bumblespider"
 	real_name = "bumblespider"
@@ -148,6 +205,7 @@
 	max_skins = 1
 	venom1 = "toxin"
 	venom2 = "black_goop"
+	ai_type = /datum/aiHolder/spider_peaceful
 
 /mob/living/critter/spider/baby
 	name = "li'l space spider"
@@ -200,9 +258,9 @@
 	can_grab = 0
 	venom1 = "toxin"
 	venom2 = "cryostylane"
-	bitesound = "sound/impact_sounds/Crystal_Hit_1.ogg"
-	stepsound = "sound/impact_sounds/Glass_Shards_Hit_1.ogg"
-	deathsound = "sound/impact_sounds/Crystal_Shatter_1.ogg"
+	bitesound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
+	stepsound = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
+	deathsound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	encase_in_web = 0
 	max_skins = 4
 	reacting = 0
@@ -306,6 +364,21 @@
 			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
 
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick)
+			if (!kick.disabled && kick.cooldowncheck() && prob(20))
+				kick.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+			else
+				src.set_a_intent(INTENT_HARM)
+				src.hand_attack(target)
+
+	can_critter_attack()
+		return can_act(src,TRUE)
+
 	cluwne
 		name = "cluwnespider"
 		desc = "Uhhh. That's not normal. Like, even for clownspiders."
@@ -319,6 +392,31 @@
 							/datum/targetable/critter/spider_drain/cluwne)
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
+
+		critter_attack(target)
+			if(ismob(target))
+				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+				var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick/cluwne)
+				if (!kick.disabled && kick.cooldowncheck() && prob(20))
+					kick.handleCast(target)
+				else if(!bite.disabled && bite.cooldowncheck())
+					bite.handleCast(target)
+				else
+					src.set_a_intent(INTENT_HARM)
+					src.hand_attack(target)
+
+		critter_scavenge(target)
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			if(!drain.disabled && drain.cooldowncheck())
+				return can_act(src,TRUE) && !drain.handleCast(target)
+
+		can_critter_scavenge()
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+		can_critter_attack()
+			return can_act(src,TRUE)
+
 
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"
@@ -343,7 +441,7 @@
 	var/list/babies = null
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
-
+	ai_type = /datum/aiHolder/clown_spider_queen
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."
@@ -358,6 +456,31 @@
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 		max_defensive_babies = 150
+
+		critter_attack(target)
+			if(ismob(target))
+				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+				var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
+				if (!trample.disabled && trample.cooldowncheck() && prob(20))
+					trample.handleCast(target)
+				else if(!bite.disabled && bite.cooldowncheck())
+					bite.handleCast(target)
+				else
+					src.set_a_intent(INTENT_HARM)
+					src.hand_attack(target)
+
+		critter_scavenge(target)
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			if(!drain.disabled && drain.cooldowncheck())
+				return can_act(src,TRUE) && !drain.handleCast(target)
+
+		can_critter_scavenge()
+			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
+			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+		can_critter_attack()
+			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
+			return can_act(src,TRUE) && !trample.disabled
 
 	New()
 		..()
@@ -395,7 +518,7 @@
 			return
 		var/defenders = 0		//this is the amount of babies that will defend you
 		var/count = 0
-		for (var/obj/critter/spider/clown/CS in babies)
+		for (var/mob/living/critter/spider/clown/CS in babies)
 			count++
 			if (count > max_defensive_babies)
 				break
@@ -405,15 +528,44 @@
 				return
 			if (prob(70))
 				continue
-			CS.target = T
-			CS.attack = 1
-			CS.task = "chasing"
+			// IMMEDIATE INTERRUPT
+			var/datum/aiTask/task = CS.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(CS.ai, CS.ai.default_task))
+			task.target = T
+			CS.ai.priority_tasks += task
+			CS.ai.interrupt()
 			defenders++
+
+	critter_attack(target)
+		if(ismob(target))
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
+
+			if (!trample.disabled && trample.cooldowncheck() && prob(20))
+				trample.handleCast(target)
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+			else
+				src.set_a_intent(INTENT_HARM)
+				src.hand_attack(target)
+
+	critter_scavenge(target)
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		if(!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && !drain.handleCast(target)
+
+	can_critter_scavenge()
+		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
+		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+	can_critter_attack()
+		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
+		return can_act(src,TRUE) && !trample.disabled
+
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN(0)
-		playsound(location, "sound/musical_instruments/Bikehorn_1.ogg", 100, 1)
-		playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+		playsound(location, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
+		playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
 
 	var/list/bloods = list()
@@ -459,3 +611,8 @@
 				I.throw_at(target, 12, 3)
 
 	return bloods
+
+/mob/living/critter/spider/baby/nice
+	adultpath = /mob/living/critter/spider/nice
+	ai_type = /datum/aiHolder/spider_peaceful
+	desc = "It seems pretty friendly. D'aww."

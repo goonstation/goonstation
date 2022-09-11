@@ -58,8 +58,8 @@
 	var/unusual = 0
 	var/failure_disease = null		//The organ failure disease associated with this organ. Not used for Heart atm.
 
-	var/MAX_DAMAGE = 100	//Max damage before organ "dies"
-	var/FAIL_DAMAGE = 65	//Total damage amount at which organ failure starts
+	var/max_damage = 100	//Max damage before organ "dies"
+	var/fail_damage = 65	//Total damage amount at which organ failure starts
 
 	var/created_decal = /obj/decal/cleanable/blood // what kinda mess it makes.  mostly so cyberhearts can splat oil on the ground, but idk maybe you wanna make something that creates a broken balloon or something on impact vOv
 	var/blood_color = null
@@ -106,7 +106,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -163,7 +163,7 @@
 	proc/splat(turf/T)
 		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
 			return FALSE
-		playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
 		cleanable.blood_DNA = src.blood_DNA
 		cleanable.blood_type = src.blood_type
@@ -177,7 +177,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A) //
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
 		src.splat(T)
 		..() // call your goddamn parents
 
@@ -185,7 +185,7 @@
 	//Under no circumstances should you ever reassign the donor or holder variables in here.
 	//Not checking donor here because it's checked where it's called. And I can't think of ANY REASON to EVER call this from somewhere else. And if I do, then I'll delete this comment. - kyle
 	proc/on_life(var/mult = 1)
-		if (holder && (src.broken || src.get_damage() > MAX_DAMAGE) )
+		if (holder && (src.broken || src.get_damage() > max_damage) )
 			return 0
 		return 1
 
@@ -315,8 +315,8 @@
 			if (bone_system && src.bones && brute && prob(brute * 2))
 				src.bones.take_damage(damage_type)
 
-		// if (src.get_damage() >= MAX_DAMAGE)
-		if (brute_dam + burn_dam + tox_dam >= MAX_DAMAGE)
+		// if (src.get_damage() >= max_damage)
+		if (brute_dam + burn_dam + tox_dam >= max_damage)
 			src.breakme()
 			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor

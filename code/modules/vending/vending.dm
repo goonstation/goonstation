@@ -153,7 +153,7 @@
 		lastvend = world.time + 2
 		var/datum/data/vending_product/R = throw_item()
 		if(R?.logged_on_vend)
-			logTheThing("station", usr, null, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	proc/vendname(var/datum/mechanicsMessage/inp)
 		if( world.time < lastvend || !inp) return//aaaaaaa
@@ -161,7 +161,7 @@
 		lastvend = world.time + 5 //Make it slower to vend by name?
 		var/datum/data/vending_product/R = throw_item(inp.signal)
 		if(R?.logged_on_vend)
-			logTheThing("station", usr, null, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
@@ -479,7 +479,7 @@
 			src.generate_HTML(1)
 
 			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
-			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(W)
 			qdel(W)
 			return
@@ -489,7 +489,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)
@@ -681,9 +681,9 @@
 			src.generate_HTML(1)
 
 			if(R.logged_on_vend)
-				logTheThing("station", usr, null, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "vended a logged product ([R.product_name]) from [src] at [log_loc(src)].")
 			if(player_list)
-				logTheThing("station", usr, null, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "vended a player product ([R.product_name]) from [src] at [log_loc(src)].")
 		if (href_list["logout"])
 			src.scan = null
 			src.generate_HTML(1)
@@ -802,7 +802,7 @@
 	status |= BROKEN
 	var/turf/vicTurf = get_turf(victim)
 	src.icon_state = "[initial(icon_state)]-fallen"
-	playsound(src.loc, "sound/machines/vending_crash.ogg", 50, 0)
+	playsound(src.loc, 'sound/machines/vending_crash.ogg', 50, 0)
 //	SPAWN(0)
 //		src.icon_state = "[initial(icon_state)]-fall"
 //		SPAWN(2 SECONDS)
@@ -810,7 +810,7 @@
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.changeStatus("weakened", 5 SECONDS)
 		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
-		logTheThing("combat", src, victim, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
+		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
 		if (src.layer < victim.layer)
@@ -1767,7 +1767,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		else if (state == "BOARDINSTALLED")
 			var/obj/item/machineboard/vending/V = target
 			vendingtype = V.machinepath
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
 			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
@@ -1776,7 +1776,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			boardinstalled = TRUE
 		else if (state == "WIRESINSTALLED")
 			var/obj/item/cable_coil/targetcoil = target
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			targetcoil.use(5)
 			wiresinstalled = TRUE
 			icon_state = "standard-frame-wired"
@@ -1784,7 +1784,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			S.change_stack_amount(-2)
 			glassed = TRUE
 			icon_state = "standard-frame-glassed"
@@ -1794,7 +1794,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 			A.amount = 2
 			glassed = FALSE
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
 			boutput(user, "<span class='notice'>You remove the glass panel.</span>")
@@ -1806,7 +1806,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			E.set_loc(src.loc)
 			boardinstalled = FALSE
 		else if (state == "WIRESREMOVED")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
 			boutput(user, "<span class='notice'>You remove the cables.</span>")
@@ -1831,11 +1831,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	attackby(obj/item/target, mob/user)
 		if (iswrenchingtool(target))
 			if (!wrenched)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("WRENCHED", user), target.icon, target.icon_state, null, null)
 			else if (!boardinstalled && wrenched)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/machineboard/vending))
@@ -1857,7 +1857,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		else if (isscrewingtool(target) && glassed)
 			boutput(user, "<span class='notice'>You connect the screen.</span>")
 			var/obj/machinery/vending/B = new vendingtype(src.loc)
-			logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+			logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 			qdel(src)
 		else if (ispryingtool(target))
 			if (glassed)
@@ -1891,6 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	var/image/crtoverlay = null
 	var/image/promoimage = null
 	player_list = list()
+	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
@@ -2011,7 +2012,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			itemEntry.icon = getScaledIcon(target)
 			player_list += itemEntry
 			if (label) itemEntry.label = label
-			logTheThing("station", user, null, "added player product ([target.name]) to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "added player product ([target.name]) to [src] at [log_loc(src)].")
 			generate_slogans()
 
 	power_change()
@@ -2654,11 +2655,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	"Style over substance.")
 
 	prevend_effect()
-		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 		return
 
 	postvend_effect()
-		playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		return
 
 	create_products()

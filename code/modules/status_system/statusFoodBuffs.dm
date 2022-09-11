@@ -67,7 +67,7 @@
 				continue
 
 			if (A.reagents && A.reagents.total_volume)
-				A.reagents.reaction(src, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate"))
+				A.reagents.reaction(src, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
 				A.reagents.trans_to(src, use_volume/2)
 				A.reagents.remove_any(use_volume/2)
 			else
@@ -354,7 +354,7 @@
 		var/list/affected_turfs = getline(owner, T)
 
 		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
-		playsound(owner.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
+		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 		var/turf/currentturf
 		var/turf/previousturf
@@ -429,13 +429,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, optional)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, optional)
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
 
 /datum/statusEffect/space_farts
 	id = "food_space_farts"

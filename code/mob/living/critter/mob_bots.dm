@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
-
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 		var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(src)
 		O.owner = src
 		O.implanted = 1
@@ -66,14 +66,14 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		if (!gibbed)
 			gib(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/screams/robot_scream.ogg" , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(get_turf(src), 'sound/voice/screams/robot_scream.ogg' , 10, 0, pitch = -1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
 
@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		emag_act(mob/user, obj/item/card/emag/E)
 			. = ..()
 			if(!src.emagged)
-				playsound(src, "sound/effects/sparks4.ogg", 50)
+				playsound(src, 'sound/effects/sparks4.ogg', 50)
 				src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/lube)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(!holder?.owner?.reagents)
 			return TRUE
 		holder.owner.reagents.add_reagent(reagent_id, 30)
-		playsound(holder.owner.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+		playsound(holder.owner.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 	lube
 		name = "Synthesize Space Lube"
 		desc = "Fill yourself will space lube. Creates a slipping hazard, but it makes those floors shine so well that you can see yourself in them!"
@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(get_turf(master), "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
+		playsound(get_turf(master), 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
 		master.anchored = 1
 		if(istype(master, /mob/living/critter/robotic/bot))
 			var/mob/living/critter/robotic/bot/bot = master
@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
 		if(!src.emagged)
-			playsound(src, "sound/effects/sparks4.ogg", 50)
+			playsound(src, 'sound/effects/sparks4.ogg', 50)
 			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)
@@ -308,7 +308,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(!holder?.owner)
 			return TRUE
 		flick("firebot-c", holder.owner)
-		playsound(get_turf(holder.owner), "sound/effects/spray.ogg", 50, 1, -3)
+		playsound(get_turf(holder.owner), 'sound/effects/spray.ogg', 50, 1, -3)
 
 		var/direction = get_dir(holder.owner,target)
 
@@ -362,7 +362,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		var/turf/T = get_turf(target)
 		var/list/affected_turfs = getline(holder.owner, T)
 		flick("firebot-c", holder.owner)
-		playsound(holder.owner.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+		playsound(holder.owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		var/turf/currentturf
 		var/turf/previousturf
 		for(var/turf/F in affected_turfs)

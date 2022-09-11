@@ -280,8 +280,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 // Really crazy shit
 
 /datum/projectile/special/shock_orb
-	name = "ball lightning"
-	sname = "ball lightning"
+	name = "rydberg-matter orb"
+	sname = "rydberg-matter orb"
 	icon_state = "elecorb"
 	shot_sound = 'sound/weapons/energy/LightningCannon.ogg'
 	power = 75
@@ -314,7 +314,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				sfloors -= Q
 
 	on_hit(var/atom/A)
-		playsound(A, "sound/weapons/energy/LightningCannonImpact.ogg", 50, 1)
+		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, 1)
 		var/list/sfloors = list()
 		for (var/turf/T in view(shock_range, A))
 			if (!T.density)
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		fireflash_sm(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
-		playsound(A, "sound/effects/ExplosionFirey.ogg", 100, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
@@ -402,9 +402,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(var/atom/A)
 		var/turf/T = get_turf(A)
-		playsound(A, "sound/effects/ExplosionFirey.ogg", 60, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
 		if(!src.impacted)
-			playsound_global(world, "sound/weapons/energy/howitzer_impact.ogg", 60)
+			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
 			SPAWN(1 DECI SECOND)
 				for(var/mob/living/M in mobs)
@@ -413,7 +413,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		SPAWN(0)
 			explosion_new(null, T, 30, 1)
 		if(prob(10))
-			playsound_global(world, "sound/effects/creaking_metal1.ogg", 40)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 40)
 
 // A weapon by Sovexe
 /datum/projectile/special/meowitzer //what have I done
@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	start_speed = 0.1
 
 
-	shot_sound = "sound/effects/mag_phase.ogg"
+	shot_sound = 'sound/effects/mag_phase.ogg'
 	goes_through_walls = 1
 	goes_through_mobs = 1
 
@@ -914,7 +914,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_rate = 0
 	max_range = 10
 	cost = 1
-	shot_sound = "sound/weapons/rocket.ogg"
+	shot_sound = 'sound/weapons/rocket.ogg'
 	icon_state = "bullet"
 	implanted= null
 	casing = null

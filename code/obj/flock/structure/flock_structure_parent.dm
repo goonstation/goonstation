@@ -19,6 +19,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/build_time = 6 // in seconds
 	var/health = 30
 	var/health_max = 30
+	var/repair_per_resource = 5
 	var/uses_health_icon = TRUE
 	var/bruteVuln = 1.2
 	///Should it twitch on being hit?
@@ -188,9 +189,11 @@ ABSTRACT_TYPE(/obj/flock_structure)
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
 	qdel(src)
 
-/obj/flock_structure/proc/repair()
-	src.health = min(src.health + 50, src.health_max)
+/obj/flock_structure/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
 	src.update_health_icon()
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
@@ -203,7 +206,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")
 			src.report_attack()
 			src.takeDamage("brute", 1)
-			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 
 	else
 		var/action = ""
@@ -230,9 +233,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if (src.hitTwitch)
 		hit_twitch(src)
 	if (W.force < 5)
-		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 	else
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
 
 
 /obj/flock_structure/proc/report_attack()

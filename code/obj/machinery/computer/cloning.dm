@@ -137,9 +137,9 @@ var/global/cloning_with_records = TRUE
 		new /obj/item/cloneModule/genepowermodule(src.loc)
 		src.BE = null
 	if(src.status & BROKEN)
-		logTheThing("station", usr, null, "disassembles [src] (broken) [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
-		logTheThing("station", usr, null, "disassembles [src] [log_loc(src)]")
+		logTheThing(LOG_STATION, usr, "disassembles [src] [log_loc(src)]")
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
@@ -167,7 +167,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -177,7 +177,7 @@ var/global/cloning_with_records = TRUE
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing("combat", src, user, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -190,7 +190,7 @@ var/global/cloning_with_records = TRUE
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing("combat", src, user, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 
@@ -525,7 +525,7 @@ proc/find_ghost_by_key(var/find_key)
 		src.add_fingerprint(user)
 		src.connected?.updateUsrDialog()
 
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
 	attack_hand(mob/user)
 		..()
@@ -565,20 +565,21 @@ proc/find_ghost_by_key(var/find_key)
 	proc/go_out()
 		if ((!( src.occupant ) || src.locked))
 			return
-
 		if(!src.occupant.disposed)
 			src.occupant.set_loc(get_turf(src))
-
-		src.occupant = null
-
-		for(var/atom/movable/A in src)
-			A.set_loc(src.loc)
-
-		src.icon_state = "scanner_0"
-
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
-
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.occupant)
+			src.occupant = null
+
+			for(var/atom/movable/A in src)
+				A.set_loc(src.loc)
+
+			src.icon_state = "scanner_0"
+
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 
 	was_deconstructed_to_frame(mob/user)
 		src.go_out()
@@ -719,7 +720,7 @@ proc/find_ghost_by_key(var/find_key)
 				return TRUE
 			var/selected_record =	find_record(params["ckey"])
 			if(selected_record)
-				logTheThing("station", usr, null, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
 				qdel(selected_record)
 				selected_record = null

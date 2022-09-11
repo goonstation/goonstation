@@ -14,7 +14,9 @@
 		/obj/item/clothing/suit/billow_cape = 10,\
 		/obj/item/clothing/under/misc/tiedye = 20,\
 		/obj/item/clothing/under/misc/neapolitan = 20,\
-		/obj/item/clothing/under/misc/mint_chip = 20,
+		/obj/item/clothing/under/misc/mint_chip = 20,\
+		/obj/item/clothing/under/misc/mimefancy = 10,\
+		/obj/item/clothing/under/misc/mimedress = 10,
 	// station
 	)
 	var/list/department = list(
@@ -46,6 +48,8 @@
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\
+		/obj/item/gun/energy/phaser_small = 20,\
+		/obj/item/gun/energy/phaser_huge = 10,\
 		/obj/item/clothing/ears/earmuffs/yeti = 20,\
 	// fun
 		/obj/item/gun/bling_blaster = 20,\
@@ -375,7 +379,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
-			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(opener.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		return
 
 /datum/loot_crate_trap/zap
@@ -393,7 +397,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 
 	trigger_trap(var/mob/living/opener)
 		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
-		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
+		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
 			if (istype(I,/obj/critter/cat/))
