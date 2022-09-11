@@ -1532,7 +1532,7 @@
 	name = "abomination suit"
 	desc =  "The abomination suit straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_BELT
+	hides_from_examine = C_UNIFORM|C_BELT
 	icon_state = "abomcostume"
 
 /obj/item/clothing/head/abomination
@@ -1750,7 +1750,7 @@
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
-	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
+	hides_from_examine = C_UNIFORM|C_BELT
 
 	New()
 		..()

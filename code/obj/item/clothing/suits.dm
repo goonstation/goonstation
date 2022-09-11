@@ -1478,7 +1478,7 @@
 	over_hair = TRUE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
+	hides_from_examine = C_UNIFORM|C_BELT
 
 	setupProperties()
 		..()
@@ -1518,7 +1518,7 @@
 	wear_layer = MOB_OVERLAY_BASE
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_BELT|C_EARS
+	hides_from_examine = C_UNIFORM|C_BELT
 	over_hair = TRUE
 
 	setupProperties()

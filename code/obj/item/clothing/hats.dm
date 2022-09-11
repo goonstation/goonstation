@@ -142,7 +142,7 @@ proc/filter_trait_hats(var/type)
 	name = "Class II radiation hood"
 	icon_state = "radiation"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
