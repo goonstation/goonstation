@@ -1,5 +1,9 @@
 
 (t)sun sep 11 22
+(u)Moberry
+(p)10731
+(e)|
+(*)Radiation Collectors can now be deconstructed and scanned by mechanics!
 (u)Mr. Moriarty
 (p)10734
 (e)|
