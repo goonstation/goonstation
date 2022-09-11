@@ -37,8 +37,6 @@
 	var/ai_paused = FALSE
 	var/wander_count = 0
 
-	var/atom_hovered_over = null
-
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
 	src.ai = new /datum/aiHolder/flock/drone(src)
 
@@ -55,7 +53,7 @@
 	src.real_name = src.flock ? src.flock.pick_name("flockdrone") : src.name
 	src.update_name_tag()
 	src.flock_name_tag = new
-	src.flock_name_tag.set_name_tag(src.real_name)
+	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
 	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
@@ -147,7 +145,6 @@
 	src.is_npc = FALSE
 	src.dormant = FALSE
 	src.anchored = FALSE
-	pilot.mob_hovered_over = null
 	pilot.atom_hovered_over = null
 
 	var/datum/mind/mind = pilot.mind
@@ -449,30 +446,6 @@
 		else
 			return ..()
 
-/mob/living/critter/flock/drone/keys_changed(keys, changed)
-	..()
-	if (changed & KEY_EXAMINE && src.client)
-		if (keys & KEY_EXAMINE)
-			for (var/path in src.flock.units)
-				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
-					F.name_tag.show_images(src.client, FALSE, FALSE)
-					F.flock_name_tag.show_tags(src.client, TRUE, FALSE)
-			for (var/obj/flock_structure/S as anything in src.flock.structures)
-				S.info_tag.show_tags(src.client, TRUE, FALSE)
-			if (src.atom_hovered_over)
-				if (istype(src.atom_hovered_over, /mob/living/critter/flock))
-					var/mob/living/critter/flock/F = src.atom_hovered_over
-					F.flock_name_tag.show_tags(src.client, FALSE, TRUE)
-				else
-					var/obj/flock_structure/S = src.atom_hovered_over
-					S.info_tag.show_tags(src.client, FALSE, TRUE)
-		else
-			for (var/path in src.flock.units)
-				for (var/mob/living/critter/flock/F as anything in src.flock.units[path])
-					F.flock_name_tag.show_tags(src.client, FALSE, FALSE)
-			for (var/obj/flock_structure/S as anything in src.flock.structures)
-				S.info_tag.show_tags(src.client, FALSE, FALSE)
-
 /mob/living/critter/flock/drone/setup_equipment_slots()
 	absorber = new /datum/equipmentHolder/flockAbsorption(src)
 	equipment += absorber
@@ -764,6 +737,12 @@
 			if(!dormant && !ai_paused)
 				src.icon_state = "drone-d2"
 	return
+
+/mob/living/critter/flock/drone/get_tracked_examine_atoms()
+	var/list/tracked = list() + ..()
+	for (var/obj/flock_structure/structure as anything in src.flock.structures)
+		tracked += structure
+	return tracked
 
 /mob/living/critter/flock/drone/proc/reduce_lifeprocess_on_death()
 	remove_lifeprocess(/datum/lifeprocess/blood)

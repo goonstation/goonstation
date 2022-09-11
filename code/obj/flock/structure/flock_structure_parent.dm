@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	///Should it twitch on being hit?
 	var/hitTwitch = TRUE
 
-	var/atom/movable/flock_examine_tag/info_tag
+	var/atom/movable/name_tag/flock_examine_tag/info_tag
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
@@ -59,7 +59,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	src.AddComponent(/datum/component/flock_protection)
 
 	src.info_tag = new
-	src.info_tag.set_name_tag(src.flock_id)
+	src.info_tag.set_name(src.flock_id)
 	src.vis_contents += src.info_tag
 
 	src.update_health_icon()
@@ -166,47 +166,30 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	annotation.icon_state = "hp-[round(src.health / src.health_max * 10) * 10]"
 
 /obj/flock_structure/MouseEntered(location, control, params)
-	if (istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone))
-		var/mob/M
-		if (istype(usr, /mob/living/intangible/flock))
-			var/mob/living/intangible/flock/F = usr
-			if (src.flock != F.flock)
-				..()
-				return
-			F.atom_hovered_over = src
-			M = F
-		else
-			var/mob/living/critter/flock/drone/F = usr
-			if (src.flock != F.flock)
-				..()
-				return
-			F.atom_hovered_over = src
-			M = F
-		if (M.client.check_key(KEY_EXAMINE))
-			src.info_tag.show_tags(M.client, FALSE, TRUE)
-	..()
+	var/mob/M = usr
+	M.atom_hovered_over = src
+	if(M.client.check_key(KEY_EXAMINE))
+		var/atom/movable/name_tag/tag_to_show = src.get_examine_tag(M)
+		tag_to_show?.show_images(M.client, FALSE, TRUE)
 
 /obj/flock_structure/MouseExited(location, control, params)
-	if (istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone))
-		var/mob/M
-		if (istype(usr, /mob/living/intangible/flock))
-			var/mob/living/intangible/flock/F = usr
-			F.atom_hovered_over = null
-			M = F
-			if (src.flock != F.flock)
-				..()
-				src.info_tag?.show_tags(M.client, FALSE, FALSE)
-				return
-		else
-			var/mob/living/critter/flock/drone/F = usr
-			F.atom_hovered_over = null
-			M = F
-			if (src.flock != F.flock)
-				..()
-				src.info_tag?.show_tags(M.client, FALSE, FALSE)
-				return
-		src.info_tag?.show_tags(M.client, M.client.check_key(KEY_EXAMINE) ? TRUE : FALSE, FALSE)
-	..()
+	var/mob/M = usr
+	M.atom_hovered_over = null
+	var/atom/movable/name_tag/tag_to_show = src.get_examine_tag(M)
+	tag_to_show?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
+
+/obj/flock_structure/get_examine_tag(mob/examiner)
+	if (!src.flock || !(istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone)))
+		return null
+	if (istype(examiner, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_intangible = examiner
+		if (src.flock != flock_intangible.flock)
+			return null
+	if (istype(examiner, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = examiner
+		if (src.flock != flockdrone.flock)
+			return null
+	return src.info_tag
 
 /obj/flock_structure/proc/deconstruct()
 	visible_message("<span class='alert'>[src.name] suddenly dissolves!</span>")

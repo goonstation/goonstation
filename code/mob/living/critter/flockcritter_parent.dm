@@ -32,7 +32,7 @@
 
 	var/mob/living/intangible/flock/controller = null
 
-	var/atom/movable/flock_examine_tag/flock_name_tag
+	var/atom/movable/name_tag/flock_examine_tag/flock_name_tag
 
 	// do i pay for building?
 	var/pays_to_construct = TRUE
@@ -92,58 +92,18 @@
 		state["area"] = "???"
 	return state
 
-/mob/living/critter/flock/MouseEntered(location, control, params)
-	if (isdead(src))
-		..()
-		return
-	if (!src.flock)
-		..()
-		return
-	if (!istype(usr, /mob/living/intangible/flock) && !istype(usr, /mob/living/critter/flock/drone))
-		..()
-		return
-
-	var/mob/M
-	if (istype(usr, /mob/living/intangible/flock))
-		var/mob/living/intangible/flock/F = usr
-		if (src.flock != F.flock)
-			..()
-			return
-		F.atom_hovered_over = src
-		M = F
-	else
-		var/mob/living/critter/flock/drone/F = usr
-		if (src.flock != F.flock)
-			..()
-			return
-		F.atom_hovered_over = src
-		M = F
-
-	if (M.client.check_key(KEY_EXAMINE))
-		src.flock_name_tag.show_tags(M.client, FALSE, TRUE)
-
-/mob/living/critter/flock/MouseExited(location, control, params)
-	if (istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone))
-		var/mob/M
-		if (istype(usr, /mob/living/intangible/flock))
-			var/mob/living/intangible/flock/F = usr
-			F.atom_hovered_over = null
-			M = F
-			if ((!src.flock || src.flock != F.flock))
-				src.flock_name_tag?.show_tags(M.client, FALSE, FALSE)
-				..()
-				return
-		else
-			var/mob/living/critter/flock/drone/F = usr
-			F.atom_hovered_over = null
-			M = F
-			if ((!src.flock || src.flock != F.flock))
-				src.flock_name_tag?.show_tags(M.client, FALSE, FALSE)
-				..()
-				return
-		src.flock_name_tag?.show_tags(M.client, M.client.check_key(KEY_EXAMINE) ? TRUE : FALSE, FALSE)
-		return
-	..()
+/mob/living/critter/flock/get_examine_tag(mob/examiner)
+	if (isdead(src) || !src.flock || !(istype(examiner, /mob/living/intangible/flock) || istype(examiner, /mob/living/critter/flock/drone)))
+		return ..()
+	if (istype(examiner, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_intangible = examiner
+		if (src.flock != flock_intangible.flock)
+			return ..()
+	if (istype(examiner, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = examiner
+		if (src.flock != flockdrone.flock)
+			return ..()
+	return src.flock_name_tag
 
 /mob/living/critter/flock/hand_attack(atom/target, params)
 	var/datum/handHolder/HH = get_active_hand()
@@ -161,7 +121,7 @@
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
-	src.flock_name_tag.set_name_tag(src.name)
+	src.flock_name_tag.set_name(src.name)
 	src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
