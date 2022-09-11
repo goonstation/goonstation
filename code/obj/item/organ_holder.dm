@@ -240,17 +240,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.fail_damage))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.fail_damage))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.fail_damage))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.fail_damage))
 			count++
 		return count
 

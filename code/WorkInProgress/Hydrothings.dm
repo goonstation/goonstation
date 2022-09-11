@@ -960,7 +960,6 @@ obj/critter/madnessowl/switchblade
 	current_projectile = new/datum/projectile/bullet/lmg
 	projectile_spread = 20
 	attack_cooldown = 35
-	must_drop_loot = 1
 	smashes_shit = 1
 
 	select_target(var/atom/newtarget)

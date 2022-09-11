@@ -131,17 +131,31 @@ var/f_color_selector_handler/F_Color_Selector
 		renderSourceHolder.render_target = "*renderSourceHolder"
 
 /proc/buildMaterialCache()
-	//material_cache
+	material_cache = list()
 	var/materialList = concrete_typesof(/datum/material)
 	for(var/mat in materialList)
 		var/datum/material/M = new mat()
 		material_cache.Add(M.mat_id)
 		material_cache[M.mat_id] = M
-	return
+
+#ifdef TRACY_PROFILER_HOOK
+/proc/prof_init()
+	var/lib
+	switch(world.system_type)
+		if(MS_WINDOWS) lib = "prof.dll"
+		if(UNIX) lib = "libprof.so"
+		else CRASH("unsupported platform")
+
+	var/init = call(lib, "init")()
+	if("0" != init) CRASH("[lib] init error: [init]")
+#endif
 
 //Called BEFORE the map loads. Useful for objects that require certain things be set during init
 /datum/preMapLoad
 	New()
+#ifdef TRACY_PROFILER_HOOK
+		prof_init()
+#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
 #endif
@@ -164,7 +178,7 @@ var/f_color_selector_handler/F_Color_Selector
 #ifndef RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
-		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]] Starting new round"
+		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]\] Starting new round"
 		world.log << "========================================"
 		world.log << ""
 #endif
@@ -185,7 +199,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 		if (config.allowRotatingFullLogs)
 			roundLog << "========================================<br>"
-			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]] <b>Starting new round</b><br>"
+			roundLog << "\[[time2text(world.timeofday,"hh:mm:ss")]\] <b>Starting new round</b><br>"
 			roundLog << "========================================<br>"
 			roundLog << "<br>"
 			logLength += 4
@@ -247,8 +261,6 @@ var/f_color_selector_handler/F_Color_Selector
 		random_events = new /datum/event_controller()
 		Z_LOG_DEBUG("Preload", "  disease_controls")
 		disease_controls = new /datum/disease_controller()
-		Z_LOG_DEBUG("Preload", "  mechanic_controls")
-		mechanic_controls = null //A ruck kit will fill this in
 		Z_LOG_DEBUG("Preload", "  artifact_controls")
 		artifact_controls = new /datum/artifact_controller()
 		Z_LOG_DEBUG("Preload", "  mining_controls")
@@ -321,9 +333,9 @@ var/f_color_selector_handler/F_Color_Selector
 			rewardDB.Add(R.type)
 			rewardDB[R.type] = R
 
-		Z_LOG_DEBUG("Preload", "  /obj/trait")
-		for(var/A in concrete_typesof(/obj/trait)) //Creating trait objects. I hate this.
-			var/obj/trait/T = new A( )							//Sentiment shared -G
+		Z_LOG_DEBUG("Preload", "  /datum/trait")
+		for(var/A in concrete_typesof(/datum/trait))
+			var/datum/trait/T = new A()
 			traitList.Add(T.id)
 			traitList[T.id] = T
 
@@ -569,10 +581,11 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
-	UPDATE_TITLE_STATUS("Reticulating splines")
+	UPDATE_TITLE_STATUS("Initializing worldgen setup")
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
+	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 

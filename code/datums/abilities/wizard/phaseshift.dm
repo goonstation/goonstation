@@ -152,6 +152,8 @@
 		return
 	if (!H.canmove)
 		return
+	if(isrestrictedz(H.loc.z))
+		return
 
 	if (isliving(H))
 		var/mob/living/owner = H

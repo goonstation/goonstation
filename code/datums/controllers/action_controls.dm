@@ -1813,7 +1813,7 @@ var/datum/action_controller/actions
 			P = item
 			duration = round(clamp(P.reagents.total_volume, 30, 90) / 3 + 20)
 		else
-			logTheThing("debug", src, null, "/datum/action/bar/icon/pill called with invalid type [item].")
+			logTheThing(LOG_DEBUG, src, "/datum/action/bar/icon/pill called with invalid type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
 
