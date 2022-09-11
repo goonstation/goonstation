@@ -1,4 +1,7 @@
 
+(t)sun sep 11 22
+(u)Sord
+(*)The emergency shuttle can no longer be called on blob rounds until 20 minutes have passed
 (t)sat sep 10 22
 (u)glowbold
 (p)10737
