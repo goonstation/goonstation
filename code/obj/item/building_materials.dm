@@ -1093,8 +1093,8 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				// If this isn't space or metal foam...
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam) || istype(S, /turf/simulated/floor/plating/airless/asteroid)))
+				// If this isn't space, metal foam, or an asteroid...
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T

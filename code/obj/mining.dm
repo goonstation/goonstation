@@ -1442,8 +1442,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(ispryingtool(W))
-			src.ReplaceWithSpace()
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
 
 	update_icon()
 
