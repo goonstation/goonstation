@@ -75,14 +75,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 5
 		prefabSizeY = 5
 
-	beacon // warp beacon for easy z5 teleporting.
-		required = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_beacon.dmm"
-		prefabSizeX = 5
-		prefabSizeY = 5
-
 	outpost // rest stop/outpost for miners to eat/rest/heal at.
 		required = 1
 		maxNum = 1

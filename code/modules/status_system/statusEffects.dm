@@ -884,7 +884,7 @@
 				icon_state = "drunk[how_drunk]"
 
 		getTooltip()
-			. =  "You are [how_drunk == 2 ? "very": ""][how_drunk == 3 ? ", very" : ""] drunk."
+			. =  "You are [how_drunk >= 2 ? "very": ""][how_drunk >= 3 ? ", very" : ""] drunk."
 
 	blinded
 		id = "blinded"

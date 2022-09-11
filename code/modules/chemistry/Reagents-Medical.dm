@@ -646,7 +646,7 @@ datum
 			transparency = 40
 			value = 3
 			threshold = THRESHOLD_INIT
-			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium")
+			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium", "neurodepressant")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
