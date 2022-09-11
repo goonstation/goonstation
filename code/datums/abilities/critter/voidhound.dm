@@ -65,7 +65,7 @@
 			M.layer = EFFECTS_LAYER_BASE
 			usr.visible_message("<span class='alert'><b>[M]</b> pounces into the air!</span>")
 
-			for(var/i in 1 to jump_tiles, i++)
+			for(var/i in 1 to jump_tiles)
 
 				//get the mobs on the next step in the pounce, throw em to the side if they are standing.
 				var/turf/next_step = get_step(M, M.dir)

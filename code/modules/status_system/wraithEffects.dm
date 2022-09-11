@@ -173,7 +173,7 @@
 						qdel(illusionIcon)
 				if (2) //sound based
 					if(prob(90))
-						switch(rand(1,2))
+						switch(rand(1,8))
 							if (1)
 								sound_effect = "sound/machines/phones/ring_incoming.ogg"
 								volume = 60
