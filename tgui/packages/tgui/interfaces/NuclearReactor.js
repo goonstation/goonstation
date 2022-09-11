@@ -128,15 +128,15 @@ export const NuclearReactor = (props, context) => {
               <Box>Reactor Temperature:</Box>
               <RoundGauge
                 minValue={0-T0C}
-                maxValue={2500-T0C}
+                maxValue={1500}
                 size={5}
                 value={reactorTemp}
                 format={value => round(value-T0C, 2)+ " °C"}
-                alertAfter={2000-T0C}
+                alertAfter={1200}
                 ranges={{
-                  "good": [0-T0C, 1000-T0C],
-                  "average": [1000-T0C, 2000-T0C],
-                  "bad": [2000-T0C, 2500-T0C],
+                  "good": [0-T0C, 1000],
+                  "average": [1000, 1200],
+                  "bad": [1200, 1500],
                 }} />
             </Flex.Item>
             <Flex.Item>

@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/reactor_component)
 	var/melt_health = 100
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
-	var/melting_point = 2500
+	var/melting_point = 1700 //1700K is the melting point of steel
 	var/static/list/ui_image_base64_cache = list()
 	var/gas_volume = 0
 
@@ -98,20 +98,20 @@ ABSTRACT_TYPE(/obj/reactor_component)
 		for(var/datum/neutron/N in inNeutrons)
 			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
-					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
-					inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
+				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
+					for(var/i in 1 to 5)
+						inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
-					src.temperature += 20
-				else if(N.velocity <= (1 + src.melted) & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
-					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
-					inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+					src.temperature += 50
+				else if(N.velocity <= 1 & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
+					for(var/i in 1 to 5)
+						inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
 					inNeutrons -= N
 					qdel(N)
-					src.temperature += 10
+					src.temperature += 25
 				else
-					if(prob(src.material.getProperty("hardness")*10)) //reflection is based on hardness
+					if(prob(src.material.getProperty("hard")*10)) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
 					else if(is_control_rod) //control rods absorb neutrons
 						N.velocity = 0
@@ -123,12 +123,14 @@ ABSTRACT_TYPE(/obj/reactor_component)
 					src.temperature += 1
 
 		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
-			inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3)) //neutron radiation gets you fast neutrons
+			for(var/i in 1 to 3)
+				inNeutrons += new /datum/neutron(pick(cardinals), 3) //neutron radiation gets you fast neutrons
 			src.material.adjustProperty("n_radioactive", -0.01)
 			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
 			src.temperature += 20
 		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
-			inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2))
+			for(var/i in 1 to 3)
+				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
 			src.material.adjustProperty("radioactive", -0.01)
 			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
 			src.temperature += 10

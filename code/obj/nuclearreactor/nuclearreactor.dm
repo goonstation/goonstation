@@ -3,6 +3,9 @@
 /////////////////////////////////////////////////////////////////
 #define REACTOR_GRID_WIDTH 7
 #define REACTOR_GRID_HEIGHT 7
+#define REACTOR_TOO_HOT_TEMP 1200
+#define REACTOR_ON_FIRE_TEMP 1500
+#define REACTOR_MELTDOWN_TEMP 2000 //just so the components can melt before the catastrophic overload
 
 /obj/machinery/atmospherics/binary/nuclear_reactor
 	name = "Model NTBMK Nuclear Reactor"
@@ -105,20 +108,20 @@
 		//if we somehow ended up with input gas still
 		gas_output.merge(gas_input)
 
-		if(temperature >= 2000)
+		if(temperature >= REACTOR_TOO_HOT_TEMP)
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
-				logTheThing("station", src, "[src] is at 2000K and may meltdown")
+				logTheThing("station", src, "[src] is at [temperature]K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
-			if(temperature >= 2500 && !src.GetParticles("overheat_fire"))
+			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
-				logTheThing("station", src, "[src] is at 2500K and is likely to meltdown")
+				logTheThing("station", src, "[src] is at [temperature]K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
-			else if(temperature < 2500 && src.GetParticles("overheat_fire"))
+			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
 				logTheThing("station", src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
@@ -127,13 +130,13 @@
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
-				logTheThing("station", src, "[src] is cooling from 2000K")
+				logTheThing("station", src, "[src] is cooling from [temperature]K")
 				src.ClearSpecificParticles("overheat_smoke")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
 					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
 
 		src.radiationLevel = tmpRads
-		if(tmpRads > 1000 || temperature > 5000)
+		if(tmpRads > 1000 || temperature > REACTOR_MELTDOWN_TEMP)
 			src.catastrophicOverload() //we need this, otherwise neutron interactions go exponential and processing does too
 			return
 
@@ -469,7 +472,9 @@
 
 #undef REACTOR_GRID_WIDTH
 #undef REACTOR_GRID_HEIGHT
-
+#undef REACTOR_TOO_HOT_TEMP
+#undef REACTOR_ON_FIRE_TEMP
+#undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
 	icon_state = ""
@@ -511,7 +516,7 @@
 			return TRUE //don't hit this, lose power and pass through it
 
 		if(hit.material)
-			if(prob(hit.material.getProperty("hardness")*10))
+			if(prob(hit.material.getProperty("hard")*10))
 				//reflect
 				shoot_reflected_bounce(O, hit)
 				return TRUE
