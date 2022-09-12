@@ -507,7 +507,7 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, get_dist(spawnpoint, target), 1)
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
