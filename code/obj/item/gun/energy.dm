@@ -1757,7 +1757,7 @@
 
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
-	desc = "It's a shotgun? Or an assault rifle? You can't tell."
+	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
 	icon = 'icons/obj/large/48x32.dmi'
 	muzzle_flash = "muzzle_flash_bluezap"
 	icon_state = "cornicen_close"
