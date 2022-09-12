@@ -11,12 +11,10 @@
 		if (..())
 			return TRUE
 		var/mob/wraith/W = null
-		if(istype(holder.owner, /mob/living/critter/wraith/nascent))
-			var/mob/living/critter/wraith/nascent/N = holder.owner
-			if(N.master != null)
-				W = N.master
-		var/mob/living/critter/wraith/skeleton_commander/S = new /mob/living/critter/wraith/skeleton_commander(get_turf(holder.owner), W)
 		var/mob/living/critter/wraith/nascent/N = holder.owner
+		if(istype(N) && N.master)
+			W = N.master
+		var/mob/living/critter/wraith/skeleton_commander/S = new /mob/living/critter/wraith/skeleton_commander(get_turf(holder.owner), W)
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)

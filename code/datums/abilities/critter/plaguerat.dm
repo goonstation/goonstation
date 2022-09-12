@@ -20,11 +20,11 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to eat.</span>")
-			return 1
+			return TRUE
 
 		var/turf/T = null
 		if (isturf(target))
@@ -34,7 +34,7 @@
 
 		if (T == null)
 			boutput(holder.owner, "<span class='alert'>There is nothing to eat here.</span>")
-			return 1
+			return TRUE
 
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 
@@ -49,7 +49,7 @@
 			actions.start(new/datum/action/bar/private/icon/plaguerat_eat(found_decals, src), P)
 		else
 			boutput(holder.owner, "<span class='alert'>You can't eat that, it doesnt satisfy your appetite.</span>")
-			return 1
+			return TRUE
 
 	onAttach(datum/abilityHolder/holder)
 		..()
@@ -135,19 +135,19 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
 				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
-				return 1
+				return TRUE
 		if (target == holder.owner)
-			return 1
+			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
-			return 1
+			return TRUE
 		var/mob/MT = target
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)
@@ -174,7 +174,7 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (istype(holder.owner, /mob/living/critter/wraith/plaguerat) && !istype(get_turf(holder.owner), /turf/space))
 			var/mob/living/critter/wraith/plaguerat/P = holder.owner
 			if (P.linked_den == null)
@@ -193,7 +193,7 @@
 				P.linked_den = W
 				boutput (P, "<span class='notice'>You spawn a new rat den</span>")
 			return 0
-		return 1
+		return TRUE
 
 	onAttach(datum/abilityHolder/holder)
 		..()

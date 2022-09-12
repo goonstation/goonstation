@@ -71,17 +71,8 @@
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	death(var/gibbed)
-		if(master != null)
-			src.master.set_loc(get_turf(src))
-			master.abilityHolder.points = src.abilityHolder.points
-			master.haunt()
-			src.mind.transfer_to(master)
-			var/datum/targetable/ability = master.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
-			ability.doCooldown()
-			src.master = null
-		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
+		. = ..()
 		qdel(src)
-		return ..()
 
 	disposing()
 		if(master != null)
@@ -93,8 +84,7 @@
 			ability.doCooldown()
 			src.master = null
 		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
-		qdel(src)
-		return ..()
+		. = ..()
 
 	proc/demanifest()
 		if(master != null)

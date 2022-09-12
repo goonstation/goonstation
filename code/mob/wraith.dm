@@ -29,9 +29,7 @@
 	var/haunting = 0
 	var/hauntBonus = 0
 	var/justdied = 0
-	var/forcedVisible = false	//Spirit candles can force us to show ourself
-	var/visibleTimer = 3	//Spirit candles reset the timer periodically when close.
-	var/justmanifested = 0	//To track if a candle forced us to manifest
+	var/last_spirit_candle_time = 0	//last time that were forced to manifest by a spirit candle
 	var/absorbcount = 0 //Keep track of how many souls we absorbed
 	var/absorbs_to_evolve = 3
 	var/obj/machinery/wraith/vortex_wraith/linked_portal = null //The portal harbinger can spawn
@@ -110,9 +108,8 @@
 		if (!movement_controller)
 			movement_controller = new /datum/movement_controller/poltergeist (src)
 
-		var/default_name = make_name()
+		real_name = make_name()
 		src.UpdateName()
-		src.choose_name(3, "Wraith", default_name)
 
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_mob(src)
 
@@ -162,11 +159,6 @@
 
 		var/life_time_passed = max(life_tick_spacing, TIME - last_life_update)
 
-		if (src.forcedVisible && !src.density && !src.haunting)
-			if (src.visibleTimer > 0)
-				src.visibleTimer--
-			if (src.visibleTimer <= 0)
-				makeInvisible()
 
 		src.hauntBonus = 0
 		if (src.haunting)
@@ -185,14 +177,7 @@
 				next_area_change = world.time + 10 MINUTES
 				get_new_booster_zones()
 
-		var/area/mob_area = get_area(src)
-		var/is_in_area = false
-		for (var/area/A in booster_locations)	//Are we in a booster zone?
-			if (mob_area == A)
-				is_in_area = true
-				break
-
-		if(is_in_area) //Double points in the area
+		if (get_area(src) in booster_locations)
 			hauntBonus = (hauntBonus * 2)
 
 		if(hauntBonus > 0)
@@ -202,15 +187,13 @@
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 		src.abilityHolder.updateText()
 
-		if (src.health < 1)
+		if (src.health <= 0 )
 			src.death(FALSE)
 			return
 		else if (src.health < src.max_health)
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
 		last_life_update = TIME
 
-		if(justmanifested > 0)
-			justmanifested--
 
 	// No log entries for unaffected mobs (Convair880).
 	ex_act(severity)
@@ -601,16 +584,6 @@
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 				src.alpha = 160
 				src.see_invisible = INVIS_SPOOKY
-
-		makeVisible()
-			if(!src.density && !src.forcedVisible)
-				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-				src.forcedVisible = true
-
-		makeInvisible()
-			if(!src.density)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
-			src.forcedVisible = false
 
 		haunt()
 			if (src.density)

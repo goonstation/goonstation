@@ -179,7 +179,7 @@
 			var/mob/wraith/W = src.holder.owner
 			W.absorbcount += 1
 			//Messages for everyone!
-			playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
+			playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
 
 			return 0
 
@@ -191,7 +191,7 @@
 				for (var/mob/living/carbon/human/target in T.contents)
 					if (isdead(target))
 						error = TRUE
-						if (target.decomp_stage != 4)
+						if (target.decomp_stage != DECOMP_STAGE_SKELETONIZED)
 							M = target
 							break
 			else if (ishuman(T))
@@ -201,7 +201,7 @@
 					return 1
 
 				//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-				else if (M.decomp_stage != 4)
+				else if (M.decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					if (M.reagents)
 						var/mob/wraith/W = src.holder.owner
 						var/amt = M.reagents.get_reagent_amount("formaldehyde")
@@ -210,7 +210,7 @@
 							boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
 							particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
 							return 0
-				else if (M.decomp_stage == 4)
+				else if (M.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 					M = null
 					error = 1
 				else
@@ -228,7 +228,7 @@
 			logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
 
 			//Make the corpse all grody and skeleton-y
-			M.decomp_stage = 4
+			M.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			if (M.organHolder && M.organHolder.brain)
 				qdel(M.organHolder.brain)
 			M.set_face_icon_dirty()
@@ -1157,38 +1157,44 @@
 				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
 				H.make_jittery(300)
 				SPAWN(4 SECOND)
+					if (!(H?.loc && W?.loc)) return
 					H.changeStatus("stunned", 2 SECONDS)
 					H.emote("scream")
 					boutput(H, "<span class='alert'>You feel netherworldly hands grasping you!</span>")
-					SPAWN(3 SECOND)
-						random_brute_damage(H, 10)
-						playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-						H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
-						new /obj/decal/cleanable/blood/drip(get_turf(H))
-						SPAWN(3 SECOND)
-							random_brute_damage(H, 10)
-							playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-							new /obj/decal/cleanable/blood/drip(get_turf(H))
-							SPAWN(1 SECOND)
-								random_brute_damage(H, 20)
-								playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
-								new /obj/decal/cleanable/blood/drip(get_turf(H))
-								SPAWN(2 SECOND)
-									boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
-									H.remove_stamina( rand(100, 120) )
-									H.changeStatus("stunned", 4 SECONDS)
-									SPAWN(3 SECOND)
-										var/turf/T = get_turf(H)
-										var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
-										if (S)
-											S.set_up(8, 0, T, null, "#000000")
-											S.start()
-										H.gib()
-										boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
-										T.fluid_react_single("miasma", 60, airborne = 1)
-										holder.points += 100
-										holder.regenRate += 2.0
-										W.absorbcount++
+					sleep(3 SECOND)
+					if (!(H?.loc && W?.loc)) return
+					random_brute_damage(H, 10)
+					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
+					new /obj/decal/cleanable/blood/drip(get_turf(H))
+					sleep(3 SECOND)
+					if (!(H?.loc && W?.loc)) return
+					random_brute_damage(H, 10)
+					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					new /obj/decal/cleanable/blood/drip(get_turf(H))
+					sleep(1 SECOND)
+					if (!(H?.loc && W?.loc)) return
+					random_brute_damage(H, 20)
+					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					new /obj/decal/cleanable/blood/drip(get_turf(H))
+					sleep(2 SECOND)
+					if (!(H?.loc && W?.loc)) return
+					boutput(H, "<span class='alert'>IT'S COMING FOR YOU!</span>")
+					H.remove_stamina( rand(100, 120) )
+					H.changeStatus("stunned", 4 SECONDS)
+					sleep(3 SECOND)
+					if (!(H?.loc && W?.loc)) return
+					var/turf/T = get_turf(H)
+					var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+					if (S)
+						S.set_up(8, 0, T, null, "#000000")
+						S.start()
+					H.gib()
+					boutput(holder.owner, "<span class='alert'>What delicious agony!</span>")
+					T.fluid_react_single("miasma", 60, airborne = 1)
+					holder.points += 100
+					holder.regenRate += 2.0
+					W.absorbcount++
 			else
 				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
 				return 1
@@ -1201,6 +1207,9 @@
 	targeted = 0
 	cooldown = 90 SECONDS
 	pointCost = 120
+	var/const/max_decals = 40
+	var/const/min_decals = 10
+	var/const/strong_exploder_threshold = 20
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,
@@ -1217,35 +1226,39 @@
 		var/decal_count = 0
 		var/list/found_decal_list = list()
 		for (var/obj/decal/cleanable/found_cleanable in range(3, get_turf(holder.owner)))
-			for (var/decal_type in decal_list)
-				if (istype(found_cleanable, decal_type))
-					decal_count++
-					found_decal_list += found_cleanable
-		if (decal_count > 10)
+			if (istypes(found_cleanable, decal_list))
+				found_decal_list += found_cleanable
+				if (length(found_decal_list) >= max_decals)
+					break
+		if (length(found_decal_list) > min_decals)
 			holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithraise[pick("1","2","3")].ogg", 80)
 			var/turf/T = get_turf(holder.owner)
 			T.visible_message("<span class='alert'>All the filth and grime around begins to writhe and move!</span>")
-			for(var/obj/decal/cleanable/C in found_decal_list)
-				step_towards(C,T)
-			sleep(2 SECOND)
-			for(var/obj/decal/cleanable/C in found_decal_list)
-				step_towards(C,T)
-			sleep(1.5 SECOND)
-			for(var/obj/decal/cleanable/C in found_decal_list)
-				step_towards(C,T)
-			sleep(1 SECOND)
-			if (decal_count >= 22)
-				var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
-				animate_portal_tele(E)
-				T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
-				boutput(holder.owner, "The great amount of filth coalesces into a rotting goliath")
-			else
-				var/mob/living/critter/exploder/E = new /mob/living/critter/exploder(T)
-				animate_portal_tele(E)
-				T.visible_message("<span class='alert'>A [E] slowly rises up from the coalesced filth!</span>")
-				boutput(holder.owner, "The filth accumulates into a living bloated abomination")
-			for(var/obj/decal/cleanable/C in found_decal_list)
-				qdel(C)
+			SPAWN(0)
+				for(var/obj/decal/cleanable/C in found_decal_list)
+					if (!C?.loc) continue
+					step_towards(C,T)
+				sleep(2 SECOND)
+				for(var/obj/decal/cleanable/C in found_decal_list)
+					if (!C?.loc) continue
+					step_towards(C,T)
+				sleep(1.5 SECOND)
+				for(var/obj/decal/cleanable/C in found_decal_list)
+					if (!C?.loc) continue
+					step_towards(C,T)
+				sleep(1 SECOND)
+				if (decal_count >= strong_exploder_threshold)
+					var/mob/living/critter/exploder/strong/E = new /mob/living/critter/exploder/strong(T)
+					animate_portal_tele(E)
+					T.visible_message("<span class='alert'>A [E] slowly emerges from the gigantic pile of grime!</span>")
+					boutput(holder.owner, "The great amount of filth coalesces into a rotting goliath")
+				else
+					var/mob/living/critter/exploder/E = new /mob/living/critter/exploder(T)
+					animate_portal_tele(E)
+					T.visible_message("<span class='alert'>A [E] slowly rises up from the coalesced filth!</span>")
+					boutput(holder.owner, "The filth accumulates into a living bloated abomination")
+				for(var/obj/decal/cleanable/C as anything in found_decal_list)
+					qdel(C)
 			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>This place is much too clean to summon a rot hulk.</span>")
@@ -1397,49 +1410,54 @@
 					boutput(H, "<span class='alert'>You are feeling awfully woozy.</span>")
 					H.change_misstep_chance(20)
 					SPAWN(10 SECONDS)
+						if (!(H?.loc && W?.loc)) return
 						boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
 						H.emote("faint")
 						H.setStatusMin("weakened", 5 SECONDS)
-						SPAWN(15 SECONDS)
-							H.change_misstep_chance(-20)
-							H.emote("scream")
-							H.setStatusMin("weakened", 8 SECONDS)
-							H.setStatusMin("paralysis", 8 SECONDS)
-							SPAWN(8 SECONDS)
-								var/mob/dead/observer/O = H.ghostize()
-								if(W.mind == null)	//Wraith died or was removed in the meantime
-									return TRUE
-								if (O?.mind)
-									boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
-									WG = O.insert_slasher_observer(H)
-									WG.mind.dnr = TRUE
-									WG.verbs -= list(/mob/verb/setdnr)
-									has_mind = true
-								W.mind.transfer_to(H)
-								APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
-								SPAWN(45 SECONDS)
-									boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
-									SPAWN(20 SECONDS)
-										boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
-										REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
-										if(!H.loc) //H gibbed
-											var/mob/M2 = ckey_to_mob(wraith_key)
-											M2.mind.transfer_to(W)
-										if(!W.loc) //wraith got gibbed
-											return
-										H.mind.transfer_to(W)
-										if (has_mind)
-											WG.mind.dnr = FALSE
-											WG.verbs += list(/mob/verb/setdnr)
-											WG.mind.transfer_to(H)
-											playsound(H, "sound/effects/ghost2.ogg", 50, 0)
-										W.possession_points = 0
-										logTheThing("debug", null, null, "step 5")
-										qdel(WG)
-										H.take_brain_damage(70)
-										H.setStatus("weakened", 5 SECOND)
-										boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
-										return FALSE
+						sleep(15 SECONDS)
+						if (!(H?.loc && W?.loc)) return
+						H.change_misstep_chance(-20)
+						H.emote("scream")
+						H.setStatusMin("weakened", 8 SECONDS)
+						H.setStatusMin("paralysis", 8 SECONDS)
+						sleep(8 SECONDS)
+						if (!(H?.loc && W?.loc)) return
+						var/mob/dead/observer/O = H.ghostize()
+						if(W.mind == null)	//Wraith died or was removed in the meantime
+							return
+						if (O?.mind)
+							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
+							WG = O.insert_slasher_observer(H)
+							WG.mind.dnr = TRUE
+							WG.verbs -= list(/mob/verb/setdnr)
+							has_mind = true
+						W.mind.transfer_to(H)
+						APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
+						sleep(45 SECONDS)
+						if (!H?.loc) return
+						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
+						sleep(20 SECONDS)
+						if (!H?.loc) return
+						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
+						REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+						if(!H?.loc) //H gibbed
+							var/mob/M2 = ckey_to_mob(wraith_key)
+							M2.mind.transfer_to(W)
+						if(!W.loc) //wraith got gibbed
+							return
+						H.mind.transfer_to(W)
+						if (has_mind)
+							WG.mind.dnr = FALSE
+							WG.verbs += list(/mob/verb/setdnr)
+							WG.mind.transfer_to(H)
+							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+						W.possession_points = 0
+						logTheThing("debug", null, null, "step 5")
+						qdel(WG)
+						H.take_brain_damage(30)
+						H.setStatus("weakened", 5 SECOND)
+						boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
+					return FALSE
 			else
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return 1

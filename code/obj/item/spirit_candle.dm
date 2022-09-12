@@ -23,15 +23,16 @@
 		if (src.on)
 			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
 			for(var/mob/wraith/W in orange(4, user))
-				if (W.justmanifested <= 0)
-					SPAWN(5 DECI SECOND)	//Give them half a second to flee
-						W.makeCorporeal()
-						W.forced_manifest = TRUE
-						boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
-						SPAWN(30 SECOND)
-							W.makeIncorporeal()
-							W.justmanifested = 5	//To avoid spamming the candle
-							W.forced_manifest = FALSE
+				if ((W.last_spirit_candle_time + (W.haunt_duration * 2)) < TIME)
+					W.last_spirit_candle_time = TRUE
+					W.makeCorporeal()
+					W.forced_manifest = TRUE
+					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
+					SPAWN(W.haunt_duration)
+						W?.makeIncorporeal()
+						W?.forced_manifest = FALSE
+				else
+					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")
 			var/turf/T = get_turf(src)
 			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
 			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
@@ -63,19 +64,6 @@
 			return ..()
 
 	process()
-		var/turf/location = src.loc
-		var/mob/M = null
-		var/origin = null
-		if (ismob(location))
-			M = location
-			origin = get_turf(M)
-		else
-			origin = location
-		//Check for wraiths in range and reveal them
-		for (var/mob/wraith/W in range(4, origin))
-			W.makeVisible()
-			W.visibleTimer = 3	//Reset the wraith timer when nearby
-
 		if (src.on)
 			light_ticks --
 		if ((light_ticks < 40) && (burn_state < 1))

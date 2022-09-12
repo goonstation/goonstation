@@ -136,10 +136,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			var/MA = null	//Do we have a master? Lets transfer it to the new rat.
-			if(src.master != null)
-				MA = master
-			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), MA)
+			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), master)
 			var/mob/living/critter/wraith/plaguerat/old_rat = src
 			src.mind.transfer_to(new_rat)
 			animate_buff_in(new_rat)
