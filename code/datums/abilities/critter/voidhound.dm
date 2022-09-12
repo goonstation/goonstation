@@ -89,7 +89,6 @@
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(M.loc, "sound/effects/bang.ogg", 50, 1)
 			animate_storage_thump(container)
 			if (prob(25))
 				if (istype(container, /obj/storage))
