@@ -1,5 +1,9 @@
 
 (t)mon sep 12 22
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
 (u)DimWhat
 (p)10785
 (e)|
