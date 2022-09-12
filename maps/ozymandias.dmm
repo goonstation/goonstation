@@ -18755,7 +18755,7 @@
 "fkv" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -41368,10 +41368,6 @@
 	},
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
-"leM" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
 "leR" = (
 /obj/stool/chair{
 	dir = 1
@@ -51601,7 +51597,7 @@
 /area/station/medical/medbay/surgery/storage)
 "nNk" = (
 /obj/storage/crate/internals{
-	spawn_contents = list(/obj/item/clothing/mask/gas = 2,/obj/item/tank/emergency_oxygen = 1,/obj/item/tank/air = 1,/obj/item/clothing/head/emerg = 2,/obj/item/clothing/suit/space/emerg = 2)
+	spawn_contents = list(/obj/item/clothing/mask/gas=2,/obj/item/tank/emergency_oxygen=1,/obj/item/tank/air=1,/obj/item/clothing/head/emerg=2,/obj/item/clothing/suit/space/emerg=2)
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
@@ -60758,9 +60754,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/quartermaster/office)
-"qfP" = (
-/turf/space,
-/area/supply/delivery_point)
 "qgb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65124,7 +65117,7 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
+/area/space)
 "rnd" = (
 /obj/machinery/manufacturer/general{
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
@@ -73069,7 +73062,7 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
+/area/supply/delivery_point)
 "tig" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -73986,7 +73979,7 @@
 /area/station/hangar/qm)
 "ttH" = (
 /obj/storage/crate/internals{
-	spawn_contents = list(/obj/item/clothing/mask/gas = 2,/obj/item/tank/emergency_oxygen = 1,/obj/item/tank/air = 1,/obj/item/clothing/head/emerg = 2,/obj/item/clothing/suit/space/emerg = 2)
+	spawn_contents = list(/obj/item/clothing/mask/gas=2,/obj/item/tank/emergency_oxygen=1,/obj/item/tank/air=1,/obj/item/clothing/head/emerg=2,/obj/item/clothing/suit/space/emerg=2)
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -159071,7 +159064,7 @@ fdT
 xGX
 aJu
 fdT
-leM
+avG
 rna
 xGX
 aJu
@@ -159676,7 +159669,7 @@ xGX
 aJu
 fdT
 xGX
-qfP
+aJu
 wqf
 aJu
 aJu
