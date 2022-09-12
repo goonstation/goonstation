@@ -1270,15 +1270,6 @@ datum
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
 
-			/*reaction_temperature(exposed_temperature, exposed_volume)
-				var/myvol = volume
-
-				if(exposed_temperature > T0C + 50) //Turns into omnizine. Derp.
-					volume = 0
-					holder.add_reagent("omnizine", myvol, null)
-
-				return*/
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275 && !M.hasStatus("burning")) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
@@ -1288,10 +1279,10 @@ datum
 						M.lose_breath(-1 * mult)
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 2 * mult, 2 * mult, 2 * mult)
+					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
 
 					M.take_radiation_dose(-0.025 SIEVERTS * mult)
-					M.bodytemperature = min(M.bodytemperature + (10 * mult), M.base_body_temp)
+					M.bodytemperature = min(M.bodytemperature + (20 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
