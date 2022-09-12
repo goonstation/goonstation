@@ -78,7 +78,7 @@
 		if(master != null)
 			src.master.set_loc(get_turf(src))
 			master.abilityHolder.points = src.abilityHolder.points
-			master.haunt()
+			master.setStatus("corporeal", master.haunt_duration)
 			src.mind.transfer_to(master)
 			var/datum/targetable/ability = master.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
 			ability.doCooldown()

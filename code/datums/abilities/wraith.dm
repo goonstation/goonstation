@@ -548,10 +548,10 @@
 			return 0
 
 		var/mob/wraith/K = src.holder.owner
-		if (K.density)
+		if (!K.forced_manifest && K.hasStatus("corporeal"))
 			boutput(holder.owner, "We fade back into the shadows")
 			cooldown = 0 SECONDS
-			return K.disappear()
+			return K.delStatus("corporeal")
 		else
 			boutput(holder.owner, "We show ourselves")
 			var/mob/wraith/W = holder.owner
@@ -577,9 +577,13 @@
 			if (iswraith(W.loc))
 				boutput(W, "You can't become corporeal while inside another wraith! How would that even work?!")
 				return 1
+			if (W.hasStatus("corporeal"))
+				return 1
+			else
+				W.setStatus("corporeal", W.haunt_duration)
+				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
+			return 0
 
-			usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
-			return W.haunt()
 
 /datum/targetable/wraithAbility/spook
 	name = "Spook"

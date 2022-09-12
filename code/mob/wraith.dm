@@ -217,7 +217,7 @@
 		src.flags |= UNCRUSHABLE
 		src.hauntBonus = 0
 		deaths++
-		src.makeIncorporeal()
+		src.delStatus("corporeal")
 		if (src.mind)
 			for (var/datum/objective/specialist/wraith/WO in src.mind.objectives)
 				WO.onWeakened()
@@ -270,7 +270,7 @@
 						P.exit_master(tmploc)
 					else
 						P.exit_master(T1)
-					P.makeCorporeal()
+					P.setStatus("corporeal", INFINITE_STATUS, TRUE)
 					boutput(P, "<span class='alert'><b>Oh no! Your master has died and you've been ejected outside into the material plane!</b></span>")
 				boutput(P, "<span class='alert'><b>Your master has died!</b></span>")
 
@@ -428,12 +428,8 @@
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
-				src.forced_manifest = TRUE
-				src.makeCorporeal()
+				src.setStatus("corporeal", src.haunt_duration, TRUE)
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
-				SPAWN(1 MINUTE) //one minute
-					src.forced_manifest = FALSE
-					src.makeIncorporeal()
 
 		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
 
@@ -568,43 +564,6 @@
 	// Wraith Procs
 	//////////////
 	proc
-
-		makeCorporeal()
-			if (!src.density)
-				src.set_density(1)
-				REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-				src.alpha = 255
-				src.see_invisible = INVIS_NONE
-				src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
-
-		makeIncorporeal()
-			if (src.density)
-				src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The wraith dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
-				src.set_density(0)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
-				src.alpha = 160
-				src.see_invisible = INVIS_SPOOKY
-
-		haunt()
-			if (src.density)
-				src.show_message("<span class='alert'>You are already corporeal! You cannot use this ability.</span>")
-				return 1
-
-			src.makeCorporeal()
-			src.haunting = 1
-			src.flags &= !UNCRUSHABLE
-			return 0
-
-		disappear()
-			if(!src.density)
-				src.show_message("<span class='alert'>You are already a specter! You cannot use this ability.</span>")
-				return 1
-
-			src.makeIncorporeal()
-			src.haunting = 0
-			src.flags |= UNCRUSHABLE
-			return 0
-
 		addAllBasicAbilities()
 			src.addAbility(/datum/targetable/wraithAbility/help)
 			src.addAbility(/datum/targetable/wraithAbility/absorbCorpse)

@@ -2178,3 +2178,48 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/corporeal
+	id = "corporeal"
+	icon_state = "eye"
+	desc = "You've manifested into the phyiscal realm!"
+	unique = TRUE
+	maxDuration = 1 MINUTE
+
+	onAdd(optional) // optional = forced to manifest
+		. = ..()
+		var/mob/M = owner
+		if (istype(M, /mob/wraith))
+			var/mob/wraith/W = M
+			if(optional)
+				W.forced_manifest = TRUE
+			else
+				W.haunting = TRUE
+				W.flags &= !UNCRUSHABLE
+			if (!istype_exact(M, /mob/wraith/poltergeist))
+				M.alpha = 255
+		if (istype_exact(M, /mob/wraith/poltergeist))
+			M.icon_state = "poltergeist-corp"
+			M.update_body()
+		M.set_density(TRUE)
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
+		M.see_invisible = INVIS_NONE
+		M.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
+
+	onRemove()
+		var/mob/M = owner
+		if (istype(M, /mob/wraith))
+			var/mob/wraith/W = M
+			W.forced_manifest = FALSE
+			W.haunting = FALSE
+			W.flags |= UNCRUSHABLE
+			if (!istype_exact (M, /mob/wraith/poltergeist))
+				M.alpha = 160
+		else if (istype_exact (M, /mob/wraith/poltergeist))
+			M.icon_state = "poltergeist"
+			M.update_body()
+		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
+		M.set_density(FALSE)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		M.see_invisible = INVIS_SPOOKY
+		. = ..()
