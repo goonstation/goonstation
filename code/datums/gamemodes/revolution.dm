@@ -513,7 +513,7 @@
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	item_state = "revsign"
 
 	w_class = W_CLASS_BULKY
