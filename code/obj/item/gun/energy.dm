@@ -1330,12 +1330,6 @@
 			return
 
 ///////////////////////////////////////////////////
-/obj/item/gun/energy/lawbringer/old
-	name = "antique Lawbringer"
-	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "old-lawbringer0"
-	old = 1
-
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
@@ -1559,11 +1553,6 @@
 		if (!owner_prints || (user.bioHolder.Uid == owner_prints))
 			return 1
 		return 0
-
-	proc/make_antique()
-		icon_state = "old-lawbringer0"
-		old = 1
-		UpdateIcon()
 
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
