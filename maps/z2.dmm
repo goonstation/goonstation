@@ -72278,7 +72278,7 @@
 	name = "sensor array"
 	},
 /turf/unsimulated/floor/void/channel,
-/area/adventure/channel/teleport)
+/area/adventure/channel)
 "mZZ" = (
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
