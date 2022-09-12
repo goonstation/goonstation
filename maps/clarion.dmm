@@ -47084,17 +47084,6 @@
 	dir = 6
 	},
 /area/station/hangar/sec)
-"lPc" = (
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargo_in"
-	},
-/obj/machinery/conveyor{
-	dir = 1;
-	id = "cargo_in"
-	},
-/turf/space,
-/area/space)
 "lQu" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/brig,
@@ -90873,7 +90862,7 @@ bBR
 bCY
 bEf
 dzu
-lPc
+dzu
 aaa
 aaa
 aaa
