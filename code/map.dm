@@ -220,6 +220,10 @@ var/global/list/mapNames = list(
 		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
 		"the main station pod bay" = list(/area/station/hangar/main))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "http://goonhub.com/maps/donut3"
@@ -366,6 +370,10 @@ var/global/list/mapNames = list(
 		"the mining staff room" = list(/area/station/mining/staff_room),
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/destiny
 	name = "DESTINY"
