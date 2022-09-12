@@ -1,5 +1,9 @@
 
 (t)mon sep 12 22
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
 (u)Hans
 (p)10576
 (e)|
