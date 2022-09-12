@@ -5151,7 +5151,7 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
-		playsound(src.loc, 'sound/items/coindrop.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
 		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")

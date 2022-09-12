@@ -2,6 +2,7 @@
 	name = "blob"
 	config_tag = "blob"
 	shuttle_available = 2
+	shuttle_available_threshold = 12000 // 20 min
 
 	var/const/blobs_minimum = 2
 	var/const/blobs_possible = 4
