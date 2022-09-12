@@ -261,6 +261,10 @@ var/global/list/mapNames = list(
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_dir = SOUTH
@@ -315,6 +319,10 @@ var/global/list/mapNames = list(
 		"the escape arm" = list(/area/station/hallway/secondary/exit),
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
