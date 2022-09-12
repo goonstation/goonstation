@@ -62,7 +62,6 @@ names@=
 	Mark Antony
 	Luthais
 	Colman
-	Cooney
 	Wynono
 	Kane
 	Alhsom
