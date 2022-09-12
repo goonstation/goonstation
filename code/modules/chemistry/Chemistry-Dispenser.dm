@@ -359,7 +359,7 @@
 				src.UpdateIcon()
 				. = TRUE
 			if ("newGroup")
-				var/reagents = get_recording_text()//params["reagents"]
+				var/reagents = get_recording_text()
 				if (isnull(reagents) || !length(reagents))
 					return
 				var/name = params["groupName"]
