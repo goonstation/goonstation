@@ -62266,10 +62266,6 @@
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
-"tHV" = (
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/wall/auto/supernorn,
-/area/station/ranch)
 "tJg" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -125923,10 +125919,10 @@ adC
 adC
 adC
 tqZ
-tHV
-tHV
-tHV
-tHV
+tqZ
+tqZ
+tqZ
+tqZ
 arl
 asK
 azs
