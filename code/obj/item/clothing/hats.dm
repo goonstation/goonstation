@@ -1663,30 +1663,34 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		icon_state = "beret_wht"
 		item_state = "beret_wht"
 
+	pink
+		name = "pink French beret"
+		icon_state = "beret_pnk"
+		item_state = "beret_pnk"
+
 	yellow
 		name = "yellow French beret"
 		icon_state = "beret_yel"
 		item_state = "beret_yel"
 
+	red
+		name = "Red French beret"
+		icon_state = "beret_red"
+		item_state = "beret_red"
 	mint
 		name = "mint French beret"
 		icon_state = "beret_mnt"
 		item_state = "beret_mnt"
-
-	purple
-		name = "purple French beret"
-		icon_state = "beret_prp"
-		item_state = "beret_prp"
 
 	blue
 		name = "blue French beret"
 		icon_state = "beret_blu"
 		item_state = "beret_blu"
 
-	pink
-		name = "pink French beret"
-		icon_state = "beret_pnk"
-		item_state = "beret_pnk"
+	purple
+		name = "purple French beret"
+		icon_state = "beret_prp"
+		item_state = "beret_prp"
 
 	strawberry
 		name = "strawberry beret"

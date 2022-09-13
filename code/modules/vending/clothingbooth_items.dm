@@ -851,25 +851,29 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/frenchberet)
 		name = "White French Beret"
 		path = /obj/item/clothing/head/frenchberet/white
 
-	purple
-		name = "Purple French Beret"
-		path = /obj/item/clothing/head/frenchberet/purple
-
-	blue
-		name = "Blue French Beret"
-		path = /obj/item/clothing/head/frenchberet/blue
-
 	pink
 		name = "Pink French Beret"
 		path = /obj/item/clothing/head/frenchberet/pink
+
+	red
+		name = "Red French Beret"
+		path = /obj/item/clothing/head/frenchberet/red
+
+	yellow
+		name = "Yellow French Beret"
+		path = /obj/item/clothing/head/frenchberet/yellow
 
 	mint
 		name = "Mint French Beret"
 		path = /obj/item/clothing/head/frenchberet/mint
 
-	yellow
-		name = "Yellow French Beret"
-		path = /obj/item/clothing/head/frenchberet/yellow
+	blue
+		name = "Blue French Beret"
+		path = /obj/item/clothing/head/frenchberet/blue
+
+	purple
+		name = "Purple French Beret"
+		path = /obj/item/clothing/head/frenchberet/purple
 
 	strawberry
 		name = "Strawberry Beret"
