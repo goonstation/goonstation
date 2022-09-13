@@ -29766,6 +29766,7 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple,
+/obj/access_spawn/security,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bNl" = (
@@ -30323,6 +30324,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red/side,
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
@@ -33383,6 +33385,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/customs)
 "cax" = (
@@ -38342,7 +38345,6 @@
 "coI" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/access_spawn/mining,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/cable{
@@ -38350,6 +38352,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "coJ" = (
@@ -47883,6 +47886,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
@@ -49014,6 +49018,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "mrx" = (
@@ -54752,6 +54757,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "rXN" = (
@@ -59019,6 +59025,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "vZG" = (
@@ -59977,6 +59984,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "wVa" = (
