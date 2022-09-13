@@ -11,7 +11,7 @@ datum/controller/process/mob_ai
 
 			last_object = X
 
-			if (!M)
+			if (QDELETED(M))
 				continue
 
 			//in case it isn't obvious, what we're doing here is giving each mob a raffle ticket, and mod 30ing it to determine if a mob should tick

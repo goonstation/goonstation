@@ -1193,7 +1193,7 @@
 		if (!isturf(src.loc))
 			return
 		src.layer = initial(src.layer)
-		playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 		SPAWN(rand(2,5))
 			if (src && isturf(src.loc))
 				var/obj/table/T = locate(/obj/table) in range(3,src)
@@ -1203,7 +1203,7 @@
 							break
 						if (src.loc == T.loc)
 							src.visible_message("<span class='alert'>\The [src] rolls under [T]!</span>")
-							playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 530, 1, null, 2)
 							if (prob(30))
 								qdel(src)
 								return
@@ -1213,7 +1213,7 @@
 						else
 							step_towards(src, T)
 							src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-							playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 							sleep(rand(2,5))
 				else
 					for (var/i=rand(0,4), i>0, i--)
@@ -1221,7 +1221,7 @@
 							break
 						step(src, pick(alldirs))
 						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-						playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
 /obj/item/clothing/gloves/ring/gold

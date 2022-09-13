@@ -2443,7 +2443,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
-	receives_implant = /obj/item/implant/health
+	receives_implant = /obj/item/implant/health/security
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
