@@ -986,6 +986,9 @@
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need [FLOCK_CONVERT_COST]).</span>")
 	else
 		if(istype(target, /turf))
+			if (!flockTurfAllowed(target))
+				boutput(user, "<span class='alert'>Something about this area resists your attempt to convert it</span>")
+				return
 			if (user.flock)
 				for (var/name in user.flock.busy_tiles)
 					if (user.flock.busy_tiles[name] == target && name != user.real_name)
