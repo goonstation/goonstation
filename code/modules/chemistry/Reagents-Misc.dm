@@ -1184,7 +1184,7 @@ datum
 
 			proc/cube_mob(var/mob/M, var/volume_passed)
 				var/obj/icecube/I = new/obj/icecube(get_turf(M), M)
-				I.health = max(volume_passed/5,1)
+				I.health = clamp(volume_passed/2, 1, 10)
 				//M.bodytemperature = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)

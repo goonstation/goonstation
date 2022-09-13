@@ -1282,7 +1282,7 @@ datum
 					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
 
 					M.take_radiation_dose(-0.025 SIEVERTS * mult)
-					M.bodytemperature = min(M.bodytemperature + (20 * mult), M.base_body_temp)
+					M.bodytemperature = min(M.bodytemperature + (12.5 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
