@@ -78000,12 +78000,6 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
-"xYc" = (
-/obj/landmark{
-	name = "shuttle-transit"
-	},
-/turf/space,
-/area/space)
 "xYs" = (
 /obj/machinery/vending/standard{
 	pixel_y = 5
@@ -159553,7 +159547,7 @@ cnw
 cnw
 cnw
 cnw
-xYc
+cnw
 aaa
 dkY
 xWi
