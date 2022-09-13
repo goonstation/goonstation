@@ -28,7 +28,7 @@
 	/obj/item/gun/kinetic/grenade_launcher, //A little unsure on these two
 	/obj/item/gun/kinetic/sniper)
 
-/obj/random_item_spawner/surplus/shortgun //PRAY TO RNJESUS, SONNY
+/obj/random_item_spawner/surplus/shortgun //YOU BEST PRAY TO RNJESUS, SONNY
 	amt2spawn = 1
 	rare_chance = 5
 	items2spawn = list(/obj/item/gun/kinetic/riot40mm,
@@ -59,6 +59,7 @@
 		/obj/item/bat,
 		/obj/item/katana_sheath/reverse,
 		/obj/item/knife/butcher,
+		/obj/item/clothing/gloves/bladed,
 		/obj/item/breaching_hammer,
 		/obj/item/experimental/melee/spear/plaswood,
 		/obj/item/sword/discount,
