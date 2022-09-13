@@ -150,7 +150,7 @@
 					var/list/wall_turfs = list()
 					for (var/turf/simulated/wall/wall in turfs)
 						wall_turfs += wall
-					if (length(wall_turfs) > 0)
+					if (length(wall_turfs))
 						var/turf/W = pick(wall_turfs)
 						switch(rand(1,3))
 							if (1)
