@@ -47,7 +47,6 @@ var/list/server_toggles_tab_verbs = list(\
 /client/proc/toggle_attack_messages,\
 /client/proc/toggle_ghost_respawns,\
 /client/proc/toggle_adminwho_alerts,\
-/client/proc/toggle_rp_word_filtering,\
 /client/proc/toggle_toggles,\
 /client/proc/toggle_jobban_announcements,\
 /client/proc/toggle_banlogin_announcements,\
@@ -222,6 +221,18 @@ client/proc/toggle_ghost_respawns()
 	else
 		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
+
+/client/proc/toggle_uncool_word_filtering()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Uncool Word Alerts"
+	set desc = "Toggles notifications for players saying uncool words"
+	ADMIN_ONLY
+	src.holder.uncool_word_filtering = !src.holder.uncool_word_filtering
+	if(src.holder.uncool_word_filtering)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, .proc/message_one_admin)
+	else
+		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE)
+	boutput(usr, "<span class='notice'>Toggled uncool word filter notifications [src.holder.uncool_word_filtering ?"on":"off"]!</span>")
 
 /client/proc/toggle_hear_prayers()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
