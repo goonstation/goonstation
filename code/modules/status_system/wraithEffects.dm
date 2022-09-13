@@ -117,14 +117,14 @@
 	maxDuration = 3 MINUTES
 	visible = FALSE
 	var/mob/living/carbon/human/H
-	var/list/wall_list = list()
 	var/sound_effect = null
 	var/illusion_icon = null
 	var/illusion_icon_state = null
 	var/volume = null
-	var/has_faked_armory = false
-	var/has_faked_nuke = false
-	var/has_faked_shuttle = false
+	var/has_faked_armory = FALSE
+	var/has_faked_nuke = FALSE
+	var/has_faked_shuttle = FALSE
+	var/range = 6
 
 	onAdd(optional=null)
 		. = ..()
@@ -144,10 +144,14 @@
 		if (probmult(5))
 			switch (rand(1,3))
 				if (1) // Image based illusion
-					for (var/turf/W in range(6, H))	//Check for surrounding spots
-						wall_list += W
-					if (length(wall_list) > 0)
-						var/turf/W = pick(wall_list)
+					var/turf/owner_turf = get_turf(owner)
+					if (!owner_turf) return
+					var/list/turfs = block(locate(max(owner_turf.x - range, 0), max(owner_turf.y - range, 0), owner_turf.z), locate(min(owner_turf.x + range, world.maxx), min(owner_turf.y + range, world.maxy), owner_turf.z))
+					var/list/wall_turfs = list()
+					for (var/turf/simulated/wall/wall in turfs)
+						wall_turfs += wall
+					if (length(wall_turfs) > 0)
+						var/turf/W = pick(wall_turfs)
 						switch(rand(1,3))
 							if (1)
 								sound_effect = 'sound/effects/Explosion2.ogg'
@@ -225,10 +229,14 @@
 									has_faked_shuttle = true
 					H.playsound_local(H.loc,sound_effect, volume, 1)
 				if (3) //Wall based, blood pouring out of the walls and other spooky stuff
-					for (var/turf/simulated/wall/auto/W in orange(5, H))
-						wall_list += W
-					if (length(wall_list) > 0)
-						var/turf/simulated/wall/auto/W = pick(wall_list)
+					var/turf/owner_turf = get_turf(owner)
+					if (!owner_turf) return
+					var/list/turfs = block(locate(max(owner_turf.x - range, 0), max(owner_turf.y - range, 0), owner_turf.z), locate(min(owner_turf.x + range, world.maxx), min(owner_turf.y + range, world.maxy), owner_turf.z))
+					var/list/wall_turfs = list()
+					for (var/turf/simulated/wall/wall in turfs)
+						wall_turfs += wall
+					if (length(wall_turfs))
+						var/turf/simulated/wall/W = pick(wall_turfs)
 						switch(rand(1,3))
 							if (1)
 								illusion_icon = 'icons/effects/wraitheffects.dmi'
@@ -257,4 +265,48 @@
 								sleep(5 DECI SECOND)
 								illusionIcon.alpha -= 10
 							qdel(illusionIcon)
-		wall_list = list()
+
+/datum/statusEffect/corporeal
+	id = "corporeal"
+	icon_state = "eye"
+	desc = "You've manifested into the phyiscal realm!"
+	unique = TRUE
+	maxDuration = 1 MINUTE
+
+	onAdd(optional) // optional = forced to manifest
+		. = ..()
+		var/mob/M = owner
+		if (istype(M, /mob/wraith))
+			var/mob/wraith/W = M
+			if(optional)
+				W.forced_manifest = TRUE
+			else
+				W.haunting = TRUE
+				W.flags &= !UNCRUSHABLE
+			if (!istype_exact(M, /mob/wraith/poltergeist))
+				M.alpha = 255
+		if (istype_exact(M, /mob/wraith/poltergeist))
+			M.icon_state = "poltergeist-corp"
+			M.update_body()
+		M.set_density(TRUE)
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src)
+		M.see_invisible = INVIS_NONE
+		M.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
+
+	onRemove()
+		var/mob/M = owner
+		if (istype(M, /mob/wraith))
+			var/mob/wraith/W = M
+			W.forced_manifest = FALSE
+			W.haunting = FALSE
+			W.flags |= UNCRUSHABLE
+			if (!istype_exact(M, /mob/wraith/poltergeist))
+				M.alpha = 160
+		if (istype_exact(M, /mob/wraith/poltergeist))
+			M.icon_state = "poltergeist"
+			M.update_body()
+		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
+		M.set_density(FALSE)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		M.see_invisible = INVIS_SPOOKY
+		. = ..()

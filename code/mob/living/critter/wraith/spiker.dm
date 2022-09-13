@@ -74,9 +74,8 @@
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 		SPAWN(1 DECI SECOND)	//Make it last a bit for impact
-			if (previous_line != null)
-				for (var/obj/O in previous_line)
-					qdel(O)
+			for (var/obj/O in previous_line)
+				qdel(O)
 		qdel(P)
 
 
@@ -88,7 +87,6 @@
 
 	on_end(var/obj/projectile/P)	//Clean up behind us
 		SPAWN(1 DECI SECOND)
-		if (previous_line != null)
 			for (var/obj/O in previous_line)
 				qdel(O)
 		..()

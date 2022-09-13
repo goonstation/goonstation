@@ -967,6 +967,6 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	heal(var/mob/M)
 		if (istype(M, /mob/living/critter/wraith/plaguerat))
 			boutput(M, "<span class='notice'>This is incredible, but there isnt enough! MORE!</span>")
-			M.reagents.add_reagent("Omnizine", 3)
+			M.reagents.add_reagent("omnizine", 3)
 			M.reagents.add_reagent("methamphetamine", 3)
 		..()
