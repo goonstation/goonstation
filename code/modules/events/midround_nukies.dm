@@ -31,50 +31,53 @@
 
 		//spawn them in, set up as needed
 		for (var/i in 1 to 3)
-			var/datum/mind/lucky_dude = pick(candidates)
+			var/datum/mind/chosen_mind = pick(candidates)
 
-			if (lucky_dude.special_role) //purge roles
-				if (lucky_dude in ticker.mode.traitors)
-					ticker.mode.traitors.Remove(lucky_dude)
-				if (lucky_dude in ticker.mode.Agimmicks)
-					ticker.mode.Agimmicks.Remove(lucky_dude)
-				if (!lucky_dude.former_antagonist_roles.Find(lucky_dude.special_role))
-					lucky_dude.former_antagonist_roles.Add(lucky_dude.special_role)
-				if (!(lucky_dude in ticker.mode.former_antagonists))
-					ticker.mode.former_antagonists.Add(lucky_dude)
+			if (chosen_mind.special_role) //purge roles
+				if (chosen_mind in ticker.mode.traitors)
+					ticker.mode.traitors.Remove(chosen_mind)
+				if (chosen_mind in ticker.mode.Agimmicks)
+					ticker.mode.Agimmicks.Remove(chosen_mind)
+				if (!chosen_mind.former_antagonist_roles.Find(chosen_mind.special_role))
+					chosen_mind.former_antagonist_roles.Add(chosen_mind.special_role)
+				if (!(chosen_mind in ticker.mode.former_antagonists))
+					ticker.mode.former_antagonists.Add(chosen_mind)
 
 
 
-			//Now I know what you're thinking: The following code is awful
-			//it's also a condensed version of the normal midround traitor code.
-			//if anyone finds a way to make it less bad, please also apply it to the midround antag event
+			//the following code is an extremely condensed version of what the midround antag event uses to respawn traitors
+			//it's bad, but functional
 
-			var/mob/M3 //create a mob, assign it to our winner
-			if (!M3)
-				M3 = lucky_dude.current
+			//flockpillar says to fix:
+			//take M and turn into a new human H
+			//and return a ref to the new human we just made
+
+			var/mob/M //create a mob, assign it to our winner
+			if (!M)
+				M = chosen_mind.current
 			else
 				return
 
-			var/mob/living/carbon/human/R = M3.humanize()//since humanize is local to the mob proc, we then have to turn the generic mob into a human
+			var/mob/living/carbon/human/H = M.humanize()//since humanize is local to the mob proc, we then must make the mob human
 
-			if (R && istype(R))
-				M3 = R
-				R.unequip_all(1)
+			if (H && istype(H))
+				M = H
+				H.unequip_all(1)
 
 				//now that we have a human, put them at the spawnpoints and set them up
-				R.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
+				H.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
 				SPAWN(0)
 					equip_shitty_syndicate(R, 1)//do this after the name call to prevent their agent cards from changing
-					R.choose_name(3, "Surplus Operative")
-					lucky_dude.special_role = ROLE_SURPLUS_OPERATIVE
-					ticker.mode.Agimmicks |= lucky_dude  //add them to the antags
+					H.choose_name(3, "Surplus Operative")
+					chosen_mind.special_role = ROLE_SURPLUS_OPERATIVE
+					ticker.mode.Agimmicks |= chosen_mind  //add them to the antags
 
-					R.antagonist_overlay_refresh(1, 0) //this doesn't work RN
+					H.antagonist_overlay_refresh(1, 0) //this doesn't work RN
 
-					boutput(R, "<span class='notice'>You are a surplus operative!</span>")
-					ticker.mode.bestow_objective(R, ourobjectives)
-					for (var/datum/objective/Obj in lucky_dude.objectives)
-						boutput(R, "<b>Objective #[i]</b>: [Obj.explanation_text]")
-						lucky_dude.store_memory(Obj.explanation_text)
+					boutput(H, "<span class='notice'>You are a surplus operative!</span>")
+					ticker.mode.bestow_objective(H, ourobjectives)
+					for (var/datum/objective/Obj in chosen_mind.objectives)
+						boutput(H, "<b>Objective #[i]</b>: [Obj.explanation_text]")
+						chosen_mind.store_memory(Obj.explanation_text)
 
-			candidates -= lucky_dude //start the whole process over again for the other two
+			candidates -= chosen_mind //start the whole process over again for the other two
