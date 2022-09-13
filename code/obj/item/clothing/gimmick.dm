@@ -938,11 +938,12 @@
 	icon_state = "anthy"
 	item_state = "anthy"
 
-/obj/item/clothing/under/gimmick/leather_armor
-	name = "boiled leather armor costume"
-	desc = "A fantasy boiled synthleather armor set, does not protect against crossbow quarrels."
-	icon_state = "leather_armor"
-	item_state = "shirt_n_pant-b"
+/obj/item/clothing/suit/gimmick/fantasy_cloak
+	name = "fantasy cloak"
+	desc = "A fantasy cloak replica with synth fur, nerdy and comfy."
+	icon_state = "cloak"
+	item_state = "mobile_suit"
+	wear_layer = MOB_BACK_LAYER + 0.2
 
 // Gundam Costumes
 
