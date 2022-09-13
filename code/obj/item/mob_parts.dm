@@ -179,6 +179,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	proc/sever(var/mob/user)
@@ -193,7 +195,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 		if (user)
-			logTheThing("admin", user, src.holder, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing(LOG_ADMIN, user, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -255,70 +257,40 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.remove_object = null
 			holder = null
 			qdel(src)
-
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	//for humans
-	attach(var/mob/living/carbon/human/attachee,var/mob/attacher,var/both_legs = 0)
-		if(!can_act(attacher))
-			return
-		if(!src.easy_attach)
-			if(!surgeryCheck(attachee, attacher))
+	attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
+		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
+			return ..()
+		if(attacher)
+			if(!can_act(attacher))
 				return
-
-		if(!both_legs)
-			if(attacher.zone_sel.selecting != slot || !ishuman(attachee))
+			if(!src.easy_attach)
+				if(!surgeryCheck(attachee, attacher))
+					return
+			if(attacher.zone_sel.selecting != slot)
 				return ..()
 
-			if(attachee.limbs.vars[src.slot])
-				boutput(attacher, "<span class='alert'>[attachee.name] already has one of those!</span>")
-				return
+			attacher.remove_item(src)
 
-			attachee.limbs.vars[src.slot] = src
-		else
-			if (!(attacher.zone_sel.selecting in list("l_leg","r_leg")))
-				return ..()
-			else if(attachee.limbs.vars["l_leg"] || attachee.limbs.vars["r_leg"])
-				boutput(attacher, "<span class='alert'>[attachee.name] still has one leg!</span>")
-				return
+			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
+			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : "doesn't look very secure"]!</span>")
 
-			attachee.limbs.l_leg = src
-			attachee.limbs.r_leg = src
-
+		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee
-		attacher.remove_item(src)
 		src.layer = initial(src.layer)
 		src.screen_loc = ""
 		src.set_loc(attachee)
-		src.remove_stage = 2
+		src.remove_stage = src.easy_attach ? 0 : 2
 
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
 
-		for(var/mob/O in AIviewers(attachee, null))
-			if(O == (attacher || attachee))
-				continue
-			if(attacher == attachee)
-				O.show_message("<span class='alert'>[attacher] attaches a [src] to \his own stump[both_legs? "s" : ""]!</span>", 1)
-			else
-				O.show_message("<span class='alert'>[attachee] has a [src] attached to \his stump[both_legs? "s" : ""] by [attacher].</span>", 1)
-
-		if (src.easy_attach) //No need to make it drop off later if it attaches instantly.
-			if(attachee != attacher)
-				boutput(attachee, "<span class='alert'>[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It fuses instantly with the muscles and tendons!</span>")
-				boutput(attacher, "<span class='alert'>You attach \the [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
-			else
-				boutput(attacher, "<span class='alert'>You attach \the [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
-			src.remove_stage = 0
-		else
-			if(attachee != attacher)
-				boutput(attachee, "<span class='alert'>[attacher] attaches \the [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-				boutput(attacher, "<span class='alert'>You attach \the [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-			else
-				boutput(attacher, "<span class='alert'>You attach \the [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-
-			SPAWN(rand(150,200))
-				if(remove_stage == 2) src.remove()
+		SPAWN(rand(150,200))
+			if(remove_stage == 2) src.remove()
 
 		attachee.update_clothing()
 		attachee.update_body()
@@ -331,7 +303,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = 0)
+	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if(no_icon) return 0
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
@@ -354,12 +326,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 			src.standImage = image(used_icon, "[src.slot][decomp]")
 			return standImage
 
-	proc/getAttachmentIcon(var/decomp_stage = 0)
+	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = 0)
+	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -367,7 +339,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = 0)
+	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"

@@ -248,7 +248,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
 				return
 
-	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
+	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
@@ -285,6 +285,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
 		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
 		return
+	var/atom/movable/moveable_target = comsig_target
+	if(istype(moveable_target) && !moveable_target.anchored)
+		boutput(user, "<span class='alert'>[moveable_target] must be anchored to connect it.</span>")
+		return
+	var/atom/movable/moveable_trigger = trigger
+	if(istype(moveable_trigger) && !moveable_trigger.anchored)
+		boutput(user, "<span class='alert'>[moveable_trigger] must be anchored to connect it.</span>")
+		return
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
 		return
@@ -299,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
@@ -326,7 +334,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
-		if(hacked_door.p_open)
+		if(hacked_door.panel_open)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target

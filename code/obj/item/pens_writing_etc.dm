@@ -15,7 +15,7 @@
 /* =============== PENS =============== */
 
 /obj/item/pen
-	desc = "It's a normal black ink pen."
+	desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -73,7 +73,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(user, "sound/items/penclick.ogg", 50, 1)
+			playsound(user, 'sound/items/penclick.ogg', 50, 1)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -109,7 +109,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -155,7 +155,7 @@
 
 /obj/item/pen/fancy
 	name = "fancy pen"
-	desc = "A pretty swag pen."
+	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
 	icon_state = "pen_fancy"
 	item_state = "pen_fancy"
 	font_color = "blue"
@@ -165,7 +165,7 @@
 
 /obj/item/pen/odd
 	name = "odd pen"
-	desc = "There's something strange about this pen."
+	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
 	font = "Wingdings"
 
 /obj/item/pen/red // we didn't have one of these already??
@@ -193,7 +193,7 @@
 
 /obj/item/pen/marker
 	name = "felt marker"
-	desc = "Try not to sniff it too much. Weirdo."
+	desc = "It's the National Notary 'Edgewater' waterproof marker. Try not to sniff it too much. Weirdo."
 	icon_state = "marker"
 	color = "#333333"
 	font = "'Permanent Marker', cursive"
@@ -348,7 +348,7 @@
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M as mob, mob/user as mob, def_zone)
+			attack(mob/M, mob/user, def_zone)
 				if (M == user)
 					src.color = random_color()
 					src.font_color = src.color
@@ -421,7 +421,7 @@
 				else
 					return pick(src.c_default)
 		src.in_use = 1
-		. = input(user, "What do you want to write?", null, null) as null|anything in ((isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
+		. = tgui_input_list(user, "What do you want to write?", "Write something", (isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
 			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
 			inp = uppertext(inp)
@@ -505,7 +505,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -602,10 +602,10 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
-			playsound(user.loc, "sound/items/eatfoodshort.ogg", rand(30, 60), 1)
+			playsound(user.loc, 'sound/items/eatfoodshort.ogg', rand(30, 60), 1)
 			src.chalk_health -= rand(2,5)
 			if (src.chalk_health <= 1)
 				src.chalk_break(user)
@@ -648,7 +648,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -681,7 +681,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ONBELT
 	rand_pos = 1
 
 	get_desc()
@@ -690,7 +690,7 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		/* lol vvv
 		if (!ismob(M)) // do this via afterattack()
 			return
@@ -738,7 +738,7 @@
 			return
 		src.label = "[str]"
 		boutput(user, "<span class='notice'>You set the text to '[str]'.</span>")
-		logTheThing("combat", user, null, "sets a hand labeler label to \"[str]\".")
+		logTheThing(LOG_COMBAT, user, "sets a hand labeler label to \"[str]\".")
 
 	proc/RemoveLabel(var/atom/A, var/mob/user, var/no_message = 0)
 		if(!islist(A.name_suffixes))
@@ -756,7 +756,7 @@
 	proc/Label(var/atom/A, var/mob/user, var/no_message = 0)
 		var/obj/machinery/power/apc/apc = A
 		if(istype(A,/obj/machinery/power/apc) && apc.area.type == /area/built_zone)
-			if(alert("Would you like to name this area, or just label the APC?", "Area Naming", "Label the APC", "Name the Area") == "Name the Area")
+			if(tgui_alert(user, "Would you like to name this area, or just label the APC?", "Area Naming", list("Label the APC", "Name the Area")) == "Name the Area")
 				var/area/built_zone/ba = apc.area
 				ba.SetName(src.label)
 				return
@@ -772,11 +772,11 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
-		playsound(src, "sound/items/hand_label.ogg", 40, 1)
+		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
 		if (user && !no_message)
-			logTheThing("combat", user, A, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
+			logTheThing(LOG_COMBAT, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
-			logTheThing("combat", A, null, "has a label applied to them, \"[src.label]\"")
+			logTheThing(LOG_COMBAT, A, "has a label applied to them, \"[src.label]\"")
 		A.add_fingerprint(user)
 
 	custom_suicide = 1
@@ -899,7 +899,7 @@
 		src.updateSelfDialog()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user.equipped() && (user.l_hand == src || user.r_hand == src))
 			var/obj/item/paper/P = locate() in src
 			if (P)
@@ -909,7 +909,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 
 		if (istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
 			if (src.contents.len < 15)
@@ -984,7 +984,7 @@
 	throw_range = 10
 	tooltip_flags = REBUILD_DIST
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/paper))
 			if (src.contents.len < 10)
 				boutput(user, "You cram the paper into the folder.")
@@ -1060,7 +1060,7 @@
 		n_name = copytext(html_encode(n_name), 1, 32)
 		if (((src.loc == user || (src.loc && src.loc.loc == user)) && isalive(user)))
 			src.name = "booklet[n_name ? "- '[n_name]'" : null]"
-			logTheThing("say", user, null, "labels a paper booklet: [n_name]")
+			logTheThing(LOG_SAY, user, "labels a paper booklet: [n_name]")
 		src.add_fingerprint(user)
 		return
 
@@ -1134,7 +1134,7 @@
 			if ("last_page")
 				src.display_booklet_contents(usr,pages.len)
 
-	attackby(var/obj/item/P as obj, mob/user as mob)
+	attackby(var/obj/item/P, mob/user)
 		if (istype(P, /obj/item/paper))
 			var/obj/item/staple_gun/S = user.find_type_in_hand(/obj/item/staple_gun)
 			if (S?.ammo)
@@ -1206,7 +1206,7 @@
 /* ============== PRINTERS & TYPEWRITERS ================= */
 
 /obj/item/pen/typewriter
-	name = "integrated typewriter pen"
+	name = "National Notary 'Turbot Landing' experimental integrated typewriter pen"
 	desc = "A mechanical pen that writes on paper inside the portable typewriter. How did you even get this?"
 	font = "Monospace"
 	clicknoise = FALSE
@@ -1241,7 +1241,7 @@
 			if(ON_COOLDOWN(src, "create_paper", src.paper_creation_cooldown))
 				boutput(user, "<span class='alert'>\The [src]'s paper-manufacturing mechanism is recharging.</span>")
 				return
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 30, 0, pitch=0.7)
+			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 0, pitch=0.7)
 			src.stored_paper = new/obj/item/paper/thermal/portable_printer(src)
 			src.UpdateIcon()
 			src.stored_paper.Attackby(src.pen, user)
@@ -1267,7 +1267,7 @@
 			return FALSE
 		boutput(user, "<span class='notice'>\The [src] ejects \the [src.stored_paper].</span>")
 		if(!ON_COOLDOWN(src, "eject_sound", 3 SECONDS))
-			playsound(src.loc, "sound/machines/typewriter.ogg", 60, 0)
+			playsound(src.loc, 'sound/machines/typewriter.ogg', 60, 0)
 			// CC0 license on the sound, source here: https://freesound.org/people/tams_kp/sounds/43559/
 		src.stored_paper.set_loc(target)
 		src.stored_paper = null

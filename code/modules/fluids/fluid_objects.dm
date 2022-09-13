@@ -18,7 +18,6 @@
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
 	name = "drain"
 	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
-	var/turf/my_turf
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -35,7 +34,6 @@
 		drain_max = 14
 
 	New()
-		my_turf = get_turf(src)
 		START_TRACKING
 		..()
 
@@ -44,24 +42,24 @@
 		STOP_TRACKING
 
 	process()
-		if (!my_turf)
-			my_turf = get_turf(src)
-			if (!my_turf) return
-		if (my_turf.active_liquid)
+		var/turf/T = get_turf(src)
+		if (!T)
+			return
+		if (T.active_liquid)
 			if (clogged)
 				clogged--
 				return
 			if (welded)
 				return
 
-			var/obj/fluid/F = my_turf.active_liquid
+			var/obj/fluid/F = T.active_liquid
 			if (F.group)
 				F.group.queued_drains += rand(drain_min,drain_max)
-				F.group.last_drain = my_turf
+				F.group.last_drain = T
 				if (!F.group.draining)
 					F.group.add_drain_process()
 
-				playsound(src.loc, "sound/misc/drain_glug.ogg", 50, 1)
+				playsound(src.loc, 'sound/misc/drain_glug.ogg', 50, 1)
 
 				//moved to fluid process
 				//F.group.reagents.skip_next_update = 1
@@ -69,17 +67,17 @@
 
 
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (isweldingtool(I))
 			if(!I:try_weld(user, 2))
 				return
 
 			if (!src.welded)
 				src.welded = 1
-				logTheThing("station", user, null, "welded [name] shut at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "welded [name] shut at [log_loc(user)].")
 				user.show_text("You weld the drain shut.")
 			else
-				logTheThing("station", user, null, "un-welded [name] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "un-welded [name] at [log_loc(user)].")
 				src.welded = 0
 				user.show_text("You unseal the drain with your welder.")
 
@@ -93,7 +91,7 @@
 			var/obj/item/material_piece/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
-			logTheThing("station", user, null, "clogs [name] shut temporarily at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "clogs [name] shut temporarily at [log_loc(user)].")
 			qdel(I)
 			src.UpdateIcon()
 			return
@@ -270,7 +268,7 @@
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
 					if (prob(80))
-						playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 0.1, 0.7)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0.1, 0.7)
 				UpdateIcon()
 
 		else if (pissing)
@@ -328,7 +326,7 @@
 			return
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		var/offtext
 		var/intext
@@ -454,7 +452,7 @@
 
 	proc/deploy_ladder(turf/source, turf/dest, mob/user)
 		user.show_text("You deploy [src].")
-		playsound(src.loc, "sound/effects/airbridge_dpl.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/airbridge_dpl.ogg', 60, 1)
 
 		var/obj/sea_ladder_deployed/L = new /obj/sea_ladder_deployed(source)
 		L.linked_ladder = new /obj/sea_ladder_deployed(dest)
@@ -497,11 +495,11 @@
 
 	proc/boom()
 		if (src.active)
-			logTheThing("bombing", src.fingerprintslast, null, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
+			logTheThing(LOG_BOMBING, src.fingerprintslast, "A naval mine explodes at [log_loc(src)]. Last touched by [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"].")
 			src.blowthefuckup(boom_str)
 
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		active = !active

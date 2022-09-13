@@ -53,9 +53,9 @@
 		item.set_loc(get_turf(holder))
 		item.master = null
 		item.layer = initial(item.layer)
+		on_unequip()
 		item = null
 		holder.update_clothing()
-		on_unequip()
 		return 1
 
 	proc/remove()
@@ -65,8 +65,8 @@
 			return 0
 		if (!holder.put_in_hand(item))
 			return 0
-		item = null
 		on_unequip()
+		item = null
 		return 1
 
 	proc/on_update()

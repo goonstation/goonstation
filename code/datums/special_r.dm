@@ -248,7 +248,7 @@ datum/special_respawn
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else
-				F.icon_state = pick("platingdmg1","platingdmg2","platingdmg3")
+				F.burn_tile()
 		else if(istype(T, /turf/simulated/wall))
 			var/turf/simulated/wall/W = T
 			if (was_eaten)
@@ -256,7 +256,9 @@ datum/special_respawn
 				W.icon_state = "bloodwall_2"
 				W.name = "meaty wall"
 			else
-				if(!istype(W, /turf/simulated/wall/r_wall) && !istype(W, /turf/simulated/wall/auto/reinforced))
-					W.icon_state = "r_wall-4"
+				var/overlay
+				if(istype(W,/turf/simulated/wall/auto/supernorn) || istype(W,/turf/simulated/wall/auto/reinforced/supernorn))
+					overlay = image('icons/turf/walls_damage.dmi',"burn-[W.icon_state]")
+				W.UpdateOverlays(overlay,"burn")
 		if(counter++ % 300 == 0)
 			LAGCHECK(LAG_MED)

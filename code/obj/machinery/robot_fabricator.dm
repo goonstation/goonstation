@@ -10,7 +10,7 @@
 	var/obj/item/parts/robot_parts/being_built = null
 	mats = 20
 
-/obj/machinery/robotic_fabricator/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/robotic_fabricator/attackby(var/obj/item/O, var/mob/user)
 	if (istype(O, /obj/item/sheet/metal))
 		if (src.metal_amount < 150000.0)
 			var/count = 0
@@ -20,7 +20,7 @@
 					if(!O:amount)
 						return
 
-					src.metal_amount += O:height * O:width * O:length * 100000.0
+					src.metal_amount += O:height * O:width * O:length * 100000
 					O:amount--
 					count++
 
@@ -44,7 +44,7 @@
 
 	use_power(1000)
 
-/obj/machinery/robotic_fabricator/attack_hand(user as mob)
+/obj/machinery/robotic_fabricator/attack_hand(user)
 	var/dat
 	if (..())
 		return

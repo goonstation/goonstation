@@ -1,4 +1,5 @@
-obj/effects/tatara
+
+/obj/effects/tatara
 	var/obj/spark_generator/sparks = new/obj/spark_generator
 
 	New()
@@ -8,13 +9,13 @@ obj/effects/tatara
 		sparks.particles.spawning = 0
 
 	proc/spark_up()
-		if(!ON_COOLDOWN(src,"spark_up",2.0 SECONDS))
+		if(!ON_COOLDOWN(src,"spark_up",2 SECONDS))
 			sparks.particles.spawning = 16
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
 			SPAWN(1 SECONDS)
 				sparks.particles.spawning = 0
 
-obj/effects/welding
+/obj/effects/welding
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 	vis_flags = VIS_INHERIT_DIR
 	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
@@ -40,7 +41,7 @@ obj/effects/welding
 		emitters = list(new/obj/spark_generator/directed, new/obj/spark_generator/flame)
 
 
-obj/spark_generator
+/obj/spark_generator
 	particles = new/particles/spark
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
@@ -55,7 +56,7 @@ obj/spark_generator
 		particles = new/particles/spark/directed
 
 
-particles/spark
+/particles/spark
 	width = 32     // 500 x 500 image to cover a moderately sized map
 	height = 32
 	count = 32    // 2500 particles
@@ -148,3 +149,20 @@ particles/spark
 	friction = generator("num", 0.1, 0.3, NORMAL_RAND)
 	drift = generator("box", list(0.1,0.05,0), list(-0.1,0,0), UNIFORM_RAND)
 	rotation = generator("num", -45, 45, UNIFORM_RAND)
+
+/// Used for bloodlings, maybe would be cool for other stuff!
+/particles/bloody_aura
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("8x8circle")
+	color = generator("color", "#440020", "#86090B", UNIFORM_RAND)
+	spawning = 0.5
+	count = 40
+	lifespan = 15
+	fade = 6
+	fadein = 2
+	position = generator("circle", 6, 8, NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 1, 0)
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)

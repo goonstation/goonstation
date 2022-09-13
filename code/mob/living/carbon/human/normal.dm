@@ -141,10 +141,10 @@
 		..()
 		JobEquipSpawned("Scientist")
 
-/mob/living/carbon/human/normal/ntso
+/mob/living/carbon/human/normal/ntsc
 	New()
 		..()
-		JobEquipSpawned("Nanotrasen Security Operative")
+		JobEquipSpawned("Nanotrasen Security Consultant")
 
 /mob/living/carbon/human/normal/inspector
 	New()

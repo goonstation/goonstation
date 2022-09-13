@@ -166,6 +166,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/butterburger
 
+/datum/cookingrecipe/aburgination
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 6 // still mostly raw, since we don't kill it
+	output = /obj/item/reagent_containers/food/snacks/burger/aburgination
+
 /datum/cookingrecipe/monster
 	item1 = /obj/item/reagent_containers/food/snacks/burger/bigburger
 	amt1 = 4
@@ -690,7 +696,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 					fillingColors += transformedFilling
 
 				// spread the total healing left for the added food among the sandwich bites
-				customSandwich.heal_amt += snack.heal_amt * snack.amount / customSandwich.amount
+				customSandwich.heal_amt += snack.heal_amt * snack.bites_left / customSandwich.bites_left
 
 				qdel(snack)
 
@@ -1111,10 +1117,10 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/steak_s
 
-/datum/cookingrecipe/steak_s
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
-	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/steak_s
+/datum/cookingrecipe/steak_ling
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	cookbonus = 12 // tough meat
+	output = /obj/item/reagent_containers/food/snacks/steak_ling
 
 /datum/cookingrecipe/fish_fingers
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
@@ -1277,6 +1283,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 				pieName += " "
 
 			custom_pie.w_class = max(custom_pie.w_class, T.w_class) //Well, that huge thing you put into it isn't going to shrink, you know
+			custom_pie.throw_range = min(custom_pie.throw_range, T.throw_range)
+			custom_pie.throw_speed = min(custom_pie.throw_speed, T.throw_speed)
+			custom_pie.contraband = max(custom_pie.contraband, T.contraband - 1)
 
 			count++
 
@@ -1475,7 +1484,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake
 
@@ -1623,6 +1632,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meat/
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
+
+/datum/cookingrecipe/fishpaste
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste/
 
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
@@ -1789,6 +1803,39 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item4 = /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chickenpineapplecurry
+
+/datum/cookingrecipe/ramen_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/ramen_bowl
+
+/datum/cookingrecipe/udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/kamaboko
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/udon_bowl
+
+/datum/cookingrecipe/curry_udon_bowl
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/udon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/currypowder
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
+
+
+/datum/cookingrecipe/cheesewheel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cheesewheel
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

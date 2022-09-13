@@ -395,8 +395,15 @@ datum
 					M.HealDamage("All", volume_passed * 1.5, volume_passed * 1.5)
 					if (isliving(M))
 						var/mob/living/H = M
+						if (H.disfigured)
+							boutput(H, "<span class='notice'>You feel the synthflesh seeping into your face.</span>")
+							H.disfigured = FALSE
+							H.UpdateName()
 						if (H.bleeding)
 							repair_bleeding_damage(H, 80, 2)
+						if (ishuman(M))
+							var/mob/living/carbon/human/healed = M
+							healed.heal_laser_wound("all")
 
 					var/silent = 0
 					if (length(paramslist))
@@ -407,6 +414,12 @@ datum
 
 					M.UpdateDamageIcon()
 
+				else if(method == INGEST)
+					if (isliving(M))
+						if (M.vdisfigured)
+							boutput(M, "<span class='notice'>You feel the ache in your vocal chords dissipate as you ingest the synthflesh.</span>")
+							M.vdisfigured = FALSE
+
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
 				if (covered.len > 9)
@@ -414,7 +427,7 @@ datum
 
 				if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 			/*reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item/parts/robot_parts/robot_frame))
@@ -592,13 +605,13 @@ datum
 			transparency = 40
 			value = 2 // 1c + 1c
 			target_organs = list("left_kidney", "right_kidney", "liver")
+			threshold = THRESHOLD_INIT
+			threshold_volume = 5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.getStatusDuration("radiation") && prob(80))
-					M.changeStatus("radiation", -2 SECONDS * mult, 1)
-				if(M.getStatusDuration("n_radiation") && prob(80))
-					M.changeStatus("n_radiation", -2 SECONDS * mult, 1)
+				if(M.radiation_dose && prob(75))
+					M.take_radiation_dose(-0.01 SIEVERTS * mult)
 
 				M.take_toxin_damage(-0.5 * mult)
 				M.HealDamage("All", 0, 0, 0.5 * mult)
@@ -609,6 +622,18 @@ datum
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
 				..()
 				return
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "r_potassium_iodide", 25)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "r_potassium_iodide")
+				..()
 
 		medical/smelling_salt
 			name = "ammonium bicarbonate"
@@ -621,7 +646,7 @@ datum
 			transparency = 40
 			value = 3
 			threshold = THRESHOLD_INIT
-			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium")
+			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium", "neurodepressant")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -635,16 +660,15 @@ datum
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt")
 				..()
 
-			on_mob_life(var/mob/M, var/method=INGEST, var/mult = 1)
+			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 				flush(M, 3 * mult, flushed_reagents)
 
-				if(method == INGEST)
-					if (M.health < -5 && M.health > -30)
-						M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
+				if (M.health < -5 && M.health > -30)
+					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
-					M.changeStatus("radiation", -2 SECONDS * mult, 1)
+					M.take_radiation_dose(-0.005 SIEVERTS * mult)
 				if (prob(5))
 					M.take_toxin_damage(1 * mult)
 				..()
@@ -834,11 +858,11 @@ datum
 				if (severity == 1) //lesser
 					if (effect <= 2)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
@@ -854,11 +878,11 @@ datum
 							H.set_clothing_icon_dirty()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
 		medical/proconvertin // old name for factor VII, which is a protein that causes blood to clot. this stuff is seemingly just used for people with hemophilia but this is ss13 so let's give it to everybody who's bleeding a little, it's fine.
@@ -918,7 +942,7 @@ datum
 						L.emote("cough")
 					else if (severity > 1 && prob(50))
 						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
-						playsound(L, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 						bleed(L, rand(2,8) * mult, 3 * mult)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1116,7 +1140,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(M, 5 * mult) //flushes all chemicals but itself
-				M.changeStatus("radiation", -7 SECONDS, 1)
+				M.take_radiation_dose(-0.05 SIEVERTS * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)
 				if (prob(33))

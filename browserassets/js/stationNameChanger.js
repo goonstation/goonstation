@@ -17,6 +17,10 @@ $(document).ready(function() {
 	var adminUser = false; //is an admin using the panel?
 	var fillerSections = [].concat( //sections used as "filler" for the randomiser
 		whitelistSectioned['Admins'],
+		whitelistSectioned['Frontier Locations'],
+		whitelistSectioned['Frontier Bodies'],
+		whitelistSectioned['Sol System Bodies'],
+		whitelistSectioned['Organizations'],
 		whitelistSectioned['Countries'],
 		whitelistSectioned['Directions'],
 		whitelistSectioned['Greek'],
@@ -64,7 +68,7 @@ $(document).ready(function() {
 	}
 
 	var randomName = function() {
-		//prefix, adjective, <any>, suffix 
+		//prefix, adjective, <any>, suffix
 		var prefix = pick(whitelistSectioned['Prefixes']);
 		var adjective = pick(whitelistSectioned['Adjectives']);
 		var suffix = pick(whitelistSectioned['Suffixes']);

@@ -121,7 +121,7 @@
 		for (var/atom/A in src.objects)
 			C.screen -= A
 
-	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null)
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
 		var/atom/movable/screen/hud/S
 		if (customType)
 			if (!ispath(customType, /atom/movable/screen/hud))
@@ -140,6 +140,7 @@
 		S.layer = layer
 		S.set_dir(dir)
 		S.tooltipTheme = tooltipTheme
+		S.mouse_opacity = mouse_opacity
 		src.objects += S
 
 		for (var/client/C in src.clients)

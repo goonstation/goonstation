@@ -19,7 +19,7 @@ ENGINE
 	directwired = 1
 
 	// To connect it to the computer
-	var/id = 0.0
+	var/id = 0
 
 	var/lastpower = 0
 	var/active = 0
@@ -80,7 +80,7 @@ ENGINE
 		add_avail(power)
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (BROKEN | NOPOWER))
 			boutput(user, "The engine won't turn on.")
 			return
@@ -137,14 +137,14 @@ REACTOR
 	// Meltdown is 0 when no meltdown is occuring
 	// Meltdown is 1 when a meltdown is occuring
 	// Meltdown is 2 when a meltdown has occured
-	var/meltdown = 0.0
+	var/meltdown = 0
 	// It is active when there is a fission reaction going down
 	// I.e. we're not turning it off or on
 	var/active = 0
 	// Use this so as to not loose energy in our calculations
 	var/setEnergyZero = 0
 	// To connect it to the engine
-	var/id = 0.0
+	var/id = 0
 	// Energy generated
 	var/energy = 0
 	// Temperature of the reactor
@@ -213,25 +213,7 @@ REACTOR
 
 			if(FR.amount > 0)
 
-				// Get the turf
-				var/turf/T = get_turf(src)
-				// If it has air in it:
-				if(istype(T, /turf/simulated) && T:air)
-					// This count to see if there already exists
-					// a radiation trace gas
-					var/count = 0
-					if(T:air:trace_gases && length(T:air:trace_gases))
-						for(var/datum/gas/G in T:air:trace_gases)
-							if(istype(G, /datum/gas/rad_particles))
-								count++
-								G.moles += 0.1
-
-					if(count == 0)
-						var/datum/gas/rad_particles/rad = new
-						rad.moles = 0.1
-						if(!T:air:trace_gases)
-							T:air:trace_gases = list()
-						T:air:trace_gases += rad
+				// used to be rad particle code here creating it
 
 				temperature += 60 / numConRods
 				FR.amount -= 60 / numConRods
@@ -285,30 +267,12 @@ REACTOR
 					icon_state = "norm0"
 
 	proc/meltdown()
-		meltdown = 1.0
+		meltdown = 1
 
-		// Get the turf
-		var/turf/T = get_turf(src)
-		// If it has air in it:
-		if(istype(T, /turf/simulated) && T:air)
-			// This count to see if there already exists
-			// a radiation trace gas
-			var/count = 0
-			if(T:air:trace_gases && length(T:air:trace_gases))
-				for(var/datum/gas/G in T:air:trace_gases)
-					if(istype(G, /datum/gas/rad_particles))
-						count++
-						G.moles += 1000
-
-			if(count == 0)
-				var/datum/gas/rad_particles/rad = new
-				rad.moles = 1000
-				if(!T:air:trace_gases)
-					T:air:trace_gases = list()
-				T:air:trace_gases += rad
+		// used to be rad particle code here creating it
 
 		SPAWN(0.8 SECONDS)
-			meltdown = 2.0
+			meltdown = 2
 
 
 	proc/checkChainReaction()
@@ -320,7 +284,7 @@ REACTOR
 				return
 		src.active = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -371,14 +335,14 @@ REACTOR
 		// Called when an object is in an explosion
 		// Higher "severity" means the object was further from the centre of the explosion
 		switch(severity)
-			if(1.0)
+			if(1)
 				status |= BROKEN
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					status |= BROKEN
 					return
-			if(3.0)
+			if(3)
 				if (prob(25))
 					status |= BROKEN
 					return

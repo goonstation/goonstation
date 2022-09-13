@@ -1,357 +1,144 @@
+/datum/loot_crate_manager
+	/// three types of loot - aesthetic motivated, department motivated, and player motivated
+	var/list/aesthetic = list(
+	// character
+		/obj/item/clothing/head/bear = 20,\
+		list(/obj/item/clothing/head/rugged, /obj/item/clothing/suit/rugged_jacket) = 10,\
+		list(/obj/item/clothing/head/star_tophat, /obj/item/clothing/suit/star_cloak) = 10,\
+		list(/obj/item/clothing/head/cow, /obj/item/clothing/suit/cow_jacket) = 10,\
+		/obj/item/clothing/head/torch = 20,\
+		list(/obj/item/clothing/head/helmet/space/replica, /obj/item/clothing/suit/space/replica) = 10,\
+		/obj/item/clothing/suit/lined_jacket = 20,\
+		/obj/item/clothing/suit/warm_jacket = 20,\
+		/obj/item/clothing/suit/cool_jacket = 20,\
+		/obj/item/clothing/suit/billow_cape = 10,\
+		/obj/item/clothing/under/misc/tiedye = 20,\
+		/obj/item/clothing/under/misc/neapolitan = 20,\
+		/obj/item/clothing/under/misc/mint_chip = 20,\
+		/obj/item/clothing/under/misc/mimefancy = 10,\
+		/obj/item/clothing/under/misc/mimedress = 10,
+	// station
+	)
+	var/list/department = list(
+	// medbay
+		/obj/item/roboupgrade/efficiency = 20,\
+		/obj/item/roboupgrade/jetpack = 20,\
+		/obj/item/roboupgrade/physshield = 10,\
+		/obj/item/roboupgrade/teleport = 10,\
+		/obj/item/cloner_upgrade = 10,\
+		/obj/item/grinder_upgrade = 20,\
+		/obj/item/reagent_containers/mender/both = 10,\
+		/obj/item/plant/herb/cannabis/white/spawnable = 20,\
+		list(/obj/item/parts/robot_parts/leg/right/thruster, /obj/item/parts/robot_parts/leg/left/thruster) = 10,
+	// botany
+		/obj/item/reagent_containers/glass/happyplant = 20,\
+	// mining
+		/obj/item/clothing/shoes/industrial = 10,\
+	// qm
+		/obj/item/stamped_bullion = 20,\
+		/obj/item/plant/herb/cannabis/omega/spawnable = 20,\
+		list(/obj/item/antitamper, /obj/item/antitamper, /obj/item/antitamper) = 20,
+	)
+	var/list/player = list(
+	// useful
+		/obj/item/clothing/gloves/psylink_bracelet = 10,\
+		/obj/item/device/voltron = 5,\
+		/obj/item/injector_belt = 20,\
+		/obj/item/clothing/mask/gas/injector_mask = 10,\
+		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
+		/obj/item/clothing/gloves/ring/titanium = 20,\
+		/obj/item/gun/energy/phaser_gun = 20,\
+		/obj/item/gun/energy/phaser_small = 20,\
+		/obj/item/gun/energy/phaser_huge = 10,\
+		/obj/item/clothing/ears/earmuffs/yeti = 20,\
+	// fun
+		/obj/item/gun/bling_blaster = 20,\
+		/obj/item/clothing/under/gimmick/frog = 20,\
+		/obj/vehicle/skateboard = 20,\
+		/obj/item/device/flyswatter = 20,\
+		/obj/critter/bear = 20,\
+		/obj/item/clothing/shoes/jetpack = 20,\
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20,
+	)
+
+var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager
+
 /obj/storage/crate/loot
 	name = "crate"
 	desc = "A crate of unknown contents, probably accidentally lost from some bygone freighter shipment or the like."
 	icon_state = "crate"
 	icon_opened = "crateopen"
 	icon_closed = "crate"
-	locked = 1
-	var/tier = 1
+	locked = TRUE
+	anchored = TRUE
 	var/image/light = null
+
+	New()
+		..()
+		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
+		new /obj/item/antitamper(
+			src,
+			TRUE, // Attach it to crate being spawned
+		)
+
+		var/list/loot = list()
+		loot.Add(weighted_pick(loot_crate_manager.aesthetic), weighted_pick(loot_crate_manager.department), weighted_pick(loot_crate_manager.player))
+
+		for (var/l in loot)
+			if (islist(l))
+				for (var/l2 in l)
+					new l2(src)
+			else
+				new l(src)
+
+		switch (rand(1, 4))
+			if (1)
+				icon_state = "lootsci"
+				icon_opened = "lootsciopen"
+				icon_closed = "lootsci"
+			if (2)
+				icon_state = "lootind"
+				icon_opened = "lootindopen"
+				icon_closed = "lootind"
+			if (3)
+				icon_state = "lootmil"
+				icon_opened = "lootmilopen"
+				icon_closed = "lootmil"
+			if (4)
+				icon_state = "lootcrime"
+				icon_opened = "lootcrimeopen"
+				icon_closed = "lootcrime"
+
+	update_icon()
+		if (open)
+			icon_state = icon_opened
+		else
+			icon_state = icon_closed
+
+		if (src.locked)
+			light.color = "#FF0000"
+		else
+			light.color = "#00FF00"
+		src.UpdateOverlays(src.light, "light")
+
+/obj/storage/crate/loot/puzzle
 	var/datum/loot_crate_lock/lock = null
 	var/datum/loot_crate_trap/trap = null
 
 	New()
 		..()
-		src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
 
-		tier = RarityClassRoll(100,0,list(95,70))
-		var/kind = rand(1,5)
-		// kinds: (1) Civilian (2) Scientific (3) Industrial (4) Military (5) Criminal
-
-		var/list/items = list()
-		var/list/item_amounts = list()
-		var/picker = 0
-
-		switch(kind)
-			if(2)
-				name = "research shipment crate"
-				desc = "There are laboratory and research company logos on the crate."
-				icon_state = "lootsci"
-				icon_opened = "lootsciopen"
-				icon_closed = "lootsci"
-
-				// SCIENCE GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/clothing/gloves/psylink_bracelet
-							item_amounts += 1
-						if(2)
-							items += pick(/obj/item/artifact/teleport_wand, /obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/artifact/melee_weapon, /obj/item/artifact/forcewall_wand) // All of these are pretty useful and it heavily reduces chances of telewand.
-							item_amounts += 1
-						else
-							items += /obj/item/device/voltron
-							item_amounts += 1
-				else if (tier == 2)
-					picker = rand(1,2)
-					switch(picker)
-						if(1)
-							items += pick(/obj/critter/bear,/obj/critter/domestic_bee,
-							/obj/critter/brullbar,/obj/critter/nicespider) // 1/2 chance for scary thing that has cool arms you can use, 1/2 chance for cute thing!!
-							item_amounts += 1
-						if(2)
-							items += pick(/obj/item/injector_belt,/obj/item/clothing/mask/gas/injector_mask)
-							item_amounts += 1
-				else
-					picker = rand(1,4)
-					switch(picker)
-						if(1)
-							items += /obj/item/roboupgrade/efficiency
-							item_amounts += 1
-							items += /obj/item/roboupgrade/jetpack
-							item_amounts += 1
-							picker = rand(1,4)
-							items += pick(
-								/obj/item/roboupgrade/physshield,
-								/obj/item/roboupgrade/teleport,
-								// /obj/item/roboupgrade/opticthermal,
-								/obj/item/roboupgrade/speed,
-							)
-							item_amounts += 1
-						if(2)
-							items += /obj/item/reagent_containers/glass/beaker/large/antitox
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/brute
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/burn
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
-							item_amounts += 1
-							items += /obj/item/reagent_containers/hypospray
-							item_amounts += 1
-						if(3)
-							items += pick(/obj/critter/spore)
-							item_amounts += 3
-						else
-							items += /obj/item/reagent_containers/glass/happyplant
-							item_amounts += 2
-							items += /obj/item/seed/alien
-							item_amounts += 3
-
-			if(3)
-				name = "industrial shipment crate"
-				desc = "There are industrial company logos on the crate."
-				icon_state = "lootind"
-				icon_opened = "lootindopen"
-				icon_closed = "lootind"
-
-				// INDUSTRIAL GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/clothing/shoes/jetpack
-							item_amounts += 1
-						if(2)
-							items += pick(concrete_typesof(/obj/item/wizard_crystal))
-							item_amounts += 10
-						else
-							items += /obj/item/shipcomponent/mainweapon/rockdrills
-							item_amounts += 1
-				else if (tier == 2)
-					picker = rand(1,4)
-					switch(picker)
-						if(1 to 3)
-							items += pick(/obj/item/raw_material/telecrystal,/obj/item/raw_material/gemstone,
-							/obj/item/raw_material/miracle,/obj/item/raw_material/uqill)
-							item_amounts += 30
-						else
-							items += /obj/critter/fermid
-							item_amounts += 1
-				else
-					picker = rand(1,7)
-					switch(picker)
-						if(1)
-							items += /obj/item/breaching_charge/mining
-							item_amounts += 25
-						if(2)
-							items += /obj/item/clothing/gloves/concussive
-							item_amounts += 1
-							items += /obj/item/clothing/shoes/industrial
-							item_amounts += 1
-						if(3)
-							items += /obj/item/clothing/head/helmet/space/industrial
-							item_amounts += 1
-							items += /obj/item/clothing/suit/space/industrial
-							item_amounts += 1
-						if(4)
-							items += pick(/obj/item/raw_material/telecrystal,/obj/item/raw_material/gemstone,
-							/obj/item/raw_material/miracle,/obj/item/raw_material/uqill)
-							item_amounts += 10
-						if(5)
-							items += pick(/obj/item/raw_material/syreline,/obj/item/raw_material/bohrum,
-							/obj/item/raw_material/claretine,/obj/item/raw_material/cerenkite)
-							item_amounts += 40
-						if(6)
-							items += /obj/item/radio_tape/advertisement/cargonia
-							item_amounts += 1
-							items += /obj/item/clothing/under/rank/cargo
-							item_amounts += 1
-							items += /obj/decal/fakeobjects/skeleton
-							item_amounts += 1
-						else
-							items += /obj/critter/rockworm
-							item_amounts += 3
-
-			if(4)
-				name = "military shipment crate"
-				desc = "The crate is covered in military insignia."
-				icon_state = "lootmil"
-				icon_opened = "lootmilopen"
-				icon_closed = "lootmil"
-
-				// MILITARY GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/device/voltron
-							item_amounts += 1
-						if(2)
-							items += /obj/item/ammo/power_cell/self_charging/pod_wars_standard
-							item_amounts += 1
-							items += /obj/item/ammo/power_cell/higherish_power // 400 pu charge, designed to be able to be a trade off of higher capacity at the cost of no self recharging, or vice versa.
-							item_amounts += 1
-						else
-							items += /obj/item/clothing/gloves/ring/titanium
-							item_amounts += 1
-				else if (tier == 2)
-					picker = rand(1,10)
-					switch(picker)
-						if(1)
-							items += pick(/obj/item/gun/energy/plasma_gun)
-							item_amounts += 1
-						if(2 to 6)
-							items += /obj/item/gun/energy/phaser_gun
-							item_amounts += 1
-							items += /obj/item/storage/firstaid/crit
-							item_amounts += 1
-						if(7 to 10)
-							for (var/i = 1, i < rand(4,10), i++)
-								items += pick(/obj/item/chem_grenade/incendiary, /obj/item/chem_grenade/cryo, /obj/item/chem_grenade/shock, /obj/item/chem_grenade/pepper, prob(10); /obj/item/chem_grenade/sarin)
-								item_amounts += 1
-				else
-					picker = rand(1,1)
-					switch(picker)
-						if(1)
-							items += /obj/item/reagent_containers/glass/beaker/large/antitox
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/brute
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/burn
-							item_amounts += 1
-							items += /obj/item/reagent_containers/glass/beaker/large/epinephrine
-							item_amounts += 1
-							items += /obj/item/reagent_containers/hypospray
-							item_amounts += 1
-
-			if(5)
-				name = "unmarked shipment crate"
-				desc = "This crate seems to have all identifications scratched off."
-				icon_state = "lootcrime"
-				icon_opened = "lootcrimeopen"
-				icon_closed = "lootcrime"
-
-				// CRIMINAL GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,6)
-					switch(picker)
-						if(1 to 2)
-							items += /obj/item/device/voltron
-							item_amounts += 1
-						if(3 to 5)
-							items += /obj/item/gun/bling_blaster
-							item_amounts += 1
-						else
-							items += /obj/item/spacecash/hundredthousand
-							item_amounts += 3
-				else if (tier == 2)
-					picker = rand(1,4)
-					switch(picker)
-						if(1)
-							items += /obj/item/spacecash/thousand
-							item_amounts += 20
-						if(2)
-							items += /obj/item/material_piece/gold
-							item_amounts += 5
-						if(3)
-							items += /obj/item/plant/herb/cannabis/omega/spawnable
-							item_amounts += 10
-						if(4)
-							items += /obj/item/storage/pill_bottle/cyberpunk
-							item_amounts += 3
-				else
-					picker = rand(1,4)
-					switch(picker)
-						if(1)
-							items += /obj/item/spacecash/thousand
-							item_amounts += 5
-						if(2)
-							items += /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
-							item_amounts += 5
-						if(3)
-							items += /obj/item/material_piece/gold
-							item_amounts += 1
-						if(4)
-							items += pick(/obj/item/plant/herb/cannabis/spawnable,
-							/obj/item/plant/herb/cannabis/white/spawnable,
-							/obj/item/plant/herb/cannabis/mega/spawnable)
-							item_amounts += 10
-
-			else
-				name = "goods shipment crate"
-				desc = "There are consumer goods company logos on the crate."
-
-				// CIVILIAN GOODS LOOT TABLE
-				if (tier == 3)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/clothing/under/gimmick/frog
-							item_amounts += 1
-						if(2)
-							items += /obj/item/clothing/shoes/sandal
-							item_amounts += 1
-						else
-							items += /obj/vehicle/skateboard
-							item_amounts += 1
-				else if (tier == 2)
-					picker = rand(1,3)
-					switch(picker)
-						if(1)
-							items += /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
-							item_amounts += 5
-						if(2)
-							items += /obj/item/clothing/ears/earmuffs/yeti
-							item_amounts += 1
-						if(3)
-							items += /obj/item/device/light/zippo/gold
-							item_amounts += 1
-							items += /obj/item/cigpacket/random
-							item_amounts += rand(2,4)
-				else
-					picker = rand(1,5)
-					switch(picker)
-						if(1)
-							items += /obj/item/clothing/shoes/moon
-							item_amounts += 1
-						if(2)
-							items += /obj/item/reagent_containers/food/drinks/bottle/hobo_wine
-							item_amounts += 5
-						if(3)
-							items += pick(/obj/item/reagent_containers/food/snacks/burrito,
-							/obj/item/reagent_containers/food/snacks/snack_cake,
-							/obj/item/reagent_containers/food/snacks/snack_cake/golden,
-							/obj/item/reagent_containers/food/snacks/plant/lashberry,
-							/obj/item/reagent_containers/food/snacks/plant/tomato)
-							item_amounts += 5
-						if(4)
-							items += /obj/critter/cat
-							item_amounts += 1
-						if(5)
-							items += /obj/item/device/flyswatter
-							item_amounts += 1
-							items += /obj/item/storage/box/mousetraps
-							item_amounts += 1
-
-		var/trap_prob = 100
-		var/newlock = null
-		var/newtrap = null
-		switch(tier)
-			if(2)
-				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine)
-				newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/bomb)
-			if(3)
-				newlock = pick(/datum/loot_crate_lock/hangman/nine, /datum/loot_crate_lock/hangman/seven)
-				newtrap = pick(/datum/loot_crate_trap/bomb,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/crusher)
-			else
-				trap_prob = 33
-				newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman)
-				newtrap = /datum/loot_crate_trap/spikes
+		var/newlock = pick(/datum/loot_crate_lock/decacode,/datum/loot_crate_lock/hangman/seven, /datum/loot_crate_lock/hangman/nine)
+		var/newtrap = pick(/datum/loot_crate_trap/crusher,/datum/loot_crate_trap/spikes,/datum/loot_crate_trap/zap, /datum/loot_crate_trap/bomb)
 
 		if (ispath(newlock))
 			var/datum/loot_crate_lock/L = new newlock
 			L.holder = src
 			src.lock = L
-		if (ispath(newtrap) && prob(trap_prob))
+		if (ispath(newtrap))
 			var/datum/loot_crate_trap/T = new newtrap
 			T.holder = src
 			src.trap = T
-
-		var/list_counter = 1
-		var/temp_counter = 0
-		for (var/X in items)
-			temp_counter = item_amounts[list_counter]
-			while (temp_counter > 0)
-				temp_counter--
-				new X(src)
-			list_counter++
-
-		SPAWN(0)
-			UpdateIcon()
-
-		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (istype(trap))
@@ -364,12 +151,12 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded
 				boutput(user, "<span class='notice'>The crate unlocks!</span>")
-				src.locked = 0
+				src.locked = FALSE
 				src.lock = null
 				src.trap = null
 				src.UpdateIcon()
@@ -379,7 +166,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W) && locked)
 			if (istype(lock))
 				lock.read_device(user)
@@ -395,21 +182,10 @@
 			..()
 		return
 
-	update_icon()
-
-		if(open) icon_state = icon_opened
-		else icon_state = icon_closed
-
-		if (src.locked)
-			light.color = "#FF0000"
-		else
-			light.color = "#00FF00"
-		src.UpdateOverlays(src.light, "light")
-
 // LOCKS
 
 /datum/loot_crate_lock
-	var/obj/storage/crate/loot/holder = null
+	var/obj/storage/crate/loot/puzzle/holder = null
 	var/attempts_allowed = 0
 	var/attempts_remaining = 0
 
@@ -438,7 +214,7 @@
 			return
 
 	proc/inputter_check(var/mob/living/opener)
-		if (get_dist(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
+		if (GET_DIST(holder.loc,opener.loc) > 2 && !opener.bioHolder.HasEffect("telekinesis"))
 			boutput(opener, "You try really hard to press the button all the way over there. Using your mind. Way to go, champ!")
 			return 0
 
@@ -570,7 +346,7 @@
 // TRAPS
 
 /datum/loot_crate_trap
-	var/obj/storage/crate/loot/holder = null
+	var/obj/storage/crate/loot/puzzle/holder = null
 	var/destroys_crate = 0
 	var/desc = null
 
@@ -603,7 +379,7 @@
 		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
-			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(opener.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		return
 
 /datum/loot_crate_trap/zap
@@ -621,7 +397,7 @@
 
 	trigger_trap(var/mob/living/opener)
 		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
-		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
+		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
 			if (istype(I,/obj/critter/cat/))
@@ -629,13 +405,75 @@
 			new /obj/item/scrap(holder)
 			qdel(I)
 
-		holder.locked = 0
+		holder.locked = FALSE
 		holder.lock = null
 		holder.trap = null
 		holder.UpdateIcon()
 		return
 
 // Items specific to loot crates
+
+/obj/item/antitamper
+	name = "anti-tamper device"
+	desc = "Space pirates hate these!"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "antitamper-off"
+	w_class = W_CLASS_SMALL
+	force = 4
+	throwforce = 2
+	var/obj/storage/crate/attached = null
+
+	New(var/obj/storage/crate/C, var/attach_to_crate = FALSE)
+		..()
+		if (attach_to_crate)
+			attach_to(C)
+
+	disposing()
+		. = ..()
+		attached = null
+
+	attack_hand(mob/user)
+		if (attached)
+			return
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if (!attached)
+			return ..()
+		if (W.w_class < W_CLASS_NORMAL || W.force < 10)
+			boutput(user, "<span class='alert'>You're going to have to use a heftier object if you want to break the crate's anti-tampering system.</span>")
+			return
+		add_fingerprint(user)
+		detach_from()
+
+	proc/attach_to(var/obj/storage/crate/C, var/mob/user)
+		if (!C || !istype(C))
+			return
+		if (user != null)
+			user.u_equip(src)
+		set_loc(C)
+		attached = C
+		attached.vis_contents += src
+		attached.locked = TRUE
+		attached.anchored = TRUE
+		attached.update_icon()
+		icon_state = "antitamper-on"
+		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
+
+	proc/detach_from()
+		if (!attached)
+			return
+		icon_state = ""
+		flick("antitamper-break", src)
+		var/obj/storage/crate/C = attached
+		attached = null
+		SPAWN(1 SECOND)
+			C.vis_contents -= src
+			C.locked = FALSE
+			C.anchored = FALSE
+			C.update_icon()
+			qdel(src)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)
 
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"
@@ -647,6 +485,9 @@
 	var/primary = TRUE
 	var/image/gemstone = null
 	var/obj/item/clothing/gloves/psylink_bracelet/twin
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
 
 	New()
 		..()

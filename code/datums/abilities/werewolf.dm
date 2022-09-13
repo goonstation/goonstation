@@ -5,51 +5,24 @@
 
 /* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
 
-/mob/proc/make_werewolf(var/force=0)
+/mob/proc/make_werewolf()
 	if (ishuman(src))
 		var/datum/abilityHolder/werewolf/A = src.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (A && istype(A))
 			return
 		var/datum/abilityHolder/werewolf/W = src.add_ability_holder(/datum/abilityHolder/werewolf)
-		//W.addAbility(/datum/targetable/werewolf/werewolf_transform)
 		W.addAbility(/datum/targetable/werewolf/werewolf_feast)
 		W.addAbility(/datum/targetable/werewolf/werewolf_pounce)
 		W.addAbility(/datum/targetable/werewolf/werewolf_thrash)
 		W.addAbility(/datum/targetable/werewolf/werewolf_throw)
 		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
-		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction)	//not using for now, but could be fun later ish.
-		if (force)
-			W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-			boutput(src, "<span class='alert'>You are a full werewolf, you can transform immediately!</span>")
-		else
-			SPAWN(W.awaken_time)
-				handle_natural_werewolf(W)
-
+		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
+		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction) //not using for now, but could be fun later ish.
 		src.resistances += /datum/ailment/disease/lycanthropy
 
 		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			SHOW_WEREWOLF_TIPS(src)
-
-	else return
-
-/mob/proc/handle_natural_werewolf(var/datum/abilityHolder/werewolf/W)
-	src.emote("shiver")
-	boutput(src, "<span class='alert'><b>You feel feral!</b></span>")
-	sleep(5 SECONDS)
-	if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-		boutput(src, "<span class='alert'><b>You suddenly feel very weak.</b></span>")
-		src.emote("collapse")
-	SPAWN(8 SECONDS)
-		if (!src.getStatusDuration("weakened"))
-			src.emote("collapse")
-		boutput(src, "<span class='alert'><b>Your body feels as if it's on fire! You think it's... IT'S CHANGING! You should probably get somewhere private!</b></span>")
-		sleep(rand(300, 500))
-		src.emote("scream")
-		if (!src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
-			src.emote("collapse")
-		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		src.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+			src.show_antag_popup("werewolf")
 
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
@@ -72,7 +45,7 @@
 			M.delStatus("slowed")
 			M.delStatus("disorient")
 			M.delStatus("radiation")
-			M.delStatus("n_radiation")
+			M.take_radiation_dose(-INFINITY)
 			M.delStatus("burning")
 			M.delStatus("staggered")
 			M.change_misstep_chance(-INFINITY)
@@ -125,7 +98,7 @@
 
 			which_way = 1
 
-		logTheThing("combat", M, null, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
 		return
 
 // There used to be more stuff here, most of which was moved to limb datums.
@@ -181,31 +154,31 @@
 				M.visible_message("<span class='alert'><B>[M] [pick("chomps on", "chews off a chunk of", "gnaws on")] [HH]'s [pick("right arm", "left arm", "head", "right leg", "left leg")]!</B></span>")
 
 			if (isnpcmonkey(HH))
-				boutput(M, __red("Monkey flesh just isn't the real deal..."))
+				boutput(M, "<span class='alert'>Monkey flesh just isn't the real deal...</span>")
 				healing /= 2
 			else if (isdead(HH))
-				boutput(M, __red("Fresh meat would be much preferable to this cadaver..."))
+				boutput(M, "<span class='alert'>Fresh meat would be much preferable to this cadaver...</span>")
 				healing /= 2
 			else if (HH.health < -150)
-				boutput(M, __red("[target] is pretty mangled. There's not a lot of flesh left..."))
+				boutput(M, "<span class='alert'>[target] is pretty mangled. There's not a lot of flesh left...</span>")
 				healing /= 1.5
 			else
 				if (iscluwne(HH))
-					boutput(M, __red("That tasted awful!"))
+					boutput(M, "<span class='alert'>That tasted awful!</span>")
 					healing /= 2
 					M.take_toxin_damage(5)
 				else if (iswerewolf(HH) || ishunter(HH) || isabomination(HH))
-					boutput(M, __blue("That tasted fantastic!"))
+					boutput(M, "<span class='notice'>That tasted fantastic!</span>")
 					healing *= 2
 				else if (HH.nutrition > 100)
-					boutput(M, __blue("That tasted amazing!"))
+					boutput(M, "<span class='notice'>That tasted amazing!</span>")
 					M.unlock_medal("Space Ham", 1)
 					healing *= 2
 				else if (HH.mind && HH.mind.assigned_role == "Clown")
-					boutput(M, __blue("That tasted funny, huh."))
+					boutput(M, "<span class='notice'>That tasted funny, huh.</span>")
 					M.unlock_medal("That tasted funny", 1)
 				else
-					boutput(M, __blue("That tasted good!"))
+					boutput(M, "<span class='notice'>That tasted good!</span>")
 					M.unlock_medal("Space Ham", 1) //new way to acquire
 
 			HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
@@ -312,15 +285,15 @@
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
 
 			SPAWN(0.1 SECONDS)
-				if (src) playsound(src.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
+				if (src) playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
 		if ("feast")
 			if (prob(60))
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Tear_1.ogg', 'sound/impact_sounds/Flesh_Tear_2.ogg'), 50, 1, -1)
-				playsound(src.loc, "sound/items/eatfood.ogg", 50, 1, -1)
+				playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 
 			if (prob(40))
-				playsound(target.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			if (prob(30))
 				playsound(src.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
@@ -383,7 +356,7 @@
 
 		return
 
-//percent, give number 0.0-1.0
+//percent, give number 0-1
 /datum/abilityHolder/proc/lower_cooldowns(var/percent)
 	for (var/datum/targetable/werewolf/A in src.abilities)
 		A.cooldown = A.cooldown * (1-percent)
@@ -464,23 +437,23 @@
 			return 0
 
 		if (!ishuman(M)) // Only humans use mutantrace datums.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (werewolf_only == 1 && !iswerewolf(M))
-			boutput(M, __red("You must be in your wolf form to use this ability."))
+			boutput(M, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

@@ -1,4 +1,4 @@
-/mob/living/critter/drone/hk
+/mob/living/critter/robotic/drone/hk
 	drone_designation = "HK"
 	desc = "A heavily-armed Syndicate hunter-killer drone."
 	icon_state = "drone2"

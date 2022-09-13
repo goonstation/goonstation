@@ -33,6 +33,8 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		boutput(world, "<B>Get ready to play some football!</B>")
 
 	pre_setup()
+		for(var/datum/mind/mind in antag_token_list())
+			mind.current?.client?.using_antag_token = FALSE
 		// EVERYONE IS A football player.
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
@@ -220,7 +222,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			return
 
 		if (is_new)
-			SHOW_FOOTBALL_TIPS(footballer)
+			footballer.show_antag_popup("football")
 			if (football_players["blue"].len == football_players["red"].len)
 				team = pick("red", "blue")
 			else if (football_players["blue"].len < football_players["red"].len)

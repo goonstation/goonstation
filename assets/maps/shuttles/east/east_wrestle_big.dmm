@@ -1790,7 +1790,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "cV" = (
-/obj/machinery/vending/cola{
+/obj/machinery/vending/cola/red{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

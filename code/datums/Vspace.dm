@@ -35,7 +35,7 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "party"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!ismob(user) || !user.client || !istype(user, /mob/living/carbon/human/virtual/))
 			return
 		src.add_fingerprint(user)

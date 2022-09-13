@@ -121,7 +121,10 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/waking_critters = 0
 
 	// this chunk zone is for Area Ambience
+
+	/// Set to a sound you want to loop in an area
 	var/sound_loop = null
+	/// Volume for [sound_loop]
 	var/sound_loop_vol = 50
 	var/sound_fx_1 = null
 	var/sound_fx_2 = null
@@ -296,7 +299,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 				return null
 		return R
 
-	/*
+	/**
 	 * returns a list of objects matching type in an area
 	 */
 	proc/get_type(var/type)
@@ -333,7 +336,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			C.wake_from_hibernation()
 		if(enteringM?.client)
 			for (var/mob/living/M as anything in src.mobs_not_in_global_mobs_list)
-				if(!M.skipped_mobs_list)
+				if(!M.skipped_mobs_list && get_area(M) == src)
 					stack_trace("Attempting to add [M] to global mobs list but its flag is not set.")
 				if(M.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 					global.ai_mobs |= M
@@ -348,12 +351,13 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_area_value()
 		var/value = 0
-		for (var/turf/simulated/floor/F in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt || F.icon_state == "plating")
 				continue
 			value++
 
-		for (var/obj/machinery/M in src.contents)
+		for (var/obj/machinery/M in our_contents)
 			if (M.status & BROKEN || M.status & NOPOWER)
 				continue
 			value++
@@ -362,17 +366,18 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 
 	proc/calculate_structure_value()
 		var/value = 0
-		for (var/turf/simulated/wall/W in src.contents)
+		var/list/atom/our_contents = src.contents.Copy()
+		for (var/turf/simulated/wall/W in our_contents)
 			value++
-		for (var/turf/simulated/floor/F in src.contents)
+		for (var/turf/simulated/floor/F in our_contents)
 			if (F.broken || F.burnt)
 				continue
 			value++
-		for (var/obj/machinery/light/L in src.contents)
+		for (var/obj/machinery/light/L in our_contents)
 			if (L.current_lamp.light_status != 0) //See LIGHT_OK
 				continue
 			value++
-		for (var/obj/window/W in src.contents)
+		for (var/obj/window/W in our_contents)
 			value++
 
 		return value
@@ -472,7 +477,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/jerk = O
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by a CORDON at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect))
@@ -495,6 +500,9 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	fullbright
 		ambient_light = null
 		force_fullbright = 1
+
+	dark
+		ambient_light = null
 
 /area/cavetiny
 	name = "Caves"
@@ -529,7 +537,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 			var/mob/jerk = O
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
-			logTheThing("combat", jerk, null, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
 			setdead(jerk)
 			jerk.remove()
 		else if (isobj(O) && !istype(O, /obj/overlay/tile_effect) && !istype(O, /obj/landmark))
@@ -550,7 +558,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 		if (ismob(O))
 			var/mob/jerk = O
 			var/list/found_areas = get_area_turfs(current_battle_spawn,1)
-			if (isnull(found_areas))
+			if (length(found_areas) == 0)
 				jerk.set_loc(pick(get_area_turfs(/area/station/maintenance/,1)))
 				boutput(jerk, "You somehow land in maintenance! Weird!")
 			else
@@ -677,8 +685,11 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/mining/station
 	icon_state = "shuttle"
 
-/area/shuttle/mining/space
-	icon_state = "shuttle2"
+/area/shuttle/mining/diner
+	icon_state = "shuttle"
+
+/area/shuttle/mining/outpost
+	icon_state = "shuttle"
 
 /area/shuttle/john/diner
 	icon_state = "shuttle"
@@ -1537,19 +1548,15 @@ ABSTRACT_TYPE(/area/station)
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
-
-	New()
-		..()
-		initial_structure_value = calculate_structure_value()
-		START_TRACKING
 #else
 	filler_turf = null
+#endif
 
 	New()
 		..()
-		initial_structure_value = calculate_structure_value()
 		START_TRACKING
-#endif
+		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+			initial_structure_value = calculate_structure_value()
 
 	Del()
 		STOP_TRACKING
@@ -1564,7 +1571,8 @@ ABSTRACT_TYPE(/area/station/atmos)
 	do_not_irradiate = 1
 
 /area/station/atmos/highcap_storage
-  name = "High-Capacity Atmospherics Storage"
+	name = "High-Capacity Atmospherics Storage"
+	do_not_irradiate = 0
 
 ABSTRACT_TYPE(/area/station/atmos/hookups)
 /area/station/atmos/hookups
@@ -1829,6 +1837,10 @@ ABSTRACT_TYPE(/area/station/maintenance/outer)
 
 /area/station/maintenance/disposal
 	name = "Waste Disposal"
+	icon_state = "disposal"
+
+/area/station/maintenance/scidisposal
+	name = "Outpost Zeta Waste Disposal"
 	icon_state = "disposal"
 
 /area/station/maintenance/lowerstarboard
@@ -2848,6 +2860,14 @@ ABSTRACT_TYPE(/area/station/solar)
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"
 
+/area/station/solar/aisat
+	name = "AI Satellite Solar Array"
+	icon_state = "yellow"
+
+/area/station/solar/zeta
+	name = "Research Outpost Solar Array"
+	icon_state = "yellow"
+
 ABSTRACT_TYPE(/area/station/quartermaster)
 /area/station/quartermaster
 	name = "Quartermaster's"
@@ -3579,6 +3599,7 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Kosmicheskoi Stantsii 13"
 	icon_state = "yellow"
 	permarads = 1
+	irradiated = 1
 
 // // // // // // // // // // // //
 

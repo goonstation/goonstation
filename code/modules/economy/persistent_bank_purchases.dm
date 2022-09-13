@@ -6,6 +6,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/crayon_box,\
 	new /datum/bank_purchaseable/human_item/paint_plaid,\
 	new /datum/bank_purchaseable/human_item/stickers,\
+	new /datum/bank_purchaseable/human_item/handkerchief,\
 	new /datum/bank_purchaseable/human_item/bee_egg,\
 	new /datum/bank_purchaseable/human_item/harmonica,\
 	new /datum/bank_purchaseable/human_item/airhorn,\
@@ -21,6 +22,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/sparkler_box,\
 	new /datum/bank_purchaseable/human_item/dabbing_license,\
 	new /datum/bank_purchaseable/human_item/chem_hint,\
+	new /datum/bank_purchaseable/human_item/pixel_pass,\
 
 	new /datum/bank_purchaseable/altjumpsuit,\
 	new /datum/bank_purchaseable/altclown,\
@@ -204,6 +206,13 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/items/storage.dmi'
 			icon_state = "sticker_box_assorted"
 
+		handkerchief
+			name = "Handkerchief"
+			cost = 1000
+			path = /obj/item/cloth/handkerchief/random
+			icon = 'icons/obj/items/cloths.dmi'
+			icon_state = "hanky_pink"
+
 		bee_egg
 			name = "Bee Egg"
 			cost = 550
@@ -302,19 +311,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/items/card.dmi'
 			icon_state = "id_dab"
 
-		battlepass
-			name = "Battle Pass"
-			cost = 1000
-			path = /obj/item/battlepass
-			icon = 'icons/obj/items/card.dmi'
-			icon_state = "id"
-
-			Create(var/mob/living/M)
-				..(M)
-				if(M?.mind)
-					battle_pass_holders.Add(M.mind)
-				return 1
-
 		chem_hint
 			name = "Secret chem hint"
 			cost = 3500
@@ -323,7 +319,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			icon = 'icons/obj/dojo.dmi'
 			icon_state = "scroll"
 
-
+		pixel_pass
+			name = "Pixel Pass"
+			cost = 2500
+			path = /obj/item/pixel_pass
+			icon_state = "pixel_pass"
 
 	altjumpsuit
 		name = "Alternate Jumpsuit"
@@ -514,7 +514,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
-				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
+				logTheThing(LOG_STATION, M, "named their adopted frog [froggo.real_name]")
 				froggo.name = froggo.real_name
 			return 1
 

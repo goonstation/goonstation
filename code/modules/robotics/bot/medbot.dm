@@ -30,7 +30,7 @@
 	var/last_found = 0
 	/// Time after injecting someone before they'll try to inject them again. Encourages them to spread the love (and poison). Hitting the bot overrides the cooldown
 	var/last_patient_cooldown = 5 SECONDS
-	var/point_cooldown = 1 SECOND //Don't spam your pointer-finger
+	var/point_cooldown = 10 SECONDS //Don't spam your pointer-finger
 	var/currently_healing = 0
 	var/injection_amount = 10 //How much reagent do we inject at a time?
 	var/heal_threshold = 15 //Start healing when they have this much damage in a category
@@ -200,7 +200,7 @@
 /obj/machinery/bot/medbot/attack_ai(mob/user as mob)
 	return toggle_power()
 
-/obj/machinery/bot/medbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/medbot/attack_hand(mob/user, params)
 	if (src.terrifying)
 		return
 
@@ -289,7 +289,7 @@
 		src.on = 1
 		src.UpdateIcon()
 		src.pick_poison()
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -304,7 +304,7 @@
 	src.UpdateIcon()
 	return 1
 
-/obj/machinery/bot/medbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/medbot/attackby(obj/item/W, mob/user)
 	//if (istype(W, /obj/item/card/emag)) // this gets to stay here because it is a good story
 		/*
 		I caught a fish once, real little feller, it was.
@@ -424,7 +424,7 @@
 		if (src.assess_patient(C))
 			src.patient = C
 			src.doing_something = 1
-			if (ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
+			if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam these messages!
 				src.point(src.patient, 1)
 				var/message = pick("Hey, you! Hold on, I'm coming.","Wait! I want to help!","You appear to be injured!","Don't worry, I'm trained for this!")
 				src.speak(message)
@@ -618,7 +618,7 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "medbot_inject"
 	icon = 'icons/obj/syringe.dmi'
-	icon_state = "0"
+	icon_state = "syringe_15"
 	var/obj/machinery/bot/medbot/master
 	var/list/reagent_id
 	var/did_spooky = 0
@@ -766,10 +766,10 @@
 
 /obj/machinery/bot/medbot/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.explode()
 			return
-		if(2.0)
+		if(2)
 			src.health -= 15
 			if (src.health <= 0)
 				src.explode()
@@ -803,7 +803,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/storage/firstaid(Tsec)
@@ -863,7 +863,7 @@
 		qdel(S)
 		qdel(src)
 
-/obj/item/firstaid_arm_assembly/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")

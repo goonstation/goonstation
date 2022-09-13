@@ -76,7 +76,7 @@
 			return 100
 		actions.interrupt(src, INTERRUPT_ACTION)
 		SPAWN(0)
-			B.execute_ability(target)
+			B.execute_ability(target, params)
 			src.targeting_ability = null
 			src.update_cursor()
 		return 100
@@ -97,7 +97,7 @@
 	//circumvented by some rude hack in client.dm; uncomment if hack ceases to exist
 	//if (istype(target, /atom/movable/screen/ability))
 	//	target:clicked(params)
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		if(!src.dir_locked)
 			set_dir(get_dir(src, target))
 			if(dir & (dir-1))
@@ -169,7 +169,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if(!C || !C.cloud_available())
-		//logTheThing("debug", null, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
+		//logTheThing(LOG_DEBUG, null, "<B>ZeWaka/Keybinds:</B> Attempted to fetch custom keybinds for [C.ckey] but failed.")
 		return
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")

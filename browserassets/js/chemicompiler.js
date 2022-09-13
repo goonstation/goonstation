@@ -23,6 +23,7 @@
     function initEvents() {
         $('#butt-load').on("click", errWrapper(handleButtonLoadClick));
         $('#butt-save').on("click", errWrapper(handleButtonSaveClick));
+		$('#butt-abort').on("click", errWrapper(handleButtonAbortClick));
         $('.btn-c').on("click", errWrapper(handleButtonClick));
         $('.reservoir-button').on("click", errWrapper(handleReservoirButtonClick));
     }
@@ -72,27 +73,27 @@
         }
         setMode("execute");
     }
-    
+
     function setMode(newMode) {
         if (newMode === mode) {
             return;
         }
-        
+
         if (newMode == 'execute') {
             $('#butt-save').removeClass("active");
             $('#butt-load').removeClass("active");
         }
-        
+
         if (newMode == 'load') {
             $('#butt-save').removeClass("active");
             $('#butt-load').addClass("active");
         }
-        
+
         if (newMode == 'save') {
             $('#butt-load').removeClass("active");
             $('#butt-save').addClass("active");
         }
-        
+
         mode = newMode;
     }
 
@@ -111,6 +112,10 @@
     function handleButtonSaveClick() {
         setMode("save")
     }
+
+	function handleButtonAbortClick(buttonId) {
+		jax("abortCode", {id: buttonId, message: "Aborted by user"});
+	}
 
     function doSaveCode(buttonId) {
         jax("saveCode", {id: buttonId, code: getCode()});

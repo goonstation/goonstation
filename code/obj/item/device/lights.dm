@@ -87,15 +87,15 @@
 		return 1
 
 	attack_self(mob/user)
-		src.toggle(user)
+		src.toggle(user, TRUE)
 
-	proc/toggle(var/mob/user)
+	proc/toggle(var/mob/user, activated_inhand = FALSE)
 		if (src.broken)
 			name = "broken flashlight"
 			return
 
 		src.on = !src.on
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -105,18 +105,23 @@
 						var/mob/living/target = M
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
-							logTheThing("combat", user, target, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
+							logTheThing(LOG_COMBAT, user, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
 				user.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
 				on = 0
 				light_dir.update(0)
 				icon_state = icon_broken
 				name = "broken [name]"
 				src.broken = 1
+				return
 			else
 				light_dir.update(1)
 		else
 			set_icon_state(src.icon_off)
 			light_dir.update(0)
+
+		if (activated_inhand)
+			var/obj/ability_button/flashlight_toggle/flashlight_button = locate(/obj/ability_button/flashlight_toggle) in src.ability_buttons
+			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
@@ -129,7 +134,7 @@
 	w_class = W_CLASS_SMALL
 	flags = ONBELT | TABLEPASS
 	var/heated = 0
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	brightness = 0.33
@@ -155,7 +160,7 @@
 		light_c.update(1)
 
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
 			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
@@ -186,12 +191,12 @@
 	attack_self(mob/user as mob)
 		if (!on)
 			boutput(user, "<span class='notice'>You crack [src].</span>")
-			playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
 				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
-				playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				if (user.reagents)
 					if (heated > 0)
 						user.reagents.add_reagent("radium", 10, null, T0C + heated * 200)
@@ -206,7 +211,7 @@
 	icon_state = "glowstick-green0"
 	name = "emergency glowstick"
 	desc = "For emergency use only. Not for use in illegal lightswitch raves."
-	col_r = 0.0
+	col_r = 0
 	col_g = 0.9
 	col_b = 0.1
 	color_name = "green"
@@ -283,7 +288,7 @@
 	desc = "A regular emergency glowstick edgy and red!"
 	col_r = 0.9
 	col_g = 0.1
-	col_b = 0.0
+	col_b = 0
 	color_name = "red"
 
 /obj/item/device/light/candle
@@ -298,7 +303,7 @@
 	icon_on = "candle"
 	col_r = 0.5
 	col_g = 0.3
-	col_b = 0.0
+	col_b = 0
 
 	attack_self(mob/user as mob)
 		if (src.on)
@@ -307,13 +312,13 @@
 			"You [fluff] out [src].")
 			src.put_out(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.on)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
@@ -446,7 +451,7 @@
 	brightness = 0.8
 
 	attack_self(mob/user as mob)
-		playsound(src, "sound/items/penclick.ogg", 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, 1)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)

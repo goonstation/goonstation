@@ -54,11 +54,11 @@
 			usr.show_text("You can't set this target as the home location.", "red")
 			return
 
-		if (alert("Set selected turf as home location?",,"Yes","No") == "Yes")
+		if (tgui_alert(usr, "Set selected turf as home location?", "Set home location", list("Yes", "No")) == "Yes")
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	relaymove(mob/usr as mob, dir)
@@ -70,7 +70,7 @@
 
 		src.go_out()
 		add_fingerprint(usr)
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 	MouseDrop_T(mob/living/target, mob/user)
@@ -130,19 +130,19 @@
 		light.disable()
 		status |= BROKEN
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.status & BROKEN)
 			boutput(user, "<span class='notice'>The [src.name] is busted! You'll need at least two sheets of glass to fix it.</span>")
 			return
 		. = ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
 			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 				if (S.amount >= 2)
 					W.change_stack_amount(-2)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					src.status &= !BROKEN
 					src.icon_state = "PAG_0"
 					light.enable()
@@ -212,7 +212,7 @@
 
 		src.go_out()
 		add_fingerprint(usr)
-		playsound(src.loc, "sound/machines/sleeper_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 	verb/enter()
@@ -248,7 +248,7 @@
 			boutput(usr, "<span class='alert'><b>You can't reach the scanner lock from the inside.</b></span>")
 			return
 
-		playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if (src.locked)
 			src.locked = 0
 			usr.visible_message("<b>[usr]</b> unlocks the scanner.")
@@ -290,7 +290,7 @@
 		M.set_loc(src)
 		src.occupant = M
 		src.icon_state = "PAG_1"
-		playsound(src.loc, "sound/machines/sleeper_close.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		return
 
 	ui_status(mob/user)
