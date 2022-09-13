@@ -685,8 +685,11 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/mining/station
 	icon_state = "shuttle"
 
-/area/shuttle/mining/space
-	icon_state = "shuttle2"
+/area/shuttle/mining/diner
+	icon_state = "shuttle"
+
+/area/shuttle/mining/outpost
+	icon_state = "shuttle"
 
 /area/shuttle/john/diner
 	icon_state = "shuttle"
@@ -1545,19 +1548,15 @@ ABSTRACT_TYPE(/area/station)
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
-
-	New()
-		..()
-		initial_structure_value = calculate_structure_value()
-		START_TRACKING
 #else
 	filler_turf = null
+#endif
 
 	New()
 		..()
-		initial_structure_value = calculate_structure_value()
 		START_TRACKING
-#endif
+		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+			initial_structure_value = calculate_structure_value()
 
 	Del()
 		STOP_TRACKING

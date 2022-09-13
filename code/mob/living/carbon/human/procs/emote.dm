@@ -1361,7 +1361,7 @@
 						if (src.bioHolder.HasEffect("chime_snaps"))
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
-						if (prob(5))
+						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
 							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
 							/*
 							if (src.bioHolder)
@@ -1379,6 +1379,11 @@
 								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							else
 								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
+								if(istype(gloves, /obj/item/clothing/gloves/bladed))
+									var/obj/item/clothing/gloves/bladed/blades = src.gloves
+									blades.sheathe_blades_toggle(src)
+									src.update_clothing()
 
 			if ("airquote","airquotes")
 				if (param)
@@ -2171,7 +2176,7 @@
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
 						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
-						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
 							if(H.limbs.l_arm)
@@ -2199,7 +2204,7 @@
 						src.limbs.l_leg?.sever()
 						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
 						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
-						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 50,0, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
 

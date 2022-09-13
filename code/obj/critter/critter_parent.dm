@@ -722,13 +722,13 @@
 					C.update_body()
 					C.update_face()
 					switch (C.decomp_stage)
-						if (4)
+						if (DECOMP_STAGE_SKELETONIZED)
 							src.visible_message("<span class='combat'><b>[src]</b> tears the last piece of meat off [src.corpse_target]!</span>")
 							src.task = "thinking"
 							src.corpse_target = null
-						if (3)
+						if (DECOMP_STAGE_HIGHLY_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
-						if (2)
+						if (DECOMP_STAGE_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
@@ -811,7 +811,7 @@
 				return
 			var/list/visible = new()
 			for (var/mob/living/carbon/human/H in view (src.seekrange,src))
-				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				if (isdead(H) && H.decomp_stage <= DECOMP_STAGE_HIGHLY_DECAYED && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
 			if (src.corpse_target && (src.corpse_target in visible))

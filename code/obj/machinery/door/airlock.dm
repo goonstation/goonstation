@@ -56,10 +56,12 @@
 	if(src.locked)
 		src.locked = 0
 		src.UpdateIcon()
+		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 	else
 		logTheThing(LOG_STATION, user, "[user] has bolted a door at [log_loc(src)].")
 		src.locked = 1
 		src.UpdateIcon()
+		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
@@ -200,6 +202,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	operation_time = 6
 	brainloss_stumble = TRUE
 
+	get_desc()
+		var/healthpercent = src.health/src.health_max * 100
+		switch(healthpercent)
+			if(90 to 99) //dont want to clog up the description unless it's actually damaged
+				. += "It seems to be in mostly good condition"
+			if(75 to 89)
+				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+			if(50 to 74)
+				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+			if(25 to 49)
+				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+			if(0 to 24)
+				. += "It is barely intact!"
+
 /obj/machinery/door/airlock/New()
 	..()
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
@@ -333,7 +349,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_closed"
 	icon_base = "com"
-	req_access = list(access_heads)
+	req_access = null
 	health = 800
 	health_max = 800
 
@@ -376,7 +392,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "security airlock"
 	icon_state = "sec_closed"
 	icon_base = "sec"
-	req_access = list(access_security)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
@@ -389,7 +405,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "engineering airlock"
 	icon_state = "eng_closed"
 	icon_base = "eng"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering/alt
 	icon_state = "eng2_closed"
@@ -402,7 +418,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "medical airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
-	req_access = list(access_medical)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/alt
 	icon_state = "research2_closed"
@@ -437,7 +453,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "maintenance airlock"
 	icon_state = "maint_closed"
 	icon_base = "maint"
-	req_access = list(access_maint_tunnels)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/maintenance/alt
 	icon_state = "maint2_closed"
@@ -495,19 +511,19 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
-	req_access = list(access_heads)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
-	req_access = list(access_security)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"
@@ -912,12 +928,14 @@ About the new airlock wires panel:
 			if (!src.locked)
 				src.locked = 1
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
-				boutput(usr, "You hear a click from the bottom of the door.")
+				boutput(usr, "You hear a clunk from the bottom of the door.")
+				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					src.locked = 0
-				boutput(usr, "You hear a click from inside the door.")
+					boutput(usr, "You hear a clunk from inside the door.")
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
 			src.UpdateIcon()
 			SPAWN(1 DECI SECOND)
 				src.shock(usr, 25)
@@ -1033,6 +1051,7 @@ About the new airlock wires panel:
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
 			if (src.locked!=1)
 				src.locked = 1
+				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
 			src.UpdateIcon()
 
