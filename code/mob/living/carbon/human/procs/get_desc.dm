@@ -92,7 +92,7 @@
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
 	if (src.gloves && !src.gloves.nodescripition)
-		if (!src.wear_suit?.hides_from_examine & C_GLOVES)
+		if (!(src.wear_suit?.hides_from_examine & C_GLOVES))
 			. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
