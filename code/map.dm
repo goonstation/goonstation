@@ -689,6 +689,10 @@ var/global/list/mapNames = list(
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the aviary" = list( /area/station/garden/aviary))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
 	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
