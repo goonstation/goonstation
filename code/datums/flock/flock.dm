@@ -688,6 +688,22 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/machinery/vending = /obj/flock_structure/fabricator,
+	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
+	/obj/submachine/seed_vendor = /obj/flock_structure/fabricator,
+	/obj/machinery/dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/disposal_pipedispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chem_dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chemicompiler_stationary = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/foamtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/watertank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/fueltank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
+	/obj/machinery/portable_atmospherics/canister = /obj/flock_structure/fabricator,
+	/obj/machinery/portable_atmospherics/scrubber = /obj/flock_structure/fabricator,
+	/obj/machinery/atmospherics/pipe/tank = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
 
@@ -721,6 +737,8 @@ var/flock_signal_unleashed = FALSE
 		if(!FL)
 			FL = new /obj/lattice/flock(T)
 
+	var/params
+
 	for(var/obj/O in T)
 		if (istype(O, /obj/machinery/camera))
 			var/obj/machinery/camera/cam = O
@@ -743,9 +761,15 @@ var/flock_signal_unleashed = FALSE
 						break
 				if (istype(O, /obj/machinery/light/lamp) || istype(O, /obj/machinery/computer3/generic/personal) || istype(O, /obj/machinery/computer3/luggable))
 					break
+				if (istype(O, /obj/machinery/vending) || istype(O, /obj/machinery/manufacturer) || istype(O, /obj/machinery/dispenser) || istype(O, /obj/machinery/disposal_pipedispenser) || istype(O, /obj/machinery/portable_atmospherics/canister) || istype(O, /obj/machinery/atmospherics/pipe/tank) || istype(O, /obj/machinery/portable_atmospherics/scrubber) || istype(O, /obj/machinery/chem_dispenser) || istype(O, /obj/machinery/chemicompiler_stationary))
+					params = O
+			else if (istype(O, /obj/submachine/seed_vendor))
+				params = O
+			else if (istype(O, /obj/reagent_dispensers) && !(istype(O, /obj/reagent_dispensers/cleanable) || istype(O, /obj/reagent_dispensers/still)))
+				params = O
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
+			var/obj/converted = new replacementPath(T, null, params)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))
