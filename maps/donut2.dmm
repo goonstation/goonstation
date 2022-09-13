@@ -26082,6 +26082,12 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"bYp" = (
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "bYu" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -68162,7 +68168,7 @@ bGd
 bGd
 bGd
 bfA
-tQe
+bYp
 tQe
 owD
 owD
