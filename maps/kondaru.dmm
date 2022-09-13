@@ -23086,6 +23086,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "bsi" = (
@@ -23168,6 +23169,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "bsz" = (
@@ -26048,6 +26050,7 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/station/bridge)
 "bCU" = (
@@ -26454,6 +26457,7 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/station/bridge)
 "bDW" = (
@@ -28976,6 +28980,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Courtroom"
 	},
+/obj/access_spawn/brig,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "bLq" = (
@@ -31297,6 +31302,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "bSk" = (
@@ -35013,6 +35019,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
@@ -43851,6 +43858,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/access_spawn/brig,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "gUW" = (
@@ -44312,6 +44320,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "hoh" = (
@@ -49567,6 +49576,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "mTB" = (
@@ -54516,6 +54526,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "rOG" = (
@@ -59930,6 +59941,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/heads,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "wUh" = (
