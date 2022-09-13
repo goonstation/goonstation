@@ -908,9 +908,7 @@
 	if(passengers)
 		find_pilot()
 	else
-		src.ion_trail.stop()
-
-
+		src.ion_trail?.stop()
 
 	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
