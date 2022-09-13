@@ -180,7 +180,7 @@ var/global/list/mapNames = list(
 
 		var/dmm_suite/dmm_suite = new
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
-		logTheThing(LOG_ADMIN, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
+		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
 		var/turf/transit_start
 		for(var/turf/T in landmarks[LANDMARK_SHUTTLE_TRANSIT])
 			if(transit_region.turf_in_region(T))
