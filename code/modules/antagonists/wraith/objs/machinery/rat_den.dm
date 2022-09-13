@@ -9,6 +9,7 @@
 	var/linked_critters = 0
 	var/max_critters = 5
 	var/next_spawn_check = 10 SECONDS
+	var/process_range = 5
 
 	New()
 		..()
@@ -37,7 +38,8 @@
 					linked_critters ++
 
 		//Plague rats in range heal up slowly
-		for (var/mob/living/critter/wraith/plaguerat/P in range(5, src))
+		for_by_tcl(P, /mob/living/critter/wraith/plaguerat)
+			if(!IN_RANGE(src, P, process_range)) continue
 			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]

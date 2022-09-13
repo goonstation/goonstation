@@ -42,6 +42,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
+		START_TRACKING
 		SPAWN(0)
 			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 			if(M != null)
@@ -50,6 +51,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if (isnull(M.summons))
 					M.summons = list()
 				M.summons += src
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	setup_hands()
 		..()
