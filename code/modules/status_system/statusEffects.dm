@@ -2213,9 +2213,9 @@
 			W.forced_manifest = FALSE
 			W.haunting = FALSE
 			W.flags |= UNCRUSHABLE
-			if (!istype_exact (M, /mob/wraith/poltergeist))
+			if (!istype_exact(M, /mob/wraith/poltergeist))
 				M.alpha = 160
-		else if (istype_exact (M, /mob/wraith/poltergeist))
+		else if (istype_exact(M, /mob/wraith/poltergeist))
 			M.icon_state = "poltergeist"
 			M.update_body()
 		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))

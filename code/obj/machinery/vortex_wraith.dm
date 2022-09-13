@@ -70,11 +70,11 @@
 				for (var/mob/living/carbon/human/H in range((1 + src.growth), src))	//Lets try to spawn near someone
 					if(isalive(H))
 						for (var/turf/T in range(3, H))
-							if (isturf(T) && istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
+							if (istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
 								eligible_turf += T
 				if (length(eligible_turf) <= 0)	//No spot to spawn near a human, or no human in range, lets try to find a regular turf instead
 					for (var/turf/T in range((1 + src.growth), src))
-						if (isturf(T) && istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
+						if (istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
 							eligible_turf += T
 				if (length(eligible_turf) <= 0)
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")

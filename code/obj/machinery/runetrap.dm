@@ -191,7 +191,7 @@
 			var/mob/M = A
 			if(checkRun(M))
 				src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
-				playsound(src, "sound/voice/wraith/wraithraise3.ogg", 80)
+				playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 				explosion(src, src, -1, 1, 2, 4)
 				elecflash(src, 1, 1)
 				qdel(src)
@@ -208,10 +208,10 @@
 				M.remove_pulling()
 				M.changeStatus("weakened", 3 SECONDS)
 				boutput(M, "<span class='notice'>You suddenly slip!</span>")
-				playsound(M, "sound/misc/slip.ogg", 50, 1, -3)
+				playsound(M, 'sound/misc/slip.ogg', 50, 1, -3)
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
-				playsound(src, "sound/voice/wraith/wraithraise3.ogg", 80)
+				playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 				elecflash(src, 1, 1)
 
 /proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers
