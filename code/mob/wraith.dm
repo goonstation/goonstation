@@ -129,7 +129,7 @@
 
 	Login()
 		..()
-		src.updateButtons()
+		abilityHolder.updateButtons()
 		var/atom/plane = client.get_plane(PLANE_LIGHTING)
 		plane.alpha = 200
 
@@ -568,152 +568,69 @@
 	//////////////
 	// Wraith Procs
 	//////////////
-	proc
-		addAllBasicAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/help)
-			src.addAbility(/datum/targetable/wraithAbility/absorbCorpse)
-			src.addAbility(/datum/targetable/wraithAbility/possessObject)
-			src.addAbility(/datum/targetable/wraithAbility/decay)
-			src.addAbility(/datum/targetable/wraithAbility/command)
-			src.addAbility(/datum/targetable/wraithAbility/animateObject)
-			src.addAbility(/datum/targetable/wraithAbility/spook)
-			src.addAbility(/datum/targetable/wraithAbility/whisper)
-			src.addAbility(/datum/targetable/wraithAbility/blood_writing)
-			src.addAbility(/datum/targetable/wraithAbility/haunt)
+	proc/addAllBasicAbilities()
+		src.addAbility(/datum/targetable/wraithAbility/help)
+		src.addAbility(/datum/targetable/wraithAbility/absorbCorpse)
+		src.addAbility(/datum/targetable/wraithAbility/possessObject)
+		src.addAbility(/datum/targetable/wraithAbility/decay)
+		src.addAbility(/datum/targetable/wraithAbility/command)
+		src.addAbility(/datum/targetable/wraithAbility/animateObject)
+		src.addAbility(/datum/targetable/wraithAbility/spook)
+		src.addAbility(/datum/targetable/wraithAbility/whisper)
+		src.addAbility(/datum/targetable/wraithAbility/blood_writing)
+		src.addAbility(/datum/targetable/wraithAbility/haunt)
 
-		addAllDecayAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/curse/blood)
-			src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
-			src.addAbility(/datum/targetable/wraithAbility/curse/rot)
-			src.addAbility(/datum/targetable/wraithAbility/curse/death)
-			src.addAbility(/datum/targetable/wraithAbility/poison)
-			src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
-			src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
-			src.addAbility(/datum/targetable/wraithAbility/speak)
+	proc/removeAllAbilities()
+		for (var/datum/targetable/wraithAbility/abil in abilityHolder.abilities)
+			src.removeAbility(abil)
 
-		addAllTricksterAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
-			src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
-			src.addAbility(/datum/targetable/wraithAbility/dread)
-			src.addAbility(/datum/targetable/wraithAbility/hallucinate)
-			src.addAbility(/datum/targetable/wraithAbility/fake_sound)
-			src.addAbility(/datum/targetable/wraithAbility/lay_trap)
-			src.addAbility(/datum/targetable/wraithAbility/possess)
-			src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+	proc/get_new_booster_zones()	//Get new zones you can get more power in.
+		booster_locations = list()
+		var/num_booster_areas = 3
+		var/list/candidate_areas = list()
+		for(var/area/A in valid_locations)
+			for (var/datum/mind/D in A.population)
+				if (!D.current?.client) continue
+				if (!istype(D.current, /mob/living/carbon/human)) continue
+				if (isdead(D.current)) continue
+				candidate_areas += A
+				break
+		if (length(candidate_areas) < num_booster_areas)
+			for (var/i in 1 to num_booster_areas - length(candidate_areas))
+				candidate_areas |= pick(valid_locations)
+		for(var/i in 1 to num_booster_areas)
+			if (!length(candidate_areas)) break
+			var/chosen = pick(candidate_areas)
+			candidate_areas -= chosen
+			booster_locations += get_area_name(chosen)
+		var/list/safe_area_names = list()
+		for (var/area/area as anything in booster_locations)
+			safe_area_names += area.name
+		boutput(src, "<span class='alert'><b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b></span>")
 
-		addAllHarbingerAbilities()
-			src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
-			src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
-			src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
-			src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
-			src.addAbility(/datum/targetable/wraithAbility/speak)
-
-		removeAllAbilities()
-			src.removeAbility(/datum/targetable/wraithAbility/help)
-			src.removeAbility(/datum/targetable/wraithAbility/absorbCorpse)
-			src.removeAbility(/datum/targetable/wraithAbility/possessObject)
-			src.removeAbility(/datum/targetable/wraithAbility/makeRevenant)
-			src.removeAbility(/datum/targetable/wraithAbility/decay)
-			src.removeAbility(/datum/targetable/wraithAbility/command)
-			src.removeAbility(/datum/targetable/wraithAbility/raiseSkeleton)
-			src.removeAbility(/datum/targetable/wraithAbility/animateObject)
-			src.removeAbility(/datum/targetable/wraithAbility/haunt)
-			src.removeAbility(/datum/targetable/wraithAbility/spook)
-			src.removeAbility(/datum/targetable/wraithAbility/whisper)
-			src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
-			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
-			src.removeAbility(/datum/targetable/wraithAbility/curse/blood)
-			src.removeAbility(/datum/targetable/wraithAbility/curse/enfeeble)
-			src.removeAbility(/datum/targetable/wraithAbility/curse/blindness)
-			src.removeAbility(/datum/targetable/wraithAbility/curse/rot)
-			src.removeAbility(/datum/targetable/wraithAbility/poison)
-			src.removeAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
-			src.removeAbility(/datum/targetable/wraithAbility/make_plague_rat)
-			src.removeAbility(/datum/targetable/wraithAbility/speak)
-			src.removeAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
-			src.removeAbility(/datum/targetable/wraithAbility/make_poltergeist)
-			src.removeAbility(/datum/targetable/wraithAbility/mass_whisper)
-			src.removeAbility(/datum/targetable/wraithAbility/dread)
-			src.removeAbility(/datum/targetable/wraithAbility/possess)
-			src.removeAbility(/datum/targetable/wraithAbility/hallucinate)
-			src.removeAbility(/datum/targetable/wraithAbility/create_summon_portal)
-			src.removeAbility(/datum/targetable/wraithAbility/raiseSkeleton)
-			src.removeAbility(/datum/targetable/wraithAbility/makeRevenant)
-			src.removeAbility(/datum/targetable/wraithAbility/harbinger_summon)
-			src.removeAbility(/datum/targetable/wraithAbility/fake_sound)
-			src.removeAbility(/datum/targetable/wraithAbility/lay_trap)
-
-		get_new_booster_zones()	//Get new zones you can get more power in.
-			booster_locations = list()
-			var/list/safe_area_names = list()
-			var/num_safe_areas = clamp(3, 1, 5)
-			var/area/temp = null
-			var/list/locations_copy = list()
-			var/has_client = false
-			for(var/A in valid_locations)
-				for(var/mob/living/carbon/human/M in A)	//Check for player_controlled mobs in the zone
-					if(M.client != null)
-						has_client = true
-						continue
-				if (has_client)
-					locations_copy.Add(A)
-					has_client = false
-			if (length(locations_copy) < 3) //Not enough people?
-				for(var/A in valid_locations)	//Get random available areas instead
-					locations_copy.Add(A)
-			for(var/i = 0, i < num_safe_areas, i++)
-				temp = pick(locations_copy)
-				locations_copy.Remove(temp)
-				safe_area_names.Add(temp)
-				booster_locations.Add(valid_locations[temp])
-			boutput(src, "<span class='alert'><b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b></span>")
-
-		updateButtons()
-			abilityHolder.updateButtons()
-
-		makeRevenant(var/mob/M as mob)
-			if (!ishuman(M))
-				boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
-				return 1
-			var/mob/living/carbon/human/H = M
-			if (!isdead(H))
-				boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
-				return 1
-			if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
-				boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
-				return 1
-			if (ischangeling(H))
-				boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
-				return 1
-			if (!H.bioHolder)
-				message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
-				boutput(usr, "<span class='alert'>Failed.</span>")
-				return 1
-			// Happens in wraithPossess() already.
-			//src.abilityHolder.suspendAllAbilities()
-			var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
-			if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.
-				R.wraithPossess(src)
-				return 0
+	proc/makeRevenant(var/mob/M as mob)
+		if (!ishuman(M))
+			boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
 			return 1
-
-
-	//////////////
-	// Wraith Verbs
-	//////////////
-
-	/*verb
-		makeCorporealDebug()
-			src.makeCorporeal()
-
-
-		makeIncorporealDebug()
-			src.makeIncorporeal()
-
-
-		givePointsDebug()
-			src.abilityHolder.points = 99999*/
+		var/mob/living/carbon/human/H = M
+		if (!isdead(H))
+			boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
+			return 1
+		if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
+			boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
+			return 1
+		if (ischangeling(H))
+			boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
+			return 1
+		if (!H.bioHolder)
+			message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
+			boutput(usr, "<span class='alert'>Failed.</span>")
+			return 1
+		var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
+		if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.
+			R.wraithPossess(src)
+			return 0
+		return 1
 
 //////////////
 // Subtypes
@@ -728,9 +645,16 @@
 
 	New(var/mob/M)
 		..()
-		src.addAllDecayAbilities()
 		src.abilityHolder.regenRate = 3
-
+		src.addAbility(/datum/targetable/wraithAbility/curse/blood)
+		src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
+		src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
+		src.addAbility(/datum/targetable/wraithAbility/curse/rot)
+		src.addAbility(/datum/targetable/wraithAbility/curse/death)
+		src.addAbility(/datum/targetable/wraithAbility/poison)
+		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
+		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
+		src.addAbility(/datum/targetable/wraithAbility/speak)
 /mob/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
@@ -740,8 +664,12 @@
 
 	New(var/mob/M)
 		..()
-		src.addAllHarbingerAbilities()
 		src.abilityHolder.regenRate = 3
+		src.addAbility(/datum/targetable/wraithAbility/create_summon_portal)
+		src.addAbility(/datum/targetable/wraithAbility/raiseSkeleton)
+		src.addAbility(/datum/targetable/wraithAbility/makeRevenant)
+		src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
+		src.addAbility(/datum/targetable/wraithAbility/speak)
 
 /mob/wraith/wraith_trickster
 	name = "trickster"
@@ -749,16 +677,27 @@
 	desc = "A living shadow seeking to disrupt the station with lies and deception."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "wraith_trickster"
-	var/points_to_possess = 50	//How many points do we need to possess someone?
-	var/possession_points = 0	//How many do we currently have?
-	var/mutable_appearance/copied_appearance = null	//Steal someone's appearance and use it during haunt
-	var/copied_desc = null	//Steal their descriptions too
+	/// How many points do we need to possess someone?
+	var/points_to_possess = 50
+	// /How many do we currently have?
+	var/possession_points = 0
+	/// Steal someone's appearance and use it during haunt
+	var/mutable_appearance/copied_appearance = null
+	/// Steal their descriptions too
+	var/copied_desc = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
 		..()
-		addAllTricksterAbilities()
 		src.abilityHolder.regenRate = 3
+		src.addAbility(/datum/targetable/wraithAbility/choose_haunt_appearance)
+		src.addAbility(/datum/targetable/wraithAbility/mass_whisper)
+		src.addAbility(/datum/targetable/wraithAbility/dread)
+		src.addAbility(/datum/targetable/wraithAbility/hallucinate)
+		src.addAbility(/datum/targetable/wraithAbility/fake_sound)
+		src.addAbility(/datum/targetable/wraithAbility/lay_trap)
+		src.addAbility(/datum/targetable/wraithAbility/possess)
+		src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
 
 	Life(parent)
 		if (..(parent))
@@ -839,11 +778,3 @@
 			new/datum/objective/specialist/wraith/survive(null, traitor)
 		if(3)
 			new/datum/objective/specialist/wraith/flawless(null, traitor)
-
-proc/get_area_names(var/list/strings)
-	. = ""
-	if(length(strings) == 1)
-		return "[strings[1]]"
-	for(var/i = 1, i < length(strings); i++)
-		. += strings[i] + ", "
-	. += "or [strings[length(strings)]]"

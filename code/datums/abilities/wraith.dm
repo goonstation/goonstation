@@ -856,8 +856,8 @@
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
 
-			W.abilityHolder.regenRate = (holder.regenRate - 2)
-			W.abilityHolder.points = (holder.points - 300)
+			W.abilityHolder.regenRate -= 2
+			W.abilityHolder.points -= pointCost
 
 			W.real_name = holder.owner.real_name
 			W.UpdateName()

@@ -76,11 +76,11 @@
 					if (isdead(H)) continue
 					if (isnpc(H)) continue
 					if (!IN_RANGE(H, src, 1 + growth)) continue
-					var/list/turfs = block(locate(max(H.x - spawn_radius, 0), max(H.y - spawn_radius, 0), H.z), locate(min(H.x + spawn_radius, world.maxx), min(H.y + spawn_radius, world.miny), H.z))
+					var/list/turfs = block(locate(max(H.x - spawn_radius, 0), max(H.y - spawn_radius, 0), H.z), locate(min(H.x + spawn_radius, world.maxx), min(H.y + spawn_radius, world.maxy), H.z))
 					for (var/turf/simulated/floor/floor in turfs)
 						eligible_turf += floor
 				if (!length(eligible_turf))	//No spot to spawn near a human, or no human in range, lets try to find a regular turf instead
-					for (var/turf/simulated/floor/floor in block(locate(max(src.x - growth, 0), max(src.y - growth, 0), src.z), locate(min(src.x + growth, world.maxx), min(src.y + growth, world.miny), src.z)))
+					for (var/turf/simulated/floor/floor in block(locate(max(src.x - growth, 0), max(src.y - growth, 0), src.z), locate(min(src.x + growth, world.maxx), min(src.y + growth, world.maxy), src.z)))
 						eligible_turf += floor
 				if (!length(eligible_turf))
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
