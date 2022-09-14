@@ -23,9 +23,9 @@
 		if (src.on)
 			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
 			for(var/mob/wraith/W in orange(4, user))
-				if ((W.last_spirit_candle_time + (W.haunt_duration * 2)) < TIME)
+				if ((W.last_spirit_candle_time + (W.forced_haunt_duration * 2)) < TIME)
 					W.last_spirit_candle_time = TRUE
-					W.setStatus("corporeal", W.haunt_duration, TRUE)
+					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
 					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 				else
 					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")

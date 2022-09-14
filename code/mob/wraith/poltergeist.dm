@@ -8,7 +8,7 @@
 	hud_path = /datum/hud/wraith/poltergeist
 	var/mob/wraith/master = null
 	var/obj/spookMarker/marker = null
-	haunt_duration = 150
+	forced_haunt_duration = 15 SECONDS
 	death_icon_state = "derangedghost"
 	weak_tk = TRUE
 	var/max_dist_marker = 15

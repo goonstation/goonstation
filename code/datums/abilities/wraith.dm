@@ -2,7 +2,10 @@
 	topBarRendered = 1
 	pointName = "Wraith Points"
 	cast_while_dead = 1
+	/// total souls absorbed by this wraith so far
 	var/corpsecount = 0
+	/// number of souls required to evolve into a specialized wraith subclass
+	var/absorbs_to_evolve = 3
 	onAbilityStat()
 		..()
 		.= list()
@@ -118,135 +121,77 @@
 	pointCost = 20
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
 
-	cast(atom/T)
+	cast(atom/target)
 		if (..())
 			return 1
-		if (!T)
-			T = get_turf(holder.owner)
+		if (!target)
+			target = get_turf(holder.owner)
 
+		//Find a suitable corpse
+		var/mob/living/carbon/human/H
+		if (isturf(target))
+			for (var/mob/living/carbon/human/mob_target in target.contents)
+				if (!isdead(mob_target))
+					continue
+				if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+					continue
+				H = mob_target
+				break
+		else if (ishuman(target))
+			H = target
+			if (!isdead(H))
+				boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
+				return 1
+
+			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
+			var/mob/wraith/W = src.holder.owner
+			if (istype(W))
+				var/amt = H.reagents.get_reagent_amount("formaldehyde")
+				if (amt >= W.formaldehyde_tolerance)
+					H.reagents.remove_reagent("formaldehyde", amt)
+					boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...But you are wounded</span>")
+					particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(H.x, H.y, H.z)))
+					holder.owner.TakeDamage(null, 50, 0)
+					return 0
+		else
+			boutput(holder.owner, "<span class='alert'>Absorbing [target] does not satisfy your ethereal taste.</span>")
+			return 1
+		if (!H)
+			return 1 // no valid targets were identified, cast fails
+
+		logTheThing("combat", holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
+
+		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
 		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
-			//Find a suitable corpse
-			var/error = FALSE
-			var/mob/living/carbon/human/M
-			if (isturf(T))
-				for (var/mob/living/carbon/human/target in T.contents)
-					if (isdead(target))
-						error = TRUE
-						M = target
-						break
-			else if (ishuman(T))
-				M = T
-				if (!isdead(M))
-					boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
-					return 1
-
-				//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-				if (M.reagents)
-					var/mob/wraith/W = src.holder.owner
-					var/amt = M.reagents.get_reagent_amount("formaldehyde")
-					if (amt >= W.formaldehyde_tol)
-						M.reagents.remove_reagent("formaldehyde", amt)
-						boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...But you are wounded</span>")
-						particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
-						holder.owner.TakeDamage(null, 50, 0)
-						return 0
-			else
-				boutput(holder.owner, "<span class='alert'>Absorbing [src] does not satisfy your ethereal taste.</span>")
-				return 1
-
-			if (!M && !error)
-				boutput(holder.owner, "<span class='alert'>There are no usable corpses here!</span>")
-				return 1
-			if (!M && error)
-				boutput(holder.owner, "<span class='alert'>[pick("This body is too fresh.", "This corpse is fresh.")]</span>")
-				return 1
-			logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
-
-			if (M.get_toxin_damage() > 60 || M.decomp_stage == 4)
-				boutput(holder.owner, "<span class='alert'>This corpse is extremely rotten and bloated. It satisfies us greatly</span>")
+			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
+				boutput(holder.owner, "<span class='alert'>[H] is extremely rotten and bloated. It satisfies us greatly</span>")
 				holder.points += 150
-				holder.regenRate += 2.0
-				var/turf/U = get_turf(M)
-				U.fluid_react_single("miasma", 60, airborne = 1)
-				M.visible_message("<span class='alert'><strong>[pick("A mysterious force rips [M]'s body apart!", "[M]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
-				M.gib()
-			else
+			else if (!(H.get_toxin_damage() >= 30) && !(H.decomp_stage >= DECOMP_STAGE_BLOATED))
 				boutput(holder.owner, "<span class='alert'>This body is too fresh. It needs to be poisoned or rotten before we consume it.</span>")
 				return 1
-			//Make the corpse all grody and skeleton-y
-			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
-			holder.owner:onAbsorb(M)
-			var/mob/wraith/W = src.holder.owner
-			W.absorbcount += 1
-			//Messages for everyone!
-			playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
-
-			return 0
-
-		else
-			//Find a suitable corpse
-			var/error = FALSE
-			var/mob/living/carbon/human/M
-			if (isturf(T))
-				for (var/mob/living/carbon/human/target in T.contents)
-					if (isdead(target))
-						error = TRUE
-						if (target.decomp_stage != DECOMP_STAGE_SKELETONIZED)
-							M = target
-							break
-			else if (ishuman(T))
-				M = T
-				if (!isdead(M))
-					boutput(holder.owner, "<span class='alert'>The living consciousness controlling this body shields it from being absorbed.</span>")
-					return 1
-
-				//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
-				else if (M.decomp_stage != DECOMP_STAGE_SKELETONIZED)
-					if (M.reagents)
-						var/mob/wraith/W = src.holder.owner
-						var/amt = M.reagents.get_reagent_amount("formaldehyde")
-						if (amt >= W.formaldehyde_tol)
-							M.reagents.remove_reagent("formaldehyde", amt)
-							boutput(holder.owner, "<span class='alert'>This vessel is tainted with an... unpleasant substance... It is now removed...</span>")
-							particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(M.x, M.y, M.z)))
-							return 0
-				else if (M.decomp_stage == DECOMP_STAGE_SKELETONIZED)
-					M = null
-					error = 1
-				else
-					M = T
-			else
-				boutput(holder.owner, "<span class='alert'>Absorbing [src] does not satisfy your ethereal taste.</span>")
-				return 1
-
-			if (!M && !error)
-				boutput(holder.owner, "<span class='alert'>There are no usable corpses here!</span>")
-				return 1
-			if (!M && error)
-				boutput(holder.owner, "<span class='alert'>[pick("This body is too decrepit to be of any use.", "This corpse has already been run through the wringer.", "There's nothing useful left.", "This corpse is worthless now.")]</span>")
-				return 1
-			logTheThing("combat", usr, null, "absorbs the corpse of [key_name(M)] as a wraith.")
-
-			//Make the corpse all grody and skeleton-y
-			M.decomp_stage = DECOMP_STAGE_SKELETONIZED
-			if (M.organHolder && M.organHolder.brain)
-				qdel(M.organHolder.brain)
-			M.set_face_icon_dirty()
-			M.set_body_icon_dirty()
-			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(M.x, M.y, M.z)))
-
-			holder.regenRate += 2.0
-			holder.owner:onAbsorb(M)
-			var/mob/wraith/W = src.holder.owner
-			W.absorbcount += 1
-			//Messages for everyone!
-			boutput(holder.owner, "<span class='alert'><strong>[pick("You draw the essence of death out of [M]'s corpse!", "You drain the last scraps of life out of [M]'s corpse!")]</strong></span>")
-			playsound(M, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 60, 0)
-			for (var/mob/living/V in viewers(7, holder.owner))
-				boutput(V, "<span class='alert'><strong>[pick("Black smoke rises from [M]'s corpse! Freaky!", "[M]'s corpse suddenly rots to nothing but bone in moments!")]</strong></span>")
-
-
-			return 0
+		holder.regenRate += 2
+		var/turf/T = get_turf(H)
+		T.fluid_react_single("miasma", 60, airborne = 1)
+		H.visible_message("<span class='alert'><strong>[pick("A mysterious force rips [H]'s body apart!", "[H]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
+		H.gib()
+		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
+		var/datum/abilityHolder/wraith/AH = holder
+		if (istype(AH))
+			var/mob/wraith/W = AH.owner
+			if (istype(W))
+				W.onAbsorb(H)
+			AH.corpsecount++
+		playsound(H, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
+		//Make the corpse all grody and skeleton-y
+		H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+		if (H.organHolder && H.organHolder.brain)
+			qdel(H.organHolder.brain)
+		H.set_face_icon_dirty()
+		H.set_body_icon_dirty()
+		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
+		boutput(holder.owner, "<span class='alert'><b>[pick("You draw the essence of death out of [H]'s corpse!", "You drain the last scraps of life out of [H]'s corpse!")]</b></span>")
+		H.visible_message("<span class='alert'>[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone in moments!")]</span>", null, "<span class='alert'>A horrid stench fills the air.</span>")
+		return 0
 
 
 	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
@@ -256,10 +201,8 @@
 		if (istype(W))
 			if (W.corpsecount == 0)
 				cooldown = 45 SECONDS
-				W.corpsecount += 1
 			else
 				cooldown += W.corpsecount * 150
-				W.corpsecount += 1
 		last_cast = world.time + cooldown
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
@@ -566,7 +509,7 @@
 					puppet.appearance = T.copied_appearance
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
-					puppet.playsound_local(puppet.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
 					puppet.alpha = 0
 					animate(puppet, alpha=255, time=2 SECONDS)
 					puppet.flags &= UNCRUSHABLE
@@ -580,7 +523,7 @@
 			if (W.hasStatus("corporeal"))
 				return 1
 			else
-				W.setStatus("corporeal", W.haunt_duration)
+				W.setStatus("corporeal", INFINITE_STATUS)
 				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
 			return 0
 
@@ -890,9 +833,9 @@
 			return 1
 
 	proc/evolve(var/effect as text)
-		var/mob/wraith/O = src.holder.owner
-		if (O.absorbcount < O.absorbs_to_evolve)
-			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [O.absorbs_to_evolve - O.absorbcount] more!</span>")
+		var/datum/abilityHolder/wraith/AH = holder
+		if (AH.corpsecount < AH.absorbs_to_evolve)
+			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
 			return 1
 		if (holder.points < pointCost)
 			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")
@@ -1198,7 +1141,8 @@
 					T.fluid_react_single("miasma", 60, airborne = 1)
 					holder.points += 100
 					holder.regenRate += 2.0
-					W.absorbcount++
+					var/datum/abilityHolder/wraith/AH = holder
+					AH.corpsecount++
 			else
 				boutput(holder.owner, "That being's soul is not weakened enough. We need to curse it some more.")
 				return 1

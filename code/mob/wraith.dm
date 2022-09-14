@@ -29,15 +29,17 @@
 	var/haunting = 0
 	var/hauntBonus = 0
 	var/justdied = 0
-	var/last_spirit_candle_time = 0	//last time that were forced to manifest by a spirit candle
-	var/absorbcount = 0 //Keep track of how many souls we absorbed
-	var/absorbs_to_evolve = 3
-	var/obj/machinery/wraith/vortex_wraith/linked_portal = null //The portal harbinger can spawn
+	/// last time that were forced to manifest by a spirit candle
+	var/last_spirit_candle_time = 0
+	/// reference to our harbinger portal, if any
+	var/obj/machinery/wraith/vortex_wraith/linked_portal = null
+	/// flag set if we were manifested involuntarily, e.g. salt. Blocks wraith powers is true
 	var/forced_manifest = FALSE
 
 	var/last_life_update = 0
-	var/const/life_tick_spacing = 20
-	var/haunt_duration = 30 SECOND
+	var/const/life_tick_spacing = LIFE_PROCESS_TICK_SPACING
+	/// standard duration of an involuntary haunt action
+	var/forced_haunt_duration = 30 SECOND
 	var/death_icon_state = "wraith-die"
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/last_typing = null
@@ -48,11 +50,12 @@
 	var/list/mob/living/critter/summons = list()	//Keep track of who we summoned to the material plane
 
 	var/list/poltergeists
-	//holy water, formaldehyde tolerances.
-	//probably will change these around, but these might be alright to start. -kyle
-	var/holy_water_tol = 0		//unused presently
-	var/formaldehyde_tol = 25
-	var/weak_tk = FALSE			//if their click-drag TK is strong or not. Poltergeists prolly should not have strong tk, mebe one day.
+	/// how much holy water a corpse can have while still being absorbable
+	var/holy_water_tolerance = 0
+	/// how much formaldehyde a corpse can have while still being absorbable
+	var/formaldehyde_tolerance = 25
+	///specifiy strong or weak tk powers. Weak for poltergeists.
+	var/weak_tk = FALSE
 
 	var/datum/movement_controller/movement_controller
 
@@ -173,8 +176,8 @@
 				src.hauntBonus += 2
 
 		if (src.next_area_change != null)
-			if (src.next_area_change < world.time)
-				next_area_change = world.time + 10 MINUTES
+			if (src.next_area_change < TIME)
+				next_area_change = TIME + 10 MINUTES
 				get_new_booster_zones()
 
 		if (get_area(src) in booster_locations)
@@ -428,7 +431,7 @@
 
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
-				src.setStatus("corporeal", src.haunt_duration, TRUE)
+				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
 
 		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))
@@ -481,13 +484,13 @@
 
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
-				if (f_amt >= src.formaldehyde_tol)
+				if (f_amt >= src.formaldehyde_tolerance)
 					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
 				else if (f_amt > 0)
 					string += "<span class='blue'>This creature has a somewhat unpleasant <i>taste</i>.</span>\n"
 
 				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
-				if (hw_amt >= src.holy_water_tol)
+				if (hw_amt >= src.holy_water_tolerance)
 					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
 				else if (hw_amt > 0)
 					string += "<span class='blue'>This creature has a somewhat vile <i>fragrance</i>!</span>\n"

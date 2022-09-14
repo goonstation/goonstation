@@ -70,10 +70,10 @@
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
 	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
-	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
-	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a>
-	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a>
-	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a>
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a> |
+	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
+	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
+	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
 	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
