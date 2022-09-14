@@ -479,6 +479,17 @@ datum
 			fluid_b = 120
 			transparency = 255
 
+		disease/leprosybacteria
+			name = "mycobacterium leprae"
+			id = "mycobacterium leprae"
+			description = "A bacterial strain that is known to cause leprosy in humans."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/leprosy
+
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"
@@ -501,7 +512,7 @@ datum
 				// this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
-					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
+					logTheThing(LOG_PATHOLOGY, M, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))

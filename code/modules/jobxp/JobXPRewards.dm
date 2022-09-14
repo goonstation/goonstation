@@ -307,8 +307,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/actual_reward_path = prob(1) ? /obj/item/gun/energy/lawbringer/old : src.reward_path
-		var/obj/item/gun/energy/lawbringer/LG = new actual_reward_path()
+		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
 		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
@@ -528,7 +527,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/clown20
 	name = "Bananna"
-	desc = "Banana, but misspelled!"
+	desc = "Bananna, but misspelled!"
 	required_levels = list("Clown"=20)
 	icon_state = "?"
 	claimable = 1
@@ -543,7 +542,6 @@ mob/verb/checkrewards()
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
-		return
 
 /////////////Bartender////////////////
 

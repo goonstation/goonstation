@@ -280,7 +280,7 @@
 	w_class = W_CLASS_TINY
 	mats = 15
 	random_color = 0
-	file_amount = 32.0
+	file_amount = 32
 
 	New()
 		. = ..()

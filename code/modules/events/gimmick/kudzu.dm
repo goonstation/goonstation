@@ -9,13 +9,13 @@
 	attack(mob/M, mob/user)
 		if(ishuman( M ))
 			if( user == M )
-				boutput( user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>" )
-				logTheThing( "combat", user, null, "fed themself a [src]." )
+				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
+				logTheThing(LOG_COMBAT, user, "fed themself a [src].")
 			else
-				boutput( user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>" )
-				logTheThing( "combat", user, M, "fed [constructTarget(M,"combat")] a [src]." )
-			animate( M, color = "#0F0", time = 300 )//TODO: See below.
-			qdel( src )
+				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
+				logTheThing(LOG_COMBAT, user, "fed [constructTarget(M,"combat")] a [src].")
+			animate(M, color = "#0F0", time = 300)//TODO: See below.
+			qdel(src)
 			return
 
 	afterattack(var/atom/A as mob|turf, var/mob/user as mob, reach, params)
@@ -26,11 +26,11 @@
 				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
 				new /obj/spacevine/living(A, src.to_spread)
-			boutput( user, "You plant the [src] on the [A]." )
-			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
+			boutput(user, "You plant the [src] on the [A].")
+			logTheThing(LOG_COMBAT, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			user.u_equip(src)
-			qdel( src )
+			qdel(src)
 
 		else
 			return ..()
@@ -295,14 +295,14 @@
 
 /obj/spacevine/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(66))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(33))
 				qdel(src)
 				return

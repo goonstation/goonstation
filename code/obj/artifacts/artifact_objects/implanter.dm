@@ -60,7 +60,7 @@
 		O.ArtifactFaultUsed(H)
 
 		var/turf/T = get_turf(O)
-		playsound(T, "sound/machines/click.ogg", 90, 1)
+		playsound(T, 'sound/machines/click.ogg', 90, 1)
 		T.visible_message("<b>[O]</b> shoots a small object into [H]!")
 
 		ready = FALSE

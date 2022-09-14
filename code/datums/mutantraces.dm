@@ -796,10 +796,10 @@ TYPEINFO(/datum/mutantrace)
 		if(act == "scream")
 			if(src.mob.emote_allowed)
 				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> screams with \his mind! Guh, that's creepy!"
-				playsound(src.mob, "sound/voice/screams/Psychic_Scream_1.ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
+				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -991,7 +991,7 @@ TYPEINFO(/datum/mutantrace)
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1092,7 +1092,7 @@ TYPEINFO(/datum/mutantrace)
 				message = "<B>[src.mob]</B> moans!"
 				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob.emote_allowed = 1
+					src.mob?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -1103,7 +1103,7 @@ TYPEINFO(/datum/mutantrace)
 			if (abil.master)
 				abil.master.remove_thrall(src.mob)
 			else
-				remove_mindslave_status(src.mob)
+				remove_mindhack_status(src.mob)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1140,6 +1140,7 @@ TYPEINFO(/datum/mutantrace)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
+		// if the head was previous linked to someone else
 		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
@@ -1147,6 +1148,12 @@ TYPEINFO(/datum/mutantrace)
 				H.set_eye(null)
 			S.head_tracker = null
 			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+		// if we were previously linked to another head
+		if (src.head_tracker)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_REMOVE_TYPING)
+			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
+			src.head_tracker.linked_human = null
 		head_tracker = head
 		head_tracker.linked_human = src.mob
 
@@ -1220,6 +1227,11 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "abomination", 100)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTSPRINT, src)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_CANT_BE_PINNED, src)
+			if (length(M.grabbed_by))
+				for(var/obj/item/grab/grab_grabbed_by in M.grabbed_by)
+					if (!istype(grab_grabbed_by, /obj/item/grab/block))
+						qdel(grab_grabbed_by)
 		last_drain = world.time
 		return ..(M)
 
@@ -1230,6 +1242,7 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "abomination")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANT_BE_PINNED, src)
 		return ..()
 
 
@@ -1277,7 +1290,7 @@ TYPEINFO(/datum/mutantrace)
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<span class='alert'><B>[src.mob] screeches!</B></span>"
-					playsound(src.mob, "sound/voice/creepyshriek.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
 		return message
@@ -1390,16 +1403,16 @@ TYPEINFO(/datum/mutantrace)
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<span class='alert'><B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
-					playsound(src.mob, "sound/voice/animal/werewolf_howl.ogg", 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						src.mob.emote_allowed = 1
+						src.mob?.emote_allowed = 1
 			if("burp")
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<B>[src.mob]</B> belches."
-					playsound(src.mob, "sound/voice/burp_alien.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						src.mob.emote_allowed = 1
+						src.mob?.emote_allowed = 1
 		return message
 
 /datum/mutantrace/hunter
@@ -1530,10 +1543,10 @@ TYPEINFO(/datum/mutantrace)
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> roars."
 			if("tail")
-				. = "<B>[src.mob.name]</B> waves \his tail."
+				. = "<B>[src.mob.name]</B> waves [his_or_her(src.mob)] tail."
 			if("paw")
 				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> flails \his paw."
+					. = "<B>[src.mob.name]</B> flails [his_or_her(src.mob)] paw."
 			if("scretch")
 				if (!muzzled)
 					. = "<B>[src.mob.name]</B> scretches."
@@ -1544,7 +1557,7 @@ TYPEINFO(/datum/mutantrace)
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src.mob]</B> gnarls and shows \his teeth.."
+					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
@@ -1591,7 +1604,7 @@ TYPEINFO(/datum/mutantrace)
 							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
 							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
 							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
-					playsound(src.mob.loc, "sound/voice/farts/poo2.ogg", 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
 					src.mob.stamina_stun()
@@ -1734,7 +1747,7 @@ TYPEINFO(/datum/mutantrace)
 			M.blood_id = "hemolymph"
 			//H.blood_color = "#009E81"
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT, src, 100)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
 
 
 
@@ -1750,7 +1763,7 @@ TYPEINFO(/datum/mutantrace)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.blood_id = initial(src.mob.blood_id)
 		if(src.mob)
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT, src)
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
@@ -1849,7 +1862,7 @@ TYPEINFO(/datum/mutantrace)
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<span class='alert'><B>[src.mob] makes an awful noise!</B></span>"
-					playsound(src.mob, pick("sound/voice/screams/frogscream1.ogg","sound/voice/screams/frogscream3.ogg","sound/voice/screams/frogscream4.ogg"), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
 					return message
@@ -1858,7 +1871,7 @@ TYPEINFO(/datum/mutantrace)
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
 					message = "<B>[src.mob]</B> croaks."
-					playsound(src.mob, "sound/voice/farts/frogfart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						if (src.mob) src.mob.emote_allowed = 1
 					return message
@@ -2088,7 +2101,7 @@ TYPEINFO(/datum/mutantrace)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 50))
 					. = "<B>[src.mob]</B> moos!"
-					playsound(src.mob, "sound/voice/screams/moo.ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
 					.= release_milk()
@@ -2110,7 +2123,7 @@ TYPEINFO(/datum/mutantrace)
 		else if (toilet && (src.mob.buckled != null))
 			for (var/obj/item/storage/toilet/T in src.mob.loc)
 				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
-				T.clogged += 0.10
+				T.clogged += 0.1
 				break
 		else if (beaker)
 			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")
@@ -2118,8 +2131,8 @@ TYPEINFO(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B> dispenses milk into [milk_target].</B></span>")
-				playsound(src.mob, "sound/misc/pourdrink.ogg", 50, 1)
+				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
+				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return
 
@@ -2167,7 +2180,8 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ishuman(src.mob))
 			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN(0)
-				APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
+				if(src.mob) //how??
+					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
 		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
@@ -2207,7 +2221,7 @@ TYPEINFO(/datum/mutantrace/pug)
 					. = src.snore()
 			if ("wheeze")
 				if (src.mob.emote_check(voluntary, 2 SECONDS))
-					playsound(src.mob, "sound/voice/pug_wheeze.ogg", 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/pug_wheeze.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					. = list("<B>[src.mob]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
@@ -2219,7 +2233,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
 		if (!A)
 			return
-		playsound(src.mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		var/adjective = pick("astutely", "discerningly", "intently")
 		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 		if (ismob(A))
@@ -2245,18 +2259,18 @@ TYPEINFO(/datum/mutantrace/pug)
 		boutput(src.mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
 
 	proc/sneeze()
-		playsound(src.mob, "sound/voice/pug_sneeze.ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[src.mob]</B> sneezes.", "<I>sneezes</I>")
 		animate(src.mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
 		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 
 	proc/sniff()
-		playsound(src.mob, "sound/voice/pug_sniff.ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[src.mob]</B> sniffs.", "<I>sniffs</I>")
 
 	proc/snore()
-		playsound(src.mob, "sound/voice/snore.ogg", rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
 		src.mob.UpdateOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
@@ -2287,7 +2301,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			if ("scream")
 				if (src.mob.emote_check(voluntary, 50))
 					. = "<B>[src.mob]</B> BWAHCAWCKs!"
-					playsound(src.mob, "sound/voice/screams/chicken_bawk.ogg", 50, 0, 0, src.mob.get_age_pitch())
+					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R

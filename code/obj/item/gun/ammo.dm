@@ -48,7 +48,7 @@
 	icon_state = "power_cell"
 	m_amt = 40000
 	g_amt = 0
-	var/amount_left = 0.0
+	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
 	var/refillable = TRUE
@@ -293,8 +293,8 @@
 	name = "custom .22 ammo box"
 	desc = "Custom made ammunition, in your favorite plinking caliber"
 	icon_state = "custom-8"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_type = new/datum/projectile/bullet/custom
 	ammo_cat = AMMO_PISTOL_22
 	icon_dynamic = 1
@@ -330,8 +330,8 @@
 	name = ".22 magazine"
 	desc = "Despite being very small, these bullets are still lethal."
 	icon_state = "pistol_magazine"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	ammo_cat = AMMO_PISTOL_22
 
@@ -339,21 +339,21 @@
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."
 	icon_state = "pistol_magazine_smart"
-	amount_left = 20.0
-	max_amount = 20.0
+	amount_left = 20
+	max_amount = 20
 	ammo_type = new/datum/projectile/bullet/bullet_22/smartgun
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
 /obj/item/ammo/bullets/bullet_22/faith
-	amount_left = 4.0
+	amount_left = 4
 
 /obj/item/ammo/bullets/bullet_22HP
 	sname = ".22 Hollow Point"
 	name = ".22 HP magazine"
 	desc = "Some JHP bullets. They expand as they penetrate, causing additional tissue damage at the cost of less armor penetration."
 	icon_state = "pistol_magazine_hp"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/bullet/bullet_22/HP
 	ammo_cat = AMMO_PISTOL_22
 
@@ -364,8 +364,8 @@
 	desc = "A magazine of 5.56 rounds, an intermediate rifle cartridge."
 	ammo_type = new/datum/projectile/bullet/assault_rifle
 	icon_state = "stenag_mag"
-	amount_left = 20.0
-	max_amount = 20.0
+	amount_left = 20
+	max_amount = 20
 	ammo_cat = AMMO_AUTO_556
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -383,8 +383,8 @@
 	ammo_type = new/datum/projectile/bullet/minigun
 	icon_state = "lmg_ammo-old" // reusing old sprites for variety
 	icon_empty = "lmg_ammo-0-old"
-	amount_left = 100.0
-	max_amount = 100.0
+	amount_left = 100
+	max_amount = 100
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -394,20 +394,23 @@
 	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
 	ammo_type = new/datum/projectile/bullet/ak47
 	icon_state = "ak47"
-	amount_left = 30.0
-	max_amount = 30.0
+	amount_left = 30
+	max_amount = 30
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
-	icon_state = "rifle_clip"
+	icon_state = "rifle_clip-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
 
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
@@ -422,12 +425,37 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
-	desc = "A box of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
+	desc = "A stripper clip of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
 	ammo_type = new/datum/projectile/bullet/tranq_dart
-	icon_state = "tranq_clip"
+	icon_state = "rifle_clip_dart-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_TRANQ_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip_dart"
+	icon_empty = "rifle_clip_empty"
+
+	var/image/reagent_image
+
+	New()
+		..()
+		src.update_icon()
+
+	update_icon()
+		..()
+		if (!src.icon_dynamic || !src.ammo_type.reagent_payload)
+			return
+
+		src.underlays = null
+		if (!src.reagent_image)
+			src.reagent_image = image(src.icon, "rifle_clip_dart_underlay-[src.amount_left]", -1)
+		else
+			src.reagent_image.icon_state = "rifle_clip_dart_underlay-[src.amount_left]"
+
+
+		var/datum/reagent/reagent = reagents_cache[src.ammo_type.reagent_payload]
+		src.reagent_image.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b, reagent.transparency)
+		src.underlays += src.reagent_image
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
@@ -440,6 +468,7 @@
 			icon_state = "pistol_tranq"
 			amount_left = 10
 			max_amount = 15
+			icon_dynamic = 0
 			ammo_cat = AMMO_TRANQ_9MM//i prefer having tranqs grouped up- owari.
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
 
@@ -456,8 +485,8 @@
 	ammo_type = new/datum/projectile/bullet/lmg
 	icon_state = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
-	amount_left = 100.0
-	max_amount = 100.0
+	amount_left = 100
+	max_amount = 100
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -466,8 +495,8 @@
 		name = "discount LMG belt"
 		desc = "A belt of really FISHY bullets."
 		ammo_type = new/datum/projectile/bullet/lmg/weak
-		amount_left = 25.0
-		max_amount = 25.0
+		amount_left = 25
+		max_amount = 25
 
 //9mm/0.355
 /obj/item/ammo/bullets/bullet_9mm
@@ -475,20 +504,20 @@
 	name = "9mm magazine"
 	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
 	icon_state = "pistol_magazine"
-	amount_left = 15.0
-	max_amount = 15.0
+	amount_left = 15
+	max_amount = 15
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
 	ammo_cat = AMMO_PISTOL_9MM
 
 	five_shots
-		amount_left = 5.0
+		amount_left = 5
 
 	smg
 		name = "9mm SMG magazine"
 		desc = "An extended 9mm magazine for a sub machine gun."
 		icon_state = "smg_magazine"
-		amount_left = 30.0
-		max_amount = 30.0
+		amount_left = 30
+		max_amount = 30
 		ammo_cat = AMMO_SMG_9MM
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
@@ -497,8 +526,8 @@
 	name = "9mm frangible magazine"
 	desc = "Some 9mm incapacitating bullets, made of plastic with rubber tips. Despite being sublethal, they can still do damage."
 	icon_state = "pistol_clip"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
-	amount_left = 18.0
-	max_amount = 18.0
+	amount_left = 18
+	max_amount = 18
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
@@ -511,8 +540,8 @@
 	name = ".357 speedloader"
 	desc = "A speedloader of .357 magnum revolver bullets."
 	icon_state = "38-7"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/revolver_357
 	ammo_cat = AMMO_REVOLVER_SYNDICATE
 	icon_dynamic = 1
@@ -534,8 +563,8 @@
 	name = ".38 speedloader"
 	desc = "A speedloader of .38 special, a popular police and detective cartridge."
 	icon_state = "38-7"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/revolver_38
 	ammo_cat = AMMO_REVOLVER_DETECTIVE
 	icon_dynamic = 1
@@ -548,8 +577,8 @@
 	name = ".38 AP speedloader"
 	desc = "A speedloader of .38 special armor piercing bullets. The iron core increases penetration at the cost of stopping power."
 	icon_state = "38A-7"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/revolver_38/AP
 	icon_dynamic = 1
 	icon_short = "38A"
@@ -560,8 +589,8 @@
 	name = ".38 Stun speedloader"
 	desc = "A speedloader of .38 stun bullets."
 	icon_state = "38S-7"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/revolver_38/stunners
 	icon_dynamic = 1
 	icon_short = "38S"
@@ -616,8 +645,8 @@
 	name = ".41 ammo box"
 	desc = "A pair of really small derringer bullets."
 	icon_state = "357-2"
-	amount_left = 2.0
-	max_amount = 2.0
+	amount_left = 2
+	max_amount = 2
 	ammo_type = new/datum/projectile/bullet/derringer
 	ammo_cat = AMMO_PISTOL_41
 	icon_dynamic = 1
@@ -630,8 +659,8 @@
 	name = "Colt .45 speedloader"
 	desc = "A speedloader of .45 caliber revolver bullets."
 	icon_state = "38-7"
-	amount_left = 7.0
-	max_amount = 7.0
+	amount_left = 7
+	max_amount = 7
 	ammo_type = new/datum/projectile/bullet/revolver_45
 	ammo_cat = AMMO_REVOLVER_45
 	icon_dynamic = 1
@@ -655,8 +684,8 @@
 	desc = "A box of buckshot shells, capable of tearing through soft tissue."
 	ammo_type = new/datum/projectile/bullet/a12
 	icon_state = "12"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	icon_dynamic = 0
 	icon_empty = "12-0"
@@ -671,12 +700,38 @@
 	desc = "This buckshot looks a little old..."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/
 	icon_state = "12"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	icon_dynamic = 0
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
+
+ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
+/obj/item/ammo/bullets/pipeshot
+	sname = "pipeshot"
+	name = "pipeshot"
+	desc = "A parent item! If you see this contact a coder."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst
+	icon_state = "makeshiftscrap"
+	amount_left = 4
+	max_amount = 4
+	ammo_cat = AMMO_SHOTGUN_HIGH
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_heavy.ogg'
+	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
+	sname = "glass load"
+	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
+	icon_state = "makeshiftglass"
+
+/obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
+	sname = "scrap load"
+	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
@@ -685,8 +740,8 @@
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/nails
 	icon_state = "custom-8"
 	icon_short = "custom"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	icon_dynamic = 1
 	icon_empty = "custom-0"
@@ -698,8 +753,8 @@
 	desc = "Some really fancy HE shotgun shells. The smallish size limits the explosive potential, but it's nothing to scoff at."
 	ammo_type = new/datum/projectile/bullet/aex
 	icon_state = "AEX"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_cat = AMMO_SHOTGUN_LOW
 	icon_dynamic = 0
 	icon_empty = "AEX-0"
@@ -711,8 +766,8 @@
 	desc = "A box of rubber slugs. Despite being nonlethal, they still pack a punch."
 	ammo_type = new/datum/projectile/bullet/abg
 	icon_state = "bg"
-	amount_left = 8.0
-	max_amount = 8.0
+	amount_left = 8
+	max_amount = 8
 	ammo_cat = AMMO_SHOTGUN_LOW
 	icon_dynamic = 0
 	icon_empty = "bg-0"
@@ -868,8 +923,8 @@
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
-	amount_left = 5
-	max_amount = 5
+	amount_left = 2
+	max_amount = 2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -1076,8 +1131,8 @@
 	icon_state = "power_cell"
 	m_amt = 10000
 	g_amt = 20000
-	var/charge = 100.0
-	var/max_charge = 100.0
+	var/charge = 100
+	var/max_charge = 100
 	var/recharge_rate = 0
 	var/sound_load = 'sound/weapons/gunload_click.ogg'
 	var/unusualCell = 0
@@ -1137,6 +1192,16 @@
 /obj/item/ammo/power_cell/empty
 	charge = 0
 
+/obj/item/ammo/power_cell/med_minus_power
+	name = "Power Cell - 150"
+	desc = "A power cell that holds a max of 150PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 15000
+	g_amt = 30000
+	charge = 150
+	max_charge = 150
+
 /obj/item/ammo/power_cell/med_power
 	name = "Power Cell - 200"
 	desc = "A power cell that holds a max of 200PU"
@@ -1144,8 +1209,8 @@
 	icon_state = "power_cell"
 	m_amt = 15000
 	g_amt = 30000
-	charge = 200.0
-	max_charge = 200.0
+	charge = 200
+	max_charge = 200
 
 /obj/item/ammo/power_cell/med_plus_power
 	name = "Power Cell - 250"
@@ -1154,8 +1219,8 @@
 	icon_state = "power_cell"
 	m_amt = 17500
 	g_amt = 35000
-	charge = 250.0
-	max_charge = 250.0
+	charge = 250
+	max_charge = 250
 
 /obj/item/ammo/power_cell/high_power
 	name = "Power Cell - 300"
@@ -1164,8 +1229,8 @@
 	icon_state = "power_cell"
 	m_amt = 20000
 	g_amt = 40000
-	charge = 300.0
-	max_charge = 300.0
+	charge = 300
+	max_charge = 300
 
 /obj/item/ammo/power_cell/higherish_power
 	name = "Power Cell - 400"
@@ -1174,8 +1239,8 @@
 	icon_state = "power_cell"
 	m_amt = 20000
 	g_amt = 40000
-	charge = 400.0
-	max_charge = 400.0
+	charge = 400
+	max_charge = 400
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
@@ -1184,9 +1249,9 @@
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 40.0
-	max_charge = 40.0
-	recharge_rate = 5.0
+	charge = 40
+	max_charge = 40
+	recharge_rate = 5
 
 
 /obj/item/ammo/power_cell/self_charging/custom
@@ -1235,16 +1300,16 @@
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 100.0
-	max_charge = 100.0
+	charge = 100
+	max_charge = 100
 
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
-	charge = 150.0
-	max_charge = 150.0
+	charge = 150
+	max_charge = 150
 	recharge_rate = 7.5
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer
@@ -1252,14 +1317,14 @@
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 250PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
-	charge = 250.0
-	max_charge = 250.0
+	charge = 250
+	max_charge = 250
 	recharge_rate = 9
 
 /obj/item/ammo/power_cell/self_charging/ntso_signifer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 150PU."
-	charge = 150.0
-	max_charge = 150.0
+	charge = 150
+	max_charge = 150
 	recharge_rate = 4
 
 /obj/item/ammo/power_cell/self_charging/medium
@@ -1285,9 +1350,9 @@
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 400.0
-	max_charge = 400.0
-	recharge_rate = 40.0
+	charge = 400
+	max_charge = 400
+	recharge_rate = 40
 
 /obj/item/ammo/power_cell/self_charging/lawbringer
 	name = "Power Cell - Lawbringer Charger"
@@ -1296,20 +1361,20 @@
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 300.0
-	max_charge = 300.0
-	recharge_rate = 10.0
+	charge = 300
+	max_charge = 300
+	recharge_rate = 10
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
-	max_charge = 175.0
-	recharge_rate = 6.0
+	max_charge = 175
+	recharge_rate = 6
 
 /obj/item/ammo/power_cell/self_charging/howitzer
 	name = "Miniaturized SMES"
 	desc = "This thing is huge! How did you even lift it put it into the gun?"
-	charge = 2500.0
-	max_charge = 2500.0
+	charge = 2500
+	max_charge = 2500
 
 /obj/item/ammo/power_cell/self_charging/flockdrone
 	name = "Flockdrone incapacitor cell"

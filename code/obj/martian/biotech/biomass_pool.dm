@@ -174,7 +174,7 @@
   onEnd()
     ..()
     owner.visible_message("<span class='alert'><b>[owner] dips [target] into [pool]!</b></span>", "<span class='alert'>You dip [target] in [pool]!</span>")
-    logTheThing("combat", owner, target, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
+    logTheThing(LOG_COMBAT, owner, "forced [constructTarget(target,"combat")] ([isdead(target) ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
     if (!isdead(target))
       message_admins("[key_name(owner)] forced [key_name(target, 1)] ([target == 2 ? "dead" : "alive"]) into \an [pool] at [log_loc(pool)].")
     target.set_loc(pool)

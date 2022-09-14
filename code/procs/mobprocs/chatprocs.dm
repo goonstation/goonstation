@@ -18,7 +18,7 @@
 		return
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
-		logTheThing("say", src, null, "SAY: [html_encode(message)] [log_loc(src)]")
+		logTheThing(LOG_SAY, src, "SAY: [html_encode(message)] [log_loc(src)]")
 
 /mob/verb/say_radio()
 	set name = "say_radio"
@@ -145,8 +145,8 @@
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
 		if (copytext(message, 1, 2) != "*") // if this is an emote it is logged in emote
-			logTheThing("say", src, null, "SAY: [message]")
-	else logTheThing("say", src, null, "SAY: [message]")
+			logTheThing(LOG_SAY, src, "SAY: [message]")
+	else logTheThing(LOG_SAY, src, "SAY: [message]")
 */
 /mob/verb/me_verb(message as text)
 	set name = "me"
@@ -172,7 +172,7 @@
 /* ghost emotes wooo also the logging is already taken care of in the emote() procs vOv
 	if (isliving(src) && isalive(src))
 		src.emote(message, 1)
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 	else
 		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
 */
@@ -221,8 +221,33 @@
 	game_stats.ScanText(message)
 #endif
 
+	var/image/chat_maptext/chat_text = null
+	if (speechpopups && src.chat_text)
+		var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
+
+		var/turf/T = get_turf(src)
+		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
+		for(var/i = 0; i < 5; i++)
+			for(var/mob/M in T)
+				if(M != src)
+					for(var/image/chat_maptext/I in M.chat_text?.lines)
+						I.bump_up()
+			T = get_step(T, EAST)
+
+		var/singing_italics = singing ? " font-style: italic;" : ""
+		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
+
+		if(chat_text)
+			chat_text.measure(src.client)
+			for(var/image/chat_maptext/I in src.chat_text.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
+
+		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 	//logit( "chat", 0, "([name])", src, message )
@@ -233,13 +258,19 @@
 		if (istype(M, /mob/new_player)) continue
 
 		if(try_render_chat_to_admin(C, rendered))
+			if(chat_text && !M.client.preferences.flying_chat_hidden)
+				chat_text.show_to(C)
 			continue
 
 		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
 		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
 
 		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+			if(chat_text && !M.client.preferences.flying_chat_hidden)
+				chat_text.show_to(C)
 			boutput(M, rendered)
+
+
 
 //changeling hivemind say
 /mob/proc/say_hive(var/message, var/datum/abilityHolder/changeling/hivemind_owner)
@@ -282,7 +313,7 @@
 #endif
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
 	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -320,7 +351,7 @@
 #endif
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
 	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -345,10 +376,10 @@
 #ifdef DATALOGGER
 	game_stats.ScanText(message)
 #endif
-	logTheThing("diary", src, null, "(KUDZU): [message]", "hivesay")
+	logTheThing(LOG_DIARY, src, "(KUDZU): [message]", "hivesay")
 
 	message = src.say_quote(message)
-	//logTheThing("say", src, null, "SAY: [message]")
+	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
 	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
 
@@ -560,12 +591,12 @@
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing("admin", src, null, "has attempted to advertise in OOC.")
-		logTheThing("diary", src, null, "has attempted to advertise in OOC.", "admin")
+		logTheThing(LOG_ADMIN, src, "has attempted to advertise in OOC.")
+		logTheThing(LOG_DIARY, src, "has attempted to advertise in OOC.", "admin")
 		message_admins("[key_name(src)] has attempted to advertise in OOC.")
 		return
 
-	logTheThing("diary", src, null, ": [msg]", "ooc")
+	logTheThing(LOG_DIARY, src, ": [msg]", "ooc")
 	phrase_log.log_phrase("ooc", msg)
 
 #ifdef DATALOGGER
@@ -575,7 +606,7 @@
 	for (var/client/C in clients)
 		// DEBUGGING
 		if (!C.preferences)
-			logTheThing("debug", null, null, "[C] (\ref[C]): client.preferences is null")
+			logTheThing(LOG_DEBUG, null, "[C] (\ref[C]): client.preferences is null")
 
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
@@ -610,7 +641,7 @@
 
 		boutput(C, rendered)
 
-	logTheThing("ooc", src, null, "OOC: [msg]")
+	logTheThing(LOG_OOC, src, "OOC: [msg]")
 
 /mob/proc/listen_looc()
 	set name = "(Un)Mute LOOC"
@@ -647,12 +678,12 @@
 		return
 	else if (findtext(msg, "byond://") && !src.client.holder)
 		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing("admin", src, null, "has attempted to advertise in LOOC.")
-		logTheThing("diary", src, null, "has attempted to advertise in LOOC.", "admin")
+		logTheThing(LOG_ADMIN, src, "has attempted to advertise in LOOC.")
+		logTheThing(LOG_DIARY, src, "has attempted to advertise in LOOC.", "admin")
 		message_admins("[key_name(src)] has attempted to advertise in LOOC.")
 		return
 
-	logTheThing("diary", src, null, ": [msg]", "ooc")
+	logTheThing(LOG_DIARY, src, ": [msg]", "ooc")
 
 #ifdef DATALOGGER
 	game_stats.ScanText(msg)
@@ -697,7 +728,7 @@
 	for (var/client/C in recipients)
 		// DEBUGGING
 		if (!C.preferences)
-			logTheThing("debug", null, null, "[C] (\ref[C]): client.preferences is null")
+			logTheThing(LOG_DEBUG, null, "[C] (\ref[C]): client.preferences is null")
 
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
@@ -729,7 +760,7 @@
 		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
 			looc_text.show_to(C)
 
-	logTheThing("ooc", src, null, "LOOC: [msg]")
+	logTheThing(LOG_OOC, src, "LOOC: [msg]")
 
 /mob/proc/heard_say(var/mob/other)
 	return
@@ -918,7 +949,7 @@
 
 /mob/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
 	for (var/mob/M in AIviewers(src))
-		if (!M.client)
+		if (!M.client && !isAI(M))
 			continue
 		var/msg = message
 		if (self_message && M == src)
@@ -1002,7 +1033,7 @@
 		structure_speaking = speaker
 
 	var/name = ""
-	var/class = "flocksay"
+	var/class = "flocksay sentient"
 	var/is_npc = FALSE
 	var/is_flockmind = istype(mob_speaking, /mob/living/intangible/flock/flockmind)
 
@@ -1026,7 +1057,7 @@
 			name = mob_speaking.real_name
 
 	if(is_flockmind)
-		class = "flocksay flockmindsay"
+		class = "flocksay sentient flockmind"
 	else if(is_npc)
 		class = "flocksay flocknpc"
 	else if(isnull(mob_speaking))

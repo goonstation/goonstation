@@ -7,6 +7,7 @@
 	var/scan_decal = null
 	var/prevent_excavation = 0
 	var/restrict_to_turf_type = null
+	var/weight = 100
 
 	set_up(var/datum/ore/event/parent_event)
 		..()
@@ -66,6 +67,7 @@
 	analysis_string = "Caution! Large object embedded in rock!"
 	excavation_string = "An abandoned crate was unearthed!"
 	scan_decal = "scan-object"
+	weight = 10
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
@@ -141,10 +143,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 5 SECONDS, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 10 SECONDS, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)

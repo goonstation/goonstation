@@ -64,7 +64,7 @@
 					affected_mob.gib()
 					qdel(affected_mob)
 				else if (ishuman(affected_mob))
-					logTheThing("combat", affected_mob, null, "was transformed into a cyborg by the disease [name] at [log_loc(affected_mob)].")
+					logTheThing(LOG_COMBAT, affected_mob, "was transformed into a cyborg by the disease [name] at [log_loc(affected_mob)].")
 					gibs(T, null, null, bdna, btype)
 					affected_mob:Robotize_MK2(1)
 
@@ -128,7 +128,7 @@
 					var/do_replace = 0
 					if(replacing_organ in list("heart", "left_lung","right_lung","left_kidney","right_kidney","liver","spleen","pancreas","stomach","intestines","appendix"))
 						var/obj/item/organ/O = affected_mob.organHolder.get_organ(replacing_organ)
-						do_replace = (O ? ((O.broken || O.get_damage() >= O.FAIL_DAMAGE || i > 6) && !O.robotic) : 1)
+						do_replace = (O ? ((O.broken || O.get_damage() >= O.fail_damage || i > 6) && !O.robotic) : 1)
 					else if (replacing_organ == "butt")
 						var/obj/item/clothing/head/butt/cyberbutt/O = affected_mob.organHolder.get_organ(replacing_organ)
 						do_replace = (O ? (!istype(O) && i > 6) : 1)

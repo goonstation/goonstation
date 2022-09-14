@@ -12,7 +12,7 @@
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	does_not_open_in_pocket = 0
-	spawn_contents = list(/obj/item/storage/box/starter)
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
 
@@ -41,6 +41,9 @@
 		BLOCK_SETUP(BLOCK_LARGE)
 		AddComponent(/datum/component/itemblock/backpackblock)
 
+/obj/item/storage/backpack/empty
+	spawn_contents = list()
+
 /obj/item/storage/backpack/withO2
 	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
@@ -63,6 +66,7 @@
 	desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 	icon_state = "capbackpack"
 	item_state = "capbackpack"
+	spawn_contents = list(/obj/item/storage/box/starter/withO2)
 
 	blue
 		desc = "A fancy designer bag made out of rare blue space snake leather and encrusted with plastic expertly made to look like gold."
@@ -457,13 +461,16 @@
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROPE)
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	proc/can_use()
 		.= 1
 		if (!ismob(loc))
 			return 0
-
-
 
 	mouse_drop(obj/over_object as obj, src_location, over_location)
 		var/mob/M = usr
@@ -545,7 +552,7 @@
 				H.attached_objs.Add(overlay)
 
 
-			playsound(src.loc, "sound/machines/shieldup.ogg", 60, 1)
+			playsound(src.loc, 'sound/machines/shieldup.ogg', 60, 1)
 		return
 
 	dropped(mob/user as mob)
@@ -568,7 +575,7 @@
 			qdel(overlay)
 			overlay = null
 
-		playsound(src.loc, "sound/machines/shielddown.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/shielddown.ogg', 60, 1)
 		return
 
 	process()
@@ -621,7 +628,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/mini_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -685,7 +692,6 @@
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
@@ -729,10 +735,10 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/ntgun, /obj/item/old_grenade/stinger/frag, /obj/item/ammo/power_cell/med_power = 5)
+		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
@@ -846,7 +852,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "Syndiesatchel"
 	item_state = "backpack"
 	spawn_contents = list(/obj/item/robodefibrillator,
-	/obj/item/extinguisher)
+	/obj/item/extinguisher/large)
 
 
 /* -------------------- Wrestling Belt -------------------- */
@@ -859,7 +865,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	contraband = 8
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
-	mats = 18 //SPACE IS THE PLACE FOR WRESTLESTATION 13
+	mats = list("MET-2"=5, "DEN-2"=10, "FAB-1"=5)
 	var/fake = 0		//So the moves are all fake.
 
 	equipped(var/mob/user)

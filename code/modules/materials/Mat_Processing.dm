@@ -108,10 +108,10 @@
 				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
-				playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
+				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
 		return
 
 	attackby(var/obj/item/W, mob/user)
@@ -272,7 +272,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -507,7 +507,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)

@@ -431,7 +431,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -443,7 +443,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -466,7 +466,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
 	screw
@@ -478,7 +478,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
@@ -490,7 +490,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -1177,7 +1177,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..() && target.resources >= FLOCK_CONVERT_COST
 
 	capture
 		name = "Capture"
@@ -1186,7 +1186,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..()
 
 	barricade
 		name = "Barricade"
@@ -1195,7 +1195,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
 
 		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources > 25
+			return ..() && target.resources >= FLOCK_BARRICADE_COST
 
 	shoot
 		name = "Shoot"

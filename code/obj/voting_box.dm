@@ -4,7 +4,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1.0
+	anchored = 1
 	desc = "Some sort of thing to put ballots into. Maybe you can even vote with it!"
 	var/bribeAmount = 0
 	var/bribeJerk = null
@@ -32,7 +32,7 @@
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
 				var/adj = pick("", "questionable", "decisive", "worthless", "important", "curious", "bizarre", "regrettable")
 				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
-				playsound(src.loc, "sound/machines/ping.ogg", 35)
+				playsound(src.loc, 'sound/machines/ping.ogg', 35)
 
 				if (user.real_name == bribeJerk)
 					map_vote_holder.voting_box(src,map)
@@ -65,7 +65,7 @@
 
 			if ((S.amount > bribeAmount) || (user.real_name == bribeJerk))
 				var/list/voted_maps = map_vote_holder.get_client_votes(C)
-				if(voted_maps.len > 0)
+				if(length(voted_maps))
 					var/chosen = input("Money Talks", "Which Map?") as null|anything in voted_maps
 					if (chosen)
 						if (user.real_name == bribeJerk)
@@ -88,16 +88,16 @@
 			S.dropped(user)
 			qdel( S )
 			animate_storage_rustle(src)
-			playsound(src.loc, "sound/machines/ping.ogg", 75)
+			playsound(src.loc, 'sound/machines/ping.ogg', 75)
 			SPAWN(1 SECOND)
-				playsound(src.loc, "sound/machines/paper_shredder.ogg", 90, 1)
+				playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			return
 
 
 		var/obj/item/paper/P = S
 		if (istype(P) && !istype(P, /obj/item/paper/book))
 			src.visible_message("<span>[user] casts a worthless ballot into [src.name] and it emits a buzzing sound.</span>")
-			playsound(src.loc, "sound/machines/paper_shredder.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/paper_shredder.ogg', 50, 1)
 			animate_storage_rustle(src)
 			user.u_equip(P)
 			qdel(P)

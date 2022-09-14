@@ -6,8 +6,8 @@
 	icon_state = "cell"
 	item_state = "cell"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	health = 8
@@ -150,7 +150,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 // recharge the cell
@@ -159,7 +159,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 /obj/item/cell/process()
@@ -189,11 +189,11 @@
 		if (S.reagents.has_reagent("plasma", 1))
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				logTheThing("combat", user, null, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
 		S.reagents.clear_reagents()
@@ -304,8 +304,8 @@
 	unusualCell = 1
 	m_amt = 20000
 	g_amt = 20000
-	max_charge = 10.0
-	recharge_rate = 0.0
+	max_charge = 10
+	recharge_rate = 0
 
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()

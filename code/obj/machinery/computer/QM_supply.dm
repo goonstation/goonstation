@@ -532,10 +532,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						var/default_comment = ""
+						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
-						logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+						if(O.comment && O.comment != default_comment)
+							phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -561,10 +564,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							var/default_comment = ""
+							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
-							logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+							if(O.comment && O.comment != default_comment)
+								phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -851,7 +857,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			for(var/datum/commodity/cartcom in T.shopping_cart)
 				total_stuff_in_cart += cartcom.amount
@@ -989,7 +995,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
 				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
@@ -1069,14 +1075,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
 		src.temp += "[RC.requis_desc]"
 		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
+			var/datum/req_contract/aid/RCAID = RC
 			src.temp += "URGENT - Cannot Be Reserved<br>"
+			if(RCAID.cycles_remaining)
+				var/formatted_cycles_remaining = RCAID.cycles_remaining + 1
+				src.temp += "Contract leaves market in [formatted_cycles_remaining] cycles<br>"
+			else
+				src.temp += "Contract leaves market with next cycle<br>"
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
 		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
 	src.printing = 1
-	playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
 		var/obj/item/paper/thermal/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
