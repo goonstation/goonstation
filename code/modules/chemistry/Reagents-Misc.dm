@@ -620,7 +620,7 @@ datum
 						var/turf/simulated/T = target
 						if (T.air)
 							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
-							if (lowertemp)// ZeWaka: Fix for null.temperature
+							if (lowertemp)
 								lowertemp.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()

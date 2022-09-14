@@ -99,6 +99,14 @@ var/global/list/adventure_elements_by_id = list()
 // DO SOMETHING.
 // LEAVE ME ALONE.
 /obj/adventurepuzzle/triggerable/triggerer
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	var/list/triggered = list()
 
 	proc/post_trigger()

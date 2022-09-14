@@ -1,4 +1,30 @@
 
+(t)tue sep 13 22
+(u)Kubius
+(p)10797
+(e)|
+(+)Kondaru's ranch has been expanded to accommodate additional ranchers.
+(u)Idiot
+(p)10714
+(e)|
+(+)Adds Stumped trait that spawns you with no legs and a free wheelchair.
+(t)mon sep 12 22
+(u)DimWhat
+(p)10786
+(e)|
+(+)Resprited the riot helmet's object sprite.
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
+(u)DimWhat
+(p)10785
+(e)|
+(+)Removed the antique lawbringer skin
 (t)sun sep 11 22
 (u)Emily
 (+)Buff to Plant Chicken eggs; give feedback on the usual places
