@@ -535,9 +535,6 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
-#ifdef SECRETS_ENABLED
-	initialize_gallery_manager()
-#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
@@ -560,6 +557,12 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
 	buildRandomRooms()
 	makepowernets()
+	#endif
+
+	#ifdef SECRETS_ENABLED
+	UPDATE_TITLE_STATUS("Loading gallery artwork")
+	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
+	initialize_gallery_manager()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")

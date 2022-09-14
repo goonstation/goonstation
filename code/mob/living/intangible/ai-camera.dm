@@ -529,8 +529,10 @@
 //---MISC---//
 
 var/list/obj/machinery/camera/camerasToRebuild
-world/proc/updateCameraVisibility(generateAiImages=FALSE)
+
+/world/proc/updateCameraVisibility(generateAiImages=FALSE)
 	set waitfor = FALSE
+
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
@@ -564,7 +566,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
 
 			donecount++
-			thispct = round(donecount / cam_candidates.len * 100)
+			thispct = round(donecount / length(cam_candidates) * 100)
 			if (thispct != lastpct)
 				lastpct = thispct
 				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")

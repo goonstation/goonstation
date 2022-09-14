@@ -3369,9 +3369,7 @@
 /area/station/hallway/secondary/exit)
 "anq" = (
 /obj/lattice,
-/obj/disposalpipe/switch_junction/biofilter{
-	icon_state = "pipe-sj2"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/space,
 /area/space)
 "anB" = (
@@ -3993,16 +3991,17 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/simulated/floor/caution/south,
-/area/station/quartermaster/office)
-"aqe" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
 /obj/machinery/conveyor_switch{
 	id = "cargo-art-in";
 	name = "artifact intake conveyor switch"
 	},
+/obj/landmark/start{
+	name = "Quartermaster"
+	},
+/turf/simulated/floor/caution/south,
+/area/station/quartermaster/office)
+"aqe" = (
+/obj/storage/secure/closet/engineering/cargo,
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/office)
 "aqf" = (
@@ -5668,6 +5667,9 @@
 "avy" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "avA" = (
@@ -5837,6 +5839,9 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "awu" = (
@@ -18250,7 +18255,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "biM" = (
-/obj/storage/secure/closet/brig,
+/obj/storage/secure/closet/brig_automatic/solitary2,
 /obj/item/device/radio/intercom/brig{
 	dir = 8
 	},
@@ -19895,7 +19900,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/vending/player,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "boD" = (
@@ -21009,6 +21013,14 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/AIbaseoutside)
+"btr" = (
+/obj/machinery/power/apc{
+	areastring = "Medbay Operating Theater";
+	name = "Medbay Operating Theater APC";
+	pixel_y = -24
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/interrogation)
 "bts" = (
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -22093,10 +22105,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=2";
-	location = "Hydroponics"
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -22866,14 +22874,6 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"bAx" = (
-/obj/machinery/networked/radio,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-6"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "bAB" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -23153,6 +23153,10 @@
 	dir = 4
 	},
 /obj/landmark/gps_waypoint,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Engineering"
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bBw" = (
@@ -27171,15 +27175,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
-"dbr" = (
-/obj/cable{
-	icon_state = "9-10"
-	},
-/obj/cable{
-	icon_state = "6-9"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "dby" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Outpost mail hub'";
@@ -27764,11 +27759,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "dAF" = (
-/obj/machinery/computer/supplycomp,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-10"
 	},
+/obj/machinery/networked/radio,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "dAM" = (
@@ -34434,6 +34429,12 @@
 "jEI" = (
 /turf/simulated/floor/carpet/blue/fancy/narrow/west,
 /area/station/crew_quarters/stockex)
+"jEU" = (
+/obj/submachine/ATM{
+	pixel_y = -24
+	},
+/turf/simulated/floor/grime,
+/area/station/security/brig)
 "jFs" = (
 /obj/stool/chair/office/red{
 	dir = 8;
@@ -35131,6 +35132,16 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"kof" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Kitchen"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "koB" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -35202,6 +35213,13 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
+"ksV" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Mechanics"
+	},
+/turf/simulated/floor,
+/area/station/engine/storage)
 "ktd" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
@@ -35418,6 +35436,10 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
 	pixel_x = -6
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Medbay"
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -37831,6 +37853,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/hangar/main)
 "mLC" = (
@@ -38097,7 +38122,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	layer = 2
 	},
-/obj/decal/poster/wallsign/mantaposter{
+/obj/decal/poster/wallsign/fuck2{
 	pixel_y = 32
 	},
 /turf/simulated/floor/stairs{
@@ -39797,16 +39822,6 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"oxB" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Engineering"
-	},
-/turf/simulated/floor,
-/area/station/engine/storage)
 "oxC" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/restroom)
@@ -40063,6 +40078,10 @@
 /obj/disposalpipe/junction{
 	dir = 0;
 	icon_state = "pipe-y"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Hydroponics"
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -44043,7 +44062,6 @@
 	pixel_x = -4;
 	pixel_y = 42
 	},
-/obj/machinery/vending/player,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -46064,6 +46082,10 @@
 /area/space)
 "tMY" = (
 /obj/disposalpipe/segment/ejection,
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Security"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "tNu" = (
@@ -47498,7 +47520,7 @@
 /obj/machinery/power/apc{
 	pixel_y = -24;
 	name = "Brig APC";
-	areastring = "/area/station/security/brig"
+	areastring = "Brig"
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/processing)
@@ -48489,10 +48511,6 @@
 /turf/simulated/floor/black,
 /area/station/security/processing)
 "vXY" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=4";
-	location = "Hydroponics"
-	},
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -49159,13 +49177,6 @@
 	dir = 1
 	},
 /area/station/security/processing)
-"wHO" = (
-/obj/stool,
-/obj/submachine/ATM{
-	pixel_y = -32
-	},
-/turf/simulated/floor/grime,
-/area/station/security/brig)
 "wIh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -65457,7 +65468,7 @@ aaa
 blZ
 blZ
 blZ
-aaa
+blZ
 aaa
 aaa
 aaa
@@ -65749,21 +65760,21 @@ blZ
 blZ
 blZ
 blZ
-aaa
-aaa
-aaa
+bun
+bun
+blZ
 aaa
 aaa
 aaa
 blZ
 blZ
 ybn
+bis
 blZ
 blZ
 blZ
 blZ
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -66050,9 +66061,9 @@ xNZ
 imL
 kmE
 bis
-blZ
-bun
-bun
+bis
+bis
+bis
 blZ
 blZ
 blZ
@@ -66060,12 +66071,12 @@ blZ
 blZ
 bis
 tSw
+bis
 blZ
 bis
 bis
 jxv
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -66362,12 +66373,12 @@ bis
 bis
 bis
 bis
+bis
 lrX
 bis
 bis
 bis
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -66664,12 +66675,12 @@ bis
 tSw
 bis
 bis
-blZ
-bis
-bis
 bis
 blZ
-aaa
+bis
+bis
+bis
+blZ
 aaa
 aaa
 aaa
@@ -66966,12 +66977,12 @@ bGd
 bGd
 bGd
 bis
+bis
 blZ
 blZ
 blZ
 blZ
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -67268,10 +67279,10 @@ bAB
 coi
 bGd
 bis
+bis
 blZ
 nFr
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -67570,10 +67581,10 @@ bAB
 rtN
 bGd
 bis
+bis
 blZ
 blZ
 blZ
-aaa
 aaa
 aaa
 aaa
@@ -69972,7 +69983,7 @@ oTi
 glV
 xOa
 sIH
-xOa
+kof
 xRE
 leh
 uJB
@@ -78734,7 +78745,7 @@ bqO
 bqN
 bsI
 btE
-oxB
+btE
 bvL
 bwU
 uRE
@@ -79638,7 +79649,7 @@ nGP
 bpY
 bpY
 sRo
-bqN
+ksV
 bsJ
 buI
 bvN
@@ -91402,7 +91413,7 @@ bfT
 aXV
 aXV
 ndp
-ndp
+btr
 ndp
 ndp
 bjH
@@ -95943,7 +95954,7 @@ bed
 bkP
 bkP
 bkP
-wHO
+bkQ
 bgL
 bkP
 gxv
@@ -97151,7 +97162,7 @@ rfR
 bkQ
 bkP
 bkP
-bkP
+jEU
 bns
 apU
 aaa
@@ -123134,7 +123145,7 @@ bGF
 bFg
 sNX
 sNX
-bAx
+wEi
 wEi
 bCb
 bCM
@@ -123437,7 +123448,7 @@ bFg
 sNX
 bDB
 wEi
-dbr
+wRk
 bCc
 bCN
 nZy

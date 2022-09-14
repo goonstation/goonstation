@@ -226,6 +226,8 @@
 			saved_uncool_word_filtering = 1
 		if (saved_uncool_word_filtering == 0 && uncool_word_filtering != 0)
 			src.owner:toggle_uncool_word_filtering()
+		else
+			src.owner.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, /client/proc/message_one_admin)
 		uncool_word_filtering = saved_uncool_word_filtering
 
 		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]

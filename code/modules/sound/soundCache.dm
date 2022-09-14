@@ -1066,7 +1066,6 @@ var/global/list/soundCache = list(
  	"sound/musical_instruments/artifact/Artifact_Precursor_3.ogg" = 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg',\
  	"sound/musical_instruments/artifact/Artifact_Precursor_4.ogg" = 'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg',\
  	"sound/musical_instruments/artifact/Artifact_Precursor_5.ogg" = 'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg',\
- 	"sound/musical_instruments/artifact/Artifact_Precursor_6.ogg" = 'sound/musical_instruments/artifact/Artifact_Precursor_6.ogg',\
  	"sound/musical_instruments/artifact/Artifact_Void_1.ogg" = 'sound/musical_instruments/artifact/Artifact_Void_1.ogg',\
  	"sound/musical_instruments/artifact/Artifact_Void_2.ogg" = 'sound/musical_instruments/artifact/Artifact_Void_2.ogg',\
  	"sound/musical_instruments/artifact/Artifact_Void_3.ogg" = 'sound/musical_instruments/artifact/Artifact_Void_3.ogg',\
