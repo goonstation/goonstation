@@ -538,7 +538,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -582,7 +582,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -732,7 +732,7 @@
 			flick("comp_tprint1",src)
 			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html(html_decode(input.signal))
+			P.info = strip_html_tags(html_decode(input.signal))
 			P.name = paper_name
 		return
 
@@ -789,7 +789,7 @@
 			flick("comp_pscan1",src)
 			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
-			var/saniStr = strip_html(sanitize(html_encode(P.info)))
+			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
@@ -1182,7 +1182,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1217,7 +1217,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1325,7 +1325,7 @@
 		if(!R) return
 
 		var/mod = R.Replace(input.signal, expressionrepl)
-		mod = strip_html(sanitize(html_encode(mod)))//U G H
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
 		if(mod)
 			input.signal = mod
@@ -1607,7 +1607,7 @@
 		setStartingString(input.signal)
 
 	proc/setStartingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		bstr = inp
 		tooltip_rebuild = 1
 
@@ -1625,7 +1625,7 @@
 		setEndingString(input.signal)
 
 	proc/setEndingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		astr = inp
 		tooltip_rebuild = 1
 
@@ -1648,7 +1648,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
+		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
@@ -1873,7 +1873,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1881,21 +1881,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("[signal.encryption]" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["data"])), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["message"])), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -2522,7 +2522,7 @@
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message))
+		message = strip_html_tags(html_decode(message))
 		var/heardname = null
 		if (isobj(AM))
 			heardname = AM.name

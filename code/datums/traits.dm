@@ -228,8 +228,8 @@
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0)
-					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0)
+					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0, TRUE)
+					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0, TRUE)
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
@@ -247,8 +247,8 @@
 			if(ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0)
-					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0)
+					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0, TRUE)
+					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0, TRUE)
 					H.limbs.l_arm.holder = H
 					H.limbs.r_arm.holder = H
 					H.update_body()
@@ -509,6 +509,13 @@
 	name = "One Armed Spaceman"
 	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
 	id = "onearmed"
+	icon_state = "placeholder"
+	points = 0
+
+/datum/trait/nolegs
+	name = "Stumped"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	id = "nolegs"
 	icon_state = "placeholder"
 	points = 0
 

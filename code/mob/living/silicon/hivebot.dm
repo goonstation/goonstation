@@ -408,7 +408,7 @@
 		. += "<span class='alert'>[src.name] is powered-down.</span>"
 	if (src.bruteloss)
 		if (src.bruteloss < 75)
-			. += "<span class='alert'>[src.name] looks slightly dented</span>"
+			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
 		else
 			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
 	if (src.fireloss)

@@ -395,15 +395,20 @@
 			if("r_leg")
 				. = r_leg
 
-	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1)
+	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/l_held_item
 					if (src.l_arm)
+						if (no_drop && src.holder.l_hand)
+							l_held_item = src.holder.l_hand
 						src.l_arm.delete()
 					src.l_arm = new new_type(src.holder)
+					if (l_held_item)
+						src.holder.equip_if_possible(l_held_item, SLOT_L_HAND)
 				else // need to make an item arm
 					if (src.l_arm)
 						src.l_arm.delete()
@@ -418,9 +423,14 @@
 
 			if (target == "both_arms" || target == "r_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/r_held_item
 					if (src.r_arm)
+						if (no_drop && src.holder.r_hand)
+							r_held_item = src.holder.r_hand
 						src.r_arm.delete()
 					src.r_arm = new new_type(src.holder)
+					if (r_held_item)
+						src.holder.equip_if_possible(r_held_item, SLOT_R_HAND)
 				else // need to make an item arm
 					if (src.r_arm)
 						src.r_arm.delete()

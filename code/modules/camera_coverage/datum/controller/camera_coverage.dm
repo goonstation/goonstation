@@ -38,7 +38,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 		addAIImage(T.aiImage, "aiImage_\ref[T.aiImage]", low_priority=istype(T, /turf/space))
 
 		donecount++
-		thispct = round(donecount / cam_candidates.len * 100)
+		thispct = round(donecount / length(cam_candidates) * 100)
 		if (thispct != lastpct)
 			lastpct = thispct
 			game_start_countdown?.update_status("Updating cameras...\n[thispct]%")

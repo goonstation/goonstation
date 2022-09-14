@@ -349,7 +349,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_closed"
 	icon_base = "com"
-	req_access = list(access_heads)
+	req_access = null
 	health = 800
 	health_max = 800
 
@@ -392,7 +392,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "security airlock"
 	icon_state = "sec_closed"
 	icon_base = "sec"
-	req_access = list(access_security)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/security/alt
 	icon_state = "sec2_closed"
@@ -405,7 +405,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "engineering airlock"
 	icon_state = "eng_closed"
 	icon_base = "eng"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/engineering/alt
 	icon_state = "eng2_closed"
@@ -418,7 +418,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "medical airlock"
 	icon_state = "research_closed"
 	icon_base = "research"
-	req_access = list(access_medical)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/medical/alt
 	icon_state = "research2_closed"
@@ -453,7 +453,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "maintenance airlock"
 	icon_state = "maint_closed"
 	icon_base = "maint"
-	req_access = list(access_maint_tunnels)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/maintenance/alt
 	icon_state = "maint2_closed"
@@ -511,19 +511,19 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "command airlock"
 	icon_state = "com_glass_closed"
 	icon_base = "com_glass"
-	req_access = list(access_heads)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/engineering
 	name = "engineering airlock"
 	icon_state = "eng_glass_closed"
 	icon_base = "eng_glass"
-	req_access = list(access_engineering)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/security //Shitty Azungar recolor, no need to thank me.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
-	req_access = list(access_security)
+	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"

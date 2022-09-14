@@ -69,7 +69,7 @@
 		..()
 
 	proc/breathe(datum/gas_mixture/environment)
-		var/mult = 4
+		var/mult = get_multiplier()
 
 		var/atom/underwater = 0
 		if (isturf(owner.loc))

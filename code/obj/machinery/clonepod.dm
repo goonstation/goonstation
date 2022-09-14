@@ -1087,10 +1087,8 @@
 		src.icon_state = "grinder[fluid_level]"
 
 		if (update_grindpaddle)
-			src.overlays = null
-			src.overlays += "grindpaddle[src.process_timer > 0 ? 1 : 0]"
-
-			src.overlays += "grindglass[fluid_level]"
+			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
+			UpdateOverlays(image(src.icon, "grindglass[fluid_level]"),"glass")
 		return
 
 	ex_act(severity)
