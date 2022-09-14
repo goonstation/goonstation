@@ -1,5 +1,9 @@
 
 (t)tue sep 13 22
+(u)Kubius
+(p)10797
+(e)|
+(+)Kondaru's ranch has been expanded to accommodate additional ranchers.
 (u)Idiot
 (p)10714
 (e)|
