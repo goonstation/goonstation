@@ -28,7 +28,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -67,7 +67,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/item/furniture_parts/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -97,7 +97,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/stool/chair/comfy/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -124,7 +124,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/item/furniture_parts/flock_chair/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -164,14 +164,14 @@ TYPEINFO_NEW(/obj/table/flock)
 			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
-			S.setMaterial(getMaterial("gnesisglass"))
+			S.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 			src.dump_contents()
 			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 			qdel(src)
 
 /obj/storage/closet/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 

@@ -2249,13 +2249,11 @@ datum
 						if(prob(50))
 							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 							B.set_loc(T)
-							var/datum/material/mat = getMaterial("gnesis")
-							B.setMaterial(mat)
+							B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 						else
 							var/atom/movable/B = new /obj/item/raw_material/shard
 							B.set_loc(T)
-							var/datum/material/mat = getMaterial("gnesisglass")
-							B.setMaterial(mat)
+							B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 						return
 				// otherwise we didn't have enough
 				T.visible_message("<span class='notice'>The substance flows out, spread too thinly.</span>")
