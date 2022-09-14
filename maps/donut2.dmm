@@ -33879,6 +33879,7 @@
 	pixel_x = -31
 	},
 /obj/disposalpipe/segment/mail,
+/turf/simulated/floor,
 /area/station/hallway/primary/south)
 "jvw" = (
 /obj/machinery/status_display{
