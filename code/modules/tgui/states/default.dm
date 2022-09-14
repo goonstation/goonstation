@@ -70,3 +70,6 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if(. > UI_CLOSE)
 		. = min(., shared_living_ui_distance(src_object)) //critters can only use things they're near.
 
+/mob/dead/target_observer/default_can_use_topic(src_object)
+	. = ..()
+	return UI_UPDATE
