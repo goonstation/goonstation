@@ -1834,9 +1834,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-		P.die()
-		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [P] ([P.type]) hitting mob [src] (src.type)")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
