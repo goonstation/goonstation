@@ -135,7 +135,6 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 	var/static/image/juggle_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
-	var/list/curse_icons = list()	//Used for plaguebringer wraith curses
 	var/list/juggling = list()
 	var/can_juggle = 0
 

@@ -856,9 +856,6 @@
 					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
 
-			W.abilityHolder.regenRate -= 2
-			W.abilityHolder.points -= pointCost
-
 			W.real_name = holder.owner.real_name
 			W.UpdateName()
 			var/turf/T = get_turf(holder.owner)
@@ -943,16 +940,6 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
-
-			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "blood_status", loc = H)
-			icon.blend_mode = BLEND_ADD
-			icon.plane = PLANE_ABOVE_LIGHTING
-			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			icon.pixel_y = 28
-			icon.alpha = 170
-			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
-			H.curse_icons += icon
-
 			return 0
 		else
 			return 1
@@ -985,16 +972,6 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
-
-			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "blind_status", loc = H)
-			icon.blend_mode = BLEND_ADD
-			icon.plane = PLANE_ABOVE_LIGHTING
-			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			icon.pixel_y = 28
-			icon.alpha = 170
-			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
-			H.curse_icons += icon
-
 			return 0
 		else
 			return 1
@@ -1027,16 +1004,6 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
-
-			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "weak_status", loc = H)
-			icon.blend_mode = BLEND_ADD
-			icon.plane = PLANE_ABOVE_LIGHTING
-			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			icon.pixel_y = 28
-			icon.alpha = 170
-			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
-			H.curse_icons += icon
-
 			return 0
 		else
 			return 1
@@ -1069,16 +1036,6 @@
 			ability.doCooldown()
 			ability = holder.getAbility(/datum/targetable/wraithAbility/curse/death)
 			ability.doCooldown()
-
-			var/image/icon = image('icons/mob/wraith_ui.dmi', icon_state = "rot_status", loc = H)
-			icon.blend_mode = BLEND_ADD
-			icon.plane = PLANE_ABOVE_LIGHTING
-			icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-			icon.pixel_y = 26
-			icon.alpha = 170
-			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(icon)
-			H.curse_icons += icon
-
 			return 0
 		else
 			return 1

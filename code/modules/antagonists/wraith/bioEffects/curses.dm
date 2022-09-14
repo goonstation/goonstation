@@ -1,7 +1,6 @@
 ////////////////////
 //Wraith curses
 ////////////////////
-
 /datum/bioEffect/blood_curse
 	name = "Blood curse"
 	desc = "Curse of blood."
@@ -13,10 +12,18 @@
 	acceptable_in_mutini = 0
 	probability = 0
 	curable_by_mutadone = 0
+	var/image/curse_icon
 
 	OnAdd()
 		if (ishuman(owner))
 			owner.traitHolder?.addTrait("hemophilia")
+		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blood_status")
+		curse_icon.blend_mode = BLEND_ADD
+		curse_icon.plane = PLANE_ABOVE_LIGHTING
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.pixel_y = 28
+		curse_icon.alpha = 170
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
 		if (probmult(5))
@@ -32,6 +39,7 @@
 	OnRemove()
 		if (ishuman(owner))
 			owner.traitHolder?.removeTrait("hemophilia")
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
 /datum/bioEffect/blindness_curse
@@ -45,6 +53,17 @@
 	acceptable_in_mutini = 0
 	probability = 0
 	curable_by_mutadone = 0
+	var/image/curse_icon
+
+	OnAdd()
+		. = ..()
+		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blood_status")
+		curse_icon.blend_mode = BLEND_ADD
+		curse_icon.plane = PLANE_ABOVE_LIGHTING
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.pixel_y = 28
+		curse_icon.alpha = 170
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
 		if (probmult(8) && ishuman(owner))
@@ -59,6 +78,9 @@
 				owner.emote("blink")
 				boutput(owner, "<span class='notice'>You blink and notice that your vision is blurier than before.<span>")
 
+	OnRemove()
+		. = ..()
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 
 /datum/bioEffect/weak_curse
 	name = "Weakness curse"
@@ -71,10 +93,18 @@
 	acceptable_in_mutini = 0
 	probability = 0
 	curable_by_mutadone = 0
+	var/image/curse_icon
 
 	OnAdd()
 		if (ishuman(owner))
 			owner.setStatus("weakcurse", duration = null)
+		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "weak_status")
+		curse_icon.blend_mode = BLEND_ADD
+		curse_icon.plane = PLANE_ABOVE_LIGHTING
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.pixel_y = 28
+		curse_icon.alpha = 170
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
 		if (probmult(5))
@@ -90,6 +120,7 @@
 	OnRemove()
 		if (ishuman(owner))
 			owner.delStatus("weakcurse")
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
 
 /datum/bioEffect/rot_curse	//Also prevents eating entirely.
@@ -103,10 +134,18 @@
 	acceptable_in_mutini = 0
 	probability = 0
 	curable_by_mutadone = 0
+	var/image/curse_icon
 
 	OnAdd()
 		if (ishuman(owner))
 			owner.bioHolder.AddEffect("stinky")
+			curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "rot_status")
+			curse_icon.blend_mode = BLEND_ADD
+			curse_icon.plane = PLANE_ABOVE_LIGHTING
+			curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			curse_icon.pixel_y = 26
+			curse_icon.alpha = 170
+			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
 		if (probmult(5))
@@ -119,4 +158,5 @@
 	OnRemove()
 		if (ishuman(owner))
 			owner.bioHolder.RemoveEffect("stinky")
+		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()

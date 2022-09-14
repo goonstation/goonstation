@@ -854,8 +854,6 @@ datum
 									H.bioHolder.RemoveEffect("rot_curse")
 									H.visible_message("[H] screams as some black smoke exits their body.")
 									H.emote("scream")
-									for (var/image/I in H.curse_icons)
-										qdel(I)
 									random_burn_damage(H, 5)
 									var/turf/T = get_turf(H)
 									if (T && isturf(T))
