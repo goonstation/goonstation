@@ -181,7 +181,9 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -345,7 +347,9 @@
 		return 6
 
 	proc/check_for_unacceptable_content()
-		return mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	construction
 		var/marker_type = /obj/magnet_target_marker

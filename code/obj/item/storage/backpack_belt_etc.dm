@@ -692,7 +692,6 @@
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
@@ -700,7 +699,8 @@
 	/obj/item/gun/energy/tasersmg,
 	/obj/item/gun/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
-	/obj/item/gun/energy/ntgun)
+	/obj/item/gun/energy/ntgun,
+	/obj/item/gun/energy/cornicen3)
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)

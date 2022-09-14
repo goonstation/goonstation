@@ -985,7 +985,7 @@
 		amount--
 		if (turfs.len < 1)
 			break
-		E = pick(mining_controls.events)
+		E = weighted_pick(mining_controls.weighted_events)
 		AST = pick(turfs)
 		if (!istype(AST) || (E.restrict_to_turf_type && AST.type != E.restrict_to_turf_type))
 			turfs -= AST
