@@ -1,15 +1,19 @@
+import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Input, Knob, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
   name: string;
+  volume: number;
+  transpose: number;
   notes: string[];
+  keybindToggle: boolean;
 };
 
 export const MusicInstrument = (_props, context) => {
   const { act, data } = useBackend<MusicInstrumentData>(context);
-  const { name, notes } = data;
+  const { name, notes, volume, transpose, keybindToggle } = data;
 
   const [noteKeysOrder, setNoteKeysOrder] = useLocalState(
     context,
@@ -19,25 +23,32 @@ export const MusicInstrument = (_props, context) => {
 
   const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', new Array(notes.length));
   const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
-  const [keybindToggle, setKeybindToggle] = useLocalState(context, 'keybindToggle', false);
-  const [volume, setVolume] = useLocalState(context, 'keyboardVolume', 50);
-  const [transpose, setTranspose] = useLocalState(context, 'keyboardTranspose', 0);
+
+  const setVolume = (value: number) => {
+    act('set_volume', { value });
+  };
+
+  const setTranspose = (value: number) => {
+    act('set_transpose', { value });
+  };
+
+  const setKeybindToggle = (value: boolean) => {
+    if (value) {
+      act('play_keyboard_on');
+    } else {
+      act('play_keyboard_off');
+    }
+  };
 
   const toggleKeybind = () => {
-    if (keybindToggle) {
-      act('play_keyboard_off');
-      setKeybindToggle(false);
-    } else {
-      act('play_keyboard_on');
-      setKeybindToggle(true);
-    }
+    setKeybindToggle(!keybindToggle);
   };
 
   const keyIndexWithinRange = (index: number) => index + transpose >= 0 && index + transpose < notes.length;
 
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
-      act('play_note', { note: index + transpose + 1, volume: volume });
+      act('play_note', { note: index + transpose, volume: volume });
       const newKeys = [...activeKeys];
       newKeys[index] = true;
       setActiveKeys(newKeys);
@@ -136,13 +147,17 @@ export const MusicInstrument = (_props, context) => {
                 </Box>
               </Box>
               <Box className="instrument__keyorder">
-                <h4>Key binding order for keyboard input</h4>
+                <Box className="instrument__instructions" fontSize="1.1em">
+                  Key binding order for keyboard input
+                </Box>
                 <Input
                   className="instrument__input_keyorder"
                   value={noteKeysOrder.join('')}
                   onInput={(e, v) => setNoteKeysOrder(v.split(''))}
                 />
-                <h6>Type in the order you wish the keybindings to be placed</h6>
+                <Box className="instrument__instructions" fontSize="0.8em" bold>
+                  Type in the order you wish the keybindings to be placed
+                </Box>
               </Box>
             </Flex>
             <Box className="instrument__speaker" />
@@ -153,18 +168,21 @@ export const MusicInstrument = (_props, context) => {
               const keybind = noteKeysOrder[index - keyOffset];
               const keyClass = isBlackKey ? 'instruments__piano-key-black' : 'instruments__piano-key-white';
               const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(note.split('')[0]);
-              const wko = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-kwo' : '';
+              const whiteKeyOffsetClass = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-key-white-offset' : '';
 
               return (
                 <li
                   key={index}
-                  className={`instruments__piano-key ${keyClass} ${wko} ${
+                  className={classes([
+                    'instruments__piano-key',
+                    keyClass,
+                    whiteKeyOffsetClass,
                     activeKeys[index]
                       ? isBlackKey
                         ? 'instruments__piano-key-black-active'
                         : 'instruments__piano-key-white-active'
-                      : ''
-                  }`}
+                      : '',
+                  ])}
                   onMouseDown={() => playNote(index)}
                   onMouseLeave={() => playNoteRelease(index)}
                   onMouseUp={() => playNoteRelease(index)}>

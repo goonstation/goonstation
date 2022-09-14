@@ -28,30 +28,22 @@
 	var/desc_sound = list("funny", "rockin'", "great", "impressive", "terrible", "awkward")
 	var/desc_music = list("riff", "jam", "bar", "tune")
 	var/volume = 50
+	var/transpose = 0
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
-	var/use_new_interface = 0
+	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
+	var/keyboard_toggle = 0
 
 	New()
 		..()
-
-<<<<<<< HEAD
 		if (!pick_random_note && use_new_interface != 1)
 			contextLayout = new /datum/contextLayout/instrumental()
-=======
-		if (!pick_random_note)
-			if(use_new_interface == 0)
-				contextLayout = new /datum/contextLayout/instrumental()
-			else
-				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
->>>>>>> master
-
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
 			for(var/datum/contextAction/C as anything in src.contextActions)
@@ -68,8 +60,6 @@
 
 				newcontext.note = i
 				contextActions += newcontext
-
-
 
 	proc/play_note(var/note, var/mob/user)
 		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
@@ -119,6 +109,9 @@
 		. = list(
 			"name" = src.name,
 			"notes" = src.notes,
+			"volume" = src.volume,
+			"transpose" = src.transpose,
+			"keybindToggle" = src.keyboard_toggle,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -127,16 +120,24 @@
 			return
 		switch(action)
 			if("play_note")
-				var/note_to_play = params["note"]
+				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
 				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
-				. = FALSE
+				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")
-				. = FALSE
+				src.keyboard_toggle = 1
+				. = TRUE
 			if("play_keyboard_off")
 				usr.client.mob.reset_keymap()
-				. = FALSE
+				src.keyboard_toggle = 0
+				. = TRUE
+			if("set_volume")
+				src.volume = clamp(params["value"], 0, 100)
+				. = TRUE
+			if("set_transpose")
+				src.transpose = clamp(params["value"], -12, 12)
+				. = TRUE
 
 	ui_close(mob/user)
 		user.reset_keymap()
