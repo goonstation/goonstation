@@ -1,5 +1,42 @@
 
+(t)mon sep 12 22
+(u)DimWhat
+(p)10786
+(e)|
+(+)Resprited the riot helmet's object sprite.
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
+(u)DimWhat
+(p)10785
+(e)|
+(+)Removed the antique lawbringer skin
+(t)sun sep 11 22
+(u)Emily
+(+)Buff to Plant Chicken eggs; give feedback on the usual places
+(u)Moberry
+(p)10731
+(e)|
+(*)Radiation Collectors can now be deconstructed and scanned by mechanics!
+(u)Mr. Moriarty
+(p)10734
+(e)|
+(+)Added an announcement for when the Armoury is deauthorised.
+(u)Sord
+(*)The emergency shuttle can no longer be called on blob rounds until 20 minutes have passed
+(t)sat sep 10 22
+(u)glowbold
+(p)10737
+(e)|
+(+)Vampire's bat form no longer works on restricted z levels.
 (t)fri sep 09 22
+(u)tarmunora
+(+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
 (u)Sord
 (e)|
 (+)Raw gemstones now have their own value on the shipping market

@@ -826,7 +826,7 @@
 					M.real_name = "strange vampire outfit"
 					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
-				return 1
+					return 1
 
 		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
 		return
