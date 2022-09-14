@@ -1,4 +1,9 @@
 
+(t)tue sep 13 22
+(u)Idiot
+(p)10714
+(e)|
+(+)Adds Stumped trait that spawns you with no legs and a free wheelchair.
 (t)mon sep 12 22
 (u)DimWhat
 (p)10786
