@@ -160,37 +160,37 @@
 			return 1 // no valid targets were identified, cast fails
 
 		logTheThing("combat", holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
-
+		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
 		if ((istype(holder.owner, /mob/wraith/wraith_decay)))
 			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
 				boutput(holder.owner, "<span class='alert'>[H] is extremely rotten and bloated. It satisfies us greatly</span>")
 				holder.points += 150
+				T.fluid_react_single("miasma", 60, airborne = 1)
+				H.visible_message("<span class='alert'><strong>[pick("A mysterious force rips [H]'s body apart!", "[H]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
+				H.gib()
 			else if (!(H.get_toxin_damage() >= 30) && !(H.decomp_stage >= DECOMP_STAGE_BLOATED))
 				boutput(holder.owner, "<span class='alert'>This body is too fresh. It needs to be poisoned or rotten before we consume it.</span>")
 				return 1
+		if (H.loc)//gibbed check
+			//Make the corpse all grody and skeleton-y
+			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
+			if (H.organHolder && H.organHolder.brain)
+				qdel(H.organHolder.brain)
+			H.set_face_icon_dirty()
+			H.set_body_icon_dirty()
+			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
+			boutput(holder.owner, "<span class='alert'><b>[pick("You draw the essence of death out of [H]'s corpse!", "You drain the last scraps of life out of [H]'s corpse!")]</b></span>")
+			H.visible_message("<span class='alert'>[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone in moments!")]</span>", null, "<span class='alert'>A horrid stench fills the air.</span>")
+		playsound(T, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
 		holder.regenRate += 2
-		var/turf/T = get_turf(H)
-		T.fluid_react_single("miasma", 60, airborne = 1)
-		H.visible_message("<span class='alert'><strong>[pick("A mysterious force rips [H]'s body apart!", "[H]'s corpse suddenly explodes in a cloud of miasma and guts!")]</strong></span>")
-		H.gib()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
 		var/datum/abilityHolder/wraith/AH = holder
 		if (istype(AH))
 			var/mob/wraith/W = AH.owner
 			if (istype(W))
 				W.onAbsorb(H)
 			AH.corpsecount++
-		playsound(H, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
-		//Make the corpse all grody and skeleton-y
-		H.decomp_stage = DECOMP_STAGE_SKELETONIZED
-		if (H.organHolder && H.organHolder.brain)
-			qdel(H.organHolder.brain)
-		H.set_face_icon_dirty()
-		H.set_body_icon_dirty()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
-		boutput(holder.owner, "<span class='alert'><b>[pick("You draw the essence of death out of [H]'s corpse!", "You drain the last scraps of life out of [H]'s corpse!")]</b></span>")
-		H.visible_message("<span class='alert'>[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone in moments!")]</span>", null, "<span class='alert'>A horrid stench fills the air.</span>")
+
 		return 0
 
 
