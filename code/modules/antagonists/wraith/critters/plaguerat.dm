@@ -37,8 +37,8 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	max_skins = 1
 
 	blood_id = "miasma"
-
-	var/bite_transfer_amt = 1	//How much rat venom are we giving to people?
+	/// venom injected per bite
+	var/bite_transfer_amt = 3
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if(H.clothing_protects_from_chems())
 					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
 					return 1
-			M.reagents.add_reagent(src.venom, bite_transfer_amt)
+			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 
 	proc/grow_up(var/mob/wraith/M = null)
 		if (!ispath(src.adultpath))

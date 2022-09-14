@@ -8,13 +8,13 @@
 
 	onAdd(optional)
 		. = ..()
-		var/obj/citter/C = owner
+		var/obj/critter/C = owner
 		C.atk_delay = (C.atk_delay / 1.5)
 		C.atk_brute_amt = (C.atk_brute_amt * 1.5)
 		C.atk_burn_amt = (C.atk_burn_amt * 1.5)
 
 	onRemove()
-		var/obj/citter/C = owner
+		var/obj/critter/C = owner
 		C.atk_delay = (C.atk_delay * 1.5)
 		C.atk_brute_amt = (C.atk_brute_amt / 1.5)
 		C.atk_burn_amt = (C.atk_burn_amt / 1.5)

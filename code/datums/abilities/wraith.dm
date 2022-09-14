@@ -1255,10 +1255,10 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (!message)
 			return 1
 		for_by_tcl(H, /mob/living/carbon/human)
-			if (!IN_RANGE(holder.owner, M, 8)) continue
-			if (isdead(M)) continue
+			if (!IN_RANGE(holder.owner, H, 8)) continue
+			if (isdead(H)) continue
 			logTheThing("say", holder.owner, H, "WRAITH WHISPER TO [key_name(H)]: [message]")
-			boutput(M, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+			boutput(H, "<b>A netherworldly voice whispers into your ears... </b> [message]")
 			holder.owner.playsound_local(holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 
