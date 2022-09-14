@@ -28,21 +28,10 @@
 		playsound(holder.owner.loc, "sound/effects/ghostbreath.ogg", 80, 0)
 		holder.owner.visible_message("<span class='alert'>[holder.owner] emits a rallying howl!</span>")
 
-		var/list/obj/critter/affected_critter = list()
-		for (var/obj/critter/C in range(6, get_turf(holder.owner)))
-			for (var/O in critter_list)
-				if (istype(C, O))
-					logTheThing("debug", src, null, "Affected")
-					C.atk_delay = (C.atk_delay / 1.5)
-					C.atk_brute_amt = (C.atk_brute_amt * 1.5)
-					C.atk_burn_amt = (C.atk_burn_amt * 1.5)
-					affected_critter += C
-		SPAWN(25 SECOND)
-			for (var/obj/critter/C in affected_critter)
-				if (C.loc)
-					C.atk_delay = (C.atk_delay * 1.5)
-					C.atk_brute_amt = (C.atk_brute_amt / 1.5)
-					C.atk_burn_amt = (C.atk_burn_amt / 1.5)
+		for (var/obj/critter/C in by_cat[TR_CAT_CRITTERS])
+			if (!IN_RANGE(holder.owner, C, 6)) continue
+			if (istypes(C, critter_list))
+				C.setStatus("skeleton_rallied", 25 SECONDS)
 
 	onAttach(datum/abilityHolder/holder)
 		..()

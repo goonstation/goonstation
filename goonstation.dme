@@ -768,6 +768,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\wraith\objs\machinery\rat_den.dm"
 #include "code\modules\antagonists\wraith\objs\machinery\runetrap.dm"
 #include "code\modules\antagonists\wraith\objs\machinery\vortex_wraith.dm"
+#include "code\modules\antagonists\wraith\status_system\skeleton_commander.dm"
 #include "code\modules\antagonists\wraith\status_system\wraithEffects.dm"
 #include "code\modules\atmospherics\FEA_airgroup.dm"
 #include "code\modules\atmospherics\FEA_fire.dm"

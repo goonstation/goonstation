@@ -869,6 +869,7 @@
 ////////////////////////
 // Curses
 ////////////////////////
+ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 /datum/targetable/wraithAbility/curse
 	name = "Base curse"
 	icon_state = "skeleton"
@@ -1250,18 +1251,18 @@
 			return 1
 
 		var/message = html_encode(input("What would you like to whisper to everyone?", "Whisper", "") as text)
-		for (var/mob/living/M in range(8))
-			if (ishuman(M) && !isdead(M))
-				var/mob/living/carbon/human/H = M
-				logTheThing("say", usr, M, "WRAITH WHISPER TO [constructTarget(M,"say")]: [message]")
-				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
-				if (!message)
-					return 1
-				boutput(M, "<b>A netherworldly voice whispers into your ears... </b> [message]")
-				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
-				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
+		if (!message)
+			return 1
+		for_by_tcl(H, /mob/living/carbon/human)
+			if (!IN_RANGE(holder.owner, M, 8)) continue
+			if (isdead(M)) continue
+			logTheThing("say", holder.owner, H, "WRAITH WHISPER TO [key_name(H)]: [message]")
+			boutput(M, "<b>A netherworldly voice whispers into your ears... </b> [message]")
+			holder.owner.playsound_local(holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
+			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 
-		boutput(usr, "<b>You whisper to everyone around you:</b> [message]")
+		boutput(holder.owner, "<b>You whisper to everyone around you:</b> [message]")
 
 
 /datum/targetable/wraithAbility/dread
