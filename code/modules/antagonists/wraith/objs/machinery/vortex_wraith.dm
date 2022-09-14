@@ -9,6 +9,7 @@
 	var/list/obj/critter/critter_list = list()
 	var/mob_value_cap = 10	//Total allowed point value of all linked mobs
 	var/growth = 0
+	var/spawn_radius = 3
 	var/next_growth = 10 SECONDS
 	var/next_spawn = 5 SECONDS
 	var/total_mob_value = 0	//Total point value of all linked mobs
@@ -43,8 +44,12 @@
 		light.set_color(150, 40, 40)
 		light.attach(src)
 		light.enable()
-
+		START_TRACKING
 		..()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	process()
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
@@ -67,16 +72,17 @@
 			if (growth > 0)	//Are we spawning mobs yet? If not, wait for next tick
 				var/list/eligible_turf = list()
 				var/turf/chosen_turf = null
-				for (var/mob/living/carbon/human/H in range((1 + src.growth), src))	//Lets try to spawn near someone
-					if(isalive(H))
-						for (var/turf/T in range(3, H))
-							if (istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
-								eligible_turf += T
-				if (length(eligible_turf) <= 0)	//No spot to spawn near a human, or no human in range, lets try to find a regular turf instead
-					for (var/turf/T in range((1 + src.growth), src))
-						if (istype(T, /turf/simulated/floor))	//Find a non-wall, non-space turf to spawn in
-							eligible_turf += T
-				if (length(eligible_turf) <= 0)
+				for_by_tcl(H, /mob/living/carbon/human)
+					if (isdead(H)) continue
+					if (isnpc(H)) continue
+					if (!IN_RANGE(H, src, 1 + growth)) continue
+					var/list/turfs = block(locate(max(H.x - spawn_radius, 0), max(H.y - spawn_radius, 0), H.z), locate(min(H.x + spawn_radius, world.maxx), min(H.y + spawn_radius, world.miny), H.z))
+					for (var/turf/simulated/floor/floor in turfs)
+						eligible_turf += floor
+				if (!length(eligible_turf))	//No spot to spawn near a human, or no human in range, lets try to find a regular turf instead
+					for (var/turf/simulated/floor/floor in block(locate(max(src.x - growth, 0), max(src.y - growth, 0), src.z), locate(min(src.x + growth, world.maxx), min(src.y + growth, world.miny), src.z)))
+						eligible_turf += floor
+				if (!length(eligible_turf))
 					src.visible_message("<span class='alert'><b>[src] sputters and crackles, it seems it couldnt find a spot to summon something!</b></span>")
 					return 1
 				chosen_turf = pick(eligible_turf)

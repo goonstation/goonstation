@@ -171,9 +171,11 @@
 					if(istype(src, /mob/wraith/wraith_trickster))
 						src.hauntBonus += 1
 
-		for (var/obj/machinery/wraith/vortex_wraith/V in range(8, src))
+		for_by_tcl(V, /obj/machinery/wraith/vortex_wraith)
 			if (V == linked_portal)
-				src.hauntBonus += 2
+				if (IN_RANGE(src, V, 8))
+					src.hauntBonus += 2
+				break //we only ever have one
 
 		if (src.next_area_change != null)
 			if (src.next_area_change < TIME)
