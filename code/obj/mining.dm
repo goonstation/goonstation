@@ -1050,6 +1050,32 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
 
+	algae
+		name = "sea foam"
+		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		stone_color = "#6090a0"
+		fullbright = 0
+		luminosity = 1
+
+		space_overlays()
+			. = ..()
+			if (length(space_overlays)) // Are we on the edge of a chunk wall
+				var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+				var/color_vals = list(255, 0, 255, 30) // TODO: Hardcoded hot pink lol
+				algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+				UpdateOverlays(algea, "glow_algae")
+				add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			. = ..()
+
 	consider_superconductivity(starting)
 		return FALSE
 
