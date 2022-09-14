@@ -271,4 +271,3 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "outline", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#007BFF"
 		..()
-
