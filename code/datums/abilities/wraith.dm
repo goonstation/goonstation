@@ -808,7 +808,7 @@
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
 	icon_state = "evolve"
-	desc = "Choose a form to evolve into once you have grown strong enough"
+	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
 	targeted = 0
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
