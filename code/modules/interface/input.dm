@@ -288,8 +288,7 @@ var/list/dirty_keystates = list()
 		// stub
 
 	proc/recheck_keys()
-		if (src.client)
-			keys_changed(src.client.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
+		keys_changed(src.client?.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
 	// returns TRUE if it schedules a move
 	proc/internal_process_move(keys)

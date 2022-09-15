@@ -181,8 +181,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null // we're already plating
 			else
 				src.burn_tile()
+				src.icon_old = null
 			src.UpdateIcon()
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt,src)
@@ -214,8 +216,10 @@
 		if (prob(20))
 			if (prob(50))
 				src.break_tile()
+				src.icon_old = null
 			else
 				src.burn_tile()
+				src.icon_old = null
 
 
 /////////////////////////////////////////
@@ -1129,7 +1133,7 @@ DEFINE_FLOORS(minitiles/black,
 	Entered(atom/A as mob|obj)
 		if (istype(A, /obj/stool/chair/comfy/wheelchair))
 			var/obj/stool/chair/comfy/wheelchair/W = A
-			if (!W.lying && prob(40))
+			if (!W.lying && prob(10))
 				if (W.buckled_guy && W.buckled_guy.m_intent == "walk")
 					return ..()
 				else

@@ -80,7 +80,10 @@
 /proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0, var/do_sfx = 1)
 	var/block = 0
 
-	if (holder?.my_atom) //this happens with burning plants somehow
+	if(QDELETED(holder))
+		return 0
+
+	if (holder.my_atom) //this happens with burning plants somehow
 		var/atom/psource = holder.my_atom.loc
 		while (psource)
 			if (istype(psource, /obj/machinery/vehicle))
@@ -93,7 +96,7 @@
 
 	var/og_smoke_size = smoke_size
 
-	var/list/covered = holder.covered_turf()
+	var/list/covered = holder?.covered_turf()
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 

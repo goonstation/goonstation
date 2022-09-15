@@ -220,6 +220,10 @@ var/global/list/mapNames = list(
 		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
 		"the main station pod bay" = list(/area/station/hangar/main))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "http://goonhub.com/maps/donut3"
@@ -260,6 +264,10 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -316,6 +324,10 @@ var/global/list/mapNames = list(
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
@@ -358,6 +370,10 @@ var/global/list/mapNames = list(
 		"the mining staff room" = list(/area/station/mining/staff_room),
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -672,6 +688,10 @@ var/global/list/mapNames = list(
 		"the news office" = list(/area/station/crew_quarters/radio/news_office),
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the aviary" = list( /area/station/garden/aviary))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"

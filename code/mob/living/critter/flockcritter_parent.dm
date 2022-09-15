@@ -18,8 +18,8 @@
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
 	// HEALTHS
-	var/health_brute = 1
-	var/health_burn = 1
+	health_brute = 1
+	health_burn = 1
 	var/repair_per_resource
 
 	metabolizes = FALSE // under assumption drones dont metabolize chemicals due to gnesis internals
